@@ -1,29 +1,29 @@
 #pragma once
 namespace SST {
-namespace Fwd {
+namespace Drv {
 
 // forward declarations
-class FwdCore;
+class DrvCore;
 
 /**
  * Forward thread
  */
-class FwdThread {
+class DrvThread {
 public:
   /**
     * Constructor
     */
-  FwdThread();
+  DrvThread();
 
   /**
     * Destructor
     */
-  ~FwdThread();
+  ~DrvThread();
 
   /**
     * Execute the thread
     */
-  void execute(FwdCore *core);
+  void execute(DrvCore *core);
 };
 
 }

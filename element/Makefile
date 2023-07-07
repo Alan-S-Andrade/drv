@@ -9,18 +9,18 @@ LDFLAGS=$(shell sst-config --ELEMENT_LDFLAGS) -fno-stack-protector
 CPPFLAGS=-I./
 
 
-fwdsim-headers = $(wildcard *.hpp)
-fwdsim-sources = $(wildcard *.cpp)
-fwdsim-objects = $(patsubst %.cpp,%.o,$(fwdsim-sources))
+drvsim-headers = $(wildcard *.hpp)
+drvsim-sources = $(wildcard *.cpp)
+drvsim-objects = $(patsubst %.cpp,%.o,$(drvsim-sources))
 
-$(fwdsim-objects): %.o: %.cpp $(fwdsim-headers)
+$(drvsim-objects): %.o: %.cpp $(drvsim-headers)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-libFwd.so: $(fwdsim-objects) $(fwdsim-headers)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -shared -o $@ $(fwdsim-objects)
+libDrv.so: $(drvsim-objects) $(drvsim-headers)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -shared -o $@ $(drvsim-objects)
 
-install: libFwd.so
-	sst-register Fwd Fwd_LIBDIR=$(CURDIR)
+install: libDrv.so
+	sst-register Drv Drv_LIBDIR=$(CURDIR)
 
 clean:
 	rm -Rf *.o *.so

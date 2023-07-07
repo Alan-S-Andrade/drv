@@ -2,22 +2,22 @@
 #include <sst/core/component.h>
 #include <sst/core/link.h>
 #include <memory>
-#include <FwdThread.hpp>
+#include <DrvThread.hpp>
 
 namespace SST {
-namespace Fwd {
+namespace Drv {
 /**
  * A Core
  */
-class FwdCore : public SST::Component {
+class DrvCore : public SST::Component {
 public:
   // REGISTER THIS COMPONENT INTO THE ELEMENT LIBRARY
   SST_ELI_REGISTER_COMPONENT(
-                             FwdCore,
-                             "Fwd",
-                             "FwdCore",
+                             DrvCore,
+                             "Drv",
+                             "DrvCore",
                              SST_ELI_ELEMENT_VERSION(1,0,0),
-                             "Fwd Core",
+                             "Drv Core",
                              COMPONENT_CATEGORY_UNCATEGORIZED
                              )
   // Document the parameters that this component accepts
@@ -43,10 +43,10 @@ public:
    * @param[in] id The component id.
    * @param[in] params Parameters for this component.
    */
-  FwdCore(SST::ComponentId_t id, SST::Params& params);
+  DrvCore(SST::ComponentId_t id, SST::Params& params);
 
   /** destructor */
-  ~FwdCore();
+  ~DrvCore();
 
   /**
    * configure output logging
@@ -96,7 +96,7 @@ public:
 
 private:
   std::unique_ptr<SST::Output> output_;
-  std::vector<FwdThread> threads_;
+  std::vector<DrvThread> threads_;
 };
 }
 }
