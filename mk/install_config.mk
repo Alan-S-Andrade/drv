@@ -1,0 +1,15 @@
+DRV_DIR = $(shell git rev-parse --show-toplevel)
+DRV_INSTALL_DIR = $(DRV_DIR)/install
+
+DRV_BIN_DIR = $(DRV_INSTALL_DIR)/bin
+DRV_INCLUDE_DIR = $(DRV_INSTALL_DIR)/include
+DRV_LIB_DIR = $(DRV_INSTALL_DIR)/lib
+
+$(DRV_BIN_DIR) $(DRV_INCLUDE_DIR) $(DRV_LIB_DIR):
+	@mkdir -p $@
+
+$(DRV_INSTALL_DIR): $(DRV_BIN_DIR) $(DRV_INCLUDE_DIR) $(DRV_LIB_DIR)
+	@mkdir -p $@
+
+.PHONY: $(DRV_INSTALL_DIR) $(DRV_BIN_DIR) $(DRV_INCLUDE_DIR) $(DRV_LIB_DIR)
+

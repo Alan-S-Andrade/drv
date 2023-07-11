@@ -1,5 +1,6 @@
 #include "DrvCore.hpp"
 #include <cstdio>
+#include <dlfcn.h>
 
 static constexpr uint32_t DEBUG_INIT  = (1<< 0); //!< debug messages during initialization
 static constexpr uint32_t DEBUG_CLK   = (1<<31); //!< debug messages we expect to see during clock ticks
@@ -31,6 +32,49 @@ void DrvCore::configureOutput(SST::Params &params) {
 }
 
 /**
+ * configure the executable
+ */
+void DrvCore::configureExecutable(SST::Params &params) {
+  std::string executable = params.find<std::string>("executable");
+  if (executable.empty()) {
+    output_->fatal(CALL_INFO, -1, "executable not specified\n");
+  }
+
+  output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring executable: %s\n", executable.c_str());
+  executable_ = dlopen(executable.c_str(), RTLD_LAZY|RTLD_LOCAL);
+  if (!executable_) {
+    output_->fatal(CALL_INFO, -1, "unable to open executable: %s\n", dlerror());
+  }
+
+  main_ = (drv_api_main_t)dlsym(executable_, "__drv_api_main");
+  if (!main_) {
+    output_->fatal(CALL_INFO, -1, "unable to find __drv_api_main in executable: %s\n", dlerror());
+  }
+
+  get_thread_context_ = (drv_api_get_thread_context_t)dlsym(executable_, "DrvAPIGetCurrentContext");
+  if (!get_thread_context_) {
+    output_->fatal(CALL_INFO, -1, "unable to find __get_thread_context in executable: %s\n", dlerror());
+  }
+
+  set_thread_context_ = (drv_api_set_thread_context_t)dlsym(executable_, "DrvAPISetCurrentContext");
+  if (!set_thread_context_) {
+    output_->fatal(CALL_INFO, -1, "unable to find __set_thread_context in executable: %s\n", dlerror());
+  }
+
+  output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured executable\n");  
+}
+
+/**
+ * close the executable
+ */
+void DrvCore::closeExecutable() {
+  if (dlclose(executable_)) {
+    output_->fatal(CALL_INFO, -1, "unable to close executable: %s\n", dlerror());
+  }
+  executable_ = nullptr;
+}
+
+/**
  * configure the clock and register the handler
  */
 void DrvCore::configureClock(SST::Params &params) {
@@ -43,7 +87,8 @@ void DrvCore::configureClock(SST::Params &params) {
  */
 void DrvCore::configureThread(int thread, int threads) {
   output_->verbose(CALL_INFO, 2, DEBUG_INIT, "configuring thread (%2d/%2d)\n", thread, threads);
-  threads_.push_back(DrvThread());
+  threads_.emplace_back();
+  threads_.back().getAPIThread().setMain(main_);
 }
 
 /**
@@ -57,13 +102,17 @@ void DrvCore::configureThreads(SST::Params &params) {
 }
 
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
-  : SST::Component(id) {
+  : SST::Component(id)
+  , executable_(nullptr)
+  , count_down_(32){
   configureOutput(params);
   configureClock(params);
+  configureExecutable(params);
   configureThreads(params);
 }
 
 DrvCore::~DrvCore() {
+  closeExecutable();
 }
 
 /////////////////////
@@ -72,15 +121,16 @@ DrvCore::~DrvCore() {
 static constexpr int NO_THREAD_READY = -1;
 
 int DrvCore::selectReadyThread() {
-    // select a ready thread to execute
-    int thread_id = NO_THREAD_READY;
-    // for (int i = 0; i < threads_.size(); i++) {
-    //     if (threads_[i].isReady()) {
-    //         thread_id = i;
-    //         break;
-    //     }
-    // }
-    return thread_id;
+  // select a ready thread to execute
+  //int thread_id = NO_THREAD_READY;
+  int thread_id = 0;
+  // for (int i = 0; i < threads_.size(); i++) {
+  //     if (threads_[i].isReady()) {
+  //         thread_id = i;
+  //         break;
+  //     }
+  // }
+  return thread_id;
 }
 
 
@@ -96,7 +146,7 @@ void DrvCore::executeReadyThread() {
 }
 
 bool DrvCore::allDone() {
-  return true;
+  return --count_down_ == 0;
 }
 
 bool DrvCore::clockTick(SST::Cycle_t cycle) {

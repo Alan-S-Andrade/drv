@@ -2,7 +2,8 @@
 #include <sst/core/component.h>
 #include <sst/core/link.h>
 #include <memory>
-#include <DrvThread.hpp>
+#include "DrvThread.hpp"
+#include "DrvAPIMain.hpp"
 
 namespace SST {
 namespace Drv {
@@ -22,6 +23,9 @@ public:
                              )
   // Document the parameters that this component accepts
   SST_ELI_DOCUMENT_PARAMS(
+                          /* input */
+                          {"executable", "Path to user program"},
+                          /* system config */
                           {"threads", "Number of threads on this core", "1"},
                           {"clock", "Clock rate of core", "125MHz"},
                           /* debug flags */
@@ -48,6 +52,17 @@ public:
   /** destructor */
   ~DrvCore();
 
+  /**
+   * configure the executable
+   * @param[in] params Parameters to this component.
+   */
+  void configureExecutable(SST::Params &params);
+
+  /**
+   * close the executable
+   */
+  void closeExecutable();
+  
   /**
    * configure output logging
    * @param[in] params Parameters to this component.
@@ -94,9 +109,21 @@ public:
    */
   virtual bool clockTick(SST::Cycle_t);
 
+  /**
+   * set the current thread context
+   */
+  void setThreadContext(DrvThread* thread) {
+    set_thread_context_(&thread->getAPIThread());
+  }
+  
 private:
-  std::unique_ptr<SST::Output> output_;
-  std::vector<DrvThread> threads_;
+  std::unique_ptr<SST::Output> output_; //!< for logging
+  std::vector<DrvThread> threads_; //!< the threads on this core
+  void *executable_; //!< the executable handle
+  drv_api_main_t main_; //!< the main function in the executable
+  drv_api_get_thread_context_t get_thread_context_; //!< the get_thread_context function in the executable
+  drv_api_set_thread_context_t set_thread_context_; //!< the set_thread_context function in the executable
+  int count_down_;
 };
 }
 }
