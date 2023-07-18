@@ -2,10 +2,6 @@
 #include <cstdio>
 #include <dlfcn.h>
 
-static constexpr uint32_t DEBUG_INIT  = (1<< 0); //!< debug messages during initialization
-static constexpr uint32_t DEBUG_CLK   = (1<<31); //!< debug messages we expect to see during clock ticks
-static constexpr uint32_t DEBUG_REQ   = (1<<30); //!< debug messages we expect to see when receiving requests
-static constexpr uint32_t DEBUG_RSP   = (1<<29); //!< debug messages we expect to see when receiving responses
 using namespace SST;
 using namespace Drv;
 
@@ -53,12 +49,12 @@ void DrvCore::configureExecutable(SST::Params &params) {
 
   get_thread_context_ = (drv_api_get_thread_context_t)dlsym(executable_, "DrvAPIGetCurrentContext");
   if (!get_thread_context_) {
-    output_->fatal(CALL_INFO, -1, "unable to find __get_thread_context in executable: %s\n", dlerror());
+    output_->fatal(CALL_INFO, -1, "unable to find DrvAPIGetCurrentContext in executable: %s\n", dlerror());
   }
 
   set_thread_context_ = (drv_api_set_thread_context_t)dlsym(executable_, "DrvAPISetCurrentContext");
   if (!set_thread_context_) {
-    output_->fatal(CALL_INFO, -1, "unable to find __set_thread_context in executable: %s\n", dlerror());
+    output_->fatal(CALL_INFO, -1, "unable to find DrvAPISetCurrentContext in executable: %s\n", dlerror());
   }
 
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured executable\n");  
@@ -122,15 +118,14 @@ static constexpr int NO_THREAD_READY = -1;
 
 int DrvCore::selectReadyThread() {
   // select a ready thread to execute
-  //int thread_id = NO_THREAD_READY;
-  int thread_id = 0;
-  // for (int i = 0; i < threads_.size(); i++) {
-  //     if (threads_[i].isReady()) {
-  //         thread_id = i;
-  //         break;
-  //     }
-  // }
-  return thread_id;
+  for (int t = 0; t < threads_.size(); t++) {
+    DrvThread &thread = threads_[t];
+    auto state = thread.getAPIThread().getState();
+    if (state->canResume()) {
+      return t;
+    }
+  }
+  return NO_THREAD_READY;
 }
 
 

@@ -10,7 +10,7 @@ class DrvAPIThreadState
 {
 public:
   DrvAPIThreadState() {}
-  virtual ~DrvAPIThreadState() {}
+  virtual bool canResume() const { return true; }
 };
 
 /**
@@ -21,7 +21,22 @@ class DrvAPIThreadIdle : public DrvAPIThreadState
 {
 public:
   DrvAPIThreadIdle() {}
-  ~DrvAPIThreadIdle() {}
+};
+
+/**
+ * @brief Base thread state for a memory operation
+ * 
+ */
+class DrvAPIMem : public DrvAPIThreadState
+{
+public:
+  DrvAPIMem() : can_resume_(false) {}
+
+  virtual bool canResume() const  { return can_resume_; }
+  
+  void complete() { can_resume_ = true; }
+protected:
+  bool can_resume_;
 };
 
 /**
@@ -29,16 +44,17 @@ public:
  * 
  * @tparam T 
  */
-class DrvAPIMemRead : public DrvAPIThreadState
+class DrvAPIMemRead : public DrvAPIMem
 {
 public:
   DrvAPIMemRead(DrvAPIAddress address)
-    : address_(address) {}
-  ~DrvAPIMemRead() {}
+    : DrvAPIMem(), address_(address) {}
+
   DrvAPIAddress getAddress() const { return address_; }
-  virtual void getResult(void *p) = 0;
-  virtual void setResult(void *p) = 0;
-private:
+  virtual void getResult(void *p) {}
+  virtual void setResult(void *p) {}
+
+protected:
   DrvAPIAddress address_;
 };
 
@@ -51,15 +67,14 @@ template <typename T>
 class DrvAPIMemReadConcrete : public DrvAPIMemRead
 {
 public:
-  DrvAPIMemReadConcrete(DrvAPIAddress address, T value)
-      : DrvAPIMemRead(address), value_(value) {}
-  ~DrvAPIMemReadConcrete() {}
+  DrvAPIMemReadConcrete(DrvAPIAddress address)
+      : DrvAPIMemRead(address) {}
 
-  void getResult(void *p) override {
+  virtual void getResult(void *p) override {
     *static_cast<T*>(p) = value_;
   }
 
-  void setResult(void *p) override {
+  virtual void setResult(void *p) override {
     value_ = *static_cast<T*>(p);
   }
   
@@ -72,16 +87,16 @@ private:
  * 
  * @tparam T 
  */
-class DrvAPIMemWrite : public DrvAPIThreadState
+class DrvAPIMemWrite : public DrvAPIMem
 {
 public:
   DrvAPIMemWrite(DrvAPIAddress address)
-    : address_(address) {}
-  ~DrvAPIMemWrite() {}
+    : DrvAPIMem(), address_(address) {}
   DrvAPIAddress getAddress() const { return address_; }
-  virtual void getResult(void *p) = 0;
-  virtual void setResult(void *p) = 0;
-private:
+  virtual void getPayload(void *p) {}
+  virtual void setPayload(void *p) {}
+
+protected:
   DrvAPIAddress address_;
 };
 
@@ -96,13 +111,11 @@ class DrvAPIMemWriteConcrete : public DrvAPIMemWrite
 public:
   DrvAPIMemWriteConcrete(DrvAPIAddress address, T value)
       : DrvAPIMemWrite(address), value_(value) {}
-  ~DrvAPIMemWriteConcrete() {}
-
-  void getResult(void *p) override {
+  virtual void getPayload(void *p) override {
     *static_cast<T*>(p) = value_;
   }
 
-  void setResult(void *p) override {
+  virtual void setPayload(void *p) override {
     value_ = *static_cast<T*>(p);
   }
 private:

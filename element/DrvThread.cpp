@@ -23,5 +23,6 @@ DrvThread::~DrvThread() {
  */
 void DrvThread::execute(DrvCore *core) {
     core->setThreadContext(this);
+    //core->output()->verbose(CALL_INFO, 2, DrvCore::DEBUG_CLK, "Thread %p: can resume = %d\n", this, static_cast<int>(this->getAPIThread().getState()->canResume()));
     thread_->resume();
 }

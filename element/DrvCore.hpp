@@ -2,6 +2,7 @@
 #include <sst/core/component.h>
 #include <sst/core/link.h>
 #include <memory>
+#include "DrvMemory.hpp"
 #include "DrvThread.hpp"
 #include "DrvAPIMain.hpp"
 
@@ -115,8 +116,17 @@ public:
   void setThreadContext(DrvThread* thread) {
     set_thread_context_(&thread->getAPIThread());
   }
+
+  std::unique_ptr<SST::Output>& output() {
+    return output_;
+  }
   
-private:
+  static constexpr uint32_t DEBUG_INIT  = (1<< 0); //!< debug messages during initialization
+  static constexpr uint32_t DEBUG_CLK   = (1<<31); //!< debug messages we expect to see during clock ticks
+  static constexpr uint32_t DEBUG_REQ   = (1<<30); //!< debug messages we expect to see when receiving requests
+  static constexpr uint32_t DEBUG_RSP   = (1<<29); //!< debug messages we expect to see when receiving responses
+
+private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   std::vector<DrvThread> threads_; //!< the threads on this core
   void *executable_; //!< the executable handle
@@ -124,6 +134,12 @@ private:
   drv_api_get_thread_context_t get_thread_context_; //!< the get_thread_context function in the executable
   drv_api_set_thread_context_t set_thread_context_; //!< the set_thread_context function in the executable
   int count_down_;
+
+  // memory
+  DrvMemory *my_l1sp_; //!< the L1 scratchpad
+  DrvMemory *other_l1sp_; //!< l1sp on another core
+  DrvMemory *my_dram_; //!< this core's DRAM
+  DrvMemory *remote_; //!< remote memory
 };
 }
 }
