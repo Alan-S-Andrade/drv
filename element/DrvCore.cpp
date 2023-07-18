@@ -1,5 +1,6 @@
 #include "DrvCore.hpp"
 #include "DrvSimpleMemory.hpp"
+#include "DrvSelfLinkMemory.hpp"
 #include <cstdio>
 #include <dlfcn.h>
 
@@ -99,10 +100,23 @@ void DrvCore::configureThreads(SST::Params &params) {
 }
 
 /**
+ * configure the core link
+ */
+SST::Link* DrvCore::configureCoreLink(const std::string &link_name, Event::HandlerBase *handler) {
+    return configureLink(link_name, handler);
+}
+
+/**
  * configure the memory
  */
 void DrvCore::configureMemory(SST::Params &params) {
-    memory_ = std::make_unique<DrvSimpleMemory>();
+    if (isPortConnected("mem_loopback")) {
+        output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring memory loopback\n");
+        memory_ = std::make_unique<DrvSelfLinkMemory>(this, "mem_loopback");
+    } else {
+        output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring simple memory\n");
+        memory_ = std::make_unique<DrvSimpleMemory>();
+    }
 }
 
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)

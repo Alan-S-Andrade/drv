@@ -2,6 +2,7 @@
 #include <sst/core/component.h>
 #include <sst/core/link.h>
 #include <memory>
+#include "DrvEvent.hpp"
 #include "DrvMemory.hpp"
 #include "DrvThread.hpp"
 #include "DrvAPIMain.hpp"
@@ -37,11 +38,9 @@ public:
                           {"debug_responses", "Print debug messages we expect to see during response events"},
                           )
   // Document the ports that this component accepts
-#if 0
   SST_ELI_DOCUMENT_PORTS(
-                         ("placeholder", "A link", {"pandos.PandosPacketEvent", ""}),
+                         {"mem_loopback", "A loopback link", {"Drv.DrvEvent", ""}},
                          )
-#endif
 
   /**
    * constructor
@@ -141,6 +140,14 @@ public:
   static constexpr uint32_t DEBUG_REQ   = (1<<30); //!< debug messages we expect to see when receiving requests
   static constexpr uint32_t DEBUG_RSP   = (1<<29); //!< debug messages we expect to see when receiving responses
 
+
+  /**
+   * configure a link
+   * @param[in] link_name The name of the link
+   * @param[in] handler The event handler
+   */
+  SST::Link* configureCoreLink(const std::string &link_name, Event::HandlerBase *handler);
+  
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   std::vector<DrvThread> threads_; //!< the threads on this core

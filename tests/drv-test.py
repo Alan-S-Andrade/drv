@@ -15,3 +15,6 @@ core.addParams({
     "debug_clock" : True,
     "executable" : executable,
 })
+
+link = sst.Link("loopback")
+link.connect((core, "mem_loopback", "8ns"), (core, "mem_loopback", "8ns"))
