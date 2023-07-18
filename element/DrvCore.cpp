@@ -1,4 +1,5 @@
 #include "DrvCore.hpp"
+#include "DrvSimpleMemory.hpp"
 #include <cstdio>
 #include <dlfcn.h>
 
@@ -97,6 +98,13 @@ void DrvCore::configureThreads(SST::Params &params) {
     configureThread(thread, threads);
 }
 
+/**
+ * configure the memory
+ */
+void DrvCore::configureMemory(SST::Params &params) {
+    memory_ = std::make_unique<DrvSimpleMemory>();
+}
+
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
   , executable_(nullptr)
@@ -105,10 +113,15 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   configureClock(params);
   configureExecutable(params);
   configureThreads(params);
+  configureMemory(params);
 }
 
 DrvCore::~DrvCore() {
-  closeExecutable();
+    threads_.clear();
+    // the last thing we should is close the executable
+    // this keeps the vtable entries valid for dynamic classes
+    // created in the user code
+    closeExecutable();
 }
 
 /////////////////////
@@ -140,6 +153,18 @@ void DrvCore::executeReadyThread() {
   threads_[thread_id].execute(this);
 }
 
+void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
+    std::shared_ptr<DrvAPI::DrvAPIThreadState> state = thread->getAPIThread().getState();
+    std::shared_ptr<DrvAPI::DrvAPIMem> mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(state);
+    // handle memory requests
+    if (mem_req) {
+        // for now; do nothing
+        memory_->sendRequest(this, thread, mem_req);
+        return;
+    }
+    return;
+}
+    
 bool DrvCore::allDone() {
   return --count_down_ == 0;
 }
@@ -150,3 +175,4 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   executeReadyThread();
   return allDone();
 }
+

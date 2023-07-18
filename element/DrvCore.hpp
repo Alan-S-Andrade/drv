@@ -90,6 +90,12 @@ public:
   void configureThread(int thread, int threads);  
 
   /**
+   * configure memory
+   * @param[in] params Parameters to this component.
+   */
+  void configureMemory(SST::Params &params);
+  
+  /**
    * select a ready thread
    */
   int selectReadyThread();
@@ -117,9 +123,18 @@ public:
     set_thread_context_(&thread->getAPIThread());
   }
 
+  /**
+   * return the output stream of this core
+   */
   std::unique_ptr<SST::Output>& output() {
     return output_;
   }
+
+  /**
+   * handle a thread state after the the thread has yielded back to the simulator
+   * @param[in] thread The thread to handle
+   */
+  void handleThreadStateAfterYield(DrvThread *thread);
   
   static constexpr uint32_t DEBUG_INIT  = (1<< 0); //!< debug messages during initialization
   static constexpr uint32_t DEBUG_CLK   = (1<<31); //!< debug messages we expect to see during clock ticks
@@ -136,10 +151,7 @@ private:
   int count_down_;
 
   // memory
-  DrvMemory *my_l1sp_; //!< the L1 scratchpad
-  DrvMemory *other_l1sp_; //!< l1sp on another core
-  DrvMemory *my_dram_; //!< this core's DRAM
-  DrvMemory *remote_; //!< remote memory
+  std::unique_ptr<DrvMemory> memory_;  
 };
 }
 }

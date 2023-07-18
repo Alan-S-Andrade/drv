@@ -21,6 +21,19 @@ DrvSimpleMemory::sendWriteRequest(DrvCore *core, DrvThread *thread, const std::s
 }
 
 /**
+ * @brief Send an atomic request
+ */
+void
+DrvSimpleMemory::sendAtomicRequest(DrvCore *core
+                                   ,DrvThread *thread
+                                   ,const std::shared_ptr<DrvAPI::DrvAPIMemAtomic> &atomic_req) {
+    atomic_req->setResult(&data_[atomic_req->getAddress().offset()]);
+    atomic_req->modify();
+    atomic_req->getPayload(&data_[atomic_req->getAddress().offset()]);
+    atomic_req->complete();
+}
+
+/**
  * @brief Send a memory request
  */
 void
@@ -35,6 +48,11 @@ DrvSimpleMemory::sendRequest (DrvCore *core, DrvThread *thread, const std::share
         return sendWriteRequest(core, thread, write_req);
     }
 
+    auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(thread_mem_req);
+    if (atomic_req) {
+        return sendAtomicRequest(core, thread, atomic_req);
+    }
+    
     return;
 }
 

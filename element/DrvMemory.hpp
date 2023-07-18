@@ -24,9 +24,16 @@ public:
     DrvMemory() {}
 
     /**
+     * @brief Destroy the DrvMemory object
+     */
+    virtual ~DrvMemory() {}
+    
+    /**
      * @brief Send a memory request
      */
-    virtual void sendRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) = 0;
+    virtual void sendRequest(DrvCore *core
+                             ,DrvThread *thread
+                             ,const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) = 0;
 };
 
 }

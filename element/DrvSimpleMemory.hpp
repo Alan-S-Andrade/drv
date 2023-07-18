@@ -16,7 +16,8 @@ public:
     /**
      * @brief Construct a new DrvSimpleMemory object
      */
-    DrvSimpleMemory() {}
+    DrvSimpleMemory(size_t sz) : data_(sz) {}
+    DrvSimpleMemory() : data_(32*1024) {}
 
     /**
      * @brief Destroy the DrvSimpleMemory object
@@ -26,19 +27,33 @@ public:
     /**
      * @brief Send a memory request
      */
-    virtual void sendRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) override;
+    virtual void
+    sendRequest(DrvCore *core
+                ,DrvThread *thread
+                ,const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) override;
 
 private:
     /**
      * @brief Send a read request
      */
-    void sendWriteRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMemWrite> &write_req);
+    void sendWriteRequest(DrvCore *core
+                          ,DrvThread *thread
+                          ,const std::shared_ptr<DrvAPI::DrvAPIMemWrite> &write_req);
 
     /**
      * @brief Send a write request
      */
-    void sendReadRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMemRead> &read_req);
-    
+    void sendReadRequest(DrvCore *core
+                         ,DrvThread *thread
+                         ,const std::shared_ptr<DrvAPI::DrvAPIMemRead> &read_req);
+
+    /**
+     * @brief Send an atomic request
+     */
+    void sendAtomicRequest(DrvCore *core
+                           ,DrvThread *thread
+                           ,const std::shared_ptr<DrvAPI::DrvAPIMemAtomic> &atomic_req);
+
     // members
     std::vector<uint8_t> data_; //!< The data store
 };
