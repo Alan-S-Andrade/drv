@@ -1,6 +1,8 @@
 #pragma once
 #include <sst/core/component.h>
 #include <sst/core/link.h>
+#include <sst/core/interfaces/stdMem.h>
+#include <sst/core/event.h>
 #include <memory>
 #include "DrvEvent.hpp"
 #include "DrvMemory.hpp"
@@ -16,31 +18,36 @@ class DrvCore : public SST::Component {
 public:
   // REGISTER THIS COMPONENT INTO THE ELEMENT LIBRARY
   SST_ELI_REGISTER_COMPONENT(
-                             DrvCore,
-                             "Drv",
-                             "DrvCore",
-                             SST_ELI_ELEMENT_VERSION(1,0,0),
-                             "Drv Core",
-                             COMPONENT_CATEGORY_UNCATEGORIZED
-                             )
+      DrvCore,
+      "Drv",
+      "DrvCore",
+      SST_ELI_ELEMENT_VERSION(1,0,0),
+      "Drv Core",
+      COMPONENT_CATEGORY_UNCATEGORIZED
+  )
   // Document the parameters that this component accepts
   SST_ELI_DOCUMENT_PARAMS(
-                          /* input */
-                          {"executable", "Path to user program"},
-                          /* system config */
-                          {"threads", "Number of threads on this core", "1"},
-                          {"clock", "Clock rate of core", "125MHz"},
-                          /* debug flags */
-                          {"verbose", "Verbosity of logging", "0"},
-                          {"debug_init", "Print debug messages during initialization", "False"},
-                          {"debug_clock", "Print debug messages we expect to see during clock ticks", "False"},
-                          {"debug_requests", "Print debug messages we expect to see during request events"},
-                          {"debug_responses", "Print debug messages we expect to see during response events"},
-                          )
+      /* input */
+      {"executable", "Path to user program"},
+      /* system config */
+      {"threads", "Number of threads on this core", "1"},
+      {"clock", "Clock rate of core", "125MHz"},
+      /* debug flags */
+      {"verbose", "Verbosity of logging", "0"},
+      {"debug_init", "Print debug messages during initialization", "False"},
+      {"debug_clock", "Print debug messages we expect to see during clock ticks", "False"},
+      {"debug_requests", "Print debug messages we expect to see during request events"},
+      {"debug_responses", "Print debug messages we expect to see during response events"},
+  )
   // Document the ports that this component accepts
   SST_ELI_DOCUMENT_PORTS(
-                         {"mem_loopback", "A loopback link", {"Drv.DrvEvent", ""}},
-                         )
+      {"mem_loopback", "A loopback link", {"Drv.DrvEvent", ""}},
+  )
+
+  // Document the subcomponents that this component has
+  SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
+      {"memory", "Interface to memory hierarchy", "SST::Interfaces::StandardMem"},
+  )
 
   /**
    * constructor
@@ -147,6 +154,30 @@ public:
    * @param[in] handler The event handler
    */
   SST::Link* configureCoreLink(const std::string &link_name, Event::HandlerBase *handler);
+
+  /**
+   * configure a standard memory subcomponent
+   * @param[in] mem_name The name of the memory
+   * @param[in] share_flags The share flags
+   * @param[in] handler The event handler
+   */
+  SST::Interfaces::StandardMem *
+  loadStandardMemSubComponent(const std::string &mem_name, uint64_t share_flags, SST::Interfaces::StandardMem::HandlerBase *handler);
+
+  /**
+   * initialize the component
+   */
+  void init(unsigned int phase) override;
+
+  /**
+   * finish the component
+   */
+  void setup() override;
+
+  /**
+   * finish the component
+   */
+  void finish() override;
   
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
@@ -155,10 +186,9 @@ private:
   drv_api_main_t main_; //!< the main function in the executable
   drv_api_get_thread_context_t get_thread_context_; //!< the get_thread_context function in the executable
   drv_api_set_thread_context_t set_thread_context_; //!< the set_thread_context function in the executable
+  DrvMemory* memory_;  //!< the memory hierarchy
+  SST::TimeConverter *clocktc_; //!< the clock time converter
   int count_down_;
-
-  // memory
-  std::unique_ptr<DrvMemory> memory_;  
 };
 }
 }

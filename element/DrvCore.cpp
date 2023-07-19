@@ -1,6 +1,7 @@
 #include "DrvCore.hpp"
 #include "DrvSimpleMemory.hpp"
 #include "DrvSelfLinkMemory.hpp"
+#include "DrvStdMemory.hpp"
 #include <cstdio>
 #include <dlfcn.h>
 
@@ -76,7 +77,7 @@ void DrvCore::closeExecutable() {
  * configure the clock and register the handler
  */
 void DrvCore::configureClock(SST::Params &params) {
-  registerClock(params.find<std::string>("clock", "125MHz"),
+  clocktc_ = registerClock(params.find<std::string>("clock", "125MHz"),
                 new Clock::Handler<DrvCore>(this, &DrvCore::clockTick));    
 }
 
@@ -107,15 +108,26 @@ SST::Link* DrvCore::configureCoreLink(const std::string &link_name, Event::Handl
 }
 
 /**
+ * configure standard memory subcomponent
+ */
+SST::Interfaces::StandardMem *
+DrvCore::loadStandardMemSubComponent(const std::string &mem_name, uint64_t share_flags, SST::Interfaces::StandardMem::HandlerBase *handler) {
+    return loadUserSubComponent<SST::Interfaces::StandardMem>(mem_name, share_flags, clocktc_, handler);
+}
+    
+/**
  * configure the memory
  */
 void DrvCore::configureMemory(SST::Params &params) {
     if (isPortConnected("mem_loopback")) {
         output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring memory loopback\n");
-        memory_ = std::make_unique<DrvSelfLinkMemory>(this, "mem_loopback");
+        memory_ = new DrvSelfLinkMemory(this, "mem_loopback");
+    } else if (isUserSubComponentLoadableUsingAPI<Interfaces::StandardMem>("memory")) {
+        output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring standard memory\n");
+        memory_ = new DrvStdMemory(this, "memory");
     } else {
         output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring simple memory\n");
-        memory_ = std::make_unique<DrvSimpleMemory>();
+        memory_ = new DrvSimpleMemory();
     }
 }
 
@@ -136,6 +148,40 @@ DrvCore::~DrvCore() {
     // this keeps the vtable entries valid for dynamic classes
     // created in the user code
     closeExecutable();
+    delete memory_;
+}
+
+///////////////////////////
+// SST simulation phases //
+///////////////////////////
+/**
+ * initialize the component
+ */
+void DrvCore::init(unsigned int phase) {
+  auto stdmem = dynamic_cast<DrvStdMemory*>(memory_);
+  if (stdmem) {
+    stdmem->init(phase);
+  }
+}
+
+/**
+ * finish the component
+ */
+void DrvCore::setup() {
+  auto stdmem = dynamic_cast<DrvStdMemory*>(memory_);
+  if (stdmem) {
+    stdmem->setup();
+  }  
+}
+
+/**
+ * finish the component
+ */
+void DrvCore::finish() {
+  auto stdmem = dynamic_cast<DrvStdMemory*>(memory_);
+  if (stdmem) {
+    stdmem->finish();
+  }
 }
 
 /////////////////////

@@ -1,5 +1,6 @@
 #pragma once
 #include <DrvAPIAddress.hpp>
+#include <stdlib.h>
 namespace DrvAPI
 {
 /**
@@ -54,7 +55,7 @@ public:
   DrvAPIAddress getAddress() const { return address_; }
   virtual void getResult(void *p) {}
   virtual void setResult(void *p) {}
-
+  virtual size_t getSize() const { return 0; }
 protected:
   DrvAPIAddress address_;
 };
@@ -78,6 +79,10 @@ public:
   virtual void setResult(void *p) override {
     value_ = *static_cast<T*>(p);
   }
+
+  virtual size_t getSize() const override {
+    return sizeof(T);
+  }
   
 private:
   T value_;
@@ -96,6 +101,7 @@ public:
   DrvAPIAddress getAddress() const { return address_; }
   virtual void getPayload(void *p) {}
   virtual void setPayload(void *p) {}
+  virtual size_t getSize() const { return 0; }
 
 protected:
   DrvAPIAddress address_;
@@ -119,6 +125,11 @@ public:
   virtual void setPayload(void *p) override {
     value_ = *static_cast<T*>(p);
   }
+
+  virtual size_t getSize() const override {
+    return sizeof(T);
+  }
+  
 private:
   T value_;
 };
@@ -133,16 +144,17 @@ typedef enum  {
  */
 class DrvAPIMemAtomic : public DrvAPIMem {
 public:
-    DrvAPIMemAtomic(DrvAPIAddress address)
-        : DrvAPIMem(), address_(address) {}
-    DrvAPIAddress getAddress() const { return address_; }
-    virtual void getPayload(void *p) {}
-    virtual void setPayload(void *p) {}
-    virtual void getResult(void *p) {}
-    virtual void setResult(void *p) {}
-    virtual void modify() {}
+  DrvAPIMemAtomic(DrvAPIAddress address)
+    : DrvAPIMem(), address_(address) {}
+  DrvAPIAddress getAddress() const { return address_; }
+  virtual void getPayload(void *p) {}
+  virtual void setPayload(void *p) {}
+  virtual void getResult(void *p) {}
+  virtual void setResult(void *p) {}
+  virtual void modify() {}
+  virtual size_t getSize() const { return 0; }
 protected:    
-    DrvAPIAddress address_;
+  DrvAPIAddress address_;
 };
 
 /**
@@ -154,31 +166,32 @@ protected:
 template <typename T, DrvAPIMemAtomicType OP>
 class DrvAPIMemAtomicConcrete : public DrvAPIMemAtomic {
 public:
-    DrvAPIMemAtomicConcrete(DrvAPIAddress address, T value)
-        : DrvAPIMemAtomic(address), w_value_(value) {}
-    virtual void getPayload(void *p) override {
-        *static_cast<T*>(p) = w_value_;
+  DrvAPIMemAtomicConcrete(DrvAPIAddress address, T value)
+    : DrvAPIMemAtomic(address), w_value_(value) {}
+  virtual void getPayload(void *p) override {
+    *static_cast<T*>(p) = w_value_;
+  }
+  virtual void setPayload(void *p) override {
+    w_value_ = *static_cast<T*>(p);
+  }
+  virtual void getResult(void *p) override {
+    *static_cast<T*>(p) = r_value_;
+  }
+  virtual void setResult(void *p) override {
+    r_value_  = *static_cast<T*>(p);
+  }
+  virtual void modify() override {
+    switch (OP) {
+    case DrvAPIMemAtomicSWAP:
+      break;
+    case DrvAPIMemAtomicADD:
+      w_value_ += r_value_;
+      break;
     }
-    virtual void setPayload(void *p) override {
-        w_value_ = *static_cast<T*>(p);
-    }
-    virtual void getResult(void *p) override {
-        *static_cast<T*>(p) = r_value_;
-    }
-    virtual void setResult(void *p) override {
-        r_value_  = *static_cast<T*>(p);
-    }
-    virtual void modify() override {
-        switch (OP) {
-        case DrvAPIMemAtomicSWAP:
-            break;
-        case DrvAPIMemAtomicADD:
-            w_value_ += r_value_;
-            break;
-        }
-    }
+  }
+  virtual size_t getSize() const { return sizeof(T); }
 private:
-    T r_value_;
-    T w_value_;
+  T r_value_;
+  T w_value_;
 };
 }
