@@ -134,7 +134,7 @@ void DrvCore::configureMemory(SST::Params &params) {
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
   , executable_(nullptr)
-  , count_down_(32){
+  , all_done_(false) {
   configureOutput(params);
   configureClock(params);
   configureExecutable(params);
@@ -195,9 +195,11 @@ int DrvCore::selectReadyThread() {
     DrvThread &thread = threads_[t];
     auto state = thread.getAPIThread().getState();
     if (state->canResume()) {
+      output_->verbose(CALL_INFO, 2, DEBUG_CLK, "thread %d is ready\n", t);
       return t;
     }
   }
+  output_->verbose(CALL_INFO, 2, DEBUG_CLK, "no thread is ready\n");
   return NO_THREAD_READY;
 }
 
@@ -214,19 +216,25 @@ void DrvCore::executeReadyThread() {
 }
 
 void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
-    std::shared_ptr<DrvAPI::DrvAPIThreadState> state = thread->getAPIThread().getState();
-    std::shared_ptr<DrvAPI::DrvAPIMem> mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(state);
-    // handle memory requests
-    if (mem_req) {
-        // for now; do nothing
-        memory_->sendRequest(this, thread, mem_req);
-        return;
-    }
+  std::shared_ptr<DrvAPI::DrvAPIThreadState> state = thread->getAPIThread().getState();
+  std::shared_ptr<DrvAPI::DrvAPIMem> mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(state);
+  // handle memory requests
+  if (mem_req) {
+    // for now; do nothing
+    memory_->sendRequest(this, thread, mem_req);
     return;
+  }
+  // handle termination
+  std::shared_ptr<DrvAPI::DrvAPITerminate> term_req = std::dynamic_pointer_cast<DrvAPI::DrvAPITerminate>(state);
+  if (term_req) {
+    output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d terminated\n", getThreadID(thread));
+    all_done_ = true;
+  }
+  return;
 }
     
 bool DrvCore::allDone() {
-  return --count_down_ == 0;
+  return all_done_;
 }
 
 bool DrvCore::clockTick(SST::Cycle_t cycle) {

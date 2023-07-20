@@ -205,7 +205,7 @@ private:
   drv_api_set_thread_context_t set_thread_context_; //!< the set_thread_context function in the executable
   DrvMemory* memory_;  //!< the memory hierarchy
   SST::TimeConverter *clocktc_; //!< the clock time converter
-  int count_down_;
+  bool all_done_;
 };
 }
 }

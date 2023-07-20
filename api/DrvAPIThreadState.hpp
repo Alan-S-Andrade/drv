@@ -26,6 +26,16 @@ public:
 };
 
 /**
+ * @brief Terminated thread state
+ */
+class DrvAPITerminate : public DrvAPIThreadState
+{
+public:
+  DrvAPITerminate() {}
+  bool canResume() const override { return false; }
+};
+
+/**
  * @brief Base thread state for a memory operation
  * 
  */
