@@ -8,14 +8,7 @@ using namespace Drv;
  * Constructor
  */
 DrvThread::DrvThread() {
-    thread_ = new DrvAPI::DrvAPIThread();
-}
-
-/**
- * Destructor
- */
-DrvThread::~DrvThread() {
-    delete thread_;
+    thread_ = std::make_unique<DrvAPI::DrvAPIThread>();
 }
 
 /**
