@@ -178,6 +178,23 @@ public:
    * finish the component
    */
   void finish() override;
+
+  /**
+   * return the id of a thread
+   */
+  int getThreadID(DrvThread *thread) {
+    int tid = thread - &threads_[0];
+    assert(tid >= 0 && tid < threads_.size());
+    return tid;    
+  }
+
+  /**
+   * return pointer to thread
+   */
+  DrvThread* getThread(int tid) {
+    assert(tid >= 0 && tid < threads_.size());
+    return &threads_[tid];
+  }
   
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging

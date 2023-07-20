@@ -189,7 +189,7 @@ public:
       break;
     }
   }
-  virtual size_t getSize() const { return sizeof(T); }
+  virtual size_t getSize() const override { return sizeof(T); }
 private:
   T r_value_;
   T w_value_;

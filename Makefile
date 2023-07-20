@@ -13,6 +13,7 @@ install:
 clean:
 	$(MAKE) -C $(DRV_DIR)/element/ clean
 	$(MAKE) -C $(DRV_DIR)/api/ clean
+	rm -rf install/
 
 debug:
 	@echo $(EXAMPLES)
