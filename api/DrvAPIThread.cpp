@@ -15,7 +15,7 @@ DrvAPIThread::DrvAPIThread()
             if (this->main_) {
                 this->main_(0, nullptr);
                 this->main_ = nullptr;
-                this->state_ = std::make_shared<DrvAPIThreadIdle>();
+                this->state_ = std::make_shared<DrvAPITerminate>();
             }
             this->yield();
         }

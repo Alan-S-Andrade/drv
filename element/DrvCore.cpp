@@ -98,6 +98,7 @@ void DrvCore::configureThreads(SST::Params &params) {
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring %d threads\n", threads);
   for (int thread = 0; thread < threads; thread++)
     configureThread(thread, threads);
+  done_ = threads;
 }
 
 /**
@@ -133,8 +134,7 @@ void DrvCore::configureMemory(SST::Params &params) {
 
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
-  , executable_(nullptr)
-  , all_done_(false) {
+  , executable_(nullptr) {
   configureOutput(params);
   configureClock(params);
   configureExecutable(params);
@@ -228,13 +228,13 @@ void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
   std::shared_ptr<DrvAPI::DrvAPITerminate> term_req = std::dynamic_pointer_cast<DrvAPI::DrvAPITerminate>(state);
   if (term_req) {
     output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d terminated\n", getThreadID(thread));
-    all_done_ = true;
+    done_--;
   }
   return;
 }
     
 bool DrvCore::allDone() {
-  return all_done_;
+  return done_ == 0;
 }
 
 bool DrvCore::clockTick(SST::Cycle_t cycle) {
