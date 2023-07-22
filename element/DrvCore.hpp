@@ -32,6 +32,7 @@ public:
       /* system config */
       {"threads", "Number of threads on this core", "1"},
       {"clock", "Clock rate of core", "125MHz"},
+      {"id", "ID for the core", "0"},
       /* debug flags */
       {"verbose", "Verbosity of logging", "0"},
       {"debug_init", "Print debug messages during initialization", "False"},
@@ -206,6 +207,9 @@ private:
   DrvMemory* memory_;  //!< the memory hierarchy
   SST::TimeConverter *clocktc_; //!< the clock time converter
   int done_; //!< number of threads that are done
+  int last_thread_; //!< last thread that was executed
+public:
+  int id_; //!< the core id
 };
 }
 }

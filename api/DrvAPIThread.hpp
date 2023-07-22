@@ -57,6 +57,26 @@ public:
    * @param main
    */
   void setMain(drv_api_main_t main) { main_ = main; }
+
+  /**
+   * @brief get the thread id
+   */
+  int id() const { return id_; } //!< Get the thread id
+
+  /**
+   * @brief get the core id
+   */
+  int coreId() const { return core_id_; } //!< Get the core id
+
+  /**
+   * @brief set the core id
+   */
+  void setCoreId(int core_id) { core_id_ = core_id; } //!< Set the core id
+  
+  /**
+   * @brief set the thread id
+   */
+  void setId(int id) { id_ = id; } //!< Set the thread id
   
   /**
    * @brief Get the current active thread
@@ -72,6 +92,8 @@ private:
   coro_t::push_type *main_context_; //!< Main context, can be yielded back to
   std::shared_ptr<DrvAPIThreadState> state_; //!< Thread state
   drv_api_main_t main_; //!< Main function
+  int id_; //!< Thread id
+  int core_id_; //!< Core id
 };
 }
 

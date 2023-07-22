@@ -14,7 +14,7 @@ core.addParams({
     "debug_init" : True,
     "debug_clock" : True,
     "executable" : executable,
-    "threads" : 2,
+    "threads" : 16,
 })
 
 link = sst.Link("loopback")

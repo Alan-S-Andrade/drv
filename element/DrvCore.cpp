@@ -88,6 +88,8 @@ void DrvCore::configureThread(int thread, int threads) {
   output_->verbose(CALL_INFO, 2, DEBUG_INIT, "configuring thread (%2d/%2d)\n", thread, threads);
   threads_.emplace_back();
   threads_.back().getAPIThread().setMain(main_);
+  threads_.back().getAPIThread().setId(thread);
+  threads_.back().getAPIThread().setCoreId(id_);
 }
 
 /**
@@ -99,6 +101,7 @@ void DrvCore::configureThreads(SST::Params &params) {
   for (int thread = 0; thread < threads; thread++)
     configureThread(thread, threads);
   done_ = threads;
+  last_thread_ = threads - 1;
 }
 
 /**
@@ -135,6 +138,7 @@ void DrvCore::configureMemory(SST::Params &params) {
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
   , executable_(nullptr) {
+  id_ = params.find<int>("id", 0);
   configureOutput(params);
   configureClock(params);
   configureExecutable(params);
@@ -192,11 +196,12 @@ static constexpr int NO_THREAD_READY = -1;
 int DrvCore::selectReadyThread() {
   // select a ready thread to execute
   for (int t = 0; t < threads_.size(); t++) {
-    DrvThread &thread = threads_[t];
-    auto state = thread.getAPIThread().getState();
+    int thread_id = (last_thread_ + t + 1) % threads_.size();
+    DrvThread *thread = getThread(thread_id);
+    auto state = thread->getAPIThread().getState();
     if (state->canResume()) {
-      output_->verbose(CALL_INFO, 2, DEBUG_CLK, "thread %d is ready\n", t);
-      return t;
+      output_->verbose(CALL_INFO, 2, DEBUG_CLK, "thread %d is ready\n", thread_id);
+      return thread_id;
     }
   }
   output_->verbose(CALL_INFO, 2, DEBUG_CLK, "no thread is ready\n");
@@ -213,6 +218,7 @@ void DrvCore::executeReadyThread() {
 
   // execute the ready thread
   threads_[thread_id].execute(this);
+  last_thread_ = thread_id;
 }
 
 void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
