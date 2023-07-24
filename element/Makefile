@@ -9,11 +9,13 @@ include $(DRV_DIR)/mk/config.mk
 CXX=$(shell sst-config --CXX)
 CXXFLAGS=$(shell sst-config --ELEMENT_CXXFLAGS) -fno-stack-protector -O2
 CXXFLAGS+=$(BOOST_CXXFLAGS)
+CXXFLAGS+=$(SST_ELEMENTS_CXXFLAGS)
 CXXFLAGS+=-DDEBUG -g
 
 LDFLAGS =  $(shell sst-config --ELEMENT_LDFLAGS) -fno-stack-protector
 LDFLAGS += -L$(DRV_LIB_DIR) -Wl,-rpath,$(DRV_LIB_DIR)
 LDFLAGS += $(BOOST_LDFLAGS)
+LDFLAGS += $(SST_ELEMENTS_LDFLAGS)
 
 
 CXXFLAGS += -I$(DRV_DIR)/element/
