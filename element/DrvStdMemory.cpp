@@ -205,6 +205,7 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
             } else {
                 core_->output()->fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", custom_rsp->tid);
             }
+            delete areq_data;
         }
     }
 #endif
