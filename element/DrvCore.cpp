@@ -139,6 +139,8 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
   , executable_(nullptr) {
   id_ = params.find<int>("id", 0);
+  registerAsPrimaryComponent();
+  primaryComponentDoNotEndSim();
   configureOutput(params);
   configureClock(params);
   configureExecutable(params);
@@ -247,6 +249,12 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   output_->verbose(CALL_INFO, 1, DEBUG_CLK, "tick!\n");
   // execute a ready thread
   executeReadyThread();
-  return allDone();
+
+  // done?
+  bool done = allDone();
+  if (done)
+      primaryComponentOKToEndSim();
+
+  return done;
 }
 
