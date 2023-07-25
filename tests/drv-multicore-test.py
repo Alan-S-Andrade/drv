@@ -2,7 +2,8 @@ import sst
 import sys
 
 VERBOSE = 0
-CORES = 2
+CORES = 32
+THREADS = 16
 
 #executable = sys.argv[1]
 if (len(sys.argv) < 2):
@@ -53,6 +54,7 @@ for i in range(CORES):
     core = sst.Component("core_%d" % i, "Drv.DrvCore")
     core.addParams({
         "verbose" : VERBOSE,
+        "threads" : THREADS,
         "debug_init" : True,
         "debug_clock" : True,
         "debug_requests" : True,
