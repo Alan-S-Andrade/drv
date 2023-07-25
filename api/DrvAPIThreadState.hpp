@@ -1,5 +1,6 @@
 #pragma once
 #include <DrvAPIAddress.hpp>
+#include <DrvAPIReadModifyWrite.hpp>
 #include <stdlib.h>
 namespace DrvAPI
 {
@@ -144,10 +145,6 @@ private:
   T value_;
 };
 
-typedef enum  {
-    DrvAPIMemAtomicSWAP,
-    DrvAPIMemAtomicADD,
-} DrvAPIMemAtomicType;
 
 /**
  * @brief Base thread state for an atomic read-modify-write
@@ -163,6 +160,7 @@ public:
   virtual void setResult(void *p) {}
   virtual void modify() {}
   virtual size_t getSize() const { return 0; }
+  virtual DrvAPIMemAtomicType getOp() const = 0;
 protected:    
   DrvAPIAddress address_;
 };
@@ -178,28 +176,23 @@ class DrvAPIMemAtomicConcrete : public DrvAPIMemAtomic {
 public:
   DrvAPIMemAtomicConcrete(DrvAPIAddress address, T value)
     : DrvAPIMemAtomic(address), w_value_(value) {}
-  virtual void getPayload(void *p) override {
+  void getPayload(void *p) override {
     *static_cast<T*>(p) = w_value_;
   }
-  virtual void setPayload(void *p) override {
+  void setPayload(void *p) override {
     w_value_ = *static_cast<T*>(p);
   }
-  virtual void getResult(void *p) override {
+  void getResult(void *p) override {
     *static_cast<T*>(p) = r_value_;
   }
-  virtual void setResult(void *p) override {
+  void setResult(void *p) override {
     r_value_  = *static_cast<T*>(p);
   }
-  virtual void modify() override {
-    switch (OP) {
-    case DrvAPIMemAtomicSWAP:
-      break;
-    case DrvAPIMemAtomicADD:
-      w_value_ += r_value_;
-      break;
-    }
+  void modify() override {
+    w_value_ = atomic_modify<T>(w_value_, r_value_, OP);
   }
-  virtual size_t getSize() const override { return sizeof(T); }
+  size_t getSize() const override { return sizeof(T); }
+  DrvAPIMemAtomicType getOp() const override { return OP; }
 private:
   T r_value_;
   T w_value_;
