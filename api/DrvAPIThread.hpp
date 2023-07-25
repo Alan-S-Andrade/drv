@@ -64,6 +64,11 @@ public:
   int id() const { return id_; } //!< Get the thread id
 
   /**
+   * @brief get the thread id
+   */
+  int threadId() const { return id_; } //!< Get the thread id
+
+  /**
    * @brief get the core id
    */
   int coreId() const { return core_id_; } //!< Get the core id
