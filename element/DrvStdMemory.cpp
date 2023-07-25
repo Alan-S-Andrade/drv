@@ -1,4 +1,5 @@
 #include "DrvStdMemory.hpp"
+#include "DrvCustomStdMem.hpp"
 #include "DrvCore.hpp"
 #include "DrvThread.hpp"
 
@@ -6,6 +7,7 @@ using namespace SST;
 using namespace Drv;
 using namespace Interfaces;
 
+//#define USE_STDMEM_PROVIDED
 /**
  * @brief Construct a new DrvStdMemory object
  * 
@@ -90,9 +92,22 @@ DrvStdMemory::sendRequest(DrvCore *core
         core->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_CLK,
                                 "Sending atomic (read-lock) request to '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
                                 mem_name_.c_str(), addr, size);
+#ifdef USE_STDMEM_PROVIDED
         StandardMem::ReadLock *req = new StandardMem::ReadLock(addr, size);
         req->tid = core->getThreadID(thread);
         mem_->send(req);
+#else
+        AtomicReqData *data = new AtomicReqData();
+        data->pAddr = addr;
+        data->size = size;
+        data->wdata.resize(size);
+        data->opcode = atomic_req->getOp();
+        atomic_req->getPayload(&data->wdata[0]);
+        // set atomic type
+        StandardMem::CustomReq *req = new StandardMem::CustomReq(data);
+        req->tid = core->getThreadID(thread);
+        mem_->send(req);
+#endif
         return;
     }
 
@@ -147,7 +162,7 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
             read_req->setResult(&read_rsp->data[0]);
             read_req->complete();            
         }
-
+#ifdef USE_STDMEM_PROVIDED
         // perform modify-write, if this was an atomic request
         auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(thread->getAPIThread().getState());
         if (atomic_req) {
@@ -163,18 +178,45 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
                                      "Sending write-unlock request to '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
                                      mem_name_.c_str(), read_rsp->pAddr, read_rsp->size);
             mem_->send(wureq);
-        }
+        }]
+#endif
 
+#ifdef USE_STDMEM_PROVIDED
         if (!(read_req || atomic_req)) {
+#else
+        if (!read_req) {
+#endif
             core_->output()->fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", read_rsp->tid);
         }
     }
-
+#ifndef USE_STDMEM_PROVIDED
+    auto custom_rsp = dynamic_cast<StandardMem::CustomResp*>(req);
+    AtomicReqData* areq_data = nullptr;
+    if (custom_rsp) {
+        areq_data = dynamic_cast<AtomicReqData*>(custom_rsp->data);
+        if (areq_data) {
+            core_->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_REQ,
+                                     "Received custom response from '%s'\n", mem_name_.c_str());
+            DrvThread *thread = core_->getThread(custom_rsp->tid);
+            auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(thread->getAPIThread().getState());
+            if (atomic_req) {
+                atomic_req->setResult(&areq_data->rdata[0]);
+                atomic_req->complete();
+            } else {
+                core_->output()->fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", custom_rsp->tid);
+            }
+        }
+    }
+#endif
     // must delete the request
     delete req;
 
     // fatally error if we don't know the response type
+#ifdef USE_STDMEM_PROVIDED
     if (!(write_rsp || read_rsp)) {
+#else
+    if (!(write_rsp || read_rsp || (custom_rsp && areq_data))) {
+#endif
         core_->output()->fatal(CALL_INFO, -1, "Unknown memory response type\n");
     }
 }

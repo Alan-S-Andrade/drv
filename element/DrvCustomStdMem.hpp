@@ -7,6 +7,8 @@
 #include <sst/elements/memHierarchy/memEventCustom.h>
 #include <sst/elements/memHierarchy/memTypes.h>
 #include <sst/elements/memHierarchy/customcmd/customCmdMemory.h>
+#include <sst/elements/memHierarchy/membackend/simpleMemBackend.h>
+#include "DrvAPIReadModifyWrite.hpp"
 #include "DrvAPIThreadState.hpp"
 
 namespace SST {
@@ -21,34 +23,47 @@ namespace Drv {
  */
 class AtomicReqData : public Interfaces::StandardMem::CustomData {
 public:
-    /* constructor */
-    AtomicReqData() {}
+  /* constructor */
+  AtomicReqData() {}
 
-    /* destructor */
-    ~AtomicReqData() override {}
+  /* return address to use for routing this event to its destination */
+  Interfaces::StandardMem::Addr
+  getRoutingAddress() override { return pAddr; }
 
-    /* return address to use for routing this event to its destination */
-    Interfaces::StandardMem::Addr
-    getRoutingAddress() override { return 0; }
+  /* return size of to use when accounting for bandwidth used by this event */
+  uint64_t getSize() override { return size; }
 
-    /* return size of to use when accounting for bandwidth used by this event */
-    uint64_t getSize() override { return 0; }
+  /* return a CustomData* objected formatted as a response */
+  Interfaces::StandardMem::CustomData*
+  makeResponse() override { return new AtomicReqData(*this); }
 
-    /* return a CustomData* objected formatted as a response */
-    Interfaces::StandardMem::CustomData*
-    makeResponse() override { return nullptr; }
+  /* return wheter a response is needed */
+  bool needsResponse() override { return true; }
 
-    /* return wheter a response is needed */
-    bool needsResponse() override { return false; }
+  /* string representation for debugging */
+  std::string getString() override {
+    std::stringstream ss;
+    ss << "{Type: AtomicReqData, pAddr: " << pAddr << ", size: " << size << "} ";
+    return ss.str();
+  }
 
-    /* string representation for debugging */
-    std::string getString() override { return ""; }
+  /* serialize this data for parallel sims */
+  void serialize_order(SST::Core::Serialization::serializer &ser) override {
+    CustomData::serialize_order(ser);
+    ser & wdata;
+    ser & rdata;
+    ser & size;
+    ser & pAddr;
+  }
+  ImplementSerializable(SST::Drv::AtomicReqData);
 
-    /* serialize this data for parallel sims */
-    void serialize_order(SST::Core::Serialization::serializer &ser) override {
-        CustomData::serialize_order(ser);
-    }
-    ImplementSerializable(SST::Drv::AtomicReqData);
+public:
+  std::vector<uint8_t> wdata;
+  std::vector<uint8_t> rdata;
+  int64_t size;
+  DrvAPI::DrvAPIMemAtomicType opcode;
+  Interfaces::StandardMem::Addr pAddr;
+  
 };
 
 
@@ -60,46 +75,73 @@ public:
  */
 class DrvCmdMemHandler : public SST::MemHierarchy::CustomCmdMemHandler {
 public:
-    /* Element Library Info */
-    SST_ELI_REGISTER_SUBCOMPONENT(DrvCmdMemHandler, "Drv", "DrvCmdMemHandler", SST_ELI_ELEMENT_VERSION(1,0,0),
-                                  "custom command handler for drv element", SST::Drv::DrvCmdMemHandler)
+  /* Element Library Info */
+  SST_ELI_REGISTER_SUBCOMPONENT(DrvCmdMemHandler, "Drv", "DrvCmdMemHandler", SST_ELI_ELEMENT_VERSION(1,0,0),
+                                "custom command handler for drv element", SST::Drv::DrvCmdMemHandler)
 
-    /* constructor
-     *
-     * should register a read and write handler
-     */
-    DrvCmdMemHandler(SST::ComponentId_t id, SST::Params& params,
-                     std::function<void(MemHierarchy::Addr,size_t,std::vector<uint8_t>&)> read, // read backing store
-                     std::function<void(MemHierarchy::Addr,std::vector<uint8_t>*)> write); // write backing store
+  /* constructor
+   *
+   * should register a read and write handler
+   */
+  DrvCmdMemHandler(SST::ComponentId_t id, SST::Params& params,
+                   std::function<void(MemHierarchy::Addr,size_t,std::vector<uint8_t>&)> read, // read backing store
+                   std::function<void(MemHierarchy::Addr,std::vector<uint8_t>*)> write); // write backing store
 
-    /* destructor */
-    ~DrvCmdMemHandler();
+  /* destructor */
+  ~DrvCmdMemHandler();
 
-    /* Receive should decode a custom event and return an OutstandingEvent struct
-     * to the memory controller so that it knows how to process the event
-     */
-    CustomCmdMemHandler::MemEventInfo receive(MemHierarchy::MemEventBase* ev) override;
+  /* Receive should decode a custom event and return an OutstandingEvent struct
+   * to the memory controller so that it knows how to process the event
+   */
+  CustomCmdMemHandler::MemEventInfo receive(MemHierarchy::MemEventBase* ev) override;
 
-    /* The memController will call ready when the event is ready to issue.
-     * Events are ready immediately (back-to-back receive() and ready()) unless
-     * the event needs to stall for some coherence action.
-     * The handler should return a CustomData* which will be sent to the memBackendConvertor.
-     * The memBackendConvertor will then issue the unmodified CustomCmdReq* to the backend.
-     * CustomCmdReq is intended as a base class for custom commands to define as needed.
-     */
-    Interfaces::StandardMem::CustomData* ready(MemHierarchy::MemEventBase* ev);
+  /* The memController will call ready when the event is ready to issue.
+   * Events are ready immediately (back-to-back receive() and ready()) unless
+   * the event needs to stall for some coherence action.
+   * The handler should return a CustomData* which will be sent to the memBackendConvertor.
+   * The memBackendConvertor will then issue the unmodified CustomCmdReq* to the backend.
+   * CustomCmdReq is intended as a base class for custom commands to define as needed.
+   */
+  Interfaces::StandardMem::CustomData* ready(MemHierarchy::MemEventBase* ev);
 
-    /* When the memBackendConvertor returns a response, the memController will call this function, including
-     * the return flags. This function should return a response event or null if none needed.
-     * It should also call the following as needed:
-     *  writeData(): Update the backing store if this custom command wrote data
-     *  readData(): Read the backing store if the response needs data
-     *  translateLocalT
-     */
-    MemHierarchy::MemEventBase* finish(MemHierarchy::MemEventBase *ev, uint32_t flags);
+  /* When the memBackendConvertor returns a response, the memController will call this function, including
+   * the return flags. This function should return a response event or null if none needed.
+   * It should also call the following as needed:
+   *  writeData(): Update the backing store if this custom command wrote data
+   *  readData(): Read the backing store if the response needs data
+   *  translateLocalT
+   */
+  MemHierarchy::MemEventBase* finish(MemHierarchy::MemEventBase *ev, uint32_t flags);
 
 private:
-    SST::Output output;
+  SST::Output output;
+};
+
+/**
+ * @brief our specialized simple memory backend
+ *
+ * this is all just to handle atomic memory operations... *sigh*
+ * there HAS to be a better way to do this...
+ */
+class DrvSimpleMemBackend : public SST::MemHierarchy::SimpleMemory {
+public:
+  /* Element library info */
+  SST_ELI_REGISTER_SUBCOMPONENT(DrvSimpleMemBackend, "Drv", "DrvSimpleMemBackend", SST_ELI_ELEMENT_VERSION(1,0,0),
+                                "Custom simple memory backend for drv element", SST::Drv::DrvSimpleMemBackend)
+  /* parameters */
+  SST_ELI_DOCUMENT_PARAMS(
+                          {"verbose_level", "Sets the verbosity of the backend output", "0"}
+                          )
+
+  /* constructor */
+  DrvSimpleMemBackend(ComponentId_t id, Params &params);
+
+  /* destructor */
+  ~DrvSimpleMemBackend() override;
+
+  bool issueCustomRequest(ReqId, Interfaces::StandardMem::CustomData *) override;
+private:
+  SST::Output output_;
 };
 
 }

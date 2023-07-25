@@ -17,11 +17,20 @@ memctrl.addParams({
     "clock" : "1GHz",
     "addr_range_start" : 0,
     "addr_range_end" : 512*1024*1024-1,
+    "debug" : 1,
+    "debug_level" : VERBOSE,
+    "verbose" : VERBOSE,
 })
-memory = memctrl.setSubComponent("backend", "memHierarchy.simpleMem")
+# set the backend memory system
+memory = memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
 memory.addParams({
     "access_time" : "1ns",
     "mem_size" : "512MiB",
+})
+# set the custom command handler
+customcmdhadler = memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+customcmdhadler.addParams({
+    "verbose_level" : VERBOSE,
 })
 
 # build a bus

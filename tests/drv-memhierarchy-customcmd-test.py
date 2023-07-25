@@ -32,14 +32,15 @@ memctrl.addParams({
     "addr_range_start" : 0,
     "addr_range_end" : 512*1024*1024-1,
     })
-memory = memctrl.setSubComponent("backend", "memHierarchy.simpleMem")
+memory = memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
 memory.addParams({
     "access_time" : "1ns",
     "mem_size" : "512MiB",
+    "verbose_level" : VERBOSE,
 })
 customcmdhandler = memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
 customcmdhandler.addParams({
-    "verbose_level" : 1,
+    "verbose_level" : VERBOSE,
 })
 
 link_core_mem = sst.Link("link_core_mem")

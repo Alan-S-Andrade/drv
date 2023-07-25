@@ -1,3 +1,4 @@
+#include <DrvAPIReadModifyWrite.hpp>
 #include "DrvCustomStdMem.hpp"
 
 using namespace SST;
@@ -14,7 +15,7 @@ DrvCmdMemHandler::DrvCmdMemHandler(SST::ComponentId_t id, SST::Params& params,
                                    std::function<void(Addr,std::vector<uint8_t>*)> write)
   : CustomCmdMemHandler(id, params, read, write) {
   int verbose_level = params.find<int>("verbose_level", 0);
-  output = SST::Output("DrvCmdMemHandler[@f:@l:@p]: ", verbose_level, 0, SST::Output::STDOUT);
+  output = SST::Output("[@f:@l:@p]: ", verbose_level, 0, SST::Output::STDOUT);
   output.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
 }
 
@@ -29,7 +30,7 @@ DrvCmdMemHandler::~DrvCmdMemHandler() {
 CustomCmdMemHandler::MemEventInfo
 DrvCmdMemHandler::receive(MemEventBase* ev) {
   output.verbose(CALL_INFO, 1, 0,"%s\n", __PRETTY_FUNCTION__);
-  CustomCmdMemHandler::MemEventInfo MEI(ev->getRoutingAddress(),true);
+  CustomCmdMemHandler::MemEventInfo MEI(ev->getRoutingAddress(),false);
   return MEI;
 }
 
@@ -69,8 +70,57 @@ DrvCmdMemHandler::finish(MemEventBase *ev, uint32_t flags) {
     cme->setCustomData(nullptr); // Just in case someone attempts to access it...
     return nullptr;
   }
-
+  // get the custom data and make sure it's something we support
+  CustomMemEvent * cme = static_cast<CustomMemEvent*>(ev);
+  AtomicReqData *ard = dynamic_cast<AtomicReqData*>(cme->getCustomData());
+  if (!ard) {
+    output.fatal(CALL_INFO, -1, "Error: unknown custom request type\n");
+  }
+  output.verbose(CALL_INFO, 1, 0, "Formatting response to atomic memory op\n");
+  // here's where we should update backing store
+  // and the response payload
+  ard->rdata.resize(ard->getSize());
+  // read value in memory
+  readData(ard->getRoutingAddress(), ard->getSize(), ard->rdata);
+  // do modify based on read value
+  DrvAPI::atomic_modify(&ard->wdata[0], &ard->rdata[0], &ard->wdata[0], ard->opcode, ard->getSize());
+  // write-back
+  writeData(ard->getRoutingAddress(), &(ard->wdata));
   MemEventBase *MEB = ev->makeResponse();
   return MEB;
 }
 
+
+/**
+ * constructor of our simple memory backend
+ */
+DrvSimpleMemBackend::DrvSimpleMemBackend(ComponentId_t id, Params &params)
+  : SimpleMemory(id, params) {
+  int verbose_level = params.find<int>("verbose_level", 0);
+  output_ = SST::Output("[@f:@l:@p]: ", verbose_level, 0, SST::Output::STDOUT);
+  output_.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
+}
+
+/**
+ * destructor
+ */
+DrvSimpleMemBackend::~DrvSimpleMemBackend() {
+  output_.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
+}
+
+
+/**
+ * handle custom requests for drv componenets
+ */
+bool
+DrvSimpleMemBackend::issueCustomRequest(ReqId req_id, Interfaces::StandardMem::CustomData *data) {
+  output_.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
+  AtomicReqData *atomic_data = dynamic_cast<AtomicReqData*>(data);
+  if (atomic_data) {
+    output_.verbose(CALL_INFO, 1, 0, "Received atomic request\n");
+    self_link->send(1, new MemCtrlEvent(req_id));
+    return true;
+  }
+  output_.fatal(CALL_INFO, -1, "Error: unknown custom request type\n");
+  return false;
+}
