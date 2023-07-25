@@ -3,7 +3,7 @@
 #include <DrvAPIThread.hpp>
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIMemory.hpp>
-
+#include <inttypes.h>
 using namespace DrvAPI;
 
 int MemMain(int argc, char *argv[]) {
@@ -30,14 +30,14 @@ int MemMain(int argc, char *argv[]) {
 
     DrvAPIAddress addr2(8);
     writeval = 2;
-    printf("writing %lx to memory\n", writeval);
+    printf("writing %" PRId64 " to memory\n", writeval);
     DrvAPI::write<uint64_t>(addr2, writeval);
     printf("adding %d to memory\n", -1);
-    uint64_t addback = DrvAPI::atomic_add<uint64_t>(addr2, -1);
-    printf("added %d, read back %lx\n", -1, addback);
+    int64_t addback = DrvAPI::atomic_add<int64_t>(addr2, -1);
+    printf("added %d, read back %" PRId64 "\n", -1, addback);
     printf("adding %d to memory\n", -1);
-    addback = DrvAPI::atomic_add<uint64_t>(addr2, -1);
-    printf("added %d, read back %lx\n", -1, addback);
+    addback = DrvAPI::atomic_add<int64_t>(addr2, -1);
+    printf("added %d, read back %" PRId64 "\n", -1, addback);
 
     printf("done!\n");
     return 0;
