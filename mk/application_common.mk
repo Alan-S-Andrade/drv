@@ -1,8 +1,10 @@
-DRV_DIR := $(shell git rev-parse --show-toplevel)
+ifndef APP_NAME
+$(error APP_NAME is not set)
+endif
+
+DRV_DIR ?= $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
 
-# change me: the app name
-APP_NAME := simple
 APP_PATH := $(DRV_DIR)/examples/$(APP_NAME)
 
 # Build options

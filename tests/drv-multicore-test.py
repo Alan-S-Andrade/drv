@@ -2,8 +2,8 @@ import sst
 import sys
 
 VERBOSE = 0
-CORES = 32
-THREADS = 16
+CORES = 1
+THREADS = 1
 
 #executable = sys.argv[1]
 if (len(sys.argv) < 2):
