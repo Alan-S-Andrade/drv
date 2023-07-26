@@ -21,9 +21,14 @@ public:
    * @brief offset
    */
   uint64_t offset() const { return address_; }
-  
+
+  /**
+   * cast operator
+   */
+  operator uint64_t() const { return address_; }
+
 private:
-    uint64_t address_;
+  uint64_t address_;
 };
 
 }
