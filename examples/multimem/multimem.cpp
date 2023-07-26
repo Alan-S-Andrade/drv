@@ -15,14 +15,14 @@ int MultiMemMain(int argc, char *argv[])
         std::vector<DrvAPIAddress> addrs;
         while (arg < argc) {
             DrvAPIAddress addr = strtoull(argv[arg++], NULL, 0);
-            printf("parsed 0x%08lx\n", static_cast<unsigned long>(addr));
+            printf("parsed    0x%08lx\n", static_cast<unsigned long>(addr));
             addrs.push_back(addr);
         }
         // write and read-back
         for (DrvAPIAddress addr : addrs) {
             uint64_t writeval = 0xa5a5a5a5a5a5a5a5;
             uint64_t swapval  = ~writeval;
-            printf ("writing  0x%08lx, w_value=%08" PRIx64 "\n",
+            printf("writing   0x%08lx, w_value=%08" PRIx64 "\n",
                     static_cast<unsigned long>(addr), writeval);
             DrvAPI::write<uint64_t>(addr, writeval);
             uint64_t readback = DrvAPI::read<uint64_t>(addr);

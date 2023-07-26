@@ -1,8 +1,14 @@
 import sst
 import sys
 
-DEBUG_MEM = 0
+DEBUG_MEM = 000
 VERBOSE = 0
+
+GROUPS = {
+    "core" : 0,
+    "scratchpad" : 1,
+    "dram" : 2,
+}
 
 if (len(sys.argv) < 2):
     print("ERROR: Must specify executable to run")
@@ -28,15 +34,14 @@ iface = core.setSubComponent("memory", "memHierarchy.standardInterface")
 iface.addParams({
     "verbose" : VERBOSE,
 })
-
-##################
-# the memory bus #
-##################
-mem_bus = sst.Component("mem_bus", "memHierarchy.Bus")
-mem_bus.addParams({
-    "bus_frequency" : "1GHz",
-    "idle_max" : 0,
+core_nic = iface.setSubComponent("memlink", "memHierarchy.MemNIC")
+core_nic.addParams({
+    "group" : GROUPS["core"],
+    "network_bw" : "256GB/s",
+    # this sets what valid destinations are for this link
+    "destinations" : "%d,%d" % (GROUPS["scratchpad"], GROUPS["dram"]),
 })
+
 
 ###############
 # Dram memory #
@@ -60,6 +65,11 @@ dram_customcmdhandler = dram_memctrl.setSubComponent("customCmdHandler", "Drv.Dr
 dram_customcmdhandler.addParams({
     "verbose_level" : VERBOSE,
 })
+dram_nic = dram_memctrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
+dram_nic.addParams({
+    "group" : GROUPS["dram"],
+    "network_bw" : "256GB/s",
+})
 
 #####################
 # Scratchpad memory #
@@ -79,14 +89,41 @@ scratchpad.addParams({
     "mem_size" : "4KiB"
 })
 scratchpad_customcmdhandler = scratchpad_memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+scratchpad_customcmdhandler.addParams({
+    "verbose_level" : VERBOSE,
+})
+scratchpad_nic = scratchpad_memctrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
+scratchpad_nic.addParams({
+    "group" : GROUPS["scratchpad"],
+    "network_bw" : "256GB/s",    
+})
+
+######################
+# define the network #
+######################
+chiprtr = sst.Component("chiprtr", "merlin.hr_router")
+chiprtr.addParams({
+    "xbar_bw" : "256GB/s",
+    "id" : "0",
+    "input_buf_size" : "1KB",
+    "num_ports" : "3",
+    "flit_size" : "8B",
+    "output_buf_size" : "1KB",
+    "link_bw" : "256GB/s",
+    # change this if we use a different network
+    # topology; for now just one xbar router
+    "topology" : "merlin.singlerouter"
+})
+chiprtr.setSubComponent("topology","merlin.singlerouter")
 
 #########
 # Links #
 #########
-link_core_bus = sst.Link("link_core_bus")
-link_core_bus.connect((iface, "port", "1ns"), (mem_bus, "high_network_0", "1ns"))
-link_bus_dram = sst.Link("link_bus_dram")
-link_bus_dram.connect((mem_bus, "low_network_0", "1ns"), (dram_memctrl, "direct_link", "1ns"))
-link_bus_scratchpad = sst.Link("link_bus_scratchpad")
-link_bus_scratchpad.connect((mem_bus, "low_network_1", "1ns"), (scratchpad_memctrl, "direct_link", "1ns"))
+link_core_chiprtr = sst.Link("link_core_chiprtr")
+link_core_chiprtr.connect((core_nic, "port", "1ns"), (chiprtr, "port0", "1ns"))
 
+link_scratchpad_chiprtr = sst.Link("link_scratchpad_chiprtr")
+link_scratchpad_chiprtr.connect((scratchpad_nic, "port", "1ns"), (chiprtr, "port1", "1ns"))
+
+link_dram_chiprtr = sst.Link("link_dram_chiprtr")
+link_dram_chiprtr.connect((dram_nic, "port", "1ns"), (chiprtr, "port2", "1ns"))

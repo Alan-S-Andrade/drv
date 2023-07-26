@@ -9,6 +9,7 @@ if (len(sys.argv) < 2):
     exit(1)
 
 executable = sys.argv[1]
+argv = sys.argv[2:]
 
 core = sst.Component("core", "Drv.DrvCore")
 core.addParams({
@@ -17,6 +18,7 @@ core.addParams({
     "debug_clock" : True,
     "debug_requests" : True,
     "executable" : executable,
+    "argv" : ' '.join(argv),
 })
 iface = core.setSubComponent("memory", "memHierarchy.standardInterface")
 iface.addParams({

@@ -23,20 +23,26 @@ iface.addParams({
     "verbose" : VERBOSE,
 })
 
-memctrl = sst.Component("memctrl", "memHierarchy.MemController")
+memctrl = sst.Component("spmemctrl", "memHierarchy.Scratchpad")
 memctrl.addParams({
     "debug" : DEBUG_MEM,
     "debug_level" : VERBOSE,
-    "verbose" : VERBOSE,
     "clock" : "1GHz",
-    "addr_range_start" : 0,
-    "addr_range_end" : 512*1024*1024-1,
-    })
-memory = memctrl.setSubComponent("backend", "memHierarchy.simpleMem")
-memory.addParams({
-    "access_time" : "1ns",
-    "mem_size" : "512MiB",
-})
+    "size" : "4KiB",
+    "memory_addr_offset" : 0,
+})    
+
+# memory = memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+# memory.addParams({
+#     "access_time" : "1ns",
+#     "mem_size" : "512MiB",
+#     "verbose_level" : VERBOSE,
+# })
+
+# customcmdhandler = memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+# customcmdhandler.addParams({
+#     "verbose_level" : VERBOSE,
+# })
 
 link_core_mem = sst.Link("link_core_mem")
 link_core_mem.connect((iface, "port", "1ns"), (memctrl, "direct_link", "1ns"))
