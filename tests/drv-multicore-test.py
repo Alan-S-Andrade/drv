@@ -27,11 +27,18 @@ memctrl.addParams({
 })
 # set the backend memory system
 memory = memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+# we need to use the Drv backend memory system
+# for Drv specific memory commands (AMOs)
+#
+# this is a subclass of the simpleMem backend
+# with an overrided issueCustomRequest method
 memory.addParams({
     "access_time" : "1ns",
     "mem_size" : "512MiB",
 })
 # set the custom command handler
+# we need to use the Drv custom command handler
+# for Drv specific memory commands (AMOs)
 customcmdhadler = memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
 customcmdhadler.addParams({
     "verbose_level" : VERBOSE,
