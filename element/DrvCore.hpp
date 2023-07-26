@@ -29,6 +29,7 @@ public:
   SST_ELI_DOCUMENT_PARAMS(
       /* input */
       {"executable", "Path to user program"},
+      {"argv","List of arguments for program", ""},
       /* system config */
       {"threads", "Number of threads on this core", "1"},
       {"clock", "Clock rate of core", "125MHz"},
@@ -112,6 +113,11 @@ public:
    */
   void executeReadyThread();
 
+  /**
+   * parse the command line arguments
+   */
+  void parseArgv(SST::Params &params);
+  
   /**
    * return true if simulation should finish
    */
@@ -208,6 +214,8 @@ private:
   SST::TimeConverter *clocktc_; //!< the clock time converter
   int done_; //!< number of threads that are done
   int last_thread_; //!< last thread that was executed
+  std::vector<char*> argv_; //!< the command line arguments
+  
 public:
   int id_; //!< the core id
 };

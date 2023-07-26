@@ -11,6 +11,9 @@ if (len(sys.argv) < 2):
     exit(1)
 
 executable = sys.argv[1]
+argv = sys.argv[2:]
+
+print("Drv Simulation: executable: %s, argv: %s" % (executable, argv))
 
 # build a a shared memory
 memctrl = sst.Component("memctrl", "memHierarchy.MemController")
@@ -60,6 +63,7 @@ for i in range(CORES):
         "debug_requests" : True,
         "debug_response" : True,
         "executable" : executable,
+        "argv" : ' '.join(argv),
         "id" : i,
     })
     cores.append(core)    

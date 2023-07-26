@@ -6,14 +6,16 @@ using namespace DrvAPI;
 
 DrvAPIThread::DrvAPIThread()
     : state_(new DrvAPIThreadIdle)
-    , main_(nullptr) {
+    , main_(nullptr)
+    , argc_(0)
+    , argv_(nullptr) {
     thread_context_
         = std::make_unique<coro_t::pull_type>([this](coro_t::push_type &sink) {
         this->main_context_ = &sink;
         this->yield();
         while (true) {
             if (this->main_) {
-                this->main_(0, nullptr);
+                this->main_(argc_, argv_);
                 this->main_ = nullptr;
                 this->state_ = std::make_shared<DrvAPITerminate>();
             }

@@ -4,7 +4,7 @@
 #include "DrvStdMemory.hpp"
 #include <cstdio>
 #include <dlfcn.h>
-
+#include <cstring>
 using namespace SST;
 using namespace Drv;
 
@@ -35,6 +35,7 @@ void DrvCore::configureOutput(SST::Params &params) {
  */
 void DrvCore::configureExecutable(SST::Params &params) {
   std::string executable = params.find<std::string>("executable");
+  argv_.push_back(strdup(executable.c_str()));
   if (executable.empty()) {
     output_->fatal(CALL_INFO, -1, "executable not specified\n");
   }
@@ -88,6 +89,7 @@ void DrvCore::configureThread(int thread, int threads) {
   output_->verbose(CALL_INFO, 2, DEBUG_INIT, "configuring thread (%2d/%2d)\n", thread, threads);
   threads_.emplace_back();
   threads_.back().getAPIThread().setMain(main_);
+  threads_.back().getAPIThread().setArgs(argv_.size(), argv_.data());
   threads_.back().getAPIThread().setId(thread);
   threads_.back().getAPIThread().setCoreId(id_);
 }
@@ -135,6 +137,18 @@ void DrvCore::configureMemory(SST::Params &params) {
     }
 }
 
+void DrvCore::parseArgv(SST::Params &params) {
+    std::string argv_str = params.find<std::string>("argv", "");
+    std::stringstream ss(argv_str);
+    while (!ss.eof()) {
+        std::string arg;
+        ss >> arg;
+        if (!arg.empty()) {
+            argv_.push_back(strdup(arg.c_str()));
+        }
+    }
+}
+
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
   , executable_(nullptr) {
@@ -144,6 +158,7 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   configureOutput(params);
   configureClock(params);
   configureExecutable(params);
+  parseArgv(params);
   configureThreads(params);
   configureMemory(params);
 }
@@ -154,6 +169,10 @@ DrvCore::~DrvCore() {
     // this keeps the vtable entries valid for dynamic classes
     // created in the user code
     closeExecutable();
+    // clean up the argv
+    for (auto arg : argv_) {
+        free(arg);
+    }
     delete memory_;
 }
 
