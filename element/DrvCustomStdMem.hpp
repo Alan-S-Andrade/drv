@@ -43,7 +43,11 @@ public:
   /* string representation for debugging */
   std::string getString() override {
     std::stringstream ss;
-    ss << "{Type: AtomicReqData, pAddr: " << pAddr << ", size: " << size << "} ";
+    ss << "{Type: AtomicReqData, pAddr: ";
+    ss << std::hex;
+    ss << pAddr << ", size: ";
+    ss << std::dec;
+    ss << size << "} ";
     return ss.str();
   }
 
