@@ -18,6 +18,11 @@ public:
     : address_(address) {}
 
   /**
+   * no arg constructor
+   */
+  DrvAPIAddress() : address_(0) {}
+
+  /**
    * @brief offset
    */
   uint64_t offset() const { return address_; }

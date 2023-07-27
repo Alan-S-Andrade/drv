@@ -5,8 +5,18 @@
 int AmoaddMain(int argc, char *argv[])
 {
     using namespace DrvAPI;
-    DrvAPIAddress signal_addr(8);
-    DrvAPIAddress barrier_addr(0);
+    DrvAPIAddress signal_addr  = 0x0;
+    DrvAPIAddress barrier_addr = 0x8;
+    if (argc > 1) {
+        barrier_addr = strtoull(argv[1], NULL, 0);
+        if (argc > 2) {
+            signal_addr = strtoull(argv[2], NULL, 0);
+        }
+    }
+    printf("Hello from %s\n", __PRETTY_FUNCTION__);
+    printf("barrier_addr = %lx, signal_addr = %lx\n",
+           static_cast<unsigned long>(barrier_addr),
+           static_cast<unsigned long>(signal_addr));
     int64_t signal = 0xa5a5a5a5a5a5a5a5;
     
     if (DrvAPIThread::current()->threadId() == 0 &&
