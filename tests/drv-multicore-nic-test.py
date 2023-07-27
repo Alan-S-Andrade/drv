@@ -29,6 +29,7 @@ class Tile(object):
         self.core.addParams({
             "verbose" : VERBOSE,
             "threads" : THREADS,
+            "clock"   : "125MHz",
             "debug_init" : CORE_DEBUG["init"],
             "debug_clock" : CORE_DEBUG["clock"],
             "debug_requests" : CORE_DEBUG["requests"],
@@ -44,7 +45,7 @@ class Tile(object):
         self.core_nic = self.core_iface.setSubComponent("memlink", "memHierarchy.MemNIC")
         self.core_nic.addParams({
             "group" : 0,
-            "network_bw" : "256GB/s",
+            "network_bw" : "1024GB/s",
             "destinations" : "1,2",
         })
         # create the scratchpad
@@ -75,7 +76,7 @@ class Tile(object):
         self.scratchpad_nic = self.scratchpad_mectrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
         self.scratchpad_nic.addParams({
             "group" : 1,
-            "network_bw" : "256GB/s",
+            "network_bw" : "1024GB/s",
         })
         # create the tile network
         self.tile_rtr = sst.Component("tile_rtr_%d" % id, "merlin.hr_router")
@@ -85,8 +86,8 @@ class Tile(object):
             "num_ports" : 3,
             "topology" : "merlin.singlerouter",
             # performance models
-            "xbar_bw" : "256GB/s",
-            "link_bw" : "256GB/s",
+            "xbar_bw" : "1024GB/s",
+            "link_bw" : "1024GB/s",
             "flit_size" : "8B",
             "input_buf_size" : "1KB",
             "output_buf_size" : "1KB",
@@ -119,7 +120,7 @@ class SharedMemory(object):
         self.memory = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         self.memory.addParams({
             "verbose_level" : VERBOSE,
-            "access_time" : "1ns",
+            "access_time" : "32ns",
             "mem_size" : "512MiB",
         })
         # set the custom command handler
