@@ -3,7 +3,7 @@ include $(DRV_DIR)/mk/boost_config.mk
 
 APP_CXX := clang++
 
-APP_CXXFLAGS := -std=c++11 -Wall -Wextra -Werror -pedantic -Wno-unused-parameter
+APP_CXXFLAGS := -std=c++11 -Wall -Wextra -Werror -pedantic -Wno-unused-parameter -O2
 APP_CXXFLAGS += -fPIC
 APP_CXXFLAGS += -I$(DRV_DIR)/install/include
 APP_CXXFLAGS += $(BOOST_CXXFLAGS)
