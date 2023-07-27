@@ -85,7 +85,8 @@ public:
    */
   DrvCmdMemHandler(SST::ComponentId_t id, SST::Params& params,
                    std::function<void(MemHierarchy::Addr,size_t,std::vector<uint8_t>&)> read, // read backing store
-                   std::function<void(MemHierarchy::Addr,std::vector<uint8_t>*)> write); // write backing store
+                   std::function<void(MemHierarchy::Addr,std::vector<uint8_t>*)> write, // write backing store
+                   std::function<MemHierarchy::Addr(MemHierarchy::Addr)> globalToLocal); // translate global to local address
 
   /* destructor */
   ~DrvCmdMemHandler();

@@ -12,8 +12,9 @@ using namespace MemHierarchy;
  */
 DrvCmdMemHandler::DrvCmdMemHandler(SST::ComponentId_t id, SST::Params& params,
                                    std::function<void(Addr,size_t,std::vector<uint8_t>&)> read,
-                                   std::function<void(Addr,std::vector<uint8_t>*)> write)
-  : CustomCmdMemHandler(id, params, read, write) {
+                                   std::function<void(Addr,std::vector<uint8_t>*)> write,
+                                   std::function<Addr(MemHierarchy::Addr)> globalToLocal)
+  : CustomCmdMemHandler(id, params, read, write, globalToLocal) {
   int verbose_level = params.find<int>("verbose_level", 0);
   output = SST::Output("[@f:@l:@p]: ", verbose_level, 0, SST::Output::STDOUT);
   output.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
@@ -81,11 +82,12 @@ DrvCmdMemHandler::finish(MemEventBase *ev, uint32_t flags) {
   // and the response payload
   ard->rdata.resize(ard->getSize());
   // read value in memory
-  readData(ard->getRoutingAddress(), ard->getSize(), ard->rdata);
+  MemHierarchy::Addr localAddr = translateGlobalToLocal(ard->getRoutingAddress());
+  readData(localAddr, ard->getSize(), ard->rdata);
   // do modify based on read value
   DrvAPI::atomic_modify(&ard->wdata[0], &ard->rdata[0], &ard->wdata[0], ard->opcode, ard->getSize());
   // write-back
-  writeData(ard->getRoutingAddress(), &(ard->wdata));
+  writeData(localAddr, &(ard->wdata));
   MemEventBase *MEB = ev->makeResponse();
   return MEB;
 }
