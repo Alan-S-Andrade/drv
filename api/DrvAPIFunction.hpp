@@ -73,19 +73,26 @@ public:
    * This is other ranks can rematerialize the function from a type id.
    */
   virtual const DrvAPIFunctionTypeInfo *getTypeInfo() = 0;
-  
+
   /**
    * @brief get the number of DrvAPIFunction types
    */
   static DrvAPIFunctionTypeId NumTypes() {
     return &__stop_drv_api_function_typev - &__start_drv_api_function_typev;
-  }  
+  }
 
   /**
    * @brief get the factory for a given type id
-   */  
+   */
   static DrvAPIFunctionFactory GetFactory(DrvAPIFunctionTypeId id) {
     return (&__start_drv_api_function_typev)[id].factory;
+  }
+
+  /**
+   * @brief get the type info for a given type id
+   */
+  static const DrvAPIFunctionTypeInfo *GetTypeInfo(DrvAPIFunctionTypeId id) {
+    return &(&__start_drv_api_function_typev)[id];
   }
 
   /**
@@ -114,7 +121,7 @@ public:
 
   /*
    * constructors/destructors/assignement operators
-   */     
+   */
   ~DrvAPIFunctionConcrete()  = default;
   DrvAPIFunctionConcrete(const DrvAPIFunctionConcrete&) = default;
   DrvAPIFunctionConcrete& operator=(const DrvAPIFunctionConcrete&) = default;
@@ -129,7 +136,7 @@ public:
   static DrvAPIFunction* Factory(void *buf) {
     return new DrvAPIFunctionConcrete<F>(*(F*)buf);
   }
-  
+
   /**
    * @brief execute
    * execute this function
@@ -145,7 +152,7 @@ public:
   static const DrvAPIFunctionTypeInfo &GetTypeInfo() {
     // we allocate this in the drv_api_function_typev section
     // so that other ranks can find it with an id
-    __attribute__((section("drv_api_function_typev")))    
+    __attribute__((section("drv_api_function_typev")))
     static DrvAPIFunctionTypeInfo TYPE_INFO = {0, sizeof(F), Factory};
     return TYPE_INFO;
   }
@@ -169,7 +176,7 @@ public:
     // by offsetting it from the start of the special section
     return (&GetTypeInfo()) - &__start_drv_api_function_typev;
   }
-    
+
 public:
   F f_;
 };
@@ -181,7 +188,50 @@ template <typename F>
 DrvAPIFunction* MakeDrvAPIFunction(const F & f)
 {
   return new DrvAPIFunctionConcrete<F>(f);
+}
 
+/**
+ * @brief write a function pointer to Drv memory
+ */
+inline void write_function_ptr(DrvAPIAddress addr, DrvAPIFunction *f)
+{
+  // write the function type id
+  write(addr, f->getFunctionTypeId());
+  addr += sizeof(DrvAPIFunctionTypeId);
+  // write the function data
+  std::size_t sz = f->getTypeInfo()->data_size;
+  for (std::size_t i = 0; i < sz; ++i) {
+    write(addr + i, ((char*)f)[i]);
+  }
+}
+
+/**
+ * @brief read a function pointer from Drv memory
+ */
+inline DrvAPIFunction *
+read_function_ptr(DrvAPIAddress addr)
+{
+  // read the type id
+  DrvAPIFunctionTypeId type_id;
+  type_id = read<DrvAPIFunctionTypeId>(addr);
+  addr += sizeof(DrvAPIFunctionTypeId);
+
+  // get the type info and allocate a buffer
+  const DrvAPIFunctionTypeInfo *type_info = DrvAPIFunction::GetTypeInfo(type_id);
+  std::size_t sz = type_info->data_size;
+  std::size_t rmask = sizeof(uint64_t) - 1;
+  sz += rmask;
+  sz &= ~rmask;
+  std::size_t words = sz / sizeof(uint64_t);
+  std::uint64_t buf[words];
+
+  // read in the function data
+  for (std::size_t i = 0; i < words; ++i) {
+    buf[i] = read<uint64_t>(addr + i*sizeof(uint64_t));
+  }
+
+  // create new function
+  return DrvAPIFunction::FromIDAndBuffer(type_id, buf);
 }
 
 }
