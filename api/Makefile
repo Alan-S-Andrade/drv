@@ -14,25 +14,50 @@ CXXFLAGS += -std=c++14 -fPIC -Wall -Wextra -Werror -Wno-unused-parameter
 CXXFLAGS += -I$(DRV_INCLUDE_DIR)
 CXXFLAGS += -I$(DRV_DIR)/api
 
-libdrvapi-sources := $(wildcard $(DRV_DIR)/api/*.cpp)
+# libdrvapi
+libdrvapi-sources += $(DRV_DIR)/api/DrvAPIThread.cpp
 libdrvapi-objects := $(patsubst %.cpp,%.o,$(libdrvapi-sources))
-libdrvapi-headers := $(wildcard $(DRV_DIR)/api/*.hpp)
-
+libdrvapi-headers := $(DRV_DIR)/api/DrvAPIAddress.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIMain.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIMemory.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIReadModifyWrite.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIThread.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIThreadState.hpp
 libdrvapi-install-headers := $(foreach header,$(libdrvapi-headers),$(DRV_INCLUDE_DIR)/$(notdir $(header)))
 
-$(libdrvapi-install-headers): $(DRV_INCLUDE_DIR)
-$(libdrvapi-install-headers): $(DRV_INCLUDE_DIR)/%: $(DRV_DIR)/api/%
+# libdrvapiapp
+libdrvapiapp-sources += $(DRV_DIR)/api/DrvAPIFunction.cpp
+libdrvapiapp-objects := $(patsubst %.cpp,%.o,$(libdrvapiapp-sources))
+libdrvapiapp-headers := $(DRV_DIR)/api/DrvAPIFunction.hpp
+libdrvapiapp-install-headers := $(foreach header,$(libdrvapiapp-headers),$(DRV_INCLUDE_DIR)/$(notdir $(header)))
+
+$(libdrvapiapp-install-headers) $(libdrvapi-install-headers): $(DRV_INCLUDE_DIR)
+$(libdrvapiapp-install-headers) $(libdrvapi-install-headers): $(DRV_INCLUDE_DIR)/%: $(DRV_DIR)/api/%
 	@cp $< $@
 
 all: install
-install: $(DRV_LIB_DIR)/libdrvapi.so $(libdrvapi-install-headers)
+
+install: $(libdrvapiapp-install-headers)
+install: $(libdrvapi-install-headers)
+install: $(DRV_LIB_DIR)/libdrvapiapp.so
+install: $(DRV_LIB_DIR)/libdrvapi.so 
 
 $(libdrvapi-objects): %.o: %.cpp $(libdrvapi-headers)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(DRV_LIB_DIR)/libdrvapi.so: $(DRV_INSTALL_DIR)
+$(libdrvapiapp-objects): %.o: %.cpp $(libdrvapiapp-headers) $(libdrvapi-headers)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(DRV_LIB_DIR)/libdrvapiapp.so $(DRV_LIB_DIR)/libdrvapi.so: $(DRV_INSTALL_DIR)
+$(DRV_LIB_DIR)/libdrvapiapp.so: $(libdrvapiapp-objects)
 $(DRV_LIB_DIR)/libdrvapi.so: $(libdrvapi-objects)
+$(DRV_LIB_DIR)/libdrvapiapp.so $(DRV_LIB_DIR)/libdrvapi.so:
 	$(CXX) $(CXXFLAGS) -shared -fPIC -o $@ $(filter %.o,$^) $(LDFLAGS) $(LIBS)
 
 clean:
-	rm -f $(libdrvapi-objects) $(DRV_LIB_DIR)/libdrvapi.so $(libdrvapi-install-headers)
+	rm -f $(libdrvapi-objects)
+	rm -f $(DRV_LIB_DIR)/libdrvapi.so
+	rm -f $(libdrvapi-install-headers)
+	rm -f $(libdrvapiapp-objects)
+	rm -f $(DRV_LIB_DIR)/libdrvapiapp.so
+	rm -f $(libdrvapiapp-install-headers)

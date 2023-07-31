@@ -3,7 +3,8 @@ include $(DRV_DIR)/mk/boost_config.mk
 
 APP_CXX := clang++
 
-APP_CXXFLAGS := -std=c++11 -Wall -Wextra -Werror -pedantic -Wno-unused-parameter -O2
+APP_CXXFLAGS := -std=c++11 -Wall -Wextra -Werror -Wno-vla-extension -pedantic -Wno-unused-parameter -O2
+APP_CXXFLAGS += -Wno-unused-variable
 APP_CXXFLAGS += -fPIC
 APP_CXXFLAGS += -I$(DRV_DIR)/install/include
 APP_CXXFLAGS += $(BOOST_CXXFLAGS)
@@ -13,4 +14,4 @@ APP_LDFLAGS += -shared
 APP_LDFLAGS += $(BOOST_LDFLAGS)
 
 APP_LIBS := -lboost_coroutine -lboost_context
-APP_LIBS += -ldrvapi
+APP_LIBS += -ldrvapi -ldrvapiapp
