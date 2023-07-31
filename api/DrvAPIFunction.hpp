@@ -20,6 +20,7 @@ typedef DrvAPIFunction* (*DrvAPIFunctionFactory)(void *);
 
 struct DrvAPIFunctionTypeInfo {
   int id;
+  std::size_t data_size;
   DrvAPIFunctionFactory factory;
 };
 
@@ -47,8 +48,31 @@ public:
   /**
    * @brief get a factory for this type
    */
-  virtual DrvAPIFunctionFactory getFactory() = 0;  
-  virtual DrvAPIFunctionTypeInfo *getTypeInfo() = 0;
+  DrvAPIFunctionFactory getFactory() {
+    return getTypeInfo()->factory;
+  }
+
+  /**
+   * @brief get the type id for this type
+   */
+  virtual DrvAPIFunctionTypeId getFunctionTypeId() = 0;
+
+  /**
+   * @brief get the type info for this function type
+   *
+   * This needs to exist and be a virtual function because it forces
+   * the compiler to allocate the global type info variables
+   * in the template subclasses if they are used to implement
+   * this function (which they are :-D).
+   *
+   * Without a function like this, the compiler can optimize away static
+   * constants like the type info structure.
+   *
+   * We don't want that because we rely on those constants to exist and
+   * be allocated in our special defined drv_api_function_typev section.
+   * This is other ranks can rematerialize the function from a type id.
+   */
+  virtual const DrvAPIFunctionTypeInfo *getTypeInfo() = 0;
   
   /**
    * @brief get the number of DrvAPIFunction types
@@ -58,10 +82,17 @@ public:
   }  
 
   /**
-   * @brief get the function from the type id
-   */
+   * @brief get the factory for a given type id
+   */  
   static DrvAPIFunctionFactory GetFactory(DrvAPIFunctionTypeId id) {
     return (&__start_drv_api_function_typev)[id].factory;
+  }
+
+  /**
+   * @brief create a function from the type id and buffer
+   */
+  static DrvAPIFunction *FromIDAndBuffer(DrvAPIFunctionTypeId id, void *buf) {
+    return GetFactory(id)(buf);
   }
 };
 
@@ -104,42 +135,51 @@ public:
    * execute this function
    */
   void execute() override { f_(); }
-  
-  __attribute__((noinline))
-  static DrvAPIFunctionTypeInfo &GetTypeInfo() {
+
+  /**
+   * @brief GetTypeInfo
+   *
+   * This function exists as a shell for allocating a type info structure
+   * for this function type.
+   */
+  static const DrvAPIFunctionTypeInfo &GetTypeInfo() {
+    // we allocate this in the drv_api_function_typev section
+    // so that other ranks can find it with an id
     __attribute__((section("drv_api_function_typev")))    
-    static DrvAPIFunctionTypeInfo TYPE_INFO = {0, Factory};
+    static DrvAPIFunctionTypeInfo TYPE_INFO = {0, sizeof(F), Factory};
     return TYPE_INFO;
   }
 
-  DrvAPIFunctionTypeInfo *getTypeInfo() override {
+  /**
+   * @brief getTypeInfo
+   *
+   * implements the pure virtual function from DrvAPIFunction
+   */
+  const DrvAPIFunctionTypeInfo *getTypeInfo() override {
     return &GetTypeInfo();
   }
-  
+
   /**
-   * @brief class function get a factory for this type
+   * @brief getFunctionTypeId
+   *
+   * implements the pure virtual function from DrvAPIFunction
    */
-  static DrvAPIFunctionFactory GetFactory() {
-    printf("TRACE: %s\n", __PRETTY_FUNCTION__);
-    return GetTypeInfo().factory;
-  }
-  
-  /**
-   * @brief get a factory for this type
-   */
-  DrvAPIFunctionFactory getFactory() override {
-    printf("TRACE: %s\n", __PRETTY_FUNCTION__);
-    return GetFactory();
+  DrvAPIFunctionTypeId getFunctionTypeId() override {
+    // use the address of the type info structure to get the id
+    // by offsetting it from the start of the special section
+    return (&GetTypeInfo()) - &__start_drv_api_function_typev;
   }
     
 public:
   F f_;
 };
 
+/**
+ * @brief Create a DrvAPIFunction from a functor
+ */
 template <typename F>
 DrvAPIFunction* MakeDrvAPIFunction(const F & f)
 {
-  printf("TRACE: %s\n", __PRETTY_FUNCTION__);
   return new DrvAPIFunctionConcrete<F>(f);
 
 }

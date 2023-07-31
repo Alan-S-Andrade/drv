@@ -47,6 +47,7 @@ int PIDMain(int argc, char *argv[])
         f0_clone->execute();
 
         DrvAPIFunction *f1 = MakeDrvAPIFunction(f1_body);
+        f1->execute();
         printf("Core %4d, Rank %4d: &f0->getFactory() = %p\n"
                ,DrvAPIThread::current()->coreId()
                ,rank
@@ -72,6 +73,9 @@ int PIDMain(int argc, char *argv[])
         DrvAPIFunction *f1_clone = DrvAPIFunction::GetFactory(1)(&f1_body);
         f0_clone->execute();
         f1_clone->execute();
+
+        f0_clone = DrvAPIFunction::GetFactory(f0_clone->getFunctionTypeId())(&f0_body);
+        f0_clone->execute();
     }
     
     return 0;
