@@ -15,10 +15,29 @@ namespace Drv {
  */
 class DrvSelfLinkMemory : public DrvMemory {
 public:
+
+    // register this subcomponent into the element library
+    SST_ELI_REGISTER_SUBCOMPONENT(
+        SST::Drv::DrvSelfLinkMemory,
+        "Drv",
+        "DrvSelfLinkMemory",
+        SST_ELI_ELEMENT_VERSION(1,0,0),
+        "Memory with fixed latency",
+        SST::Drv::DrvMemory
+    )
+
+    // document the parameters that this component accepts
+    SST_ELI_DOCUMENT_PARAMS(
+        {"size", "Size of the memory", "0"},
+    )
+    // register ports
+    SST_ELI_DOCUMENT_PORTS(
+        {"port", "Self link to memory", {"Drv.DrvSelfLinkMemory.Event"}},
+    )
     /**
      * @brief Construct a new DrvSelfLinkMemory object
      */
-    DrvSelfLinkMemory(DrvCore*core, const std::string &link_name);
+    DrvSelfLinkMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core);
 
     /**
      * @brief Destroy the DrvSelfLinkMemory object
@@ -58,7 +77,6 @@ private:
      */
     void handleEvent(SST::Event *ev);
     
-    std::string link_name_; //!< Name of the link
     SST::Link  *link_; //!< A link
     DrvCore    *core_; //!< The core
     std::vector<uint8_t> data_; //!< The data store

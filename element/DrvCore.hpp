@@ -48,7 +48,7 @@ public:
 
   // Document the subcomponents that this component has
   SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
-      {"memory", "Interface to memory hierarchy", "SST::Interfaces::StandardMem"},
+      {"memory", "Interface to memory hierarchy", "Drv::DrvMemory"},
   )
 
   /**
@@ -156,22 +156,6 @@ public:
 
 
   /**
-   * configure a link
-   * @param[in] link_name The name of the link
-   * @param[in] handler The event handler
-   */
-  SST::Link* configureCoreLink(const std::string &link_name, Event::HandlerBase *handler);
-
-  /**
-   * configure a standard memory subcomponent
-   * @param[in] mem_name The name of the memory
-   * @param[in] share_flags The share flags
-   * @param[in] handler The event handler
-   */
-  SST::Interfaces::StandardMem *
-  loadStandardMemSubComponent(const std::string &mem_name, uint64_t share_flags, SST::Interfaces::StandardMem::HandlerBase *handler);
-
-  /**
    * initialize the component
    */
   void init(unsigned int phase) override;
@@ -201,6 +185,13 @@ public:
   DrvThread* getThread(int tid) {
     assert(tid >= 0 && tid < threads_.size());
     return &threads_[tid];
+  }
+
+  /**
+   * return the time converter for the clock
+   */
+  SST::TimeConverter* getClockTC() {
+    return clocktc_;
   }
   
 private:  

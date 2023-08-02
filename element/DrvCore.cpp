@@ -105,36 +105,32 @@ void DrvCore::configureThreads(SST::Params &params) {
   done_ = threads;
   last_thread_ = threads - 1;
 }
-
-/**
- * configure the core link
- */
-SST::Link* DrvCore::configureCoreLink(const std::string &link_name, Event::HandlerBase *handler) {
-    return configureLink(link_name, handler);
-}
-
-/**
- * configure standard memory subcomponent
- */
-SST::Interfaces::StandardMem *
-DrvCore::loadStandardMemSubComponent(const std::string &mem_name, uint64_t share_flags, SST::Interfaces::StandardMem::HandlerBase *handler) {
-    return loadUserSubComponent<SST::Interfaces::StandardMem>(mem_name, share_flags, clocktc_, handler);
-}
     
 /**
  * configure the memory
  */
 void DrvCore::configureMemory(SST::Params &params) {
-    if (isPortConnected("mem_loopback")) {
-        output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring memory loopback\n");
-        memory_ = new DrvSelfLinkMemory(this, "mem_loopback");
-    } else if (isUserSubComponentLoadableUsingAPI<Interfaces::StandardMem>("memory")) {
-        output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring standard memory\n");
-        memory_ = new DrvStdMemory(this, "memory");
-    } else {
+    memory_ = loadUserSubComponent<DrvMemory>("memory", ComponentInfo::SHARE_NONE, this);
+    if (!memory_) {
         output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring simple memory\n");
-        memory_ = new DrvSimpleMemory();
+        SST::Params mem_params = params.get_scoped_params("memory");
+        memory_ = loadAnonymousSubComponent<DrvMemory>
+            ("Drv.DrvSimpleMemory", "memory", 0, ComponentInfo::SHARE_NONE, mem_params, this);
+        if (!memory_) {
+            output_->fatal(CALL_INFO, -1, "unable to load memory subcomponent\n");
+        }
     }
+
+    // if (isPortConnected("mem_loopback")) {
+    //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring memory loopback\n");
+    //     memory_ = new DrvSelfLinkMemory(this, "mem_loopback");
+    // } else if (isUserSubComponentLoadableUsingAPI<Interfaces::StandardMem>("memory")) {
+    //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring standard memory\n");
+    //     memory_ = new DrvStdMemory(this, "memory");
+    // } else {
+    //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring simple memory\n");
+    //     memory_ = new DrvSimpleMemory();
+    // }
 }
 
 void DrvCore::parseArgv(SST::Params &params) {

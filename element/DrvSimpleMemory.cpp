@@ -3,11 +3,26 @@ using namespace SST;
 using namespace Drv;
 
 /**
+ * @brief Construct a new DrvSimpleMemory object
+ */
+DrvSimpleMemory::DrvSimpleMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core)
+    : DrvMemory(id, params, core) {
+    int size = params.find<int>("size", 1024);
+    if (size <= 0) {
+        output_.fatal(CALL_INFO, -1, "Memory size must be positive\n");
+    }
+    data_.resize(size);
+    output_.verbose(CALL_INFO, 1, DrvMemory::VERBOSE_INIT, "constructor done\n");
+}
+
+
+/**
  * @brief Send a read request
  */
 void
 DrvSimpleMemory::sendReadRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMemRead> &read_req) {
-    read_req->setResult(&data_[read_req->getAddress().offset()]);
+    output_.verbose(CALL_INFO, 1, DrvMemory::VERBOSE_REQ, "sending read request\n");
+    read_req->setResult(&data_[read_req->getAddress()]);
     read_req->complete();
 }
 
@@ -16,7 +31,8 @@ DrvSimpleMemory::sendReadRequest(DrvCore *core, DrvThread *thread, const std::sh
  */
 void
 DrvSimpleMemory::sendWriteRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMemWrite> &write_req) {
-    write_req->getPayload(&data_[write_req->getAddress().offset()]);
+    output_.verbose(CALL_INFO, 1, DrvMemory::VERBOSE_REQ, "sending write request\n");
+    write_req->getPayload(&data_[write_req->getAddress()]);
     write_req->complete();
 }
 
@@ -27,9 +43,10 @@ void
 DrvSimpleMemory::sendAtomicRequest(DrvCore *core
                                    ,DrvThread *thread
                                    ,const std::shared_ptr<DrvAPI::DrvAPIMemAtomic> &atomic_req) {
-    atomic_req->setResult(&data_[atomic_req->getAddress().offset()]);
+    output_.verbose(CALL_INFO, 1, DrvMemory::VERBOSE_REQ, "sending atomic request\n");
+    atomic_req->setResult(&data_[atomic_req->getAddress()]);
     atomic_req->modify();
-    atomic_req->getPayload(&data_[atomic_req->getAddress().offset()]);
+    atomic_req->getPayload(&data_[atomic_req->getAddress()]);
     atomic_req->complete();
 }
 

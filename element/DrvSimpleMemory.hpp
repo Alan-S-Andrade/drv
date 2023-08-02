@@ -13,12 +13,25 @@ namespace Drv {
  */
 class DrvSimpleMemory : public DrvMemory {
 public:
+    // register this subcomponent into the element library
+    SST_ELI_REGISTER_SUBCOMPONENT(
+        SST::Drv::DrvSimpleMemory,
+        "Drv",
+        "DrvSimpleMemory",
+        SST_ELI_ELEMENT_VERSION(1,0,0),
+        "Simple memory with no latency",
+        SST::Drv::DrvMemory
+    )
+    // document the parameters that this component accepts
+    SST_ELI_DOCUMENT_PARAMS(
+        {"size", "The size of the memory", "1024"},
+    )
+
     /**
      * @brief Construct a new DrvSimpleMemory object
      */
-    DrvSimpleMemory(size_t sz) : data_(sz) {}
-    DrvSimpleMemory() : data_(32*1024) {}
-
+    DrvSimpleMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core);
+    
     /**
      * @brief Destroy the DrvSimpleMemory object
      */
@@ -27,10 +40,7 @@ public:
     /**
      * @brief Send a memory request
      */
-    virtual void
-    sendRequest(DrvCore *core
-                ,DrvThread *thread
-                ,const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) override;
+    virtual void sendRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) override;
 
 private:
     /**

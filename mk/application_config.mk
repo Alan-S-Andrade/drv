@@ -14,4 +14,4 @@ APP_LDFLAGS += -shared
 APP_LDFLAGS += $(BOOST_LDFLAGS)
 
 APP_LIBS := -lboost_coroutine -lboost_context
-APP_LIBS += -ldrvapi -ldrvapiapp
+APP_LIBS += -ldrvapi #-ldrvapiapp

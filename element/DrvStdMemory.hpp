@@ -13,13 +13,29 @@ namespace Drv {
  */
 class DrvStdMemory : public DrvMemory {
 public:
+    // register this subcomponent into the element library
+    SST_ELI_REGISTER_SUBCOMPONENT(
+        SST::Drv::DrvStdMemory,
+        "Drv",
+        "DrvStdMemory",
+        SST_ELI_ELEMENT_VERSION(1,0,0),
+        "Memory that interfaces with memHierarchy components",
+        SST::Drv::DrvMemory
+    )
+
+    // register subcomponent slots
+    SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
+        {"memory", "Memory component", "SST::Interfaces::StandardMem"}
+    )
+    
     /**
      * @brief Construct a new DrvStdMemory object
      * 
-     * @param core 
-     * @param mem_name 
+     * @param id
+     * @param params
+     * @param core
      */
-    DrvStdMemory(DrvCore* core, const std::string &mem_name);
+    DrvStdMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core);
 
     /**
      * @brief Destroy the DrvStdMemory object
@@ -61,8 +77,6 @@ private:
      */
     void handleEvent(SST::Interfaces::StandardMem::Request *req);
     
-    DrvCore *core_; //!< The core
-    std::string mem_name_; //!< The name of the memory
     Interfaces::StandardMem *mem_; //!< The memory
 };
 

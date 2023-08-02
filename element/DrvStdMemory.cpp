@@ -8,27 +8,29 @@ using namespace Drv;
 using namespace Interfaces;
 
 //#define USE_STDMEM_PROVIDED
+
 /**
  * @brief Construct a new DrvStdMemory object
  * 
- * @param core 
- * @param mem_name 
+ * @param id
+ * @param params
  */
-DrvStdMemory::DrvStdMemory(DrvCore* core, const std::string &mem_name)
-    : core_(core)
-    , mem_name_(mem_name) {
-    core_->output()->verbose(CALL_INFO, 2, DrvCore::DEBUG_INIT,
-                             "Creating memory '%s'\n", mem_name_.c_str());
-
-    mem_ = core_->loadStandardMemSubComponent
-        (mem_name_, ComponentInfo::SHARE_NONE, new SST::Interfaces::StandardMem::Handler<DrvStdMemory>(this, &DrvStdMemory::handleEvent));
-
-    if (!mem_) {
-        core_->output()->fatal(CALL_INFO, -1, "Failed to load memory '%s'\n", mem_name_.c_str());
-    }
-
-    core_->output()->verbose(CALL_INFO, 2, DrvCore::DEBUG_INIT,
-                             "Memory '%s' created: %p\n", mem_name_.c_str(), mem_);
+DrvStdMemory::DrvStdMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core)
+    : DrvMemory(id, params, core) {
+    mem_ = loadUserSubComponent<Interfaces::StandardMem>
+        ("memory", ComponentInfo::SHARE_NONE,
+         core->getClockTC(),
+         new SST::Interfaces::StandardMem::Handler<DrvStdMemory>(this, &DrvStdMemory::handleEvent));
+    
+    if (mem_ == nullptr) {
+        SST::Params mem_params = params.get_scoped_params("memory.");
+        mem_ = loadAnonymousSubComponent<Interfaces::StandardMem>
+            ("memHierarchy.standardInterface", "memory", 0,
+             ComponentInfo::SHARE_NONE,
+             mem_params,
+             core->getClockTC(),
+             new SST::Interfaces::StandardMem::Handler<DrvStdMemory>(this, &DrvStdMemory::handleEvent));        
+    }    
 }
 
 /**
@@ -36,8 +38,6 @@ DrvStdMemory::DrvStdMemory(DrvCore* core, const std::string &mem_name)
  * 
  */
 DrvStdMemory::~DrvStdMemory() {
-    core_->output()->verbose(CALL_INFO, 2, DrvCore::DEBUG_INIT,
-                             "Destroying memory '%s'\n", mem_name_.c_str());
 }
 
 /**
@@ -56,9 +56,9 @@ DrvStdMemory::sendRequest(DrvCore *core
         /* do write */
         uint64_t size = write_req->getSize();
         uint64_t addr = write_req->getAddress().offset();
-        core->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_CLK,
-                                "Sending write request to '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
-                                mem_name_.c_str(), addr, size);
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_INIT,
+                        "Sending write request addr=%" PRIx64 " size=%" PRIu64 "\n",
+                        addr, size);
         std::vector<uint8_t> data(size);
         write_req->getPayload(&data[0]);
         StandardMem::Write *req = new StandardMem::Write(addr, size, data);
@@ -72,9 +72,9 @@ DrvStdMemory::sendRequest(DrvCore *core
         /* do read */
         uint64_t size = read_req->getSize();
         uint64_t addr = read_req->getAddress().offset();
-        core->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_CLK,
-                                "Sending read request to '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
-                                mem_name_.c_str(), addr, size);
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                                "Sending read request addr=%" PRIx64 " size=%" PRIu64 "\n",
+                                addr, size);
         StandardMem::Read *req = new StandardMem::Read(addr, size);
         req->tid = core->getThreadID(thread);
         mem_->send(req);
@@ -89,9 +89,9 @@ DrvStdMemory::sendRequest(DrvCore *core
          */
         uint64_t size = atomic_req->getSize();
         uint64_t addr = atomic_req->getAddress().offset();
-        core->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_CLK,
-                                "Sending atomic (read-lock) request to '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
-                                mem_name_.c_str(), addr, size);
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                        "Sending atomic request addr=%" PRIx64 " size=%" PRIu64 "\n",
+                        addr, size);
 #ifdef USE_STDMEM_PROVIDED
         StandardMem::ReadLock *req = new StandardMem::ReadLock(addr, size);
         req->tid = core->getThreadID(thread);
@@ -124,25 +124,25 @@ DrvStdMemory::sendRequest(DrvCore *core
  */
 void
 DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
-    core_->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_REQ,
-                             "Received memory request from '%s'\n", mem_name_.c_str());
+    output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ, "Received memory request\n");
     DrvThread *thread = nullptr;
     std::shared_ptr<DrvAPI::DrvAPIMem> mem_req = nullptr;
     auto write_rsp = dynamic_cast<StandardMem::WriteResp*>(req);
     if (write_rsp) {
         thread = core_->getThread(write_rsp->tid);
         if (!thread) {
-            core_->output()->fatal(CALL_INFO, -1, "Failed to find thread for tid=%" PRIu32 "\n", write_rsp->tid);
+            output_.fatal(CALL_INFO, -1, "Failed to find thread for tid=%" PRIu32 "\n", write_rsp->tid);
         }
-        core_->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_REQ,
-                                 "Received write response from '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
-                                 mem_name_.c_str(), write_rsp->pAddr, write_rsp->size);
+        
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                        "Received write response from addr=%" PRIx64 " size=%" PRIu64 "\n",
+                        write_rsp->pAddr, write_rsp->size);
         // complete write
         mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(thread->getAPIThread().getState());
         if (mem_req) {
             mem_req->complete();
         } else {
-            core_->output()->fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", write_rsp->tid);
+            output_.fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", write_rsp->tid);
         }
     }
 
@@ -150,11 +150,11 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
     if (read_rsp) {
         thread = core_->getThread(read_rsp->tid);
         if (!thread) {
-            core_->output()->fatal(CALL_INFO, -1, "Failed to find thread for tid=%" PRIu32 "\n", read_rsp->tid);
+            output_.fatal(CALL_INFO, -1, "Failed to find thread for tid=%" PRIu32 "\n", read_rsp->tid);
         }
-        core_->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_REQ,
-                                 "Received read response from '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
-                                 mem_name_.c_str(), read_rsp->pAddr, read_rsp->size);        
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                        "Received read response from addr=%" PRIx64 " size=%" PRIu64 "\n",
+                        read_rsp->pAddr, read_rsp->size);
 
         // complete read, if this was a read request
         auto read_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemRead>(thread->getAPIThread().getState());
@@ -174,9 +174,9 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
             atomic_req->getPayload(&data[0]);
             StandardMem::WriteUnlock *wureq = new StandardMem::WriteUnlock(read_rsp->pAddr, read_rsp->size, data);
             wureq->tid = read_rsp->tid;
-            core_->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_REQ,
-                                     "Sending write-unlock request to '%s' addr=%" PRIx64 " size=%" PRIu64 "\n",
-                                     mem_name_.c_str(), read_rsp->pAddr, read_rsp->size);
+            output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                            "Sending write-unlock request addr=%" PRIx64 " size=%" PRIu64 "\n",
+                            read_rsp->pAddr, read_rsp->size);
             mem_->send(wureq);
         }]
 #endif
@@ -186,7 +186,7 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
 #else
         if (!read_req) {
 #endif
-            core_->output()->fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", read_rsp->tid);
+            output_.fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", read_rsp->tid);
         }
     }
 #ifndef USE_STDMEM_PROVIDED
@@ -195,15 +195,15 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
     if (custom_rsp) {
         areq_data = dynamic_cast<AtomicReqData*>(custom_rsp->data);
         if (areq_data) {
-            core_->output()->verbose(CALL_INFO, 10, DrvCore::DEBUG_REQ,
-                                     "Received custom response from '%s'\n", mem_name_.c_str());
+            output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                            "Received custom response\n");            
             DrvThread *thread = core_->getThread(custom_rsp->tid);
             auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(thread->getAPIThread().getState());
             if (atomic_req) {
                 atomic_req->setResult(&areq_data->rdata[0]);
                 atomic_req->complete();
             } else {
-                core_->output()->fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", custom_rsp->tid);
+                output_.fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", custom_rsp->tid);
             }
             delete areq_data;
         }
@@ -218,7 +218,7 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
 #else
     if (!(write_rsp || read_rsp || (custom_rsp && areq_data))) {
 #endif
-        core_->output()->fatal(CALL_INFO, -1, "Unknown memory response type\n");
+        output_.fatal(CALL_INFO, -1, "Unknown memory response type\n");
     }
 }
 

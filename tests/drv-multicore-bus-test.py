@@ -3,8 +3,8 @@ import sys
 
 VERBOSE = 0
 VERBOSE_MEMCTRL = 0
-CORES = 64
-THREADS = 16
+CORES = 2
+THREADS = 1
 CORE_DEBUG = {
     "init"      : False,
     "clock"     : False,
@@ -38,7 +38,8 @@ class Tile(object):
             "argv" : ' '.join(argv),
             "id" : id,
         })
-        self.core_iface = self.core.setSubComponent("memory", "memHierarchy.standardInterface")
+        self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
+        self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({
             "verbose" : VERBOSE,
         })
