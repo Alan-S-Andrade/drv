@@ -20,7 +20,7 @@ if (len(sys.argv) < 2):
 executable = sys.argv[1]
 argv = sys.argv[2:]
 
-print("Drv Simulation: executable: %s, argv: %s" % (executable, argv))
+print("Drv Simulation: cores = %d, threads = %d, executable: %s, argv: %s" % (CORES, THREADS, executable, argv))
 
 class Tile(object):
     def __init__(self, id):

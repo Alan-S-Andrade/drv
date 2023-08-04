@@ -23,11 +23,14 @@ int GupsMain(int argc, char *argv[])
     int64_t tbl_size = std::stoll(tbl_size_str);
     int64_t thread_n_updates = std::stoll(thread_n_updates_str);
 
-    printf("Core %4d: Thread %4d: tble_size = %" PRId64 ", thread_n_updates = %" PRId64 "\n",           
-           DrvAPIThread::current()->coreId(),
-           DrvAPIThread::current()->threadId(),
-           tbl_size,
-           thread_n_updates);
+    if (DrvAPIThread::current()->coreId() == 0 &&
+        DrvAPIThread::current()->threadId() == 0) {
+        printf("Core %4d: Thread %4d: tbl_size = %" PRId64 ", thread_n_updates = %" PRId64 "\n",
+               DrvAPIThread::current()->coreId(),
+               DrvAPIThread::current()->threadId(),
+               tbl_size,
+               thread_n_updates);
+    }
     
     for (int64_t u = 0; u < thread_n_updates; u++) {
         int64_t i = rand() % tbl_size;
@@ -35,9 +38,7 @@ int GupsMain(int argc, char *argv[])
         auto  val = read<int64_t>(addr);
         write(addr, val ^ addr);
     }
-    printf("Core %4d: Thread %4d: done\n",
-           DrvAPIThread::current()->coreId(),
-           DrvAPIThread::current()->threadId());
+
     return 0;    
 }
 
