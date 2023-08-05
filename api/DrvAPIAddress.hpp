@@ -2,6 +2,7 @@
 #include <cstdint>
 namespace DrvAPI
 {
+
 /**
  * @brief The address class
  * 
@@ -33,6 +34,39 @@ public:
   operator uint64_t() const { return address_; }
 
 
+  /**
+   * postfix increment
+   */
+  DrvAPIAddress operator++(int) {
+    DrvAPIAddress tmp(*this);
+    address_++;
+    return tmp;
+  }
+
+  /**
+   * prefix increment
+   */
+  DrvAPIAddress &operator++() {
+    address_++;
+    return *this;
+  }
+
+  /**
+   * addition assignment operator
+   */
+  DrvAPIAddress &operator+=(uint64_t rhs) {
+    address_ += rhs;
+    return *this;
+  }
+
+  /**
+   * subtraction assignment operator
+   */
+  DrvAPIAddress &operator-=(uint64_t rhs) {
+    address_ -= rhs;
+    return *this;
+  }
+  
   DrvAPIAddress operator+=(const DrvAPIAddress &rhs) {
     address_ += rhs.address_;
     return *this;
