@@ -212,14 +212,38 @@ public:
     DrvAPIAddress vaddr_; //!< virtual address 
 };
 
-#define DRVAPI_POINTER_MEMBER_TYPE(ptr, member) \
-    decltype(ptr->member)
+// #define __DRV_UNPACK(...) __VA_ARGS__
 
-#define DRVAPI_POINTER_MEMBER_POINTER(ptr, member)                      \
-    (DrvAPI::DrvAPIPointer<DRVAPI_POINTER_MEMBER_TYPE(ptr,member)>      \
-     ((ptr).vaddr_ + offsetof(decltype(ptr)::value_type, member)))
-
-#define DRVAPI_POINTER_DATA_MEMBER(ptr, member) \
-    (*DRVAPI_POINTER_MEMBER_POINTER(ptr, member))
+// #define DRV_API_POINTER_DATA_MEMBERS_SELECT(_0, _MORE, ...)
+// #define DRV_API_POINTER_DATA_MEMBERS()
+// #define DRV_API_POINTER_DATA_MEMBERS(member, ...)                       \
+//     int member () const {                                               \
+//         return 0;                                                       \
+//     }                                                                   \
+//     DRV_API_POINTER_DATA_MEMBERS(__VA_ARGS__)
     
+#define DRV_API_REF_CLASS_BEGIN(type)                                   \
+    class type##_ref {                                                  \
+    public:                                                             \
+    type##_ref(const DrvAPI::DrvAPIPointer<type>&ptr) : ptr_(ptr) {}    \
+    type##_ref(const DrvAPI::DrvAPIAddress &vaddr) : ptr_(vaddr) {}     \
+    type##_ref(uint64_t vaddr) : ptr_(vaddr) {}                         \
+    type##_ref() = delete;                                              \
+    type##_ref(const type##_ref &other) = default;                      \
+    type##_ref(type##_ref &&other) = default;                           \
+    type##_ref &operator=(const type##_ref &other) = default;           \
+    type##_ref &operator=(type##_ref &&other) = default;                \
+    ~type##_ref() = default;                                            \
+    DrvAPI::DrvAPIPointer<type> ptr_;
+
+#define DRV_API_REF_CLASS_DATA_MEMBER(type, member)                     \
+    DrvAPI::DrvAPIPointer<decltype(std::declval<type>().member)>::value_handle \
+    member () const {                                                   \
+        return *DrvAPI::DrvAPIPointer<decltype(std::declval<type>().member)> \
+            (ptr_.vaddr_ + offsetof(type, member));                     \
+    }                                                                   \
+
+#define DRV_API_REF_CLASS_END(type)                                     \
+    };                                                                  \
+
 }
