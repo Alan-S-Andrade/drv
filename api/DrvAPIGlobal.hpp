@@ -105,6 +105,59 @@ public:
     T init_val_; //!< initial value
 };
 
+/**
+ * @brief specialization for DrvAPIPointer globals
+ */
+template <typename T, DrvAPIMemoryType MEMTYPE>
+class DrvAPIGlobal<DrvAPIPointer<T>, MEMTYPE>
+{
+public:
+    /**
+     * @brief constructor
+     */
+    DrvAPIGlobal() {
+        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
+        pointer_ = DrvAPIPointer<T>
+            (section.getBase() + section.increaseSizeBy(sizeof(T)));
+    }
+
+    // not copyable or movable
+    DrvAPIGlobal(const DrvAPIGlobal &other) = delete;
+    DrvAPIGlobal(DrvAPIGlobal &&other) = delete;
+    DrvAPIGlobal &operator=(const DrvAPIGlobal &other) = delete;
+    DrvAPIGlobal &operator=(DrvAPIGlobal &&other) = delete;
+
+
+    /**
+     * cast operator
+     */
+    operator DrvAPIPointer<T>() const { return static_cast<DrvAPIPointer<T>>(*pointer_); }
+
+    /**
+     * assignment operator
+     */
+    DrvAPIGlobal& operator=(const DrvAPIPointer<T> &other) {
+        *pointer_ = other;
+        return *this;
+    }
+
+    /**
+     * address operator
+     */
+    DrvAPIPointer<DrvAPIPointer<T>> operator&() const { return pointer_; }
+
+    /**
+     * subscript operator
+     */
+    typename DrvAPIPointer<T>::value_handle
+    operator[](size_t idx) const {
+        DrvAPIPointer<T> p = *pointer_;
+        return p[idx];
+    }
+
+    DrvAPIPointer<DrvAPIPointer<T>> pointer_; //!< pointer to the data
+};
+
 template <typename T>
 using DrvAPIGlobalL1SP = DrvAPIGlobal<T, DrvAPIMemoryType::DrvAPIMemoryL1SP>;
 
