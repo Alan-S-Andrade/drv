@@ -16,6 +16,7 @@ CXXFLAGS += -I$(DRV_DIR)/api
 
 # libdrvapi
 libdrvapi-sources += $(DRV_DIR)/api/DrvAPIThread.cpp
+libdrvapi-sources += $(DRV_DIR)/api/DrvAPIAllocator.cpp
 libdrvapi-objects := $(patsubst %.cpp,%.o,$(libdrvapi-sources))
 libdrvapi-headers := $(DRV_DIR)/api/DrvAPIAddress.hpp
 libdrvapi-headers += $(DRV_DIR)/api/DrvAPIMain.hpp
@@ -24,6 +25,8 @@ libdrvapi-headers += $(DRV_DIR)/api/DrvAPIReadModifyWrite.hpp
 libdrvapi-headers += $(DRV_DIR)/api/DrvAPIThread.hpp
 libdrvapi-headers += $(DRV_DIR)/api/DrvAPIThreadState.hpp
 libdrvapi-headers += $(DRV_DIR)/api/DrvAPIPointer.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIAllocator.hpp
+libdrvapi-headers += $(DRV_DIR)/api/DrvAPIGlobal.hpp
 libdrvapi-headers += $(DRV_DIR)/api/DrvAPI.hpp
 libdrvapi-install-headers := $(foreach header,$(libdrvapi-headers),$(DRV_INCLUDE_DIR)/$(notdir $(header)))
 

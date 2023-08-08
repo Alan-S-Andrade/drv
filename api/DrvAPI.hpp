@@ -6,4 +6,5 @@
 #include <DrvAPIReadModifyWrite.hpp>
 #include <DrvAPIThread.hpp>
 #include <DrvAPIThreadState.hpp>
-
+#include <DrvAPIAllocator.hpp>
+#include <DrvAPIGlobal.hpp>

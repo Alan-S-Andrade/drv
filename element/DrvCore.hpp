@@ -34,6 +34,10 @@ public:
       {"threads", "Number of threads on this core", "1"},
       {"clock", "Clock rate of core", "125MHz"},
       {"id", "ID for the core", "0"},
+      {"dram_base", "Base address of DRAM", "0x80000000"},
+      {"dram_size", "Size of DRAM", "0x100000000"},
+      {"l1sp_base", "Base address of L1SP", "0x00000000"},
+      {"l1sp_size", "Size of L1SP", "0x00001000"},
       /* debug flags */
       {"verbose", "Verbosity of logging", "0"},
       {"debug_init", "Print debug messages during initialization", "False"},
@@ -161,7 +165,7 @@ public:
   void init(unsigned int phase) override;
 
   /**
-   * finish the component
+   * setup the component
    */
   void setup() override;
 

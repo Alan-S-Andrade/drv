@@ -1,5 +1,7 @@
 #include "DrvAPIThread.hpp"
 #include "DrvAPIMain.hpp"
+#include "DrvAPIGlobal.hpp"
+#include "DrvAPIAllocator.hpp"
 #include <iostream>
 
 using namespace DrvAPI;

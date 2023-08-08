@@ -1,4 +1,4 @@
-DRV_DIR = $(shell git rev-parse --show-toplevel)
+DRV_DIR ?= $(shell git rev-parse --show-toplevel)
 DRV_INSTALL_DIR = $(DRV_DIR)/install
 
 DRV_BIN_DIR = $(DRV_INSTALL_DIR)/bin

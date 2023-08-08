@@ -1,3 +1,5 @@
+#include <DrvAPIGlobal.hpp>
+#include <DrvAPIAllocator.hpp>
 #include "DrvCore.hpp"
 #include "DrvSimpleMemory.hpp"
 #include "DrvSelfLinkMemory.hpp"
@@ -31,8 +33,7 @@ void DrvCore::configureOutput(SST::Params &params) {
 }
 
 /**
- * configure the executable
- */
+ * configure the executable */
 void DrvCore::configureExecutable(SST::Params &params) {
   std::string executable = params.find<std::string>("executable");
   argv_.push_back(strdup(executable.c_str()));
@@ -121,6 +122,12 @@ void DrvCore::configureMemory(SST::Params &params) {
         }
     }
 
+    uint64_t dram_base = params.find<uint64_t>("dram_base", 0x80000000);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM).setBase(dram_base);
+
+    uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", 0x00000000);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP).setBase(l1sp_base);
+
     // if (isPortConnected("mem_loopback")) {
     //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring memory loopback\n");
     //     memory_ = new DrvSelfLinkMemory(this, "mem_loopback");
@@ -153,10 +160,10 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   primaryComponentDoNotEndSim();
   configureOutput(params);
   configureClock(params);
+  configureMemory(params);  
   configureExecutable(params);
   parseArgv(params);
   configureThreads(params);
-  configureMemory(params);
 }
 
 DrvCore::~DrvCore() {
@@ -192,7 +199,7 @@ void DrvCore::setup() {
   auto stdmem = dynamic_cast<DrvStdMemory*>(memory_);
   if (stdmem) {
     stdmem->setup();
-  }  
+  }
 }
 
 /**

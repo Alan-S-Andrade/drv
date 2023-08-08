@@ -234,6 +234,9 @@ public:
     type##_ref &operator=(const type##_ref &other) = default;           \
     type##_ref &operator=(type##_ref &&other) = default;                \
     ~type##_ref() = default;                                            \
+    DrvAPI::DrvAPIPointer<type> operator&() {                           \
+        return ptr_;                                                    \
+    }                                                                   \
     DrvAPI::DrvAPIPointer<type> ptr_;
 
 #define DRV_API_REF_CLASS_DATA_MEMBER(type, member)                     \

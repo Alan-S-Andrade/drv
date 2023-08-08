@@ -4,6 +4,16 @@
 
 namespace DrvAPI
 {
+
+/**
+ * @brief the types of memory
+ */
+typedef enum __DrvAPIMemoryType {
+    DrvAPIMemoryL1SP,
+    DrvAPIMemoryDRAM,
+    DrvAPIMemoryNTypes,
+} DrvAPIMemoryType;
+
 /**
  * @brief read from a memory address
  * 
