@@ -12,6 +12,9 @@ CORE_DEBUG = {
     "responses" : False,
 }
 
+DRAM_BASE = 0x80000000
+L1SP_BASE = 0x00000000
+
 #executable = sys.argv[1]
 if (len(sys.argv) < 2):
     print("ERROR: Must specify executable to run")
@@ -56,8 +59,8 @@ class Tile(object):
             "debug_level" : VERBOSE_MEMCTRL,
             "verbose" : VERBOSE_MEMCTRL,
             "clock" : "1GHz",
-            "addr_range_start" : (i+0)*4*1024+0,
-            "addr_range_end" :   (i+1)*4*1024-1,
+            "addr_range_start" : L1SP_BASE+(i+0)*4*1024+0,
+            "addr_range_end" :   L1SP_BASE+(i+1)*4*1024-1,
         })
         # set the backend memory system to Drv special memory
         # (needed for AMOs)
@@ -110,8 +113,8 @@ class SharedMemory(object):
         self.memctrl = sst.Component("memctrl_%d" % id, "memHierarchy.MemController")
         self.memctrl.addParams({
             "clock" : "1GHz",
-            "addr_range_start" : 0x80000000+(id+0)*512*1024*1024+0,
-            "addr_range_end"   : 0x80000000+(id+1)*512*1024*1024-1,
+            "addr_range_start" : DRAM_BASE+(id+0)*512*1024*1024+0,
+            "addr_range_end"   : DRAM_BASE+(id+1)*512*1024*1024-1,
             "debug" : 1,
             "debug_level" : VERBOSE_MEMCTRL,
             "verbose" : VERBOSE_MEMCTRL,
