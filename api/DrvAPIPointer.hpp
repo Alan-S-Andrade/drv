@@ -59,6 +59,14 @@ public:
 
 
     /**
+     * cast to another pointer type
+     */
+    template <typename U>
+    operator DrvAPIPointer<U>() const {
+        return DrvAPIPointer<U>(vaddr_);
+    }
+
+    /**
      * cast operator to DrvAPIAddress
      */
     operator DrvAPIAddress() const {
