@@ -51,7 +51,7 @@ void DrvSelfLinkMemory::handleEvent(SST::Event *ev) {
     atomic->complete();
     return;
   }
-  
+  core_->assertCoreOn();
   delete ev;
 }
 

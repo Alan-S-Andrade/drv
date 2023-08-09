@@ -1,4 +1,5 @@
 #include "DrvSimpleMemory.hpp"
+#include "DrvCore.hpp"
 using namespace SST;
 using namespace Drv;
 
@@ -69,7 +70,7 @@ DrvSimpleMemory::sendRequest (DrvCore *core, DrvThread *thread, const std::share
     if (atomic_req) {
         return sendAtomicRequest(core, thread, atomic_req);
     }
-    
+    core_->assertCoreOn();
     return;
 }
 

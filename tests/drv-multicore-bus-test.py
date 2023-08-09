@@ -10,6 +10,7 @@ CORE_DEBUG = {
     "clock"     : False,
     "requests"  : False,
     "responses" : False,
+    "loopback"  : False,
 }
 
 DRAM_BASE = 0x80000000
@@ -36,6 +37,8 @@ class Tile(object):
             "debug_clock" : CORE_DEBUG["clock"],
             "debug_requests" : CORE_DEBUG["requests"],
             "debug_responses" : CORE_DEBUG["responses"],
+            "debug_loopback" : CORE_DEBUG["loopback"],
+            "max_idle" : int(1000/8), # turn clock off after idle for 1 us
             "dram_base" : DRAM_BASE,
             "l1sp_base" : L1SP_BASE,
             "executable" : executable,

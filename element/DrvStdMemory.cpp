@@ -220,5 +220,6 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
 #endif
         output_.fatal(CALL_INFO, -1, "Unknown memory response type\n");
     }
+    core_->assertCoreOn();
 }
 

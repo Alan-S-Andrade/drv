@@ -81,7 +81,9 @@ void DrvCore::closeExecutable() {
  */
 void DrvCore::configureClock(SST::Params &params) {
   clocktc_ = registerClock(params.find<std::string>("clock", "125MHz"),
-                new Clock::Handler<DrvCore>(this, &DrvCore::clockTick));    
+                new Clock::Handler<DrvCore>(this, &DrvCore::clockTick));
+  max_idle_cycles_ = params.find<uint64_t>("max_idle", 1000000);
+  core_on_ = true;
 }
 
 /**
@@ -153,7 +155,9 @@ void DrvCore::parseArgv(SST::Params &params) {
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
   , executable_(nullptr)
-  , loopback_(nullptr) {
+  , loopback_(nullptr)
+  , idle_cycles_(0)
+  , core_on_(false) {
   id_ = params.find<int>("id", 0);
   registerAsPrimaryComponent();
   primaryComponentDoNotEndSim();
@@ -237,9 +241,11 @@ void DrvCore::executeReadyThread() {
   // select a ready thread to execute
   int thread_id = selectReadyThread();
   if (thread_id == NO_THREAD_READY) {
+    idle_cycles_++;
     return;
   }
-
+  idle_cycles_ = 0;
+  
   // execute the ready thread
   threads_[thread_id].execute(this);
   last_thread_ = thread_id;
@@ -282,13 +288,15 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   output_->verbose(CALL_INFO, 20, DEBUG_CLK, "tick!\n");
   // execute a ready thread
   executeReadyThread();
-
-  // done?
-  bool done = allDone();
-  if (done)
+  if (allDone()) {
       primaryComponentOKToEndSim();
-
-  return done;
+  }
+  bool unregister = shouldUnregisterClock();
+  core_on_ = !unregister;
+  if (unregister) {
+    output_->verbose(CALL_INFO, 2, DEBUG_CLK, "unregistering clock\n");
+  }
+  return unregister;
 }
 
 void DrvCore::handleLoopback(SST::Event *event) {
@@ -306,6 +314,7 @@ void DrvCore::handleLoopback(SST::Event *event) {
       output_->fatal(CALL_INFO, -1, "loopback event is not a nop\n");
     }
     nop->complete();
+    assertCoreOn();
     delete event;
     return;
   }

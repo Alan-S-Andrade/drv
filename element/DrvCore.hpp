@@ -33,6 +33,7 @@ public:
       /* system config */
       {"threads", "Number of threads on this core", "1"},
       {"clock", "Clock rate of core", "125MHz"},
+      {"max_idle", "Max idle cycles before we unregister the clock", "1000000"},
       {"id", "ID for the core", "0"},
       {"dram_base", "Base address of DRAM", "0x80000000"},
       {"dram_size", "Size of DRAM", "0x100000000"},
@@ -210,6 +211,24 @@ public:
   SST::TimeConverter* getClockTC() {
     return clocktc_;
   }
+
+  /**
+   * return true if we should unregister the clock
+   */
+  bool shouldUnregisterClock() {    
+    return allDone() || (idle_cycles_ >= max_idle_cycles_);
+  }
+
+  /**
+   * turn the core on if it's off
+   */
+  void assertCoreOn() {
+    if (!core_on_) {
+      core_on_ = true;
+      output_->verbose(CALL_INFO, 2, DEBUG_RSP, "turning core on\n");
+      reregisterClock(clocktc_, new SST::Clock::Handler<DrvCore>(this, &DrvCore::clockTick));
+    }
+  }
   
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
@@ -224,7 +243,9 @@ private:
   int last_thread_; //!< last thread that was executed
   std::vector<char*> argv_; //!< the command line arguments
   SST::Link *loopback_; //!< the loopback link
-  
+  uint64_t max_idle_cycles_; //!< maximum number of idle cycles
+  uint64_t idle_cycles_; //!< number of idle cycles
+  bool core_on_; //!< true if the core is on (clock handler is registered)
 public:
   int id_; //!< the core id
 };
