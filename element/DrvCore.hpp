@@ -44,10 +44,11 @@ public:
       {"debug_clock", "Print debug messages we expect to see during clock ticks", "False"},
       {"debug_requests", "Print debug messages we expect to see during request events"},
       {"debug_responses", "Print debug messages we expect to see during response events"},
+      {"debug_loopback", "Print debug messages we expect to see during loopback events"},
   )
   // Document the ports that this component accepts
   SST_ELI_DOCUMENT_PORTS(
-      {"mem_loopback", "A loopback link", {"Drv.DrvEvent", ""}},
+      {"loopback", "A loopback link", {"Drv.DrvEvent", ""}},
   )
 
   // Document the subcomponents that this component has
@@ -106,6 +107,12 @@ public:
    * @param[in] params Parameters to this component.
    */
   void configureMemory(SST::Params &params);
+
+  /**
+   * configure other links
+   * @param[in] params Parameters to this component.
+   */
+  void configureOtherLinks(SST::Params &params);
   
   /**
    * select a ready thread
@@ -134,6 +141,12 @@ public:
   virtual bool clockTick(SST::Cycle_t);
 
   /**
+   * handle a loopback event
+   * @param[in] event The event to handle
+   */
+  void handleLoopback(SST::Event *event);
+
+  /**
    * set the current thread context
    */
   void setThreadContext(DrvThread* thread) {
@@ -153,11 +166,11 @@ public:
    */
   void handleThreadStateAfterYield(DrvThread *thread);
   
-  static constexpr uint32_t DEBUG_INIT  = (1<< 0); //!< debug messages during initialization
-  static constexpr uint32_t DEBUG_CLK   = (1<<31); //!< debug messages we expect to see during clock ticks
-  static constexpr uint32_t DEBUG_REQ   = (1<<30); //!< debug messages we expect to see when receiving requests
-  static constexpr uint32_t DEBUG_RSP   = (1<<29); //!< debug messages we expect to see when receiving responses
-
+  static constexpr uint32_t DEBUG_INIT     = (1<< 0); //!< debug messages during initialization
+  static constexpr uint32_t DEBUG_CLK      = (1<<31); //!< debug messages we expect to see during clock ticks
+  static constexpr uint32_t DEBUG_REQ      = (1<<30); //!< debug messages we expect to see when receiving requests
+  static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
+  static constexpr uint32_t DEBUG_LOOPBACK = (1<<28); //!< debug messages we expect to see when receiving loopback events
 
   /**
    * initialize the component
@@ -210,6 +223,7 @@ private:
   int done_; //!< number of threads that are done
   int last_thread_; //!< last thread that was executed
   std::vector<char*> argv_; //!< the command line arguments
+  SST::Link *loopback_; //!< the loopback link
   
 public:
   int id_; //!< the core id

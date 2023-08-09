@@ -8,3 +8,4 @@
 #include <DrvAPIThreadState.hpp>
 #include <DrvAPIAllocator.hpp>
 #include <DrvAPIGlobal.hpp>
+#include <DrvAPIOp.hpp>

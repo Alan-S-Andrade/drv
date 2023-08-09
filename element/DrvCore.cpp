@@ -4,6 +4,7 @@
 #include "DrvSimpleMemory.hpp"
 #include "DrvSelfLinkMemory.hpp"
 #include "DrvStdMemory.hpp"
+#include "DrvNopEvent.hpp"
 #include <cstdio>
 #include <dlfcn.h>
 #include <cstring>
@@ -127,17 +128,14 @@ void DrvCore::configureMemory(SST::Params &params) {
 
     uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", 0x00000000);
     DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP).setBase(l1sp_base);
+}
 
-    // if (isPortConnected("mem_loopback")) {
-    //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring memory loopback\n");
-    //     memory_ = new DrvSelfLinkMemory(this, "mem_loopback");
-    // } else if (isUserSubComponentLoadableUsingAPI<Interfaces::StandardMem>("memory")) {
-    //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring standard memory\n");
-    //     memory_ = new DrvStdMemory(this, "memory");
-    // } else {
-    //     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring simple memory\n");
-    //     memory_ = new DrvSimpleMemory();
-    // }
+/*
+ * configure the other links
+ */
+void DrvCore::configureOtherLinks(SST::Params &params) {
+    loopback_ = configureSelfLink("loopback", new Event::Handler<DrvCore>(this, &DrvCore::handleLoopback));
+    loopback_->addSendLatency(1, "ns");
 }
 
 void DrvCore::parseArgv(SST::Params &params) {
@@ -154,13 +152,15 @@ void DrvCore::parseArgv(SST::Params &params) {
 
 DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   : SST::Component(id)
-  , executable_(nullptr) {
+  , executable_(nullptr)
+  , loopback_(nullptr) {
   id_ = params.find<int>("id", 0);
   registerAsPrimaryComponent();
   primaryComponentDoNotEndSim();
   configureOutput(params);
   configureClock(params);
-  configureMemory(params);  
+  configureMemory(params);
+  configureOtherLinks(params);
   configureExecutable(params);
   parseArgv(params);
   configureThreads(params);
@@ -248,12 +248,23 @@ void DrvCore::executeReadyThread() {
 void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
   std::shared_ptr<DrvAPI::DrvAPIThreadState> state = thread->getAPIThread().getState();
   std::shared_ptr<DrvAPI::DrvAPIMem> mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(state);
+
   // handle memory requests
   if (mem_req) {
     // for now; do nothing
     memory_->sendRequest(this, thread, mem_req);
     return;
   }
+
+  // handle nop
+  std::shared_ptr<DrvAPI::DrvAPINop> nop_req = std::dynamic_pointer_cast<DrvAPI::DrvAPINop>(state);
+  if (nop_req) {
+    output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d nop for %d cycles\n", getThreadID(thread), nop_req->count());
+    TimeConverter *tc = getTimeConverter("1ns");
+    loopback_->send(nop_req->count(), tc, new DrvNopEvent(getThreadID(thread)));
+    return;
+  }
+  
   // handle termination
   std::shared_ptr<DrvAPI::DrvAPITerminate> term_req = std::dynamic_pointer_cast<DrvAPI::DrvAPITerminate>(state);
   if (term_req) {
@@ -268,7 +279,7 @@ bool DrvCore::allDone() {
 }
 
 bool DrvCore::clockTick(SST::Cycle_t cycle) {
-  output_->verbose(CALL_INFO, 1, DEBUG_CLK, "tick!\n");
+  output_->verbose(CALL_INFO, 20, DEBUG_CLK, "tick!\n");
   // execute a ready thread
   executeReadyThread();
 
@@ -280,3 +291,22 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   return done;
 }
 
+void DrvCore::handleLoopback(SST::Event *event) {
+  DrvEvent *drv_event = dynamic_cast<DrvEvent*>(event);
+  if (!drv_event) {
+    output_->fatal(CALL_INFO, -1, "loopback event is not a thread\n");
+  }
+  // nop events
+  DrvNopEvent *nop_event = dynamic_cast<DrvNopEvent*>(drv_event);
+  if (nop_event) {
+    output_->verbose(CALL_INFO, 2, DEBUG_LOOPBACK, "loopback event is a nop\n");
+    DrvThread *thread = getThread(nop_event->tid);
+    auto nop = std::dynamic_pointer_cast<DrvAPI::DrvAPINop>(thread->getAPIThread().getState());
+    if (!nop) {
+      output_->fatal(CALL_INFO, -1, "loopback event is not a nop\n");
+    }
+    nop->complete();
+    delete event;
+    return;
+  }
+}

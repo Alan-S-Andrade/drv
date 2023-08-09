@@ -37,6 +37,20 @@ public:
 };
 
 /**
+ */
+class DrvAPINop : public DrvAPIThreadState
+{
+public:
+    DrvAPINop(int count) : can_resume_(false), count_(count) {}
+    bool canResume() const override { return can_resume_; }
+    int count() const { return count_; }
+    void complete(){ can_resume_ = true; }
+private:
+    bool can_resume_;
+    int  count_;
+};
+
+/**
  * @brief Base thread state for a memory operation
  * 
  */
