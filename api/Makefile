@@ -43,10 +43,12 @@ $(libdrvapiapp-install-headers) $(libdrvapi-install-headers): $(DRV_INCLUDE_DIR)
 
 all: install
 
-install: $(libdrvapiapp-install-headers)
-install: $(libdrvapi-install-headers)
-install: $(DRV_LIB_DIR)/libdrvapiapp.so
-install: $(DRV_LIB_DIR)/libdrvapi.so 
+install-headers: $(libdrvapiapp-install-headers)
+install-headers: $(libdrvapi-install-headers)
+install-headers: install-lib
+install-lib: $(DRV_LIB_DIR)/libdrvapiapp.so
+install-lib: $(DRV_LIB_DIR)/libdrvapi.so
+install: install-lib install-headers
 
 $(libdrvapi-objects): %.o: %.cpp $(libdrvapi-headers)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
