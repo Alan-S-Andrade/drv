@@ -1,13 +1,15 @@
 ifeq (, $(shell which sst-config))
  $(error "No sst-config in $(PATH), add `sst-config` to your PATH")
 endif
+SST_CONFIG   := $(shell which sst-config)
+SST_REGISTER := $(shell which sst-register)
 
 # include the config.mk
 DRV_DIR=$(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
 
-CXX=$(shell sst-config --CXX)
-CXXFLAGS=$(shell sst-config --ELEMENT_CXXFLAGS) -fno-stack-protector -O2
+CXX=$(shell $(SST_CONFIG) --CXX)
+CXXFLAGS=$(shell $(SST_CONFIG) --ELEMENT_CXXFLAGS) -fno-stack-protector -O2
 CXXFLAGS+=$(BOOST_CXXFLAGS)
 CXXFLAGS+=$(SST_ELEMENTS_CXXFLAGS)
 CXXFLAGS+=-DDEBUG -g
@@ -35,7 +37,7 @@ libDrv.so: $(drvsim-objects) $(drvsim-headers)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -shared -o $@ $(drvsim-objects) $(LIBS)
 
 install: libDrv.so
-	sst-register Drv Drv_LIBDIR=$(CURDIR)
+	$(SST_REGISTER) Drv Drv_LIBDIR=$(CURDIR)
 
 clean:
 	rm -Rf *.o *.so
