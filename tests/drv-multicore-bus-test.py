@@ -48,7 +48,7 @@ class Tile(object):
         self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
         self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({
-            "verbose" : VERBOSE,
+            "verbose" : VERBOSE_MEMCTRL,
         })
         # create the scratchpad
         self.scratchpad_mectrl = sst.Component("scratchpad_mectrl_%d" % id, "memHierarchy.MemController")
@@ -64,7 +64,7 @@ class Tile(object):
         # (needed for AMOs)
         self.scratchpad = self.scratchpad_mectrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         self.scratchpad.addParams({
-            "verbose_level" : VERBOSE,
+            "verbose_level" : VERBOSE_MEMCTRL,
             "access_time" : "1ns",
             "mem_size" : "4KiB",
         })
@@ -73,7 +73,7 @@ class Tile(object):
         # to handle our custom commands (AMOs)
         self.scratchpad_customcmdhandler = self.scratchpad_mectrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
         self.scratchpad_customcmdhandler.addParams({
-            "verbose_level" : VERBOSE,
+            "verbose_level" : VERBOSE_MEMCTRL,
         })
 
 class SharedMemory(object):
@@ -91,7 +91,7 @@ class SharedMemory(object):
         # (needed for AMOs)
         self.memory = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         self.memory.addParams({
-            "verbose_level" : VERBOSE,
+            "verbose_level" : VERBOSE_MEMCTRL,
             "access_time" : "32ns",
             "mem_size" : "512MiB",
         })
@@ -100,7 +100,7 @@ class SharedMemory(object):
         # to handle our custom commands (AMOs)
         self.customcmdhandler = self.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
         self.customcmdhandler.addParams({
-            "verbose_level" : VERBOSE,
+            "verbose_level" : VERBOSE_MEMCTRL,
         })
 
 # build the tiles
