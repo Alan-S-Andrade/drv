@@ -51,7 +51,20 @@ RUN apt update -y \
         && apt remove -y git libltdl-dev \
         && apt clean -y
 
-# build drv
+# install boost
+RUN apt update -y \
+        && apt install -y \
+        wget \
+        && mkdir -p /downloads \
+        && cd /downloads \
+        && wget https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.gz \
+        && tar zxf boost_1_82_0.tar.gz \
+        && cd /downloads/boost_1_82_0 \
+        && /downloads/boost_1_82_0/bootstrap.sh \
+        && /downloads/boost_1_82_0/b2 --prefix=/install install \
+        && rm -rf /downloads \
+        && apt remove -y wget \
+        && apt clean -y
 
 ENV PATH "${PATH}":/install/bin
 ENV LD_LIBRARY_PATH /install/lib
