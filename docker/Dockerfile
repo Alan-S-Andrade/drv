@@ -66,6 +66,14 @@ RUN apt update -y \
         && apt remove -y wget \
         && apt clean -y
 
+# install other dependencies
+RUN apt update -y \
+        && apt install -y \
+        git \
+        clang \
+        libopenmpi-dev \
+        && apt clean -y
+
 # copy drv sources
 COPY  . /root/drv/
 WORKDIR /root/drv/
@@ -73,4 +81,7 @@ WORKDIR /root/drv/
 ENV PATH "${PATH}":/install/bin
 ENV LD_LIBRARY_PATH /install/lib
 ENV LIBRARY_PATH /install/lib
+ENV C_INCLUDE_PATH /install/include
+ENV CPLUS_INCLUDE_PATH /install/include
+ENV OMPI_CXX clang++
 
