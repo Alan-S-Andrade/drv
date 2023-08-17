@@ -32,3 +32,28 @@ RUN apt update -y \
         && apt remove -y git automake \
         && apt clean -y
 
+# install sst-elements
+RUN apt update -y \
+        && apt install -y \
+        git \
+        libltdl-dev \
+        && git clone https://github.com/mrutt92/sst-elements.git /sst-elements-src \
+        && cd /sst-elements-src \
+        && git checkout devel-drv-changes \
+        && ./autogen.sh \
+        && mkdir -p /sst-elements-build \
+        && cd /sst-elements-build \
+        && /sst-elements-src/configure \
+        --prefix=/install \
+        --with-sst-core=/install \
+        && make -j `nproc` install \
+        && rm -rf /sst-elements-build \
+        && apt remove -y git libltdl-dev \
+        && apt clean -y
+
+# build drv
+
+ENV PATH "${PATH}":/install/bin
+ENV LD_LIBRARY_PATH /install/lib
+ENV LIBRARY_PATH /install/lib
+
