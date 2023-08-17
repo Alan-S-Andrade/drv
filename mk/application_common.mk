@@ -8,8 +8,8 @@ include $(DRV_DIR)/mk/config.mk
 APP_PATH ?= $(DRV_DIR)/examples/$(APP_NAME)
 
 # Build options
-CXX := clang++
-CC  := clang
+CXX ?= clang++
+CC  ?= clang
 
 CXXFLAGS := $(APP_CXXFLAGS)
 CFLAGS   := $(APP_CFLAGS)
