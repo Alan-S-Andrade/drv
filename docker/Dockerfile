@@ -66,6 +66,10 @@ RUN apt update -y \
         && apt remove -y wget \
         && apt clean -y
 
+# copy drv sources
+COPY  . /root/drv/
+WORKDIR /root/drv/
+
 ENV PATH "${PATH}":/install/bin
 ENV LD_LIBRARY_PATH /install/lib
 ENV LIBRARY_PATH /install/lib
