@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_MEMORY_H
+#define DRV_API_MEMORY_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIThread.hpp>
 
@@ -75,3 +76,4 @@ T atomic_add(DrvAPIAddress address, T value)
     return result;
 }
 }
+#endif

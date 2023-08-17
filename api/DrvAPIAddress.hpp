@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_ADDRESS_H
+#define DRV_API_ADDRESS_H
 #include <cstdint>
 namespace DrvAPI
 {
@@ -77,3 +78,4 @@ private:
 };
 
 }
+#endif

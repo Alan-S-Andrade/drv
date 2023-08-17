@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_THREAD_STATE_H
+#define DRV_API_THREAD_STATE_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIReadModifyWrite.hpp>
 #include <stdlib.h>
@@ -212,3 +213,4 @@ private:
   T w_value_;
 };
 }
+#endif

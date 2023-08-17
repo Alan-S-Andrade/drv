@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_THREAD_H
+#define DRV_API_THREAD_H
 #include <DrvAPIThreadState.hpp>
 #include <DrvAPIMain.hpp>
 #include <boost/coroutine2/all.hpp>
@@ -132,3 +133,4 @@ extern "C" void DrvAPISetCurrentContext(DrvAPI::DrvAPIThread *thread);
  * type definition for DrvAPISetCurrentContext
  */
 typedef void (*drv_api_set_thread_context_t)(DrvAPI::DrvAPIThread *thread);
+#endif

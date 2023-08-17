@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DRV_API_ALLOCATOR_H
+#define DRV_API_ALLOCATOR_H
+
 #include <DrvAPIPointer.hpp>
 #include <DrvAPIMemory.hpp>
 
@@ -31,3 +33,4 @@ void DrvAPIMemoryFree(const DrvAPIPointer<void> &ptr);
 void DrvAPIMemoryAllocatorInit();
 
 }
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_READ_MODIFY_WRITE_H
+#define DRV_API_READ_MODIFY_WRITE_H
 #include <cstddef>
 #include <cstdint>
 namespace DrvAPI {
@@ -42,3 +43,4 @@ inline void atomic_modify(void *w, void *r, void *o, DrvAPIMemAtomicType op, std
 }
 
 }
+#endif

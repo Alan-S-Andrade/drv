@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_GLOBAL_H
+#define DRV_API_GLOBAL_H
 #include <DrvAPIPointer.hpp>
 #include <atomic>
 #include <cassert>
@@ -164,3 +165,4 @@ using DrvAPIGlobalL1SP = DrvAPIGlobal<T, DrvAPIMemoryType::DrvAPIMemoryL1SP>;
 template <typename T>
 using DrvAPIGlobalDRAM = DrvAPIGlobal<T, DrvAPIMemoryType::DrvAPIMemoryDRAM>;
 }
+#endif

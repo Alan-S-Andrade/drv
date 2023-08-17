@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_OP_H
+#define DRV_API_OP_H
 #include <DrvAPIThread.hpp>
 #include <DrvAPIThreadState.hpp>
 namespace DrvAPI
@@ -17,3 +18,4 @@ inline void wait(int cycles)
 };
 
 }
+#endif

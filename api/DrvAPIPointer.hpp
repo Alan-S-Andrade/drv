@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_POINTER_H
+#define DRV_API_POINTER_H
 #include "DrvAPIAddress.hpp"
 #include "DrvAPIMemory.hpp"
 #include <cstddef>
@@ -248,3 +249,4 @@ public:
     };                                                                  \
 
 }
+#endif

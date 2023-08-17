@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_H
+#define DRV_API_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIMain.hpp>
 #include <DrvAPIMemory.hpp>
@@ -9,3 +10,4 @@
 #include <DrvAPIAllocator.hpp>
 #include <DrvAPIGlobal.hpp>
 #include <DrvAPIOp.hpp>
+#endif

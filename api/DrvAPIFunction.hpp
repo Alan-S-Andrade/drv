@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DRV_API_FUNCTION_H
+#define DRV_API_FUNCTION_H
 #include <cstdint>
 #include <cstring>
 #include <DrvAPIMemory.hpp>
@@ -235,3 +236,4 @@ read_function_ptr(DrvAPIAddress addr)
 }
 
 }
+#endif

@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef DRV_API_MAIN_H
+#define DRV_API_MAIN_H
 typedef void (*drv_api_main_t)(int argc, char *argv[]);
 
 /**
@@ -10,3 +10,4 @@ typedef void (*drv_api_main_t)(int argc, char *argv[]);
     {                                                           \
         return main_function(argc, argv);                       \
     }
+#endif
