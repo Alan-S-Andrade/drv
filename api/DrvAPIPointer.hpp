@@ -220,16 +220,6 @@ public:
     DrvAPIAddress vaddr_; //!< virtual address 
 };
 
-// #define __DRV_UNPACK(...) __VA_ARGS__
-
-// #define DRV_API_POINTER_DATA_MEMBERS_SELECT(_0, _MORE, ...)
-// #define DRV_API_POINTER_DATA_MEMBERS()
-// #define DRV_API_POINTER_DATA_MEMBERS(member, ...)                       \
-//     int member () const {                                               \
-//         return 0;                                                       \
-//     }                                                                   \
-//     DRV_API_POINTER_DATA_MEMBERS(__VA_ARGS__)
-    
 #define DRV_API_REF_CLASS_BEGIN(type)                                   \
     class type##_ref {                                                  \
     public:                                                             \
