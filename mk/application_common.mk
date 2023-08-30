@@ -41,5 +41,5 @@ $(APP_NAME).so:
 
 
 .PHONY: run
-run:
+run: $(APP_NAME).so
 	sst $(DRV_DIR)/tests/drv-multicore-bus-test.py -- $(APP_PATH)/$(APP_NAME).so

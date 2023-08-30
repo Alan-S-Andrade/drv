@@ -4,7 +4,7 @@ include $(DRV_DIR)/mk/boost_config.mk
 APP_CXX := clang++
 APP_CC  := clang
 
-APP_CCXXFLAGS += -Wall -Wextra -Werror -Wno-vla-extension -pedantic -Wno-unused-parameter -O2
+APP_CCXXFLAGS += -Wall -Wextra -Werror -Wno-vla-extension -Wno-unused-parameter -O2
 APP_CCXXFLAGS += -Wno-unused-variable -Wno-unused-but-set-variable -Wno-gnu-zero-variadic-macro-arguments
 APP_CCXXFLAGS += -fPIC
 APP_CCXXFLAGS += -I$(DRV_DIR)/install/include
