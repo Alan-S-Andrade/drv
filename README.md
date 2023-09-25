@@ -15,6 +15,14 @@ Here are the repos you should clone with the branches you should checkout.
 - `sst-core`: https://github.com/sstsimulator/sst-core (devel)
 - `sst-elements`: https://github.com/mrutt92/sst-elements (devel-drv-changes)
 
+Drv can simulate RISCV programs. You will need to have the RISCV toolchain installed.
+
+- `riscv-gnu-toolchain`: https://github.com/riscv-collab/riscv-gnu-toolchain
+
+Use the following command to configure the riscv toolchain:
+
+`./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=<install-path>`
+
 Drv has been tested on CentOS and Ubuntu systems.
 
 ## Configuring
@@ -29,6 +37,11 @@ set this variable to `/path/to/sst-elements/install`.
 
 In `drv/mk/install_config.mk`, set `DRV_INSTALL_DIR` to wherever you want to install the `DrvAPI` header files and the `Drv` element
 libraries needed by `sst`.
+
+In `drv/mk/riscv_config.mk`, set `RISCV_INSTALL_DIR` to wherever you install riscv-gnu-toolchain.
+That means if you built `riscv-gnu-toolchain` with `./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=/path/to/toolchain/install`,
+you should set this variable to `/path/to/toolchain/install`.
+
 
 Finally, make sure that wherever you installed the `sst` executable is in your `PATH`.
 That means if you built `sst-core`with `configure --prefix=/path/to/sst-core/install && make install`, you should
@@ -57,6 +70,10 @@ program with `drv` is the following:
     `sst drv-multicore-{bus|nic}-test.py -- /path/to/my-app/<my-app>.so [ARG1 [ARG2 [... ARGN]]]`
 
 Have fun!
+
+## Running A Drv RISCV Application
+
+Go to `drv/riscv-examples/<some-example>` and run `make run`. This will build the app and run the right model.
 
 # Using Docker
 
