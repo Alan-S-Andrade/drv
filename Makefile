@@ -4,15 +4,18 @@ all: install examples
 
 EXAMPLES = $(wildcard $(DRV_DIR)/examples/*/)
 
-.PHONY: all install install-element install-api
+.PHONY: all install install-element install-api install-interpreter
 .PHONY: clean  examples $(EXAMPLES)
 
-install: install-api install-element
+install: install-api install-element install-interpreter
 
 install-api:
 	$(MAKE) -C $(DRV_DIR)/api/ install
 
-install-element: install-api
+install-interpreter:
+	$(MAKE) -C $(DRV_DIR)/interpreter/ install
+
+install-element: install-api install-interpreter
 	$(MAKE) -C $(DRV_DIR)/element/ install
 
 $(foreach example, $(EXAMPLES), $(example)-clean): %-clean:
@@ -21,9 +24,10 @@ $(foreach example, $(EXAMPLES), $(example)-clean): %-clean:
 clean: $(foreach example, $(EXAMPLES), $(example)-clean)
 	$(MAKE) -C $(DRV_DIR)/element/ clean
 	$(MAKE) -C $(DRV_DIR)/api/ clean
+	$(MAKE) -C $(DRV_DIR)/interpreter/ clean
 	rm -rf install/
 
-$(EXAMPLES): install-api install-element
+$(EXAMPLES): install-api install-element install-interpreter
 
 examples: $(EXAMPLES)
 

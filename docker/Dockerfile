@@ -66,6 +66,20 @@ RUN apt update -y \
         && apt remove -y wget \
         && apt clean -y
 
+
+# install riscv gnu toolchain
+RUN apt update -y \
+        && apt install -y git automake gawk wget curl texinfo libgmp-dev flex bison \
+        && git clone https://github.com/riscv-collab/riscv-gnu-toolchain /riscv-gnu-toolchain \
+        && cd /riscv-gnu-toolchain \
+        && ./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=/install \
+        && make -j `nproc` \
+        && make install \
+        && /install/bin/riscv64-unknown-elf-gcc --version \
+        && rm -rf /riscv-gnu-toolchain \
+        && apt remove -y git automake gawk wget curl texinfo libgmp-dev flex bison \
+        && apt clean -y
+
 # install other dependencies
 RUN apt update -y \
         && apt install -y \
@@ -87,4 +101,4 @@ WORKDIR /root/drv/
 
 # build drv
 RUN cd /root/drv \
-        && make
+        && make -j `nproc`
