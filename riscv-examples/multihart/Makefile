@@ -1,0 +1,11 @@
+DRV_DIR := $(shell git rev-parse --show-toplevel)
+TARGET := exe.riscv
+
+PLATFORM ?= ph
+VERBOSE ?= 0
+HARTS ?= 1
+
+SIM_OPTIONS := --harts $(HARTS)
+SIM_OPTIONS += --verbose-core $(VERBOSE)
+
+include $(DRV_DIR)/mk/riscv_common.mk
