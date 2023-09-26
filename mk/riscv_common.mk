@@ -45,5 +45,7 @@ $(TARGET): %.riscv: $(COBJECT) $(CXXOBJECT) $(ASMOBJECT)
 clean:
 	rm -f *.o *.riscv
 
+SIM_OPTIONS ?=
+
 run: $(TARGET)
-	sst $(SCRIPT) -- $(TARGET)
+	sst $(SCRIPT) -- $(TARGET) $(SIM_OPTIONS)

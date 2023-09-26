@@ -1,5 +1,6 @@
 import sst
 import sys
+import argparse
 
 MEM_BASE  = 0x00000000
 MEM_SIZE  = 0x00020000
@@ -12,16 +13,40 @@ STACK_SIZE = MEM_SIZE
 
 size_to_str = lambda x: str(x) + "B"
 
+parser = argparse.ArgumentParser()
+parser.add_argument("program", help="program to run")
+parser.add_argument("--harts", type=int, default=1, help="number of harts")
+parser.add_argument("--verbose-core", type=int, default=0, help="verbosity of core")
+args = parser.parse_args()
+
+# set stack pointers
+# divide stack space among harts
+STACK_WORDS = STACK_SIZE // 8
+HART_STACK_WORDS = STACK_WORDS // args.harts
+HART_STACK_SIZE = HART_STACK_WORDS * 8
+
+sp_v = ["{} {}".format(i, STACK_BASE + ((i+1)*HART_STACK_SIZE) - 8) for i in range(args.harts)]
+sp_str = "[" + ", ".join(sp_v) + "]"
+
+print(
+    """
+    Running {}:
+    - harts: {}
+    - sp: {}
+    - verbose-core: {}
+    """.format(args.program, args.harts, sp_str, args.verbose_core)
+)
 # build the core
 core = sst.Component("core", "Drv.RISCVCore")
 core.addParams({
-    "verbose" : 0,
+    "verbose" : args.verbose_core,
     "clock" : "2GHz",
-    "num_harts" : 1,
+    "num_harts" : args.harts,
     "load" : 1,
-    "program" : sys.argv[1],
-    "sp" : "[0 {}]".format(STACK_BASE + STACK_SIZE - 8),
+    "program" : args.program,
+    "sp" : sp_str,
 })
+
 core_iface = core.setSubComponent("memory", "memHierarchy.standardInterface")
 core_iface.addParams({
     "verbose" : 1,
@@ -39,6 +64,10 @@ scratch.addParams({
     "access_time" : "2ns",
     "mem_size" : size_to_str(MEM_SIZE),
 })
+scratchcmdhandler = scratchmemctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+scratchcmdhandler.addParams({
+    "verbose_level" : 0,
+})
 
 # build the dram memory controller
 drammemctrl = sst.Component("dram", "memHierarchy.MemController")
@@ -51,6 +80,10 @@ dram = drammemctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
 dram.addParams({
     "access_time" : "100ns",
     "mem_size" : size_to_str(DRAM_SIZE),
+})
+dramcmdhandler = drammemctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+dramcmdhandler.addParams({
+    "verbose_level" : 0,
 })
 
 bus = sst.Component("bus", "memHierarchy.Bus")

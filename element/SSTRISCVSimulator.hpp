@@ -2,6 +2,7 @@
 #include <RV64IMInterpreter.hpp>
 #include <sst/core/interfaces/stdMem.h>
 #include <map>
+#include "DrvAPIReadModifyWrite.hpp"
 namespace SST {
 namespace Drv {
 
@@ -36,8 +37,44 @@ public:
     void visitSW(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSD(RISCVHart &hart, RISCVInstruction &instruction) override;
 
+    // csr instructions
+private:
+    uint64_t visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint64_t wval, uint64_t mask);
+
+public:
+    void visitCSRRW(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitCSRRS(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitCSRRC(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitCSRRWI(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitCSRRSI(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitCSRRCI(RISCVHart &hart, RISCVInstruction &instruction) override;
+
     // atomics
+private:
+    template <typename T>
+    void visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvAPIMemAtomicType op);
+
+    void visitAMOSWAPW(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOSWAPW_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOSWAPW_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOSWAPW_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
+    void visitAMOADDW(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOADDW_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOADDW_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOADDW_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
     
+    void visitAMOSWAPD(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOSWAPD_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOSWAPD_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOSWAPD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
+    void visitAMOADDD(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOADDD_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOADDD_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
+    // environment calls
     void visitECALL(RISCVHart &hart, RISCVInstruction &instruction) override;
     
     RISCVCore *core_; //!< the riscv core component
@@ -45,7 +82,13 @@ public:
     static constexpr uint64_t MMIO_BASE       = 0xFFFFFFFFFFFF0000;
     static constexpr uint64_t MMIO_PRINT_INT  = MMIO_BASE + 0x0000;
     static constexpr uint64_t MMIO_PRINT_HEX  = MMIO_BASE + 0x0008;
-    static constexpr uint64_t MMIO_PRINT_CHAR = MMIO_BASE + 0x0010;    
+    static constexpr uint64_t MMIO_PRINT_CHAR = MMIO_BASE + 0x0010;
+
+    // CSRs
+    static constexpr uint64_t CSR_MHARTID = 0xF14;
+    static constexpr uint64_t CSR_MSTATUS = 0x300;
+    
+    
 private:    
     template <typename R, typename T>
     void visitLoad(RISCVHart &hart, RISCVInstruction &instruction);

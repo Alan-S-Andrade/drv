@@ -143,16 +143,26 @@ void RISCVCore::finish() {
 void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
     output_.verbose(CALL_INFO, 50, 0, "Received memory request\n");
     int tid = -1;
-    if (auto *rd_rsp = dynamic_cast<Interfaces::StandardMem::ReadResp*>(req)) {
+
+    auto *rd_rsp = dynamic_cast<Interfaces::StandardMem::ReadResp*>(req);
+    if (rd_rsp) {
         tid = rd_rsp->tid;
-    } else {
-        auto wr_rsp = dynamic_cast<Interfaces::StandardMem::WriteResp*>(req);
-        if (wr_rsp) {
-            tid = wr_rsp->tid;
-        } else {
-            output_.fatal(CALL_INFO, -1, "Unknown memory request type\n");
-        }
     }
+
+    auto *wr_rsp = dynamic_cast<Interfaces::StandardMem::WriteResp*>(req);
+    if (wr_rsp) {
+        tid = wr_rsp->tid;
+    }
+
+    auto *custom_rsp = dynamic_cast<Interfaces::StandardMem::CustomResp*>(req);
+    if (custom_rsp) {
+        tid = custom_rsp->tid;
+    }
+
+    if (!rd_rsp && !wr_rsp && !custom_rsp) {
+        output_.fatal(CALL_INFO, -1, "Unknown memory request type\n");
+    }
+
     auto it = rsp_handlers_.find(tid);
     if (it == rsp_handlers_.end()) {
         output_.fatal(CALL_INFO, -1, "Received memory request for unknown hart\n");
