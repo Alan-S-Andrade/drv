@@ -3,6 +3,7 @@
 #include <sst/core/interfaces/stdMem.h>
 #include <map>
 #include "DrvAPIReadModifyWrite.hpp"
+#include "DrvNativeSimulationTranslator.hpp"
 namespace SST {
 namespace Drv {
 
@@ -112,12 +113,13 @@ private:
     
     // void sysREADV(RISCVSimHart &shart, RISCVInstruction &i);
     // void sysWRITEV(RISCVSimHart &shart, RISCVInstruction &i);
-    // void sysCLOSE(RISCVSimHart &shart, RISCVInstruction &i);
-    // void sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i);
+    void sysCLOSE(RISCVSimHart &shart, RISCVInstruction &i);
+    void sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i);
     
     bool isMMIO(SST::Interfaces::StandardMem::Addr addr);
 
     std::map<uint64_t, int64_t> _pchist;
+    DrvNativeSimulationTranslator _type_translator;
 };
 
 }
