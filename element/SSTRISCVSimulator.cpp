@@ -1,3 +1,8 @@
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+
 #include <sstream>
 #include <type_traits>
 #include "SSTRISCVSimulator.hpp"
@@ -329,12 +334,33 @@ void RISCVSimulator::sysREAD(RISCVSimHart &shart, RISCVInstruction &i) {
 void RISCVSimulator::sysBRK(RISCVSimHart &shart, RISCVInstruction &i) {
     uint64_t addr = shart.a(0);
     core_->output_.verbose(CALL_INFO, 2, 0, "BRK: addr=%#lx\n", addr);
-    shart.a(0) = 0;
+    shart.a(0) = -1;
 }
 
 void RISCVSimulator::sysEXIT(RISCVSimHart &shart, RISCVInstruction &i) {
     shart.ready() = false;
     shart.exit() = true;
+}
+
+void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
+    int fd = shart.sa(0);
+    uint64_t stat_buf = shart.a(1);
+    core_->output_.verbose(CALL_INFO, 2, 0, "FSTAT: fd=%d, stat_buf=%#lx\n", fd, stat_buf);    
+    struct stat stat_s;
+    int r = fstat(fd, &stat_s);
+    std::vector<unsigned char> sim_stat_s = _type_translator.nativeToSimulator_stat(&stat_s);
+    // set the return value
+    shart.a(0) = r;
+    // issue a write request
+    shart.ready() = false;
+    RISCVCore::ICompletionHandler ch([&shart, sim_stat_s](StandardMem::Request *req) {
+        // handle the write response
+        shart.ready() = true;
+        delete req;
+    });
+    auto wr = new StandardMem::Write(stat_buf, sim_stat_s.size(), sim_stat_s);
+    wr->tid = core_->getHartId(shart);
+    core_->issueMemoryRequest(wr, wr->tid, ch);
 }
 
 void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
@@ -353,7 +379,7 @@ void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
     RISCVCore::ICompletionHandler ch([&shart, this, flags, mode](StandardMem::Request *req) {
         auto *rsp = static_cast<StandardMem::ReadResp *>(req);
         char *path = (char *)&rsp->data[0];
-        int32_t my_flags = O_RDWR | O_CREAT | O_TRUNC;
+        int32_t my_flags = _type_translator.simulatorToNative_openflags(flags);
         mode_t my_mode = 0644;
         core_->output_.verbose(CALL_INFO, 2, 0
                                , "OPEN: path=%s, flags=%lx (my_flags=%lx), mode=%ld (my_mode=%lx)\n"
@@ -364,6 +390,16 @@ void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
         shart.ready() = true;
     });
     core_->issueMemoryRequest(rd, rd->tid, ch);
+}
+
+void RISCVSimulator::sysCLOSE(RISCVSimHart &shart, RISCVInstruction &i) {
+    int fd = shart.sa(0);
+    if (fd != STDOUT_FILENO && fd != STDERR_FILENO && fd != STDIN_FILENO) {
+        core_->output_.verbose(CALL_INFO, 2, 0, "CLOSE: fd=%d\n", fd);    
+        shart.a(0) = close(fd);
+    } else {
+        shart.a(0) = 0;
+    }
 }
 
 void RISCVSimulator::visitECALL(RISCVHart &hart, RISCVInstruction &i) {
@@ -381,11 +417,15 @@ void RISCVSimulator::visitECALL(RISCVHart &hart, RISCVInstruction &i) {
     case SYS_read:
         sysREAD(shart, i);
         break;
-#if 0
+    case SYS_fstat:
+        sysFSTAT(shart, i);
+        break;
+    case SYS_close:
+        sysCLOSE(shart, i);
+        break;
     case SYS_open:
         sysOPEN(shart, i);
         break;
-#endif
     default:
         core_->output_.fatal(CALL_INFO, -1, "Unknown ECALL %lu\n", (unsigned long)shart.a(7));
     }
