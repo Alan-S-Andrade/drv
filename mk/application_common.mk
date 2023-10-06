@@ -40,6 +40,7 @@ $(APP_NAME).so:
 	$(CXX) $(CXXFLAGS) -o $@ $(filter %.o,$^) $(LDFLAGS) $(LIBS)
 
 
+SCRIPT ?= drv-multicore-bus-test.py
 .PHONY: run
 run: $(APP_NAME).so
-	sst $(DRV_DIR)/tests/drv-multicore-bus-test.py -- $(APP_PATH)/$(APP_NAME).so
+	sst $(DRV_DIR)/tests/$(SCRIPT) -- $(APP_PATH)/$(APP_NAME).so

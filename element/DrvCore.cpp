@@ -63,6 +63,16 @@ void DrvCore::configureExecutable(SST::Params &params) {
     output_->fatal(CALL_INFO, -1, "unable to find DrvAPISetCurrentContext in executable: %s\n", dlerror());
   }
 
+  get_sys_config_app_ = (DrvAPIGetSysConfig_t)dlsym(executable_, "DrvAPIGetSysConfig");
+  if (!get_sys_config_app_) {
+      output_->fatal(CALL_INFO, -1, "unable to find DrvAPIGetSysConfig in executable: %s\n", dlerror());
+  }
+
+  set_sys_config_app_ = (DrvAPISetSysConfig_t)dlsym(executable_, "DrvAPISetSysConfig");
+  if (!set_sys_config_app_) {
+      output_->fatal(CALL_INFO, -1, "unable to find DrvAPISetSysConfig in executable: %s\n", dlerror());
+  }
+  
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured executable\n");  
 }
 
@@ -91,11 +101,14 @@ void DrvCore::configureClock(SST::Params &params) {
  */
 void DrvCore::configureThread(int thread, int threads) {
   output_->verbose(CALL_INFO, 2, DEBUG_INIT, "configuring thread (%2d/%2d)\n", thread, threads);
-  threads_.emplace_back();
-  threads_.back().getAPIThread().setMain(main_);
-  threads_.back().getAPIThread().setArgs(argv_.size(), argv_.data());
-  threads_.back().getAPIThread().setId(thread);
-  threads_.back().getAPIThread().setCoreId(id_);
+  DrvAPI::DrvAPIThread& api_thread = threads_.emplace_back().getAPIThread();
+  api_thread.setMain(main_);
+  api_thread.setArgs(argv_.size(), argv_.data());
+  api_thread.setId(thread);
+  api_thread.setCoreId(id_);
+  api_thread.setCoreThreads(threads);
+  api_thread.setPodId(pod_);
+  api_thread.setPxnId(pxn_);
 }
 
 /**
@@ -140,6 +153,26 @@ void DrvCore::configureOtherLinks(SST::Params &params) {
     loopback_->addSendLatency(1, "ns");
 }
 
+/**
+ * configure sysconfig
+ * @param[in] params Parameters to this component.
+ */
+void DrvCore::configureSysConfig(SST::Params &params) {
+    sys_config_.init(params);
+    DrvAPI::DrvAPISysConfig cfg = sys_config_.config();
+    output_->verbose(CALL_INFO, 1, DEBUG_INIT,
+                     "configured sysconfig: "
+                     "num_pxn = %" PRId64 ", "
+                     "pxn_pods = %" PRId64 ", "
+                     "pod_cores = %" PRId64 ", "
+                     "core_threads = %" PRId64
+                     "\n"
+                     ,cfg.numPXN()
+                     ,cfg.numPXNPods()
+                     ,cfg.numPodCores()
+                     );
+}
+
 void DrvCore::parseArgv(SST::Params &params) {
     std::string argv_str = params.find<std::string>("argv", "");
     std::stringstream ss(argv_str);
@@ -159,15 +192,19 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   , idle_cycles_(0)
   , core_on_(false) {
   id_ = params.find<int>("id", 0);
+  pod_ = params.find<int>("pod", 0);
+  pxn_ = params.find<int>("pxn", 0);
   registerAsPrimaryComponent();
   primaryComponentDoNotEndSim();
   configureOutput(params);
+  configureSysConfig(params);
   configureClock(params);
   configureMemory(params);
   configureOtherLinks(params);
   configureExecutable(params);
   parseArgv(params);
   configureThreads(params);
+  setSysConfigApp();
 }
 
 DrvCore::~DrvCore() {

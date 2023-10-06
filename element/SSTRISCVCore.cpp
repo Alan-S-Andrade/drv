@@ -49,6 +49,12 @@ void RISCVCore::configureSimulator(Params &params) {
     sim_ = new RISCVSimulator(this);
 }
     
+void RISCVCore::configureSysConfig(Params &params) {
+    sys_config_.init(params);
+    core_ = params.find<int>("core", 0);
+    pod_  = params.find<int>("pod", 0);
+    pxn_  = params.find<int>("pxn", 0);
+}
 
 /* constructor */
 RISCVCore::RISCVCore(ComponentId_t id, Params& params)
@@ -64,6 +70,7 @@ RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     configureSimulator(params);
     configureHarts(params);
     configureMemory(params);
+    configureSysConfig(params);
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
 }
