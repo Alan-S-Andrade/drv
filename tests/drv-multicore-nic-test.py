@@ -3,8 +3,6 @@ import sys
 
 VERBOSE = 0
 VERBOSE_MEMCTRL = 0
-CORES = 64
-THREADS = 32
 CORE_DEBUG = {
     "init"      : False,
     "clock"     : False,
@@ -13,10 +11,19 @@ CORE_DEBUG = {
     "loopback"  : False,
 }
 
+CORES = 64
+THREADS = 32
 DRAM_BASE = 0x80000000
 L1SP_BASE = 0x00000000
 
-#executable = sys.argv[1]
+SYSCONFIG = {
+    "num_pxn"      : 1,
+    "pxn_pods"     : 1,
+    "pod_cores"    : CORES,
+}
+
+SYSCONFIG = { "sys_" + k : v for k, v in SYSCONFIG.items() }
+
 if (len(sys.argv) < 2):
     print("ERROR: Must specify executable to run")
     exit(1)
@@ -43,7 +50,10 @@ class Tile(object):
             "executable" : executable,
             "argv" : ' '.join(argv),
             "id" : id,
+            "pod" : 0,
+            "pxn" : 0,
         })
+        self.core.addParams(SYSCONFIG)
         self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
         self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({

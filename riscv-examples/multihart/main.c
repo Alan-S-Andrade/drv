@@ -1,23 +1,8 @@
 #include <string.h>
 #include <stdint.h>
+#include <pandohammer/mmio.h>
+#include <pandohammer/cpuinfo.h>
 
-/**
- * print_int.c
- */
-static inline void print_int(long x)
-{
-    *(volatile long*)0xFFFFFFFFFFFF0000 = x;
-}
-
-static inline void print_hex(unsigned long x)
-{
-    *(volatile unsigned long*)0xFFFFFFFFFFFF0008 = x;
-}
-
-static inline void print_char(char x)
-{
-    *(volatile char*)0xFFFFFFFFFFFF0010 = x;
-}
 
 #define ARRAY_SIZE(x) \
     (sizeof(x)/sizeof((x)[0]))
@@ -51,10 +36,18 @@ int64_t x = -1;
 int64_t y =  0;
 
 int main() {
-    int64_t id  = hartid();
+    ph_print_int(myThreadId());
+    ph_print_int(myCoreId());
+    ph_print_int(myPodId());
+    ph_print_int(myPXNId());
+    ph_print_int(myCoreThreads());
+    ph_print_int(numPXN());
+    ph_print_int(numPodCores());
+    ph_print_int(numPXNPods());
+    //int64_t id  = hartid();
     //print_int(id);
     // swap id with x
     //print_int(amoswap(id, &x));
-    print_int(amoadd(1, &y));
+    //ph_print_int(amoadd(1, &y));
     return 0;
 }

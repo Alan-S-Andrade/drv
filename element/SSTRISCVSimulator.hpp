@@ -87,6 +87,14 @@ private:
 
     // CSRs
     static constexpr uint64_t CSR_MHARTID = 0xF14;
+    static constexpr uint64_t CSR_MCOREID = 0xF15;
+    static constexpr uint64_t CSR_MPODID  = 0xF16;
+    static constexpr uint64_t CSR_MPXNID  = 0xF17;
+    static constexpr uint64_t CSR_MCOREHARTS = 0xF18;
+    static constexpr uint64_t CSR_MPODCORES  = 0xF19;
+    static constexpr uint64_t CSR_MPXNPODS   = 0xF1A;
+    static constexpr uint64_t CSR_MNUMPXN    = 0xF1B;
+
     static constexpr uint64_t CSR_MSTATUS = 0x300;
     
     

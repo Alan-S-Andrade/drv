@@ -11,6 +11,7 @@
 #include <ICacheBacking.hpp>
 #include "SSTRISCVSimulator.hpp"
 #include "SSTRISCVHart.hpp"
+#include "DrvSysConfig.hpp"
 
 namespace SST {
 namespace Drv {
@@ -35,9 +36,13 @@ public:
         {"program", "Program to run", "/path/to/r64elf"},
         {"load", "Load program into memory", "0"},
         /* system config */
+        DRV_SYS_CONFIG_PARAMETERS
         {"sp", "[Core Value. ...]"},
         {"clock", "Clock rate in Hz", "1GHz"},
         {"num_harts", "Number of harts", "1"},
+        {"core", "Core ID", "0"},
+        {"pod", "Pod ID", "0"},
+        {"pxn", "PXN ID", "0"},
         /* debugging */
         {"verbose", "Verbosity of output", "0"},        
     )
@@ -125,6 +130,11 @@ public:
      * configure simulator
      */
     void configureSimulator(Params &params);
+
+    /**
+     * configure system config
+     */
+    void configureSysConfig(Params &params);
     
     /**
      * clock tick
@@ -144,6 +154,18 @@ public:
 
     int getHartId(RISCVSimHart &hart) const {
         return &hart - &harts_[0];
+    }
+
+    int getCoreId() const {
+        return core_;
+    }
+
+    int getPodId() const {
+        return pod_;
+    }
+
+    int getPXNId() const {
+        return pxn_;
     }
     
     static constexpr int NO_HART = -1;
@@ -176,6 +198,11 @@ public:
             it->second++;
         }
     }
+
+    /**
+     * get system info
+     */
+    DrvAPI::DrvAPISysConfig sys() const { return sys_config_.config(); }
     
     SST::Output output_; //!< output stream
     Interfaces::StandardMem *mem_; //!< memory interface
@@ -187,7 +214,11 @@ public:
     SST::TimeConverter *clocktc_; //!< the clock time converter
     int last_hart_; //!< last hart to execute
     bool load_program_; //!< load program
+    DrvSysConfig sys_config_; //!< system configuration
     std::map<uint64_t, int64_t> pchist_; //!< program counter history
+    int core_; //!< core id wrt pod
+    int pod_;  //!< pod id wrt pxn
+    int pxn_;  //!< pxn id wrt system
 };
 
 

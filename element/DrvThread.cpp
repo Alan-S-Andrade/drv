@@ -7,8 +7,9 @@ using namespace Drv;
 /**
  * Constructor
  */
-DrvThread::DrvThread() {
+DrvThread::DrvThread()  {
     thread_ = std::make_unique<DrvAPI::DrvAPIThread>();
+    thread_->setCoreThreads(1);
 }
 
 /**

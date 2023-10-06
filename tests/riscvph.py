@@ -11,6 +11,14 @@ DRAM_SIZE = 0x40000000
 STACK_BASE = MEM_BASE
 STACK_SIZE = MEM_SIZE
 
+
+SYSCONFIG = {
+    "num_pxn"      : 1,
+    "pxn_pods"     : 1,
+    "pod_cores"    : 1,
+}
+SYSCONFIG = { "sys_" + k : v for k, v in SYSCONFIG.items() }
+
 size_to_str = lambda x: str(x) + "B"
 
 parser = argparse.ArgumentParser()
@@ -45,7 +53,11 @@ core.addParams({
     "load" : 1,
     "program" : args.program,
     "sp" : sp_str,
+    "core" : 0,
+    "pod" : 0,
+    "pxn" : 0,
 })
+core.addParams(SYSCONFIG)
 
 core_iface = core.setSubComponent("memory", "memHierarchy.standardInterface")
 core_iface.addParams({

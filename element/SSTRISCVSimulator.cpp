@@ -20,15 +20,24 @@ bool RISCVSimulator::isMMIO(SST::Interfaces::StandardMem::Addr addr) {
 }
 
 template <typename T>
-void RISCVSimulator::visitStoreMMIO(RISCVHart &shart, RISCVInstruction &i) {
+void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
+    RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     StandardMem::Addr addr = shart.x(i.rs1()) + i.Simm();
     std::stringstream ss;
     switch (addr) {
     case MMIO_PRINT_INT:
-        std::cout << static_cast<std::make_signed_t<T>>(shart.sx(i.rs2())) << std::endl;;
+        std::cout << "PXN: " << std::setw(3) << core_->getPXNId() << " ";
+        std::cout << "POD: " << std::setw(2) << core_->getPodId() << " ";
+        std::cout << "CORE: " << std::setw(3) << core_->getCoreId() << " ";
+        std::cout << "THREAD: " << std::setw(2) << core_->getHartId(shart) << " ";
+        std::cout << ":" << static_cast<std::make_signed_t<T>>(shart.sx(i.rs2())) << std::endl;;
         break;
     case MMIO_PRINT_HEX:
-        ss << "0x" << std::hex << std::setfill('0') << std::setw(sizeof(T)*2);
+        std::cout << "PXN: " << core_->getPXNId() << " ";
+        std::cout << "POD: " << core_->getPodId() << " ";
+        std::cout << "CORE: " << core_->getCoreId() << " ";
+        std::cout << "THREAD: " << std::setw(2) << core_->getHartId(shart) << " ";
+        ss << ": 0x" << std::hex << std::setfill('0') << std::setw(sizeof(T)*2);
         ss << static_cast<std::make_unsigned_t<T>>(shart.x(i.rs2()));
         std::cout << ss.str() << std::endl;
         break;
@@ -230,6 +239,29 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
     case CSR_MHARTID: // read-only
         rval = core_->getHartId(shart);
         break;
+    case CSR_MCOREID: // read-only
+        rval = core_->getCoreId();
+        break;
+    case CSR_MPODID: // read-only
+        rval = core_->getPodId();
+        break;
+    case CSR_MPXNID: // read-only
+        rval = core_->getPXNId();
+        break;
+    case CSR_MCOREHARTS: // read-only
+        rval = core_->numHarts();
+        break;
+    case CSR_MPODCORES: // read-only
+        rval = core_->sys().numPodCores();
+        break;
+    case CSR_MPXNPODS: // read-only
+        rval = core_->sys().numPXNPods();
+        break;
+    case CSR_MNUMPXN: // read-only
+        rval = core_->sys().numPXN();
+        break;
+    default:
+        core_->output_.fatal(CALL_INFO, -1, "CSR %x is not implemented", csr);
     }
     return rval;
 }
