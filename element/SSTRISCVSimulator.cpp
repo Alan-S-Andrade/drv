@@ -261,7 +261,7 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
         rval = core_->sys().numPXN();
         break;
     default:
-        core_->output_.fatal(CALL_INFO, -1, "CSR %x is not implemented", csr);
+        core_->output_.fatal(CALL_INFO, -1, "CSR %" PRIx64 " is not implemented", csr);
     }
     return rval;
 }
@@ -414,7 +414,7 @@ void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
         int32_t my_flags = _type_translator.simulatorToNative_openflags(flags);
         mode_t my_mode = 0644;
         core_->output_.verbose(CALL_INFO, 2, 0
-                               , "OPEN: path=%s, flags=%lx (my_flags=%lx), mode=%ld (my_mode=%lx)\n"
+                               , "OPEN: path=%s, flags=%" PRIx32 " (my_flags=%" PRIx32 "), mode=%u (my_mode=%u)\n"
                                , path, flags, my_flags, mode, my_mode);
         // handle the read response
         shart.a(0) = open((const char *)&rsp->data[0], my_flags, my_mode);

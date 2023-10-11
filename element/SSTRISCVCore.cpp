@@ -184,7 +184,6 @@ int RISCVCore::selectNextHart() {
     int stop = start + harts_.size();
     for (int h = start; h < stop; h++) {
         int hart_id = h % harts_.size();
-        RISCVSimHart &hart = harts_[hart_id];
         if (harts_[hart_id].ready()) {
             last_hart_ = hart_id;
             return hart_id;
@@ -198,9 +197,9 @@ bool RISCVCore::tick(Cycle_t cycle) {
     int hart_id = selectNextHart();
     if (hart_id != NO_HART) {
         uint64_t pc = harts_[hart_id].pc();
-        uint64_t inst = icache_->read(pc);
+        uint32_t inst = icache_->read(pc);
         RISCVInstruction *i = decoder_.decode(inst);
-        output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016lx, instr = 0x%08x (%s)\n"
+        output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x08%" PRIx32" (%s)\n"
                         ,hart_id
                         ,pc
                         ,inst

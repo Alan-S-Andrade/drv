@@ -13,6 +13,8 @@ CXXFLAGS=$(shell $(SST_CONFIG) --ELEMENT_CXXFLAGS) -fno-stack-protector -O2
 CXXFLAGS+=$(BOOST_CXXFLAGS)
 CXXFLAGS+=$(SST_ELEMENTS_CXXFLAGS)
 CXXFLAGS+=-I$(RISCV_INSTALL_DIR)
+CXXFLAGS+=-Wall -Wextra -Werror
+CXXFLAGS+=-Wno-reorder -Wno-ignored-qualifiers -Wno-unused-parameter
 CXXFLAGS+=-DDEBUG -g
 
 LDFLAGS =  $(shell sst-config --ELEMENT_LDFLAGS) -fno-stack-protector

@@ -10,6 +10,7 @@ class RISCVInterpreter;
 class RISCVInstruction {
 public:
     RISCVInstruction(uint32_t instruction) : instruction_(instruction) {}
+    virtual ~RISCVInstruction() {}
     virtual void accept(RISCVHart &hart, RISCVInterpreter &interpreter) = 0;
     virtual const char* getMnemonic() = 0;
     uint32_t rs1() const { return (instruction_ >> 15) & 0x1F; }

@@ -37,7 +37,7 @@ public:
         {"load", "Load program into memory", "0"},
         /* system config */
         DRV_SYS_CONFIG_PARAMETERS
-        {"sp", "[Core Value. ...]"},
+        {"sp", "[Core Value. ...]", ""},
         {"clock", "Clock rate in Hz", "1GHz"},
         {"num_harts", "Number of harts", "1"},
         {"core", "Core ID", "0"},

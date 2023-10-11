@@ -145,11 +145,13 @@ public:
     }
     
     void printEIdent() {
+#ifdef ICACHE_BACKING_DEBUG
         auto e_ident = ehdr()->e_ident;
         pr_debug("e_ident: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
                 e_ident[EI_MAG0], e_ident[EI_MAG1], e_ident[EI_MAG2], e_ident[EI_MAG3],
                 e_ident[EI_CLASS], e_ident[EI_DATA], e_ident[EI_VERSION], e_ident[EI_OSABI],
                 e_ident[EI_ABIVERSION], e_ident[EI_PAD]);
+#endif
     }
 
 
