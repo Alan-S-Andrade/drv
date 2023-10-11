@@ -79,8 +79,8 @@ public:
     : DrvAPIMem(), address_(address) {}
 
   DrvAPIAddress getAddress() const { return address_; }
-  virtual void getResult(void *p) {}
-  virtual void setResult(void *p) {}
+  virtual void getResult(void *p) = 0;
+  virtual void setResult(void *p) = 0;
   virtual size_t getSize() const { return 0; }
 protected:
   DrvAPIAddress address_;
@@ -125,8 +125,8 @@ public:
   DrvAPIMemWrite(DrvAPIAddress address)
     : DrvAPIMem(), address_(address) {}
   DrvAPIAddress getAddress() const { return address_; }
-  virtual void getPayload(void *p) {}
-  virtual void setPayload(void *p) {}
+  virtual void getPayload(void *p) = 0;
+  virtual void setPayload(void *p)  = 0;
   virtual size_t getSize() const { return 0; }
 
 protected:
@@ -169,11 +169,11 @@ public:
   DrvAPIMemAtomic(DrvAPIAddress address)
     : DrvAPIMem(), address_(address) {}
   DrvAPIAddress getAddress() const { return address_; }
-  virtual void getPayload(void *p) {}
-  virtual void setPayload(void *p) {}
-  virtual void getResult(void *p) {}
-  virtual void setResult(void *p) {}
-  virtual void modify() {}
+  virtual void getPayload(void *p) = 0;
+  virtual void setPayload(void *p)  = 0;
+  virtual void getResult(void *p) = 0;
+  virtual void setResult(void *p) = 0;
+  virtual void modify() = 0;
   virtual size_t getSize() const { return 0; }
   virtual DrvAPIMemAtomicType getOp() const = 0;
 protected:    

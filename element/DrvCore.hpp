@@ -29,7 +29,7 @@ public:
   // Document the parameters that this component accepts
   SST_ELI_DOCUMENT_PARAMS(
       /* input */
-      {"executable", "Path to user program"},
+      {"executable", "Path to user program", ""},
       {"argv","List of arguments for program", ""},
       /* system config */
       DRV_SYS_CONFIG_PARAMETERS
@@ -48,9 +48,9 @@ public:
       {"verbose", "Verbosity of logging", "0"},
       {"debug_init", "Print debug messages during initialization", "False"},
       {"debug_clock", "Print debug messages we expect to see during clock ticks", "False"},
-      {"debug_requests", "Print debug messages we expect to see during request events"},
-      {"debug_responses", "Print debug messages we expect to see during response events"},
-      {"debug_loopback", "Print debug messages we expect to see during loopback events"},
+      {"debug_requests", "Print debug messages we expect to see during request events", "False"},
+      {"debug_responses", "Print debug messages we expect to see during response events", "False"},
+      {"debug_loopback", "Print debug messages we expect to see during loopback events", "False"}
   )
   // Document the ports that this component accepts
   SST_ELI_DOCUMENT_PORTS(
@@ -203,18 +203,25 @@ public:
    * return the id of a thread
    */
   int getThreadID(DrvThread *thread) {
-    int tid = thread - &threads_[0];
-    assert(tid >= 0 && tid < threads_.size());
-    return tid;    
+    size_t tid = thread - &threads_[0];
+    assert(tid < threads_.size());
+    return static_cast<int>(tid);
   }
 
   /**
    * return pointer to thread
    */
   DrvThread* getThread(int tid) {
-    assert(tid >= 0 && tid < threads_.size());
+    assert(tid >= 0 && static_cast<size_t>(tid) < threads_.size());
     return &threads_[tid];
   }
+
+  /**
+   * return the number of threads on this core
+   */
+  int numThreads() const {
+     return static_cast<int>(threads_.size());
+  }        
 
   /**
    * return the time converter for the clock

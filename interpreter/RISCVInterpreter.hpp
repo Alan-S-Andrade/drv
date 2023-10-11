@@ -15,7 +15,8 @@ public:
     }
 
 #define DEFINSTR(mnemonic, value_under_mask, mask, ...) \
-    virtual void visit ## mnemonic (RISCVHart &hart, RISCVInstruction &instruction) { \
+    virtual void visit ## mnemonic (__attribute__((unused)) RISCVHart &hart, \
+                                    __attribute__((unused)) RISCVInstruction &instruction) { \
         throw std::runtime_error(#mnemonic ": Not implemented");        \
     }
 #include "InstructionTable.h"

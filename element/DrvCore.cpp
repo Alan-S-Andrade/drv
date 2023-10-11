@@ -165,11 +165,12 @@ void DrvCore::configureSysConfig(SST::Params &params) {
                      "num_pxn = %" PRId64 ", "
                      "pxn_pods = %" PRId64 ", "
                      "pod_cores = %" PRId64 ", "
-                     "core_threads = %" PRId64
+                     "core_threads = %d"
                      "\n"
                      ,cfg.numPXN()
                      ,cfg.numPXNPods()
                      ,cfg.numPodCores()
+                     ,numThreads()
                      );
 }
 
@@ -260,8 +261,8 @@ static constexpr int NO_THREAD_READY = -1;
 
 int DrvCore::selectReadyThread() {
   // select a ready thread to execute
-  for (int t = 0; t < threads_.size(); t++) {
-    int thread_id = (last_thread_ + t + 1) % threads_.size();
+  for (int t = 0; t < numThreads(); t++) {
+    int thread_id = (last_thread_ + t + 1) % numThreads();
     DrvThread *thread = getThread(thread_id);
     auto state = thread->getAPIThread().getState();
     if (state->canResume()) {

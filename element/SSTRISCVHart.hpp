@@ -6,8 +6,8 @@ class RISCVSimHart : public RISCVHart {
 public:
     RISCVSimHart()
         : RISCVHart(),
-        _ready(true),
-        _exit(false) {}
+          _ready(true),
+          _exit(false) {}
     virtual ~RISCVSimHart() {}
 
     int & ready() { return _ready; }
