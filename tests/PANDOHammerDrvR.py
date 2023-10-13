@@ -1,5 +1,13 @@
+########################################################################################################
+# Diagram of this model:                                                                               #
+# https://docs.google.com/presentation/d/1FnrAjOXJKo5vKgo7IkuSD7QT15aDAmJi5Pts6IQhkX8/edit?usp=sharing #
+########################################################################################################
 import sst
 import argparse
+
+COMPUTETILE_RTR_ID = 0
+SHAREDMEM_RTR_ID = 1024
+CHIPRTR_ID = 1024*1024
 
 SYSCONFIG = {
     "sys_num_pxn" : 1,
@@ -7,6 +15,7 @@ SYSCONFIG = {
     "sys_pod_cores" : 8,
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
+    "sys_pod_dram_ports" : 2
 }
 
 CORE_DEBUG = {
@@ -87,7 +96,7 @@ class Tile(object):
         self.tile_rtr = sst.Component("tile_rtr_%d" % self.id, "merlin.hr_router")
         self.tile_rtr.addParams({
             # semantics parameters
-            "id" : self.id,
+            "id" : COMPUTETILE_RTR_ID + self.id,
             "num_ports" : 3,
             "topology" : "merlin.singlerouter",
             # performance models
@@ -201,6 +210,30 @@ class SharedMemory(object):
             "group" : 2,
             "network_bw" : "256GB/s",
         })
+        
+        # create the tile network
+        self.mem_rtr = sst.Component("sharedmem_rtr_%d" % id, "merlin.hr_router")
+        self.mem_rtr.addParams({
+            # semantics parameters
+            "id" : SHAREDMEM_RTR_ID+id,
+            "num_ports" : 2,
+            "topology" : "merlin.singlerouter",
+            # performance models
+            "xbar_bw" : "1024GB/s",
+            "link_bw" : "1024GB/s",
+            "flit_size" : "8B",
+            "input_buf_size" : "1KB",
+            "output_buf_size" : "1KB",
+        })
+        self.mem_rtr.setSubComponent("topology","merlin.singlerouter")
+
+        # setup connection rtr <-> mem
+        self.mem_nic_link = sst.Link("sharedmem_nic_link_%d" % id)
+        self.mem_nic_link.connect(
+            (self.nic, "port", "1ns"),
+            (self.mem_rtr, "port0", "1ns"),
+        )
+
 
 # build the tiles
 tiles = []
@@ -211,14 +244,17 @@ for i in range(CORES):
 tiles[0].markAsLoader()
 
 # build the shared memory
-shared_memory = SharedMemory(0)
-
+DRAM_PORTS = SYSCONFIG["sys_pod_dram_ports"]
+dram_ports = []
+for i in range(DRAM_PORTS):
+    dram_ports.append(SharedMemory(i))
+                      
 # build the network crossbar
 chiprtr = sst.Component("chiprtr", "merlin.hr_router")
 chiprtr.addParams({
     # semantics parameters
-    "id" : len(tiles),
-    "num_ports" : len(tiles)+1,
+    "id" : CHIPRTR_ID,
+    "num_ports" : CORES+DRAM_PORTS,
     "topology" : "merlin.singlerouter",
     # performance models
     "xbar_bw" : "256GB/s",
@@ -230,7 +266,6 @@ chiprtr.addParams({
 chiprtr.setSubComponent("topology","merlin.singlerouter")
 
 # wire up the tiles network
-
 for (i, tile) in enumerate(tiles):
     bridge = sst.Component("bridge_%d" % i, "merlin.Bridge")
     bridge.addParams({
@@ -251,8 +286,24 @@ for (i, tile) in enumerate(tiles):
     )
 
 # wire up the shared memory
-mem_rtr_link = sst.Link("mem_rtr_link")
-mem_rtr_link.connect(
-    (shared_memory.nic, "port", "1ns"),
-    (chiprtr, "port%d" % len(tiles), "1ns")
-)
+base_dram_portno = len(tiles)
+for (i, dram_port) in enumerate(dram_ports):
+    bridge = sst.Component("bridge_%d" % (base_dram_portno+i), "merlin.Bridge")
+    bridge.addParams({
+        "translator" : "memHierarchy.MemNetBridge",
+        "debug" : 1,
+        "debug_level" : 10,
+        "network_bw" : "256GB/s",
+        })
+    dram_bridge_link = sst.Link("dram_bridge_link_%d" % i)
+    dram_bridge_link.connect(
+        (bridge, "network0", "1ns"),
+        (dram_port.mem_rtr, "port1", "1ns")
+    )
+    bridge_chiprtr_link = sst.Link("bridge_chip_memrtr_link_%d" %i)
+    bridge_chiprtr_link.connect(
+        (bridge, "network1", "1ns"),
+        (chiprtr, "port%d" % (base_dram_portno+i), "1ns")
+    )
+        
+
