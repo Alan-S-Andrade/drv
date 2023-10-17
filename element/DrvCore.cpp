@@ -101,7 +101,8 @@ void DrvCore::configureClock(SST::Params &params) {
  */
 void DrvCore::configureThread(int thread, int threads) {
   output_->verbose(CALL_INFO, 2, DEBUG_INIT, "configuring thread (%2d/%2d)\n", thread, threads);
-  DrvAPI::DrvAPIThread& api_thread = threads_.emplace_back().getAPIThread();
+  threads_.emplace_back();
+  DrvAPI::DrvAPIThread& api_thread = threads_.back().getAPIThread();
   api_thread.setMain(main_);
   api_thread.setArgs(argv_.size(), argv_.data());
   api_thread.setId(thread);
