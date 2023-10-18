@@ -1,6 +1,9 @@
 #ifndef PANDOHAMMER_CPUINFO_H
 #define PANDOHAMMER_CPUINFO_H
-
+#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 #define MCSR_MCOREID    0xF15
 #define MCSR_MPODID     0xF16
 #define MCSR_MPXNID     0xF17
@@ -93,5 +96,7 @@ inline int numPXNPods()
     asm volatile ("csrr %0, " __stringify(MCSR_MPXNPODS) : "=r"(pods));
     return (int)pods;
 }
-
+#ifdef __cplusplus
+}
+#endif
 #endif
