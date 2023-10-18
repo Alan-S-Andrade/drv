@@ -209,7 +209,7 @@ bool RISCVCore::tick(Cycle_t cycle) {
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
-        output_.verbose(CALL_INFO, 100, 0, "No harts ready to execute\n");
+        output_.verbose(CALL_INFO, 101, 0, "No harts ready to execute\n");
     }
 
     if (shouldExit())
