@@ -1,6 +1,8 @@
 #ifndef PANDOHAMMER_MMIO_H
 #define PANDOHAMMER_MMIO_H
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 static inline void ph_print_int(long x)
 {
@@ -18,4 +20,7 @@ static inline void ph_print_char(char x)
 }
 
 
+#ifdef __cplusplus
+}
+#endif
 #endif
