@@ -61,7 +61,7 @@ core.addParams(SYSCONFIG)
 
 core_iface = core.setSubComponent("memory", "memHierarchy.standardInterface")
 core_iface.addParams({
-    "verbose" : 1,
+    "verbose" : args.verbose_core,
 })
 
 # build the memory controller
@@ -75,10 +75,11 @@ scratch = scratchmemctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
 scratch.addParams({
     "access_time" : "2ns",
     "mem_size" : size_to_str(MEM_SIZE),
+    "verbose" : args.verbose_core,
 })
 scratchcmdhandler = scratchmemctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
 scratchcmdhandler.addParams({
-    "verbose_level" : 0,
+    "verbose_level" : args.verbose_core,
 })
 
 # build the dram memory controller
@@ -95,7 +96,7 @@ dram.addParams({
 })
 dramcmdhandler = drammemctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
 dramcmdhandler.addParams({
-    "verbose_level" : 0,
+    "verbose_level" : args.verbose_core,
 })
 
 bus = sst.Component("bus", "memHierarchy.Bus")
