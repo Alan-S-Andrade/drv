@@ -1,3 +1,6 @@
+ifndef _APPLICATION_CONFIG_MK_
+_APPLICATION_CONFIG_MK_ := 1
+
 DRV_DIR ?= $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/boost_config.mk
 
@@ -22,3 +25,4 @@ APP_LDFLAGS += $(BOOST_LDFLAGS)
 
 APP_LIBS += -lboost_coroutine -lboost_context
 APP_LIBS += -ldrvapi #-ldrvapiapp
+endif
