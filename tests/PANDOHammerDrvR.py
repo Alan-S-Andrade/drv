@@ -30,7 +30,7 @@ CORE_DEBUG = {
 parser = argparse.ArgumentParser()
 parser.add_argument("program", help="program to run")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
-
+parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
 arguments = parser.parse_args()
 
 print("""
@@ -191,12 +191,20 @@ class SharedMemory(object):
         })
         # set the backend memory system to Drv special memory
         # (needed for AMOs)
-        self.memory = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
-        self.memory.addParams({
-            "verbose_level" : 0,
-            "access_time" : "32ns",
-            "mem_size" : "512MiB",
-        })
+        if (arguments.dram_backend == "simple"):
+            self.memory = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+            self.memory.addParams({
+                "verbose_level" : 0,
+                "access_time" : "32ns",
+                "mem_size" : "512MiB",
+            })
+        elif (arguments.dram_backend == "ramulator"):
+            self.memory = self.memctrl.setSubComponent("backend", "memHierarchy.ramulator")
+            self.memory.addParams({
+                "verbose_level" : 0,
+                "configFile" : "/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
+                "mem_size" : "512MiB",
+            })
         # set the custom command handler
         # we need to use the Drv custom command handler
         # to handle our custom commands (AMOs)
