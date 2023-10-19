@@ -25,6 +25,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("program", help="program to run")
 parser.add_argument("--harts", type=int, default=1, help="number of harts")
 parser.add_argument("--verbose-core", type=int, default=0, help="verbosity of core")
+parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
 args = parser.parse_args()
 
 # set stack pointers
@@ -88,11 +89,18 @@ drammemctrl.addParams({
     "addr_range_start" : DRAM_BASE+0,
     "addr_range_end"   : DRAM_BASE+DRAM_SIZE-1,
 })
-dram = drammemctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
-dram.addParams({
-    "access_time" : "100ns",
-    "mem_size" : size_to_str(DRAM_SIZE),
-})
+if (args.dram_backend == "simple"):
+    dram = drammemctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+    dram.addParams({
+        "access_time" : "100ns",
+        "mem_size" : size_to_str(DRAM_SIZE),
+    })
+elif (args.dram_backend == "ramulator"):
+    dram = drammemctrl.setSubComponent("backend", "memHierarchy.ramulator")
+    dram.addParams({
+        "mem_size" : size_to_str(DRAM_SIZE),
+        "configFile" : "/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
+    })
 dramcmdhandler = drammemctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
 dramcmdhandler.addParams({
     "verbose_level" : 0,
