@@ -12,6 +12,21 @@ void RISCVCore::configureClock(Params &params) {
 void RISCVCore::configureOuptut(Params& params) {
     int verbose_level = params.find<int>("verbose", 0);
     uint32_t verbose_mask = 0;
+    if (params.find<bool>("debug_memory", false)) {
+        verbose_mask |= DEBUG_MEMORY;
+    }
+    if (params.find<bool>("debug_idle", false)) {
+        verbose_mask |= DEBUG_IDLE;
+    }
+    if (params.find<bool>("debug_requests", false)) {
+        verbose_mask |= DEBUG_REQ;
+    }
+    if (params.find<bool>("debug_responses", false)) {
+        verbose_mask |= DEBUG_RSP;
+    }
+    if (params.find<bool>("debug_syscalls", false)) {
+        verbose_mask |= DEBUG_SYSCALLS;
+    }
     output_.init("SSTRISCVCore[@p:@l]: ", verbose_level, verbose_mask, Output::STDOUT);
 }
 
@@ -83,15 +98,37 @@ RISCVCore::~RISCVCore() {
 
 /* load program segment */
 void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
+    using Write = Interfaces::StandardMem::Write;
+    using Addr = Interfaces::StandardMem::Addr;
     output_.verbose(CALL_INFO, 1, 0, "Loading program segment: (paddr = 0x%lx, vaddr = 0x%lx)\n"
                     , phdr->p_paddr
                     , phdr->p_vaddr);
-    std::vector<uint8_t> data(phdr->p_memsz, 0);
-    memcpy(&data[0], icache_->segment(phdr), phdr->p_filesz);
-    // issue a memory request
-    using Write = Interfaces::StandardMem::Write;
-    Write *wr = new Write(phdr->p_paddr, data.size(), data, true);
-    mem_->send(wr);
+    uint8_t *segp = static_cast<uint8_t*>(icache_->segment(phdr));
+    size_t  segsz = phdr->p_filesz;
+    size_t  reqsz = getMaxReqSize();
+    Addr segpaddr = phdr->p_paddr;
+    // write data
+    for (;segsz > 0;) {
+        size_t wrsz = std::min(reqsz, segsz);
+        std::vector<uint8_t> data(wrsz, 0);
+        memcpy(&data[0], segp, wrsz);
+        Write *wr = new Write(segpaddr, wrsz, data, true);
+        mem_->send(wr);
+        segsz -= wrsz;
+        segpaddr += wrsz;
+        segp += wrsz;
+    }
+    // write zeros
+    segsz = phdr->p_memsz - phdr->p_filesz;
+    if (segsz > 0) {
+        size_t wrsz = std::min(reqsz, segsz);
+        std::vector<uint8_t> data(wrsz, 0);
+        Write *wr = new Write(segpaddr, wrsz, data, true);
+        mem_->send(wr);
+        segsz -= wrsz;
+        segpaddr += wrsz;
+        segp += wrsz;
+    }
 }
 
 /* load program */
@@ -122,6 +159,7 @@ void RISCVCore::setup() {
     if (stdmem) {
         stdmem->setup();
     }
+    output_.verbose(CALL_INFO, 1, 0, "memory: line size = %" PRIu64 "\n", stdmem->getLineSize());
     // load program data
     if (load_program_) {
         output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
@@ -139,7 +177,7 @@ void RISCVCore::finish() {
     // dump pc histogram
     output_.verbose(CALL_INFO, 3, 0, "PC Histogram:\n");
     for (auto &pc : pchist_) {
-        output_.verbose(CALL_INFO, 3, 0, "0x%lx: %lu\n", pc.first, pc.second);
+        output_.verbose(CALL_INFO, 3, 0, "0x%08lx: %9lu\n", pc.first, pc.second);
     }
     auto stdmem = dynamic_cast<Interfaces::StandardMem*>(mem_);
     if (stdmem) {
@@ -149,21 +187,24 @@ void RISCVCore::finish() {
 
 /* handle memory event */
 void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
-    output_.verbose(CALL_INFO, 50, 0, "Received memory request\n");
+    output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received memory response\n");
     int tid = -1;
 
     auto *rd_rsp = dynamic_cast<Interfaces::StandardMem::ReadResp*>(req);
     if (rd_rsp) {
+        output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received read response\n");
         tid = rd_rsp->tid;
     }
 
     auto *wr_rsp = dynamic_cast<Interfaces::StandardMem::WriteResp*>(req);
     if (wr_rsp) {
+        output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received write response\n");
         tid = wr_rsp->tid;
     }
 
     auto *custom_rsp = dynamic_cast<Interfaces::StandardMem::CustomResp*>(req);
     if (custom_rsp) {
+        output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received custom response\n");
         tid = custom_rsp->tid;
     }
 
@@ -199,7 +240,7 @@ bool RISCVCore::tick(Cycle_t cycle) {
         uint64_t pc = harts_[hart_id].pc();
         uint32_t inst = icache_->read(pc);
         RISCVInstruction *i = decoder_.decode(inst);
-        output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x08%" PRIx32" (%s)\n"
+        output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x%08" PRIx32" (%s)\n"
                         ,hart_id
                         ,pc
                         ,inst
@@ -209,7 +250,7 @@ bool RISCVCore::tick(Cycle_t cycle) {
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
-        output_.verbose(CALL_INFO, 101, 0, "No harts ready to execute\n");
+        output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "No harts ready to execute\n");
     }
 
     if (shouldExit())
@@ -222,7 +263,7 @@ bool RISCVCore::tick(Cycle_t cycle) {
  * issue a memory request
  */
 void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler) {
-    output_.verbose(CALL_INFO, 50, 0, "Issuing memory request\n");
+    output_.verbose(CALL_INFO, 0, DEBUG_REQ, "Issuing memory request\n");
     // TODO: check if tid is valid
     rsp_handlers_[tid] = handler;
     mem_->send(req);

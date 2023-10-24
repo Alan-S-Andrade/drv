@@ -44,7 +44,12 @@ public:
         {"pod", "Pod ID", "0"},
         {"pxn", "PXN ID", "0"},
         /* debugging */
-        {"verbose", "Verbosity of output", "0"},        
+        {"verbose", "Verbosity of output", "0"},
+        {"debug_memory", "Debug memory requests", "0"},
+        {"debug_idle", "Debug idle cycles", "0"},
+        {"debug_requests", "Debug requests", "0"},
+        {"debug_responses", "Debug responses", "0"},
+        {"debug_syscalls", "Debug system calls", "0"},
     )
     // DOCUMENT SUBCOMPONENTS
     SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
@@ -100,6 +105,12 @@ public:
      * Load a program
      */
     void loadProgram();
+
+    static constexpr uint32_t DEBUG_MEMORY   = (1<< 0); //!< debug memory requests
+    static constexpr uint32_t DEBUG_IDLE     = (1<< 1); //!< debug idle cycles
+    static constexpr uint32_t DEBUG_SYSCALLS = (1<< 2); //!< debug system calls
+    static constexpr uint32_t DEBUG_REQ      = (1<<30); //!< debug messages we expect to see when receiving requests
+    static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
     
     /**
      * configure output stream
@@ -203,6 +214,11 @@ public:
      * get system info
      */
     DrvAPI::DrvAPISysConfig sys() const { return sys_config_.config(); }
+
+    /**
+     * get the max write request size
+     */
+    size_t getMaxReqSize() const { return sys().numNWObufDwords() * sizeof(uint64_t); }
     
     SST::Output output_; //!< output stream
     Interfaces::StandardMem *mem_; //!< memory interface
