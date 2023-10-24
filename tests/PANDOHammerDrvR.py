@@ -15,7 +15,7 @@ SYSCONFIG = {
     "sys_pod_cores" : 8,
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
-    "sys_pod_dram_ports" : 2
+    "sys_pod_dram_ports" : 2,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
 }
