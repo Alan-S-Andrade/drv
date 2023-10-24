@@ -7,7 +7,7 @@
 #include <type_traits>
 #include "SSTRISCVSimulator.hpp"
 #include "SSTRISCVCore.hpp"
-#include "riscv64-unknown-elfpandodrvsim/include/machine/syscall.h"
+#include "riscv64-unknown-elf/include/machine/syscall.h"
 #include "DrvAPIReadModifyWrite.hpp"
 #include "DrvCustomStdMem.hpp"
 
