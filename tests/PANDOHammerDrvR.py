@@ -16,6 +16,8 @@ SYSCONFIG = {
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
     "sys_pod_dram_ports" : 2
+    "sys_nw_flit_dwords" : 1,
+    "sys_nw_obuf_dwords" : 8,
 }
 
 CORE_DEBUG = {
@@ -24,6 +26,8 @@ CORE_DEBUG = {
     "debug_requests" : False,
     "debug_responses" : False,
     "debug_loopback" : False,
+    "debug_memory": False,
+    "debug_syscalls" : False,
 }
 
 # parse command line arguments
@@ -31,7 +35,18 @@ parser = argparse.ArgumentParser()
 parser.add_argument("program", help="program to run")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
 parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
+parser.add_argument("--debug-memory", action="store_true", help="enable memory debug")
+parser.add_argument("--debug-requests", action="store_true", help="enable debug of requests")
+parser.add_argument("--debug-responses", action="store_true", help="enable debug of responses")
+parser.add_argument("--debug-syscalls", action="store_true", help="enable debug of syscalls")
+parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of memory")
+
 arguments = parser.parse_args()
+
+CORE_DEBUG['debug_memory'] = arguments.debug_memory
+CORE_DEBUG['debug_requests'] = arguments.debug_requests
+CORE_DEBUG['debug_responses'] = arguments.debug_responses
+CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 
 print("""
 PANDOHammerDrvR:
@@ -70,7 +85,7 @@ class Tile(object):
         # (needed for AMOs)
         self.scratchpad = self.scratchpad_mectrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         self.scratchpad.addParams({
-            "verbose_level" : 0,
+            "verbose_level" : arguments.verbose_memory,
             "access_time" : "1ns",
             "mem_size" : "4KiB",
         })
@@ -80,7 +95,7 @@ class Tile(object):
         # to handle our custom commands (AMOs)
         self.scratchpad_customcmdhandler = self.scratchpad_mectrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
         self.scratchpad_customcmdhandler.addParams({
-            "verbose_level" : 0,
+            "verbose_level" : arguments.verbose_memory,
         })
         self.scratchpad_nic = self.scratchpad_mectrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
         self.scratchpad_nic.addParams({
@@ -105,6 +120,7 @@ class Tile(object):
             "flit_size" : "8B",
             "input_buf_size" : "1KB",
             "output_buf_size" : "1KB",
+            "debug" : 1,
         })
 
         # setup connection rtr <-> core
@@ -142,13 +158,15 @@ class Tile(object):
         self.core.addParams(CORE_DEBUG)
         self.core_iface = self.core.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({
-            "verbose" : 0,
+            "verbose" : arguments.verbose,
         })
         self.core_nic = self.core_iface.setSubComponent("memlink", "memHierarchy.MemNIC")
         self.core_nic.addParams({
             "group" : 0,
             "network_bw" : "1024GB/s",
-            "destinations" : "1,2",})
+            "destinations" : "1,2",
+            "verbose_level" : arguments.verbose_memory,
+        })
         self.initSP()
 
     def initSP(self):
@@ -186,22 +204,22 @@ class SharedMemory(object):
             "addr_range_start" : DRAM_BASE+(id+0)*512*1024*1024+0,
             "addr_range_end"   : DRAM_BASE+(id+1)*512*1024*1024-1,
             "debug" : 1,
-            "debug_level" : 0,
-            "verbose" : 0,
+            "debug_level" : arguments.verbose_memory,
+            "verbose" : arguments.verbose_memory,
         })
         # set the backend memory system to Drv special memory
         # (needed for AMOs)
         if (arguments.dram_backend == "simple"):
             self.memory = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
             self.memory.addParams({
-                "verbose_level" : 0,
+                "verbose_level" : arguments.verbose_memory,
                 "access_time" : "32ns",
                 "mem_size" : "512MiB",
             })
         elif (arguments.dram_backend == "ramulator"):
             self.memory = self.memctrl.setSubComponent("backend", "memHierarchy.ramulator")
             self.memory.addParams({
-                "verbose_level" : 0,
+                "verbose_level" : arguments.verbose_memory,
                 "configFile" : "/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
                 "mem_size" : "512MiB",
             })
@@ -210,13 +228,14 @@ class SharedMemory(object):
         # to handle our custom commands (AMOs)
         self.customcmdhandler = self.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
         self.customcmdhandler.addParams({
-            "verbose_level" : 0,
+            "verbose_level" : arguments.verbose_memory,
         })
         # network interface
         self.nic = self.memctrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
         self.nic.addParams({
             "group" : 2,
             "network_bw" : "256GB/s",
+            "verbose_level": arguments.verbose_memory,
         })
         
         # create the tile network
@@ -232,6 +251,7 @@ class SharedMemory(object):
             "flit_size" : "8B",
             "input_buf_size" : "1KB",
             "output_buf_size" : "1KB",
+            "debug" : 1,
         })
         self.mem_rtr.setSubComponent("topology","merlin.singlerouter")
 

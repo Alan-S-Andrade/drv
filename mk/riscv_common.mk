@@ -4,8 +4,8 @@ _RISCV_COMMON_MK_ := 1
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
 
-CXX := $(RISCV_INSTALL_DIR)/bin/riscv64-unknown-elf-g++
-CC  := $(RISCV_INSTALL_DIR)/bin/riscv64-unknown-elf-gcc
+CXX := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-g++
+CC  := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-gcc
 
 PLATFORM ?= default
 
@@ -16,8 +16,9 @@ vpath %.cpp $(DRV_DIR)/riscv-examples/platform_$(PLATFORM)
 ARCH:=rv64imafd
 ABI:=lp64d
 
-CXXFLAGS += -O2  -march=$(ARCH) -mabi=$(ABI)
-CFLAGS   += -O2  -march=$(ARCH) -mabi=$(ABI)
+COMPILE_FLAGS += -O2 -march=$(ARCH) -mabi=$(ABI)
+CXXFLAGS += $(COMPILE_FLAGS)
+CFLAGS   += $(COMPILE_FLAGS)
 LDFLAGS  +=
 LIBS     +=
 

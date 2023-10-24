@@ -13,6 +13,8 @@ struct DrvAPISysConfigData
     int64_t num_pxn_; //!< number of PXNs in the system
     int64_t pxn_pods_; //!< number of pods per PXN
     int64_t pod_cores_; //!< number of cores per pod
+    int16_t nw_flit_dwords_; //!< number of dwords in a flit
+    int16_t nw_obuf_dwords_; //!< number of dwords in an output buffer
 };
 
 
@@ -34,6 +36,8 @@ public:
     int64_t numPXN() const { return data_.num_pxn_; }
     int64_t numPXNPods() const { return data_.pxn_pods_; }
     int64_t numPodCores() const { return data_.pod_cores_; }
+    int16_t numNWFlitDwords() const { return data_.nw_flit_dwords_; }
+    int16_t numNWObufDwords() const { return data_.nw_obuf_dwords_; }
 
     static DrvAPISysConfig *Get() { return &sysconfig; }
     static DrvAPISysConfig sysconfig;

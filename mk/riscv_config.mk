@@ -1,6 +1,8 @@
 RISCV_INSTALL_DIR=/install
 ifndef _RISCV_CONFIG_MK_
 _RISCV_CONFIG_MK_ := 1
-RISCV_ARCH_INSTALL_DIR=$(RISCV_INSTALL_DIR)/riscv64-unknown-elf
+
+RISCV_ARCH ?= unknown-elfpandodrvsim
+RISCV_ARCH_INSTALL_DIR=$(RISCV_INSTALL_DIR)/riscv64-$(RISCV_ARCH)
 
 endif

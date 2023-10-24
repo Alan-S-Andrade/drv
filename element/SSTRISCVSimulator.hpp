@@ -2,6 +2,7 @@
 #include <RV64IMInterpreter.hpp>
 #include <sst/core/interfaces/stdMem.h>
 #include <map>
+#include <functional>
 #include "DrvAPIReadModifyWrite.hpp"
 #include "DrvNativeSimulationTranslator.hpp"
 namespace SST {
@@ -98,7 +99,79 @@ private:
     static constexpr uint64_t CSR_MSTATUS = 0x300;
     
     
-private:    
+private:
+
+    /**
+     * @brief The LargeReadHandler class
+     * coealesces multiple read requests into a single callback
+     */
+    class LargeReadHandler {
+    public:
+        using ResponseType = SST::Interfaces::StandardMem::ReadResp;
+        LargeReadHandler(size_t n_requests, std::function<void(std::vector<uint8_t>&)> &&completion) :
+            n_requests(n_requests), completion(completion) {
+            responses.reserve(n_requests);
+        }
+        virtual ~LargeReadHandler() {
+            for (ResponseType *rsp : responses) {
+                delete rsp;
+            }
+        }
+        void recvRsp(SST::Interfaces::StandardMem::Request *req) {
+            ResponseType *rsp = dynamic_cast<ResponseType*>(req);
+            if (rsp == nullptr) {
+                SST::Output::getDefaultObject().fatal(CALL_INFO, -1, "LargeReadHandler: received a response of the wrong type\n");
+            }
+            responses.push_back(rsp);
+            if (responses.size() == n_requests) {
+                // 1.. sort responses by address
+                std::sort(responses.begin(), responses.end(), [](ResponseType  *a, ResponseType *b) {
+                    return a->pAddr < b->pAddr;
+                });
+                std::vector<uint8_t> data;
+                for (ResponseType *rsp : responses) {
+                    data.insert(data.end(), rsp->data.begin(), rsp->data.end());
+                }
+                completion(data);
+            }
+        }
+        size_t n_requests;
+        std::vector<ResponseType *> responses;
+        std::function<void(std::vector<uint8_t>&)> completion;
+    };
+
+
+    /**
+     * @brief LargeWriteHandler
+     * coalesces multiple write responses into a single callback
+     */
+    class LargeWriteHandler {
+    public:
+        using ResponseType = SST::Interfaces::StandardMem::WriteResp;
+        LargeWriteHandler(size_t n_requests, std::function<void()> &&completion) :
+            n_requests(n_requests), completion(completion) {
+            responses.reserve(n_requests);
+        }
+        virtual ~LargeWriteHandler() {
+            for (ResponseType *rsp : responses) {
+                delete rsp;
+            }
+        }
+        void recvRsp(SST::Interfaces::StandardMem::Request *req) {
+            ResponseType *rsp = dynamic_cast<ResponseType*>(req);
+            if (rsp == nullptr) {
+                SST::Output::getDefaultObject().fatal(CALL_INFO, -1, "LargeWriteHandler: received a response of the wrong type\n");
+            }
+            responses.push_back(rsp);
+            if (responses.size() == n_requests) {
+                completion();
+            }
+        }
+        size_t n_requests;
+        std::vector<ResponseType *> responses;
+        std::function<void()> completion;
+    };
+
     template <typename R, typename T>
     void visitLoad(RISCVHart &hart, RISCVInstruction &instruction);
 
@@ -116,6 +189,8 @@ private:
     void sysWRITE(RISCVSimHart &shart, RISCVInstruction &i);
     void sysREAD(RISCVSimHart &shart, RISCVInstruction &i);
     void sysEXIT(RISCVSimHart &shart, RISCVInstruction &i);
+    void sysReadBuffer(RISCVSimHart &shart, SST::Interfaces::StandardMem::Addr paddr, size_t n, std::function<void(std::vector<uint8_t>&)> && cont);
+    void sysWriteBuffer(RISCVSimHart &shart, SST::Interfaces::StandardMem::Addr paddr, std::vector<uint8_t> &data, std::function<void(void)> && cont);
 
     // TODO: implement these for stdio
     
