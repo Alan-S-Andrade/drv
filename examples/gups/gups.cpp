@@ -7,7 +7,7 @@
 
 using namespace DrvAPI;
 
-DrvAPIAddress DRAM_START = 0x80000000;
+DrvAPIAddress DRAM_START = 0x40000000;
 DrvAPIAddress TABLE = DRAM_START;
 
 int GupsMain(int argc, char *argv[])
