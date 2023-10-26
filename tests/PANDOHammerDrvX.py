@@ -1,27 +1,28 @@
 ########################################################################################################
 # Diagram of this model:                                                                               #
-# https://docs.google.com/presentation/d/1FnrAjOXJKo5vKgo7IkuSD7QT15aDAmJi5Pts6IQhkX8/edit?usp=sharing #
+# https://docs.google.com/presentation/d/1ekm0MbExI1PKca5tDkSGEyBi-_0000Ro9OEaBLF-rUQ/edit?usp=sharing #
 ########################################################################################################
 import sst
 import argparse
 from drv import *
 
-# for drvr we set the core clock to 1GHz
-SYSCONFIG["sys_core_clock"] = "1GHz"
+# for drvx we set the core clock to 125MHz (assumption is 1/8 ops are memory)
+SYSCONFIG["sys_core_clock"] = "125MHz"
 
 print("""
-PANDOHammerDrvR:
+PANDOHammerDrvX:
   program = {}
 """.format(
     arguments.program
 ))
+
 class Tile(object):
     def l1sp_start(self):
         return (self.id+0)*4*1024
 
     def l1sp_end(self):
         return (self.id+1)*4*1024-1
-    
+
     def markAsLoader(self):
         """
         Set this tile as responsible for loading the executable.
@@ -104,20 +105,27 @@ class Tile(object):
         Initialize the tile's core
         """
         # create the core
-        self.core = sst.Component("core_%d" % self.id, "Drv.RISCVCore")
+        self.core = sst.Component("core_%d" % self.id, "Drv.DrvCore")
         self.core.addParams({
             "verbose"   : arguments.verbose,
-            "num_harts" : SYSCONFIG["sys_core_threads"],
+            "threads"   : SYSCONFIG["sys_core_threads"],
             "clock"     : SYSCONFIG["sys_core_clock"],
-            "program" : arguments.program,
-            #"argv" : ' '.join(argv), @ todo, make this work
-            "core": self.id,
+            "executable": arguments.program,
+            "argv" : ' '.join(arguments.argv),
+            "max_idle" : 100//8, # turn clock offf after idle for 1 us
+            "id"  : self.id,
             "pod" : self.pod,
             "pxn" : self.pxn,
         })
         self.core.addParams(SYSCONFIG)
         self.core.addParams(CORE_DEBUG)
-        self.core_iface = self.core.setSubComponent("memory", "memHierarchy.standardInterface")
+
+        self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
+        self.core_mem.addParams({
+            "verbose" : arguments.verbose,
+        })
+
+        self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({
             "verbose" : arguments.verbose,
         })
@@ -128,20 +136,6 @@ class Tile(object):
             "destinations" : "1,2",
             "verbose_level" : arguments.verbose_memory,
         })
-        self.initSP()
-
-    def initSP(self):
-        # set stack pointers
-        stack_base = self.l1sp_start()
-        stack_bytes = self.l1sp_end() - self.l1sp_start() + 1
-        stack_words = stack_bytes // 8
-        thread_stack_words = stack_words // SYSCONFIG["sys_core_threads"]
-        thread_stack_bytes = thread_stack_words * 8
-        # build a string of stack pointers
-        # to pass a parameter to the core
-        sp_v = ["{} {}".format(i, stack_base + ((i+1)*thread_stack_bytes) - 8) for i in range(SYSCONFIG["sys_core_threads"])]
-        sp_str = "[" + ", ".join(sp_v) + "]"
-        self.core.addParams({"sp" : sp_str})
 
     def __init__(self, id, pod=0, pxn=0):
         self.id = id
@@ -198,7 +192,7 @@ class SharedMemory(object):
             "network_bw" : "256GB/s",
             "verbose_level": arguments.verbose_memory,
         })
-        
+
         # create the tile network
         self.mem_rtr = sst.Component("sharedmem_rtr_%d" % id, "merlin.hr_router")
         self.mem_rtr.addParams({
@@ -237,7 +231,7 @@ DRAM_PORTS = SYSCONFIG["sys_pod_dram_ports"]
 dram_ports = []
 for i in range(DRAM_PORTS):
     dram_ports.append(SharedMemory(i))
-                      
+
 # build the network crossbar
 chiprtr = sst.Component("chiprtr", "merlin.hr_router")
 chiprtr.addParams({
@@ -294,5 +288,5 @@ for (i, dram_port) in enumerate(dram_ports):
         (bridge, "network1", "1ns"),
         (chiprtr, "port%d" % (base_dram_portno+i), "1ns")
     )
-        
+
 

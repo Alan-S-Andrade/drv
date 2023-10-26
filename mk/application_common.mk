@@ -5,6 +5,10 @@ endif
 DRV_DIR ?= $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
 
+# include the test directory to the python path
+# so we can import modules from this directory
+export PYTHONPATH := $(DRV_DIR)/tests:$(PYTHONPATH)
+
 APP_PATH ?= $(DRV_DIR)/examples/$(APP_NAME)
 
 # Build options
@@ -40,7 +44,9 @@ $(APP_NAME).so:
 	$(CXX) $(CXXFLAGS) -o $@ $(filter %.o,$^) $(LDFLAGS) $(LIBS)
 
 
-SCRIPT ?= drv-multicore-bus-test.py
+#SCRIPT ?= drv-multicore-bus-test.py
+SCRIPT ?= PANDOHammerDrvX.py
+
 .PHONY: run
 run: $(APP_NAME).so
 	sst $(DRV_DIR)/tests/$(SCRIPT) -- $(APP_PATH)/$(APP_NAME).so
