@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include <DrvAPIMain.hpp>
-#include <DrvAPIThread.hpp>
-#include <DrvAPIAddress.hpp>
-#include <DrvAPIMemory.hpp>
+#include <DrvAPI.hpp>
 #include <inttypes.h>
 using namespace DrvAPI;
 

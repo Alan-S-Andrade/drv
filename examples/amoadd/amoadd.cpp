@@ -1,6 +1,4 @@
-#include <DrvAPIMain.hpp>
-#include <DrvAPIThread.hpp>
-#include <DrvAPIMemory.hpp>
+#include <DrvAPI.hpp>
 
 int AmoaddMain(int argc, char *argv[])
 {

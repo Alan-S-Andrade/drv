@@ -1,5 +1,4 @@
-#include <DrvAPIMain.hpp>
-#include <DrvAPIThread.hpp>
+#include <DrvAPI.hpp>
 #include <cstdio>
 
 int SimpleMain(int argc, char *argv[]) {

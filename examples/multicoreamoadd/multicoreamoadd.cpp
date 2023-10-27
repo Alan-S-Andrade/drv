@@ -1,7 +1,4 @@
-#include "DrvAPIAddress.hpp"
-#include "DrvAPIThread.hpp"
-#include "DrvAPIMain.hpp"
-#include "DrvAPIMemory.hpp"
+#include <DrvAPI.hpp>
 
 using namespace DrvAPI;
 

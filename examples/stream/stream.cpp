@@ -4,10 +4,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
-
-#include <DrvAPIMain.hpp>
-#include <DrvAPIMemory.hpp>
-#include <DrvAPIThread.hpp>
+#include <DrvAPI.hpp>
 
 using namespace DrvAPI;
 

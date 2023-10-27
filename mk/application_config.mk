@@ -21,6 +21,7 @@ APP_CFLAGS += -std=c11
 
 APP_LDFLAGS += -L$(DRV_INSTALL_DIR)/lib -Wl,-rpath,$(DRV_INSTALL_DIR)/lib
 APP_LDFLAGS += -shared
+APP_LDFLAGS += -Wl,--no-as-needed
 APP_LDFLAGS += $(BOOST_LDFLAGS)
 
 APP_LIBS += -lboost_coroutine -lboost_context
