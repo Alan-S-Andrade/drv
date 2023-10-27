@@ -12,7 +12,7 @@
 using namespace DrvAPI;
 
 /* Drv stuff - CHANGEME */
-DrvAPIAddress DRAM_START = 0x80000000;
+DrvAPIAddress DRAM_START = 0x40000000;
 uint32_t NUM_OF_FG_THREADS_PER_TILE = 16;
 
 /* Usual Stream defs */
