@@ -1,7 +1,6 @@
 #ifndef DRV_API_H
 #define DRV_API_H
 #include <DrvAPIAddress.hpp>
-#include <DrvAPIMain.hpp>
 #include <DrvAPIMemory.hpp>
 #include <DrvAPIPointer.hpp>
 #include <DrvAPIReadModifyWrite.hpp>
@@ -12,4 +11,5 @@
 #include <DrvAPIOp.hpp>
 #include <DrvAPISysConfig.hpp>
 #include <DrvAPIInfo.hpp>
+#include <DrvAPIMain.hpp>
 #endif

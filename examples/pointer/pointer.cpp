@@ -1,6 +1,4 @@
-#include <DrvAPIPointer.hpp>
-#include <DrvAPIThread.hpp>
-#include <DrvAPIMain.hpp>
+#include <DrvAPI.hpp>
 #include <stdint.h>
 #include <inttypes.h>
 

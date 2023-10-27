@@ -1,5 +1,4 @@
-#include <DrvAPIMain.hpp>
-#include <DrvAPIThread.hpp>
+#include <DrvAPI.hpp>
 
 int ThreadMain(int argc, char *argv[]) {
     printf("Hello from thread %2d (%p)\n"

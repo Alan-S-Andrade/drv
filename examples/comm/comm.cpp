@@ -1,8 +1,4 @@
-#include <DrvAPIThread.hpp>
-#include <DrvAPIMain.hpp>
-#include <DrvAPIAddress.hpp>
-#include <DrvAPIMemory.hpp>
-
+#include <DrvAPI.hpp>
 using namespace DrvAPI;
 
 uint64_t signal = 0xa5a5a5a5a5a5a5a5;
