@@ -86,9 +86,11 @@ RUN apt update -y \
         git \
         clang \
         libopenmpi-dev \
+        bc \
         && apt clean -y
 
 ENV PATH "${PATH}":/install/bin
+ENV PYTHONPATH "/root/drv/tests:${PYTHONPATH}"
 ENV LD_LIBRARY_PATH /install/lib
 ENV LIBRARY_PATH /install/lib
 ENV C_INCLUDE_PATH /install/include

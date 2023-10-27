@@ -2,6 +2,8 @@ ifndef _RISCV_COMMON_MK_
 _RISCV_COMMON_MK_ := 1
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
+export PYTHONPATH := $(DRV_DIR)/tests:$(PYTHONPATH)
+
 include $(DRV_DIR)/mk/config.mk
 
 CXX := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-g++
