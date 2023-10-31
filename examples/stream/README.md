@@ -11,6 +11,6 @@ The code is based of the **reference stream benchmark** implementation and **NOT
 ## Compile and run
 Make sure your environment is set up correctly like for other Drv examples - boost, drvapi, sst, and other paths are set correctly (you might need to change couple of .mk files too).
 ```
-make stream.so
+make run
 ```
 Use the provided example script to run in SST. Obviously you will have to use a valid SST configuration script and paths.
