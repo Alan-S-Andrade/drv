@@ -1,3 +1,6 @@
+SPDX-License-Identifier: MIT
+Copyright (c) 2023 University of Washington
+
 # Installing on Your System
 
 Here are the steps to running Drv natively on your system.

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #include <unistd.h>
 int main(int argc, char *argv[])
 {
