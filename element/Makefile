@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2023 University of Washington
+
 ifeq (, $(shell which sst-config))
  $(error "No sst-config in $(PATH), add `sst-config` to your PATH")
 endif

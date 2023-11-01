@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef RISCVHART_HPP
 #define RISCVHART_HPP
 #include <cstdint>
