@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef RTYPE_MASK
 #define RTYPE_MASK      0xfe00707f
 #endif

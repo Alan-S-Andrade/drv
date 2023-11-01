@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef DRV_API_ALLOCATOR_H
 #define DRV_API_ALLOCATOR_H
 

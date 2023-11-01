@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #include "DrvSimpleMemory.hpp"
 #include "DrvCore.hpp"
 using namespace SST;

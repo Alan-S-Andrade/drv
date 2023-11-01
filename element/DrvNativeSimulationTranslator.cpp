@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #include "DrvNativeSimulationTranslator.hpp"
 #include "rv64simtypes/stat.h"
 #include "rv64simtypes/fcntl.h"

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>

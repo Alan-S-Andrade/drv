@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2023 University of Washington
+
 ifndef _SST_CONFIG_MK_
 _SST_CONFIG_MK_ := 1
 DRV_DIR ?= $(shell git rev-parse --show-toplevel)

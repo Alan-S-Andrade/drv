@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #pragma once
 #include <RV64IMInterpreter.hpp>
 #include <sst/core/interfaces/stdMem.h>

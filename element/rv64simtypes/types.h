@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef RV64SIMTYPES_TYPES_H
 #define RV64SIMTYPES_TYPES_H
 #include <stdint.h>
@@ -13,4 +16,3 @@ typedef  int64_t rv64_blksize_t;
 typedef  int64_t rv64_blkcnt_t;
 
 #endif
-
