@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef RV64IMINTERPRETER_HPP
 #define RV64IMINTERPRETER_HPP
 #include "RISCVInstruction.hpp"

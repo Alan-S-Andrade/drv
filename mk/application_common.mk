@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2023 University of Washington
+
 ifndef APP_NAME
 $(error APP_NAME is not set)
 endif

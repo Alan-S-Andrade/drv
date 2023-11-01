@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 int fib(int n)
 {
     if (n <= 1)

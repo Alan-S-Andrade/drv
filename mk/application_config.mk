@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2023 University of Washington
+
 ifndef _APPLICATION_CONFIG_MK_
 _APPLICATION_CONFIG_MK_ := 1
 

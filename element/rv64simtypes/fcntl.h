@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef RV64SIMTYPES_FCNTL_H
 #define RV64SIMTYPES_FCNTL_H
 #include "rv64simtypes/types.h"

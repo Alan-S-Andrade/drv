@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef DRV_API_SYS_CONFIG_HPP_
 #define DRV_API_SYS_CONFIG_HPP_
 #include <cstdint>

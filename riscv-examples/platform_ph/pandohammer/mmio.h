@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef PANDOHAMMER_MMIO_H
 #define PANDOHAMMER_MMIO_H
 #ifdef __cplusplus

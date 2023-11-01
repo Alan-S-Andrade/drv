@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef RV64IINTERPRETER_HPP
 #define RV64IINTERPRETER_HPP
 #include <boost/multiprecision/cpp_int.hpp>

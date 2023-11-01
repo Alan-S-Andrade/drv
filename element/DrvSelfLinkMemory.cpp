@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #include "DrvSelfLinkMemory.hpp"
 #include "DrvCore.hpp"
 #include "DrvEvent.hpp"

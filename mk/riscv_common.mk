@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2023 University of Washington
+
 ifndef _RISCV_COMMON_MK_
 _RISCV_COMMON_MK_ := 1
 

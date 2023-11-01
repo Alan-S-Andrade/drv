@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2023 University of Washington
+
 #ifndef ICACHEBACKING_HPP
 #define ICACHEBACKING_HPP
 #include <cstdio>
