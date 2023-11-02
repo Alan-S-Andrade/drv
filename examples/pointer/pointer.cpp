@@ -49,7 +49,7 @@ int PointerMain(int argc, char* argv[])
     if (DrvAPIThread::current()->threadId() == 0 &&
         DrvAPIThread::current()->coreId() == 0) {
         pr("%s\n", __PRETTY_FUNCTION__);
-        DrvAPIPointer<uint64_t> DRAM_BASE(0x80000000ull);
+        DrvAPIPointer<uint64_t> DRAM_BASE = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
         *DRAM_BASE = 0x55;
         pr(" DRAM_BASE    = 0x%016" PRIx64 "\n", static_cast<uint64_t>(DRAM_BASE));
         pr("&DRAM_BASE[4] = 0x%016" PRIx64 "\n", static_cast<uint64_t>(&DRAM_BASE[4]));
@@ -67,7 +67,7 @@ int PointerMain(int argc, char* argv[])
         pr("bref.obar() = %f\n", static_cast<float>(bref.obar()));
         pr("bref.sum()  = %f\n", bref.sum());
         // void pointer
-        DrvAPIPointer<void> voidptr(0x80000000ull);
+        DrvAPIPointer<void> voidptr = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
         pr("voidptr = 0x%016" PRIx64 "\n", static_cast<uint64_t>(voidptr));
     }
     return 0;

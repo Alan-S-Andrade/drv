@@ -6,7 +6,8 @@
 #include <sst/core/interfaces/stdMem.h>
 #include <map>
 #include <functional>
-#include "DrvAPIReadModifyWrite.hpp"
+#include <DrvAPIAddress.hpp>
+#include <DrvAPIReadModifyWrite.hpp>
 #include "DrvNativeSimulationTranslator.hpp"
 namespace SST {
 namespace Drv {

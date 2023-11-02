@@ -2,13 +2,15 @@
 // Copyright (c) 2023 University of Washington
 
 #include <DrvAPI.hpp>
+
 using namespace DrvAPI;
 
 uint64_t signal = 0xa5a5a5a5a5a5a5a5;
 uint64_t fignal = 0x5a5a5a5a5a5a5a5a;
+DrvAPIGlobalL2SP<uint64_t> g_signal;
 
 int CommMain(int argc, char *argv[]) {
-    DrvAPIAddress addr(0);
+    DrvAPIAddress addr = &g_signal;
     if (DrvAPIThread::current()->id() == 0) {
         printf("Thread %2d: writing fignal\n", DrvAPIThread::current()->id());
         write<uint64_t>(addr, fignal);

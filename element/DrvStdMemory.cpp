@@ -58,7 +58,7 @@ DrvStdMemory::sendRequest(DrvCore *core
     if (write_req) {
         /* do write */
         uint64_t size = write_req->getSize();
-        uint64_t addr = write_req->getAddress().offset();
+        uint64_t addr = write_req->getAddress();
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_INIT,
                         "Sending write request addr=%" PRIx64 " size=%" PRIu64 "\n",
                         addr, size);
@@ -74,7 +74,7 @@ DrvStdMemory::sendRequest(DrvCore *core
     if (read_req) {
         /* do read */
         uint64_t size = read_req->getSize();
-        uint64_t addr = read_req->getAddress().offset();
+        uint64_t addr = read_req->getAddress();
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                                 "Sending read request addr=%" PRIx64 " size=%" PRIu64 "\n",
                                 addr, size);
@@ -91,7 +91,7 @@ DrvStdMemory::sendRequest(DrvCore *core
          * we could also do this with ll and sc, but those do not guarantee success
          */
         uint64_t size = atomic_req->getSize();
-        uint64_t addr = atomic_req->getAddress().offset();
+        uint64_t addr = atomic_req->getAddress();
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                         "Sending atomic request addr=%" PRIx64 " size=%" PRIu64 "\n",
                         addr, size);
@@ -106,6 +106,10 @@ DrvStdMemory::sendRequest(DrvCore *core
         data->wdata.resize(size);
         data->opcode = atomic_req->getOp();
         atomic_req->getPayload(&data->wdata[0]);
+        if (atomic_req->hasExt()) {
+            data->extdata.resize(size);
+            atomic_req->getPayloadExt(&data->extdata[0]);
+        }
         // set atomic type
         StandardMem::CustomReq *req = new StandardMem::CustomReq(data);
         req->tid = core->getThreadID(thread);

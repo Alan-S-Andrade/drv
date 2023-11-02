@@ -2,12 +2,13 @@
 // Copyright (c) 2023 University of Washington
 
 #include <DrvAPI.hpp>
-
 using namespace DrvAPI;
+
+DrvAPIGlobalL2SP<int> counter;
 
 int AmoaddMain(int argc, char *argv[])
 {
-    DrvAPIAddress addr(0);
+    DrvAPIAddress addr = &counter;
     
     if (DrvAPIThread::current()->id() != 0)
         return 0;

@@ -3,6 +3,8 @@
 
 #include <DrvAPIGlobal.hpp>
 #include <DrvAPIAllocator.hpp>
+#include <DrvAPIAddress.hpp>
+#include <DrvAPIAddressMap.hpp>
 #include "DrvCore.hpp"
 #include "DrvSimpleMemory.hpp"
 #include "DrvSelfLinkMemory.hpp"
@@ -141,11 +143,15 @@ void DrvCore::configureMemory(SST::Params &params) {
             output_->fatal(CALL_INFO, -1, "unable to load memory subcomponent\n");
         }
     }
+    // default l2 statics to base of local l2 scratchpad
+    DrvAPI::DrvAPIAddress l2sp_base_default = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
+    uint64_t l2sp_base = params.find<uint64_t>("l2sp_base", l2sp_base_default);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL2SP).setBase(l2sp_base);
 
-    uint64_t dram_base = params.find<uint64_t>("dram_base", 0x80000000);
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM).setBase(dram_base);
 
-    uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", 0x00000000);
+    // default l1 statics to base of local l1 scratchpad
+    DrvAPI::DrvAPIAddress l1sp_base_default = DrvAPI::DrvAPIVAddress::MyL1Base().encode();
+    uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", l1sp_base_default);
     DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP).setBase(l1sp_base);
 }
 

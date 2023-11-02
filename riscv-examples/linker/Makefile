@@ -4,5 +4,6 @@
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 TARGET := exe.riscv
 PLATFORM ?= ph
-SIM_OPTIONS += --verbose 100
+SIM_OPTIONS += --pod-cores=1 --core-threads=1
+COMPILE_FLAGS += -Wl,--defsym=z=0
 include $(DRV_DIR)/mk/riscv_common.mk

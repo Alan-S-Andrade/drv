@@ -166,6 +166,6 @@ template <typename T>
 using DrvAPIGlobalL1SP = DrvAPIGlobal<T, DrvAPIMemoryType::DrvAPIMemoryL1SP>;
 
 template <typename T>
-using DrvAPIGlobalDRAM = DrvAPIGlobal<T, DrvAPIMemoryType::DrvAPIMemoryDRAM>;
+using DrvAPIGlobalL2SP = DrvAPIGlobal<T, DrvAPIMemoryType::DrvAPIMemoryL2SP>;
 }
 #endif

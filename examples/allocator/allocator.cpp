@@ -15,9 +15,9 @@ DRV_API_REF_CLASS_DATA_MEMBER(foo, a)
 DRV_API_REF_CLASS_DATA_MEMBER(foo, b)
 DRV_API_REF_CLASS_END(foo)
 
-DrvAPIGlobalDRAM<int> i;
-DrvAPIGlobalDRAM<foo> f;
-DrvAPIGlobalDRAM<DrvAPIPointer<int>> pi;
+DrvAPIGlobalL2SP<int> i;
+DrvAPIGlobalL2SP<foo> f;
+DrvAPIGlobalL2SP<DrvAPIPointer<int>> pi;
 
 int AllocatorMain(int argc, char *argv[])
 {
@@ -25,8 +25,8 @@ int AllocatorMain(int argc, char *argv[])
     if (DrvAPIThread::current()->threadId() == 0 &&
         DrvAPIThread::current()->coreId() == 0) {
         DrvAPIMemoryAllocatorInit();
-        DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, 0x1000);
-        DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, 0x1000);
+        DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, 0x1000);
+        DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, 0x1000);
         foo_ref fref = &f;
         std::cout << "p0 = 0x" << std::hex << p0 << std::endl;
         std::cout << "p1 = 0x" << std::hex << p1 << std::endl;

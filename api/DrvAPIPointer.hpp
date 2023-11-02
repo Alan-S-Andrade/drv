@@ -3,8 +3,8 @@
 
 #ifndef DRV_API_POINTER_H
 #define DRV_API_POINTER_H
-#include "DrvAPIAddress.hpp"
-#include "DrvAPIMemory.hpp"
+#include <DrvAPIAddress.hpp>
+#include <DrvAPIMemory.hpp>
 #include <cstddef>
 namespace DrvAPI
 {
@@ -24,13 +24,8 @@ public:
     /**
      * base constructor
      */
-    DrvAPIPointer(const DrvAPIAddress& vaddr) :vaddr_(vaddr) {}
+    DrvAPIPointer(DrvAPIAddress vaddr) :vaddr_(vaddr) {}
 
-    /**
-     * constructor from uint64_t
-     */
-    DrvAPIPointer(uint64_t vaddr) : DrvAPIPointer(DrvAPIAddress(vaddr)) {}
-    
     /**
      * empty constructor
      */
@@ -77,13 +72,6 @@ public:
         return vaddr_;
     }
 
-    /**
-     * cast operator to uint64_t
-     */
-    operator uint64_t() const {
-        return static_cast<uint64_t>(vaddr_);
-    }
-    
     /**
      * handle
      */

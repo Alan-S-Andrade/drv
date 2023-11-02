@@ -8,12 +8,14 @@
 
 using namespace DrvAPI;
 
-DrvAPIAddress DRAM_START = 0x40000000;
-DrvAPIAddress TABLE = DRAM_START;
 
 int GupsMain(int argc, char *argv[])
 {
-    std::string tbl_size_str = "67108864";
+    auto base = DrvAPIVAddress::MyL2Base();
+    base.global() = true;
+    DrvAPIAddress TABLE = base.encode();
+
+    std::string tbl_size_str = "1048576";
     std::string thread_n_updates_str = "1024";
     if (argc > 1) {
         tbl_size_str = argv[1];
@@ -26,16 +28,17 @@ int GupsMain(int argc, char *argv[])
 
     if (DrvAPIThread::current()->coreId() == 0 &&
         DrvAPIThread::current()->threadId() == 0) {
-        printf("Core %4d: Thread %4d: tbl_size = %" PRId64 ", thread_n_updates = %" PRId64 "\n",
+        printf("Core %4d: Thread %4d: TABLE=%" PRIx64 ", tbl_size = %" PRId64 ", thread_n_updates = %" PRId64 "\n",
                DrvAPIThread::current()->coreId(),
                DrvAPIThread::current()->threadId(),
+                TABLE,
                tbl_size,
                thread_n_updates);
     }
     
     for (int64_t u = 0; u < thread_n_updates; u++) {
         int64_t i = rand() % tbl_size;
-        int64_t addr = DRAM_START + i * sizeof(int64_t);
+        int64_t addr = TABLE + i * sizeof(int64_t);
         auto  val = read<int64_t>(addr);
         write(addr, val ^ addr);
     }

@@ -10,9 +10,9 @@
 **********************************************************/
 
 MEMORY {
-DMEM_VMA (rw) : ORIGIN = 0x00000000, LENGTH = 0x00001000
-DRAM_T_LMA (rx) : ORIGIN = 0x40000000, LENGTH = 0x01000000
-DRAM_D_LMA (rw) : ORIGIN = 0x41000000, LENGTH = 0x3f000000
+DMEM_VMA (rw)   : ORIGIN = 0x0000000000000000, LENGTH = 0x00020000
+DRAM_T_LMA (rx) : ORIGIN = 0x0000000002000000, LENGTH = 0x00100000
+DRAM_D_LMA (rw) : ORIGIN = 0x0000000002100000, LENGTH = 0x00f00000
 }
 
 SECTIONS {
@@ -51,7 +51,7 @@ AT(LOADADDR(.tbss.dmem) + ADDR(.striped.data.dmem) - ADDR(.tbss.dmem)) {
 } >DMEM_VMA 
 
 __dmem_end = .;
-ASSERT((__dmem_end <= 0x00001000), "Error: dmem size limit exceeded")
+ASSERT((__dmem_end <= 0x00020000), "Error: dmem size limit exceeded")
 
 .text.dram 0x0 :
  {
@@ -61,13 +61,12 @@ ASSERT((__dmem_end <= 0x00001000), "Error: dmem size limit exceeded")
   *(.text.startup)
   *(.text.*)
   PROVIDE (__.text.dram_end = .);
-  ASSERT((__.text.dram_end <= 0x01000000), "Error: .text.dram section exceeded limit 0x01000000");
+  ASSERT((__.text.dram_end <= 0x00100000), "Error: .text.dram section exceeded limit 0x01000000");
   . = ALIGN(16);
 
 }  AT>DRAM_T_LMA
-
-. = 0x80000000 + 0x01000000;
-
+. = 0x0000000002100000;
+__global_pointer$ = .;
 .eh_frame.dram  :
  {
   *(.eh_frame)
@@ -119,7 +118,6 @@ ASSERT((__dmem_end <= 0x00001000), "Error: dmem size limit exceeded")
 }  AT>DRAM_D_LMA
 
 _gp = ADDR(.sdata.dram);
-__global_pointer$ = ADDR(.sdata.dram);
 _sp = 0x00001000;
 _bsg_data_start_addr = 0x00000000;
 _bsg_data_end_addr = ADDR(.striped.data.dmem) + SIZEOF(.striped.data.dmem);

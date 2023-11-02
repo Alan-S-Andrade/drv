@@ -34,23 +34,23 @@ void DrvSelfLinkMemory::handleEvent(SST::Event *ev) {
   
   auto read = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemRead>(mem_req);
   if (read) {
-    read->setResult(&data_[read->getAddress().offset()]);
+    read->setResult(&data_[read->getAddress()]);
     read->complete();
     return;
   }
   
   auto write = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemWrite>(mem_req);
   if (write) {
-    write->getPayload(&data_[write->getAddress().offset()]);
+    write->getPayload(&data_[write->getAddress()]);
     write->complete();
     return;
   }
   
   auto atomic = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(mem_req);
   if (atomic) {
-    atomic->setResult(&data_[atomic->getAddress().offset()]);
+    atomic->setResult(&data_[atomic->getAddress()]);
     atomic->modify();
-    atomic->getPayload(&data_[atomic->getAddress().offset()]);
+    atomic->getPayload(&data_[atomic->getAddress()]);
     atomic->complete();
     return;
   }
