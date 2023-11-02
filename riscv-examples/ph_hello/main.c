@@ -8,6 +8,7 @@
 #define ARRAY_SIZE(x) \
     (sizeof(x)/sizeof((x)[0]))
 
+__attribute__((section(".dmem")))
 char message[] = "Hello, world!\n";
 
 long lock = 1;

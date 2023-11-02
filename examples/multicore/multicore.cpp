@@ -5,11 +5,15 @@
 
 using namespace DrvAPI;
 
+DrvAPIGlobalL2SP<uint64_t> g_data;
+DrvAPIGlobalL2SP<uint64_t> g_signal;
+DrvAPIGlobalL2SP<uint64_t> g_swap;
+
 int AmoaddMain(int argc, char *argv[])
 {
-    DrvAPIAddress data_addr   (0);
-    DrvAPIAddress signal_addr (8);
-    DrvAPIAddress swap_addr  (16);
+    DrvAPIAddress data_addr   = &g_data;
+    DrvAPIAddress signal_addr = &g_signal;
+    DrvAPIAddress swap_addr   = &g_swap;
     uint64_t signal = 0xa5a5a5a5a5a5a5a5;
     if (DrvAPIThread::current()->id() != 0)
         return 0;

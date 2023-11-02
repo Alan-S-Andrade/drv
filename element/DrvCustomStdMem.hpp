@@ -59,6 +59,7 @@ public:
     CustomData::serialize_order(ser);
     ser & wdata;
     ser & rdata;
+    ser & extdata;
     ser & size;
     ser & pAddr;
   }
@@ -67,6 +68,7 @@ public:
 public:
   std::vector<uint8_t> wdata;
   std::vector<uint8_t> rdata;
+  std::vector<uint8_t> extdata;
   int64_t size;
   DrvAPI::DrvAPIMemAtomicType opcode;
   Interfaces::StandardMem::Addr pAddr;

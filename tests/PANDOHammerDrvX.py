@@ -21,10 +21,10 @@ PANDOHammerDrvX:
 
 class Tile(object):
     def l1sp_start(self):
-        return (self.id+0)*4*1024
+        return self.l1sprange.start
 
     def l1sp_end(self):
-        return (self.id+1)*4*1024-1
+        return self.l1sprange.end
 
     def markAsLoader(self):
         """
@@ -144,6 +144,7 @@ class Tile(object):
         self.id = id
         self.pod = pod
         self.pxn = pxn
+        self.l1sprange = L1SPRange(self.pxn, self.pod, self.id >> 3, self.id & 0x7)
         """
         Create a tile with the given ID, pod, and PXN.
         """
@@ -151,16 +152,17 @@ class Tile(object):
         self.initMem()
         self.initRtr()
 
-DRAM_BASE = 0x40000000
-DRAM_SIZE = 0x40000000
-
 class SharedMemory(object):
-    def __init__(self, id):
-        self.memctrl = sst.Component("memctrl_%d" % id, "memHierarchy.MemController")
+    def __init__(self, bank, pod=0, pxn=0):
+        pod_shift = ADDR_POD_HI - ADDR_POD_LO+1
+        pxn_shift = ADDR_PXN_LO - ADDR_PXN_LO+1 + pod_shift
+        self.id = bank + (pod << pod_shift) + (pxn << pxn_shift)
+        self.l2sprange = L2SPRange(pxn, pod, bank)
+        self.memctrl = sst.Component("memctrl_%d" % self.id, "memHierarchy.MemController")
         self.memctrl.addParams({
             "clock" : "1GHz",
-            "addr_range_start" : DRAM_BASE+(id+0)*512*1024*1024+0,
-            "addr_range_end"   : DRAM_BASE+(id+1)*512*1024*1024-1,
+            "addr_range_start" : self.l2sprange.start,
+            "addr_range_end"   : self.l2sprange.end,
             "debug" : 1,
             "debug_level" : arguments.verbose_memory,
             "verbose" : arguments.verbose_memory,
@@ -172,14 +174,14 @@ class SharedMemory(object):
             self.memory.addParams({
                 "verbose_level" : arguments.verbose_memory,
                 "access_time" : "32ns",
-                "mem_size" : "512MiB",
+                "mem_size" : L2SPRange.L2SP_BANK_SIZE_STR,
             })
         elif (arguments.dram_backend == "ramulator"):
             self.memory = self.memctrl.setSubComponent("backend", "memHierarchy.ramulator")
             self.memory.addParams({
                 "verbose_level" : arguments.verbose_memory,
                 "configFile" : "/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
-                "mem_size" : "512MiB",
+                "mem_size" : L2SPRange.L2SP_BANK_SIZE_STR,
             })
         # set the custom command handler
         # we need to use the Drv custom command handler
@@ -197,10 +199,10 @@ class SharedMemory(object):
         })
 
         # create the tile network
-        self.mem_rtr = sst.Component("sharedmem_rtr_%d" % id, "merlin.hr_router")
+        self.mem_rtr = sst.Component("sharedmem_rtr_%d" % self.id, "merlin.hr_router")
         self.mem_rtr.addParams({
             # semantics parameters
-            "id" : SHAREDMEM_RTR_ID+id,
+            "id" : SHAREDMEM_RTR_ID+self.id,
             "num_ports" : 2,
             "topology" : "merlin.singlerouter",
             # performance models
@@ -214,7 +216,7 @@ class SharedMemory(object):
         self.mem_rtr.setSubComponent("topology","merlin.singlerouter")
 
         # setup connection rtr <-> mem
-        self.mem_nic_link = sst.Link("sharedmem_nic_link_%d" % id)
+        self.mem_nic_link = sst.Link("sharedmem_nic_link_%d" % self.id)
         self.mem_nic_link.connect(
             (self.nic, "port", "1ns"),
             (self.mem_rtr, "port0", "1ns"),

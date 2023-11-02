@@ -5,6 +5,7 @@
 #define DRV_API_THREAD_STATE_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIReadModifyWrite.hpp>
+#include <utility>
 #include <stdlib.h>
 namespace DrvAPI
 {
@@ -61,13 +62,16 @@ private:
 class DrvAPIMem : public DrvAPIThreadState
 {
 public:
-  DrvAPIMem() : can_resume_(false) {}
-
+  DrvAPIMem(DrvAPIAddress address);
+    
   virtual bool canResume() const  { return can_resume_; }
   
   void complete() { can_resume_ = true; }
+  DrvAPIAddress getAddress() const { return address_; }
+
 protected:
   bool can_resume_;
+  DrvAPIAddress address_;
 };
 
 /**
@@ -79,14 +83,12 @@ class DrvAPIMemRead : public DrvAPIMem
 {
 public:
   DrvAPIMemRead(DrvAPIAddress address)
-    : DrvAPIMem(), address_(address) {}
+    : DrvAPIMem(address){}
 
-  DrvAPIAddress getAddress() const { return address_; }
+
   virtual void getResult(void *p) = 0;
   virtual void setResult(void *p) = 0;
   virtual size_t getSize() const { return 0; }
-protected:
-  DrvAPIAddress address_;
 };
 
 /**
@@ -126,14 +128,10 @@ class DrvAPIMemWrite : public DrvAPIMem
 {
 public:
   DrvAPIMemWrite(DrvAPIAddress address)
-    : DrvAPIMem(), address_(address) {}
-  DrvAPIAddress getAddress() const { return address_; }
+    : DrvAPIMem(address) {}
   virtual void getPayload(void *p) = 0;
   virtual void setPayload(void *p)  = 0;
   virtual size_t getSize() const { return 0; }
-
-protected:
-  DrvAPIAddress address_;
 };
 
 /**
@@ -170,17 +168,20 @@ private:
 class DrvAPIMemAtomic : public DrvAPIMem {
 public:
   DrvAPIMemAtomic(DrvAPIAddress address)
-    : DrvAPIMem(), address_(address) {}
-  DrvAPIAddress getAddress() const { return address_; }
+    : DrvAPIMem(address) {}
   virtual void getPayload(void *p) = 0;
   virtual void setPayload(void *p)  = 0;
   virtual void getResult(void *p) = 0;
   virtual void setResult(void *p) = 0;
+  /*
+   * Extended payload for atomic operations with two operands
+   */
+  virtual void getPayloadExt(void *p) {}
+  virtual void setPayloadExt(void *p) {}
+  virtual bool hasExt() const { return false; }
   virtual void modify() = 0;
   virtual size_t getSize() const { return 0; }
   virtual DrvAPIMemAtomicType getOp() const = 0;
-protected:    
-  DrvAPIAddress address_;
 };
 
 /**
@@ -207,7 +208,7 @@ public:
     r_value_  = *static_cast<T*>(p);
   }
   void modify() override {
-    w_value_ = atomic_modify<T>(w_value_, r_value_, OP);
+    std::tie(w_value_, r_value_) = atomic_modify<T>(w_value_, r_value_, OP);
   }
   size_t getSize() const override { return sizeof(T); }
   DrvAPIMemAtomicType getOp() const override { return OP; }
@@ -215,5 +216,51 @@ private:
   T r_value_;
   T w_value_;
 };
+
+/**
+ * @brief Concrete thread state for an atomic read-modify-write
+ *
+ * @tparam T The data type.
+ * @tparam op The operation.
+ */
+template <typename T, DrvAPIMemAtomicType OP>
+class DrvAPIMemAtomicConcreteExt : public DrvAPIMemAtomic {
+public:
+  DrvAPIMemAtomicConcreteExt(DrvAPIAddress address, T value, T ext)
+      : DrvAPIMemAtomic(address), w_value_(value), ext_value_(ext) {}
+
+  void getPayload(void *p) override {
+    *static_cast<T*>(p) = w_value_;
+  }
+  void setPayload(void *p) override {
+    w_value_ = *static_cast<T*>(p);
+  }
+  void getResult(void *p) override {
+    *static_cast<T*>(p) = r_value_;
+  }
+  void setResult(void *p) override {
+    r_value_  = *static_cast<T*>(p);
+  }
+  void getPayloadExt(void *p) override {
+    *static_cast<T*>(p) = ext_value_;
+  }
+  void setPayloadExt(void *p) override {
+    ext_value_ = *static_cast<T*>(p);
+  }
+  bool hasExt() const override {
+    return true;
+  }
+  void modify() override {
+      std::tie(w_value_,r_value_) = atomic_modify<T>(w_value_, r_value_, ext_value_, OP);
+  }
+  size_t getSize() const override { return sizeof(T); }
+  DrvAPIMemAtomicType getOp() const override { return OP; }
+private:
+  T r_value_;
+  T w_value_;
+  T ext_value_;
+};
+
+
 }
 #endif

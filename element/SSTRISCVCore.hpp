@@ -15,7 +15,8 @@
 #include "SSTRISCVSimulator.hpp"
 #include "SSTRISCVHart.hpp"
 #include "DrvSysConfig.hpp"
-
+#include "DrvAPIAddress.hpp"
+#include "DrvAPIAddressMap.hpp"
 namespace SST {
 namespace Drv {
 
@@ -222,7 +223,12 @@ public:
      * get the max write request size
      */
     size_t getMaxReqSize() const { return sys().numNWObufDwords() * sizeof(uint64_t); }
-    
+
+    /**
+     * decode a virtual address to a physical address
+     */
+    DrvAPI::DrvAPIPAddress toPhysicalAddress(uint64_t addr) const;
+
     SST::Output output_; //!< output stream
     Interfaces::StandardMem *mem_; //!< memory interface
     RISCVSimulator *sim_; //!< simulator

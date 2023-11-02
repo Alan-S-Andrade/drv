@@ -56,5 +56,5 @@ clean:
 SIM_OPTIONS ?=
 
 run: $(TARGET)
-	sst $(SCRIPT) -- $(TARGET) $(SIM_OPTIONS)
+	sst $(SCRIPT) -- $(SIM_OPTIONS) $(TARGET) $(SIM_ARGS)
 endif

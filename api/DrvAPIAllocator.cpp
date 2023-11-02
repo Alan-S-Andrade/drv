@@ -5,10 +5,11 @@
 #include "DrvAPIGlobal.hpp"
 #include <iostream>
 #include <atomic>
+#include <inttypes.h>
 namespace DrvAPI
 {
 
-DrvAPIGlobalDRAM<uint64_t> drvapi_global_memory[DrvAPIMemoryType::DrvAPIMemoryNTypes];
+DrvAPIGlobalL2SP<uint64_t> drvapi_global_memory[DrvAPIMemoryType::DrvAPIMemoryNTypes];
 static std::atomic<int> initialized;
 
 void DrvAPIMemoryAllocatorInit() {

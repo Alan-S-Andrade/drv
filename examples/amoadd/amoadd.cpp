@@ -3,11 +3,14 @@
 
 #include <DrvAPI.hpp>
 
+DrvAPI::DrvAPIGlobalL2SP<int64_t> signal_var;
+DrvAPI::DrvAPIGlobalL2SP<int64_t> barrier_var;
+
 int AmoaddMain(int argc, char *argv[])
 {
     using namespace DrvAPI;
-    DrvAPIAddress signal_addr  = 0x0;
-    DrvAPIAddress barrier_addr = 0x8;
+    DrvAPIAddress signal_addr  = &signal_var;
+    DrvAPIAddress barrier_addr = &barrier_var;
     if (argc > 1) {
         barrier_addr = strtoull(argv[1], NULL, 0);
         if (argc > 2) {

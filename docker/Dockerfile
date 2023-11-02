@@ -7,6 +7,7 @@ RUN apt update -y \
         && apt install -y \
         make \
         build-essential \
+        openssh-client \
         && apt clean -y
 
 # install sst core
@@ -70,15 +71,26 @@ RUN apt update -y \
         && apt clean -y
 
 
-# install riscv gnu toolchain
+RUN mkdir ~/.ssh
+ARG ssh_prv_key
+ARG ssh_pub_key
+RUN echo "$ssh_prv_key" > /root/.ssh/id_ed25519 && \
+    echo "$ssh_pub_key" > /root/.ssh/id_ed25519.pub && \
+    chmod 600 /root/.ssh/id_ed25519 && \
+    chmod 600 /root/.ssh/id_ed25519.pub && \
+    ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+RUN eval "$(ssh-agent -s)" && \
+    ssh-add ~/.ssh/id_ed25519
+
 RUN apt update -y \
         && apt install -y git automake gawk wget curl texinfo libgmp-dev flex bison \
-        && git clone https://github.com/riscv-collab/riscv-gnu-toolchain /riscv-gnu-toolchain \
+        && git clone git@github.com:AMDResearch/pando-riscv-gnu-toolchain /riscv-gnu-toolchain \
         && cd /riscv-gnu-toolchain \
+	&& git checkout pandodrvsim \
         && ./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=/install \
         && make -j `nproc` \
         && make install \
-        && /install/bin/riscv64-unknown-elf-gcc --version \
         && rm -rf /riscv-gnu-toolchain \
         && apt remove -y git automake gawk wget curl texinfo libgmp-dev flex bison \
         && apt clean -y
@@ -106,4 +118,5 @@ WORKDIR /root/drv/
 
 # build drv
 RUN cd /root/drv \
-        && make -j `nproc`
+       && make -j `nproc`
+RUN cd /root/drv

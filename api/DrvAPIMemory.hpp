@@ -10,15 +10,6 @@ namespace DrvAPI
 {
 
 /**
- * @brief the types of memory
- */
-typedef enum __DrvAPIMemoryType {
-    DrvAPIMemoryL1SP,
-    DrvAPIMemoryDRAM,
-    DrvAPIMemoryNTypes,
-} DrvAPIMemoryType;
-
-/**
  * @brief read from a memory address
  * 
  */
@@ -78,5 +69,22 @@ T atomic_add(DrvAPIAddress address, T value)
     }
     return result;
 }
+
+/**
+ * @brief atomic compare and swap to a memory address
+ */
+template <typename T>
+T atomic_cas(DrvAPIAddress address, T compare, T value)
+{
+    T result = 0;
+    DrvAPIThread::current()->setState(std::make_shared<DrvAPIMemAtomicConcreteExt<T, DrvAPIMemAtomicCAS>>(address, value, compare));
+    DrvAPIThread::current()->yield();
+    auto atomic_req = std::dynamic_pointer_cast<DrvAPIMemAtomic>(DrvAPIThread::current()->getState());
+    if (atomic_req) {
+        atomic_req->getResult(&result);
+    }
+    return result;
+}
+
 }
 #endif

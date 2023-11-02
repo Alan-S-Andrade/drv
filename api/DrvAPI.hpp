@@ -15,4 +15,5 @@
 #include <DrvAPISysConfig.hpp>
 #include <DrvAPIInfo.hpp>
 #include <DrvAPIMain.hpp>
+#include <DrvAPIAddressMap.hpp>
 #endif

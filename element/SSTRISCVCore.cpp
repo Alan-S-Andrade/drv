@@ -3,7 +3,7 @@
 
 #include "SSTRISCVCore.hpp"
 #include "SSTRISCVSimulator.hpp"
-
+#include <DrvAPIAddressMap.hpp>
 namespace SST {
 namespace Drv {
 
@@ -99,6 +99,10 @@ RISCVCore::~RISCVCore() {
     delete sim_;
 }
 
+DrvAPI::DrvAPIPAddress RISCVCore::toPhysicalAddress(uint64_t addr) const {
+    return DrvAPI::DrvAPIVAddress::to_physical(addr, pxn_, pod_, core_ >> 3, core_ & 0x7);
+}
+
 /* load program segment */
 void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
     using Write = Interfaces::StandardMem::Write;
@@ -109,7 +113,15 @@ void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
     uint8_t *segp = static_cast<uint8_t*>(icache_->segment(phdr));
     size_t  segsz = phdr->p_filesz;
     size_t  reqsz = getMaxReqSize();
-    Addr segpaddr = phdr->p_paddr;
+
+    auto decoded_phys_addr = toPhysicalAddress(phdr->p_paddr);
+
+    // skip if you are not the l2sp loader
+    if (!load_program_ && decoded_phys_addr.type() != DrvAPI::DrvAPIPAddress::TYPE_L1SP) {
+        return;
+    }
+
+    Addr segpaddr = decoded_phys_addr.encode(); // this turns a relative address into an absolute one
     // write data
     for (;segsz > 0;) {
         size_t wrsz = std::min(reqsz, segsz);
@@ -164,11 +176,9 @@ void RISCVCore::setup() {
     }
     output_.verbose(CALL_INFO, 1, 0, "memory: line size = %" PRIu64 "\n", stdmem->getLineSize());
     // load program data
-    if (load_program_) {
-        output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
-        loadProgram();
-        output_.verbose(CALL_INFO, 1, 0, "Program loaded\n");
-    }
+    output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
+    loadProgram();
+    output_.verbose(CALL_INFO, 1, 0, "Program loaded\n");
 }
 
 /* finish */

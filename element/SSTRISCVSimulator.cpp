@@ -10,7 +10,8 @@
 #include <type_traits>
 #include "SSTRISCVSimulator.hpp"
 #include "SSTRISCVCore.hpp"
-#include "riscv64-unknown-elf/include/machine/syscall.h"
+#include "riscv64-unknown-elfpandodrvsim/include/machine/syscall.h"
+#include "DrvAPIAddress.hpp"
 #include "DrvAPIReadModifyWrite.hpp"
 #include "DrvCustomStdMem.hpp"
 
@@ -58,6 +59,7 @@ template <typename R, typename T>
 void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
    RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
    StandardMem::Addr addr = shart.x(i.rs1()) + i.SIimm();
+   addr = core_->toPhysicalAddress(addr).encode();
    // create the read request
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
    rd->tid = core_->getHartId(shart);
@@ -87,6 +89,7 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
         visitStoreMMIO<T>(shart, i);
         return;
     }
+    addr = core_->toPhysicalAddress(addr).encode();
     // create the write request
     std::vector<uint8_t> data(sizeof(T));
     T *ptr = (T*)&data[0];
@@ -111,6 +114,7 @@ template <typename T>
 void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvAPIMemAtomicType op) {
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     StandardMem::Addr addr = shart.x(i.rs1());
+    addr = core_->toPhysicalAddress(addr).encode();
     AtomicReqData *data = new AtomicReqData();
     data->pAddr = addr;
     data->size = sizeof(T);
@@ -337,9 +341,8 @@ void RISCVSimulator::visitCSRRCI(RISCVHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::sysWRITE(RISCVSimHart &hart, RISCVInstruction &i) {
     int fd = hart.sa(0);
-    uint64_t buf = hart.a(1);
+    uint64_t buf = core_->toPhysicalAddress(hart.a(1)).encode();
     uint64_t len = hart.a(2);
-
     std::function<void(std::vector<uint8_t>&)> completion
         ([this, buf, &hart, fd, len](std::vector<uint8_t> &data) {
             this->core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "WRITE: fd=%d, buf=%#lx, len=%lu\n", fd, buf, len);
@@ -355,7 +358,7 @@ void RISCVSimulator::sysWRITE(RISCVSimHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::sysREAD(RISCVSimHart &shart, RISCVInstruction &i) {
     int fd = shart.sa(0);
-    uint64_t buf = shart.a(1);
+    uint64_t buf = core_->toPhysicalAddress(shart.a(1)).encode();
     uint64_t len = shart.a(2);
     core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "READ: fd=%d, buf=%#lx, len=%lu\n", fd, buf, len);
     // call read on a simulation space buffer
@@ -373,7 +376,7 @@ void RISCVSimulator::sysREAD(RISCVSimHart &shart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::sysBRK(RISCVSimHart &shart, RISCVInstruction &i) {
-    uint64_t addr = shart.a(0);
+    uint64_t addr = core_->toPhysicalAddress(shart.a(0)).encode();
     core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "BRK: addr=%#lx\n", addr);
     shart.a(0) = -1;
 }
@@ -385,7 +388,7 @@ void RISCVSimulator::sysEXIT(RISCVSimHart &shart, RISCVInstruction &i) {
 
 void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
     int fd = shart.sa(0);
-    uint64_t stat_buf = shart.a(1);
+    uint64_t stat_buf = core_->toPhysicalAddress(shart.a(1)).encode();
     core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "FSTAT: fd=%d, stat_buf=%#lx\n", fd, stat_buf);
     struct stat stat_s;
     int r = fstat(fd, &stat_s);
@@ -405,8 +408,7 @@ void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
-    uint64_t path = shart.a(0);
-
+    uint64_t path = core_->toPhysicalAddress(shart.a(0)).encode();
     // TODO: these flags need to be translated
     // to native flags for the running host
     int32_t flags = _type_translator.simulatorToNative_openflags(shart.a(1));

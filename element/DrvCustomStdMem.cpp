@@ -88,7 +88,24 @@ DrvCmdMemHandler::finish(MemEventBase *ev, uint32_t flags) {
   MemHierarchy::Addr localAddr = translateGlobalToLocal(ard->getRoutingAddress());
   readData(localAddr, ard->getSize(), ard->rdata);
   // do modify based on read value
-  DrvAPI::atomic_modify(&ard->wdata[0], &ard->rdata[0], &ard->wdata[0], ard->opcode, ard->getSize());
+  if (!ard->extdata.empty()) {
+      DrvAPI::atomic_modify
+          ( &ard->wdata[0]
+          , &ard->rdata[0]
+          , &ard->extdata[0]
+          , &ard->wdata[0]
+          , ard->opcode
+          , ard->getSize()
+          );
+  } else {
+      DrvAPI::atomic_modify
+          ( &ard->wdata[0]
+          , &ard->rdata[0]
+          , &ard->wdata[0]
+          , ard->opcode
+          , ard->getSize()
+          );
+  }
   // write-back
   writeData(localAddr, &(ard->wdata));
   MemEventBase *MEB = ev->makeResponse();
