@@ -11,8 +11,7 @@ using namespace DrvAPI;
 
 int GupsMain(int argc, char *argv[])
 {
-    auto base = DrvAPIVAddress::MyL2Base();
-    base.global() = true;
+    auto base = DrvAPIVAddress::MainMemBase(myPXNId());
     DrvAPIAddress TABLE = base.encode();
 
     std::string tbl_size_str = "1048576";
