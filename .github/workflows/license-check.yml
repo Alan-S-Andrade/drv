@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2023 University of Washington
+name: Run License Checks on Source Files
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+      - name: Install addlicense
+        run:  go install github.com/google/addlicense@latest
+      - name: Run license check
+        run:  /home/runner/go/bin/addlicense -check .
