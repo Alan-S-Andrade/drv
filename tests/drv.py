@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2023 University of Washington
-
+import sst
 import argparse
 
 # common functions
@@ -10,8 +10,9 @@ ADDR_POD_HI,ADDR_POD_LO       = (39, 34)
 ADDR_CORE_Y_HI,ADDR_CORE_Y_LO = (30, 28)
 ADDR_CORE_X_HI,ADDR_CORE_X_LO = (24, 22)
 
-ADDR_TYPE_L1SP = 0b000000
-ADDR_TYPE_L2SP = 0b000001
+ADDR_TYPE_L1SP    = 0b000000
+ADDR_TYPE_L2SP    = 0b000001
+ADDR_TYPE_MAINMEM = 0b000100
 
 def set_bits(word, hi, lo, value):
     mask = (1 << (hi - lo + 1)) - 1
@@ -47,6 +48,23 @@ class L2SPRange(object):
         self.start = start + bank * self.L2SP_BANK_SIZE
         self.end = self.start + self.L2SP_BANK_SIZE - 1
         
+class MainMemoryRange(object):
+    # spec says upto 8TB
+    # for simulation, we'll use 1GB/pod
+    POD_MAINMEM_BANKS = 8
+    POD_MAINMEM_SIZE = 0x0000000040000000
+    POD_MAINMEM_BANK_SIZE = POD_MAINMEM_SIZE // POD_MAINMEM_BANKS
+    POD_MAINMEM_SIZE_STR = "1GB"
+    POD_MAINMEM_BANK_SIZE_STR = "128MB"
+    def __init__(self, pxn, pod, bank):
+        start = 0
+        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
+        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
+        self.start = start \
+                   + pod  * self.POD_MAINMEM_SIZE \
+                   + bank * self.POD_MAINMEM_BANK_SIZE
+        self.end = self.start + self.POD_MAINMEM_BANK_SIZE - 1
+
         
 ################################
 # parse command line arguments #
@@ -81,7 +99,8 @@ SYSCONFIG = {
     "sys_pod_cores" : 8,
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
-    "sys_pod_dram_ports" : L2SPRange.L2SP_POD_BANKS,
+    "sys_pod_l2_banks" : L2SPRange.L2SP_POD_BANKS,
+    "sys_pod_dram_ports" : MainMemoryRange.POD_MAINMEM_BANKS,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
 }

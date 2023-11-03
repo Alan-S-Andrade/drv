@@ -104,6 +104,16 @@ struct DrvAPIVAddress
         addr.not_scratchpad() = false;
         return addr;
     }
+
+    static DrvAPIVAddress MainMemBase(uint32_t pxn) {
+        DrvAPIVAddress addr = 0;
+        addr.not_scratchpad() = true;
+        addr.pxn() = pxn;
+        addr.global() = false;
+        addr.dram_offset_hi10() = 0;
+        addr.dram_offset_lo33() = 0;
+        return addr;
+    }
     
     DrvAPIVAddress() : addr(0) {}
     DrvAPIVAddress(const DrvAPIVAddress &o) = default;

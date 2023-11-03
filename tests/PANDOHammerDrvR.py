@@ -5,9 +5,8 @@
 # Diagram of this model:                                                                               #
 # https://docs.google.com/presentation/d/1FnrAjOXJKo5vKgo7IkuSD7QT15aDAmJi5Pts6IQhkX8/edit?usp=sharing #
 ########################################################################################################
-import sst
-import argparse
 from drv import *
+from drv_memory import *
 
 # for drvr we set the core clock to 1GHz
 SYSCONFIG["sys_core_clock"] = "1GHz"
@@ -158,76 +157,6 @@ class Tile(object):
         self.initMem()
         self.initRtr()
 
-class SharedMemory(object):
-    def __init__(self, bank, pod=0, pxn=0):
-        pod_shift = ADDR_POD_HI - ADDR_POD_LO + 1
-        pxn_shift = ADDR_PXN_HI - ADDR_PXN_LO + 1 + pod_shift
-        self.id = bank + (pod << pod_shift) + (pxn << pxn_shift)
-        self.l2sprange = L2SPRange(pxn, pod, bank)
-        self.memctrl = sst.Component("memctrl_%d" % self.id, "memHierarchy.MemController")
-        self.memctrl.addParams({
-            "clock" : "1GHz",
-            "addr_range_start" : self.l2sprange.start,
-            "addr_range_end"   : self.l2sprange.end,
-            "debug" : 1,
-            "debug_level" : arguments.verbose_memory,
-            "verbose" : arguments.verbose_memory,
-        })
-        # set the backend memory system to Drv special memory
-        # (needed for AMOs)
-        if (arguments.dram_backend == "simple"):
-            self.memory = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
-            self.memory.addParams({
-                "verbose_level" : arguments.verbose_memory,
-                "access_time" : "32ns",
-                "mem_size" : L2SPRange.L2SP_BANK_SIZE_STR,
-            })
-        elif (arguments.dram_backend == "ramulator"):
-            self.memory = self.memctrl.setSubComponent("backend", "memHierarchy.ramulator")
-            self.memory.addParams({
-                "verbose_level" : arguments.verbose_memory,
-                "configFile" : "/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
-                "mem_size" : L2SPRange.L2SP_BANK_SIZE_STR,
-            })
-        # set the custom command handler
-        # we need to use the Drv custom command handler
-        # to handle our custom commands (AMOs)
-        self.customcmdhandler = self.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
-        self.customcmdhandler.addParams({
-            "verbose_level" : arguments.verbose_memory,
-        })
-        # network interface
-        self.nic = self.memctrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
-        self.nic.addParams({
-            "group" : 2,
-            "network_bw" : "256GB/s",
-            "verbose_level": arguments.verbose_memory,
-        })
-        
-        # create the tile network
-        self.mem_rtr = sst.Component("sharedmem_rtr_%d" % self.id, "merlin.hr_router")
-        self.mem_rtr.addParams({
-            # semantics parameters
-            "id" : SHAREDMEM_RTR_ID+self.id,
-            "num_ports" : 2,
-            "topology" : "merlin.singlerouter",
-            # performance models
-            "xbar_bw" : "1024GB/s",
-            "link_bw" : "1024GB/s",
-            "flit_size" : "8B",
-            "input_buf_size" : "1KB",
-            "output_buf_size" : "1KB",
-            "debug" : 1,
-        })
-        self.mem_rtr.setSubComponent("topology","merlin.singlerouter")
-
-        # setup connection rtr <-> mem
-        self.mem_nic_link = sst.Link("sharedmem_nic_link_%d" % self.id)
-        self.mem_nic_link.connect(
-            (self.nic, "port", "1ns"),
-            (self.mem_rtr, "port0", "1ns"),
-        )
-
 
 # build the tiles
 tiles = []
@@ -238,17 +167,23 @@ for i in range(CORES):
 tiles[0].markAsLoader()
 
 # build the shared memory
-DRAM_PORTS = SYSCONFIG["sys_pod_dram_ports"]
-dram_ports = []
-for i in range(DRAM_PORTS):
-    dram_ports.append(SharedMemory(i))
-                      
+POD_L2_BANKS = SYSCONFIG["sys_pod_l2_banks"]
+l2_banks = []
+for i in range(POD_L2_BANKS):
+    l2_banks.append(L2MemoryBank(i))
+
+# build the main memory banks
+POD_MAINMEM_BANKS = SYSCONFIG["sys_pod_dram_ports"]
+mainmem_banks = []
+for i in range(POD_MAINMEM_BANKS):
+    mainmem_banks.append(MainMemoryBank(i))
+
 # build the network crossbar
 chiprtr = sst.Component("chiprtr", "merlin.hr_router")
 chiprtr.addParams({
     # semantics parameters
     "id" : CHIPRTR_ID,
-    "num_ports" : CORES+DRAM_PORTS,
+    "num_ports" : CORES+POD_L2_BANKS+POD_MAINMEM_BANKS,
     "topology" : "merlin.singlerouter",
     # performance models
     "xbar_bw" : "256GB/s",
@@ -280,24 +215,45 @@ for (i, tile) in enumerate(tiles):
     )
 
 # wire up the shared memory
-base_dram_portno = len(tiles)
-for (i, dram_port) in enumerate(dram_ports):
-    bridge = sst.Component("bridge_%d" % (base_dram_portno+i), "merlin.Bridge")
+base_l2_bankno = len(tiles)
+for (i, l2_bank) in enumerate(l2_banks):
+    bridge = sst.Component("bridge_%d" % (base_l2_bankno+i), "merlin.Bridge")
     bridge.addParams({
         "translator" : "memHierarchy.MemNetBridge",
         "debug" : 1,
         "debug_level" : 10,
         "network_bw" : "256GB/s",
         })
-    dram_bridge_link = sst.Link("dram_bridge_link_%d" % i)
-    dram_bridge_link.connect(
+    l2_bank_bridge_link = sst.Link("l2bank_bridge_link_%d" % i)
+    l2_bank_bridge_link.connect(
         (bridge, "network0", "1ns"),
-        (dram_port.mem_rtr, "port1", "1ns")
+        (l2_bank.mem_rtr, "port1", "1ns")
     )
     bridge_chiprtr_link = sst.Link("bridge_chip_memrtr_link_%d" %i)
     bridge_chiprtr_link.connect(
         (bridge, "network1", "1ns"),
-        (chiprtr, "port%d" % (base_dram_portno+i), "1ns")
+        (chiprtr, "port%d" % (base_l2_bankno+i), "1ns")
     )
         
+# wire up the main memory
+base_mainmem_bankno = base_l2_bankno + len(l2_banks)
+for (i, mainmem_bank) in enumerate(mainmem_banks):
+    bridge = sst.Component("mainmem_bridge_%d" % i, "merlin.Bridge")
+    bridge.addParams({
+        "translator" : "memHierarchy.MemNetBridge",
+        "debug" : 1,
+        "debug_level" : 10,
+        "network_bw" : "256GB/s",
+    })
+    mainmem_bank_bridge_link = sst.Link("mainmem_bank_bridge_link_%d" % i)
+    mainmem_bank_bridge_link.connect(
+        (bridge, "network0", "1ns"),
+        (mainmem_bank.mem_rtr, "port1", "1ns")
+    )
+    bridge_chiprtr_link = sst.Link("bridge_chip_mainmem_memrtr_link_%d" %i)
+    bridge_chiprtr_link.connect(
+        (bridge, "network1", "1ns"),
+        (chiprtr, "port%d" % (base_mainmem_bankno+i), "1ns")
+    )
+
 
