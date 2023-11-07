@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2023 University of Washington
 
-BFS_DIR := $(shell git rev-parse --show-toplevel)
-DRV_DIR := $(BFS_DIR)/../..
+DRV_DIR := $(shell git rev-parse --show-toplevel)
+BFS_DIR := $(DRV_DIR)/examples/bfs
+
 include $(DRV_DIR)/mk/config.mk
 
 APP_NAME := bfs
