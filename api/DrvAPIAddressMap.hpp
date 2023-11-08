@@ -175,7 +175,7 @@ struct DrvAPIVAddress
     }
 
     bool is_dram() {
-        return !not_scratchpad();
+        return not_scratchpad();
     }
 
     bool is_l2() {
