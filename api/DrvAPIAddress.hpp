@@ -22,6 +22,7 @@ using DrvAPIAddress  = uint64_t;
 typedef enum __DrvAPIMemoryType {
     DrvAPIMemoryL1SP,
     DrvAPIMemoryL2SP,
+    DrvAPIMemoryDRAM,
     DrvAPIMemoryNTypes,
 } DrvAPIMemoryType;
 
