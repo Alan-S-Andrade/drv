@@ -143,6 +143,10 @@ void DrvCore::configureMemory(SST::Params &params) {
             output_->fatal(CALL_INFO, -1, "unable to load memory subcomponent\n");
         }
     }
+    DrvAPI::DrvAPIAddress dram_base_default
+        = DrvAPI::DrvAPIVAddress::MainMemBase(pxn_).encode();
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM).setBase(dram_base_default);
+
     // default l2 statics to base of local l2 scratchpad
     DrvAPI::DrvAPIAddress l2sp_base_default = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
     uint64_t l2sp_base = params.find<uint64_t>("l2sp_base", l2sp_base_default);
