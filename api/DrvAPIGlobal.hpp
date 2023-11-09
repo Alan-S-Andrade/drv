@@ -75,9 +75,7 @@ public:
      * @brief constructor
      */
     DrvAPIGlobal() {
-        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
-        pointer_ = DrvAPIPointer<T>
-            (section.getBase() + section.increaseSizeBy(sizeof(T)));
+        rebase();
     }
 
     // not copyable or movable
@@ -85,7 +83,12 @@ public:
     DrvAPIGlobal(DrvAPIGlobal &&other) = delete;
     DrvAPIGlobal &operator=(const DrvAPIGlobal &other) = delete;
     DrvAPIGlobal &operator=(DrvAPIGlobal &&other) = delete;
-    
+
+    void rebase() {
+        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
+        pointer_ = DrvAPIPointer<T>
+            (section.getBase() + section.increaseSizeBy(sizeof(T)));
+    }
     
     /**
      * cast operator
