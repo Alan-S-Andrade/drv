@@ -25,11 +25,15 @@ int AllocatorMain(int argc, char *argv[])
     if (DrvAPIThread::current()->threadId() == 0 &&
         DrvAPIThread::current()->coreId() == 0) {
         DrvAPIMemoryAllocatorInit();
-        DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, 0x1000);
-        DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, 0x1000);
+        for (DrvAPIMemoryType type : {DrvAPIMemoryL1SP, DrvAPIMemoryL2SP, DrvAPIMemoryDRAM}) {
+            DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(type, 0x1000);
+            DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(type, 0x1000);
+            std::cout << "p0 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
+            std::cout << "p1 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
+            std::cout << "p0 = 0x" << std::hex << p0 << std::endl;
+            std::cout << "p1 = 0x" << std::hex << p1 << std::endl;
+        }
         foo_ref fref = &f;
-        std::cout << "p0 = 0x" << std::hex << p0 << std::endl;
-        std::cout << "p1 = 0x" << std::hex << p1 << std::endl;
         fref.a() = 1;
         fref.b() = 2;
         std::cout << "&f = 0x" << std::hex << &fref << std::endl;
