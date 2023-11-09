@@ -14,8 +14,6 @@ int main()
     int i = 14;
     int r = fib(i);
 
-    char buf[256];
-    snprintf(buf, sizeof(buf), "fib(%d) = %d\n", i, r);
-    write(STDOUT_FILENO, buf, strlen(buf));
+    printf("fib(%d) = %d\n", i, r);
     return r;
 }

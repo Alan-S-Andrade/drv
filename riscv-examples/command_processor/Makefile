@@ -2,6 +2,14 @@
 # Copyright (c) 2023 University of Washington
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
-RISCV_CSOURCE := $(wildcard *.c)
+
+# pando hammer source files
+RISCV_CSOURCE += hello.c
+
+# command processor source files
+COMMAND_PROCESSOR_CXXSOURCE += hello_cp.cpp
+
 SIM_OPTIONS += --core-threads=1 --pod-cores=1
+
 include $(DRV_DIR)/mk/riscv_common.mk
+include $(DRV_DIR)/mk/command_processor.mk

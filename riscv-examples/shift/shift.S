@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2023 University of Washington
-
+#include <machine/syscall.h>
         .global _start
 _start:
         li      x1, -1
-        sw      x1, 0(x1)
-        lwu     x1, 0(x1)
+        sw      x1, 0(x0)
+        lwu     x1, 0(x0)
         addi    x2, x1, 0
         addiw   x3, x1, 0
         li      x4, 1
@@ -16,4 +16,5 @@ _start:
         li     x9, 2
         slliw x10, x9, 31
 done:
-        j done
+        li      a7, SYS_exit
+        ecall

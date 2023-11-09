@@ -9,45 +9,56 @@ export PYTHONPATH := $(DRV_DIR)/tests:$(PYTHONPATH)
 
 include $(DRV_DIR)/mk/config.mk
 
-CXX := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-g++
-CC  := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-gcc
+RISCV_CXX := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-g++
+RISCV_CC  := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-gcc
 
-PLATFORM ?= default
+RISCV_PLATFORM ?= ph
 
-vpath %.S $(DRV_DIR)/riscv-examples/platform_$(PLATFORM)
-vpath %.c $(DRV_DIR)/riscv-examples/platform_$(PLATFORM)
-vpath %.cpp $(DRV_DIR)/riscv-examples/platform_$(PLATFORM)
+vpath %.S $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)
+vpath %.c $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)
+vpath %.cpp $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)
 
-ARCH:=rv64imafd
-ABI:=lp64d
+RISCV_ARCH:=rv64imafd
+RISCV_ABI:=lp64d
 
-COMPILE_FLAGS += -O2 -march=$(ARCH) -mabi=$(ABI)
-CXXFLAGS += $(COMPILE_FLAGS)
-CFLAGS   += $(COMPILE_FLAGS)
-LDFLAGS  +=
-LIBS     +=
+RISCV_COMPILE_FLAGS += -O2 -march=$(RISCV_ARCH)
+RISCV_COMPILE_FLAGS += -mabi=$(RISCV_ABI)
 
--include $(DRV_DIR)/riscv-examples/platform_$(PLATFORM)/common.mk
+RISCV_CXXFLAGS += $(RISCV_COMPILE_FLAGS)
+RISCV_CFLAGS   += $(RISCV_COMPILE_FLAGS)
+RISCV_LDFLAGS  +=
+RISCV_LIBS     +=
 
-CSOURCE   += $(wildcard *.c)
-COBJECT   += $(patsubst %.c,%.o,$(CSOURCE))
-CXXSOURCE += $(wildcard *.cpp)
+-include $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)/common.mk
 
-CXXOBJECT := $(patsubst %.cpp,%.o,$(CXXSOURCE))
-ASMSOURCE := $(wildcard *.S)
-ASMOBJECT := $(patsubst %.S,%.o,$(ASMSOURCE))
+# The application defines this to add C source files
+# to RISCV executable
+RISCV_CSOURCE   ?=
+RISCV_COBJECT   += $(patsubst %.c,%.o,$(RISCV_CSOURCE))
 
-$(ASMOBJECT): %.o: %.S
-	$(CC) $(CFLAGS) -c -o $@ $<
+# The application defines this to add C++ [.cpp] source files
+# to RISCV executable
+RISCV_CXXSOURCE ?= 
+RISCV_CXXOBJECT := $(patsubst %.cpp,%.o,$(RISCV_CXXSOURCE))
 
-$(COBJECT): %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+# The application defines this to add .S source files
+# to RISCV executable
+RISCV_ASMSOURCE ?=
+RISCV_ASMOBJECT := $(patsubst %.S,%.o,$(RISCV_ASMSOURCE))
 
-$(CXXOBJECT): %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+$(RISCV_ASMOBJECT): %.o: %.S
+	$(RISCV_CC) $(RISCV_CFLAGS) -c -o $@ $<
 
-$(TARGET): %.riscv: $(COBJECT) $(CXXOBJECT) $(ASMOBJECT)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
+$(RISCV_COBJECT): %.o: %.c
+	$(RISCV_CC) $(RISCV_CFLAGS) -c -o $@ $<
+
+$(RISCV_CXXOBJECT): %.o: %.cpp
+	$(RISCV_CXX) $(RISCV_CXXFLAGS) -c -o $@ $<
+
+RISCV_TARGET ?= exe.riscv
+
+$(RISCV_TARGET): %.riscv: $(RISCV_COBJECT) $(RISCV_CXXOBJECT) $(RISCV_ASMOBJECT)
+	$(RISCV_CXX) $(RISCV_CXXFLAGS) $(RISCV_LDFLAGS) -o $@ $(filter %.o,$^) $(RISCV_LIBS)
 
 .PHONY: clean
 clean:
@@ -55,6 +66,6 @@ clean:
 
 SIM_OPTIONS ?=
 
-run: $(TARGET)
-	sst $(SCRIPT) -- $(SIM_OPTIONS) $(TARGET) $(SIM_ARGS)
+run: $(RISCV_TARGET)
+	sst $(SCRIPT) -- $(SIM_OPTIONS) $(RISCV_TARGET) $(SIM_ARGS)
 endif
