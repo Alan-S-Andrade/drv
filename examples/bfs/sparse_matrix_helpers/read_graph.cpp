@@ -150,7 +150,7 @@ int read_common(
     // 3. read the nonzeros
     std::vector<std::vector<NonZeroT>> rows((*V)+1);
     for (int i = 0; i < nz; i++) {
-        NonZeroT nonzero;
+        NonZeroT nonzero {};
         int row = 0;
         r = read_scan_nonzero(graph, f, banner, row, nonzero);
         // matrix market is 1 indexed, but we use zero indexing
