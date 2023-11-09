@@ -22,26 +22,31 @@ DrvAPIGlobalL2SP<DrvAPIPointer<int>> pi;
 int AllocatorMain(int argc, char *argv[])
 {
     using namespace DrvAPI;
-    if (DrvAPIThread::current()->threadId() == 0 &&
-        DrvAPIThread::current()->coreId() == 0) {
-        DrvAPIMemoryAllocatorInit();
-        for (DrvAPIMemoryType type : {DrvAPIMemoryL1SP, DrvAPIMemoryL2SP, DrvAPIMemoryDRAM}) {
-            DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(type, 0x1000);
-            DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(type, 0x1000);
-            std::cout << "p0 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
-            std::cout << "p1 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
-            std::cout << "p0 = 0x" << std::hex << p0 << std::endl;
-            std::cout << "p1 = 0x" << std::hex << p1 << std::endl;
-        }
-        foo_ref fref = &f;
-        fref.a() = 1;
-        fref.b() = 2;
-        std::cout << "&f = 0x" << std::hex << &fref << std::endl;
-        std::cout << "f.a = " << fref.a() << std::endl;
-        pi[0] = 1;
-        int x = pi[0];
-        std::cout << "pi[0] = " << x << std::endl;
+    DrvAPIMemoryAllocatorInit();
+    for (DrvAPIMemoryType type : {DrvAPIMemoryL1SP, DrvAPIMemoryL2SP, DrvAPIMemoryDRAM}) {
+        DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(type, 0x1000);
+        DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(type, 0x1000);
+        std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+        std::cout << "p0 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
+        std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+        std::cout << "p1 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
+        std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+        std::cout << "p0 = 0x" << std::hex << p0 << std::endl;
+        std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+        std::cout << "p1 = 0x" << std::hex << p1 << std::endl;
     }
+    foo_ref fref = &f;
+    fref.a() = 1;
+    fref.b() = 2;
+    std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+    std::cout << "&f = 0x" << std::hex << &fref << std::endl;
+    std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+    std::cout << "f.a = " << fref.a() << std::endl;
+    pi[0] = 1;
+    int x = pi[0];
+    std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
+    std::cout << "pi[0] = " << x << std::endl;
+
     return 0;
 }
 declare_drv_api_main(AllocatorMain);
