@@ -78,7 +78,6 @@ void DrvAPIMemoryAllocatorInit() {
 }
 
 DrvAPIPointer<void> DrvAPIMemoryAlloc(DrvAPIMemoryType type, size_t size) {
-    auto &drvapi_global_memory = getdgml2sp();
     // size should be 8-byte aligned
     global_memory_ref mem = DrvAPIPointer<global_memory_data>(0);
     switch (type) {
