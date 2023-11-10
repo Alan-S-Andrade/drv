@@ -24,6 +24,10 @@ DRV_API_REF_CLASS_DATA_MEMBER(Vertex, start)
 DRV_API_REF_CLASS_DATA_MEMBER(Vertex, type)
 DRV_API_REF_CLASS_END(Vertex)
 
+inline Vertex readVertexRef(const Vertex_ref &r) {
+  return {r.id(), r.edges(), r.start(), r.type()};
+}
+
 DRV_API_REF_CLASS_BEGIN(Edge)
 DRV_API_REF_CLASS_DATA_MEMBER(Edge, src)
 DRV_API_REF_CLASS_DATA_MEMBER(Edge, dst)
@@ -34,83 +38,110 @@ DRV_API_REF_CLASS_DATA_MEMBER(Edge, src_glbid)
 DRV_API_REF_CLASS_DATA_MEMBER(Edge, dst_glbid)
 DRV_API_REF_CLASS_END(Edge)
 
-DrvAPIGlobalDRAM<DrvAPIPointer<Vertex>> VArr;
-DrvAPIGlobalDRAM<DrvAPIPointer<Edge>> EArr;
-DrvAPIGlobalDRAM<size_t> VArrSz;
-DrvAPIGlobalDRAM<size_t> EArrSz;
+inline Edge readEdgeRef(const Edge_ref &r) {
+  return {r.src(), r.dst(), r.type(), r.src_type(), r.dst_type(), r.src_glbid(), r.dst_glbid()};
+}
 
-// use only use 2 due to very slow barrier 
-// #define NUM_CORE 4
-// #define NUM_THREAD 4
+#define DRV_READ_STRUCT_DEF(type)                       \
+  inline type read ## type (const DrvAPIPointer< type > &p, size_t pos) { \
+    type ## _ref r = &p[pos];                                             \
+    return read ## type ## Ref(r);                                        \
+  }
+
+DRV_READ_STRUCT_DEF(Vertex)
+DRV_READ_STRUCT_DEF(Edge)
+
+struct Data01CSR {
+  DrvAPIPointer<Vertex> VArr;
+  DrvAPIPointer<Edge> EArr;
+
+  size_t VSize = 0, ESize = 0;
+
+  Data01CSR(DrvAPIAddress addr) {
+    // uint64_t imageAddr = DrvAPIVAddress::MainMemBase(0).encode() + 0x38000000;
+    uint64_t imageAddr = addr;
+    uint64_t VArrAddr = imageAddr;
+    uint64_t EArrAddr = VArrAddr + 6349960;
+
+    VSize = DrvAPI::read<uint64_t>(VArrAddr);
+    ESize = DrvAPI::read<uint64_t>(EArrAddr);
+    VArr = DrvAPIPointer<Vertex>(VArrAddr + 8);
+    EArr = DrvAPIPointer<Edge>(EArrAddr + 8);
+  }
+};
+
+struct CSRInterface {
+  Data01CSR local, remote;
+  uint64_t VArrSz, EArrSz;
+  uint64_t VLocalAccessCnt = 0, VRemoteAccessCnt = 0;
+  uint64_t ELocalAccessCnt = 0, ERemoteAccessCnt = 0;
+
+  CSRInterface(unsigned lpxn, unsigned rpxn):
+    local(DrvAPIVAddress::MainMemBase(lpxn).encode() + 0x38000000),
+    remote(DrvAPIVAddress::MainMemBase(rpxn).encode() + 0x38000000) 
+  {
+    VArrSz = local.VSize;
+    EArrSz = local.ESize;
+  }
+
+  bool localVertexPos(size_t n) { return n < VArrSz / 2;}
+  bool localEdgePos(size_t n) { return n < EArrSz / 2;}
+
+  Vertex V(size_t n) {
+    if (localVertexPos(n)) {
+      VLocalAccessCnt++;
+      return readVertex(local.VArr, n);
+    } else {
+      VRemoteAccessCnt++;
+      return readVertex(remote.VArr, n);
+    }
+  }
+
+  Edge E(size_t n) {
+    if (localEdgePos(n)) {
+      ELocalAccessCnt++;
+      return readEdge(local.EArr, n);
+    } else {
+      ERemoteAccessCnt++;
+      return readEdge(remote.EArr, n);
+    }
+  }
+};
+
+DrvAPIGlobalDRAM<int> g_barrier;
+int totalThreads() {
+  return myCoreThreads() * numPodCores() * numPXNPods();
+}
 
 /*
  * number of sample
  */
-int NUM_SAMPLE[] = {5, 3, 2, 1};
+int NUM_SAMPLE[] = {5, 3, 2, 1, 0};
 int MAX_NUM_NODE = 162; // 81
 int MAX_NUM_EDGE = 256; // 162
 
 int AppMain(int argc, char *argv[])
 {
     using namespace DrvAPI;
-    if (argc < 3) {
-      printf("app <V.bin> <E.bin>\n");
-      return -1;
-    }
 
-    if (DrvAPIThread::current()->threadId() == -1 &&
-        DrvAPIThread::current()->coreId() == -1) {
-        // not possible and not used, but need to initialize the core
-        return -1;
-    }
+    if (myThreadId() == -1 && myCoreId() == -1) { return -1; }
+    DrvAPIMemoryAllocatorInit();
 
+    // should be (0, 1) or (1, 0), but now there is no config file
+    // connects two PXNs
+    CSRInterface csr(0, 0);
 
-    /*
-     * load image to DRAM (should be ignored)
-     * Currently, whether an element is local or remote is logically determined
-     * e.g. node 1 < LOCAL_RANGE is local; node 10000 > LOCAL_RANGE is remote
-     */ 
-    if (DrvAPIThread::current()->threadId() == 0 &&
-        DrvAPIThread::current()->coreId() == 0) {
+    uint64_t VArrSz = csr.VArrSz;
+    uint64_t EArrSz = csr.EArrSz;
 
-      DrvAPIMemoryAllocatorInit();
-      VArr = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, 16 * 1024 * 1024);
-      EArr = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, 64 * 1024 * 1024);
-
-      { // load vertex array image
-        std::ifstream varrin(argv[1], std::ios::binary);
-        size_t num;
-        varrin.read(reinterpret_cast<char *>(&num), sizeof(size_t));
-        std::vector<unsigned char> buffer(num * sizeof(Vertex));
-        varrin.read(reinterpret_cast<char *>(buffer.data()), num * sizeof(Vertex));
-
-        Vertex *varr = reinterpret_cast<Vertex *>(buffer.data());
-        for (size_t i = 0; i < num; i++) {
-          VArr[i] = varr[i];
-        }
-        VArrSz = num;
-      }
-
-      { // load edge array image
-        std::ifstream earrin(argv[2], std::ios::binary);
-        size_t num;
-        earrin.read(reinterpret_cast<char *>(&num), sizeof(size_t));
-        std::vector<unsigned char> buffer(num * sizeof(Edge));
-        earrin.read(reinterpret_cast<char *>(buffer.data()), num * sizeof(Edge));
-
-        Edge *earr = reinterpret_cast<Edge *>(buffer.data());
-        for (size_t i = 0; i < num; i++) {
-          EArr[i] = earr[i];
-        }
-        EArrSz = num;
-      }
-
-      DrvAPI::atomic_add<int>(0x0, 1);
-    }
+    DrvAPI::atomic_add<int>(&g_barrier, 1);
+    // }
 
     // barrier to wait until loading finishes
-    while (DrvAPI::read<int>(0x0) == 0) DrvAPI::wait(1000);
-
+    {
+      int t = totalThreads(); 
+      while (g_barrier != t) DrvAPI::wait(1000);
+    }
 
     /*
      * a model of ego graph generation kernel
@@ -123,7 +154,6 @@ int AppMain(int argc, char *argv[])
     size_t end = step * (tid + 1);
     if (tid == NUM_CORE * NUM_THREAD - 1) end = VArrSz / 4;
 
-    printf("%2d start\n", tid);
     
     // small data structures should be allocated in L1SP
     // but L1SP is too small
@@ -145,8 +175,11 @@ int AppMain(int argc, char *argv[])
         = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, sizeof(Edge) * 5);
     int neighborhood_size = 0;
 
+    // statistics
+    size_t sampledEdgeCnt = 0, sampledVertexCnt = 0;
 
     for (size_t i = beg; i < end; i++) {
+      // printf("iteration %d\n", (int) i);
       frontier[frontier_tail++] = i;
       vertices[vertices_size++] = i;
       edgesSrc[edges_size] = i;
@@ -160,25 +193,23 @@ int AppMain(int argc, char *argv[])
         uint64_t V_localID = frontier_head;
         frontier_head++;
         // ![REMOTE/LOCAL]
-        Vertex_ref va_ref = &VArr[glbID];
-        Vertex V = {va_ref.id(), va_ref.edges(), va_ref.start(), va_ref.type()};
+        Vertex V = csr.V(glbID);
 
-        bool not_last_level = level < 3;
         // Gather neighbors
         neighborhood_size = 0;
-        if (not_last_level) {
-          uint64_t startEL = V.start;
-          uint64_t endEL = startEL + V.edges;
-          uint64_t num_neighbors = V.edges;
 
-          uint64_t edges_to_fetch = std::min<uint64_t>(NUM_SAMPLE[level], num_neighbors);
+        uint64_t startEL = V.start;
+        uint64_t endEL = startEL + V.edges;
+        uint64_t num_neighbors = V.edges;
 
-          for (unsigned int i = 0; i < edges_to_fetch; ++i) {
-            size_t v = rand() % num_neighbors;
-            // ![REMOTE/LOCAL]
-            neighborhood[neighborhood_size++] = EArr[startEL + v];
-          } 
-        }
+        uint64_t edges_to_fetch = std::min<uint64_t>(NUM_SAMPLE[level], num_neighbors);
+
+        for (unsigned int i = 0; i < edges_to_fetch; ++i) {
+          size_t v = rand() % num_neighbors;
+          // ![REMOTE/LOCAL]
+          Edge e = csr.E(startEL + v);
+          neighborhood[neighborhood_size++] = e;
+        } 
 
         for (int i = 0; i < neighborhood_size; i++) {
           Edge_ref n_erf = &neighborhood[i];
@@ -194,7 +225,7 @@ int AppMain(int argc, char *argv[])
             }
           }
 
-          if (not_last_level && !visited) {
+          if (!visited) {
             uint64_t U_localID = vertices_size;
             vertices[vertices_size++] = uGlbID;
 
@@ -211,7 +242,7 @@ int AppMain(int argc, char *argv[])
             edges_size++;
 
             frontier[frontier_tail++] = uGlbID;
-          } else if (not_last_level || visited) {
+          } else { // visited
             uint64_t U_localID = searched;
 
             edgesSrc[edges_size] = V_localID;
@@ -231,6 +262,9 @@ int AppMain(int argc, char *argv[])
         }
       }
 
+      sampledEdgeCnt += edges_size;
+      sampledVertexCnt += vertices_size;
+
       // ignore post processing steps
       // clear all data structures
       edges_size = 0;
@@ -239,7 +273,15 @@ int AppMain(int argc, char *argv[])
       neighborhood_size = 0;
     }
 
-    printf("%2d done\n", tid);
+    printf("%2d done; work: %lu, sampled edges: %lu, sampled vertices: %lu\n", 
+      tid, end - beg, sampledEdgeCnt, sampledVertexCnt);
+    printf("avg sampled edges: %.2lf, avg sampled vertices: %.2lf\n", 
+      ((double) sampledEdgeCnt) / (end - beg),
+      ((double) sampledVertexCnt) / (end - beg)
+      );
+
+    printf("V local: %lu, V remote: %lu\n", csr.VLocalAccessCnt, csr.VRemoteAccessCnt);
+    printf("E local: %lu, E remote: %lu\n", csr.ELocalAccessCnt, csr.ERemoteAccessCnt);
 
     return 0;
 }
