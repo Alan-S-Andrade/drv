@@ -52,9 +52,9 @@ atomic_modify(IntType w, IntType r, IntType ext, DrvAPIMemAtomicType op) {
     switch (op) {
     case DrvAPIMemAtomicCAS:
         if (r == ext) {
-            return {w, 1};
+            return {w, r};
         } else {
-            return {r, 0};
+            return {r, r};
         }
     default:
         assert(false && "Something went wrong");

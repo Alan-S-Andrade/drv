@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2023 University of Washington
 
+#include <machine/syscall.h>
         .global _start
 _start:
         li      x1, -1
@@ -20,4 +21,5 @@ _start:
         // should be 1
         div     x10, x1, x1
 done:
-        j       done
+        li      a7, SYS_exit
+        ecall   

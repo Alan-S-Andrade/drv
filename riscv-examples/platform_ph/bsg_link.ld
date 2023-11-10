@@ -126,5 +126,6 @@ _bsg_dram_end_addr = LOADADDR(.bss.dram) + SIZEOF(.bss.dram);
 _edata = LOADADDR(.bss.dram);
 _end = _bsg_dram_end_addr;
 end = _end;
+ENTRY(_start)
 }
 

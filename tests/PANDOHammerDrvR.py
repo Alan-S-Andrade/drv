@@ -183,7 +183,7 @@ chiprtr = sst.Component("chiprtr", "merlin.hr_router")
 chiprtr.addParams({
     # semantics parameters
     "id" : CHIPRTR_ID,
-    "num_ports" : CORES+POD_L2_BANKS+POD_MAINMEM_BANKS,
+    "num_ports" : CORES+POD_L2_BANKS+POD_MAINMEM_BANKS+(1 if arguments.with_command_processor else 0),
     "topology" : "merlin.singlerouter",
     # performance models
     "xbar_bw" : "256GB/s",
@@ -256,4 +256,11 @@ for (i, mainmem_bank) in enumerate(mainmem_banks):
         (chiprtr, "port%d" % (base_mainmem_bankno+i), "1ns")
     )
 
-
+# wire up the command processor
+if arguments.with_command_processor:
+    command_processor = CommandProcessor()
+    chiprtr_command_processor_link = sst.Link("chiprtr_command_processor_link_pxn%d" % 0)
+    chiprtr_command_processor_link.connect(
+        (chiprtr, "port%d" % (CORES+POD_L2_BANKS+POD_MAINMEM_BANKS), "1ns"),
+        (command_processor.core_nic, "port", "1ns")
+    )

@@ -3,5 +3,8 @@
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 TARGET := exe.riscv
-PLATFORM := hb
+
+RISCV_ASMSOURCE := $(wildcard *.S)
+RISCV_PLATFORM_CRT := no # this tests defines its own _start
+
 include $(DRV_DIR)/mk/riscv_common.mk

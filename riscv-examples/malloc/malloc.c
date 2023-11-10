@@ -5,18 +5,17 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-int *p, *q;
+int *p, *q, *r;
 void malloc_test()
 {
-    char buf[256];
     p = malloc(10 * sizeof(int));
-    snprintf(buf, sizeof(buf), "malloc(10) = %x\n", p);
-    write(STDOUT_FILENO, buf, strlen(buf));
+    printf("malloc(10) = %x\n", p);
     q = malloc(20 * sizeof(int));
-    snprintf(buf, sizeof(buf), "malloc(20) = %x\n", q);
-    write(STDOUT_FILENO, buf, strlen(buf));
+    printf("malloc(20) = %x\n", q);
     free(p);
     p = malloc(30 * sizeof(int));
-    snprintf(buf, sizeof(buf), "malloc(30) = %x\n", p);
-    write(STDOUT_FILENO, buf, strlen(buf));
+    printf("malloc(30) = %x\n", p);
+    r = malloc(10 * sizeof(int));
+    printf("malloc(10) = %x\n", r);
+    return;
 }
