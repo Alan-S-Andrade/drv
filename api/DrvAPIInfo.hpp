@@ -9,6 +9,11 @@
 namespace DrvAPI
 {
 
+////////////////////
+// Some constants //
+////////////////////
+static constexpr int CORE_ID_COMMAND_PROCESSOR = -1;
+
 /////////////////////////////////
 // Thread-Relative Information //
 /////////////////////////////////
@@ -24,6 +29,13 @@ inline int myThreadId() {
  */
 inline int myCoreId() {
     return DrvAPIThread::current()->coreId();
+}
+
+/**
+ * return true if I am the command processor
+ */
+inline bool isCommandProcessor() {
+    return myCoreId() == CORE_ID_COMMAND_PROCESSOR;
 }
 
 /**

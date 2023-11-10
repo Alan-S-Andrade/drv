@@ -3,6 +3,7 @@
 import sst
 import argparse
 
+
 # common functions
 ADDR_TYPE_HI,ADDR_TYPE_LO     = (63, 58)
 ADDR_PXN_HI, ADDR_PXN_LO      = (57, 44)
@@ -83,6 +84,8 @@ parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of 
 parser.add_argument("--pod-cores", type=int, default=8, help="number of cores per pod")
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
+parser.add_argument("--with-command-processor", type=str, default="",
+                    help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
 
 arguments = parser.parse_args()
 
@@ -103,6 +106,7 @@ SYSCONFIG = {
     "sys_pod_dram_ports" : MainMemoryRange.POD_MAINMEM_BANKS,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
+    "sys_cp_present" : False,
 }
 
 CORE_DEBUG = {
@@ -118,9 +122,58 @@ CORE_DEBUG = {
 SYSCONFIG['sys_pxn_pods'] = arguments.pxn_pods
 SYSCONFIG['sys_pod_cores'] = arguments.pod_cores
 SYSCONFIG['sys_core_threads'] = arguments.core_threads
+SYSCONFIG['sys_cp_present'] = bool(arguments.with_command_processor)
 
 CORE_DEBUG['debug_memory'] = arguments.debug_memory
 CORE_DEBUG['debug_requests'] = arguments.debug_requests
 CORE_DEBUG['debug_responses'] = arguments.debug_responses
 CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
+
+class CommandProcessor(object):
+    CORE_ID = -1
+    def initCore(self):
+        """
+        Initialize the tile's core
+        """
+        # create the core
+        self.core = sst.Component("command_processor_pxn%d_pod%d" % (self.pxn, self.pod), "Drv.DrvCore")
+        argv = []
+        argv.append(arguments.program)
+        argv.extend(arguments.argv)
+        self.core.addParams({
+            "verbose"   : arguments.verbose,
+            "threads"   : 1,
+            "clock"     : "2GHz",
+            "executable": arguments.with_command_processor,
+            "argv" : ' '.join(argv), # cp its own exe as first arg, then same argv as the main program
+            "max_idle" : 100//8, # turn clock offf after idle for 1 us
+            "id"  : self.id,
+            "pod" : self.pod,
+            "pxn" : self.pxn,
+        })
+        self.core.addParams(SYSCONFIG)
+        self.core.addParams(CORE_DEBUG)
+
+        self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
+        self.core_mem.addParams({
+            "verbose" : arguments.verbose,
+        })
+
+        self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
+        self.core_iface.addParams({
+            "verbose" : arguments.verbose,
+        })
+        self.core_nic = self.core_iface.setSubComponent("memlink", "memHierarchy.MemNIC")
+        self.core_nic.addParams({
+            "group" : 0,
+            "network_bw" : "1024GB/s",
+            "destinations" : "1,2",
+            "verbose_level" : arguments.verbose_memory,
+        })
+
+    def __init__(self, pod=0, pxn=0):
+        self.id = self.CORE_ID
+        self.pod = pod
+        self.pxn = pxn
+        self.initCore()

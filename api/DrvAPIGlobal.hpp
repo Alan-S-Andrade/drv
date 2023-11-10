@@ -75,9 +75,7 @@ public:
      * @brief constructor
      */
     DrvAPIGlobal() {
-        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
-        pointer_ = DrvAPIPointer<T>
-            (section.getBase() + section.increaseSizeBy(sizeof(T)));
+        initOffset();
     }
 
     // not copyable or movable
@@ -85,28 +83,38 @@ public:
     DrvAPIGlobal(DrvAPIGlobal &&other) = delete;
     DrvAPIGlobal &operator=(const DrvAPIGlobal &other) = delete;
     DrvAPIGlobal &operator=(DrvAPIGlobal &&other) = delete;
-    
+
+    void initOffset() {
+        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
+        offset_ = section.increaseSizeBy(sizeof(T));
+    }
+
+    DrvAPIPointer<T> pointer() const {
+        return DrvAPIPointer<T>(DrvAPISection::GetSection(MEMTYPE).getBase()
+                                + offset_
+                                );
+    }
     
     /**
      * cast operator
      */
-    operator T() const { return static_cast<T>(*pointer_); }
+    operator T() const { return static_cast<T>(*pointer()); }
 
     /**
      * assignment operator
      */
     DrvAPIGlobal& operator=(const T &other) {
-        *pointer_ = other;
+        *pointer() = other;
         return *this;
     }
 
     /**
      * address operator
      */
-    DrvAPIPointer<T> operator&() const { return pointer_; }
-    
-    DrvAPIPointer<T> pointer_; //!< pointer to the data
-    T init_val_; //!< initial value
+    DrvAPIPointer<T> operator&() const { return pointer(); }
+
+    uint64_t offset_; //!< offset from the section base
+    T      init_val_; //!< initial value
 };
 
 /**
@@ -120,9 +128,7 @@ public:
      * @brief constructor
      */
     DrvAPIGlobal() {
-        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
-        pointer_ = DrvAPIPointer<T>
-            (section.getBase() + section.increaseSizeBy(sizeof(T)));
+        initOffset();
     }
 
     // not copyable or movable
@@ -132,34 +138,45 @@ public:
     DrvAPIGlobal &operator=(DrvAPIGlobal &&other) = delete;
 
 
+    void initOffset() {
+        DrvAPISection &section = DrvAPISection::GetSection(MEMTYPE);
+        offset_ = section.increaseSizeBy(sizeof(T));
+    }
+
+    DrvAPIPointer<DrvAPIPointer<T>> pointer() const {
+        return DrvAPIPointer<DrvAPIPointer<T>>(DrvAPISection::GetSection(MEMTYPE).getBase()
+                                               + offset_
+                                               );
+    }
+
     /**
      * cast operator
      */
-    operator DrvAPIPointer<T>() const { return static_cast<DrvAPIPointer<T>>(*pointer_); }
+    operator DrvAPIPointer<T>() const { return static_cast<DrvAPIPointer<T>>(*pointer()); }
 
     /**
      * assignment operator
      */
     DrvAPIGlobal& operator=(const DrvAPIPointer<T> &other) {
-        *pointer_ = other;
+        *pointer() = other;
         return *this;
     }
 
     /**
      * address operator
      */
-    DrvAPIPointer<DrvAPIPointer<T>> operator&() const { return pointer_; }
+    DrvAPIPointer<DrvAPIPointer<T>> operator&() const { return pointer(); }
 
     /**
      * subscript operator
      */
     typename DrvAPIPointer<T>::value_handle
     operator[](size_t idx) const {
-        DrvAPIPointer<T> p = *pointer_;
+        DrvAPIPointer<T> p = *pointer();
         return p[idx];
     }
 
-    DrvAPIPointer<DrvAPIPointer<T>> pointer_; //!< pointer to the data
+    uint64_t offset_; //!< offset from the section base
 };
 
 template <typename T>

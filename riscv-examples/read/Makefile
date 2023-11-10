@@ -3,6 +3,7 @@
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 
-TARGET := exe.riscv
+RISCV_CSOURCE := $(wildcard *.c)
+SIM_OPTIONS += --core-threads=1 --pod-cores=1
 
 include $(DRV_DIR)/mk/riscv_common.mk

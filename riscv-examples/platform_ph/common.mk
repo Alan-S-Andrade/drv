@@ -4,12 +4,19 @@
 DRV_DIR  ?= $(shell git rev-parse --show-toplevel)
 SCRIPT   := $(DRV_DIR)/tests/PANDOHammerDrvR.py
 
-COMPILE_FLAGS += -nostartfiles
-COMPILE_FLAGS += -I$(DRV_DIR)/riscv-examples/platform_ph
-CFLAGS   += $(COMPILE_FLAGS)
-CXXFLAGS += $(COMPILE_FLAGS)
+RISCV_COMPILE_FLAGS += -nostartfiles
+RISCV_COMPILE_FLAGS += -I$(DRV_DIR)/riscv-examples/platform_ph
+RISCV_CFLAGS   += $(RISCV_COMPILE_FLAGS)
+RISCV_CXXFLAGS += $(RISCV_COMPILE_FLAGS)
 
-LDFLAGS += -Wl,-T$(DRV_DIR)/riscv-examples/platform_ph/bsg_link.ld
-LDFLAGS += -L$(DRV_DIR)/riscv-examples/platform_ph/pandohammer
+RISCV_LDFLAGS += -Wl,-T$(DRV_DIR)/riscv-examples/platform_ph/bsg_link.ld
+RISCV_LDFLAGS += -L$(DRV_DIR)/riscv-examples/platform_ph/pandohammer
 
-exe.riscv: crt.o
+# include platform crt by default
+RISCV_PLATFORM_CRT ?= yes
+
+# platform asm sources
+RISCV_PLATFORM_ASMSOURCE-$(RISCV_PLATFORM_CRT) += crt.S
+
+# add platform crt to asmsource
+RISCV_ASMSOURCE += $(RISCV_PLATFORM_ASMSOURCE-yes)

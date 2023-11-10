@@ -2,13 +2,8 @@
 # Copyright (c) 2023 University of Washington
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
-TARGET := exe.riscv
+RISCV_CSOURCE := $(wildcard *.c)
 
-PLATFORM ?= ph
-VERBOSE ?= 0
-HARTS ?= 1
-
-SIM_OPTIONS := --harts $(HARTS)
-SIM_OPTIONS += --verbose-core $(VERBOSE)
+SIM_OPTIONS += --pod-cores=1 --core-threads=1
 
 include $(DRV_DIR)/mk/riscv_common.mk
