@@ -59,7 +59,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         /* do write */
         uint64_t size = write_req->getSize();
         uint64_t addr = write_req->getAddress();
-        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_INIT,
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                         "Sending write request addr=%" PRIx64 " size=%" PRIu64 "\n",
                         addr, size);
         std::vector<uint8_t> data(size);

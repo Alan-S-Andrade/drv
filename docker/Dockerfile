@@ -102,7 +102,10 @@ RUN apt update -y \
         clang \
         libopenmpi-dev \
         bc \
+        python3-pip \
         && apt clean -y
+
+RUN pip3 install gdown
 
 ENV PATH "${PATH}":/install/bin
 ENV PYTHONPATH "/root/drv/tests:${PYTHONPATH}"

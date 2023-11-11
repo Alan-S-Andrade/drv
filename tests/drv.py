@@ -80,12 +80,17 @@ parser.add_argument("--debug-memory", action="store_true", help="enable memory d
 parser.add_argument("--debug-requests", action="store_true", help="enable debug of requests")
 parser.add_argument("--debug-responses", action="store_true", help="enable debug of responses")
 parser.add_argument("--debug-syscalls", action="store_true", help="enable debug of syscalls")
+parser.add_argument("--debug-clock", action="store_true", help="enable debug of clock ticks")
 parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of memory")
 parser.add_argument("--pod-cores", type=int, default=8, help="number of cores per pod")
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
 parser.add_argument("--with-command-processor", type=str, default="",
                     help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
+parser.add_argument("--cp-verbose", type=int, default=0, help="verbosity of command processor")
+parser.add_argument("--cp-verbose-init", action="store_true", help="command processor enable debug of init")
+parser.add_argument("--cp-verbose-requests", action="store_true", help="command processor enable debug of requests")
+parser.add_argument("--cp-verbose-responses", action="store_true", help="command processor enable debug of responses")
 
 arguments = parser.parse_args()
 
@@ -129,7 +134,7 @@ CORE_DEBUG['debug_requests'] = arguments.debug_requests
 CORE_DEBUG['debug_responses'] = arguments.debug_responses
 CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
-
+CORE_DEBUG['debug_clock'] = arguments.debug_clock
 class CommandProcessor(object):
     CORE_ID = -1
     def initCore(self):
@@ -157,12 +162,15 @@ class CommandProcessor(object):
 
         self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
         self.core_mem.addParams({
-            "verbose" : arguments.verbose,
+            "verbose" : arguments.cp_verbose,
+            "verbose_init" : arguments.cp_verbose_init,
+            "verbose_requests" : arguments.cp_verbose_requests,
+            "verbose_responses" : arguments.cp_verbose_responses,
         })
 
         self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({
-            "verbose" : arguments.verbose,
+            "verbose" : arguments.cp_verbose,
         })
         self.core_nic = self.core_iface.setSubComponent("memlink", "memHierarchy.MemNIC")
         self.core_nic.addParams({
