@@ -328,7 +328,11 @@ void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
   if (term_req) {
     output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d terminated\n", getThreadID(thread));
     done_--;
+    return;
   }
+
+  // fatal - unknown state
+  output_->fatal(CALL_INFO, -1, "unknown thread state\n");
   return;
 }
     
