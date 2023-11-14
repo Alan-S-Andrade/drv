@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <string>
 #include <iomanip>
+#include <stdexcept>
 #include <DrvAPIAddress.hpp>
 namespace DrvAPI
 {
@@ -197,6 +198,31 @@ struct DrvAPIVAddress
 
     DrvAPIAddress addr;
 };
+
+/**
+ * make a global address from a local address
+ */
+static inline DrvAPIAddress toGlobalAddress(DrvAPIAddress local, uint32_t pxn, uint32_t pod, uint32_t core_y, uint32_t core_x) {
+    DrvAPIVAddress vaddr(local);
+    if (vaddr.not_scratchpad()){
+        return local;
+    } else if (vaddr.global()) {
+        return local;
+    } else if (vaddr.is_l2()) {
+        vaddr.pxn() = pxn;
+        vaddr.pod() = pod;
+        vaddr.global() = true;
+        return vaddr.encode();
+    } else if (vaddr.is_l1()) {
+        vaddr.pxn() = pxn;
+        vaddr.pod() = pod;
+        vaddr.global() = true;
+        vaddr.core_y() = core_y;
+        vaddr.core_x() = core_x;
+        return vaddr.encode();
+    }
+    throw std::runtime_error("toGlobalAddress: Unknown address type");
+}
 
 /**
  * This is a decoded physical address

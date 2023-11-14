@@ -37,7 +37,10 @@ DRV_API_REF_CLASS_BEGIN(global_memory_data)
              DrvAPIAddress sz = static_cast<DrvAPIAddress>(section.getSize());
              // align to 16-byte boundary
              sz = (sz + 15) & ~15;
-             base() = section.getBase() + sz;
+             // make a global address
+             DrvAPIAddress localBase = section.getBase();
+             DrvAPIAddress globalBase = toGlobalAddress(localBase, myPXNId(), myPodId(), myCoreId() >> 3, myCoreId() & 7);
+             base() = globalBase + sz;
              // TODO: FENCE
              status() = STATUS_INIT;
              return;
