@@ -5,6 +5,7 @@
 #include "DrvCustomStdMem.hpp"
 #include "DrvCore.hpp"
 #include "DrvThread.hpp"
+#include <sst/elements/memHierarchy/memoryController.h>
 
 using namespace SST;
 using namespace Drv;
@@ -84,6 +85,43 @@ DrvStdMemory::sendRequest(DrvCore *core
         return;
     }
 
+    auto to_native_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIToNativePointer>(mem_req);
+    if (to_native_req) {
+        uint64_t paddr = to_native_req->getAddress();
+        /* find the range this memory address belongs to */
+        auto it = std::lower_bound(SST::MemHierarchy::MemController::AddrRangeToMC.begin(),
+                                   SST::MemHierarchy::MemController::AddrRangeToMC.end(),
+                                   std::make_tuple(paddr, paddr, nullptr),
+                                   [](const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &element,
+                                      const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &value) {
+                                       return std::get<0>(element) <= std::get<0>(value);
+                                   });
+        uint64_t addr_range_start, addr_range_stop;
+        SST::MemHierarchy::MemController *memory_controller;
+        if (it == SST::MemHierarchy::MemController::AddrRangeToMC.end() ||
+            it == SST::MemHierarchy::MemController::AddrRangeToMC.begin()) {
+            output_.fatal(CALL_INFO, -1,
+                          "Could not find memory controller for address %" PRIx64 "\n",
+                          paddr);
+        }
+
+        std::tie(addr_range_start, addr_range_stop, memory_controller) = *(--it);
+        auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
+            (memory_controller->backing_);
+        /* we only support if the backing store is a BackingMMAP */
+        if (!backing) {
+            output_.fatal(CALL_INFO, -1,
+                          "Memory controller does not have a BackingMMAP "
+                          "required for translation to native pointer\n");
+        }
+        uint64_t lpaddr = memory_controller->translateToLocal(paddr);
+        uint8_t *ptr = &backing->m_buffer[lpaddr];
+        to_native_req->setNativePointer(ptr);
+        to_native_req->setRegionSize(backing->m_size - lpaddr);
+        to_native_req->complete();
+        return;
+    }
+
     auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(mem_req);
     if (atomic_req) {
         /* do atomic */
@@ -119,7 +157,7 @@ DrvStdMemory::sendRequest(DrvCore *core
     }
 
     // fatally error if we don't know the request type
-    if (!(write_req || read_req || atomic_req)) {
+    if (!(write_req || read_req || to_native_req || atomic_req)) {
         core->output()->fatal(CALL_INFO, -1, "Unknown memory request type\n");
     }
 }

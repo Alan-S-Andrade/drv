@@ -51,7 +51,7 @@ class Tile(object):
         self.scratchpad.addParams({
             "verbose_level" : arguments.verbose_memory,
             "access_time" : "1ns",
-            "mem_size" : "4KiB",
+            "mem_size" : L1SPRange.L1SP_SIZE_STR,
         })
 
         # set the custom command handler
@@ -124,7 +124,10 @@ class Tile(object):
 
         self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
         self.core_mem.addParams({
-            "verbose" : arguments.verbose,
+            "verbose"           : arguments.verbose,
+            "verbose_init"      : arguments.debug_init,
+            "verbose_requests"  : arguments.debug_requests,
+            "verbose_responses" : arguments.debug_responses,
         })
 
         self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")

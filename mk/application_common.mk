@@ -49,7 +49,8 @@ $(APP_NAME).so:
 
 #SCRIPT ?= drv-multicore-bus-test.py
 SCRIPT ?= PANDOHammerDrvX.py
+SIM_THREADS ?= 1
 
 .PHONY: run
 run: $(APP_NAME).so
-	sst $(DRV_DIR)/tests/$(SCRIPT) -- $(APP_PATH)/$(APP_NAME).so
+	sst -n $(SIM_THREADS)  $(DRV_DIR)/tests/$(SCRIPT) -- $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so
