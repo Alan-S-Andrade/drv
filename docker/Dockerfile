@@ -103,6 +103,7 @@ RUN apt update -y \
         libopenmpi-dev \
         bc \
         python3-pip \
+        wget \
         && apt clean -y
 
 RUN pip3 install gdown

@@ -225,8 +225,10 @@ int CommandProcessor(int argc, char *argv[])
            ,numPodCores(), THREADS_PER_CORE);
     
     while ((num_ready = *ph_ready) < THREADS_PER_CORE*numPodCores()) {
+        printf("CP: num PH threads ready = %" PRId64 "\n", num_ready);
         DrvAPI::wait(100);
-    }    
+    }
+    printf("CP: all PH threads ready\n");
 
     // move graph data to the PH
     auto g_fwd_offsets_p = ph_exe->symbol<vertex_pointer_t>("g_fwd_offsets", place);
