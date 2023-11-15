@@ -53,4 +53,4 @@ SIM_THREADS ?= 1
 
 .PHONY: run
 run: $(APP_NAME).so
-	sst -n $(SIM_THREADS)  $(DRV_DIR)/tests/$(SCRIPT) -- $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so
+	sst -n $(SIM_THREADS)  $(DRV_DIR)/tests/$(SCRIPT) -- $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so $(SIM_ARGS)
