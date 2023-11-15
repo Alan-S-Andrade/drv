@@ -44,7 +44,7 @@ static inline int thread_on_core() { return myThreadId(); }
                        ,thread_on_core()                                \
                        ,##__VA_ARGS__)
 
-#define DEBUG
+//#define DEBUG
 #ifdef  DEBUG
 #define pr_dbg(fmt,...)                         \
     pr_info(fmt, ##__VA_ARGS__)
