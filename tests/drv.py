@@ -84,6 +84,7 @@ parser.add_argument("--debug-clock", action="store_true", help="enable debug of 
 parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of memory")
 parser.add_argument("--pod-cores", type=int, default=8, help="number of cores per pod")
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
+parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
 parser.add_argument("--with-command-processor", type=str, default="",
                     help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
@@ -124,6 +125,7 @@ CORE_DEBUG = {
     "debug_syscalls" : False,
 }
 
+SYSCONFIG['sys_num_pxn'] = arguments.num_pxn
 SYSCONFIG['sys_pxn_pods'] = arguments.pxn_pods
 SYSCONFIG['sys_pod_cores'] = arguments.pod_cores
 SYSCONFIG['sys_core_threads'] = arguments.core_threads
@@ -135,6 +137,7 @@ CORE_DEBUG['debug_responses'] = arguments.debug_responses
 CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
 CORE_DEBUG['debug_clock'] = arguments.debug_clock
+
 class CommandProcessor(object):
     CORE_ID = -1
     def initCore(self):
