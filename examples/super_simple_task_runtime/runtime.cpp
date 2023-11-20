@@ -19,6 +19,10 @@ using StaticL1SP = DrvAPIGlobalL1SP<T>;
 template <typename T>
 using StaticL2SP = DrvAPIGlobalL2SP<T>;
 
+/* shorthand for main-mem */
+template <typename T>
+using StaticMainMem = DrvAPIGlobalDRAM<T>;
+
 /* a core's task queue */
 struct task_queue {
     std::deque<task*> deque;
@@ -46,8 +50,17 @@ static constexpr int64_t QUEUE_INIT = 2;
 StaticL1SP<int64_t> queue_initialized; //!< set if initialized
 StaticL1SP<task_queue*> this_cores_task_queue; //!< pointer to this core's task queue
 
-/* allocate on of these per pod */
-StaticL2SP<int64_t> terminate; //!< time for the thread to quit
+/* allocate on of these per pxn */
+StaticMainMem<int64_t> this_pxns_terminate; //!< time for the thread to quit
+
+static DrvAPIPointer<int64_t> terminate_pointer()
+{
+    /* pxn 0 holds the absolute */
+    DrvAPIVAddress vaddr = static_cast<DrvAPIAddress>(&this_pxns_terminate);
+    vaddr.not_scratchpad() = true;
+    vaddr.pxn() = 0;
+    return vaddr.encode();
+}
 
 
 /**
@@ -84,7 +97,7 @@ int Start(int argc, char *argv[])
             task_queue *tq = this_cores_task_queue;
             tq->push(newTask([argc, argv](){                
                 pandoMain(argc, argv);
-                terminate = 1;
+                atomic_add(terminate_pointer(), 1);
             }));
         }
         // indicate that initialization is complete
@@ -96,7 +109,7 @@ int Start(int argc, char *argv[])
         nop(1000);
     }
 
-    while (terminate != 1) {
+    while (*terminate_pointer() != numPXNs()) {
         task_queue *tq = this_cores_task_queue;
         task *t = tq->pop();
         if (t == nullptr) {
