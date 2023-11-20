@@ -5,6 +5,8 @@ APP_NAME := runtime
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 APP_PATH := $(DRV_DIR)/examples/super_simple_task_runtime
 
+SIM_OPTIONS += --num-pxn=2
+
 include $(DRV_DIR)/mk/config.mk
 include $(DRV_DIR)/mk/application_common.mk
 

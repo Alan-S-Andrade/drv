@@ -10,20 +10,28 @@ using namespace DrvAPI;
 
 int pandoMain(int argc, char *argv[])
 {
-    pr_info("hello, from main\n");
-    uint32_t pod=0, core=0;
-    pod = numPXNPods()-1;
-    core = numPodCores()-1;
+    // in this test just demonastrate that
+    // pxn 0 can send pxn 1 a task
+    if (myPXNId() != 0) {
+        return 0;
+    }
 
-    pr_info("running a task on pod %" PRIu32 ", core %" PRIu32 "\n"
-           ,myPodId()
-           ,myCoreId()
-           );
+    pr_info("hello, from main\n");
+    uint32_t pxn=0, pod=0, core=0;
+    pxn = (numPXNs()-1) - myPXNId();
+    pod = numPXNPods()-1 - myPodId();
+    core = numPodCores()-1 - myCoreId();
+
+    pr_info("running a task on pxn %" PRIu32 ", pod %" PRIu32 ", core %" PRIu32 "\n"
+            ,pxn
+            ,pod
+            ,core
+            );
 
     DrvAPIPointer<int64_t> done = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, sizeof(int64_t));
     pr_info("done = %" PRIx64 "\n", static_cast<DrvAPIAddress>(done));
     *done =  0;
-    execute_on(myPXNId(), pod, core, newTask([done](){
+    execute_on(pxn, pod, core, newTask([done](){
         pr_info("hello, from task\n");
         *done = 1;
     }));
