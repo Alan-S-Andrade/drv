@@ -70,11 +70,13 @@ DrvAPIGlobalDRAM<global_memory_data> dram_memory; //!< DRAM memory allocator
 void DrvAPIMemoryAllocatorInit() {
     using namespace allocator;
     // 1. init l1sp
-    global_memory_ref l1 = &l1sp_memory;
-    l1.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
-    // 2. init l2sp
-    global_memory_ref l2 = &l2sp_memory;
-    l2.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+    if (!isCommandProcessor()) {
+        global_memory_ref l1 = &l1sp_memory;
+        l1.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
+        // 2. init l2sp
+        global_memory_ref l2 = &l2sp_memory;
+        l2.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+    }
     // 3. init dram
     global_memory_ref dram = &dram_memory;
     dram.init(DrvAPIMemoryType::DrvAPIMemoryDRAM);
