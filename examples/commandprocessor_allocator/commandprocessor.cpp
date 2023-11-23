@@ -11,11 +11,20 @@ DrvAPIGlobalL2SP<int64_t> lock;
 int CPMain(int argc, char *argv[])
 {
     DrvAPIMemoryAllocatorInit();
+    if (!isCommandProcessor())
+        return 0;
 
     DrvAPIPointer<void> p = DrvAPIMemoryAlloc
-        (DrvAPIMemoryL2SP,1024);
+        (DrvAPIMemoryDRAM,1024);
 
-    printf("p = %" PRIx64 "\n", static_cast<DrvAPIAddress>(p));
+    printf("PXN %2d: Pod %2d: Core %2d: Thread %2d: p = %" PRIx64 "(%s)\n"
+           ,myPXNId()
+           ,myPodId()
+           ,myCoreId()
+           ,myThreadId()
+           ,static_cast<DrvAPIAddress>(p)
+           ,DrvAPIVAddress(p).to_string().c_str()
+           );
 
     return 0;
 }

@@ -29,7 +29,7 @@ def MakePANDOHammer(make_tile):
         # build the main memory banks
         mainmem_banks = []
         for i in range(PXN_MAINMEM_BANKS):
-            mainmem_banks.append(MainMemoryBank(i,pxn))
+            mainmem_banks.append(MainMemoryBank(i,0,pxn))
 
         # build the network crossbar
         chiprtr = sst.Component("chiprtr%d" % pxn, "merlin.hr_router")

@@ -145,18 +145,21 @@ void DrvCore::configureMemory(SST::Params &params) {
     }
     DrvAPI::DrvAPIAddress dram_base_default
         = DrvAPI::DrvAPIVAddress::MainMemBase(pxn_).encode();
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM).setBase(dram_base_default);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM)
+        .setBase(dram_base_default, pxn_, pod_, id_);
 
     // default l2 statics to base of local l2 scratchpad
     DrvAPI::DrvAPIAddress l2sp_base_default = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
     uint64_t l2sp_base = params.find<uint64_t>("l2sp_base", l2sp_base_default);
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL2SP).setBase(l2sp_base);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL2SP)
+        .setBase(l2sp_base, pxn_, pod_, id_);
 
 
     // default l1 statics to base of local l1 scratchpad
     DrvAPI::DrvAPIAddress l1sp_base_default = DrvAPI::DrvAPIVAddress::MyL1Base().encode();
     uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", l1sp_base_default);
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP).setBase(l1sp_base);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP)
+        .setBase(l1sp_base, pxn_, pod_, id_);
 }
 
 /*

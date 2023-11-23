@@ -4,6 +4,7 @@
 #ifndef DRV_API_GLOBAL_H
 #define DRV_API_GLOBAL_H
 #include <DrvAPIPointer.hpp>
+#include <DrvAPIInfo.hpp>
 #include <atomic>
 #include <cassert>
 namespace DrvAPI
@@ -15,22 +16,30 @@ public:
     /**
      * @brief constructor
      */
-    DrvAPISection() : base_(0), size_(0) {}
+    DrvAPISection() : size_(0) {}
+
+    DrvAPISection(const DrvAPISection &other) = delete;
+    DrvAPISection(DrvAPISection &&other) = delete;
+    DrvAPISection &operator=(const DrvAPISection &other) = delete;
+    DrvAPISection &operator=(DrvAPISection &&other) = delete;
+    virtual ~DrvAPISection() = default;
 
     /**
      * @brief get the section base
      */
-    uint64_t getBase() const { return base_; }
-
-    /**
-     * @brief get the section size
-     */
-    uint64_t getSize() const { return size_; }
+    virtual uint64_t
+    getBase(uint32_t pxn, uint32_t pod, uint32_t core) const = 0;
 
     /**
      * @brief set the section base
      */
-    void setBase(uint64_t base) { base_ = base; }
+    virtual void
+    setBase(uint64_t base, uint32_t pxn, uint32_t pod, uint32_t core) = 0;
+
+    /**
+     * @brief get the section size
+     */
+    uint64_t getSize() const { return size_; };
 
     /**
      * @brief set the section size
@@ -52,12 +61,10 @@ public:
     /**
      * @brief get the section of the specified memory type
      */
-    static DrvAPISection & GetSection(DrvAPIMemoryType memtype) {
-        static DrvAPISection sections[DrvAPIMemoryType::DrvAPIMemoryNTypes];
-        return sections[memtype];
-    }
-    
-    std::atomic<uint64_t> base_; //!< base address of the section
+    static DrvAPISection &
+    GetSection(DrvAPIMemoryType memtype);
+
+protected:
     std::atomic<uint64_t> size_; //!< size of the section
 };
 
@@ -90,9 +97,11 @@ public:
     }
 
     DrvAPIPointer<T> pointer() const {
-        return DrvAPIPointer<T>(DrvAPISection::GetSection(MEMTYPE).getBase()
-                                + offset_
-                                );
+        DrvAPIAddress base
+            = DrvAPISection::GetSection(MEMTYPE)
+            .getBase(myPXNId(), myPodId(), myCoreId());
+
+        return DrvAPIPointer<T>(base + offset_);
     }
     
     /**
@@ -144,9 +153,10 @@ public:
     }
 
     DrvAPIPointer<DrvAPIPointer<T>> pointer() const {
-        return DrvAPIPointer<DrvAPIPointer<T>>(DrvAPISection::GetSection(MEMTYPE).getBase()
-                                               + offset_
-                                               );
+        DrvAPIAddress base
+            = DrvAPISection::GetSection(MEMTYPE)
+            .getBase(myPXNId(), myPodId(), myCoreId());
+        return DrvAPIPointer<DrvAPIPointer<T>>(base + offset_);
     }
 
     /**
