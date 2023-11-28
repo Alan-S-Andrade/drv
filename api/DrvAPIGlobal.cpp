@@ -80,8 +80,11 @@ private:
 };
 
 
+__attribute__((init_priority(101)))
 static CoreRelativeAddressingSection l1sp;
+__attribute__((init_priority(101)))
 static CoreRelativeAddressingSection l2sp;
+__attribute__((init_priority(101)))
 static PXNDependentBaseSection       dram;
 
 DrvAPISection & DrvAPISection::GetSection(DrvAPIMemoryType memtype) {
