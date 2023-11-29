@@ -36,6 +36,17 @@ RUN apt update -y \
         && apt remove -y git automake \
         && apt clean -y
 
+
+# install ramulator
+RUN apt update -y \
+        && apt install -y \
+        git \
+        clang \
+        && git clone https://github.com/mrutt92/ramulator /root/sst-ramulator-src \
+        && cd /root/sst-ramulator-src \
+        && git checkout mrutt \
+        && make -j `nproc` libramulator.so
+
 # install sst-elements
 RUN apt update -y \
         && apt install -y \
@@ -50,6 +61,7 @@ RUN apt update -y \
         && /sst-elements-src/configure \
         --prefix=/install \
         --with-sst-core=/install \
+        --with-ramulator=/root/sst-ramulator-src \
         && make -j `nproc` install \
         && rm -rf /sst-elements-build \
         && apt remove -y git libltdl-dev \

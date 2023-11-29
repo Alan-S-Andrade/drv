@@ -75,6 +75,8 @@ parser.add_argument("program", help="program to run")
 parser.add_argument("argv", nargs=argparse.REMAINDER, help="arguments to program")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
 parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
+parser.add_argument("--dram-backend-config", type=str, default="/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
+                    help="backend timing model configuration for DRAM")
 parser.add_argument("--debug-init", action="store_true", help="enable debug of init")
 parser.add_argument("--debug-memory", action="store_true", help="enable memory debug")
 parser.add_argument("--debug-requests", action="store_true", help="enable debug of requests")
