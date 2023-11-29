@@ -4,23 +4,26 @@
 #include <DrvAPI.hpp>
 using namespace DrvAPI;
 
-DrvAPIGlobalL2SP<int> counter;
+DrvAPIGlobalDRAM<int> counter;
+
+#define pr_info(fmt, ...)                                               \
+    do {                                                                \
+        printf("core %2d, thread %2d: " fmt, myCoreId(), myThreadId(),  \
+               ##__VA_ARGS__);                                          \
+    } while (0)
 
 int AmoaddMain(int argc, char *argv[])
 {
     DrvAPIAddress addr = &counter;
-    
-    if (DrvAPIThread::current()->id() != 0)
-        return 0;
 
-    printf("core %2d: adding 1\n", DrvAPIThread::current()->coreId());
-    int r = 0;    
+    pr_info("adding 1\n");
+    int r = 0;
     r = DrvAPI::atomic_add<uint64_t>(addr, 1);
-    printf("core %2d: read %2d after amoadd\n", DrvAPIThread::current()->coreId(), r);
-    
+    pr_info("read %2d after amoadd\n", r);
+
     while ((r = DrvAPI::read<uint64_t>(addr)) < 2)
-        printf("core %2d: waiting for all cores: (%2d)\n", DrvAPIThread::current()->coreId(), r);
-    
+        pr_info("waiting for all cores: (%2d)\n", r);
+
     return 0;
 }
 

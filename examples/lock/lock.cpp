@@ -5,8 +5,8 @@
 
 using namespace DrvAPI;
 
-DrvAPIGlobalL2SP<int> g_lock;
-DrvAPIGlobalL2SP<int> sum;
+DrvAPIGlobalDRAM<int> g_lock;
+DrvAPIGlobalDRAM<int> sum;
 
 #define DO_LOCK
 
