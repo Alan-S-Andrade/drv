@@ -72,8 +72,8 @@ void execute_on(uint32_t pxn, uint32_t pod, uint32_t core, task* t) {
     queue_vaddr.l2_not_l1() = false;
     queue_vaddr.pxn() = pxn;
     queue_vaddr.pod() = pod;
-    queue_vaddr.core_y() = core >> 3;
-    queue_vaddr.core_x() = core & 0x7;
+    queue_vaddr.core_y() = coreYFromId(core);
+    queue_vaddr.core_x() = coreXFromId(core);
     DrvAPIPointer<task_queue*> queue_absolute_addr = queue_vaddr.encode();
     task_queue *tq = *queue_absolute_addr;
     tq->push(t);

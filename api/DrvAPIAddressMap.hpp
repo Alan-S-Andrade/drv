@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <stdexcept>
 #include <DrvAPIAddress.hpp>
+#include <DrvAPIInfo.hpp>
 namespace DrvAPI
 {
 
@@ -222,6 +223,10 @@ static inline DrvAPIAddress toGlobalAddress(DrvAPIAddress local, uint32_t pxn, u
         return vaddr.encode();
     }
     throw std::runtime_error("toGlobalAddress: Unknown address type");
+}
+
+static inline DrvAPIAddress toGlobalAddress(DrvAPIAddress local, uint32_t pxn, uint32_t pod, uint32_t core) {
+    return toGlobalAddress(local, pxn, pod, coreYFromId(core), coreXFromId(core));
 }
 
 /**
