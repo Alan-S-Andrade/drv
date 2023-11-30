@@ -32,6 +32,34 @@ inline int myCoreId() {
 }
 
 /**
+ * return a core's x  w.r.t my pod
+ */
+inline int coreXFromId(int core) {
+    return core & 7;
+}
+
+/**
+ * return a core's y  w.r.t my pod
+ */
+inline int coreYFromId(int core) {
+    return (core >> 3) & 7;
+}
+
+/**
+ * return my core's x  w.r.t my pod
+ */
+inline int myCoreX() {
+    return coreXFromId(myCoreId());
+}
+
+/**
+ * return my core's y  w.r.t my pod
+ */
+inline int myCoreY() {
+    return coreYFromId(myCoreId());
+}
+
+/**
  * return true if I am the command processor
  */
 inline bool isCommandProcessor() {

@@ -21,7 +21,7 @@ DrvAPIGlobalDRAM<int> g_dram;
 
 DrvAPIPAddress to_physical(DrvAPIAddress addr)
 {
-    return DrvAPIVAddress::to_physical(addr, myPXNId(), myPodId(), myCoreId() >> 3, myCoreId() & 3);
+    return DrvAPIVAddress::to_physical(addr, myPXNId(), myPodId(), myCoreY(), myCoreX());
 }
 
 int GlobalsMain(int argc, char *argv[])

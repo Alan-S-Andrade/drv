@@ -4,6 +4,7 @@
 #include "SSTRISCVCore.hpp"
 #include "SSTRISCVSimulator.hpp"
 #include <DrvAPIAddressMap.hpp>
+#include <DrvAPIInfo.hpp>
 namespace SST {
 namespace Drv {
 
@@ -100,7 +101,8 @@ RISCVCore::~RISCVCore() {
 }
 
 DrvAPI::DrvAPIPAddress RISCVCore::toPhysicalAddress(uint64_t addr) const {
-    return DrvAPI::DrvAPIVAddress::to_physical(addr, pxn_, pod_, core_ >> 3, core_ & 0x7);
+    return DrvAPI::DrvAPIVAddress::to_physical
+        (addr, pxn_, pod_, DrvAPI::coreYFromId(core_), DrvAPI::coreXFromId(core_));
 }
 
 /* load program segment */
