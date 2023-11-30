@@ -3,7 +3,7 @@
 
 DRV_DIR = $(shell git rev-parse --show-toplevel)
 
-all: install examples
+all: install examples examples-run
 
 EXAMPLES = $(wildcard $(DRV_DIR)/examples/*/)
 
@@ -27,6 +27,10 @@ install-py:
 $(foreach example, $(EXAMPLES), $(example)-clean): %-clean:
 	$(MAKE) -C $* clean
 
+$(foreach example, $(EXAMPLES), $(example)-run): %-run:
+	$(MAKE) -C $* clean
+	$(MAKE) -C $* run
+
 clean: $(foreach example, $(EXAMPLES), $(example)-clean)
 	$(MAKE) -C $(DRV_DIR)/element/ clean
 	$(MAKE) -C $(DRV_DIR)/api/ clean
@@ -37,6 +41,8 @@ clean: $(foreach example, $(EXAMPLES), $(example)-clean)
 $(EXAMPLES): install-api install-element install-interpreter
 
 examples: $(EXAMPLES)
+
+examples-run: $(foreach example, $(EXAMPLES), $(example)-run)
 
 $(EXAMPLES):
 	$(MAKE) -C $@ all

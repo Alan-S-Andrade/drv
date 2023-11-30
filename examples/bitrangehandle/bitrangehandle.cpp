@@ -36,9 +36,9 @@ int AddrMapMain(int argc, char *argv[])
     printf("vaddr2 = %s (%016" PRIx64 ")\n", vaddr2.to_string().c_str(), vaddr2.encode());
     printf("vaddr3 = %s (%016" PRIx64 ")\n", vaddr3.to_string().c_str(), vaddr3.encode());
 
-    auto paddr = vaddr.to_physical(myPXNId(), myPodId(), myCoreId()>>3, myCoreId()&7);
-    auto paddr2 = vaddr2.to_physical(myPXNId(), myPodId(), myCoreId()>>3, myCoreId()&7);
-    auto paddr3 = vaddr3.to_physical(myPXNId(), myPodId(), myCoreId()>>3, myCoreId()&7);
+    auto paddr = vaddr.to_physical(myPXNId(), myPodId(), myCoreY(), myCoreX());
+    auto paddr2 = vaddr2.to_physical(myPXNId(), myPodId(), myCoreY(), myCoreX());
+    auto paddr3 = vaddr3.to_physical(myPXNId(), myPodId(), myCoreY(), myCoreX());
     
     printf("paddr  = %s (%016" PRIx64 ")\n", paddr.to_string().c_str(), paddr.encode());
     printf("paddr2 = %s (%016" PRIx64 ")\n", paddr2.to_string().c_str(), paddr2.encode());
@@ -51,8 +51,8 @@ int AddrMapMain(int argc, char *argv[])
     printf("l2spbase       = %s (%016" PRIx64 ")\n", l2spbase.to_string().c_str(), l2spbase.encode());
     printf("l2sbase_global = %s (%016" PRIx64 ")\n", l2sbase_global.to_string().c_str(), l2sbase_global.encode());
 
-    auto l2spbase_phys = l2spbase.to_physical(myPXNId(), myPodId(), myCoreId()>>3, myCoreId()&7);
-    auto l2sbase_global_phys = l2sbase_global.to_physical(myPXNId(), myPodId(), myCoreId()>>3, myCoreId()&7);
+    auto l2spbase_phys = l2spbase.to_physical(myPXNId(), myPodId(), myCoreY(), myCoreX());
+    auto l2sbase_global_phys = l2sbase_global.to_physical(myPXNId(), myPodId(), myCoreY(), myCoreX());
     printf("l2spbase_phys       = %s (%016" PRIx64 ")\n", l2spbase_phys.to_string().c_str(), l2spbase_phys.encode());
     printf("l2sbase_global_phys = %s (%016" PRIx64 ")\n", l2sbase_global_phys.to_string().c_str(), l2sbase_global_phys.encode());
     return 0;
