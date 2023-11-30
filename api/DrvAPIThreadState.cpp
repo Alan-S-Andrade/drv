@@ -12,8 +12,8 @@ DrvAPIMem::DrvAPIMem(DrvAPIAddress address)
         (address
          ,myPXNId()
          ,myPodId()
-         ,myCoreId()>>3
-         ,myCoreId()&0x7
+         ,myCoreY()
+         ,myCoreX()
          ).encode();
 }
 

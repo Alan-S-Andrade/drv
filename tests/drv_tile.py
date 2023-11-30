@@ -102,6 +102,12 @@ class Tile(object):
         """
         raise NotImplementedError
 
+    def x(self):
+        return self.id & 0x7
+
+    def y(self):
+        return (self.id >> 3) & 0x7
+
     def __init__(self, id, pod=0, pxn=0):
         """
         Create a tile with the given ID, pod, and PXN.
@@ -109,7 +115,7 @@ class Tile(object):
         self.id = id
         self.pod = pod
         self.pxn = pxn
-        self.l1sprange = L1SPRange(self.pxn, self.pod, self.id >> 3, self.id & 0x7)
+        self.l1sprange = L1SPRange(self.pxn, self.pod, self.y(), self.x())
         self.initCore()
         self.initMem()
         self.initRtr()
