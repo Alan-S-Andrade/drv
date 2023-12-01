@@ -254,7 +254,14 @@ bool RISCVCore::tick(Cycle_t cycle) {
     if (hart_id != NO_HART) {
         uint64_t pc = harts_[hart_id].pc();
         uint32_t inst = icache_->read(pc);
-        RISCVInstruction *i = decoder_.decode(inst);
+        RISCVInstruction *i = nullptr;
+        try {
+            i = decoder_.decode(inst);
+        } catch (std::runtime_error &e) {
+            std::stringstream ss;
+            ss << "Failed to decode instruction at pc = 0x" << std::hex << pc << ": " << e.what();
+            throw std::runtime_error(ss.str());
+        }
         output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x%08" PRIx32" (%s)\n"
                         ,hart_id
                         ,pc

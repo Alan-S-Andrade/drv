@@ -2,7 +2,7 @@
 // Copyright (c) 2023 University of Washington
 
 #pragma once
-#include <RV64IMInterpreter.hpp>
+#include <RV64IMFInterpreter.hpp>
 #include <sst/core/interfaces/stdMem.h>
 #include <map>
 #include <functional>
@@ -18,7 +18,7 @@ class RISCVSimHart;
 /**
  * @brief a riscv simulator
  */
-class RISCVSimulator : public RV64IMInterpreter {
+class RISCVSimulator : public RV64IMFInterpreter {
 public:
     /**
      * constructor
@@ -37,12 +37,14 @@ public:
     void visitLBU(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLHU(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLWU(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitFLW(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLD(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSB(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSH(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSW(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSD(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitFENCE(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitFSW(RISCVHart &hart, RISCVInstruction &instruction) override;
 
     // csr instructions
 private:

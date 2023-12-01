@@ -18,6 +18,7 @@ public:
     virtual const char* getMnemonic() = 0;
     uint32_t rs1() const { return (instruction_ >> 15) & 0x1F; }
     uint32_t rs2() const { return (instruction_ >> 20) & 0x1F; }
+    uint32_t rs3() const { return (instruction_ >> 27) & 0x1F; }
     uint32_t rd()  const { return (instruction_ >> 7) & 0x1F; }
     uint32_t Iimm() const { return (instruction_ >> 20); }
     int32_t SIimm() const {
