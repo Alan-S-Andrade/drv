@@ -42,6 +42,7 @@ public:
     void visitSH(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSW(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSD(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitFENCE(RISCVHart &hart, RISCVInstruction &instruction) override;
 
     // csr instructions
 private:

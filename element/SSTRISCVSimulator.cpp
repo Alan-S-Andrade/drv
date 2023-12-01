@@ -245,6 +245,12 @@ void RISCVSimulator::visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicADD);
 }
 
+void RISCVSimulator::visitFENCE(RISCVHart &hart, RISCVInstruction &i) {
+    // currently a no-op
+    // implement when we non-blocking memory operations
+    hart.pc() += 4;
+}
+
 /////////
 // CSR //
 /////////
