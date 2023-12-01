@@ -18,6 +18,9 @@ struct DrvAPISysConfigData
     int64_t pod_cores_; //!< number of cores per pod
     int16_t nw_flit_dwords_; //!< number of dwords in a flit
     int16_t nw_obuf_dwords_; //!< number of dwords in an output buffer
+    uint64_t core_l1sp_size_; //!< size of the L1 scratchpad
+    uint64_t pod_l2sp_size_; //!< size of the L2 scratchpad
+    uint64_t pxn_dram_size_; //!< size of the PXN DRAM
 };
 
 
@@ -41,6 +44,9 @@ public:
     int64_t numPodCores() const { return data_.pod_cores_; }
     int16_t numNWFlitDwords() const { return data_.nw_flit_dwords_; }
     int16_t numNWObufDwords() const { return data_.nw_obuf_dwords_; }
+    uint64_t coreL1SPSize() const { return data_.core_l1sp_size_; }
+    uint64_t podL2SPSize() const { return data_.pod_l2sp_size_; }
+    uint64_t pxnDRAMSize() const { return data_.pxn_dram_size_; }
 
     static DrvAPISysConfig *Get() { return &sysconfig; }
     static DrvAPISysConfig sysconfig;

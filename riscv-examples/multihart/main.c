@@ -47,6 +47,9 @@ int main() {
     ph_print_int(numPXN());
     ph_print_int(numPodCores());
     ph_print_int(numPXNPods());
+    ph_print_int(coreL1SPSize());
+    ph_print_int(podL2SPSize());
+    ph_print_int(pxnDRAMSize());
     //int64_t id  = hartid();
     //print_int(id);
     // swap id with x

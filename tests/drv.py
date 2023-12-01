@@ -114,6 +114,9 @@ SYSCONFIG = {
     "sys_pod_dram_ports" : MainMemoryRange.POD_MAINMEM_BANKS,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
+    "sys_core_l1sp_size" : L1SPRange.L1SP_SIZE,
+    "sys_pod_l2sp_size" : L2SPRange.L2SP_SIZE,
+    "sys_pxn_dram_size" : MainMemoryRange.POD_MAINMEM_SIZE,
     "sys_cp_present" : False,
 }
 

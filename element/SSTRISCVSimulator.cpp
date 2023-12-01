@@ -276,6 +276,15 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
     case CSR_MNUMPXN: // read-only
         rval = core_->sys().numPXN();
         break;
+    case CSR_MCOREL1SPSIZE: // read-only
+        rval = core_->sys().coreL1SPSize();
+        break;
+    case CSR_MPODL2SPSIZE: // read-only
+        rval = core_->sys().podL2SPSize();
+        break;
+    case CSR_MPXNDRAMSIZE: // read-only
+        rval = core_->sys().pxnDRAMSize();
+        break;
     default:
         core_->output_.fatal(CALL_INFO, -1, "CSR %" PRIx64 " is not implemented", csr);
     }
