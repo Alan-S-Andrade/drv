@@ -86,5 +86,16 @@ T atomic_cas(DrvAPIAddress address, T compare, T value)
     return result;
 }
 
+/**
+ * @brief memory fence
+ *
+ */
+inline void fence()
+{
+    // TODO: change when we add non-blocking memory ops
+    return;
 }
+
+} // namespace DrvAPI
+
 #endif
