@@ -17,12 +17,15 @@ public:
      */
     DrvSysConfig() {}
 
-#define DRV_SYS_CONFIG_PARAMETERS                               \
-    {"sys_num_pxn", "Number of PXN in system", "1"},            \
-    {"sys_pxn_pods", "Number of pods per PXN", "1"},            \
-    {"sys_pod_cores", "Number of cores per pod", "1"},          \
-    {"sys_nw_flit_dwords", "Number of dwords in a flit", "1"},  \
-    {"sys_nw_obuf_dwords", "Number of dwords in an output buffer", "1"},
+#define DRV_SYS_CONFIG_PARAMETERS                                       \
+    {"sys_num_pxn", "Number of PXN in system", "1"},                    \
+    {"sys_pxn_pods", "Number of pods per PXN", "1"},                    \
+    {"sys_pod_cores", "Number of cores per pod", "1"},                  \
+    {"sys_nw_flit_dwords", "Number of dwords in a flit", "1"},          \
+    {"sys_nw_obuf_dwords", "Number of dwords in an output buffer", "1"}, \
+    {"sys_core_l1sp_size", "Size of core l1 scratchpad in bytes", "131072"}, \
+    {"sys_pod_l2sp_size", "Size of pod l2 scratchpad", "16777216"},     \
+    {"sys_pxn_dram_size", "Size of pxn dram", "1073741824"},
 
     /**
      * initialize the system configuration
@@ -33,6 +36,9 @@ public:
         data_.pod_cores_ = params.find<int64_t>("sys_pod_cores", 1);
         data_.nw_flit_dwords_ = params.find<int16_t>("sys_nw_flit_dwords", 1);
         data_.nw_obuf_dwords_ = params.find<int16_t>("sys_nw_obuf_dwords", 1);
+        data_.core_l1sp_size_ = params.find<int64_t>("sys_core_l1sp_size", 131072);
+        data_.pod_l2sp_size_ = params.find<int64_t>("sys_pod_l2sp_size", 16777216);
+        data_.pxn_dram_size_ = params.find<int64_t>("sys_pxn_dram_size", 1073741824);
     }
     
     /**

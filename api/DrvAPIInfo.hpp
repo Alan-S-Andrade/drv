@@ -99,5 +99,26 @@ inline int numPodCores() {
     return DrvAPISysConfig::Get()->numPodCores();
 }
 
+/**
+ * size of l1sp in bytes
+ */
+inline uint64_t coreL1SPSize() {
+    return DrvAPISysConfig::Get()->coreL1SPSize();
 }
+
+/**
+ * size of l2sp in bytes
+ */
+inline uint64_t podL2SPSize() {
+    return DrvAPISysConfig::Get()->podL2SPSize();
+}
+
+/**
+ * size of pxn's dram in bytes
+ */
+inline uint64_t pxnDRAMSize() {
+    return DrvAPISysConfig::Get()->pxnDRAMSize();
+}
+
+} // namespace DrvAPI
 #endif
