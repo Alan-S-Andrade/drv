@@ -17,6 +17,21 @@ using namespace DrvAPI;
 
 #include "inputs/binaryArr.h"
 
+// [OPTIONS]
+// #define WITH_IDM
+#define OUTPUT
+
+// [ENV & PARAMS]
+constexpr int SIM_PXN = 8;
+
+constexpr int CACHE_SIZE = 512; // two caches use (CACHE_SIZE) * 11 bytes L2SP
+constexpr int PREFETCH_AHEAD_MIN = 2;
+constexpr int PREFETCH_AHEAD_MAX = 4;
+
+
+constexpr int IDM_WAIT_CYCLES = 100000;
+
+// [DATASET & ACCESS METHODS]
 DRV_API_REF_CLASS_BEGIN(Vertex)
 DRV_API_REF_CLASS_DATA_MEMBER(Vertex, id)
 DRV_API_REF_CLASS_DATA_MEMBER(Vertex, edges)
@@ -24,7 +39,7 @@ DRV_API_REF_CLASS_DATA_MEMBER(Vertex, start)
 DRV_API_REF_CLASS_DATA_MEMBER(Vertex, type)
 DRV_API_REF_CLASS_END(Vertex)
 
-inline Vertex readVertexRef(const Vertex_ref &r) {
+inline Vertex readRef(const Vertex_ref &r) {
   return {r.id(), r.edges(), r.start(), r.type()};
 }
 
@@ -38,14 +53,14 @@ DRV_API_REF_CLASS_DATA_MEMBER(Edge, src_glbid)
 DRV_API_REF_CLASS_DATA_MEMBER(Edge, dst_glbid)
 DRV_API_REF_CLASS_END(Edge)
 
-inline Edge readEdgeRef(const Edge_ref &r) {
+inline Edge readRef(const Edge_ref &r) {
   return {r.src(), r.dst(), r.type(), r.src_type(), r.dst_type(), r.src_glbid(), r.dst_glbid()};
 }
 
 #define DRV_READ_STRUCT_DEF(type)                       \
   inline type read ## type (const DrvAPIPointer< type > &p, size_t pos) { \
     type ## _ref r = &p[pos];                                             \
-    return read ## type ## Ref(r);                                        \
+    return readRef(r);                                        \
   }
 
 DRV_READ_STRUCT_DEF(Vertex)
@@ -76,16 +91,18 @@ struct CSRInterface {
   uint64_t VLocalAccessCnt = 0, VRemoteAccessCnt = 0;
   uint64_t ELocalAccessCnt = 0, ERemoteAccessCnt = 0;
 
+  // the 6th bank is the local image
+  // the 7th bank is modeled as remote image, with 1us access latency
   CSRInterface(unsigned lpxn, unsigned rpxn):
-    local(DrvAPIVAddress::MainMemBase(lpxn).encode() + 0x38000000),
+    local(DrvAPIVAddress::MainMemBase(lpxn).encode() + 0x30000000),
     remote(DrvAPIVAddress::MainMemBase(rpxn).encode() + 0x38000000) 
   {
     VArrSz = local.VSize;
     EArrSz = local.ESize;
   }
 
-  bool localVertexPos(size_t n) { return n < VArrSz / 2;}
-  bool localEdgePos(size_t n) { return n < EArrSz / 2;}
+  bool localVertexPos(size_t n) { return n < VArrSz / SIM_PXN;}
+  bool localEdgePos(size_t n) { return n < EArrSz / SIM_PXN;}
 
   Vertex V(size_t n) {
     if (localVertexPos(n)) {
@@ -108,10 +125,130 @@ struct CSRInterface {
   }
 };
 
-DrvAPIGlobalDRAM<int> g_barrier;
+// [HELPER UTILITIES]
+DrvAPIGlobalDRAM<int> g_barrier1, g_barrier2;
 int totalThreads() {
   return myCoreThreads() * numPodCores() * numPXNPods();
 }
+
+int totalComputeThreads() {
+  return totalThreads() / 2;
+}
+
+int myThread() {
+  return myThreadId() + myCoreId() * (myCoreThreads());
+}
+
+bool isComputeThread() {
+  return myThreadId() % 2 == 0;
+}
+int myPairID() {
+  return myThread() / 2;
+}
+
+// [IDM-COMP COMMUNICATION]
+DrvAPIGlobalL2SP<DrvAPIPointer<int>> g_threadStatus;
+
+// [CACHING]
+
+/*
+ * Semantics Enhanced Caching Scheme
+ */
+
+struct IDMVCache {
+  DrvAPIPointer<Vertex> value_;
+  DrvAPIPointer<uint32_t> arg1_; // arg1: id
+  DrvAPIPointer<bool> lock_;
+  size_t size_;
+
+  IDMVCache(DrvAPIPointer<Vertex> value, DrvAPIPointer<uint32_t> arg1, DrvAPIPointer<bool> lock, size_t size) 
+    : value_(value), arg1_(arg1), lock_(lock), size_(size) { }
+
+  bool lookup(uint32_t id, Vertex* vout) {
+    int pos = id % size_;
+    bool r = false;
+    if (atomic_swap(lock_ + pos, true)) return false;
+
+    // if (myPairID() == 2) printf("vertex lookup: %d (%d)\n", pos, (int) id);
+    if (arg1_[pos] == id) {
+      *vout = readVertex(value_, pos);
+      r = true;
+    }
+    
+    lock_[pos] = false;
+    return r;
+  }
+
+  bool write(uint32_t id, Vertex& vin) {
+    int pos = id % size_;
+    if (atomic_swap(lock_ + pos, true)) return false;
+
+    // if (myPairID() == 2) printf("vertex write: %d (%d)\n", pos, (int) id);
+    arg1_[pos] = id;
+    value_[pos] = vin;
+
+    lock_[pos] = false;
+    return true;
+  }
+};
+
+struct IDMSamplingCache {
+  constexpr static int MS = 5;          // maximum number of samples
+  DrvAPIPointer<Edge> value_;
+  DrvAPIPointer<uint32_t> arg1_; // arg1: id
+  DrvAPIPointer<uint8_t> arg2_;  // arg2: sampling size
+  DrvAPIPointer<bool> lock_;
+  size_t size_;
+
+  IDMSamplingCache(DrvAPIPointer<Edge> value, 
+    DrvAPIPointer<uint32_t> arg1, DrvAPIPointer<uint8_t> arg2, 
+    DrvAPIPointer<bool> lock, size_t size) 
+    : value_(value), arg1_(arg1), arg2_(arg2), lock_(lock), size_(size) { }
+
+  bool lookup(uint32_t id, uint8_t sz, DrvAPIPointer<Edge> eout) {
+    int pos = id % size_;
+    bool r = false;
+    if (atomic_swap(lock_ + pos, true)) return false;
+
+    // if (myPairID() == 2) printf("sampling lookup: %d (%d %d)\n", pos, (int) id, (int) sz);
+    if (arg1_[pos] == id && arg2_[pos] == sz) {
+      for (int i = 0; i < sz; i++) {
+        eout[i] = readEdge(value_, pos * MS + i);
+      } 
+      r = true;
+    }
+    lock_[pos] = false;
+    return r;
+  }
+
+  bool write(uint32_t id, uint8_t sz, DrvAPIPointer<Edge> ein) {
+    int pos = id % size_;
+    if (atomic_swap(lock_ + pos, true)) return false;
+
+    // if (myPairID() == 2) printf("sampling write: %d (%d %d)\n", pos, (int) id, (int) sz);
+    arg1_[pos] = id;
+    arg2_[pos] = sz;
+    for (int i = 0; i < sz; i++) {
+      value_[pos * MS + i] = readEdge(ein, i);
+    }
+
+    lock_[pos] = false;
+    return true;
+  }
+};
+
+// resources
+DrvAPIGlobalL2SP<DrvAPIPointer<Vertex>> g_idmVCacheValue;
+DrvAPIGlobalL2SP<DrvAPIPointer<uint32_t>> g_idmVCacheArg1;
+DrvAPIGlobalL2SP<DrvAPIPointer<bool>> g_idmVCacheLock;
+
+DrvAPIGlobalL2SP<DrvAPIPointer<Edge>> g_idmSCacheValue;
+DrvAPIGlobalL2SP<DrvAPIPointer<uint32_t>> g_idmSCacheArg1;
+DrvAPIGlobalL2SP<DrvAPIPointer<uint8_t>> g_idmSCacheArg2;
+DrvAPIGlobalL2SP<DrvAPIPointer<bool>> g_idmSCacheLock;
+
+using IDMCacheA = IDMVCache;
+using IDMCacheB = IDMSamplingCache;
 
 /*
  * number of sample
@@ -120,39 +257,21 @@ int NUM_SAMPLE[] = {5, 3, 2, 1, 0};
 int MAX_NUM_NODE = 162; // 81
 int MAX_NUM_EDGE = 256; // 162
 
-int AppMain(int argc, char *argv[])
-{
-    using namespace DrvAPI;
 
-    if (myThreadId() == -1 && myCoreId() == -1) { return -1; }
-    DrvAPIMemoryAllocatorInit();
-
-    // should be (0, 1) or (1, 0), but now there is no config file
-    // connects two PXNs
-    CSRInterface csr(0, 0);
-
+void ComputeThread(CSRInterface &csr, IDMCacheA &idmVCache, IDMCacheB &idmECache) {
     uint64_t VArrSz = csr.VArrSz;
     uint64_t EArrSz = csr.EArrSz;
-
-    DrvAPI::atomic_add<int>(&g_barrier, 1);
-    // }
-
-    // barrier to wait until loading finishes
-    {
-      int t = totalThreads(); 
-      while (g_barrier != t) DrvAPI::wait(1000);
-    }
-
     /*
      * a model of ego graph generation kernel
      */
-    int NUM_CORE = DrvAPI::numPodCores();
-    int NUM_THREAD = DrvAPI::myCoreThreads();
-    size_t step = VArrSz / 4 / (NUM_CORE * NUM_THREAD);
-    int tid = DrvAPIThread::current()->threadId() + DrvAPIThread::current()->coreId() * NUM_THREAD;
+    size_t totalRoot = (VArrSz / 4) / SIM_PXN;
+    size_t step = totalRoot / totalComputeThreads();
+    int tid = myPairID();
     size_t beg = step * tid;
     size_t end = step * (tid + 1);
-    if (tid == NUM_CORE * NUM_THREAD - 1) end = VArrSz / 4;
+    if (tid == totalComputeThreads() - 1) end = totalRoot;
+    // size_t beg = 3000;
+    // size_t end = 3100;
 
     
     // small data structures should be allocated in L1SP
@@ -177,9 +296,14 @@ int AppMain(int argc, char *argv[])
 
     // statistics
     size_t sampledEdgeCnt = 0, sampledVertexCnt = 0;
+    size_t localVCnt = 0, remoteVCnt = 0, hitVCnt = 0;
+    size_t localECnt = 0, remoteECnt = 0, hitRemoteECnt = 0, hitLocalECnt = 0;
 
     for (size_t i = beg; i < end; i++) {
-      // printf("iteration %d\n", (int) i);
+      // if (myPairID() == 2) printf("status write %d\n", (int) i); 
+      // atomic_swap<int>(g_threadStatus[myPairID()], (int) i);
+      g_threadStatus[myPairID()] = (int) i;
+      // printf("[comp] ITERATION %d\n", (int) i);
       frontier[frontier_tail++] = i;
       vertices[vertices_size++] = i;
       edgesSrc[edges_size] = i;
@@ -193,7 +317,21 @@ int AppMain(int argc, char *argv[])
         uint64_t V_localID = frontier_head;
         frontier_head++;
         // ![REMOTE/LOCAL]
-        Vertex V = csr.V(glbID);
+        // if (myPairID() == 2) printf("[comp] head V: %d\n", (int) glbID);
+        Vertex V;
+        if (!csr.localVertexPos(glbID)) {
+          remoteVCnt++;
+          if (idmVCache.lookup(glbID, &V)) {
+            hitVCnt++;
+            // printf("[comp] V hit\n");
+          } else {
+            V = csr.V(glbID);
+            // printf("[comp] V miss\n");
+          }
+        } else {
+          localVCnt++;
+          V = csr.V(glbID);
+        }
 
         // Gather neighbors
         neighborhood_size = 0;
@@ -204,12 +342,29 @@ int AppMain(int argc, char *argv[])
 
         uint64_t edges_to_fetch = std::min<uint64_t>(NUM_SAMPLE[level], num_neighbors);
 
-        for (unsigned int i = 0; i < edges_to_fetch; ++i) {
-          size_t v = rand() % num_neighbors;
-          // ![REMOTE/LOCAL]
-          Edge e = csr.E(startEL + v);
-          neighborhood[neighborhood_size++] = e;
-        } 
+        // if (myPairID() == 2) printf("[comp] num neighbors: %d\n",(int) num_neighbors);
+        // should be offloaded to DMA
+        if (edges_to_fetch) {
+          if (csr.localEdgePos(startEL)) {
+            localECnt += edges_to_fetch;
+          } else {
+            remoteECnt += edges_to_fetch;
+          }
+          if (idmECache.lookup(glbID, edges_to_fetch, neighborhood)) {
+            // if (myPairID() == 2) printf("[comp] S hit\n");
+            neighborhood_size = edges_to_fetch;
+            if (!csr.localEdgePos(startEL)) hitRemoteECnt += edges_to_fetch;
+            else hitLocalECnt += edges_to_fetch;
+          } else {
+            // if (myPairID() == 2) printf("[comp] S miss\n");
+            for (unsigned int i = 0; i < edges_to_fetch; ++i) {
+              size_t v = rand() % num_neighbors;
+              // ![REMOTE/LOCAL]
+              Edge e = csr.E(startEL + v);
+              neighborhood[neighborhood_size++] = e;
+            } 
+          }
+        }
 
         for (int i = 0; i < neighborhood_size; i++) {
           Edge_ref n_erf = &neighborhood[i];
@@ -272,17 +427,214 @@ int AppMain(int argc, char *argv[])
       frontier_head = frontier_tail = 0;
       neighborhood_size = 0;
     }
+    g_threadStatus[myPairID()] = (int) -1;
 
-    printf("%2d done; work: %lu, sampled edges: %lu, sampled vertices: %lu\n", 
-      tid, end - beg, sampledEdgeCnt, sampledVertexCnt);
+    #ifdef OUTPUT
+    printf("=========================== Compute thread %4d done ===========================\n", myPairID());
+    printf("work: %lu, sampled edges: %lu, sampled vertices: %lu\n", 
+      end - beg, sampledEdgeCnt, sampledVertexCnt);
     printf("avg sampled edges: %.2lf, avg sampled vertices: %.2lf\n", 
       ((double) sampledEdgeCnt) / (end - beg),
       ((double) sampledVertexCnt) / (end - beg)
       );
 
-    printf("V local: %lu, V remote: %lu\n", csr.VLocalAccessCnt, csr.VRemoteAccessCnt);
-    printf("E local: %lu, E remote: %lu\n", csr.ELocalAccessCnt, csr.ERemoteAccessCnt);
+    printf("V local accesses: %lu, V remote accesses: %lu (from IDM cache: %lu [%.2lf%%])\n", 
+      localVCnt, remoteVCnt, hitVCnt, ((double) hitVCnt/ remoteVCnt * 100.0));
+    printf("E local accesses: %lu (from IDM cache: %lu [%.2lf%%])\nE remote accesses: %lu (from IDM cache: %lu [%.2lf%%])\n", 
+      localECnt, hitLocalECnt, ((double) hitLocalECnt / localECnt * 100.0), 
+      remoteECnt, hitRemoteECnt, ((double) hitRemoteECnt / remoteECnt * 100.0));
+    printf("================================================================================\n");
+    #endif
+}
 
-    return 0;
+void IDMThread(CSRInterface &csr, IDMCacheA &idmVCache, IDMCacheB &idmECache) {
+  {
+    while (g_threadStatus[myPairID()] == 0) DrvAPI::wait(100);
+  }
+
+  // statistics
+  int resetCnt = 0, waitCnt = 0;
+
+  // prefetch start
+  int cur = 0, compIt;
+  DrvAPIPointer<uint64_t> frontier 
+      = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, sizeof(uint64_t) * MAX_NUM_NODE);
+  int frontier_head = 0, frontier_tail = 0;
+
+  DrvAPIPointer<uint64_t> vertices
+      = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, sizeof(uint64_t) * MAX_NUM_NODE);
+  int vertices_size = 0;
+
+  DrvAPIPointer<Edge> neighborhood
+      = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, sizeof(Edge) * 5);
+  int neighborhood_size = 0;
+
+  while ((compIt = g_threadStatus[myPairID()]) != -1) {
+    if (cur <= compIt) {
+      // if (myPairID() == 2) printf("reset %d, cur %d, compIt %d\n", resetCnt, cur, compIt);
+      resetCnt++;
+      cur = compIt + PREFETCH_AHEAD_MAX;
+      continue;
+    } else if (cur > compIt + PREFETCH_AHEAD_MAX) {
+      waitCnt++;
+      // if (myPairID() == 2) printf("wait %d, cur %d, compIt %d\n", waitCnt, cur, compIt);
+      // [NOTE] do not know why, compIT can have out-of-air value
+      cur = compIt + PREFETCH_AHEAD_MAX + 1;
+      wait(IDM_WAIT_CYCLES);
+      continue;
+    }
+
+    // prefetch logic
+
+    // if (myPairID() == 2) printf("[idm] PREFETCH %d\n", (int) cur);
+    frontier[frontier_tail++] = cur;
+    vertices[vertices_size++] = cur;
+
+    int next_level = 1;
+    int level = 0;
+    while (frontier_head < frontier_tail) {
+      uint64_t glbID = frontier[frontier_head];
+      frontier_head++;
+      // if (myPairID() == 2) printf("[idm] head V: %d\n", (int) glbID);
+      // ![REMOTE/LOCAL]
+      Vertex V = csr.V(glbID);
+      if (!csr.localVertexPos(glbID)) {
+        idmVCache.write(glbID, V);
+      }
+
+      // Gather neighbors
+      neighborhood_size = 0;
+
+      uint64_t startEL = V.start;
+      uint64_t endEL = startEL + V.edges;
+      uint64_t num_neighbors = V.edges;
+
+      // if (myPairID() == 2) printf("[idm] neighbors: %d\n",(int) num_neighbors);
+      uint64_t edges_to_fetch = std::min<uint64_t>(NUM_SAMPLE[level], num_neighbors);
+
+      // [Semantics Enhanded Caching]
+      for (unsigned int i = 0; i < edges_to_fetch; ++i) {
+        // ![REMOTE/LOCAL]
+        Edge e = csr.E(startEL + i);
+        neighborhood[neighborhood_size++] = e;
+      } 
+      if (edges_to_fetch) idmECache.write(glbID, edges_to_fetch, neighborhood);
+
+      for (int i = 0; i < neighborhood_size; i++) {
+        Edge_ref n_erf = &neighborhood[i];
+        uint64_t uGlbID = n_erf.dst_glbid();
+
+        bool visited = false;
+        int searched = -1;
+        for (int j = 0; j < vertices_size; j++) {
+          if (vertices[j] == uGlbID) {
+            visited = true;
+            searched = j;
+            break;
+          }
+        }
+
+        if (!visited) {
+          vertices[vertices_size++] = uGlbID;
+          frontier[frontier_tail++] = uGlbID;
+        }
+      }
+
+
+      if (frontier_head == next_level) {
+        level++;
+        next_level = frontier_tail;
+      }
+    }
+
+    // clear all data structures
+    vertices_size = 0;
+    frontier_head = frontier_tail = 0;
+    neighborhood_size = 0;
+
+    // if (myPairID() == 2) printf("inc cur, current: %d\n", cur);
+    cur++;
+  }
+
+  #ifdef OUTPUT
+  printf("=========================== IDM thread for %4d done ===========================\n", myPairID());
+  printf("number of reset: %20d, number of wait: %20d\n", resetCnt, waitCnt);
+  printf("================================================================================\n");
+  #endif
+}
+
+int AppMain(int argc, char *argv[])
+{
+  using namespace DrvAPI;
+
+  if (myThreadId() == -1 && myCoreId() == -1) { return -1; }
+  DrvAPIMemoryAllocatorInit();
+
+  // should be (0, 1) or (1, 0), but now there is no config file
+  // connects two PXNs
+  CSRInterface csr(0, 0);
+
+  if (myThread() == 0) {
+    g_threadStatus = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, totalComputeThreads());
+
+    // [Semantics Enhanced Caching]
+    int numEntry = totalComputeThreads() * CACHE_SIZE;
+
+    g_idmVCacheValue = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, numEntry * sizeof(Vertex));
+    g_idmVCacheArg1 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, numEntry * sizeof(uint32_t));
+    g_idmVCacheLock = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, numEntry);
+
+    g_idmSCacheValue = DrvAPIMemoryAlloc(DrvAPIMemoryDRAM, numEntry * sizeof(Edge) * IDMCacheB::MS);
+    g_idmSCacheArg1 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, numEntry * sizeof(uint32_t));
+    g_idmSCacheArg2 = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, numEntry);
+    g_idmSCacheLock = DrvAPIMemoryAlloc(DrvAPIMemoryL2SP, numEntry);
+  }
+
+  if (isComputeThread()) {
+    g_threadStatus[myPairID()] = 0;
+  } 
+
+  DrvAPI::atomic_add<int>(&g_barrier1, 1);
+
+  // barrier to wait until loading finishes
+  {
+    int t = totalThreads(); 
+    while (g_barrier1 != t) DrvAPI::wait(1000);
+  }
+
+  // [Semantics Enhanced Caching]
+  size_t cacheOffset = CACHE_SIZE * myPairID();
+
+  auto idmVCacheValue = static_cast<DrvAPIPointer<Vertex>>(g_idmVCacheValue) + cacheOffset;
+  auto idmVCacheArg1 = static_cast<DrvAPIPointer<uint32_t>>(g_idmVCacheArg1) + cacheOffset;
+  auto idmVCacheLock = static_cast<DrvAPIPointer<bool>>(g_idmVCacheLock) + cacheOffset;
+
+  auto idmSCacheValue = static_cast<DrvAPIPointer<Edge>>(g_idmSCacheValue) + cacheOffset * IDMCacheB::MS;
+  auto idmSCacheArg1 = static_cast<DrvAPIPointer<uint32_t>>(g_idmSCacheArg1) + cacheOffset;
+  auto idmSCacheArg2 = static_cast<DrvAPIPointer<uint8_t>>(g_idmSCacheArg2) + cacheOffset;
+  auto idmSCacheLock = static_cast<DrvAPIPointer<bool>>(g_idmSCacheLock) + cacheOffset;
+
+  IDMCacheA idmVCache(idmVCacheValue, idmVCacheArg1, idmVCacheLock, CACHE_SIZE);
+
+  IDMCacheB idmECache(idmSCacheValue, idmSCacheArg1, idmSCacheArg2, idmSCacheLock, CACHE_SIZE);
+
+  DrvAPI::atomic_add<int>(&g_barrier2, 1);
+
+  {
+    int t = totalThreads(); 
+    while (g_barrier2 != t)  DrvAPI::wait(1000);  
+  }
+
+  
+  if (isComputeThread()) {
+    ComputeThread(csr, idmVCache, idmECache);
+  } 
+#ifdef WITH_IDM
+  else {
+    IDMThread(csr, idmVCache, idmECache);
+  }
+#endif
+
+  return 0;
 }
 declare_drv_api_main(AppMain);
