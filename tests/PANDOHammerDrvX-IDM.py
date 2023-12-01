@@ -13,7 +13,7 @@ import sys
 SYSCONFIG["sys_core_clock"] = "125MHz"
 
 # SYSCONFIG["sys_pod_cores"] = 4
-# SYSCONFIG["sys_core_threads"] = 4
+SYSCONFIG["sys_core_threads"] = 16 
 
 image = "./../examples/IDM/inputs/Data01CSR.bin"
 
@@ -177,9 +177,10 @@ POD_MAINMEM_BANKS = SYSCONFIG["sys_pod_dram_ports"]
 mainmem_banks = []
 # mainmem_banks.append(MainMemoryBank(0, preload=image))
 
-for i in range(POD_MAINMEM_BANKS - 1):
+for i in range(POD_MAINMEM_BANKS - 2):
     mainmem_banks.append(MainMemoryBank(i))
     
+mainmem_banks.append(MainMemoryBank(POD_MAINMEM_BANKS - 2, preload=image))
 mainmem_banks.append(MainMemoryBank(POD_MAINMEM_BANKS - 1, preload=image))
 
 
@@ -256,8 +257,11 @@ for (i, mainmem_bank) in enumerate(mainmem_banks):
         "network_bw" : "256GB/s",
     })
     mainmem_bank_bridge_link = sst.Link("mainmem_bank_bridge_link_%d" % i)
+    lat = '1ns'
+    if i == len(mainmem_banks) - 1:
+      lat = '1us'
     mainmem_bank_bridge_link.connect(
-        (bridge, "network0", "1ns"),
+        (bridge, "network0", lat),
         (mainmem_bank.mem_rtr, "port1", "1ns")
     )
     bridge_chiprtr_link = sst.Link("bridge_chip_mainmem_memrtr_link_%d" %i)
