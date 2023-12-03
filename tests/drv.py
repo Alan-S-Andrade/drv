@@ -55,8 +55,8 @@ class MainMemoryRange(object):
     POD_MAINMEM_BANKS = 8
     POD_MAINMEM_SIZE = 0x0000000040000000
     POD_MAINMEM_BANK_SIZE = POD_MAINMEM_SIZE // POD_MAINMEM_BANKS
-    POD_MAINMEM_SIZE_STR = "1GB"
-    POD_MAINMEM_BANK_SIZE_STR = "128MB"
+    POD_MAINMEM_SIZE_STR = "1GiB"
+    POD_MAINMEM_BANK_SIZE_STR = "128MiB"
     def __init__(self, pxn, pod, bank):
         start = 0
         start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
