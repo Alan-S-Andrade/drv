@@ -83,6 +83,13 @@ void DrvAPIMemoryAllocatorInit() {
 }
 
 DrvAPIPointer<void> DrvAPIMemoryAlloc(DrvAPIMemoryType type, size_t size) {
+    // if we use l1sp for stack, disallow allocation of l1sp
+    if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP
+        && DrvAPIThread::current()->stackInL1SP()) {
+        std::cerr << "ERROR: cannot allocate L1SP memory for stack" << std::endl;
+        exit(1);
+    }
+
     // size should be 8-byte aligned
     global_memory_ref mem = DrvAPIPointer<global_memory_data>(0);
     switch (type) {

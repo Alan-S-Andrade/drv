@@ -59,7 +59,8 @@ drvsim-headers += DrvEvent.hpp
 drvsim-headers += DrvMemEvent.hpp
 drvsim-headers += DrvNopEvent.hpp
 drvsim-headers += DrvSysConfig.hpp
-
+drvsim-headers += DrvSystem.hpp
+drvsim-sources += DrvSystem.cpp
 drvsim-sources += SSTRISCVCore.cpp
 drvsim-sources += SSTRISCVSimulator.cpp
 drvsim-headers += SSTRISCVSimulator.hpp
