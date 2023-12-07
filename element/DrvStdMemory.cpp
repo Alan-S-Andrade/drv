@@ -45,6 +45,54 @@ DrvStdMemory::~DrvStdMemory() {
 }
 
 /**
+ * @brief translate a pgas pointer to a native pointer
+ */
+void
+DrvStdMemory::toNativePointer(DrvAPI::DrvAPIAddress paddr, void **ptr, size_t *size) {
+    /* find the range this memory address belongs to */
+    auto it = std::lower_bound(SST::MemHierarchy::MemController::AddrRangeToMC.begin(),
+                               SST::MemHierarchy::MemController::AddrRangeToMC.end(),
+                               std::make_tuple(paddr, paddr, nullptr),
+                               [](const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &element,
+                                  const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &value) {
+                                   return std::get<0>(element) <= std::get<0>(value);
+                               });
+    uint64_t addr_range_start, addr_range_stop;
+    SST::MemHierarchy::MemController *memory_controller;
+    if (it == SST::MemHierarchy::MemController::AddrRangeToMC.end() ||
+        it == SST::MemHierarchy::MemController::AddrRangeToMC.begin()) {
+        output_.fatal(CALL_INFO, -1,
+                      "Could not find memory controller for address %" PRIx64 "\n",
+                      paddr);
+    }
+
+    std::tie(addr_range_start, addr_range_stop, memory_controller) = *(--it);
+
+    // check that the address is within the range
+    if (paddr < addr_range_start || paddr > addr_range_stop) {
+        output_.fatal(CALL_INFO, -1,
+                      "Could not find memory controller for address %" PRIx64 "\n",
+                      paddr);
+    }
+
+    auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
+        (memory_controller->backing_);
+    /* we only support if the backing store is a BackingMMAP */
+    if (!backing) {
+        output_.fatal(CALL_INFO, -1,
+                      "Memory controller does not have a BackingMMAP "
+                      "required for translation to native pointer\n");
+    }
+    uint64_t lpaddr = memory_controller->translateToLocal(paddr);
+    uint8_t *bptr = &backing->m_buffer[lpaddr];
+    *ptr = bptr;
+    *size = backing->m_size - lpaddr;
+    return;
+
+}
+
+
+/**
  * @brief Send a memory request
  * 
  * @param core 
@@ -88,36 +136,11 @@ DrvStdMemory::sendRequest(DrvCore *core
     auto to_native_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIToNativePointer>(mem_req);
     if (to_native_req) {
         uint64_t paddr = to_native_req->getAddress();
-        /* find the range this memory address belongs to */
-        auto it = std::lower_bound(SST::MemHierarchy::MemController::AddrRangeToMC.begin(),
-                                   SST::MemHierarchy::MemController::AddrRangeToMC.end(),
-                                   std::make_tuple(paddr, paddr, nullptr),
-                                   [](const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &element,
-                                      const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &value) {
-                                       return std::get<0>(element) <= std::get<0>(value);
-                                   });
-        uint64_t addr_range_start, addr_range_stop;
-        SST::MemHierarchy::MemController *memory_controller;
-        if (it == SST::MemHierarchy::MemController::AddrRangeToMC.end() ||
-            it == SST::MemHierarchy::MemController::AddrRangeToMC.begin()) {
-            output_.fatal(CALL_INFO, -1,
-                          "Could not find memory controller for address %" PRIx64 "\n",
-                          paddr);
-        }
-
-        std::tie(addr_range_start, addr_range_stop, memory_controller) = *(--it);
-        auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
-            (memory_controller->backing_);
-        /* we only support if the backing store is a BackingMMAP */
-        if (!backing) {
-            output_.fatal(CALL_INFO, -1,
-                          "Memory controller does not have a BackingMMAP "
-                          "required for translation to native pointer\n");
-        }
-        uint64_t lpaddr = memory_controller->translateToLocal(paddr);
-        uint8_t *ptr = &backing->m_buffer[lpaddr];
+        void *ptr=nullptr;
+        size_t size=0;
+        toNativePointer(paddr, &ptr, &size);
         to_native_req->setNativePointer(ptr);
-        to_native_req->setRegionSize(backing->m_size - lpaddr);
+        to_native_req->setRegionSize(size);
         to_native_req->complete();
         return;
     }

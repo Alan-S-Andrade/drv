@@ -94,6 +94,7 @@ parser.add_argument("--cp-verbose", type=int, default=0, help="verbosity of comm
 parser.add_argument("--cp-verbose-init", action="store_true", help="command processor enable debug of init")
 parser.add_argument("--cp-verbose-requests", action="store_true", help="command processor enable debug of requests")
 parser.add_argument("--cp-verbose-responses", action="store_true", help="command processor enable debug of responses")
+parser.add_argument("--drvx-stack-in-l1sp", action="store_true", help="use l1sp backing storage as stack")
 
 arguments = parser.parse_args()
 

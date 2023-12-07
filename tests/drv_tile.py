@@ -146,6 +146,7 @@ class DrvXTile(Tile):
             "id"  : self.id,
             "pod" : self.pod,
             "pxn" : self.pxn,
+            "stack_in_l1sp" : arguments.drvx_stack_in_l1sp,
         })
         self.core.addParams(SYSCONFIG)
         self.core.addParams(CORE_DEBUG)

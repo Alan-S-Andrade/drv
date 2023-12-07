@@ -5,6 +5,7 @@
 #define DRV_API_THREAD_STATE_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIReadModifyWrite.hpp>
+#include <DrvAPISystem.hpp>
 #include <utility>
 #include <stdlib.h>
 namespace DrvAPI

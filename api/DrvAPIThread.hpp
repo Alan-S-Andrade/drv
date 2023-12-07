@@ -6,6 +6,7 @@
 #include <DrvAPIThreadState.hpp>
 #include <DrvAPIMain.hpp>
 #include <DrvAPISysConfig.hpp>
+#include <DrvAPISystem.hpp>
 #include <boost/coroutine2/all.hpp>
 #include <memory>
 namespace DrvAPI
@@ -23,7 +24,12 @@ public:
   /**
    * @brief Destroy the DrvAPIThread object
    */
-  ~DrvAPIThread(){}
+   ~DrvAPIThread(){}
+
+  /**
+   * @brief Start the thread
+   */
+  void start();
 
   /**
    * @brief Yield back to the main context
@@ -122,7 +128,49 @@ public:
    * @brief set the pxn id
    */
   void setPxnId(int pxn_id) { pxn_id_ = pxn_id; } //!< Set the pxn id
-    
+
+  /**
+   * @brief using l1sp for stack
+   */
+  bool stackInL1SP() const {
+      return stack_in_modeled_memory_;
+  }
+
+  /**
+   * @brief using l1sp for stack
+   */
+  void setStackInL1SP(bool stack_in_l1sp) {
+      stack_in_modeled_memory_ = stack_in_l1sp;
+  }
+
+  /**
+   * @brief Get the system object
+   *
+   * @return std::shared_ptr<DrvAPISystem>
+   */
+  std::shared_ptr<DrvAPISystem> getSystem() const {
+      return system_;
+  }
+
+  /**
+   * @brief Set the system object
+   *
+   * @param sys
+   */
+  void setSystem(const std::shared_ptr<DrvAPISystem> &sys) {
+      system_ = sys;
+  }
+
+  /**
+   * @brief Convert a DrvAPIAddress to a native pointer
+   */
+  void addressToNative(DrvAPIAddress address, void **native, std::size_t *size);
+
+  /**
+   * @brief Convert a DrvAPIAddress to a native pointer
+   */
+  void nativeToAddress(void *native, DrvAPIAddress *address, std::size_t *size);
+
   /**
    * @brief Get the current active thread
    * 
@@ -133,6 +181,7 @@ public:
   thread_local static DrvAPIThread *g_current_thread; //!< The current active thread  
 
 private:
+  std::shared_ptr<DrvAPISystem> system_ = nullptr; //!< System object
   std::unique_ptr<coro_t::pull_type> thread_context_; //!< Thread context, coroutine that can be resumed
   coro_t::push_type *main_context_; //!< Main context, can be yielded back to
   std::shared_ptr<DrvAPIThreadState> state_; //!< Thread state
@@ -144,6 +193,7 @@ private:
   int core_threads_; //!< Number of threads on this core
   int pod_id_; //!< Pod id in PXN
   int pxn_id_; //!< Pxn id
+  bool stack_in_modeled_memory_ = false; //!< Stack is in modeled memory
 };
 }
 

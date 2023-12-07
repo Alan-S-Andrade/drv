@@ -115,6 +115,8 @@ void DrvCore::configureThread(int thread, int threads) {
   api_thread.setCoreThreads(threads);
   api_thread.setPodId(pod_);
   api_thread.setPxnId(pxn_);
+  api_thread.setStackInL1SP(stack_in_l1sp_);
+  api_thread.setSystem(system_callbacks_);
 }
 
 /**
@@ -122,13 +124,20 @@ void DrvCore::configureThread(int thread, int threads) {
  */
 void DrvCore::configureThreads(SST::Params &params) {
   int threads = params.find<int>("threads", 1);
+  stack_in_l1sp_ = params.find<bool>("stack_in_l1sp", false);
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring %d threads\n", threads);
   for (int thread = 0; thread < threads; thread++)
     configureThread(thread, threads);
   done_ = threads;
   last_thread_ = threads - 1;
 }
-    
+
+void DrvCore::startThreads() {
+    for (auto& thread : threads_) {
+        thread.getAPIThread().start();
+    }
+}
+
 /**
  * configure the memory
  */
@@ -208,7 +217,8 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   , executable_(nullptr)
   , loopback_(nullptr)
   , idle_cycles_(0)
-  , core_on_(false) {
+  , core_on_(false)
+  , system_callbacks_(std::make_shared<DrvSystem>(*this)) {
   id_ = params.find<int>("id", 0);
   pod_ = params.find<int>("pod", 0);
   pxn_ = params.find<int>("pxn", 0);
@@ -226,7 +236,6 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
 }
 
 DrvCore::~DrvCore() {
-    threads_.clear();
     // the last thing we should is close the executable
     // this keeps the vtable entries valid for dynamic classes
     // created in the user code
@@ -259,12 +268,14 @@ void DrvCore::setup() {
   if (stdmem) {
     stdmem->setup();
   }
+  startThreads();
 }
 
 /**
  * finish the component
  */
 void DrvCore::finish() {
+  threads_.clear();
   auto stdmem = dynamic_cast<DrvStdMemory*>(memory_);
   if (stdmem) {
     stdmem->finish();

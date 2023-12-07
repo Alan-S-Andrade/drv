@@ -2,6 +2,7 @@
 // Copyright (c) 2023 University of Washington
 
 #pragma once
+#include <DrvAPIAddress.hpp>
 #include "DrvMemory.hpp"
 #include <sst/core/component.h>
 #include <sst/core/link.h>
@@ -71,6 +72,11 @@ public:
      * @brief finish is called at the end of the simulation
      */
     void finish() { mem_->finish(); }
+
+    /**
+     * @brief translate a pgas pointer to a native pointer
+     */
+    void toNativePointer(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size);
 
 private:
     /**
