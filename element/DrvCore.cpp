@@ -180,6 +180,19 @@ void DrvCore::configureOtherLinks(SST::Params &params) {
 }
 
 /**
+ * configure the statistics
+ */
+void DrvCore::configureStatistics(Params &params) {
+#define DEFINE_DRV_STAT(name, ...)                       \
+    {                                                    \
+        auto *stat = registerStatistic<uint64_t>(#name); \
+        drv_stats_.push_back(stat);                      \
+    }
+#include "DrvStatsTable.hpp"
+#undef DEFINE_DRV_STAT
+}
+
+/**
  * configure sysconfig
  * @param[in] params Parameters to this component.
  */
@@ -230,6 +243,7 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   configureMemory(params);
   configureOtherLinks(params);
   configureExecutable(params);
+  configureStatistics(params);
   parseArgv(params);
   configureThreads(params);
   setSysConfigApp();
@@ -332,8 +346,8 @@ void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
   std::shared_ptr<DrvAPI::DrvAPINop> nop_req = std::dynamic_pointer_cast<DrvAPI::DrvAPINop>(state);
   if (nop_req) {
     output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d nop for %d cycles\n", getThreadID(thread), nop_req->count());
-    TimeConverter *tc = getTimeConverter("1ns");
-    loopback_->send(nop_req->count(), tc, new DrvNopEvent(getThreadID(thread)));
+    //TimeConverter *tc = getTimeConverter("1ns");
+    loopback_->send(nop_req->count(), clocktc_, new DrvNopEvent(getThreadID(thread)));
     return;
   }
   

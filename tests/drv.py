@@ -95,6 +95,8 @@ parser.add_argument("--cp-verbose-init", action="store_true", help="command proc
 parser.add_argument("--cp-verbose-requests", action="store_true", help="command processor enable debug of requests")
 parser.add_argument("--cp-verbose-responses", action="store_true", help="command processor enable debug of responses")
 parser.add_argument("--drvx-stack-in-l1sp", action="store_true", help="use l1sp backing storage as stack")
+parser.add_argument("--core-stats", action="store_true", help="enable core statistics")
+parser.add_argument("--stats-load-level", type=int, default=0, help="load level for statistics")
 
 arguments = parser.parse_args()
 

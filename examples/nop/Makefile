@@ -6,7 +6,5 @@ DRV_DIR := $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
 include $(DRV_DIR)/mk/application_common.mk
 
-run-%: $(APP_NAME).so
-	$(eval cycles=$(word 1,$(subst -, ,$*)))
-	@echo Cycles=$(cycles)
-	sst $(DRV_DIR)/tests/drv-multicore-bus-test.py -- $(APP_PATH)/$(APP_NAME).so $(cycles)
+SIM_ARGS += 100
+SIM_OPTIONS += --num-pxn=1 --pxn-pods=1 --pod-cores=1 --core-threads=1

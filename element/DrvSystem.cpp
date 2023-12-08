@@ -16,3 +16,18 @@ void DrvSystem::addressToNative(DrvAPI::DrvAPIAddress address,
     }
     memory->toNativePointer(address, native, size);
 }
+
+uint64_t DrvSystem::getCycleCount() {
+    return core().clocktc_->convertFromCoreTime(core().getCurrentSimCycle());
+}
+
+uint64_t DrvSystem::getClockHz() {
+    auto period = core().clocktc_->getPeriod();
+    //std::cout << "period: " << period.invert() << std::endl;
+    period.invert();
+    return period.getDoubleValue();
+}
+
+double DrvSystem::getSeconds() {
+    return core().getElapsedSimTime().getDoubleValue();
+}

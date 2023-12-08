@@ -2,7 +2,7 @@
 // Copyright (c) 2023 University of Washington
 
 #include <DrvAPI.hpp>
-
+#include <inttypes.h>
 using namespace DrvAPI;
 
 int NopMain(int argc, char *argv[])
@@ -15,16 +15,28 @@ int NopMain(int argc, char *argv[])
         cycles = std::stoi(cycles_str);
     }
 
-    printf("Thread %d on core %d: invoking nop for %d cycles\n",
-           DrvAPIThread::current()->threadId(),
-           DrvAPIThread::current()->coreId(),
-           cycles);
+    float GHz = HZ() / 1e9;
+    uint64_t ns = cycles / GHz;
+
+    printf("Thread %d on core %d: cycle=%" PRIu64 " invoking nop for %d cycles (%" PRIu64 " ns)\n",
+           myThreadId(),
+           myCoreId(),
+           cycle(),
+           cycles,
+           ns);
 
     DrvAPI::nop(cycles);
 
-    printf("Thread %d on core %d: completed nop\n",
-           DrvAPIThread::current()->threadId(),
-           DrvAPIThread::current()->coreId());    
+    printf("Thread %d on core %d: cycle=%" PRIu64 " completed nop\n",
+           myThreadId(),
+           myCoreId(),
+           cycle());
+
+    printf("Thread %d on core %d: cycle=%" PRIu64 " hz = %" PRIu64 "\n",
+           myThreadId(),
+           myCoreId(),
+           cycle(),
+           HZ());
     return 0;
 }
 

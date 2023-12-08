@@ -25,3 +25,9 @@ PANDOHammerDrvX:
 
 MakeTile = lambda id, pod, pxn : DrvXTile(id, pod, pxn)
 MakePANDOHammer(MakeTile)
+
+if (arguments.core_stats):
+    DrvXTile.enableAllCoreStats()
+
+sst.setStatisticLoadLevel(arguments.stats_load_level)
+sst.setStatisticOutput("sst.statOutputCSV", {"filepath" : "stats.csv", "separator" : ","})

@@ -5,6 +5,7 @@
 #define RISCVINSTRUCTIONBASE_HPP
 #include <cstdint>
 #include <string>
+#include <RISCVInstructionId.hpp>
 class RISCVInterpreter;
 
 /**
@@ -15,7 +16,8 @@ public:
     RISCVInstruction(uint32_t instruction) : instruction_(instruction) {}
     virtual ~RISCVInstruction() {}
     virtual void accept(RISCVHart &hart, RISCVInterpreter &interpreter) = 0;
-    virtual const char* getMnemonic() = 0;
+    virtual const char* getMnemonic() const = 0;
+    virtual RISCVInstructionId getInstructionId() const = 0;
     uint32_t rs1() const { return (instruction_ >> 15) & 0x1F; }
     uint32_t rs2() const { return (instruction_ >> 20) & 0x1F; }
     uint32_t rs3() const { return (instruction_ >> 27) & 0x1F; }

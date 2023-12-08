@@ -120,5 +120,26 @@ inline uint64_t pxnDRAMSize() {
     return DrvAPISysConfig::Get()->pxnDRAMSize();
 }
 
+//////////
+// Time //
+//////////
+/**
+ * return the cycle count
+ */
+inline uint64_t cycle() {
+    return DrvAPIThread::current()->getSystem()->getCycleCount();
+}
+
+/**
+ * return the hz
+ */
+inline uint64_t HZ() {
+    return DrvAPIThread::current()->getSystem()->getClockHz();
+}
+
+inline double seconds() {
+    return DrvAPIThread::current()->getSystem()->getSeconds();
+}
+
 } // namespace DrvAPI
 #endif

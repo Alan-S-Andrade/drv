@@ -130,6 +130,15 @@ inline uint64_t pxnDRAMSize() {
     return dram_size;
 }
 
+/**
+ * get the current cycle count
+ */
+inline uint64_t cycle() {
+    uint64_t cycle;
+    asm volatile ("rdcycle %0" : "=r"(cycle));
+    return cycle;
+}
+
 #ifdef __cplusplus
 }
 #endif

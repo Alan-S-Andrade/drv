@@ -130,6 +130,10 @@ class DrvXTile(Tile):
         """
         super().__init__(id, pod, pxn)
 
+    @classmethod
+    def enableAllCoreStats(clss):
+        sst.enableAllStatisticsForComponentType("Drv.DrvCore")
+
     def initCore(self):
         """
         Initialize the tile's core
@@ -180,6 +184,10 @@ class DrvRTile(Tile):
         Create a tile with the given ID, pod, and PXN.
         """
         super().__init__(id, pod, pxn)
+
+    @classmethod
+    def enableAllCoreStats(clss):
+        sst.enableAllStatisticsForComponentType("Drv.RISCVCore")
 
     def initCore(self):
         """
