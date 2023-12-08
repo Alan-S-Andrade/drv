@@ -24,6 +24,10 @@ public:
                                  void **native,
                                  std::size_t *size);
 
+    virtual uint64_t getCycleCount() override;
+    virtual uint64_t getClockHz() override;
+    virtual double getSeconds() override; 
+
     DrvCore &core_;
 };
 

@@ -50,6 +50,24 @@ public:
     addressToNative(DrvAPIAddress address, void **native, std::size_t *size) {
         throw std::runtime_error("adddressToNative() not implemented");
     }
+    /**
+     * @brief get cycle count of simulation
+     */
+    virtual uint64_t getCycleCount() {
+        throw std::runtime_error("getCycleCount() not implemented");
+    }
+    /**
+     * @brief get clock in hz
+     */
+    virtual uint64_t getClockHz() {
+        throw std::runtime_error("getClockHz() not implemented");
+    }
+    /**
+     * @brief get the simulation time in seconds
+     */
+    virtual double getSeconds() {
+        throw std::runtime_error("getSimulationTime() not implemented");
+    }
 };
 }
 #endif // DRV_API_SYSTEM_HPP

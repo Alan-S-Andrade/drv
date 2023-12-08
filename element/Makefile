@@ -66,6 +66,7 @@ drvsim-sources += SSTRISCVSimulator.cpp
 drvsim-headers += SSTRISCVSimulator.hpp
 drvsim-headers += SSTRISCVCore.hpp
 drvsim-headers += SSTRISCVHart.hpp
+drvsim-headers += DrvStats.hpp
 
 drvsim-sources-$(RAMULATOR) += DrvCustomRamulatorMem.cpp
 drvsim-headers-$(RAMULATOR) += DrvCustomRamulatorMem.hpp

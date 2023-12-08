@@ -290,8 +290,10 @@ int CommandProcessor(int argc, char *argv[])
     g_distance[root_vertex] = 0;
 
     // FENCE here
-    *cp_ready = 1; // signal to ph core's that we are ready
 
+    *cp_ready = 1; // signal to ph core's that we are ready
+    double start_s = DrvAPI::seconds();
+    printf("starting BFS @ %lf s\n", start_s);
     // wait for ph done
     int64_t num_done = 0;
     while ((num_done = *ph_done) < THREADS_PER_CORE*numPodCores()) {
@@ -299,8 +301,9 @@ int CommandProcessor(int argc, char *argv[])
     }
 
     printf("CP: all PH threads are done (%" PRId64 ")\n", num_done);
-
-
+    double end_s = DrvAPI::seconds();
+    printf("stoping  BFS @ %lf s\n", end_s);
+    printf("elapsed  BFS time: %lf s\n", end_s - start_s);
 
     for (vertex_t v = 0; v < V; v++) {
         if (g_distance[v] != distance[v]) {

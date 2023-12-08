@@ -4,6 +4,7 @@
 
 #ifndef PANDOHAMMER_MMIO_H
 #define PANDOHAMMER_MMIO_H
+#include <string.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,6 +36,10 @@ static inline void ph_puts(char *cstr)
     }
 }
 
+static inline void ph_print_time()
+{
+    *(volatile char*)0xFFFFFFFFFFFF0018 = 0;
+}
 
 #ifdef __cplusplus
 }

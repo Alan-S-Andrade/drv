@@ -75,6 +75,25 @@ void RISCVCore::configureSysConfig(Params &params) {
     pxn_  = params.find<int>("pxn", 0);
 }
 
+void RISCVCore::configureStatistics(Params &params) {
+#define DEFINSTR(mnemonic, ...)                          \
+    {                                                    \
+        std::string name = #mnemonic;                    \
+        name += "_count";                                \
+        auto *stat = registerStatistic<uint64_t>(name);  \
+        instruction_counts_.push_back(stat);             \
+    }
+#include <InstructionTable.h>
+#undef DEFINSTR
+#define DEFINE_DRV_STAT(name, ...)                       \
+    {                                                    \
+        auto *stat = registerStatistic<uint64_t>(#name); \
+        drv_stats_.push_back(stat);                      \
+    }
+#include "DrvStatsTable.hpp"
+#undef DEFINE_DRV_STAT
+}
+
 /* constructor */
 RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     : Component(id)
@@ -90,6 +109,7 @@ RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     configureHarts(params);
     configureMemory(params);
     configureSysConfig(params);
+    configureStatistics(params);
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
 }
@@ -269,6 +289,7 @@ bool RISCVCore::tick(Cycle_t cycle) {
                         ,i->getMnemonic()
                         );
         profileInstruction(harts_[hart_id], *i);
+        instruction_counts_[i->getInstructionId()]->addData(1);
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
