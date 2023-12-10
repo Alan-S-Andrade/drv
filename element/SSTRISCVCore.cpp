@@ -272,6 +272,7 @@ int RISCVCore::selectNextHart() {
 bool RISCVCore::tick(Cycle_t cycle) {
     int hart_id = selectNextHart();
     if (hart_id != NO_HART) {
+        addBusyCycleStat(1);
         uint64_t pc = harts_[hart_id].pc();
         uint32_t inst = icache_->read(pc);
         RISCVInstruction *i = nullptr;
@@ -293,6 +294,7 @@ bool RISCVCore::tick(Cycle_t cycle) {
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
+        addStallCycleStat(1);
         output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "No harts ready to execute\n");
     }
 

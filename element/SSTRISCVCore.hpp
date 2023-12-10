@@ -335,6 +335,14 @@ public:
         if (isPAddressDRAM(addr))       drv_stats_[ATOMIC_DRAM]->addData(1);
     }
 
+    void addBusyCycleStat(uint64_t cycles) {
+        drv_stats_[BUSY_CYCLES]->addData(cycles);
+    }
+
+    void addStallCycleStat(uint64_t cycles) {
+        drv_stats_[STALL_CYCLES]->addData(cycles);
+    }
+
     /**
      * configure statistics
      */
