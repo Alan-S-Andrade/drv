@@ -370,6 +370,10 @@ public:
         if (isPAddressDRAM(addr))       drv_stats_[ATOMIC_DRAM]->addData(1);
     }
 
+    void outputStatistics() {
+        performGlobalStatisticOutput();
+    }
+
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   std::vector<DrvThread> threads_; //!< the threads on this core

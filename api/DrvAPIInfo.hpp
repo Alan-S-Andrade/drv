@@ -141,5 +141,12 @@ inline double seconds() {
     return DrvAPIThread::current()->getSystem()->getSeconds();
 }
 
+/**
+ * this will force the simulator to do a global statistics dump
+ */
+inline void outputStatistics() {
+    DrvAPIThread::current()->getSystem()->outputStatistics();
+}
+
 } // namespace DrvAPI
 #endif
