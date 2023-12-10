@@ -31,3 +31,7 @@ uint64_t DrvSystem::getClockHz() {
 double DrvSystem::getSeconds() {
     return core().getElapsedSimTime().getDoubleValue();
 }
+
+void DrvSystem::outputStatistics() {
+    core().outputStatistics();
+}

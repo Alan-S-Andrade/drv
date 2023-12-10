@@ -68,6 +68,12 @@ public:
     virtual double getSeconds() {
         throw std::runtime_error("getSimulationTime() not implemented");
     }
+    /**
+     * @brief output simulation statistics
+     */
+    virtual void outputStatistics() {
+        throw std::runtime_error("outputStatistics() not implemented");
+    }
 };
 }
 #endif // DRV_API_SYSTEM_HPP
