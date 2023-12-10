@@ -279,7 +279,9 @@ public:
     if (!core_on_) {
       core_on_ = true;
       output_->verbose(CALL_INFO, 2, DEBUG_RSP, "turning core on\n");
-      reregisterClock(clocktc_, new SST::Clock::Handler<DrvCore>(this, &DrvCore::clockTick));
+      reregister_cycle_ = system_callbacks_->getCycleCount();
+      addStallCycleStat(reregister_cycle_ - unregister_cycle_);
+      reregisterClock(clocktc_, new SST::Clock::Handler<DrvCore>(this, &DrvCore::clockTick));      
     }
   }
 
@@ -374,6 +376,13 @@ public:
         performGlobalStatisticOutput();
     }
 
+    void addBusyCycleStat(uint64_t cycles) {
+        drv_stats_[BUSY_CYCLES]->addData(cycles);
+    }
+
+    void addStallCycleStat(uint64_t cycles) {
+        drv_stats_[STALL_CYCLES]->addData(cycles);
+    }
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   std::vector<DrvThread> threads_; //!< the threads on this core
@@ -389,6 +398,8 @@ private:
   SST::Link *loopback_; //!< the loopback link
   uint64_t max_idle_cycles_; //!< maximum number of idle cycles
   uint64_t idle_cycles_; //!< number of idle cycles
+  SimTime_t unregister_cycle_; //!< cycle when the clock handler was last unregistered
+  SimTime_t reregister_cycle_; //!< cycle when the clock handler was last reregistered
   bool core_on_; //!< true if the core is on (clock handler is registered)  
   DrvSysConfig sys_config_; //!< system configuration
   bool stack_in_l1sp_ = false; //!< true if the stack is in L1SP backing store

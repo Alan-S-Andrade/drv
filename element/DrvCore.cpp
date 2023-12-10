@@ -321,14 +321,17 @@ void DrvCore::executeReadyThread() {
   // select a ready thread to execute
   int thread_id = selectReadyThread();
   if (thread_id == NO_THREAD_READY) {
+    addStallCycleStat(1);
     idle_cycles_++;
     return;
   }
   idle_cycles_ = 0;
-  
+
   // execute the ready thread
   threads_[thread_id].execute(this);
   last_thread_ = thread_id;
+
+  addBusyCycleStat(1);
 }
 
 void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
@@ -379,6 +382,8 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   core_on_ = !unregister;
   if (unregister) {
     output_->verbose(CALL_INFO, 2, DEBUG_CLK, "unregistering clock\n");
+    // save the time for statistics
+    unregister_cycle_ = system_callbacks_->getCycleCount();
   }
   return unregister;
 }
