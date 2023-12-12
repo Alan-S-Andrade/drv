@@ -56,7 +56,11 @@ public:
       {"debug_clock", "Print debug messages we expect to see during clock ticks", "False"},
       {"debug_requests", "Print debug messages we expect to see during request events", "False"},
       {"debug_responses", "Print debug messages we expect to see during response events", "False"},
-      {"debug_loopback", "Print debug messages we expect to see during loopback events", "False"}
+      {"debug_loopback", "Print debug messages we expect to see during loopback events", "False"},
+      {"trace_remote_pxn", "Trace all requests to remote pxn", "false"},
+      {"trace_remote_pxn_load", "Trace loads to remote pxn", "false"},
+      {"trace_remote_pxn_store", "Trace loads to remote pxn", "false"},
+      {"trace_remote_pxn_atomic", "Trace loads to remote pxn", "false"},
   )
   // Document the ports that this component accepts
   SST_ELI_DOCUMENT_PORTS(
@@ -113,6 +117,12 @@ public:
    * @param[in] params Parameters to this component.
    */
   void configureOutput(SST::Params &params);
+
+  /**
+   * configure output for tracing
+   * param[in] params Parameters to this component.
+   */
+  void configureTrace(SST::Params &params);
 
   /**
    * configure clock
@@ -213,6 +223,27 @@ public:
   static constexpr uint32_t DEBUG_REQ      = (1<<30); //!< debug messages we expect to see when receiving requests
   static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
   static constexpr uint32_t DEBUG_LOOPBACK = (1<<28); //!< debug messages we expect to see when receiving loopback events
+
+  static constexpr uint32_t TRACE_REMOTE_PXN_STORE = (1<< 0); //!< trace remote store events
+  static constexpr uint32_t TRACE_REMOTE_PXN_LOAD  = (1<< 1); //!< trace remote load events
+  static constexpr uint32_t TRACE_REMOTE_PXN_ATOMIC= (1<< 2); //!< trace remote atomic events
+  static constexpr uint32_t TRACE_REMOTE_PXN_MEMORY = (TRACE_REMOTE_PXN_STORE | TRACE_REMOTE_PXN_LOAD | TRACE_REMOTE_PXN_ATOMIC); //!< trace remote memory events
+private:
+  std::unique_ptr<SST::Output> trace_; //!< for tracing
+
+public:
+  void traceRemotePxnMem(uint32_t trace_mask, const char* opname,
+                         DrvAPI::DrvAPIPAddress paddr) const {
+      trace_->verbose(CALL_INFO, 0, trace_mask
+                      ,"OP=%s:SRC_PXN=%d:SRC_POD=%d:SRC_CORE=%d:DST_PXN=%d:ADDR=%s\n"
+                      ,opname
+                      ,pxn_
+                      ,pod_
+                      ,id_
+                      ,(int)paddr.pxn()
+                      ,paddr.to_string().c_str()
+                      );
+  }
 
   /**
    * initialize the component
@@ -345,9 +376,12 @@ public:
     void addLoadStat(DrvAPI::DrvAPIPAddress addr) const {
         if (isPAddressLocalL1SP(addr))  drv_stats_[LOAD_LOCAL_L1SP]->addData(1);
         if (isPAddressRemoteL1SP(addr)) drv_stats_[LOAD_REMOTE_L1SP]->addData(1);
-        if (isPAddressRemotePXN(addr))  drv_stats_[LOAD_REMOTE_PXN]->addData(1);
         if (isPAddressL2SP(addr))       drv_stats_[LOAD_L2SP]->addData(1);
         if (isPAddressDRAM(addr))       drv_stats_[LOAD_DRAM]->addData(1);
+        if (isPAddressRemotePXN(addr))  {
+            traceRemotePxnMem(TRACE_REMOTE_PXN_LOAD, "read", addr);
+            drv_stats_[LOAD_REMOTE_PXN]->addData(1);
+        }
     }
 
     /**
@@ -356,9 +390,12 @@ public:
     void addStoreStat(DrvAPI::DrvAPIPAddress addr) const {
         if (isPAddressLocalL1SP(addr))  drv_stats_[STORE_LOCAL_L1SP]->addData(1);
         if (isPAddressRemoteL1SP(addr)) drv_stats_[STORE_REMOTE_L1SP]->addData(1);
-        if (isPAddressRemotePXN(addr))  drv_stats_[STORE_REMOTE_PXN]->addData(1);
         if (isPAddressL2SP(addr))       drv_stats_[STORE_L2SP]->addData(1);
         if (isPAddressDRAM(addr))       drv_stats_[STORE_DRAM]->addData(1);
+        if (isPAddressRemotePXN(addr))  {
+            traceRemotePxnMem(TRACE_REMOTE_PXN_STORE, "write", addr);
+            drv_stats_[STORE_REMOTE_PXN]->addData(1);
+        }
     }
 
     /**
@@ -367,9 +404,12 @@ public:
     void addAtomicStat(DrvAPI::DrvAPIPAddress addr) const {
         if (isPAddressLocalL1SP(addr))  drv_stats_[ATOMIC_LOCAL_L1SP]->addData(1);
         if (isPAddressRemoteL1SP(addr)) drv_stats_[ATOMIC_REMOTE_L1SP]->addData(1);
-        if (isPAddressRemotePXN(addr))  drv_stats_[ATOMIC_REMOTE_PXN]->addData(1);
         if (isPAddressL2SP(addr))       drv_stats_[ATOMIC_L2SP]->addData(1);
         if (isPAddressDRAM(addr))       drv_stats_[ATOMIC_DRAM]->addData(1);
+        if (isPAddressRemotePXN(addr))  {
+            traceRemotePxnMem(TRACE_REMOTE_PXN_ATOMIC, "atomic", addr);
+            drv_stats_[ATOMIC_REMOTE_PXN]->addData(1);
+        }
     }
 
     void outputStatistics() {

@@ -97,6 +97,7 @@ parser.add_argument("--cp-verbose-responses", action="store_true", help="command
 parser.add_argument("--drvx-stack-in-l1sp", action="store_true", help="use l1sp backing storage as stack")
 parser.add_argument("--core-stats", action="store_true", help="enable core statistics")
 parser.add_argument("--stats-load-level", type=int, default=0, help="load level for statistics")
+parser.add_argument("--trace-remote-pxn-memory", action="store_true", help="trace remote pxn memory accesses")
 
 arguments = parser.parse_args()
 
@@ -131,6 +132,10 @@ CORE_DEBUG = {
     "debug_loopback" : False,
     "debug_memory": False,
     "debug_syscalls" : False,
+    "trace_remote_pxn" : False,
+    "trace_remote_pxn_load" : False,
+    "trace_remote_pxn_store" : False,
+    "trace_remote_pxn_atomic" : False,
 }
 
 SYSCONFIG['sys_num_pxn'] = arguments.num_pxn
@@ -145,6 +150,7 @@ CORE_DEBUG['debug_responses'] = arguments.debug_responses
 CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
 CORE_DEBUG['debug_clock'] = arguments.debug_clock
+CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
 
 class CommandProcessor(object):
     CORE_ID = -1
