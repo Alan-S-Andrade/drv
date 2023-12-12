@@ -33,9 +33,22 @@ void DrvCore::configureOutput(SST::Params &params) {
     verbose_mask |= DEBUG_REQ;
   if (params.find<bool>("debug_responses"))
     verbose_mask |= DEBUG_RSP;
-    
+
   output_ = std::make_unique<SST::Output>("[DrvCore @t: @f:@l: @p] ", verbose_level, verbose_mask, Output::STDOUT);
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured output logging\n");
+}
+
+void DrvCore::configureTrace(SST::Params &params) {
+    uint32_t trace_mask = 0;
+    if (params.find<bool>("trace_remote_pxn"))
+        trace_mask |= TRACE_REMOTE_PXN_MEMORY;
+    if (params.find<bool>("trace_remote_pxn_load"))
+        trace_mask |= TRACE_REMOTE_PXN_LOAD;
+    if (params.find<bool>("trace_remote_pxn_store"))
+        trace_mask |= TRACE_REMOTE_PXN_STORE;
+    if (params.find<bool>("trace_remote_pxn_atomic"))
+        trace_mask |= TRACE_REMOTE_PXN_ATOMIC;
+    trace_ = std::make_unique<SST::Output>("@t:", 0, trace_mask, Output::FILE);
 }
 
 /**
@@ -238,6 +251,7 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   registerAsPrimaryComponent();
   primaryComponentDoNotEndSim();
   configureOutput(params);
+  configureTrace(params);
   configureSysConfig(params);
   configureClock(params);
   configureMemory(params);
