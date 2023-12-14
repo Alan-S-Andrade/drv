@@ -134,5 +134,6 @@ WORKDIR /root/drv/
 
 # build drv
 RUN cd /root/drv \
-       && make -j `nproc`
+    && make -j `nproc` install \
+    && make -j `nproc` examples
 RUN cd /root/drv
