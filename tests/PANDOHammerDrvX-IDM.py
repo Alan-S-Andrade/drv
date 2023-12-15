@@ -213,7 +213,10 @@ SYSCONFIG["sys_core_clock"] = "125MHz"
 # SYSCONFIG["sys_pod_cores"] = 2
 # SYSCONFIG["sys_core_threads"] = 1 
 
-image = "./../examples/IDM/inputs/Data01CSR.bin"
+import pathlib
+projRoot = pathlib.Path(__file__).parent.parent
+
+image = str(projRoot/'examples/IDM/inputs/Data01CSR.idmimg')
 
 print("""
 PANDOHammerDrvX:
