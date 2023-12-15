@@ -12,8 +12,8 @@ import sys
 # for drvx we set the core clock to 125MHz (assumption is 1/8 ops are memory)
 SYSCONFIG["sys_core_clock"] = "125MHz"
 
-# SYSCONFIG["sys_pod_cores"] = 4
-SYSCONFIG["sys_core_threads"] = 16 
+# SYSCONFIG["sys_pod_cores"] = 2
+# SYSCONFIG["sys_core_threads"] = 1 
 
 image = "./../examples/IDM/inputs/Data01CSR.bin"
 
