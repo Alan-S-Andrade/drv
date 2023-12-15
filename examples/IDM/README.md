@@ -1,11 +1,20 @@
 SPDX-License-Identifier: MIT
 
-The application assumes a binary image of CSR is loaded to the last bank of DRAM
-to start simulation, cd to `$PROJ_ROOT/tests`, then `sst PANDOHammerDrvX-IDM.py -- ./../examples/IDM/app-main.so`
+To start simulation, execute `make run`.  
+
 When a thread finishes, it outputs some statistics like below
 ```
- 4 done; work: 387, sampled edges: 37445, sampled vertices: 10141
-avg sampled edges: 96.76, avg sampled vertices: 26.20
-V local: 7117, V remote: 3024
-E local: 7587, E remote: 6065
+=========================== Compute thread   58 done ===========================
+work: 96, sampled edges: 9562, sampled vertices: 2496
+avg sampled edges: 99.60, avg sampled vertices: 26.00
+V local accesses: 706, V remote accesses: 1790 (from IDM cache: 863 [48.21%])
+E local accesses: 204 (from IDM cache: 86 [42.16%])
+E remote accesses: 3329 (from IDM cache: 1630 [48.96%])
+Root Local, Root Remote, 7, 409
+================================================================================
 ```
+
+## Configurations
+- `SIM_PXN`. The simulation is performed as if there are `SIM_PXN` PXNs. Default: 8.
+- `CACHE_SIZE`. The number of entries in the caches. Default: 512.
+- `PREFETCH_AHEAD_MIN`/`PREFETCH_AHEAD_MAX`. The look ahead range to do prefetch. Default: 2/4.
