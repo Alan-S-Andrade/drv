@@ -16,7 +16,7 @@ namespace DrvAPI
 template <typename T>
 T read(DrvAPIAddress address)
 {
-    T result = static_cast<T>(0);
+    T result{};
     DrvAPIThread::current()->setState(std::make_shared<DrvAPIMemReadConcrete<T>>(address));
     DrvAPIThread::current()->yield();
     auto read_req = std::dynamic_pointer_cast<DrvAPIMemRead>(DrvAPIThread::current()->getState());

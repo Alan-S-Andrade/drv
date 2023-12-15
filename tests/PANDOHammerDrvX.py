@@ -17,8 +17,7 @@ from drv_pandohammer import *
 SYSCONFIG["sys_core_clock"] = "125MHz"
 
 print("""
-PANDOHammerDrvX:
-  program = {}
+PANDOHammerDrvX: program = {}
 """.format(
     arguments.program
 ))

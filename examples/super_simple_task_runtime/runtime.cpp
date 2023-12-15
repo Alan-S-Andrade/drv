@@ -52,6 +52,7 @@ StaticL1SP<task_queue*> this_cores_task_queue; //!< pointer to this core's task 
 
 /* allocate on of these per pxn */
 StaticMainMem<int64_t> this_pxns_terminate; //!< time for the thread to quit
+StaticMainMem<int64_t> this_pxns_num_cores_ready; //!< number of cores ready to run
 
 static DrvAPIPointer<int64_t> terminate_pointer()
 {
@@ -62,6 +63,19 @@ static DrvAPIPointer<int64_t> terminate_pointer()
     return vaddr.encode();
 }
 
+static DrvAPIPointer<int64_t> num_cores_ready_pointer()
+{
+    /* pxn 0 holds the absolute */
+    DrvAPIVAddress vaddr = static_cast<DrvAPIAddress>(&this_pxns_num_cores_ready);
+    vaddr.not_scratchpad() = true;
+    vaddr.pxn() = 0;
+    return vaddr.encode();
+}
+
+static int64_t num_cores()
+{
+    return DrvAPI::numPXNs() * DrvAPI::numPXNPods() * DrvAPI::numPodCores();
+}
 
 /**
  * execute this task on a specific core
@@ -84,24 +98,31 @@ void execute_on(uint32_t pxn, uint32_t pod, uint32_t core, task* t) {
 int Start(int argc, char *argv[])
 {
     DrvAPIMemoryAllocatorInit();
+
+    if (isCommandProcessor()) {
+        // wait for all cores to be ready
+        while (*num_cores_ready_pointer() != num_cores()) {
+            nop(1000);
+        }
+        // only the command processor will run the main function
+        pandoMain(argc, argv);
+        atomic_add(terminate_pointer(), 1);
+        return 0;
+    }
     
     // check initialized
     if (atomic_cas(&queue_initialized,
                    QUEUE_UNINIT,
                    QUEUE_INIT_IN_PROGRESS) == QUEUE_UNINIT) {
+
         // initialize
         this_cores_task_queue = new task_queue;
-        if (myPodId() == 0
-            && myCoreId() == 0) {
-            // only core 0 will run the main function
-            task_queue *tq = this_cores_task_queue;
-            tq->push(newTask([argc, argv](){                
-                pandoMain(argc, argv);
-                atomic_add(terminate_pointer(), 1);
-            }));
-        }
+
         // indicate that initialization is complete
         queue_initialized = QUEUE_INIT;
+
+        // only one thread on each core will reach this line of code
+        atomic_add(num_cores_ready_pointer(), 1);
     }
     
     while (queue_initialized != QUEUE_INIT) {
