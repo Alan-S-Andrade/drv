@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
-APP_NAME := IDM 
+APP_NAME := IDM
 APP_PATH := $(DRV_DIR)/examples/IDM
 
 include $(DRV_DIR)/mk/config.mk
