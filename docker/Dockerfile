@@ -3,6 +3,8 @@
 
 FROM ubuntu:22.04
 
+ENV DRV_ROOT /install
+
 RUN apt update -y \
         && apt install -y \
         make \
@@ -27,14 +29,25 @@ RUN apt update -y \
         && cd /sst-core-src \
         && ./autogen.sh \
         && mkdir -p /sst-core-build \
-        && mkdir -p /install \
+        && mkdir -p ${DRV_ROOT} \
         && cd /sst-core-build \
-        && /sst-core-src/configure --prefix=/install \
+        && /sst-core-src/configure --prefix=${DRV_ROOT} \
         && make -j `nproc` install \
         && rm -rf /sst-core-src \
         && rm -rf /sst-core-build \
         && apt remove -y git automake \
         && apt clean -y
+
+
+# install ramulator
+RUN apt update -y \
+        && apt install -y \
+        git \
+        clang \
+        && git clone https://github.com/mrutt92/ramulator /root/sst-ramulator-src \
+        && cd /root/sst-ramulator-src \
+        && git checkout mrutt \
+        && make -j `nproc` libramulator.so
 
 # install sst-elements
 RUN apt update -y \
@@ -48,8 +61,9 @@ RUN apt update -y \
         && mkdir -p /sst-elements-build \
         && cd /sst-elements-build \
         && /sst-elements-src/configure \
-        --prefix=/install \
-        --with-sst-core=/install \
+        --prefix=${DRV_ROOT} \
+        --with-sst-core=${DRV_ROOT} \
+        --with-ramulator=/root/sst-ramulator-src \
         && make -j `nproc` install \
         && rm -rf /sst-elements-build \
         && apt remove -y git libltdl-dev \
@@ -65,7 +79,7 @@ RUN apt update -y \
         && tar zxf boost_1_82_0.tar.gz \
         && cd /downloads/boost_1_82_0 \
         && /downloads/boost_1_82_0/bootstrap.sh \
-        && /downloads/boost_1_82_0/b2 --prefix=/install install \
+        && /downloads/boost_1_82_0/b2 --prefix=${DRV_ROOT} install \
         && rm -rf /downloads \
         && apt remove -y wget \
         && apt clean -y
@@ -88,7 +102,7 @@ RUN apt update -y \
         && git clone git@github.com:AMDResearch/pando-riscv-gnu-toolchain /riscv-gnu-toolchain \
         && cd /riscv-gnu-toolchain \
 	&& git checkout pandodrvsim \
-        && ./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=/install \
+        && ./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=${DRV_ROOT} \
         && make -j `nproc` \
         && make install \
         && rm -rf /riscv-gnu-toolchain \
@@ -102,14 +116,18 @@ RUN apt update -y \
         clang \
         libopenmpi-dev \
         bc \
+        python3-pip \
+        wget \
         && apt clean -y
 
-ENV PATH "${PATH}":/install/bin
+RUN pip3 install gdown
+
+ENV PATH "${PATH}":${DRV_ROOT}/bin
 ENV PYTHONPATH "/root/drv/tests:${PYTHONPATH}"
-ENV LD_LIBRARY_PATH /install/lib
-ENV LIBRARY_PATH /install/lib
-ENV C_INCLUDE_PATH /install/include
-ENV CPLUS_INCLUDE_PATH /install/include
+ENV LD_LIBRARY_PATH ${DRV_ROOT}/lib
+ENV LIBRARY_PATH ${DRV_ROOT}/lib
+ENV C_INCLUDE_PATH ${DRV_ROOT}/include
+ENV CPLUS_INCLUDE_PATH ${DRV_ROOT}/include
 ENV OMPI_CXX clang++
 
 # copy drv sources
@@ -118,5 +136,6 @@ WORKDIR /root/drv/
 
 # build drv
 RUN cd /root/drv \
-       && make -j `nproc`
+    && make -j `nproc` install \
+    && make -j `nproc` examples
 RUN cd /root/drv

@@ -195,10 +195,10 @@ class MainMemoryBank(SharedMemoryBank):
             })
             return backend
         elif (arguments.dram_backend == "ramulator"):
-            backend = self.memctrl.setSubComponent("backend", "memHierarchy.ramulator")
+            backend = self.memctrl.setSubComponent("backend", "Drv.DrvRamulatorMemBackend")
             backend.addParams({
                 "verbose_level" : arguments.verbose_memory,
-                "configFile" : "/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
+                "configFile" : arguments.dram_backend_config,
                 "mem_size" : MainMemoryRange.POD_MAINMEM_BANK_SIZE_STR,
             })
             return backend

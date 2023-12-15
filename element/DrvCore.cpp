@@ -33,9 +33,22 @@ void DrvCore::configureOutput(SST::Params &params) {
     verbose_mask |= DEBUG_REQ;
   if (params.find<bool>("debug_responses"))
     verbose_mask |= DEBUG_RSP;
-    
+
   output_ = std::make_unique<SST::Output>("[DrvCore @t: @f:@l: @p] ", verbose_level, verbose_mask, Output::STDOUT);
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured output logging\n");
+}
+
+void DrvCore::configureTrace(SST::Params &params) {
+    uint32_t trace_mask = 0;
+    if (params.find<bool>("trace_remote_pxn"))
+        trace_mask |= TRACE_REMOTE_PXN_MEMORY;
+    if (params.find<bool>("trace_remote_pxn_load"))
+        trace_mask |= TRACE_REMOTE_PXN_LOAD;
+    if (params.find<bool>("trace_remote_pxn_store"))
+        trace_mask |= TRACE_REMOTE_PXN_STORE;
+    if (params.find<bool>("trace_remote_pxn_atomic"))
+        trace_mask |= TRACE_REMOTE_PXN_ATOMIC;
+    trace_ = std::make_unique<SST::Output>("@t:", 0, trace_mask, Output::FILE);
 }
 
 /**
@@ -115,6 +128,8 @@ void DrvCore::configureThread(int thread, int threads) {
   api_thread.setCoreThreads(threads);
   api_thread.setPodId(pod_);
   api_thread.setPxnId(pxn_);
+  api_thread.setStackInL1SP(stack_in_l1sp_);
+  api_thread.setSystem(system_callbacks_);
 }
 
 /**
@@ -122,13 +137,20 @@ void DrvCore::configureThread(int thread, int threads) {
  */
 void DrvCore::configureThreads(SST::Params &params) {
   int threads = params.find<int>("threads", 1);
+  stack_in_l1sp_ = params.find<bool>("stack_in_l1sp", false);
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring %d threads\n", threads);
   for (int thread = 0; thread < threads; thread++)
     configureThread(thread, threads);
   done_ = threads;
   last_thread_ = threads - 1;
 }
-    
+
+void DrvCore::startThreads() {
+    for (auto& thread : threads_) {
+        thread.getAPIThread().start();
+    }
+}
+
 /**
  * configure the memory
  */
@@ -145,18 +167,21 @@ void DrvCore::configureMemory(SST::Params &params) {
     }
     DrvAPI::DrvAPIAddress dram_base_default
         = DrvAPI::DrvAPIVAddress::MainMemBase(pxn_).encode();
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM).setBase(dram_base_default);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM)
+        .setBase(dram_base_default, pxn_, pod_, id_);
 
     // default l2 statics to base of local l2 scratchpad
     DrvAPI::DrvAPIAddress l2sp_base_default = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
     uint64_t l2sp_base = params.find<uint64_t>("l2sp_base", l2sp_base_default);
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL2SP).setBase(l2sp_base);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL2SP)
+        .setBase(l2sp_base, pxn_, pod_, id_);
 
 
     // default l1 statics to base of local l1 scratchpad
     DrvAPI::DrvAPIAddress l1sp_base_default = DrvAPI::DrvAPIVAddress::MyL1Base().encode();
     uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", l1sp_base_default);
-    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP).setBase(l1sp_base);
+    DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP)
+        .setBase(l1sp_base, pxn_, pod_, id_);
 }
 
 /*
@@ -165,6 +190,19 @@ void DrvCore::configureMemory(SST::Params &params) {
 void DrvCore::configureOtherLinks(SST::Params &params) {
     loopback_ = configureSelfLink("loopback", new Event::Handler<DrvCore>(this, &DrvCore::handleLoopback));
     loopback_->addSendLatency(1, "ns");
+}
+
+/**
+ * configure the statistics
+ */
+void DrvCore::configureStatistics(Params &params) {
+#define DEFINE_DRV_STAT(name, ...)                       \
+    {                                                    \
+        auto *stat = registerStatistic<uint64_t>(#name); \
+        drv_stats_.push_back(stat);                      \
+    }
+#include "DrvStatsTable.hpp"
+#undef DEFINE_DRV_STAT
 }
 
 /**
@@ -205,25 +243,27 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   , executable_(nullptr)
   , loopback_(nullptr)
   , idle_cycles_(0)
-  , core_on_(false) {
+  , core_on_(false)
+  , system_callbacks_(std::make_shared<DrvSystem>(*this)) {
   id_ = params.find<int>("id", 0);
   pod_ = params.find<int>("pod", 0);
   pxn_ = params.find<int>("pxn", 0);
   registerAsPrimaryComponent();
   primaryComponentDoNotEndSim();
   configureOutput(params);
+  configureTrace(params);
   configureSysConfig(params);
   configureClock(params);
   configureMemory(params);
   configureOtherLinks(params);
   configureExecutable(params);
+  configureStatistics(params);
   parseArgv(params);
   configureThreads(params);
   setSysConfigApp();
 }
 
 DrvCore::~DrvCore() {
-    threads_.clear();
     // the last thing we should is close the executable
     // this keeps the vtable entries valid for dynamic classes
     // created in the user code
@@ -256,12 +296,14 @@ void DrvCore::setup() {
   if (stdmem) {
     stdmem->setup();
   }
+  startThreads();
 }
 
 /**
  * finish the component
  */
 void DrvCore::finish() {
+  threads_.clear();
   auto stdmem = dynamic_cast<DrvStdMemory*>(memory_);
   if (stdmem) {
     stdmem->finish();
@@ -293,14 +335,17 @@ void DrvCore::executeReadyThread() {
   // select a ready thread to execute
   int thread_id = selectReadyThread();
   if (thread_id == NO_THREAD_READY) {
+    addStallCycleStat(1);
     idle_cycles_++;
     return;
   }
   idle_cycles_ = 0;
-  
+
   // execute the ready thread
   threads_[thread_id].execute(this);
   last_thread_ = thread_id;
+
+  addBusyCycleStat(1);
 }
 
 void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
@@ -318,8 +363,8 @@ void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
   std::shared_ptr<DrvAPI::DrvAPINop> nop_req = std::dynamic_pointer_cast<DrvAPI::DrvAPINop>(state);
   if (nop_req) {
     output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d nop for %d cycles\n", getThreadID(thread), nop_req->count());
-    TimeConverter *tc = getTimeConverter("1ns");
-    loopback_->send(nop_req->count(), tc, new DrvNopEvent(getThreadID(thread)));
+    //TimeConverter *tc = getTimeConverter("1ns");
+    loopback_->send(nop_req->count(), clocktc_, new DrvNopEvent(getThreadID(thread)));
     return;
   }
   
@@ -328,7 +373,11 @@ void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
   if (term_req) {
     output_->verbose(CALL_INFO, 1, DEBUG_CLK, "thread %d terminated\n", getThreadID(thread));
     done_--;
+    return;
   }
+
+  // fatal - unknown state
+  output_->fatal(CALL_INFO, -1, "unknown thread state\n");
   return;
 }
     
@@ -347,6 +396,8 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   core_on_ = !unregister;
   if (unregister) {
     output_->verbose(CALL_INFO, 2, DEBUG_CLK, "unregistering clock\n");
+    // save the time for statistics
+    unregister_cycle_ = system_callbacks_->getCycleCount();
   }
   return unregister;
 }

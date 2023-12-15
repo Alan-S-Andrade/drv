@@ -8,4 +8,6 @@ include $(DRV_DIR)/mk/application_common.mk
 
 
 run: $(APP_NAME).so
-	sst $(DRV_DIR)/tests/$(SCRIPT) --  --pod-cores 1 --core-threads 1 $(APP_PATH)/$(APP_NAME).so
+	sst $(DRV_DIR)/tests/$(SCRIPT) --  \
+	--num-pxn 2 --pod-cores 1 --core-threads \
+	1 $(APP_PATH)/$(APP_NAME).so

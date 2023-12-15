@@ -55,8 +55,8 @@ class MainMemoryRange(object):
     POD_MAINMEM_BANKS = 8
     POD_MAINMEM_SIZE = 0x0000000040000000
     POD_MAINMEM_BANK_SIZE = POD_MAINMEM_SIZE // POD_MAINMEM_BANKS
-    POD_MAINMEM_SIZE_STR = "1GB"
-    POD_MAINMEM_BANK_SIZE_STR = "128MB"
+    POD_MAINMEM_SIZE_STR = "1GiB"
+    POD_MAINMEM_BANK_SIZE_STR = "128MiB"
     def __init__(self, pxn, pod, bank):
         start = 0
         start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
@@ -75,17 +75,29 @@ parser.add_argument("program", help="program to run")
 parser.add_argument("argv", nargs=argparse.REMAINDER, help="arguments to program")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
 parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
+parser.add_argument("--dram-backend-config", type=str, default="/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
+                    help="backend timing model configuration for DRAM")
 parser.add_argument("--debug-init", action="store_true", help="enable debug of init")
 parser.add_argument("--debug-memory", action="store_true", help="enable memory debug")
 parser.add_argument("--debug-requests", action="store_true", help="enable debug of requests")
 parser.add_argument("--debug-responses", action="store_true", help="enable debug of responses")
 parser.add_argument("--debug-syscalls", action="store_true", help="enable debug of syscalls")
+parser.add_argument("--debug-clock", action="store_true", help="enable debug of clock ticks")
 parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of memory")
 parser.add_argument("--pod-cores", type=int, default=8, help="number of cores per pod")
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
+parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
 parser.add_argument("--with-command-processor", type=str, default="",
                     help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
+parser.add_argument("--cp-verbose", type=int, default=0, help="verbosity of command processor")
+parser.add_argument("--cp-verbose-init", action="store_true", help="command processor enable debug of init")
+parser.add_argument("--cp-verbose-requests", action="store_true", help="command processor enable debug of requests")
+parser.add_argument("--cp-verbose-responses", action="store_true", help="command processor enable debug of responses")
+parser.add_argument("--drvx-stack-in-l1sp", action="store_true", help="use l1sp backing storage as stack")
+parser.add_argument("--core-stats", action="store_true", help="enable core statistics")
+parser.add_argument("--stats-load-level", type=int, default=0, help="load level for statistics")
+parser.add_argument("--trace-remote-pxn-memory", action="store_true", help="trace remote pxn memory accesses")
 
 arguments = parser.parse_args()
 
@@ -106,6 +118,9 @@ SYSCONFIG = {
     "sys_pod_dram_ports" : MainMemoryRange.POD_MAINMEM_BANKS,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
+    "sys_core_l1sp_size" : L1SPRange.L1SP_SIZE,
+    "sys_pod_l2sp_size" : L2SPRange.L2SP_SIZE,
+    "sys_pxn_dram_size" : MainMemoryRange.POD_MAINMEM_SIZE,
     "sys_cp_present" : False,
 }
 
@@ -117,8 +132,13 @@ CORE_DEBUG = {
     "debug_loopback" : False,
     "debug_memory": False,
     "debug_syscalls" : False,
+    "trace_remote_pxn" : False,
+    "trace_remote_pxn_load" : False,
+    "trace_remote_pxn_store" : False,
+    "trace_remote_pxn_atomic" : False,
 }
 
+SYSCONFIG['sys_num_pxn'] = arguments.num_pxn
 SYSCONFIG['sys_pxn_pods'] = arguments.pxn_pods
 SYSCONFIG['sys_pod_cores'] = arguments.pod_cores
 SYSCONFIG['sys_core_threads'] = arguments.core_threads
@@ -129,6 +149,8 @@ CORE_DEBUG['debug_requests'] = arguments.debug_requests
 CORE_DEBUG['debug_responses'] = arguments.debug_responses
 CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
+CORE_DEBUG['debug_clock'] = arguments.debug_clock
+CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
 
 class CommandProcessor(object):
     CORE_ID = -1
@@ -157,12 +179,15 @@ class CommandProcessor(object):
 
         self.core_mem = self.core.setSubComponent("memory", "Drv.DrvStdMemory")
         self.core_mem.addParams({
-            "verbose" : arguments.verbose,
+            "verbose" : arguments.cp_verbose,
+            "verbose_init" : arguments.cp_verbose_init,
+            "verbose_requests" : arguments.cp_verbose_requests,
+            "verbose_responses" : arguments.cp_verbose_responses,
         })
 
         self.core_iface = self.core_mem.setSubComponent("memory", "memHierarchy.standardInterface")
         self.core_iface.addParams({
-            "verbose" : arguments.verbose,
+            "verbose" : arguments.cp_verbose,
         })
         self.core_nic = self.core_iface.setSubComponent("memlink", "memHierarchy.MemNIC")
         self.core_nic.addParams({

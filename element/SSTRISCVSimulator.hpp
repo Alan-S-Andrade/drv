@@ -2,7 +2,7 @@
 // Copyright (c) 2023 University of Washington
 
 #pragma once
-#include <RV64IMInterpreter.hpp>
+#include <RV64IMFInterpreter.hpp>
 #include <sst/core/interfaces/stdMem.h>
 #include <map>
 #include <functional>
@@ -18,7 +18,7 @@ class RISCVSimHart;
 /**
  * @brief a riscv simulator
  */
-class RISCVSimulator : public RV64IMInterpreter {
+class RISCVSimulator : public RV64IMFInterpreter {
 public:
     /**
      * constructor
@@ -37,11 +37,14 @@ public:
     void visitLBU(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLHU(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLWU(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitFLW(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLD(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSB(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSH(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSW(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitSD(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitFENCE(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitFSW(RISCVHart &hart, RISCVInstruction &instruction) override;
 
     // csr instructions
 private:
@@ -89,6 +92,7 @@ private:
     static constexpr uint64_t MMIO_PRINT_INT  = MMIO_BASE + 0x0000;
     static constexpr uint64_t MMIO_PRINT_HEX  = MMIO_BASE + 0x0008;
     static constexpr uint64_t MMIO_PRINT_CHAR = MMIO_BASE + 0x0010;
+    static constexpr uint64_t MMIO_PRINT_TIME = MMIO_BASE + 0x0018;
 
     // CSRs
     static constexpr uint64_t CSR_MHARTID = 0xF14;
@@ -99,9 +103,11 @@ private:
     static constexpr uint64_t CSR_MPODCORES  = 0xF19;
     static constexpr uint64_t CSR_MPXNPODS   = 0xF1A;
     static constexpr uint64_t CSR_MNUMPXN    = 0xF1B;
-
+    static constexpr uint64_t CSR_MCOREL1SPSIZE = 0xF1C;
+    static constexpr uint64_t CSR_MPODL2SPSIZE  = 0xF1D;
+    static constexpr uint64_t CSR_MPXNDRAMSIZE  = 0xF1E;
     static constexpr uint64_t CSR_MSTATUS = 0x300;
-    
+    static constexpr uint64_t CSR_CYCLE   = 0xC00;
     
 private:
 

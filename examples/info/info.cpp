@@ -3,6 +3,7 @@
 
 #include <DrvAPI.hpp>
 #include <cstdio>
+#include <inttypes.h>
 
 int SimpleMain(int argc, char *argv[]) {
     printf("my pxn: %2d/%2d, "
@@ -14,6 +15,14 @@ int SimpleMain(int argc, char *argv[]) {
            ,DrvAPI::myCoreId(),DrvAPI::numPodCores()
            ,DrvAPI::myThreadId(), DrvAPI::myCoreThreads()
            );
+    if (DrvAPI::myPXNId() == 0
+        && DrvAPI::myPodId() == 0
+        && DrvAPI::myCoreId() == 0
+        && DrvAPI::myThreadId() == 0) {
+        printf("core l1sp size = %" PRIu64 " bytes\n", DrvAPI::coreL1SPSize());
+        printf("pod l2sp size  = %" PRIu64 " bytes\n", DrvAPI::podL2SPSize());
+        printf("pxn dram size  = %" PRIu64 " bytes\n", DrvAPI::pxnDRAMSize());
+    }
     return 0;
 }
 

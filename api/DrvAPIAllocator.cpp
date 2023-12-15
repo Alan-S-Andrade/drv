@@ -37,7 +37,10 @@ DRV_API_REF_CLASS_BEGIN(global_memory_data)
              DrvAPIAddress sz = static_cast<DrvAPIAddress>(section.getSize());
              // align to 16-byte boundary
              sz = (sz + 15) & ~15;
-             base() = section.getBase() + sz;
+             // make a global address
+             DrvAPIAddress localBase = section.getBase(myPXNId(), myPodId(), myCoreId());
+             DrvAPIAddress globalBase = toGlobalAddress(localBase, myPXNId(), myPodId(), myCoreY(), myCoreX());
+             base() = globalBase + sz;
              // TODO: FENCE
              status() = STATUS_INIT;
              return;
@@ -67,17 +70,26 @@ DrvAPIGlobalDRAM<global_memory_data> dram_memory; //!< DRAM memory allocator
 void DrvAPIMemoryAllocatorInit() {
     using namespace allocator;
     // 1. init l1sp
-    global_memory_ref l1 = &l1sp_memory;
-    l1.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
-    // 2. init l2sp
-    global_memory_ref l2 = &l2sp_memory;
-    l2.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+    if (!isCommandProcessor()) {
+        global_memory_ref l1 = &l1sp_memory;
+        l1.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
+        // 2. init l2sp
+        global_memory_ref l2 = &l2sp_memory;
+        l2.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+    }
     // 3. init dram
     global_memory_ref dram = &dram_memory;
     dram.init(DrvAPIMemoryType::DrvAPIMemoryDRAM);
 }
 
 DrvAPIPointer<void> DrvAPIMemoryAlloc(DrvAPIMemoryType type, size_t size) {
+    // if we use l1sp for stack, disallow allocation of l1sp
+    if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP
+        && DrvAPIThread::current()->stackInL1SP()) {
+        std::cerr << "ERROR: cannot allocate L1SP memory for stack" << std::endl;
+        exit(1);
+    }
+
     // size should be 8-byte aligned
     global_memory_ref mem = DrvAPIPointer<global_memory_data>(0);
     switch (type) {

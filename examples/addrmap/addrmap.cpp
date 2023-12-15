@@ -25,8 +25,8 @@ int AddrMapMain(int argc, char *argv[])
     DrvAPIPAddress paddr = vaddr.to_physical
         (myPXNId()
         ,myPodId()
-        ,myCoreId() >> 3
-        ,myCoreId() & 0x7
+        ,myCoreY()
+        ,myCoreX()
          );
     pr_info("vaddr = %s (%016" PRIx64 ")"
             ",paddr = %s (%016" PRIx64 ")\n"

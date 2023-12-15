@@ -16,7 +16,7 @@ namespace DrvAPI
 template <typename T>
 T read(DrvAPIAddress address)
 {
-    T result = static_cast<T>(0);
+    T result{};
     DrvAPIThread::current()->setState(std::make_shared<DrvAPIMemReadConcrete<T>>(address));
     DrvAPIThread::current()->yield();
     auto read_req = std::dynamic_pointer_cast<DrvAPIMemRead>(DrvAPIThread::current()->getState());
@@ -86,5 +86,16 @@ T atomic_cas(DrvAPIAddress address, T compare, T value)
     return result;
 }
 
+/**
+ * @brief memory fence
+ *
+ */
+inline void fence()
+{
+    // TODO: change when we add non-blocking memory ops
+    return;
 }
+
+} // namespace DrvAPI
+
 #endif

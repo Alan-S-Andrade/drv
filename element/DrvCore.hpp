@@ -10,9 +10,11 @@
 #include "DrvEvent.hpp"
 #include "DrvMemory.hpp"
 #include "DrvThread.hpp"
+#include "DrvSystem.hpp"
 #include "DrvSysConfig.hpp"
 #include "DrvAPIMain.hpp"
-
+#include "DrvStats.hpp"
+#include <DrvAPI.hpp>
 namespace SST {
 namespace Drv {
 /**
@@ -43,6 +45,7 @@ public:
       {"id", "ID for the core", "0"},
       {"pod", "Pod ID of this core", "0"},
       {"pxn", "PXN ID of this core", "0"},
+      {"stack_in_l1sp", "Use modeled memory backing store for stack", "0"},
       {"dram_base", "Base address of DRAM", "0x80000000"},
       {"dram_size", "Size of DRAM", "0x100000000"},
       {"l1sp_base", "Base address of L1SP", "0x00000000"},
@@ -53,7 +56,11 @@ public:
       {"debug_clock", "Print debug messages we expect to see during clock ticks", "False"},
       {"debug_requests", "Print debug messages we expect to see during request events", "False"},
       {"debug_responses", "Print debug messages we expect to see during response events", "False"},
-      {"debug_loopback", "Print debug messages we expect to see during loopback events", "False"}
+      {"debug_loopback", "Print debug messages we expect to see during loopback events", "False"},
+      {"trace_remote_pxn", "Trace all requests to remote pxn", "false"},
+      {"trace_remote_pxn_load", "Trace loads to remote pxn", "false"},
+      {"trace_remote_pxn_store", "Trace loads to remote pxn", "false"},
+      {"trace_remote_pxn_atomic", "Trace loads to remote pxn", "false"},
   )
   // Document the ports that this component accepts
   SST_ELI_DOCUMENT_PORTS(
@@ -64,6 +71,25 @@ public:
   SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
       {"memory", "Interface to memory hierarchy", "Drv::DrvMemory"},
   )
+
+  // DOCUMENT STATISTICS
+  /* unfortunately the macro doesn't work with including "DrvStatsTable.hpp" */
+  static const std::vector<SST::ElementInfoStatistic>& ELI_getStatistics()
+    {
+#define DEFINE_DRV_STAT(name, desc, unit, load_level)   \
+        {#name, desc, unit, load_level},
+
+        static std::vector<SST::ElementInfoStatistic> var    = {
+#include <DrvStatsTable.hpp>
+        };
+
+#undef DEFINE_DRV_STAT
+        auto parent = SST::ELI::InfoStats<
+            std::conditional<(__EliDerivedLevel > __EliBaseLevel), __LocalEliBase, __ParentEliBase>::type>::get();
+        SST::ELI::combineEliInfo(var, parent);
+        return var;
+    }
+
 
   /**
    * constructor
@@ -91,6 +117,12 @@ public:
    * @param[in] params Parameters to this component.
    */
   void configureOutput(SST::Params &params);
+
+  /**
+   * configure output for tracing
+   * param[in] params Parameters to this component.
+   */
+  void configureTrace(SST::Params &params);
 
   /**
    * configure clock
@@ -128,6 +160,11 @@ public:
    * @param[in] params Parameters to this component.
    */
   void configureSysConfig(SST::Params &params);
+
+  /**
+   * configure statistics
+   */
+  void configureStatistics(Params &params);
 
   /**
    * select a ready thread
@@ -187,6 +224,27 @@ public:
   static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
   static constexpr uint32_t DEBUG_LOOPBACK = (1<<28); //!< debug messages we expect to see when receiving loopback events
 
+  static constexpr uint32_t TRACE_REMOTE_PXN_STORE = (1<< 0); //!< trace remote store events
+  static constexpr uint32_t TRACE_REMOTE_PXN_LOAD  = (1<< 1); //!< trace remote load events
+  static constexpr uint32_t TRACE_REMOTE_PXN_ATOMIC= (1<< 2); //!< trace remote atomic events
+  static constexpr uint32_t TRACE_REMOTE_PXN_MEMORY = (TRACE_REMOTE_PXN_STORE | TRACE_REMOTE_PXN_LOAD | TRACE_REMOTE_PXN_ATOMIC); //!< trace remote memory events
+private:
+  std::unique_ptr<SST::Output> trace_; //!< for tracing
+
+public:
+  void traceRemotePxnMem(uint32_t trace_mask, const char* opname,
+                         DrvAPI::DrvAPIPAddress paddr) const {
+      trace_->verbose(CALL_INFO, 0, trace_mask
+                      ,"OP=%s:SRC_PXN=%d:SRC_POD=%d:SRC_CORE=%d:DST_PXN=%d:ADDR=%s\n"
+                      ,opname
+                      ,pxn_
+                      ,pod_
+                      ,id_
+                      ,(int)paddr.pxn()
+                      ,paddr.to_string().c_str()
+                      );
+  }
+
   /**
    * initialize the component
    */
@@ -196,6 +254,11 @@ public:
    * setup the component
    */
   void setup() override;
+
+  /**
+   * start the threads
+   */
+  void startThreads();
 
   /**
    * finish the component
@@ -247,7 +310,9 @@ public:
     if (!core_on_) {
       core_on_ = true;
       output_->verbose(CALL_INFO, 2, DEBUG_RSP, "turning core on\n");
-      reregisterClock(clocktc_, new SST::Clock::Handler<DrvCore>(this, &DrvCore::clockTick));
+      reregister_cycle_ = system_callbacks_->getCycleCount();
+      addStallCycleStat(reregister_cycle_ - unregister_cycle_);
+      reregisterClock(clocktc_, new SST::Clock::Handler<DrvCore>(this, &DrvCore::clockTick));      
     }
   }
 
@@ -259,6 +324,105 @@ public:
       set_sys_config_app_(&sys_cfg_app);
   }
 
+    /**
+     * is local l1sp for purpose of stats
+     */
+    bool isPAddressLocalL1SP(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
+            && addr.pxn() == static_cast<uint64_t>(pxn_)
+            && addr.pod() == static_cast<uint64_t>(pod_)
+            && addr.core_y() == static_cast<uint64_t>(DrvAPI::coreYFromId(id_))
+            && addr.core_x() == static_cast<uint64_t>(DrvAPI::coreXFromId(id_));
+    }
+
+    /**
+     * is remote l1sp for purpose of stats
+     */
+    bool isPAddressRemoteL1SP(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
+            && addr.pxn() == static_cast<uint64_t>(pxn_)
+            && addr.pod() == static_cast<uint64_t>(pod_)
+            && (   addr.core_y() != static_cast<uint64_t>(DrvAPI::coreYFromId(id_))
+                || addr.core_x() != static_cast<uint64_t>(DrvAPI::coreXFromId(id_)));
+    }
+
+    /**
+     * is remote pxn memory for purpose of stats
+     */
+    bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.pxn() != static_cast<uint64_t>(pxn_);
+    }
+
+    /**
+     * is  l2sp for purpose of stats
+     */
+    bool isPAddressL2SP(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP
+            && addr.pxn() == static_cast<uint64_t>(pxn_)
+            && addr.pod() == static_cast<uint64_t>(pod_);
+    }
+
+    /**
+     * is  dram for purpose of stats
+     */
+    bool isPAddressDRAM(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_DRAM
+            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    }
+
+    /**
+     * add load statistic
+     */
+    void addLoadStat(DrvAPI::DrvAPIPAddress addr) const {
+        if (isPAddressLocalL1SP(addr))  drv_stats_[LOAD_LOCAL_L1SP]->addData(1);
+        if (isPAddressRemoteL1SP(addr)) drv_stats_[LOAD_REMOTE_L1SP]->addData(1);
+        if (isPAddressL2SP(addr))       drv_stats_[LOAD_L2SP]->addData(1);
+        if (isPAddressDRAM(addr))       drv_stats_[LOAD_DRAM]->addData(1);
+        if (isPAddressRemotePXN(addr))  {
+            traceRemotePxnMem(TRACE_REMOTE_PXN_LOAD, "read", addr);
+            drv_stats_[LOAD_REMOTE_PXN]->addData(1);
+        }
+    }
+
+    /**
+     * add store statistic
+     */
+    void addStoreStat(DrvAPI::DrvAPIPAddress addr) const {
+        if (isPAddressLocalL1SP(addr))  drv_stats_[STORE_LOCAL_L1SP]->addData(1);
+        if (isPAddressRemoteL1SP(addr)) drv_stats_[STORE_REMOTE_L1SP]->addData(1);
+        if (isPAddressL2SP(addr))       drv_stats_[STORE_L2SP]->addData(1);
+        if (isPAddressDRAM(addr))       drv_stats_[STORE_DRAM]->addData(1);
+        if (isPAddressRemotePXN(addr))  {
+            traceRemotePxnMem(TRACE_REMOTE_PXN_STORE, "write", addr);
+            drv_stats_[STORE_REMOTE_PXN]->addData(1);
+        }
+    }
+
+    /**
+     * add atomic statistic
+     */
+    void addAtomicStat(DrvAPI::DrvAPIPAddress addr) const {
+        if (isPAddressLocalL1SP(addr))  drv_stats_[ATOMIC_LOCAL_L1SP]->addData(1);
+        if (isPAddressRemoteL1SP(addr)) drv_stats_[ATOMIC_REMOTE_L1SP]->addData(1);
+        if (isPAddressL2SP(addr))       drv_stats_[ATOMIC_L2SP]->addData(1);
+        if (isPAddressDRAM(addr))       drv_stats_[ATOMIC_DRAM]->addData(1);
+        if (isPAddressRemotePXN(addr))  {
+            traceRemotePxnMem(TRACE_REMOTE_PXN_ATOMIC, "atomic", addr);
+            drv_stats_[ATOMIC_REMOTE_PXN]->addData(1);
+        }
+    }
+
+    void outputStatistics() {
+        performGlobalStatisticOutput();
+    }
+
+    void addBusyCycleStat(uint64_t cycles) {
+        drv_stats_[BUSY_CYCLES]->addData(cycles);
+    }
+
+    void addStallCycleStat(uint64_t cycles) {
+        drv_stats_[STALL_CYCLES]->addData(cycles);
+    }
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   std::vector<DrvThread> threads_; //!< the threads on this core
@@ -268,17 +432,24 @@ private:
   drv_api_set_thread_context_t set_thread_context_; //!< the set_thread_context function in the executable
   DrvAPIGetSysConfig_t get_sys_config_app_; //!< the get_sys_config function in the executable
   DrvAPISetSysConfig_t set_sys_config_app_; //!< the set_sys_config function in the executable
-  DrvMemory* memory_;  //!< the memory hierarchy
-  SST::TimeConverter *clocktc_; //!< the clock time converter
   int done_; //!< number of threads that are done
   int last_thread_; //!< last thread that was executed
   std::vector<char*> argv_; //!< the command line arguments
   SST::Link *loopback_; //!< the loopback link
   uint64_t max_idle_cycles_; //!< maximum number of idle cycles
   uint64_t idle_cycles_; //!< number of idle cycles
-  bool core_on_; //!< true if the core is on (clock handler is registered)
+  SimTime_t unregister_cycle_; //!< cycle when the clock handler was last unregistered
+  SimTime_t reregister_cycle_; //!< cycle when the clock handler was last reregistered
+  bool core_on_; //!< true if the core is on (clock handler is registered)  
   DrvSysConfig sys_config_; //!< system configuration
+  bool stack_in_l1sp_ = false; //!< true if the stack is in L1SP backing store
+  std::shared_ptr<DrvSystem> system_callbacks_ = nullptr; //!< the system callbacks
+  std::vector<Statistic<uint64_t>*> drv_stats_; //!< the statistics
+
 public:
+  DrvMemory* memory_;  //!< the memory hierarchy
+  SST::TimeConverter *clocktc_; //!< the clock time converter
+
   int id_; //!< the core id
   int pod_; //!< pod id of this core
   int pxn_; // !< pxn id of this core

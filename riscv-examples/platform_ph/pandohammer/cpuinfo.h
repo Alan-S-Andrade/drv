@@ -14,6 +14,9 @@ extern "C" {
 #define MCSR_MPODCORES  0xF19
 #define MCSR_MPXNPODS   0xF1A
 #define MCSR_MNUMPXN    0xF1B
+#define MCSR_MCOREL1SPSIZE 0xF1C
+#define MCSR_MPODL2SPSIZE  0xF1D
+#define MCSR_MPXNDRAMSIZE  0xF1E
 
 #ifndef __stringify
 #define __stringify_1(x) #x
@@ -99,6 +102,43 @@ inline int numPXNPods()
     asm volatile ("csrr %0, " __stringify(MCSR_MPXNPODS) : "=r"(pods));
     return (int)pods;
 }
+
+/**
+ * size of l1sp in bytes
+ */
+inline uint64_t coreL1SPSize() {
+    uint64_t l1sp_size;
+    asm volatile ("csrr %0, " __stringify(MCSR_MCOREL1SPSIZE) : "=r"(l1sp_size));
+    return l1sp_size;
+}
+
+/**
+ * size of l2sp in bytes
+ */
+inline uint64_t podL2SPSize() {
+    uint64_t l2sp_size;
+    asm volatile ("csrr %0, " __stringify(MCSR_MPODL2SPSIZE) : "=r"(l2sp_size));
+    return l2sp_size;
+}
+
+/**
+ * size of pxn's dram in bytes
+ */
+inline uint64_t pxnDRAMSize() {
+    uint64_t dram_size;
+    asm volatile ("csrr %0, " __stringify(MCSR_MPXNDRAMSIZE) : "=r"(dram_size));
+    return dram_size;
+}
+
+/**
+ * get the current cycle count
+ */
+inline uint64_t cycle() {
+    uint64_t cycle;
+    asm volatile ("rdcycle %0" : "=r"(cycle));
+    return cycle;
+}
+
 #ifdef __cplusplus
 }
 #endif

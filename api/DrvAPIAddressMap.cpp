@@ -17,6 +17,7 @@ DrvAPIPAddress DrvAPIVAddress::to_physical(uint32_t this_pxn
     DrvAPIPAddress ret;
     if (not_scratchpad()) {
         ret.type() = DrvAPIPAddress::TYPE_DRAM;
+        ret.pxn() = pxn();
         ret.dram_offset() = dram_offset();
     } else if (l2_not_l1()) {
         ret.type() = DrvAPIPAddress::TYPE_L2SP;

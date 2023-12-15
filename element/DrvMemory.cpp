@@ -10,7 +10,7 @@ DrvMemory::DrvMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core)
     : SubComponent(id)
     , core_(core) {
     // get parameters
-    bool verbose = params.find<bool>("verbose", false);
+    int verbose = params.find<int>("verbose", 0);
 
     // get debug masks
     uint32_t mask = 0;
@@ -22,7 +22,7 @@ DrvMemory::DrvMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core)
         mask |= VERBOSE_RSP;
     
     // set up output
-    output_.init("[DrvMemory @t:@f:@l: @p]", verbose, 0, SST::Output::STDOUT);
+    output_.init("[DrvMemory @t:@f:@l: @p]", verbose, mask, SST::Output::STDOUT);
     output_.verbose(CALL_INFO, 1, DrvMemory::VERBOSE_INIT, "constructor done\n");
 }
 

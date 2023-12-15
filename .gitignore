@@ -3,3 +3,6 @@
 *~
 install/
 *.riscv
+deps/
+tests/__pycache__/
+*.csv
