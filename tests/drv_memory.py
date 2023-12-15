@@ -17,30 +17,18 @@ class SharedMemoryBank(object):
         memctrl       : sst.Component ("memHierarchy.MemController")
         memory        : sst.SubComponent ("memHierarchy.backend")
         """
-        preload = None
-        if "preload" in kwargs:
-          preload = kwargs["preload"]
-          del kwargs["preload"]
-
         self.id = self.make_id(bank, *args, **kwargs)
         self.address_range = self.make_address_range(bank, *args, **kwargs)
         self.name = self.make_name(*args, **kwargs)
         self.memctrl = sst.Component("{}_memctrl_{}".format(self.name,self.id), "memHierarchy.MemController")
-        memargs = {
+        self.memctrl.addParams({
             "clock" : "1GHz",
             "addr_range_start" : self.address_range.start,
             "addr_range_end"   : self.address_range.end,
             "debug" : 1,
             "debug_level" : arguments.verbose_memory,
             "verbose" : arguments.verbose_memory,
-        }
-
-        if not preload is None:
-          memargs["backing"] = "mmap"
-          memargs["memory_file"] = preload
-          print("  load {} at address 0x{:16x} ".format(preload, self.address_range.start))
-
-        self.memctrl.addParams(memargs)
+        })
         # set the backend memory system to Drv special memory
         # (needed for AMOs)
         self.memory = self.make_backend(self.memctrl)
@@ -153,11 +141,8 @@ class L2MemoryBank(SharedMemoryBank):
         return backend
 
 class MainMemoryBank(SharedMemoryBank):
-    def __init__(self, bank, pod=0, pxn=0, preload = None):
-        if preload is None:
-          super().__init__(bank, pod, pxn)
-        else:
-          super().__init__(bank, pod, pxn, preload = preload)
+    def __init__(self, bank, pod=0, pxn=0):
+        super().__init__(bank, pod, pxn)
 
     def make_id(self, bank, pod=0, pxn=0):
         """
