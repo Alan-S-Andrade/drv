@@ -107,6 +107,8 @@ private:
     static constexpr uint64_t CSR_MPODL2SPSIZE  = 0xF1D;
     static constexpr uint64_t CSR_MPXNDRAMSIZE  = 0xF1E;
     static constexpr uint64_t CSR_MSTATUS = 0x300;
+    
+    static constexpr uint64_t CSR_FRM     = 0x002;
     static constexpr uint64_t CSR_CYCLE   = 0xC00;
     
 private:

@@ -79,34 +79,46 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
    RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
    // base address registers are always from the integer register file
    StandardMem::Addr addr = shart.x(i.rs1()) + i.SIimm();
+//   std::cout << std::hex << "addr: " << addr << " load rs1: " << shart.x(i.rs1()) << " siimm: " << i.SIimm() << std::dec << std::endl;
 
    DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr).encode();
    core_->addLoadStat(decode); // add to statistics
 
    // create the read request
    addr = decode.encode();
+//   std::cout << std::hex << "addr: " << addr << std::dec << std::endl;
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
    rd->tid = core_->getHartId(shart);
    shart.ready() = false;
    auto ird = i.rd();
 
-   RISCVCore::ICompletionHandler ch([&shart, ird](StandardMem::Request *req) {
+   RISCVCore::ICompletionHandler ch([this, &shart, addr, ird](StandardMem::Request *req) {
        // handle the read response
        auto*rsp = static_cast<StandardMem::ReadResp *>(req);
        T *ptr = (T*)&rsp->data[0];
+       core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
+                               ,"PC=%08" PRIx64 ": LOAD COMPLETE: 0x%016" PRIx64 " = 0x%016" PRIx64 "\n"
+                               ,static_cast<uint64_t>(shart.pc())
+                               ,addr
+                               ,static_cast<uint64_t>(*ptr));
        if (FLOAT_REGISTERS) {
            shart.f(ird) = static_cast<R>(*ptr);
        } else {
            shart.x(ird) = static_cast<R>(*ptr);
+//           core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_RSP, "Req completion - PC=%08" PRIx64 "0x%016" PRIx64 "\n", static_cast<uint64_t>(shart.pc()), static_cast<uint64_t>(*ptr));
+//           std::cout << std::hex << "Req completion - pc: " << static_cast<uint64_t>(shart.pc()) << " val: " << static_cast<uint64_t>(*ptr) << std::dec << std::endl;
        }
        shart.pc() += 4;
        shart.ready() = true;
        delete req;
    });
    core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
-                           ,"PC=%08" PRIx64 ": LOAD: 0x%016" PRIx64 "\n"
+                           ,"PC=%08" PRIx64 ": LOAD: 0x%016" PRIx64 ": rs1: 0x%016" PRIx64 ": siimm: 0x%016" PRIx32 "\n"
                            ,static_cast<uint64_t>(shart.pc())
-                           ,static_cast<uint64_t>(addr));
+                           ,static_cast<uint64_t>(addr)
+                           ,shart._x[i.rs1()]
+                           ,i.SIimm()
+                           );
    core_->issueMemoryRequest(rd, rd->tid, ch);
 }
 
@@ -339,6 +351,11 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
         break;
     case CSR_MPXNDRAMSIZE: // read-only
         rval = core_->sys().pxnDRAMSize();
+        break;
+    case CSR_FRM: // read-write
+        rval = shart.rm();
+        shart.rm() &= ~mask;
+        shart.rm() |= wval & mask;
         break;
     case CSR_CYCLE: // read-only
         rval = core_->clocktc_->convertFromCoreTime(core_->getCurrentSimCycle());
