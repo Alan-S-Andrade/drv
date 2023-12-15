@@ -4,6 +4,7 @@
 #include "SSTRISCVCore.hpp"
 #include "SSTRISCVSimulator.hpp"
 #include <DrvAPIAddressMap.hpp>
+#include <DrvAPIInfo.hpp>
 namespace SST {
 namespace Drv {
 
@@ -74,6 +75,25 @@ void RISCVCore::configureSysConfig(Params &params) {
     pxn_  = params.find<int>("pxn", 0);
 }
 
+void RISCVCore::configureStatistics(Params &params) {
+#define DEFINSTR(mnemonic, ...)                          \
+    {                                                    \
+        std::string name = #mnemonic;                    \
+        name += "_count";                                \
+        auto *stat = registerStatistic<uint64_t>(name);  \
+        instruction_counts_.push_back(stat);             \
+    }
+#include <InstructionTable.h>
+#undef DEFINSTR
+#define DEFINE_DRV_STAT(name, ...)                       \
+    {                                                    \
+        auto *stat = registerStatistic<uint64_t>(#name); \
+        drv_stats_.push_back(stat);                      \
+    }
+#include "DrvStatsTable.hpp"
+#undef DEFINE_DRV_STAT
+}
+
 /* constructor */
 RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     : Component(id)
@@ -89,6 +109,7 @@ RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     configureHarts(params);
     configureMemory(params);
     configureSysConfig(params);
+    configureStatistics(params);
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
 }
@@ -100,7 +121,8 @@ RISCVCore::~RISCVCore() {
 }
 
 DrvAPI::DrvAPIPAddress RISCVCore::toPhysicalAddress(uint64_t addr) const {
-    return DrvAPI::DrvAPIVAddress::to_physical(addr, pxn_, pod_, core_ >> 3, core_ & 0x7);
+    return DrvAPI::DrvAPIVAddress::to_physical
+        (addr, pxn_, pod_, DrvAPI::coreYFromId(core_), DrvAPI::coreXFromId(core_));
 }
 
 /* load program segment */
@@ -250,9 +272,17 @@ int RISCVCore::selectNextHart() {
 bool RISCVCore::tick(Cycle_t cycle) {
     int hart_id = selectNextHart();
     if (hart_id != NO_HART) {
+        addBusyCycleStat(1);
         uint64_t pc = harts_[hart_id].pc();
         uint32_t inst = icache_->read(pc);
-        RISCVInstruction *i = decoder_.decode(inst);
+        RISCVInstruction *i = nullptr;
+        try {
+            i = decoder_.decode(inst);
+        } catch (std::runtime_error &e) {
+            std::stringstream ss;
+            ss << "Failed to decode instruction at pc = 0x" << std::hex << pc << ": " << e.what();
+            throw std::runtime_error(ss.str());
+        }
         output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x%08" PRIx32" (%s)\n"
                         ,hart_id
                         ,pc
@@ -260,9 +290,11 @@ bool RISCVCore::tick(Cycle_t cycle) {
                         ,i->getMnemonic()
                         );
         profileInstruction(harts_[hart_id], *i);
+        instruction_counts_[i->getInstructionId()]->addData(1);
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
+        addStallCycleStat(1);
         output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "No harts ready to execute\n");
     }
 

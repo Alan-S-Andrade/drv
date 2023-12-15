@@ -78,23 +78,23 @@ public:
         hart.pc() += 4;
     }
     void visitSLTI(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) < i.Iimm();
+        hart.x(i.rd()) = hart.sx(i.rs1()) < i.SIimm();
         hart.pc() += 4;
     }
     void visitSLTIU(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = (uint32_t)hart.x(i.rs1()) < (uint32_t)i.Iimm();
+        hart.x(i.rd()) = hart.x(i.rs1()) < i.Iimm();
         hart.pc() += 4;
     }
     void visitXORI(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) ^ i.Iimm();
+        hart.x(i.rd()) = hart.x(i.rs1()) ^ i.SIimm();
         hart.pc() += 4;
     }
     void visitORI(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) | i.Iimm();
+        hart.x(i.rd()) = hart.x(i.rs1()) | i.SIimm();
         hart.pc() += 4;
     }
     void visitANDI(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) & i.Iimm();
+        hart.x(i.rd()) = hart.x(i.rs1()) & i.SIimm();
         hart.pc() += 4;
     }
     void visitSLLI(RISCVHart &hart, RISCVInstruction &i) override {

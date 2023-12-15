@@ -5,6 +5,7 @@
 #define DRV_API_THREAD_STATE_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIReadModifyWrite.hpp>
+#include <DrvAPISystem.hpp>
 #include <utility>
 #include <stdlib.h>
 namespace DrvAPI
@@ -42,6 +43,7 @@ public:
 };
 
 /**
+ * @brief No-op thread state
  */
 class DrvAPINop : public DrvAPIThreadState
 {
@@ -261,6 +263,70 @@ private:
   T ext_value_;
 };
 
+
+/**
+ * @brief Request to the simulator to convert a DrvAPIAddress to a native pointer
+ *
+ * WARNING:
+ * This state type will not work in multi-rank simulations.
+ * This state type may not work depending on the memory model used.
+ * This state type may not work depending on the memory controller used.
+ *
+ * Avoid using this function if possible. But if you need to use it, it's here.
+ * But use it at your own risk, and don't expect it to work for all memory models
+ * and simulation configurations.
+ */
+class DrvAPIToNativePointer : public DrvAPIMem
+{
+public:
+    /**
+     * @brief Construct a new DrvAPI To Native Pointer object
+     */
+    DrvAPIToNativePointer(DrvAPIAddress address)
+        : DrvAPIMem(address)
+        , native_pointer_(nullptr)
+        , region_size_(0) {
+    }
+
+    /**
+     * @brief Get the native pointer
+     *
+     * @return void*
+     */
+    void *getNativePointer() const {
+        return native_pointer_;
+    }
+
+    /**
+     * @brief Set the native pointer
+     *
+     * @param p
+     */
+    void setNativePointer(void *p) {
+        native_pointer_ = p;
+    }
+
+    /**
+     * @brief Get the size of the memory region
+     *
+     * @return std::size_t
+     */
+    std::size_t getRegionSize() const {
+        return region_size_;
+    }
+
+    /**
+     * @brief Set the size of the memory region
+     *
+     * @param size
+     */
+    void setRegionSize(std::size_t size) {
+        region_size_ = size;
+    }
+private:
+    void *native_pointer_;  //!< the native pointer
+    std::size_t region_size_;      //!< the size of the memory region
+};
 
 }
 #endif

@@ -25,6 +25,7 @@ bool RISCVSimulator::isMMIO(SST::Interfaces::StandardMem::Addr addr) {
 
 template <typename T>
 void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
+    static constexpr bool FLOAT_REGISTERS = std::is_floating_point<T>::value;
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     StandardMem::Addr addr = shart.x(i.rs1()) + i.Simm();
     std::stringstream ss;
@@ -34,7 +35,11 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
         ss << "POD: " << std::setw(2) << core_->getPodId() << " ";
         ss << "CORE: " << std::setw(3) << core_->getCoreId() << " ";
         ss << "THREAD: " << std::setw(2) << core_->getHartId(shart) << " ";
-        ss << ": " << static_cast<std::make_signed_t<T>>(shart.sx(i.rs2()));
+        if (FLOAT_REGISTERS) {
+            ss << ": " << shart.f(i.rs2());
+        } else {
+            ss << ": " << shart.sx(i.rs2());
+        }
         std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_HEX:
@@ -42,8 +47,21 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
         ss << "POD: " << std::setw(2) << core_->getPodId() << " ";
         ss << "CORE: " << std::setw(3) << core_->getCoreId() << " ";
         ss << "THREAD: " << std::setw(2) << core_->getHartId(shart) << " ";
-        ss << ": 0x" << std::hex << std::setfill('0') << std::setw(sizeof(T)*2);
-        ss << static_cast<std::make_unsigned_t<T>>(shart.x(i.rs2()));
+        if (FLOAT_REGISTERS) {
+            ss << ": 0x" << std::hexfloat;
+            ss << " " << shart.f(i.rs2());
+        } else {
+            ss << ": 0x" << std::hex << std::setfill('0') << std::setw(sizeof(T)*2);
+            ss << shart.x(i.rs2());
+        }
+        std::cout << ss.str() << std::endl;
+        break;
+    case MMIO_PRINT_TIME:
+        ss << "PXN: " << std::setw(3) << core_->getPXNId() << " ";
+        ss << "POD: " << std::setw(2) << core_->getPodId() << " ";
+        ss << "CORE: " << std::setw(3) << core_->getCoreId() << " ";
+        ss << "THREAD: " << std::setw(2) << core_->getHartId(shart) << " ";
+        ss << core_->getElapsedSimTime() << " ";
         std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_CHAR:
@@ -57,19 +75,30 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
 
 template <typename R, typename T>
 void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
+   static constexpr bool FLOAT_REGISTERS = std::is_floating_point<T>::value;
    RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
+   // base address registers are always from the integer register file
    StandardMem::Addr addr = shart.x(i.rs1()) + i.SIimm();
-   addr = core_->toPhysicalAddress(addr).encode();
+
+   DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr).encode();
+   core_->addLoadStat(decode); // add to statistics
+
    // create the read request
+   addr = decode.encode();
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
    rd->tid = core_->getHartId(shart);
    shart.ready() = false;
    auto ird = i.rd();
+
    RISCVCore::ICompletionHandler ch([&shart, ird](StandardMem::Request *req) {
        // handle the read response
        auto*rsp = static_cast<StandardMem::ReadResp *>(req);
        T *ptr = (T*)&rsp->data[0];
-       shart.x(ird) = static_cast<R>(*ptr);
+       if (FLOAT_REGISTERS) {
+           shart.f(ird) = static_cast<R>(*ptr);
+       } else {
+           shart.x(ird) = static_cast<R>(*ptr);
+       }
        shart.pc() += 4;
        shart.ready() = true;
        delete req;
@@ -83,17 +112,25 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
 
 template <typename T>
 void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
+    static constexpr bool FLOAT_REGISTERS = std::is_floating_point<T>::value;
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
+    // base address registers are always from the integer register file
     StandardMem::Addr addr = shart.x(i.rs1()) + i.Simm();
     if (isMMIO(addr)) {
         visitStoreMMIO<T>(shart, i);
         return;
     }
-    addr = core_->toPhysicalAddress(addr).encode();
+
+    DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr);
+    core_->addStoreStat(decode); // add to statistics
+
     // create the write request
+    addr = decode.encode();
     std::vector<uint8_t> data(sizeof(T));
     T *ptr = (T*)&data[0];
-    *ptr = static_cast<T>(hart.x(i.rs2()));
+    *ptr = FLOAT_REGISTERS
+        ? static_cast<T>(hart.f(i.rs2()))
+        : static_cast<T>(hart.x(i.rs2()));
     StandardMem::Write *wr = new StandardMem::Write(addr, sizeof(T), data);
     wr->tid = core_->getHartId(shart);    
     shart.ready() = false; // stores are blocking
@@ -114,8 +151,12 @@ template <typename T>
 void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvAPIMemAtomicType op) {
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     StandardMem::Addr addr = shart.x(i.rs1());
-    addr = core_->toPhysicalAddress(addr).encode();
+
+    DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr);
+    core_->addAtomicStat(decode); // add to statistics
+
     AtomicReqData *data = new AtomicReqData();
+    addr = decode.encode();
     data->pAddr = addr;
     data->size = sizeof(T);
     data->wdata.resize(sizeof(T));
@@ -165,6 +206,10 @@ void RISCVSimulator::visitLD(RISCVHart &hart, RISCVInstruction &i) {
     visitLoad<uint64_t, uint64_t>(hart, i);
 }
 
+void RISCVSimulator::visitFLW(RISCVHart &hart, RISCVInstruction &i) {
+    visitLoad<float, float>(hart, i);
+}
+
 void RISCVSimulator::visitSB(RISCVHart &hart, RISCVInstruction &i) {
     visitStore<uint8_t>(hart, i);
 }
@@ -179,6 +224,10 @@ void RISCVSimulator::visitSW(RISCVHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::visitSD(RISCVHart &hart, RISCVInstruction &i) {
     visitStore<uint64_t>(hart, i);
+}
+
+void RISCVSimulator::visitFSW(RISCVHart &hart, RISCVInstruction &i) {
+    visitStore<float>(hart, i);
 }
 
 void RISCVSimulator::visitAMOSWAPW(RISCVHart &hart, RISCVInstruction &i) {    
@@ -245,6 +294,12 @@ void RISCVSimulator::visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicADD);
 }
 
+void RISCVSimulator::visitFENCE(RISCVHart &hart, RISCVInstruction &i) {
+    // currently a no-op
+    // implement when we non-blocking memory operations
+    hart.pc() += 4;
+}
+
 /////////
 // CSR //
 /////////
@@ -275,6 +330,18 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
         break;
     case CSR_MNUMPXN: // read-only
         rval = core_->sys().numPXN();
+        break;
+    case CSR_MCOREL1SPSIZE: // read-only
+        rval = core_->sys().coreL1SPSize();
+        break;
+    case CSR_MPODL2SPSIZE: // read-only
+        rval = core_->sys().podL2SPSize();
+        break;
+    case CSR_MPXNDRAMSIZE: // read-only
+        rval = core_->sys().pxnDRAMSize();
+        break;
+    case CSR_CYCLE: // read-only
+        rval = core_->clocktc_->convertFromCoreTime(core_->getCurrentSimCycle());
         break;
     default:
         core_->output_.fatal(CALL_INFO, -1, "CSR %" PRIx64 " is not implemented", csr);

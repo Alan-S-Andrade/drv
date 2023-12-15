@@ -1,5 +1,8 @@
+```
 SPDX-License-Identifier: MIT
 Copyright (c) 2023 University of Washington
+Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
+```
 
 # Installing on Your System
 
@@ -28,6 +31,54 @@ Use the following command to configure the riscv toolchain:
 
 Drv has been tested on CentOS and Ubuntu systems.
 
+## Local build without docker
+
+### Dependencies
+```
+apt update -y \
+        && apt install -y \
+        make \
+        build-essential \
+        openssh-client \
+        libopenmpi-dev \
+        openmpi-bin \
+        openmpi-common \
+        libtool \
+        libtool-bin \
+        autoconf \
+        python3 \
+        python3-dev \
+        automake \
+        git \
+        libltdl-dev \
+        wget \
+        automake \ 
+        gawk \
+        wget \
+        curl \
+        texinfo \
+        libgmp-dev \
+        flex bison
+```
+
+### Build dependencies
+
+```
+. load_drvx.sh
+./build_drvx_deps.sh
+```
+
+### Build Drive
+
+`make -j install`
+
+### Test by running an example application
+
+```
+cd examples/allocator
+make run
+```
+
 ## Configuring
 
 In `drv/mk/boost_config.mk`, set `BOOST_INSTALL_DIR` to wherever you installed boost.
@@ -54,8 +105,18 @@ make sure that `/path/to/sst-core/install/bin` is in your `PATH`.
 
 Assuming you have configured everything correctly, you should run `make install` from `drv`.
 
-## Running A Drv Application
+## Running A DrvX Application
 
+DrvX is the PANDO team's fast-functional model for the `PANDOHammer` architecture.
+It emulates the programming environment, including the PGAS, the threading model, and the memory system  of `PANDOHammer` hardware.
+It runs the application natively.
+
+
+### Running A DrvX Application
+Go to `drv/examples/<some-example>` and run `make run`. This will build the app and run the `PANDOHammerDrvX` model
+in `drv/tests/` with the example application.
+
+### Running Older Models
 This requires some understanding of how to use `sst`. 
 Please see `sst-elements` for example configuration scripts written in python for using `sst` generally.
 Please see `drv/tests/drv-multicore-bus-test.py` and `drv/tests/drv-multicore-nic-test.py` 
@@ -74,9 +135,12 @@ program with `drv` is the following:
 
 Have fun!
 
-## Running A Drv RISCV Application
+## Running A DrvR Application
 
-Go to `drv/riscv-examples/<some-example>` and run `make run`. This will build the app and run the right model.
+DrvR is the PANDO team's instruction level simulator for the `PANDOHammer` achitecture.
+
+Go to `drv/riscv-examples/<some-example>` and run `make run`. This will build the app and run the `PANDOHammerDrvR` model
+in `drv/tests/` with the example application.
 
 # Using Docker
 

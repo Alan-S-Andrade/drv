@@ -21,7 +21,7 @@ DrvAPIGlobalDRAM<int> g_dram;
 
 DrvAPIPAddress to_physical(DrvAPIAddress addr)
 {
-    return DrvAPIVAddress::to_physical(addr, myPXNId(), myPodId(), myCoreId() >> 3, myCoreId() & 3);
+    return DrvAPIVAddress::to_physical(addr, myPXNId(), myPodId(), myCoreY(), myCoreX());
 }
 
 int GlobalsMain(int argc, char *argv[])
@@ -30,17 +30,17 @@ int GlobalsMain(int argc, char *argv[])
     DrvAPIVAddress g_l2sp_base = DrvAPIVAddress::MyL2Base();
     DrvAPIVAddress g_dram_base = DrvAPIVAddress::MainMemBase(myPXNId());
 
-    printf("g_l1sp_base = %016" PRIx64 "\n", g_l1sp_base.encode());
-    printf("g_l2sp_base = %016" PRIx64 "\n", g_l2sp_base.encode());
-    printf("g_dram_base = %016" PRIx64 "\n", g_dram_base.encode());
+    pr_info("g_l1sp_base = %016" PRIx64 "\n", g_l1sp_base.encode());
+    pr_info("g_l2sp_base = %016" PRIx64 "\n", g_l2sp_base.encode());
+    pr_info("g_dram_base = %016" PRIx64 "\n", g_dram_base.encode());
 
-    printf("&g_l1sp = %016" PRIx64 "\n", (DrvAPIAddress)&g_l1sp);
-    printf("&g_l2sp = %016" PRIx64 "\n", (DrvAPIAddress)&g_l2sp);
-    printf("&g_dram = %016" PRIx64 "\n", (DrvAPIAddress)&g_dram);
+    pr_info("&g_l1sp     = %016" PRIx64 "\n", (DrvAPIAddress)&g_l1sp);
+    pr_info("&g_l2sp     = %016" PRIx64 "\n", (DrvAPIAddress)&g_l2sp);
+    pr_info("&g_dram     = %016" PRIx64 "\n", (DrvAPIAddress)&g_dram);
 
-    printf("&g_l1sp: %s\n", to_physical(&g_l1sp).to_string().c_str());
-    printf("&g_l2sp: %s\n", to_physical(&g_l2sp).to_string().c_str());
-    printf("&g_dram: %s\n", to_physical(&g_dram).to_string().c_str());
+    pr_info("&g_l1sp:      %s\n", to_physical(&g_l1sp).to_string().c_str());
+    pr_info("&g_l2sp:      %s\n", to_physical(&g_l2sp).to_string().c_str());
+    pr_info("&g_dram:      %s\n", to_physical(&g_dram).to_string().c_str());
 
     if (!DrvAPIVAddress(&g_l1sp).is_l1()) {
         pr_info("ERROR: g_l1sp is not in L1\n");

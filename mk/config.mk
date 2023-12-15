@@ -8,5 +8,10 @@ include $(DRV_DIR)/mk/sst_config.mk
 include $(DRV_DIR)/mk/boost_config.mk
 include $(DRV_DIR)/mk/install_config.mk
 include $(DRV_DIR)/mk/application_config.mk
-include $(DRV_DIR)/mk/riscv_config.mk
+
+ifndef NO_DRVR
+  include $(DRV_DIR)/mk/ramulator_config.mk
+  include $(DRV_DIR)/mk/riscv_config.mk
+endif
+
 endif

@@ -32,6 +32,15 @@ run-%: $(APP_NAME).so
 	$(BFS_DIR)/sparse-inputs/$(graph).mtx \
 	$(root)
 
+run: $(APP_NAME).so
+	$(eval graph=u12k16)
+	$(eval root=0)
+	$(MAKE) -C $(BFS_DIR)/sparse-inputs $(graph).mtx
+	sst $(DRV_DIR)/tests/$(SCRIPT) -- \
+	$(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so \
+	$(BFS_DIR)/sparse-inputs/$(graph).mtx \
+	$(root)
+
 runsim: run-u7k1-0
 
 clean: clean-objects

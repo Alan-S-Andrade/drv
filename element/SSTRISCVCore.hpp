@@ -17,6 +17,7 @@
 #include "DrvSysConfig.hpp"
 #include "DrvAPIAddress.hpp"
 #include "DrvAPIAddressMap.hpp"
+#include "DrvStats.hpp"
 namespace SST {
 namespace Drv {
 
@@ -59,6 +60,30 @@ public:
     SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
         {"memory", "Interface to a memory hierarchy", "SST::Interfaces::StandardMem"},
     )
+
+    // DOCUMENT STATISTICS
+    /* unfortunately the macro doesn't work with including "InstructionTable.h" */
+    static const std::vector<SST::ElementInfoStatistic>& ELI_getStatistics()
+    {
+#define DEFINSTR(mnemonic, ...)                                         \
+        {#mnemonic "_count", "Number of " #mnemonic " instructions", "instructions", 2},
+
+#define DEFINE_DRV_STAT(name, desc, unit, load_level)                   \
+        {#name, desc, unit, load_level},
+
+        static std::vector<SST::ElementInfoStatistic> var    = {
+#include <InstructionTable.h>
+#include <DrvStatsTable.hpp>
+        };
+
+#undef DEFINSTR
+#undef DEFINE_DRV_STAT
+        auto parent = SST::ELI::InfoStats<
+            std::conditional<(__EliDerivedLevel > __EliBaseLevel), __LocalEliBase, __ParentEliBase>::type>::get();
+        SST::ELI::combineEliInfo(var, parent);
+        return var;
+    }
+
 
     /**
      * A key value pair
@@ -206,12 +231,14 @@ public:
     }
 
     void profileInstruction(RISCVSimHart &hart, RISCVInstruction &instruction) {
+#ifdef SST_RISCV_CORE_PROFILE_INSTRUCTIONS
         auto it = pchist_.find(hart.pc());
         if (it == pchist_.end()) {
             pchist_[hart.pc()] = 1;
         } else {
             it->second++;
         }
+#endif
     }
 
     /**
@@ -229,6 +256,98 @@ public:
      */
     DrvAPI::DrvAPIPAddress toPhysicalAddress(uint64_t addr) const;
 
+    /**
+     * is local l1sp for purpose of stats
+     */
+    bool isPAddressLocalL1SP(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
+            && addr.pxn() == static_cast<uint64_t>(pxn_)
+            && addr.pod() == static_cast<uint64_t>(pod_)
+            && addr.core_y() == static_cast<uint64_t>(DrvAPI::coreYFromId(core_))
+            && addr.core_x() == static_cast<uint64_t>(DrvAPI::coreXFromId(core_));
+    }
+
+    /**
+     * is remote l1sp for purpose of stats
+     */
+    bool isPAddressRemoteL1SP(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
+            && addr.pxn() == static_cast<uint64_t>(pxn_)
+            && addr.pod() == static_cast<uint64_t>(pod_)
+            && (   addr.core_y() != static_cast<uint64_t>(DrvAPI::coreYFromId(core_))
+                || addr.core_x() != static_cast<uint64_t>(DrvAPI::coreXFromId(core_)));
+    }
+
+    /**
+     * is remote pxn memory for purpose of stats
+     */
+    bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.pxn() != static_cast<uint64_t>(pxn_);
+    }
+
+    /**
+     * is  l2sp for purpose of stats
+     */
+    bool isPAddressL2SP(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP
+            && addr.pxn() == static_cast<uint64_t>(pxn_)
+            && addr.pod() == static_cast<uint64_t>(pod_);
+    }
+
+    /**
+     * is  dram for purpose of stats
+     */
+    bool isPAddressDRAM(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_DRAM
+            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    }
+
+    /**
+     * add load statistic
+     */
+    void addLoadStat(DrvAPI::DrvAPIPAddress addr) const {
+        if (isPAddressLocalL1SP(addr))  drv_stats_[LOAD_LOCAL_L1SP]->addData(1);
+        if (isPAddressRemoteL1SP(addr)) drv_stats_[LOAD_REMOTE_L1SP]->addData(1);
+        if (isPAddressRemotePXN(addr))  drv_stats_[LOAD_REMOTE_PXN]->addData(1);
+        if (isPAddressL2SP(addr))       drv_stats_[LOAD_L2SP]->addData(1);
+        if (isPAddressDRAM(addr))       drv_stats_[LOAD_DRAM]->addData(1);
+    }
+
+    /**
+     * add store statistic
+     */
+    void addStoreStat(DrvAPI::DrvAPIPAddress addr) const {
+        if (isPAddressLocalL1SP(addr))  drv_stats_[STORE_LOCAL_L1SP]->addData(1);
+        if (isPAddressRemoteL1SP(addr)) drv_stats_[STORE_REMOTE_L1SP]->addData(1);
+        if (isPAddressRemotePXN(addr))  drv_stats_[STORE_REMOTE_PXN]->addData(1);
+        if (isPAddressL2SP(addr))       drv_stats_[STORE_L2SP]->addData(1);
+        if (isPAddressDRAM(addr))       drv_stats_[STORE_DRAM]->addData(1);
+    }
+
+    /**
+     * add atomic statistic
+     */
+    void addAtomicStat(DrvAPI::DrvAPIPAddress addr) const {
+        if (isPAddressLocalL1SP(addr))  drv_stats_[ATOMIC_LOCAL_L1SP]->addData(1);
+        if (isPAddressRemoteL1SP(addr)) drv_stats_[ATOMIC_REMOTE_L1SP]->addData(1);
+        if (isPAddressRemotePXN(addr))  drv_stats_[ATOMIC_REMOTE_PXN]->addData(1);
+        if (isPAddressL2SP(addr))       drv_stats_[ATOMIC_L2SP]->addData(1);
+        if (isPAddressDRAM(addr))       drv_stats_[ATOMIC_DRAM]->addData(1);
+    }
+
+    void addBusyCycleStat(uint64_t cycles) {
+        drv_stats_[BUSY_CYCLES]->addData(cycles);
+    }
+
+    void addStallCycleStat(uint64_t cycles) {
+        drv_stats_[STALL_CYCLES]->addData(cycles);
+    }
+
+    /**
+     * configure statistics
+     */
+    void configureStatistics(Params &params);
+
     SST::Output output_; //!< output stream
     Interfaces::StandardMem *mem_; //!< memory interface
     RISCVSimulator *sim_; //!< simulator
@@ -244,6 +363,8 @@ public:
     int core_; //!< core id wrt pod
     int pod_;  //!< pod id wrt pxn
     int pxn_;  //!< pxn id wrt system
+    std::vector<Statistic<uint64_t>*> instruction_counts_; //!< instruction counts
+    std::vector<Statistic<uint64_t>*> drv_stats_; //!< common drv stats
 };
 
 

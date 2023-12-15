@@ -1,4 +1,4 @@
-RISCV_INSTALL_DIR=/install
+RISCV_INSTALL_DIR=$(DRV_ROOT)
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2023 University of Washington
 
