@@ -26,8 +26,9 @@ public:
         hart.pc() += i.Jimm();
     }
     void visitJALR(RISCVHart &hart, RISCVInstruction &i) override {
+        uint64_t jmp_target = (hart.x(i.rs1()) + i.SIimm());
         hart.x(i.rd()) = hart.pc() + 4;
-        hart.pc() = (hart.x(i.rs1()) + i.SIimm());
+        hart.pc() = jmp_target;
     }
     void visitBEQ(RISCVHart &hart, RISCVInstruction &i) override {
         if (hart.x(i.rs1()) == hart.x(i.rs2())) {
@@ -82,11 +83,13 @@ public:
         hart.pc() += 4;
     }
     void visitSLTIU(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) < i.Iimm();
+        uint64_t imm = i.SIimm(); // sign extend
+        hart.x(i.rd()) = hart.x(i.rs1()) < imm;
         hart.pc() += 4;
     }
     void visitXORI(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) ^ i.SIimm();
+        uint64_t sign_ext_imm = ((i.Iimm() & 0x800) == 0x800) ? (((int64_t)-1) ^ 0xfff) | i.Iimm() : i.Iimm();
+        hart.x(i.rd()) = hart.x(i.rs1()) ^ sign_ext_imm;
         hart.pc() += 4;
     }
     void visitORI(RISCVHart &hart, RISCVInstruction &i) override {
@@ -122,11 +125,11 @@ public:
         hart.pc() += 4;
     }
     void visitSLT(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = hart.x(i.rs1()) < hart.x(i.rs2());
+        hart.x(i.rd()) = hart.sx(i.rs1()) < hart.sx(i.rs2());
         hart.pc() += 4;
     }
     void visitSLTU(RISCVHart &hart, RISCVInstruction &i) override {
-        hart.x(i.rd()) = (uint32_t)hart.x(i.rs1()) < (uint32_t)hart.x(i.rs2());
+        hart.x(i.rd()) = hart.x(i.rs1()) < hart.x(i.rs2());
         hart.pc() += 4;
     }
     void visitXOR(RISCVHart &hart, RISCVInstruction &i) override {
@@ -159,28 +162,28 @@ public:
         // truncate to signed 32 bits
         int32_t rs = hart.sx(i.rs1());
         int32_t rd = rs + i.SIimm();
-        hart.x(i.rd()) = rd;
+        hart.sx(i.rd()) = rd;
         hart.pc() += 4;
     }
     void visitSLLIW(RISCVHart &hart, RISCVInstruction &i) override {
         // truncate to signed 32 bits
         uint32_t rs = hart.sx(i.rs1());
-        uint32_t rd = rs << i.shamt5();
-        hart.x(i.rd()) = rd;
+        int32_t rd = rs << i.shamt5();
+        hart.sx(i.rd()) = rd;
         hart.pc() += 4;
     }
     void visitSRLIW(RISCVHart &hart, RISCVInstruction &i) override {
         // truncate to signed 32 bits
         uint32_t rs = hart.x(i.rs1());
-        uint32_t rd = rs >> i.shamt5();
-        hart.x(i.rd()) = rd;
+        int32_t rd = rs >> i.shamt5();
+        hart.sx(i.rd()) = rd;
         hart.pc() += 4;
     }
     void visitSRAIW(RISCVHart &hart, RISCVInstruction &i) override {
         // truncate to signed 32 bits
         int32_t rs = hart.sx(i.rs1());
         int32_t rd = rs >> i.shamt5();
-        hart.x(i.rd()) = rd;
+        hart.sx(i.rd()) = rd;
         hart.pc() += 4;
     }
     void visitADDW(RISCVHart &hart, RISCVInstruction &i) override {
@@ -204,7 +207,7 @@ public:
         // truncate to signed 32 bits
         uint32_t rs1 = hart.sx(i.rs1());
         uint32_t rs2 = hart.sx(i.rs2());
-        uint32_t rd = rs1 << rs2;
+        int32_t rd = rs1 << rs2;
         hart.x(i.rd()) = rd;
         hart.pc() += 4;
     }
@@ -212,7 +215,7 @@ public:
         // truncate to signed 32 bits
         uint32_t rs1 = hart.sx(i.rs1());
         uint32_t rs2 = hart.sx(i.rs2());
-        uint32_t rd = rs1 >> rs2;
+        int32_t rd = rs1 >> rs2;
         hart.x(i.rd()) = rd;
         hart.pc() += 4;
     }
