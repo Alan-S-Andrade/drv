@@ -74,6 +74,11 @@ drvsim-headers-$(RAMULATOR) += DrvCustomRamulatorMem.hpp
 drvsim-headers += $(drvsim-headers-yes)
 drvsim-sources += $(drvsim-sources-yes)
 
+ifdef NO_DRVR
+# DrvX does not depend on RISCV-related code
+drvsim-sources := $(filter-out $(wildcard SSTRISCV*.cpp), $(drvsim-sources))
+endif
+
 drvsim-objects = $(patsubst %.cpp,%.o,$(drvsim-sources))
 
 $(drvsim-objects): %.o: %.cpp $(drvsim-headers)

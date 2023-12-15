@@ -1,6 +1,7 @@
 ```
 SPDX-License-Identifier: MIT
 Copyright (c) 2023 University of Washington
+Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
 ```
 
 # Installing on Your System
@@ -29,6 +30,54 @@ Use the following command to configure the riscv toolchain:
 `./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=<install-path>`
 
 Drv has been tested on CentOS and Ubuntu systems.
+
+## Local build without docker
+
+### Dependencies
+```
+apt update -y \
+        && apt install -y \
+        make \
+        build-essential \
+        openssh-client \
+        libopenmpi-dev \
+        openmpi-bin \
+        openmpi-common \
+        libtool \
+        libtool-bin \
+        autoconf \
+        python3 \
+        python3-dev \
+        automake \
+        git \
+        libltdl-dev \
+        wget \
+        automake \ 
+        gawk \
+        wget \
+        curl \
+        texinfo \
+        libgmp-dev \
+        flex bison
+```
+
+### Build dependencies
+
+```
+. load_drvx.sh
+./build_drvx_deps.sh
+```
+
+### Build Drive
+
+`make -j install`
+
+### Test by running an example application
+
+```
+cd examples/allocator
+make run
+```
 
 ## Configuring
 
