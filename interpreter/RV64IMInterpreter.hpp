@@ -18,7 +18,7 @@ public:
         int128_t rs1 = static_cast<int64_t>(hart.sx(i.rs1()));
         int128_t rs2 = static_cast<int64_t>(hart.sx(i.rs2()));
         int128_t rd = rs1 * rs2;
-        hart.x(i.rd()) = static_cast<int64_t>(rd);
+        hart.x(i.rd()) = static_cast<int64_t>(rd & std::numeric_limits<uint64_t>::max());
         hart.pc() += 4;
     }
     void visitMULH(RISCVHart &hart, RISCVInstruction &i) override {
@@ -45,8 +45,11 @@ public:
     void visitDIV(RISCVHart &hart, RISCVInstruction &i) override {
         int64_t rs1 = hart.sx(i.rs1());
         int64_t rs2 = hart.sx(i.rs2());
+        // check for division by zero and overflow
         if (rs2 == 0) {
-            throw std::runtime_error("DIV: division by zero");
+            hart.x(i.rd()) = -1;
+        } else if (rs1 == std::numeric_limits<int64_t>::min() && rs2 == -1) {
+            hart.x(i.rd()) = std::numeric_limits<int64_t>::min();
         } else {
             hart.x(i.rd()) = rs1 / rs2;
         }
@@ -56,7 +59,7 @@ public:
         uint64_t rs1 = hart.x(i.rs1());
         uint64_t rs2 = hart.x(i.rs2());
         if (rs2 == 0) {
-            throw std::runtime_error("DIVU: division by zero");
+            hart.x(i.rd()) = std::numeric_limits<uint64_t>::max();
         } else {
             hart.x(i.rd()) = rs1 / rs2;
         }
@@ -65,8 +68,11 @@ public:
     void visitREM(RISCVHart &hart, RISCVInstruction &i) override {
         int64_t rs1 = hart.sx(i.rs1());
         int64_t rs2 = hart.sx(i.rs2());
+        // check for division by zero and overflow
         if (rs2 == 0) {
-            throw std::runtime_error("REM: division by zero");
+            hart.x(i.rd()) = rs1;
+        } else if (rs1 == std::numeric_limits<int64_t>::min() && rs2 == -1) {
+            hart.x(i.rd()) = 0;
         } else {
             hart.x(i.rd()) = rs1 % rs2;
         }
@@ -75,8 +81,9 @@ public:
     void visitREMU(RISCVHart &hart, RISCVInstruction &i) override {
         uint64_t rs1 = hart.x(i.rs1());
         uint64_t rs2 = hart.x(i.rs2());
+        // check for division by zero
         if (rs2 == 0) {
-            throw std::runtime_error("REMU: division by zero");
+            hart.x(i.rd()) = rs1;
         } else {
             hart.x(i.rd()) = rs1 % rs2;
         }
@@ -92,8 +99,11 @@ public:
     void visitDIVW(RISCVHart &hart, RISCVInstruction &i) override {
         int32_t rs1 = hart.sx(i.rs1());
         int32_t rs2 = hart.sx(i.rs2());
+        // check for division by zero and overflow
         if (rs2 == 0) {
-            throw std::runtime_error("DIVW: division by zero");
+            hart.x(i.rd()) = -1;
+        } else if (rs1 == std::numeric_limits<int32_t>::min() && rs2 == -1) {
+            hart.x(i.rd()) = std::numeric_limits<int32_t>::min();
         } else {
             hart.x(i.rd()) = rs1 / rs2;
         }
@@ -103,29 +113,36 @@ public:
         uint32_t rs1 = hart.x(i.rs1());
         uint32_t rs2 = hart.x(i.rs2());
         if (rs2 == 0) {
-            throw std::runtime_error("DIVUW: division by zero");
+            int32_t rd = std::numeric_limits<uint32_t>::max();
+            hart.x(i.rd()) = rd;
         } else {
-            hart.x(i.rd()) = rs1 / rs2;
+            int32_t rd = rs1 / rs2;
+            hart.sx(i.rd()) = rd;
         }
         hart.pc() += 4;
     }
     void visitREMW(RISCVHart &hart, RISCVInstruction &i) override {
         int32_t rs1 = hart.sx(i.rs1());
         int32_t rs2 = hart.sx(i.rs2());
+        // check for division by zero and overflow
         if (rs2 == 0) {
-            throw std::runtime_error("REMW: division by zero");
+            hart.x(i.rd()) = rs1;
+        } else if (rs1 == std::numeric_limits<int32_t>::min() && rs2 == -1) {
+            hart.x(i.rd()) = 0;
         } else {
             hart.x(i.rd()) = rs1 % rs2;
         }
         hart.pc() += 4;
     }
     void visitREMUW(RISCVHart &hart, RISCVInstruction &i) override {
-        int32_t rs1 = hart.sx(i.rs1());
-        int32_t rs2 = hart.sx(i.rs2());
+        uint32_t rs1 = hart.sx(i.rs1());
+        uint32_t rs2 = hart.sx(i.rs2());
         if (rs2 == 0) {
-            throw std::runtime_error("REMW: division by zero");
+            int32_t rd = rs1;
+            hart.x(i.rd()) = rd;
         } else {
-            hart.x(i.rd()) = rs1 % rs2;
+            int32_t rd = rs1 % rs2;
+            hart.x(i.rd()) = rd;
         }
         hart.pc() += 4;        
     }
