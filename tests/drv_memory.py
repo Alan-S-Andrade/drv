@@ -176,7 +176,7 @@ class MainMemoryBank(SharedMemoryBank):
             backend.addParams({
                 "verbose_level" : arguments.verbose_memory,
                 "access_time" : "32ns",
-                "mem_size" : MainMemoryRange.POD_MAINMEM_BANK_SIZE_STR,
+                "mem_size" : MainMemoryRange.MAINMEM_BANK_SIZE_STR,
             })
             return backend
         elif (arguments.dram_backend == "ramulator"):
@@ -184,7 +184,7 @@ class MainMemoryBank(SharedMemoryBank):
             backend.addParams({
                 "verbose_level" : arguments.verbose_memory,
                 "configFile" : arguments.dram_backend_config,
-                "mem_size" : MainMemoryRange.POD_MAINMEM_BANK_SIZE_STR,
+                "mem_size" : MainMemoryRange.MAINMEM_BANK_SIZE_STR,
             })
             return backend
         else:

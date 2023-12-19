@@ -3,7 +3,6 @@
 import sst
 import argparse
 
-
 # common functions
 ADDR_TYPE_HI,ADDR_TYPE_LO     = (63, 58)
 ADDR_PXN_HI, ADDR_PXN_LO      = (57, 44)
@@ -49,24 +48,6 @@ class L2SPRange(object):
         self.start = start + bank * self.L2SP_BANK_SIZE
         self.end = self.start + self.L2SP_BANK_SIZE - 1
         
-class MainMemoryRange(object):
-    # spec says upto 8TB
-    # for simulation, we'll use 1GB/pod
-    POD_MAINMEM_BANKS = 8
-    POD_MAINMEM_SIZE = 0x0000000040000000
-    POD_MAINMEM_BANK_SIZE = POD_MAINMEM_SIZE // POD_MAINMEM_BANKS
-    POD_MAINMEM_SIZE_STR = "1GiB"
-    POD_MAINMEM_BANK_SIZE_STR = "128MiB"
-    def __init__(self, pxn, pod, bank):
-        start = 0
-        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
-        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-        self.start = start \
-                   + pod  * self.POD_MAINMEM_SIZE \
-                   + bank * self.POD_MAINMEM_BANK_SIZE
-        self.end = self.start + self.POD_MAINMEM_BANK_SIZE - 1
-
-        
 ################################
 # parse command line arguments #
 ################################
@@ -88,6 +69,8 @@ parser.add_argument("--pod-cores", type=int, default=8, help="number of cores pe
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
 parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
+parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
+parser.add_argument("--pxn-dram-size", type=int, default=1024**3, help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
 parser.add_argument("--with-command-processor", type=str, default="",
                     help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
 parser.add_argument("--cp-verbose", type=int, default=0, help="verbosity of command processor")
@@ -115,12 +98,12 @@ SYSCONFIG = {
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
     "sys_pod_l2_banks" : L2SPRange.L2SP_POD_BANKS,
-    "sys_pod_dram_ports" : MainMemoryRange.POD_MAINMEM_BANKS,
+    "sys_pod_dram_ports" : arguments.pxn_dram_banks,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
     "sys_core_l1sp_size" : L1SPRange.L1SP_SIZE,
     "sys_pod_l2sp_size" : L2SPRange.L2SP_SIZE,
-    "sys_pxn_dram_size" : MainMemoryRange.POD_MAINMEM_SIZE,
+    "sys_pxn_dram_size" : arguments.pxn_dram_size,
     "sys_cp_present" : False,
 }
 
@@ -151,6 +134,33 @@ CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
 CORE_DEBUG['debug_clock'] = arguments.debug_clock
 CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
+
+def MakeMainMemoryRangeClass(banks, size):
+    if (size > 8*1024*1024*1024):
+        raise ValueError("PXN main memory size cannot be more than 8GiB")
+
+    class MainMemoryRange(object):
+        # specs say upto 8TB
+        # we make this a parameter here
+        MAINMEM_BANKS = banks
+        MAINMEM_SIZE = size
+        MAINMEM_BANK_SIZE = MAINMEM_SIZE // MAINMEM_BANKS
+        # size strings
+        MAINMEM_SIZE_STR = "{}GiB".format(MAINMEM_SIZE // 1024**3)
+        MAINMEM_BANK_SIZE_STR = "{}MiB".format(MAINMEM_BANK_SIZE // 1024**2)
+        def __init__(self, pxn, pod, bank):
+            start = 0
+            start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
+            start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
+            self.start = start \
+                + pod  * size \
+                + bank * (size // banks)
+            self.end = self.start + (size // banks) - 1
+    # return the class
+    return MainMemoryRange
+
+# create the main memory range class
+MainMemoryRange = MakeMainMemoryRangeClass(8, SYSCONFIG["sys_pxn_dram_size"])
 
 class CommandProcessor(object):
     CORE_ID = -1
