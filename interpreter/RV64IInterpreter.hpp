@@ -88,8 +88,7 @@ public:
         hart.pc() += 4;
     }
     void visitXORI(RISCVHart &hart, RISCVInstruction &i) override {
-        uint64_t sign_ext_imm = ((i.Iimm() & 0x800) == 0x800) ? (((int64_t)-1) ^ 0xfff) | i.Iimm() : i.Iimm();
-        hart.x(i.rd()) = hart.x(i.rs1()) ^ sign_ext_imm;
+        hart.x(i.rd()) = hart.x(i.rs1()) ^ i.SIimm();
         hart.pc() += 4;
     }
     void visitORI(RISCVHart &hart, RISCVInstruction &i) override {
