@@ -173,6 +173,10 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
     data->wdata.resize(sizeof(T));
     data->opcode = op;
     *(T*)&data->wdata[0] = shart.x(i.rs2());
+    if (DrvAPIMemAtomicTypeHasExt(op)) {
+        data->extdata.resize(sizeof(T));
+        *(T*)&data->extdata[0] = shart.x(i.rs3());
+    }
     StandardMem::CustomReq *req = new StandardMem::CustomReq(data);
     req->tid = core_->getHartId(shart);
     shart.ready() = false;
@@ -313,6 +317,39 @@ void RISCVSimulator::visitAMOADDD_AQ(RISCVHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicADD);
+}
+
+void RISCVSimulator::visitAMOCASW(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int32_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+void RISCVSimulator::visitAMOCASW_RL(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int32_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+void RISCVSimulator::visitAMOCASW_AQ(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int32_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+void RISCVSimulator::visitAMOCASW_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int32_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+
+void RISCVSimulator::visitAMOCASD(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int64_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+void RISCVSimulator::visitAMOCASD_RL(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int64_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+void RISCVSimulator::visitAMOCASD_AQ(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int64_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
+}
+
+void RISCVSimulator::visitAMOCASD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) {
+    visitAMO<int64_t>(hart, instruction, DrvAPI::DrvAPIMemAtomicCAS);
 }
 
 void RISCVSimulator::visitFENCE(RISCVHart &hart, RISCVInstruction &i) {

@@ -31,6 +31,9 @@
 #ifndef SHIFT64TYPE_MASK
 #define SHIFT64TYPE_MASK 0x4000707f
 #endif
+#ifndef CASTYPE_MASK
+#define CASTYPE_MASK    0x0600707f
+#endif
 
 // this is used for certain floating point instructions
 // like fsqrt, fcvt, fclass, and fmove
@@ -81,6 +84,11 @@
 #ifndef FTYPE_INSTR_VALUE
 #define FTYPE_INSTR_VALUE(opcode, funct3, funct7, ext)  \
   ((opcode << 0) | (funct3 << 12) | (funct7 << 25) | (ext << 20))
+#endif
+
+#ifndef CASTYPE_INSTR_VALUE
+#define CASTYPE_INSTR_VALUE(opcode, funct3, funct2)     \
+    R4TYPE_INSTR_VALUE(opcode, funct3, funct2)
 #endif
 
 /* DEFINSTR(mnemonic, value_under_mask, mask) */
@@ -252,6 +260,14 @@ DEFINSTR(AMOMAXUW_RL, RTYPE_INSTR_VALUE(0x2f, 2, 113), RTYPE_MASK)
 DEFINSTR(AMOMAXUW_AQ, RTYPE_INSTR_VALUE(0x2f, 2, 114), RTYPE_MASK)
 DEFINSTR(AMOMAXUW_RL_AQ, RTYPE_INSTR_VALUE(0x2f, 2, 115), RTYPE_MASK)
 
+/**************************************************************************************************/
+/* https://docs.google.com/spreadsheets/d/1dSmdTiol_tSbBjMDvYSLObbvGzXWACW3kSGsRaqjt7Q/edit#gid=0 */
+/**************************************************************************************************/
+DEFINSTR(AMOCASW, CASTYPE_INSTR_VALUE(0x2b, 2, 0), CASTYPE_MASK)
+DEFINSTR(AMOCASW_RL, CASTYPE_INSTR_VALUE(0x2b, 2, 1), CASTYPE_MASK)
+DEFINSTR(AMOCASW_AQ, CASTYPE_INSTR_VALUE(0x2b, 2, 2), CASTYPE_MASK)
+DEFINSTR(AMOCASW_RL_AQ, CASTYPE_INSTR_VALUE(0x2b, 2, 3), CASTYPE_MASK)
+
 /*********/
 /* RV64A */
 /*********/
@@ -309,6 +325,14 @@ DEFINSTR(AMOMAXUD, RTYPE_INSTR_VALUE(0x2f, 3, 112), RTYPE_MASK)
 DEFINSTR(AMOMAXUD_RL, RTYPE_INSTR_VALUE(0x2f, 3, 113), RTYPE_MASK)
 DEFINSTR(AMOMAXUD_AQ, RTYPE_INSTR_VALUE(0x2f, 3, 114), RTYPE_MASK)
 DEFINSTR(AMOMAXUD_RL_AQ, RTYPE_INSTR_VALUE(0x2f, 3, 115), RTYPE_MASK)
+
+/**************************************************************************************************/
+/* https://docs.google.com/spreadsheets/d/1dSmdTiol_tSbBjMDvYSLObbvGzXWACW3kSGsRaqjt7Q/edit#gid=0 */
+/**************************************************************************************************/
+DEFINSTR(AMOCASD, CASTYPE_INSTR_VALUE(0x2b, 3, 0), CASTYPE_MASK)
+DEFINSTR(AMOCASD_RL, CASTYPE_INSTR_VALUE(0x2b, 3, 1), CASTYPE_MASK)
+DEFINSTR(AMOCASD_AQ, CASTYPE_INSTR_VALUE(0x2b, 3, 2), CASTYPE_MASK)
+DEFINSTR(AMOCASD_RL_AQ, CASTYPE_INSTR_VALUE(0x2b, 3, 3), CASTYPE_MASK)
 
 /*********/
 /* RV32F */

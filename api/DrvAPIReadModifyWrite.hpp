@@ -17,7 +17,20 @@ typedef enum  {
     DrvAPIMemAtomicADD,
 } DrvAPIMemAtomicType;
 
-
+/**
+ * @brief Check if the atomic operation has an extended operand
+ * @param op the atomic operation
+ * @return true if the atomic operation has an extended operand
+ */
+inline bool DrvAPIMemAtomicTypeHasExt(DrvAPIMemAtomicType op)
+{
+    switch (op) {
+    case DrvAPIMemAtomicCAS:
+        return true;
+    default:
+        return false;
+    }
+}
 
 /**
  * @param w the write operand

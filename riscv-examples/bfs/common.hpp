@@ -157,7 +157,7 @@ REF_CLASS_BEGIN(barrier_data)
 #ifdef COMMAND_PROCESSOR
     int count_ = DrvAPI::atomic_add(&count(), 1);
 #else
-    int count_ = atomic_fetch_add(&count(), 1);
+    int count_ = atomic_fetch_add_i32(&count(), 1);
 #endif
     if (count_ == threads()-1) {
         count() = 0;
@@ -208,7 +208,7 @@ frontier_data_ref to_sparse(frontier_data_ref & tmp_frontier, barrier_ref barrie
 #ifdef COMMAND_PROCESSOR
                 int64_t i = DrvAPI::atomic_add(&tmp_frontier.size(), 1);
 #else
-                int64_t i = atomic_fetch_add(&tmp_frontier.size(), 1);
+                int64_t i = atomic_fetch_add_i64(&tmp_frontier.size(), 1);
 #endif
                 tmp_frontier.vertices(i) = v;
             }

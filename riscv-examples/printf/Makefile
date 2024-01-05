@@ -3,5 +3,10 @@
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 RISCV_CSOURCE := $(wildcard *.c)
-SIM_OPTIONS += --core-threads=1 --pod-cores=1
+THREADS := 4
+CORES := 2
+ALL_THREADS := $(shell echo $(THREADS)*$(CORES) | bc)
+SIM_OPTIONS += --core-threads=$(THREADS) --pod-cores=$(CORES)
+RISCV_COMPILE_FLAGS += -DTHREADS=$(ALL_THREADS)
+RISCV_COMPILE_FLAGS += -DBARRIER
 include $(DRV_DIR)/mk/riscv_common.mk
