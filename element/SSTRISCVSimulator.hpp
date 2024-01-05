@@ -83,6 +83,19 @@ private:
     void visitAMOADDD_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
 
+    template <typename T>
+    void visitAMOCAS(RISCVHart &hart, RISCVInstruction &i);
+
+    void visitAMOCASW(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOCASW_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOCASW_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOCASW_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
+    void visitAMOCASD(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOCASD_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOCASD_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOCASD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
     // environment calls
     void visitECALL(RISCVHart &hart, RISCVInstruction &instruction) override;
     

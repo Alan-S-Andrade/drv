@@ -121,7 +121,7 @@ int main()
                 int src = curr_frontier.vertices(src_i);
                 mf_local += l_fwd_offsets[src+1]-l_fwd_offsets[src];
             }
-            atomic_fetch_add(&g_mf, mf_local);
+            atomic_fetch_add_i32(&g_mf, mf_local);
             // 2. find sum (degree unvisited)
             int mu_local = 0;
             for (int v = my_thread(); v < g_V; v += threads()) {
@@ -129,7 +129,7 @@ int main()
                     mu_local += l_fwd_offsets[v+1]-l_fwd_offsets[v];
                 }
             }
-            atomic_fetch_add(&g_mu, mu_local);
+            atomic_fetch_add_i32(&g_mu, mu_local);
             barrier.sync([=](){
                 g_rev_not_fwd = (g_mf > (g_mu/20));
                 // std::cout << "Iteration " << std::setw(2) << iter
@@ -174,7 +174,7 @@ int main()
                     }
                 }
             }
-            atomic_fetch_add(&next_frontier.size(), contrib);
+            atomic_fetch_add_i64(&next_frontier.size(), contrib);
 
             // wait for all threads to finish
             barrier.sync();
@@ -201,14 +201,14 @@ int main()
                     vertex_t dst = l_fwd_edges[edge_i];
                     // cas here when available
                     if (l_distance[dst] == -1) {
-                        if (atomic_swap(&l_distance[dst], distance) == -1) {
+                        if (atomic_swap_i32(&l_distance[dst], distance) == -1) {
                             next_frontier.vertices(dst) = 1;
                             contrib++;
                         }
                     }
                 }
             }
-            atomic_fetch_add(&next_frontier.size(), contrib);
+            atomic_fetch_add_i64(&next_frontier.size(), contrib);
             barrier.sync();
             swap(curr_frontier, next_frontier);
             next_frontier.clear(barrier, g_V);
