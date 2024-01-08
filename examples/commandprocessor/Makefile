@@ -7,7 +7,7 @@ APP_NAME := commandprocessor
 include $(DRV_DIR)/mk/application_common.mk
 
 run: $(APP_NAME).so
-	sst $(DRV_DIR)/tests/$(SCRIPT) -- \
+	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- \
 	--with-command-processor=$(APP_PATH)/$(APP_NAME).so \
 	--pod-cores=8 \
 	--core-threads=16 \

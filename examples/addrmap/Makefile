@@ -13,7 +13,7 @@ VADDR += 0x0000000000100010 # word 0x10 on pxn 0, pod 0,  core 0's l1sp
 tests := $(foreach vaddr,$(VADDR),run-$(vaddr))
 
 run-%: $(APP_NAME).so
-	sst $(DRV_DIR)/tests/$(SCRIPT) --  --pod-cores 2 --core-threads 1 $(APP_PATH)/$(APP_NAME).so $*
+	$(SST) $(DRV_DIR)/tests/$(SCRIPT) --  --pod-cores 2 --core-threads 1 $(APP_PATH)/$(APP_NAME).so $*
 
 # redefine run target
 run: $(tests)

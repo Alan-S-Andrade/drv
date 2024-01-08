@@ -67,5 +67,5 @@ clean:
 SIM_OPTIONS ?=
 
 run: $(RISCV_TARGET)
-	sst $(SCRIPT) -- $(SIM_OPTIONS) $(RISCV_TARGET) $(SIM_ARGS)
+	$(SST) $(SCRIPT) -- $(SIM_OPTIONS) $(RISCV_TARGET) $(SIM_ARGS)
 endif

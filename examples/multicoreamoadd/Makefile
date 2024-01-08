@@ -18,7 +18,7 @@ ramulator-SIM_OPTIONS := --dram-backend-config $(RAMULATOR_TEST_CONFIG)
 
 run-%: $(APP_NAME).so
 	$(eval SIM_OPTIONS=$($*-SIM_OPTIONS))
-	sst $(DRV_DIR)/tests/$(SCRIPT) -- --dram-backend $* $(all-SIM_OPTIONS) $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so
+	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- --dram-backend $* $(all-SIM_OPTIONS) $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so
 
 run: $(tests)
 	@echo Running tests
