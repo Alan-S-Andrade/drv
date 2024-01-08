@@ -11,6 +11,7 @@ include $(DRV_DIR)/mk/config.mk
 
 RISCV_CXX := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-g++
 RISCV_CC  := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-gcc
+RISCV_OBJDUMP := $(RISCV_INSTALL_DIR)/bin/riscv64-$(RISCV_ARCH)-objdump
 
 RISCV_PLATFORM ?= ph
 
@@ -68,4 +69,8 @@ SIM_OPTIONS ?=
 
 run: $(RISCV_TARGET)
 	$(SST) $(SCRIPT) -- $(SIM_OPTIONS) $(RISCV_TARGET) $(SIM_ARGS)
+
+disassemble: $(RISCV_TARGET)
+	$(RISCV_OBJDUMP) -D $(RISCV_TARGET)
+
 endif

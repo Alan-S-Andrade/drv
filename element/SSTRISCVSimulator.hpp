@@ -122,6 +122,9 @@ private:
     static constexpr uint64_t CSR_MSTATUS = 0x300;
     
     static constexpr uint64_t CSR_FRM     = 0x002;
+    static constexpr uint64_t CSR_MIE     = 0x304; // interrupt enable
+    static constexpr uint64_t CSR_MTVEC   = 0x305; // where to jump on trap
+    static constexpr uint64_t CSR_MEPC    = 0x341; // where to jump on exception
     static constexpr uint64_t CSR_CYCLE   = 0xC00;
     
 private:

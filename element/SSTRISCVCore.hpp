@@ -55,6 +55,8 @@ public:
         {"debug_requests", "Debug requests", "0"},
         {"debug_responses", "Debug responses", "0"},
         {"debug_syscalls", "Debug system calls", "0"},
+        {"isa_test", "Report ISA tests results", "0"},
+        {"test_name", "Optional name of the test", ""},
     )
     // DOCUMENT SUBCOMPONENTS
     SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
@@ -83,8 +85,7 @@ public:
         SST::ELI::combineEliInfo(var, parent);
         return var;
     }
-
-
+    
     /**
      * A key value pair
      */
@@ -140,7 +141,7 @@ public:
     static constexpr uint32_t DEBUG_SYSCALLS = (1<< 2); //!< debug system calls
     static constexpr uint32_t DEBUG_REQ      = (1<<30); //!< debug messages we expect to see when receiving requests
     static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
-    
+
     /**
      * configure output stream
      */
@@ -348,7 +349,14 @@ public:
      */
     void configureStatistics(Params &params);
 
+    /**
+     * test name
+     */
+    std::string testName() const { return test_name_; }
+
     SST::Output output_; //!< output stream
+    SST::Output isa_test_output_; //!< isa test output stream
+    std::string test_name_; //!< test name
     Interfaces::StandardMem *mem_; //!< memory interface
     RISCVSimulator *sim_; //!< simulator
     ICacheBacking *icache_; //!< icache
