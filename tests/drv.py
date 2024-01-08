@@ -78,6 +78,8 @@ parser.add_argument("--cp-verbose-init", action="store_true", help="command proc
 parser.add_argument("--cp-verbose-requests", action="store_true", help="command processor enable debug of requests")
 parser.add_argument("--cp-verbose-responses", action="store_true", help="command processor enable debug of responses")
 parser.add_argument("--drvx-stack-in-l1sp", action="store_true", help="use l1sp backing storage as stack")
+parser.add_argument("--drvr-isa-test", action="store_true", help="Running an ISA test")
+parser.add_argument("--test-name", type=str, default="", help="Name of the test")
 parser.add_argument("--core-stats", action="store_true", help="enable core statistics")
 parser.add_argument("--stats-load-level", type=int, default=0, help="load level for statistics")
 parser.add_argument("--trace-remote-pxn-memory", action="store_true", help="trace remote pxn memory accesses")
@@ -119,6 +121,8 @@ CORE_DEBUG = {
     "trace_remote_pxn_load" : False,
     "trace_remote_pxn_store" : False,
     "trace_remote_pxn_atomic" : False,
+    "isa_test": False,
+    "test_name": "",
 }
 
 SYSCONFIG['sys_num_pxn'] = arguments.num_pxn
@@ -134,6 +138,8 @@ CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
 CORE_DEBUG['debug_clock'] = arguments.debug_clock
 CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
+CORE_DEBUG['isa_test'] = arguments.drvr_isa_test
+CORE_DEBUG['test_name'] = arguments.test_name
 
 def MakeMainMemoryRangeClass(banks, size):
     if (size > 8*1024*1024*1024):

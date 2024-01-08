@@ -7,10 +7,7 @@ namespace Drv {
 
 class RISCVSimHart : public RISCVHart {
 public:
-    RISCVSimHart()
-        : RISCVHart(),
-          _ready(true),
-          _exit(false) {}
+
     virtual ~RISCVSimHart() {}
 
     int & ready() { return _ready; }
@@ -18,9 +15,13 @@ public:
 
     int & exit() { return _exit; }
     int   exit() const { return _exit; }
+
+    int64_t & exitCode() { return _exit_code; }
+    int64_t   exitCode() const { return _exit_code; }
     
-    int _ready;
-    int _exit;
+    int _ready = true;
+    int _exit = false;
+    int64_t _exit_code = 0;
 };
 
 }

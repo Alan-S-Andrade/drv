@@ -403,11 +403,23 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
         shart.rm() &= ~mask;
         shart.rm() |= wval & mask;
         break;
+    case CSR_MSTATUS: // read-only
+        core_->output_.verbose(CALL_INFO, 1, 0, "Warning: CSR MSTATUS not implemented\n");
+        break;
+    case CSR_MIE: // read-only
+        core_->output_.verbose(CALL_INFO, 1, 0, "Warning: CSR MIE not implemented\n");
+        break;
+    case CSR_MTVEC: // read-only
+        core_->output_.verbose(CALL_INFO, 1, 0, "Warning: CSR MTVEC not implemented\n");
+        break;
+    case CSR_MEPC: // read-only
+        core_->output_.verbose(CALL_INFO, 1, 0, "Warning: CSR MEPC not implemented\n");
+        break;
     case CSR_CYCLE: // read-only
         rval = core_->clocktc_->convertFromCoreTime(core_->getCurrentSimCycle());
         break;
     default:
-        core_->output_.fatal(CALL_INFO, -1, "CSR %" PRIx64 " is not implemented", csr);
+        core_->output_.fatal(CALL_INFO, -1, "CSR %" PRIx64 " is not implemented\n", csr);
     }
     return rval;
 }
@@ -514,6 +526,17 @@ void RISCVSimulator::sysBRK(RISCVSimHart &shart, RISCVInstruction &i) {
 void RISCVSimulator::sysEXIT(RISCVSimHart &shart, RISCVInstruction &i) {
     shart.ready() = false;
     shart.exit() = true;
+    shart.exitCode() = shart.sa(0);
+    if (shart.exitCode() == 0) {
+        core_->isa_test_output_.verbose(CALL_INFO, 1, 0, "%10s TEST PASS\n"
+                                        ,core_->testName().c_str()
+                                        );
+    } else {
+        core_->isa_test_output_.verbose(CALL_INFO, 1, 0, "%10s TEST FAILED (TEST %" PRId64 ")\n"
+                                        ,core_->testName().c_str()
+                                        ,(shart.exitCode() >> 1)
+                                        );
+    }
 }
 
 void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {

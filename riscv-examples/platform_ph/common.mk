@@ -14,7 +14,7 @@ RISCV_LDFLAGS += -L$(DRV_DIR)/riscv-examples/platform_ph/pandohammer
 
 # include platform crt by default
 RISCV_PLATFORM_CRT ?= yes
-RISCV_PLATFORM_LIBC_LOCKING ?= yes
+RISCV_PLATFORM_LIBC_LOCKING ?= $(RISCV_PLATFORM_CRT)
 
 # platform asm sources
 RISCV_PLATFORM_ASMSOURCE-$(RISCV_PLATFORM_CRT) += crt.S
