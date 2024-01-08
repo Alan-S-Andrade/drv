@@ -11,7 +11,7 @@ cd deps
 
 if [ ! -d sst-core-src ]
 then
-  git clone --branch devel_security  git@github.com:AMDResearch/pando-sst-core.git sst-core-src
+  git clone --branch pando-rt-backend  git@github.com:AMDResearch/pando-sst-core.git sst-core-src
 else
   cd sst-core-src
   git pull
@@ -27,7 +27,7 @@ cd sst-core-src \
 
 if [ ! -d sst-elements-src ]
 then
-  git clone --branch devel-drv-changes git@github.com:AMDResearch/pando-sst-elements.git sst-elements-src
+  git clone --branch pando-rt-backend git@github.com:AMDResearch/pando-sst-elements.git sst-elements-src
 else
   cd sst-elements-src
   git pull

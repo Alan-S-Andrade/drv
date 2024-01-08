@@ -175,7 +175,7 @@ class MainMemoryBank(SharedMemoryBank):
             backend = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
             backend.addParams({
                 "verbose_level" : arguments.verbose_memory,
-                "access_time" : "32ns",
+                "access_time" : "350ns",
                 "mem_size" : MainMemoryRange.MAINMEM_BANK_SIZE_STR,
             })
             return backend
