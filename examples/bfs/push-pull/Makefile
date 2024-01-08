@@ -24,7 +24,7 @@ run-%: $(APP_NAME).so
 	$(eval graph=$(word 1, $(subst -, ,$*)))
 	$(eval root=$(word 2, $(subst -, ,$*)))
 	$(MAKE) -C $(BFS_DIR)/sparse-inputs $(graph).mtx
-	sst $(DRV_DIR)/tests/$(SCRIPT) -- \
+	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- \
 	$(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so \
 	$(BFS_DIR)/sparse-inputs/$(graph).mtx \
 	$(root)
@@ -33,7 +33,7 @@ run: $(APP_NAME).so
 	$(eval graph=u12k16)
 	$(eval root=0)
 	$(MAKE) -C $(BFS_DIR)/sparse-inputs $(graph).mtx
-	sst $(DRV_DIR)/tests/$(SCRIPT) -- \
+	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- \
 	$(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so \
 	$(BFS_DIR)/sparse-inputs/$(graph).mtx \
 	$(root)

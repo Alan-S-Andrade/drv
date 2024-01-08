@@ -11,7 +11,7 @@ include $(DRV_DIR)/mk/application_common.mk
 NUM_PXN ?= 2
 
 run: $(APP_NAME).so
-	sst $(DRV_DIR)/tests/$(SCRIPT) -- \
+	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- \
 	--with-command-processor=$(APP_PATH)/$(APP_NAME).so \
 	--num-pxn=$(NUM_PXN) \
 	--pod-cores=1 \
