@@ -16,6 +16,7 @@ struct DrvAPISysConfigData
     int64_t num_pxn_; //!< number of PXNs in the system
     int64_t pxn_pods_; //!< number of pods per PXN
     int64_t pod_cores_; //!< number of cores per pod
+    int64_t core_threads_; //!< number of threads per core
     int16_t nw_flit_dwords_; //!< number of dwords in a flit
     int16_t nw_obuf_dwords_; //!< number of dwords in an output buffer
     uint64_t core_l1sp_size_; //!< size of the L1 scratchpad
@@ -42,6 +43,7 @@ public:
     int64_t numPXN() const { return data_.num_pxn_; }
     int64_t numPXNPods() const { return data_.pxn_pods_; }
     int64_t numPodCores() const { return data_.pod_cores_; }
+    int64_t numCoreThreads() const { return data_.core_threads_; }
     int16_t numNWFlitDwords() const { return data_.nw_flit_dwords_; }
     int16_t numNWObufDwords() const { return data_.nw_obuf_dwords_; }
     uint64_t coreL1SPSize() const { return data_.core_l1sp_size_; }

@@ -99,6 +99,10 @@ inline int numPodCores() {
     return DrvAPISysConfig::Get()->numPodCores();
 }
 
+inline int numCoreThreads() {
+    return DrvAPISysConfig::Get()->numCoreThreads();
+}
+
 /**
  * size of l1sp in bytes
  */
