@@ -13,7 +13,7 @@ int SimpleMain(int argc, char *argv[]) {
            ,DrvAPI::myPXNId(), DrvAPI::numPXNs()
            ,DrvAPI::myPodId(), DrvAPI::numPXNPods()
            ,DrvAPI::myCoreId(),DrvAPI::numPodCores()
-           ,DrvAPI::myThreadId(), DrvAPI::myCoreThreads()
+           ,DrvAPI::myThreadId(), DrvAPI::numCoreThreads()
            );
     if (DrvAPI::myPXNId() == 0
         && DrvAPI::myPodId() == 0
