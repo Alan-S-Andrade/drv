@@ -143,15 +143,20 @@ class DrvXTile(Tile):
         self.core.addParams({
             "verbose"   : arguments.verbose,
             "threads"   : SYSCONFIG["sys_core_threads"],
-            "clock"     : SYSCONFIG["sys_core_clock"],
             "executable": arguments.program,
             "argv" : ' '.join(arguments.argv),
-            "max_idle" : 20, # turn clock offf after idle for 20 cycles
+            "max_idle" : KNOBS["core_max_idle"],
             "id"  : self.id,
             "pod" : self.pod,
             "pxn" : self.pxn,
             "stack_in_l1sp" : arguments.drvx_stack_in_l1sp,
         })
+
+        if SYSCONFIG["sys_core_clock"]:
+            self.core.addParams({
+                "clock" : SYSCONFIG["sys_core_clock"],
+            })
+
         self.core.addParams(SYSCONFIG)
         self.core.addParams(CORE_DEBUG)
 
@@ -198,13 +203,18 @@ class DrvRTile(Tile):
         self.core.addParams({
             "verbose"   : arguments.verbose,
             "num_harts" : SYSCONFIG["sys_core_threads"],
-            "clock"     : SYSCONFIG["sys_core_clock"],
             "program" : arguments.program,
             #"argv" : ' '.join(argv), @ todo, make this work
             "core": self.id,
             "pod" : self.pod,
             "pxn" : self.pxn,
         })
+
+        if SYSCONFIG["sys_core_clock"]:
+            self.core.addParams({
+                "clock" : SYSCONFIG["sys_core_clock"],
+            })
+
         self.core.addParams(SYSCONFIG)
         self.core.addParams(CORE_DEBUG)
         self.core_iface = self.core.setSubComponent("memory", "memHierarchy.standardInterface")

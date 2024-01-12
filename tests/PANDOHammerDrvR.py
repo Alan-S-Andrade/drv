@@ -13,9 +13,6 @@ from drv_memory import *
 from drv_tile import *
 from drv_pandohammer import *
 
-# for drvr we set the core clock to 1GHz
-SYSCONFIG["sys_core_clock"] = "1GHz"
-
 print("""
 PANDOHammerDrvR:
   program = {}
