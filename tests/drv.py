@@ -55,6 +55,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("program", help="program to run")
 parser.add_argument("argv", nargs=argparse.REMAINDER, help="arguments to program")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
+parser.add_argument("--dram-access-time", type=str, default="16ns", help="latency of DRAM (only valid if using the latency based model)")
 parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
 parser.add_argument("--dram-backend-config", type=str, default="/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
                     help="backend timing model configuration for DRAM")
@@ -69,6 +70,8 @@ parser.add_argument("--pod-cores", type=int, default=8, help="number of cores pe
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
 parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
+parser.add_argument("--core-clock", type=str, default="1GHz", help="clock frequency of cores")
+parser.add_argument("--core-max-idle", type=int, default=12, help="max idle time of cores")
 parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
 parser.add_argument("--pxn-dram-size", type=int, default=1024**3, help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
 parser.add_argument("--with-command-processor", type=str, default="",
@@ -125,11 +128,17 @@ CORE_DEBUG = {
     "test_name": "",
 }
 
+KNOBS = {
+    "core_max_idle" : arguments.core_max_idle,
+    "dram_access_time" : arguments.dram_access_time,
+}
+
 SYSCONFIG['sys_num_pxn'] = arguments.num_pxn
 SYSCONFIG['sys_pxn_pods'] = arguments.pxn_pods
 SYSCONFIG['sys_pod_cores'] = arguments.pod_cores
 SYSCONFIG['sys_core_threads'] = arguments.core_threads
 SYSCONFIG['sys_cp_present'] = bool(arguments.with_command_processor)
+SYSCONFIG['sys_core_clock'] = arguments.core_clock
 
 CORE_DEBUG['debug_memory'] = arguments.debug_memory
 CORE_DEBUG['debug_requests'] = arguments.debug_requests
