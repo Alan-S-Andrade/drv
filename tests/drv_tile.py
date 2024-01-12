@@ -146,7 +146,7 @@ class DrvXTile(Tile):
             "clock"     : SYSCONFIG["sys_core_clock"],
             "executable": arguments.program,
             "argv" : ' '.join(arguments.argv),
-            "max_idle" : 100//8, # turn clock offf after idle for 1 us
+            "max_idle" : 20, # turn clock offf after idle for 20 cycles
             "id"  : self.id,
             "pod" : self.pod,
             "pxn" : self.pxn,

@@ -13,8 +13,9 @@ from drv_memory import *
 from drv_tile import *
 from drv_pandohammer import *
 
-# for drvx we set the core clock to 125MHz (assumption is 1/8 ops are memory)
-SYSCONFIG["sys_core_clock"] = "125MHz"
+# for drvx we set the core clock to 1GHz
+# we do this to offset that we simulate with fewer cores than the real chip
+SYSCONFIG["sys_core_clock"] = "1GHz"
 
 print("""
 PANDOHammerDrvX: program = {}
