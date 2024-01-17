@@ -71,7 +71,7 @@ parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
 parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
 parser.add_argument("--core-clock", type=str, default="1GHz", help="clock frequency of cores")
-parser.add_argument("--core-max-idle", type=int, default=12, help="max idle time of cores")
+parser.add_argument("--core-max-idle", type=int, default=1, help="max idle time of cores")
 parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
 parser.add_argument("--pxn-dram-size", type=int, default=1024**3, help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
 parser.add_argument("--with-command-processor", type=str, default="",
