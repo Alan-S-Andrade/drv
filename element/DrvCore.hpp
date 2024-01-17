@@ -312,7 +312,7 @@ public:
       output_->verbose(CALL_INFO, 2, DEBUG_RSP, "turning core on\n");
       reregister_cycle_ = system_callbacks_->getCycleCount();
       addStallCycleStat(reregister_cycle_ - unregister_cycle_);
-      reregisterClock(clocktc_, new SST::Clock::Handler<DrvCore>(this, &DrvCore::clockTick));      
+      reregisterClock(clocktc_, clock_handler_);
     }
   }
 
@@ -445,7 +445,7 @@ private:
   bool stack_in_l1sp_ = false; //!< true if the stack is in L1SP backing store
   std::shared_ptr<DrvSystem> system_callbacks_ = nullptr; //!< the system callbacks
   std::vector<Statistic<uint64_t>*> drv_stats_; //!< the statistics
-
+  Clock::Handler<DrvCore> *clock_handler_; //!< the clock handler
 public:
   DrvMemory* memory_;  //!< the memory hierarchy
   SST::TimeConverter *clocktc_; //!< the clock time converter
