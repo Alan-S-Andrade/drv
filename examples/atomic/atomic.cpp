@@ -20,6 +20,8 @@ target;
 #define memop(addr) DrvAPI::atomic_add<int64_t>(addr, 1)
 #elif defined(MEMOP_LOAD)
 #define memop(addr) DrvAPI::read<int64_t>(addr)
+#elif defined(MEMOP_STORE)
+#define memop(addr) DrvAPI::write<int64_t>(addr, 1)
 #endif
 
 #ifndef NATOMICS
