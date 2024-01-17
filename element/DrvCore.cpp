@@ -108,8 +108,8 @@ void DrvCore::closeExecutable() {
  * configure the clock and register the handler
  */
 void DrvCore::configureClock(SST::Params &params) {
-  clocktc_ = registerClock(params.find<std::string>("clock", "125MHz"),
-                new Clock::Handler<DrvCore>(this, &DrvCore::clockTick));
+  clock_handler_ = new Clock::Handler<DrvCore>(this, &DrvCore::clockTick);
+  clocktc_ = registerClock(params.find<std::string>("clock", "125MHz"), clock_handler_);
   max_idle_cycles_ = params.find<uint64_t>("max_idle", 1000000);
   core_on_ = true;
 }
