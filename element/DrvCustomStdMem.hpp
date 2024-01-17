@@ -38,7 +38,7 @@ public:
 
   /* return a CustomData* objected formatted as a response */
   Interfaces::StandardMem::CustomData*
-  makeResponse() override { return new AtomicReqData(*this); }
+  makeResponse() override { return this; }
 
   /* return wheter a response is needed */
   bool needsResponse() override { return true; }
