@@ -320,7 +320,7 @@ int DrvCore::selectReadyThread() {
   for (int t = 0; t < numThreads(); t++) {
     int thread_id = (last_thread_ + t + 1) % numThreads();
     DrvThread *thread = getThread(thread_id);
-    auto state = thread->getAPIThread().getState();
+    auto & state = thread->getAPIThread().getState();
     if (state->canResume()) {
       output_->verbose(CALL_INFO, 2, DEBUG_CLK, "thread %d is ready\n", thread_id);
       return thread_id;
@@ -349,7 +349,7 @@ void DrvCore::executeReadyThread() {
 }
 
 void DrvCore::handleThreadStateAfterYield(DrvThread *thread) {
-  std::shared_ptr<DrvAPI::DrvAPIThreadState> state = thread->getAPIThread().getState();
+  std::shared_ptr<DrvAPI::DrvAPIThreadState> &state = thread->getAPIThread().getState();
   std::shared_ptr<DrvAPI::DrvAPIMem> mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(state);
 
   // handle memory requests

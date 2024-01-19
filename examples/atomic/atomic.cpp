@@ -31,10 +31,13 @@ target;
 int AtomicMain(int argc, char *argv[])
 {
     using namespace DrvAPI;
+    if (!(myThreadId() == 0 && myCoreId() == 0 && myPodId() == 0 && myPXNId() == 0)) {
+        return 0;
+    }
     DrvAPIAddress addr = &target;
     for (int i = 0; i < NATOMICS; i++) {
         memop(&target);
-        if (i % 10 == 0) {
+        if (i % 1024 == 0) {
             printf("read %4d of %4d\r", i, NATOMICS);
         }
     }
