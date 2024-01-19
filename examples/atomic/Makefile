@@ -12,8 +12,13 @@ MEMOP  ?= LOAD
 DRAM_ACCESS_TIME ?= 16ns
 MAX_IDLE ?= 1
 
+THREADS ?= 16
+CORES   ?= 8
+PODS    ?= 2
+PXNS    ?= 2
+
 CXXFLAGS += -DNATOMICS=$(N) -DTARGET=TAGET_$(TARGET) -DMEMOP_$(MEMOP)
-SIM_OPTIONS += --core-threads=1 --pod-cores=1 --num-pxn=1
+SIM_OPTIONS += --core-threads=$(THREADS) --pod-cores=$(CORES) --pxn-pods=$(PODS) --num-pxn=$(PXNS)
 SIM_OPTIONS += --dram-access-time=$(DRAM_ACCESS_TIME)
 SIM_OPTIONS += --core-max-idle=$(MAX_IDLE)
 
@@ -32,7 +37,7 @@ run-%: $(APP_NAME).so
 	@echo MEMOP=$(LOAD)
 	@echo DRAM_ACCESS_TIME=$(DRAM_ACCESS_TIME)
 	@echo MAX_IDLE=$(MAX_IDLE)
-	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- --dram-backend $* $(all-SIM_OPTIONS) $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so
+	$(SST) -n $(SIM_THREADS) $(DRV_DIR)/tests/$(SCRIPT) -- --dram-backend $* $(all-SIM_OPTIONS) $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so
 
 run: $(tests)
 	@echo Running tests

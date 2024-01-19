@@ -60,7 +60,7 @@ public:
    * 
    * @return std::shared_ptr<DrvAPIThreadState> 
    */
-  std::shared_ptr<DrvAPIThreadState> getState() const { return state_; }
+  std::shared_ptr<DrvAPIThreadState> &getState() { return state_; }
 
   /**
    * @brief Set the main function
