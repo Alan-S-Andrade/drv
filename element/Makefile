@@ -2,7 +2,7 @@
 # Copyright (c) 2023 University of Washington
 
 # include the config.mk
-DRV_DIR=$(shell git rev-parse --show-toplevel)
+DRV_DIR ?= $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
 
 CXX=$(shell $(SST_CONFIG) --CXX)
