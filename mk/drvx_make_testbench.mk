@@ -35,8 +35,8 @@ $(TESTBENCH_PATH)/tests.mk: $(DRV_DIR)/py/benchmark_tests_file_gen.py
 
 $(TESTBENCH_PATH)/$(TESTBENCH).cpp:
 	mkdir -p $(dir $@)
-	@echo "# SPDX-License-Identifier: MIT" > $@
-	@echo "# Copyright (c) 2024 University of Washington" >> $@
+	@echo "// SPDX-License-Identifier: MIT" > $@
+	@echo "// Copyright (c) 2024 University of Washington" >> $@
 	@echo "#include <DrvAPI.hpp>" >> $@
 	@echo "" >> $@
 	@echo "using namespace DrvAPI;" >> $@

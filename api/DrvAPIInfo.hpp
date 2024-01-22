@@ -152,5 +152,6 @@ inline void outputStatistics() {
     DrvAPIThread::current()->getSystem()->outputStatistics();
 }
 
+
 } // namespace DrvAPI
 #endif

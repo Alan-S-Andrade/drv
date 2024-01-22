@@ -31,6 +31,9 @@ void RISCVCore::configureOuptut(Params& params) {
     if (params.find<bool>("debug_syscalls", false)) {
         verbose_mask |= DEBUG_SYSCALLS;
     }
+    if (params.find<bool>("debug_mmio", false)) {
+        verbose_mask |= DEBUG_MMIO;
+    }
     output_.init("SSTRISCVCore[@p:@l]: ", verbose_level, verbose_mask, Output::STDOUT);
 
     int isa_test = params.find<bool>("isa_test", 0);
@@ -66,6 +69,14 @@ void RISCVCore::configureMemory(Params &params) {
         ("memory", ComponentInfo::SHARE_NONE, clocktc_,
          new Interfaces::StandardMem::Handler<RISCVCore>(this, &RISCVCore::handleMemEvent));
 
+    mmio_start_.type() = DrvAPI::DrvAPIPAddress::TYPE_CTRL;
+    mmio_start_.pxn() = pxn_;
+    mmio_start_.pod() = pod_;
+    mmio_start_.core_x() = DrvAPI::coreXFromId(core_);
+    mmio_start_.core_y() = DrvAPI::coreYFromId(core_);
+    mmio_start_.ctrl_offset() = 0;
+
+    mem_->setMemoryMappedAddressRegion(mmio_start_.encode(), 1<<DrvAPI::DrvAPIPAddress::CtrlOffsetHandle::bits());
 }
 
 void RISCVCore::configureSimulator(Params &params) {
@@ -98,6 +109,12 @@ void RISCVCore::configureStatistics(Params &params) {
 #undef DEFINE_DRV_STAT
 }
 
+void RISCVCore::configureLinks(Params &params) {
+    loopback_ = configureSelfLink("loopback", new Event::Handler<RISCVCore>(this, &RISCVCore::handleLoopback));
+    loopback_->addSendLatency(1, "ns");
+    reset_time_ = params.find<uint64_t>("release_reset", 0);
+}
+
 /* constructor */
 RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     : Component(id)
@@ -111,9 +128,10 @@ RISCVCore::RISCVCore(ComponentId_t id, Params& params)
     configureICache(params);
     configureSimulator(params);
     configureHarts(params);
-    configureMemory(params);
     configureSysConfig(params);
+    configureMemory(params);
     configureStatistics(params);
+    configureLinks(params);
     registerAsPrimaryComponent();
     primaryComponentDoNotEndSim();
 }
@@ -185,8 +203,8 @@ void RISCVCore::loadProgram() {
 /* init */
 void RISCVCore::init(unsigned int phase) {
     for (RISCVSimHart &hart : harts_) {
-        hart.pc() = icache_->getStartAddr();
-        hart.ready() = true;
+        hart.resetPC() = icache_->getStartAddr();
+        hart.reset() = true;
     }
     auto stdmem = dynamic_cast<Interfaces::StandardMem*>(mem_);
     if (stdmem) {
@@ -202,9 +220,9 @@ void RISCVCore::setup() {
     }
     output_.verbose(CALL_INFO, 1, 0, "memory: line size = %" PRIu64 "\n", stdmem->getLineSize());
     // load program data
-    output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
-    loadProgram();
-    output_.verbose(CALL_INFO, 1, 0, "Program loaded\n");
+    //output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
+    //loadProgram();
+    //output_.verbose(CALL_INFO, 1, 0, "Program loaded\n");
 }
 
 /* finish */
@@ -218,10 +236,57 @@ void RISCVCore::finish() {
     for (auto &pc : pchist_) {
         output_.verbose(CALL_INFO, 3, 0, "0x%08lx: %9lu\n", pc.first, pc.second);
     }
+    output_.verbose(CALL_INFO, 3, 0, "End PC Histogram:\n");
     auto stdmem = dynamic_cast<Interfaces::StandardMem*>(mem_);
     if (stdmem) {
         stdmem->finish();
     }
+    output_.verbose(CALL_INFO, 1, 0, "Finished\n");
+}
+
+/**
+ * handle reset write
+ */
+void RISCVCore::handleResetWrite(uint64_t v) {
+    output_.verbose(CALL_INFO, 0, DEBUG_MMIO, "PXN %d: POD %d: CORE %d: Received reset write request\n"
+                    , pxn_, pod_, core_);
+    if (v == 0) {
+        // deassert reset
+        for (RISCVSimHart &hart : harts_) {
+            hart.reset() = false;
+        }
+    } else {
+        // assert reset
+        for (RISCVSimHart &hart : harts_) {
+            hart.reset() = true;
+        }
+    }
+}
+
+/* handle mmio write request */
+void RISCVCore::handleMMIOWrite(Interfaces::StandardMem::Write *write_req) {
+    using namespace DrvAPI;
+    auto *rsp = write_req->makeResponse();
+    output_.verbose(CALL_INFO, 0, DEBUG_MMIO, "PXN %d: POD %d: CORE %d: Received MMIO write request\n"
+                    , pxn_, pod_, core_);
+
+    if (write_req->size != sizeof(uint64_t)) {
+        output_.fatal(CALL_INFO, -1, "PXN %d: POD %d: CORE %d: MMIO write request size is not 8 bytes\n"
+                      , pxn_, pod_, core_);
+    }
+    uint64_t v = *reinterpret_cast<uint64_t*>(&write_req->data[0]);
+
+    DrvAPIPAddress paddr{write_req->pAddr};
+    switch (paddr.ctrl_offset()) {
+    case DrvAPIPAddress::CTRL_CORE_RESET:
+        handleResetWrite(v);
+        break;
+    default:
+        output_.verbose(CALL_INFO, 0, DEBUG_MMIO, "PXN %d: POD %d: CORE %d: Unhandled MMIO write request\n"
+                        , pxn_, pod_, core_);
+    }
+    mem_->send(rsp);
+    delete write_req;
 }
 
 /* handle memory event */
@@ -247,15 +312,20 @@ void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
         tid = custom_rsp->tid;
     }
 
-    if (!rd_rsp && !wr_rsp && !custom_rsp) {
-        output_.fatal(CALL_INFO, -1, "Unknown memory request type\n");
+    auto *write_req = dynamic_cast<Interfaces::StandardMem::Write*>(req);
+    if (write_req) {
+        handleMMIOWrite(write_req);
     }
 
-    auto it = rsp_handlers_.find(tid);
-    if (it == rsp_handlers_.end()) {
-        output_.fatal(CALL_INFO, -1, "Received memory request for unknown hart\n");
+    if (rd_rsp || wr_rsp || custom_rsp) {
+        auto it = rsp_handlers_.find(tid);
+        if (it == rsp_handlers_.end()) {
+            output_.fatal(CALL_INFO, -1, "Received memory response for unknown hart\n");
+        }
+        it->second(req);     
+    } else if (!write_req) {
+        output_.fatal(CALL_INFO, -1, "Unknown memory request type\n");
     }
-    it->second(req);
 }
 
 /* select the next hart to execute */
@@ -317,5 +387,21 @@ void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &ha
     rsp_handlers_[tid] = handler;
     mem_->send(req);
 }
+
+/**
+ * handle loopback event
+ */
+void RISCVCore::handleLoopback(Event *evt) {
+    DeassertReset *deassert = dynamic_cast<DeassertReset*>(evt);
+    if (deassert) {
+        output_.verbose(CALL_INFO, 0, 0, "Received deassert reset event\n");
+        for (auto &hart : harts_) {
+            hart.reset() = false;
+        }
+    }
+    delete evt;
+}
+
 }
 }
+

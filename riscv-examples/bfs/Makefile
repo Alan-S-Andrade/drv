@@ -13,6 +13,7 @@ RISCV_CXXSOURCE += bfs.cpp
 COMMAND_PROCESSOR_COMPILE_FLAGS += -DCOMMAND_PROCESSOR
 COMMAND_PROCESSOR_COMPILE_FLAGS += -DTHREADS_PER_CORE=$(THREADS_PER_CORE)
 COMMAND_PROCESSOR_COMPILE_FLAGS += -I$(DRV_DIR)/riscv-examples/bfs/sparse_matrix_helpers
+COMMAND_PROCESSOR_PLATFORM_LOADER := no
 
 vpath %.cpp $(DRV_DIR)/riscv-examples/bfs/sparse_matrix_helpers
 vpath %.c   $(DRV_DIR)/riscv-examples/bfs/sparse_matrix_helpers
@@ -34,7 +35,7 @@ run-%: $(RISCV_TARGET) $(COMMAND_PROCESSOR_TARGET)
 	$(eval graph=$(word 1, $(subst -, ,$*)))
 	$(eval root=$(word 2, $(subst -, ,$*)))
 	$(MAKE) -C $(DRV_DIR)/riscv-examples/bfs/sparse-inputs $(graph).mtx
-	sst $(SCRIPT) -- $(SIM_OPTIONS) $(RISCV_TARGET) \
+	$(SST) $(SCRIPT) -- $(SIM_OPTIONS) $(RISCV_TARGET) \
 	$(DRV_DIR)/riscv-examples/bfs/sparse-inputs/$(graph).mtx \
 	$(root)
 

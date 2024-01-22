@@ -65,6 +65,7 @@ parser.add_argument("--debug-requests", action="store_true", help="enable debug 
 parser.add_argument("--debug-responses", action="store_true", help="enable debug of responses")
 parser.add_argument("--debug-syscalls", action="store_true", help="enable debug of syscalls")
 parser.add_argument("--debug-clock", action="store_true", help="enable debug of clock ticks")
+parser.add_argument("--debug-mmio", action="store_true", help="enable debug of mmio requests to the core")
 parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of memory")
 parser.add_argument("--pod-cores", type=int, default=8, help="number of cores per pod")
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
@@ -118,6 +119,7 @@ CORE_DEBUG = {
     "debug_requests" : False,
     "debug_responses" : False,
     "debug_loopback" : False,
+    "debug_mmio" : False,
     "debug_memory": False,
     "debug_syscalls" : False,
     "trace_remote_pxn" : False,
@@ -146,6 +148,7 @@ CORE_DEBUG['debug_responses'] = arguments.debug_responses
 CORE_DEBUG['debug_syscalls'] = arguments.debug_syscalls
 CORE_DEBUG['debug_init'] = arguments.debug_init
 CORE_DEBUG['debug_clock'] = arguments.debug_clock
+CORE_DEBUG['debug_mmio'] = arguments.debug_mmio
 CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
 CORE_DEBUG['isa_test'] = arguments.drvr_isa_test
 CORE_DEBUG['test_name'] = arguments.test_name
@@ -218,7 +221,7 @@ class CommandProcessor(object):
         self.core_nic.addParams({
             "group" : 0,
             "network_bw" : "1024GB/s",
-            "destinations" : "1,2",
+            "destinations" : "0,1,2",
             "verbose_level" : arguments.verbose_memory,
         })
 

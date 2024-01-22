@@ -89,7 +89,7 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
 //   std::cout << std::hex << "addr: " << addr << std::dec << std::endl;
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
    rd->tid = core_->getHartId(shart);
-   shart.ready() = false;
+   shart.stalledMemory() = true;
    auto ird = i.rd();
 
    RISCVCore::ICompletionHandler ch([this, &shart, addr, ird](StandardMem::Request *req) {
@@ -109,7 +109,7 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
 //           std::cout << std::hex << "Req completion - pc: " << static_cast<uint64_t>(shart.pc()) << " val: " << static_cast<uint64_t>(*ptr) << std::dec << std::endl;
        }
        shart.pc() += 4;
-       shart.ready() = true;
+       shart.stalledMemory() = false;
        delete req;
    });
    core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
@@ -143,11 +143,11 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
         : static_cast<T>(hart.x(i.rs2()));
     StandardMem::Write *wr = new StandardMem::Write(addr, sizeof(T), data);
     wr->tid = core_->getHartId(shart);    
-    shart.ready() = false; // stores are blocking
+    shart.stalledMemory() = true; // stores are blocking
     RISCVCore::ICompletionHandler ch([&shart](StandardMem::Request *req) {
         // handle the write response
         shart.pc() += 4;
-        shart.ready() = true;
+        shart.stalledMemory() = false;
         delete req;
     });
     core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
@@ -179,7 +179,7 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
     }
     StandardMem::CustomReq *req = new StandardMem::CustomReq(data);
     req->tid = core_->getHartId(shart);
-    shart.ready() = false;
+    shart.stalledMemory() = true;
     int ird = i.rd();
     RISCVCore::ICompletionHandler ch([&shart, ird, this, addr](StandardMem::Request *req) {
         // handle the atomic response
@@ -192,7 +192,7 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
                               ,static_cast<uint64_t>(*(T*)&data->rdata[0]));
         shart.x(ird) = *(T*)&data->rdata[0];
         shart.pc() += 4;
-        shart.ready() = true;
+        shart.stalledMemory() = false;
         delete req;
     });
     core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
@@ -488,13 +488,13 @@ void RISCVSimulator::sysWRITE(RISCVSimHart &hart, RISCVInstruction &i) {
     std::function<void(std::vector<uint8_t>&)> completion
         ([this, buf, &hart, fd, len](std::vector<uint8_t> &data) {
             this->core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "WRITE: fd=%d, buf=%#lx, len=%lu\n", fd, buf, len);
-            hart.ready() = true;
+            hart.stalledMemory() = false;
             hart.a(0) = write(fd, &data[0], len);
         });
 
     // issue a request for the buffer
     // then call write when buffer returns
-    hart.ready() = false;
+    hart.stalledMemory() = true;
     sysReadBuffer(hart, buf, len, std::move(completion));
 }
 
@@ -510,10 +510,10 @@ void RISCVSimulator::sysREAD(RISCVSimHart &shart, RISCVInstruction &i) {
     // issue a write request to the userspace buffer
     std::function<void(void)> completion
         ([&shart](void) {
-            shart.ready() = true;
+            shart.stalledMemory() = false;
         });
 
-    shart.ready() = false;
+    shart.stalledMemory() = true;
     sysWriteBuffer(shart, buf, data, std::move(completion));
 }
 
@@ -524,7 +524,6 @@ void RISCVSimulator::sysBRK(RISCVSimHart &shart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::sysEXIT(RISCVSimHart &shart, RISCVInstruction &i) {
-    shart.ready() = false;
     shart.exit() = true;
     shart.exitCode() = shart.sa(0);
     if (shart.exitCode() == 0) {
@@ -549,10 +548,10 @@ void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
     // set the return value
     shart.a(0) = r;
     // issue a write request
-    shart.ready() = false;
+    shart.stalledMemory() = true;
     RISCVCore::ICompletionHandler ch([&shart, sim_stat_s](StandardMem::Request *req) {
         // handle the write response
-        shart.ready() = true;
+        shart.stalledMemory() = false;
         delete req;
     });
     auto wr = new StandardMem::Write(stat_buf, sim_stat_s.size(), sim_stat_s);
@@ -578,9 +577,9 @@ void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
                 core_->output_.fatal(CALL_INFO, -1, "OPEN: file name too long\n");
             }
             shart.a(0) = open(path, flags, mode);
-            shart.ready() = true;
+            shart.stalledMemory() = false;
         });
-    shart.ready() = false;
+    shart.stalledMemory() = true;
 
     // issue the read requests
     sysReadBuffer(shart, path, 1024, std::move(completion));

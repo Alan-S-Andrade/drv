@@ -33,7 +33,8 @@ void DrvCore::configureOutput(SST::Params &params) {
     verbose_mask |= DEBUG_REQ;
   if (params.find<bool>("debug_responses"))
     verbose_mask |= DEBUG_RSP;
-
+  if (params.find<bool>("debug_mmio"))
+    verbose_mask |= DEBUG_MMIO;
   output_ = std::make_unique<SST::Output>("[DrvCore @t: @f:@l: @p] ", verbose_level, verbose_mask, Output::STDOUT);
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured output logging\n");
 }
@@ -421,4 +422,14 @@ void DrvCore::handleLoopback(SST::Event *event) {
     delete event;
     return;
   }
+}
+
+/**
+ * handle a memory request to control registers
+ * the request is deleted by the caller
+ */
+void DrvCore::handleMMIOWriteRequest(Interfaces::StandardMem::Write* req) {
+    output_->verbose(CALL_INFO, 0, DEBUG_MMIO,
+                     "PXN %d: POD %d: Core %d: handling mmio write request\n"
+                     ,pxn_,pod_,id_);
 }

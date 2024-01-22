@@ -8,6 +8,7 @@ RISCV_CSOURCE += hello.c
 
 # command processor source files
 COMMAND_PROCESSOR_CXXSOURCE += hello_cp.cpp
+COMMAND_PROCESSOR_PLATFORM_LOADER := no
 
 SIM_OPTIONS += --core-threads=1 --pod-cores=1
 

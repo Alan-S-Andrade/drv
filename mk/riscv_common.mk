@@ -4,7 +4,7 @@
 ifndef _RISCV_COMMON_MK_
 _RISCV_COMMON_MK_ := 1
 
-DRV_DIR := $(shell git rev-parse --show-toplevel)
+DRV_DIR ?= $(shell git rev-parse --show-toplevel)
 export PYTHONPATH := $(DRV_DIR)/tests:$(PYTHONPATH)
 
 include $(DRV_DIR)/mk/config.mk
@@ -72,5 +72,7 @@ run: $(RISCV_TARGET)
 
 disassemble: $(RISCV_TARGET)
 	$(RISCV_OBJDUMP) -D $(RISCV_TARGET)
+
+include $(DRV_DIR)/mk/command_processor.mk
 
 endif

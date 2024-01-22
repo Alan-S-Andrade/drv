@@ -15,7 +15,13 @@ DrvAPIPAddress DrvAPIVAddress::to_physical(uint32_t this_pxn
                                            ,uint32_t this_core_y
                                            ,uint32_t this_core_x) {
     DrvAPIPAddress ret;
-    if (not_scratchpad()) {
+    if (is_ctrl_register()) {
+        ret.type() = DrvAPIPAddress::TYPE_CTRL;
+        ret.pxn() = pxn();
+        ret.pod() = pod();
+        ret.core_y() = core_y();
+        ret.core_x() = core_x();        
+    } else if (not_scratchpad()) {
         ret.type() = DrvAPIPAddress::TYPE_DRAM;
         ret.pxn() = pxn();
         ret.dram_offset() = dram_offset();
@@ -49,7 +55,12 @@ std::string DrvAPIVAddress::to_string() {
     std::stringstream locale;
     std::stringstream offset;
     offset << "0x" << std::setfill('0') << std::setw(11) << std::hex;
-    if (not_scratchpad()) {
+    if (is_ctrl_register()) {
+        type << "CTRL";
+        locale << "PXN=" << pxn() << " POD=" << pod();
+        locale << " CORE_Y=" << core_y() << " CORE_X=" << core_x();
+        offset << ctrl_offset();
+    } else if (not_scratchpad()) {
         type << "DRAM";
         locale << "PXN=" << pxn();
         offset << dram_offset();
@@ -87,10 +98,15 @@ std::string DrvAPIPAddress::to_string() {
         types << "L2SP";
         locale << "PXN=" << pxn() << " POD=" << pod();
         offset << l2_offset();
-    } else {
+    } else if (type() == TYPE_L1SP) {
         types << "L1SP";
         locale << "PXN=" << pxn() << " POD=" << pod() << " CORE_Y=" << core_y() << " CORE_X=" << core_x();
         offset << l1_offset();
+    } else if (type() == TYPE_CTRL) {
+        types << "CTRL";
+        locale << "PXN=" << pxn() << " POD=" << pod();
+        locale << " CORE_Y=" << core_y() << " CORE_X=" << core_x();
+        offset << ctrl_offset();
     }
     return "PADDR{" + types.str() + " " + locale.str() + " " + offset.str() + "}";
 }

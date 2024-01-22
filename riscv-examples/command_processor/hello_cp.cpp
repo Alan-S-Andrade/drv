@@ -2,9 +2,11 @@
 // Copyright (c) 2023 University of Washington
 
 #include <DrvAPI.hpp>
-
+#include <pandocommand/executable.hpp>
+#include <pandocommand/control.hpp>
+#include <pandocommand/loader.hpp>
+using namespace pandocommand;
 using namespace DrvAPI;
-
 int CommandProcessor(int argc, char *argv[])
 {
     printf("hello, from the command processor!\n");
@@ -12,6 +14,9 @@ int CommandProcessor(int argc, char *argv[])
         printf("argv[%d] = %s\n", i, argv[i]);
     }
 
+    auto exe = PANDOHammerExe::Open(argv[1]);
+    loadProgram(*exe);
+    
     DrvAPIVAddress signal = 0;
     signal.pxn() = 0;
     signal.pod() = 0;
@@ -21,7 +26,7 @@ int CommandProcessor(int argc, char *argv[])
     signal.core_y() = 0;
     signal.l1_offset() = 0;
 
-    DrvAPI::nop(1000);
+    assertResetAll(false);    
     DrvAPIPointer<uint64_t> signal_p = signal.encode();
     *signal_p = 1;
     return 0;

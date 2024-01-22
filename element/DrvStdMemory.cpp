@@ -5,6 +5,8 @@
 #include "DrvCustomStdMem.hpp"
 #include "DrvCore.hpp"
 #include "DrvThread.hpp"
+#include "DrvAPIInfo.hpp"
+#include "DrvAPIAddressMap.hpp"
 #include <sst/elements/memHierarchy/memoryController.h>
 
 using namespace SST;
@@ -33,7 +35,15 @@ DrvStdMemory::DrvStdMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *
              mem_params,
              core->getClockTC(),
              new SST::Interfaces::StandardMem::Handler<DrvStdMemory>(this, &DrvStdMemory::handleEvent));        
-    }    
+    }
+    DrvAPI::DrvAPIPAddress mmio_start;
+    mmio_start.type() = DrvAPI::DrvAPIPAddress::TYPE_CTRL;
+    mmio_start.pxn() = core->pxn_;
+    mmio_start.pod() = core->pod_;
+    mmio_start.core_y() = DrvAPI::coreYFromId(core->id_);
+    mmio_start.core_x() = DrvAPI::coreXFromId(core->id_);
+    mmio_start.ctrl_offset() = 0;
+    mem_->setMemoryMappedAddressRegion(mmio_start.encode(), 1<<DrvAPI::DrvAPIPAddress::CtrlOffsetHandle::bits());
 }
 
 /**
@@ -253,11 +263,21 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
         delete areq_data;
     }
 
+    auto write_req = dynamic_cast<StandardMem::Write*>(req);
+    if (write_req) {
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                        "Received write request addr=%" PRIx64 " size=%" PRIu64 "\n",
+                        write_req->pAddr, write_req->size);
+        core_->handleMMIOWriteRequest(write_req);
+        mem_->send(write_req->makeResponse());
+    }
+
+
     // must delete the request
     delete req;
 
     // fatally error if we don't know the response type
-    if (!(write_rsp || read_rsp || (custom_rsp && areq_data))) {
+    if (!(write_rsp || read_rsp || (custom_rsp && areq_data) || write_req)) {
         output_.fatal(CALL_INFO, -1, "Unknown memory response type\n");
     }
     core_->assertCoreOn();
