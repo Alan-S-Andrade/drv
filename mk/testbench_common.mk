@@ -35,6 +35,8 @@ $(addsuffix .run,$(TESTS)): %.run: %
 	$(MAKE) -C $< run
 $(addsuffix .debug,$(TESTS)): %.debug: %
 	$(MAKE) -C $< debug
+$(addsuffix .clean,$(TESTS)): %.clean: %
+	$(MAKE) -C $< clean
 ####################################
 # meta rules for running all tests #
 ####################################
@@ -42,7 +44,8 @@ $(addsuffix .debug,$(TESTS)): %.debug: %
 run: $(addsuffix .run,$(TESTS))
 .PHONY: debug
 debug: $(addsuffix .debug,$(TESTS))
-
+.PHONY: clean
+clean: $(addsuffix .clean,$(TESTS))
 ##############################
 # purge all test directories #
 ##############################

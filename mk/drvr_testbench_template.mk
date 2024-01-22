@@ -6,7 +6,7 @@ include parameters.mk
 include app_path.mk
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
-
+TEST_DIR :=$(APP_PATH)/$(test-name)
 
 vpath %.c   $(APP_PATH)
 vpath %.cpp $(APP_PATH)

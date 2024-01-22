@@ -3,6 +3,9 @@
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 
+THREADS := 2
+CORES := 4
+
 DRAM_BASE := 0x800000000000
 DRAM_BASE_D := $(shell printf "%d" $(DRAM_BASE))
 
@@ -14,7 +17,8 @@ TEST_D    := $(shell printf "%d" $(TEST))
 
 COMPILE_FLAGS += -DCP_TO_PH_ADDR=$(shell echo $(TEST_D) +  0 | bc)
 COMPILE_FLAGS += -DPH_TO_CP_ADDR=$(shell echo $(TEST_D) + 16 | bc)
-
+COMPILE_FLAGS += -DTHREADS=$(THREADS) -DCORES=$(CORES)
+COMPILE_FLAGS += -DKEY=0xDEADBEEFDEADBEEF
 # pando hammer source files
 RISCV_COMPILE_FLAGS += $(COMPILE_FLAGS)
 RISCV_CSOURCE += ph.c
@@ -24,7 +28,8 @@ COMMAND_PROCESSOR_COMPILE_FLAGS += $(COMPILE_FLAGS)
 COMMAND_PROCESSOR_CXXSOURCE += cp.cpp
 COMMAND_PROCESSOR_PLATFORM_LOADER := no
 
-SIM_OPTIONS += --core-threads=1 --pod-cores=1
+SIM_OPTIONS += --core-threads=$(THREADS) --pod-cores=$(CORES)
+SIM_OPTIONS += --debug-mmio
 
 include $(DRV_DIR)/mk/riscv_common.mk
 include $(DRV_DIR)/mk/command_processor.mk

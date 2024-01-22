@@ -176,7 +176,7 @@ class DrvXTile(Tile):
         self.core_nic.addParams({
             "group" : 0,
             "network_bw" : "1024GB/s",
-            "destinations" : "1,2",
+            "destinations" : "0,1,2",
             "verbose_level" : arguments.verbose_memory,
         })
 
@@ -204,6 +204,7 @@ class DrvRTile(Tile):
             "verbose"   : arguments.verbose,
             "num_harts" : SYSCONFIG["sys_core_threads"],
             "program" : arguments.program,
+            "release_reset" : 10000,
             #"argv" : ' '.join(argv), @ todo, make this work
             "core": self.id,
             "pod" : self.pod,
@@ -225,7 +226,7 @@ class DrvRTile(Tile):
         self.core_nic.addParams({
             "group" : 0,
             "network_bw" : "1024GB/s",
-            "destinations" : "1,2",
+            "destinations" : "0,1,2",
             "verbose_level" : arguments.verbose_memory,
         })
         self.initSP()

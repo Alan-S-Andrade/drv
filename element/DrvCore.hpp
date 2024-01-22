@@ -57,6 +57,7 @@ public:
       {"debug_requests", "Print debug messages we expect to see during request events", "False"},
       {"debug_responses", "Print debug messages we expect to see during response events", "False"},
       {"debug_loopback", "Print debug messages we expect to see during loopback events", "False"},
+      {"debug_mmio", "Print debug messages from MMIO write requests", "False"},
       {"trace_remote_pxn", "Trace all requests to remote pxn", "false"},
       {"trace_remote_pxn_load", "Trace loads to remote pxn", "false"},
       {"trace_remote_pxn_store", "Trace loads to remote pxn", "false"},
@@ -199,6 +200,11 @@ public:
   void handleLoopback(SST::Event *event);
 
   /**
+   * handle a mmio request event
+   */
+  void handleMMIOWriteRequest(SST::Interfaces::StandardMem::Write* req);
+
+  /**
    * set the current thread context
    */
   void setThreadContext(DrvThread* thread) {
@@ -223,6 +229,7 @@ public:
   static constexpr uint32_t DEBUG_REQ      = (1<<30); //!< debug messages we expect to see when receiving requests
   static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
   static constexpr uint32_t DEBUG_LOOPBACK = (1<<28); //!< debug messages we expect to see when receiving loopback events
+  static constexpr uint32_t DEBUG_MMIO     = (1<<27); //!< debug messages we expect to see when receiving mmio events
 
   static constexpr uint32_t TRACE_REMOTE_PXN_STORE = (1<< 0); //!< trace remote store events
   static constexpr uint32_t TRACE_REMOTE_PXN_LOAD  = (1<< 1); //!< trace remote load events

@@ -40,6 +40,10 @@ public:
         /* input */
         {"program", "Program to run", "/path/to/r64elf"},
         {"load", "Load program into memory", "0"},
+        {"release_reset", "Time to release from reset", "0"},
+        /* control */
+        {"mmio_addr_start", 0, "MMIO start address"},
+        {"mmio_addr_end", 0, "MMIO end address"},
         /* system config */
         DRV_SYS_CONFIG_PARAMETERS
         {"sp", "[Core Value. ...]", ""},
@@ -55,9 +59,16 @@ public:
         {"debug_requests", "Debug requests", "0"},
         {"debug_responses", "Debug responses", "0"},
         {"debug_syscalls", "Debug system calls", "0"},
+        {"debug_mmio", "Debug MMIO requests", "0"},
         {"isa_test", "Report ISA tests results", "0"},
         {"test_name", "Optional name of the test", ""},
     )
+
+    // Document the ports that this component accepts
+    SST_ELI_DOCUMENT_PORTS(
+       {"loopback", "A loopback link", {"Drv.DrvEvent", ""}},
+    )
+    
     // DOCUMENT SUBCOMPONENTS
     SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
         {"memory", "Interface to a memory hierarchy", "SST::Interfaces::StandardMem"},
@@ -100,6 +111,31 @@ public:
         Key   key;
         Value value;              
     };
+
+
+    /**
+     * assert reset event
+     */
+    class AssertReset : public SST::Event {
+    public:
+        AssertReset() : SST::Event() {}
+        void serialize_order(SST::Core::Serialization::serializer &ser) override {
+            Event::serialize_order(ser);
+        }
+        ImplementSerializable(SST::Drv::RISCVCore::AssertReset);
+    };
+
+    /**
+     * deassert reset event
+     */
+    class DeassertReset : public SST::Event {
+    public:
+        DeassertReset() : SST::Event() {}
+        void serialize_order(SST::Core::Serialization::serializer &ser) override {
+            Event::serialize_order(ser);
+        }
+        ImplementSerializable(SST::Drv::RISCVCore::DeassertReset);
+    };
     
     /**
      * Constructor for RISCVCore
@@ -141,6 +177,7 @@ public:
     static constexpr uint32_t DEBUG_SYSCALLS = (1<< 2); //!< debug system calls
     static constexpr uint32_t DEBUG_REQ      = (1<<30); //!< debug messages we expect to see when receiving requests
     static constexpr uint32_t DEBUG_RSP      = (1<<29); //!< debug messages we expect to see when receiving responses
+    static constexpr uint32_t DEBUG_MMIO     = (1<<28); //!< debug messages we expect to see when receiving mmio requests
 
     /**
      * configure output stream
@@ -176,6 +213,11 @@ public:
      * configure system config
      */
     void configureSysConfig(Params &params);
+
+    /**
+     * configure links
+     */
+    void configureLinks(Params &params);
     
     /**
      * clock tick
@@ -186,7 +228,22 @@ public:
      * handle a memory event
      */
     void handleMemEvent(Interfaces::StandardMem::Request *req);
-    
+
+    /**
+     * handle reset write
+     */
+    void handleResetWrite(uint64_t v);
+
+    /**
+     * handle a mmio write
+     */
+    void handleMMIOWrite(Interfaces::StandardMem::Write *write_req);
+
+    /**
+     * handle loopback event
+     */
+    void handleLoopback(Event *evt);
+
     /**
      * get the number of harts on this core
      */
@@ -283,7 +340,8 @@ public:
      * is remote pxn memory for purpose of stats
      */
     bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.pxn() != static_cast<uint64_t>(pxn_);
+        return addr.pxn() != static_cast<uint64_t>(pxn_)
+            && addr.type() != DrvAPI::DrvAPIPAddress::TYPE_CTRL;
     }
 
     /**
@@ -371,8 +429,12 @@ public:
     int core_; //!< core id wrt pod
     int pod_;  //!< pod id wrt pxn
     int pxn_;  //!< pxn id wrt system
+    uint64_t reset_time_; //!< reset time
     std::vector<Statistic<uint64_t>*> instruction_counts_; //!< instruction counts
     std::vector<Statistic<uint64_t>*> drv_stats_; //!< common drv stats
+    DrvAPI::DrvAPIPAddress mmio_start_; //!< mmio start address
+    DrvAPI::DrvAPIPAddress mmio_end_; //!< mmio end address
+    SST::Link *loopback_; //!< loopback link
 };
 
 
