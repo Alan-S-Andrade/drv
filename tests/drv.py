@@ -175,7 +175,7 @@ def MakeMainMemoryRangeClass(banks, size):
     return MainMemoryRange
 
 # create the main memory range class
-MainMemoryRange = MakeMainMemoryRangeClass(8, SYSCONFIG["sys_pxn_dram_size"])
+MainMemoryRange = MakeMainMemoryRangeClass(SYSCONFIG['sys_pod_dram_ports'], SYSCONFIG["sys_pxn_dram_size"])
 
 class CommandProcessor(object):
     CORE_ID = -1
