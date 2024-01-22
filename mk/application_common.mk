@@ -13,6 +13,7 @@ include $(DRV_DIR)/mk/config.mk
 export PYTHONPATH := $(DRV_DIR)/tests:$(PYTHONPATH)
 
 APP_PATH ?= $(DRV_DIR)/examples/$(APP_NAME)
+APP_EXE  ?= $(APP_PATH)/$(APP_NAME).so
 
 # Build options
 CXX ?= clang++
@@ -53,4 +54,5 @@ SIM_THREADS ?= 1
 
 .PHONY: run
 run: $(APP_NAME).so
-	$(SST) -n $(SIM_THREADS)  $(DRV_DIR)/tests/$(SCRIPT) -- $(SIM_OPTIONS) $(APP_PATH)/$(APP_NAME).so $(SIM_ARGS)
+	$(SST) -n $(SIM_THREADS)  $(DRV_DIR)/tests/$(SCRIPT) -- $(SIM_OPTIONS) $(APP_EXE) $(SIM_ARGS)
+

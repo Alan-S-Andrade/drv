@@ -172,6 +172,7 @@ class MainMemoryBank(SharedMemoryBank):
         @brief return a sst.SubComponent ("memHierarchy.backend")
         """
         if (arguments.dram_backend == "simple"):
+            # throughput for this backend is the mem_clock requests / second
             backend = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
             backend.addParams({
                 "verbose_level" : arguments.verbose_memory,

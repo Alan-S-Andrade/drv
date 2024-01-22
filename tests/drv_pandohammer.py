@@ -39,7 +39,7 @@ def MakePANDOHammer(make_tile):
             "num_ports" : PODS * (CORES + POD_L2_BANKS) + (1 if arguments.with_command_processor else 0) + PXN_MAINMEM_BANKS + PXNS - 1, # If number of PXNS is equal to 1 we do not need additional port. Hence -1 
             "topology" : "merlin.singlerouter",
             # performance models
-        "xbar_bw" : "256GB/s",
+            "xbar_bw" : "256GB/s",
             "link_bw" : "256GB/s",
             "flit_size" : "8B",
             "input_buf_size" : "1KB",
