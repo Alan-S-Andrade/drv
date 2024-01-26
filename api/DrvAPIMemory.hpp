@@ -71,6 +71,22 @@ T atomic_add(DrvAPIAddress address, T value)
 }
 
 /**
+ * @brief atomic add to a memory address
+ */
+template <typename T>
+T atomic_or(DrvAPIAddress address, T value)
+{
+    T result = 0;
+    DrvAPIThread::current()->setState(std::make_shared<DrvAPIMemAtomicConcrete<T, DrvAPIMemAtomicOR>>(address, value));
+    DrvAPIThread::current()->yield();
+    auto atomic_req = std::dynamic_pointer_cast<DrvAPIMemAtomic>(DrvAPIThread::current()->getState());
+    if (atomic_req) {
+        atomic_req->getResult(&result);
+    }
+    return result;
+}
+
+/**
  * @brief atomic compare and swap to a memory address
  */
 template <typename T>
