@@ -15,6 +15,7 @@ typedef enum  {
     DrvAPIMemAtomicCAS,
     DrvAPIMemAtomicSWAP,
     DrvAPIMemAtomicADD,
+    DrvAPIMemAtomicOR,
 } DrvAPIMemAtomicType;
 
 /**
@@ -46,6 +47,8 @@ atomic_modify(IntType w, IntType r, DrvAPIMemAtomicType op) {
         return {w, r};
     case DrvAPIMemAtomicADD:
         return {w + r, r};
+    case DrvAPIMemAtomicOR:
+        return {w | r, r};
     default:
         assert(false && "Something went wrong");
     }
