@@ -197,13 +197,27 @@ void DrvCore::configureOtherLinks(SST::Params &params) {
  * configure the statistics
  */
 void DrvCore::configureStatistics(Params &params) {
-#define DEFINE_DRV_STAT(name, ...)                       \
-    {                                                    \
-        auto *stat = registerStatistic<uint64_t>(#name); \
-        drv_stats_.push_back(stat);                      \
+    output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring statistics\n");
+    int threads = params.find<int>("threads", 1);
+    thread_stats_.resize(threads);
+    for (int thread = 0; thread < threads; thread++) {
+        ThreadStat *stat = &thread_stats_[thread];
+        std::string subid = "thread_" + std::to_string(thread);
+        stat->load_l1sp = registerStatistic<uint64_t>("load_l1sp", subid);
+        stat->load_l2sp = registerStatistic<uint64_t>("load_l2sp", subid);
+        stat->load_dram = registerStatistic<uint64_t>("load_dram", subid);
+        stat->load_remote_pxn = registerStatistic<uint64_t>("load_remote_pxn", subid);
+        stat->store_l1sp = registerStatistic<uint64_t>("store_l1sp", subid);
+        stat->store_l2sp = registerStatistic<uint64_t>("store_l2sp", subid);
+        stat->store_dram = registerStatistic<uint64_t>("store_dram", subid);
+        stat->store_remote_pxn = registerStatistic<uint64_t>("store_remote_pxn", subid);
+        stat->atomic_l1sp = registerStatistic<uint64_t>("atomic_l1sp", subid);
+        stat->atomic_l2sp = registerStatistic<uint64_t>("atomic_l2sp", subid);
+        stat->atomic_dram = registerStatistic<uint64_t>("atomic_dram", subid);
+        stat->atomic_remote_pxn = registerStatistic<uint64_t>("atomic_remote_pxn", subid);
     }
-#include "DrvStatsTable.hpp"
-#undef DEFINE_DRV_STAT
+    busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
+    stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");
 }
 
 /**

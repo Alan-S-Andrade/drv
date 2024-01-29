@@ -91,22 +91,34 @@ void RISCVCore::configureSysConfig(Params &params) {
 }
 
 void RISCVCore::configureStatistics(Params &params) {
-#define DEFINSTR(mnemonic, ...)                          \
-    {                                                    \
-        std::string name = #mnemonic;                    \
-        name += "_count";                                \
-        auto *stat = registerStatistic<uint64_t>(name);  \
-        instruction_counts_.push_back(stat);             \
-    }
+    size_t num_harts = params.find<size_t>("num_harts", 1);
+    thread_stats_.resize(num_harts);
+    for (size_t hart = 0; hart < num_harts; hart++) {
+        std::string subid = "hart_" + std::to_string(hart);
+        ThreadStats &stats = thread_stats_[hart];
+#define DEFINSTR(mnemonic, ...)                                         \
+        {                                                               \
+            std::string name = #mnemonic;                               \
+            name += "_count";                                           \
+            auto *stat = registerStatistic<uint64_t>(name, subid);      \
+            stats.instruction_count.push_back(stat);                    \
+        }        
 #include <InstructionTable.h>
-#undef DEFINSTR
-#define DEFINE_DRV_STAT(name, ...)                       \
-    {                                                    \
-        auto *stat = registerStatistic<uint64_t>(#name); \
-        drv_stats_.push_back(stat);                      \
+        stats.load_l1sp = registerStatistic<uint64_t>("load_l1sp", subid);
+        stats.store_l1sp = registerStatistic<uint64_t>("store_l1sp", subid);
+        stats.atomic_l1sp = registerStatistic<uint64_t>("atomic_l1sp", subid);
+        stats.load_l2sp = registerStatistic<uint64_t>("load_l2sp", subid);
+        stats.store_l2sp = registerStatistic<uint64_t>("store_l2sp", subid);
+        stats.atomic_l2sp = registerStatistic<uint64_t>("atomic_l2sp", subid);
+        stats.load_dram = registerStatistic<uint64_t>("load_dram", subid);
+        stats.store_dram = registerStatistic<uint64_t>("store_dram", subid);
+        stats.atomic_dram = registerStatistic<uint64_t>("atomic_dram", subid);
+        stats.load_remote_pxn = registerStatistic<uint64_t>("load_remote_pxn", subid);
+        stats.store_remote_pxn = registerStatistic<uint64_t>("store_remote_pxn", subid);
+        stats.atomic_remote_pxn = registerStatistic<uint64_t>("atomic_remote_pxn", subid);
     }
-#include "DrvStatsTable.hpp"
-#undef DEFINE_DRV_STAT
+    busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
+    stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -364,7 +376,8 @@ bool RISCVCore::tick(Cycle_t cycle) {
                         ,i->getMnemonic()
                         );
         profileInstruction(harts_[hart_id], *i);
-        instruction_counts_[i->getInstructionId()]->addData(1);
+        auto &stats = thread_stats_[hart_id];
+        stats.instruction_count[i->getInstructionId()]->addData(1);
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {

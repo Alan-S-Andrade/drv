@@ -73,24 +73,38 @@ public:
       {"memory", "Interface to memory hierarchy", "Drv::DrvMemory"},
   )
 
+  struct ThreadStat {
+      Statistic<uint64_t> *load_l1sp;
+      Statistic<uint64_t> *store_l1sp;
+      Statistic<uint64_t> *atomic_l1sp;
+      Statistic<uint64_t> *load_l2sp;
+      Statistic<uint64_t> *store_l2sp;
+      Statistic<uint64_t> *atomic_l2sp;
+      Statistic<uint64_t> *load_dram;
+      Statistic<uint64_t> *store_dram;
+      Statistic<uint64_t> *atomic_dram;
+      Statistic<uint64_t> *load_remote_pxn;
+      Statistic<uint64_t> *store_remote_pxn;
+      Statistic<uint64_t> *atomic_remote_pxn;
+  };
+
   // DOCUMENT STATISTICS
-  /* unfortunately the macro doesn't work with including "DrvStatsTable.hpp" */
-  static const std::vector<SST::ElementInfoStatistic>& ELI_getStatistics()
-    {
-#define DEFINE_DRV_STAT(name, desc, unit, load_level)   \
-        {#name, desc, unit, load_level},
-
-        static std::vector<SST::ElementInfoStatistic> var    = {
-#include <DrvStatsTable.hpp>
-        };
-
-#undef DEFINE_DRV_STAT
-        auto parent = SST::ELI::InfoStats<
-            std::conditional<(__EliDerivedLevel > __EliBaseLevel), __LocalEliBase, __ParentEliBase>::type>::get();
-        SST::ELI::combineEliInfo(var, parent);
-        return var;
-    }
-
+  SST_ELI_DOCUMENT_STATISTICS(
+      {"load_l1sp", "Number of loads to local L1SP", "count", 1},
+      {"store_l1sp", "Number of stores to local L1SP", "count", 1},
+      {"atomic_l1sp", "Number of atomics to local L1SP", "count", 1},
+      {"load_l2sp", "Number of loads to L2SP", "count", 1},
+      {"store_l2sp", "Number of stores to L2SP", "count", 1},
+      {"atomic_l2sp", "Number of atomics to L2SP", "count", 1},
+      {"load_dram", "Number of loads to DRAM", "count", 1},
+      {"store_dram", "Number of stores to DRAM", "count", 1},
+      {"atomic_dram", "Number of atomics to DRAM", "count", 1},
+      {"load_remote_pxn", "Number of loads to remote PXN", "count", 1},
+      {"store_remote_pxn", "Number of stores to remote PXN", "count", 1},
+      {"atomic_remote_pxn", "Number of atomics to remote PXN", "count", 1},
+      {"stall_cycles", "Number of stalled cycles", "count", 1},
+      {"busy_cycles", "Number of busy cycles", "count", 1},
+    )
 
   /**
    * constructor
@@ -275,7 +289,7 @@ public:
   /**
    * return the id of a thread
    */
-  int getThreadID(DrvThread *thread) {
+  int getThreadID(DrvThread *thread) const {
     size_t tid = thread - &threads_[0];
     assert(tid < threads_.size());
     return static_cast<int>(tid);
@@ -334,30 +348,9 @@ public:
     /**
      * is local l1sp for purpose of stats
      */
-    bool isPAddressLocalL1SP(DrvAPI::DrvAPIPAddress addr) const {
+    bool isPAddressL1SP(DrvAPI::DrvAPIPAddress addr) const {
         return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_)
-            && addr.pod() == static_cast<uint64_t>(pod_)
-            && addr.core_y() == static_cast<uint64_t>(DrvAPI::coreYFromId(id_))
-            && addr.core_x() == static_cast<uint64_t>(DrvAPI::coreXFromId(id_));
-    }
-
-    /**
-     * is remote l1sp for purpose of stats
-     */
-    bool isPAddressRemoteL1SP(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_)
-            && addr.pod() == static_cast<uint64_t>(pod_)
-            && (   addr.core_y() != static_cast<uint64_t>(DrvAPI::coreYFromId(id_))
-                || addr.core_x() != static_cast<uint64_t>(DrvAPI::coreXFromId(id_)));
-    }
-
-    /**
-     * is remote pxn memory for purpose of stats
-     */
-    bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.pxn() != static_cast<uint64_t>(pxn_);
+            && addr.pxn() == static_cast<uint64_t>(pxn_);
     }
 
     /**
@@ -365,8 +358,7 @@ public:
      */
     bool isPAddressL2SP(DrvAPI::DrvAPIPAddress addr) const {
         return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_)
-            && addr.pod() == static_cast<uint64_t>(pod_);
+            && addr.pxn() == static_cast<uint64_t>(pxn_);
     }
 
     /**
@@ -378,44 +370,63 @@ public:
     }
 
     /**
+     * is remote pxn memory for purpose of stats
+     */
+    bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
+        return addr.pxn() != static_cast<uint64_t>(pxn_);
+    }
+
+    /**
      * add load statistic
      */
-    void addLoadStat(DrvAPI::DrvAPIPAddress addr) const {
-        if (isPAddressLocalL1SP(addr))  drv_stats_[LOAD_LOCAL_L1SP]->addData(1);
-        if (isPAddressRemoteL1SP(addr)) drv_stats_[LOAD_REMOTE_L1SP]->addData(1);
-        if (isPAddressL2SP(addr))       drv_stats_[LOAD_L2SP]->addData(1);
-        if (isPAddressDRAM(addr))       drv_stats_[LOAD_DRAM]->addData(1);
-        if (isPAddressRemotePXN(addr))  {
+    void addLoadStat(DrvAPI::DrvAPIPAddress addr, DrvThread *thread) {
+        int tid = getThreadID(thread);
+        ThreadStat *stats = &thread_stats_[tid];
+        if (isPAddressL1SP(addr)) {
+            stats->load_l1sp->addData(1);
+        } else if (isPAddressL2SP(addr)) {
+            stats->load_l2sp->addData(1);
+        } else if (isPAddressDRAM(addr)) {
+            stats->load_dram->addData(1);
+        } else if (isPAddressRemotePXN(addr))  {
             traceRemotePxnMem(TRACE_REMOTE_PXN_LOAD, "read", addr);
-            drv_stats_[LOAD_REMOTE_PXN]->addData(1);
+            stats->load_remote_pxn->addData(1);
         }
     }
 
     /**
      * add store statistic
      */
-    void addStoreStat(DrvAPI::DrvAPIPAddress addr) const {
-        if (isPAddressLocalL1SP(addr))  drv_stats_[STORE_LOCAL_L1SP]->addData(1);
-        if (isPAddressRemoteL1SP(addr)) drv_stats_[STORE_REMOTE_L1SP]->addData(1);
-        if (isPAddressL2SP(addr))       drv_stats_[STORE_L2SP]->addData(1);
-        if (isPAddressDRAM(addr))       drv_stats_[STORE_DRAM]->addData(1);
-        if (isPAddressRemotePXN(addr))  {
+    void addStoreStat(DrvAPI::DrvAPIPAddress addr, DrvThread *thread) {
+        int tid = getThreadID(thread);
+        ThreadStat *stats = &thread_stats_[tid];
+        if (isPAddressL1SP(addr)) {
+            stats->store_l1sp->addData(1);
+        } else if (isPAddressL2SP(addr)) {
+            stats->store_l2sp->addData(1);
+        } else if (isPAddressDRAM(addr)) {
+            stats->store_dram->addData(1);
+        } else if (isPAddressRemotePXN(addr)) {
             traceRemotePxnMem(TRACE_REMOTE_PXN_STORE, "write", addr);
-            drv_stats_[STORE_REMOTE_PXN]->addData(1);
+            stats->store_remote_pxn->addData(1);
         }
     }
 
     /**
      * add atomic statistic
      */
-    void addAtomicStat(DrvAPI::DrvAPIPAddress addr) const {
-        if (isPAddressLocalL1SP(addr))  drv_stats_[ATOMIC_LOCAL_L1SP]->addData(1);
-        if (isPAddressRemoteL1SP(addr)) drv_stats_[ATOMIC_REMOTE_L1SP]->addData(1);
-        if (isPAddressL2SP(addr))       drv_stats_[ATOMIC_L2SP]->addData(1);
-        if (isPAddressDRAM(addr))       drv_stats_[ATOMIC_DRAM]->addData(1);
-        if (isPAddressRemotePXN(addr))  {
+    void addAtomicStat(DrvAPI::DrvAPIPAddress addr, DrvThread *thread) {
+        int tid = getThreadID(thread);
+        ThreadStat *stats = &thread_stats_[tid];
+        if (isPAddressL1SP(addr)) {
+            stats->atomic_l1sp->addData(1);
+        } else if (isPAddressL2SP(addr)) {
+            stats->atomic_l2sp->addData(1);
+        } else if (isPAddressDRAM(addr)) {
+            stats->atomic_dram->addData(1);
+        } else if (isPAddressRemotePXN(addr))  {
             traceRemotePxnMem(TRACE_REMOTE_PXN_ATOMIC, "atomic", addr);
-            drv_stats_[ATOMIC_REMOTE_PXN]->addData(1);
+            stats->atomic_remote_pxn->addData(1);
         }
     }
 
@@ -424,12 +435,13 @@ public:
     }
 
     void addBusyCycleStat(uint64_t cycles) {
-        drv_stats_[BUSY_CYCLES]->addData(cycles);
+        busy_cycles_->addData(cycles);
     }
 
     void addStallCycleStat(uint64_t cycles) {
-        drv_stats_[STALL_CYCLES]->addData(cycles);
+        stall_cycles_->addData(cycles);
     }
+
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   std::vector<DrvThread> threads_; //!< the threads on this core
@@ -451,8 +463,11 @@ private:
   DrvSysConfig sys_config_; //!< system configuration
   bool stack_in_l1sp_ = false; //!< true if the stack is in L1SP backing store
   std::shared_ptr<DrvSystem> system_callbacks_ = nullptr; //!< the system callbacks
-  std::vector<Statistic<uint64_t>*> drv_stats_; //!< the statistics
   Clock::Handler<DrvCore> *clock_handler_; //!< the clock handler
+  // statistics
+  std::vector<ThreadStat> thread_stats_; //!< the thread statistics
+  Statistic<uint64_t> *busy_cycles_; //!< busy cycles
+  Statistic<uint64_t> *stall_cycles_; //!< stall cycles
 public:
   DrvMemory* memory_;  //!< the memory hierarchy
   SST::TimeConverter *clocktc_; //!< the clock time converter
