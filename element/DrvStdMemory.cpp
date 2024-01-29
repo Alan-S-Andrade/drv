@@ -126,7 +126,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         StandardMem::Write *req = new StandardMem::Write(addr, size, data);
         req->tid = core->getThreadID(thread);
         // add statistic
-        core->addStoreStat(DrvAPI::DrvAPIPAddress{addr});
+        core->addStoreStat(DrvAPI::DrvAPIPAddress{addr}, thread);
         mem_->send(req);
         return;
     }
@@ -141,7 +141,7 @@ DrvStdMemory::sendRequest(DrvCore *core
                                 addr, size);
         StandardMem::Read *req = new StandardMem::Read(addr, size);
         req->tid = core->getThreadID(thread);
-        core->addLoadStat(DrvAPI::DrvAPIPAddress{addr});
+        core->addLoadStat(DrvAPI::DrvAPIPAddress{addr}, thread);
         mem_->send(req);
         return;
     }
@@ -169,7 +169,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                         "Sending atomic request addr=%" PRIx64 " size=%" PRIu64 "\n",
                         addr, size);
-        core->addAtomicStat(DrvAPI::DrvAPIPAddress{addr});
+        core->addAtomicStat(DrvAPI::DrvAPIPAddress{addr}, thread);
         AtomicReqData *data = new AtomicReqData();
         data->pAddr = addr;
         data->size = size;

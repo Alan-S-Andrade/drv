@@ -82,7 +82,7 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
 //   std::cout << std::hex << "addr: " << addr << " load rs1: " << shart.x(i.rs1()) << " siimm: " << i.SIimm() << std::dec << std::endl;
 
    DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr).encode();
-   core_->addLoadStat(decode); // add to statistics
+   core_->addLoadStat(decode, shart); // add to statistics
 
    // create the read request
    addr = decode.encode();
@@ -132,7 +132,7 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
     }
 
     DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr);
-    core_->addStoreStat(decode); // add to statistics
+    core_->addStoreStat(decode, shart); // add to statistics
 
     // create the write request
     addr = decode.encode();
@@ -164,7 +164,7 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
     StandardMem::Addr addr = shart.x(i.rs1());
 
     DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr);
-    core_->addAtomicStat(decode); // add to statistics
+    core_->addAtomicStat(decode, shart); // add to statistics
 
     AtomicReqData *data = new AtomicReqData();
     addr = decode.encode();
