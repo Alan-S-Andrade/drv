@@ -198,6 +198,10 @@ void DrvCore::configureOtherLinks(SST::Params &params) {
  */
 void DrvCore::configureStatistics(Params &params) {
     output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configuring statistics\n");
+    uint32_t stats_level = getStatisticLoadLevel();
+    tag_.init("", stats_level, 0, Output::FILE, "tags.csv");
+    tag_.verbose(CALL_INFO, 1, 0, "SimTime,TagName\n");
+
     int threads = params.find<int>("threads", 1);
     thread_stats_.resize(threads);
     for (int thread = 0; thread < threads; thread++) {

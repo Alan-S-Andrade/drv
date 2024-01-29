@@ -32,6 +32,6 @@ double DrvSystem::getSeconds() {
     return core().getElapsedSimTime().getDoubleValue();
 }
 
-void DrvSystem::outputStatistics() {
-    core().outputStatistics();
+void DrvSystem::outputStatistics(const std::string &tagname) {
+    core().outputStatistics(tagname);
 }
