@@ -6,9 +6,10 @@ APP_NAME := latency
 include $(DRV_DIR)/mk/config.mk
 include $(DRV_DIR)/mk/application_common.mk
 
-run-%: $(APP_NAME).so
-	$(eval core=0)
-	$(eval tthread=0)
-	$(eval addr=$(word 1,$(subst -, ,$*)))
-	$(eval n=$(word 2,$(subst -, ,$*)))
-	$(SST) $(DRV_DIR)/tests/$(SCRIPT) -- $(APP_PATH)/$(APP_NAME).so $(core) $(tthread) $(addr) $(n)
+CORE   ?= 0
+THREAD ?= 0
+ADDR   ?= 0x0
+N      ?= 1000
+
+SIM_OPTIONS += --core-stats --stats-load-level=1
+SIM_ARGS += $(CORE) $(THREAD) $(ADDR) $(N)

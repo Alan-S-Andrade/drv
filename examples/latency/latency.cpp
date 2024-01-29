@@ -41,10 +41,12 @@ int LatencyMain(int argc, char *argv[])
         // read from address n times
         for (int i = 0; i < n; i++) {
             DrvAPI::read<uint64_t>(addr);
-            if (i % 10 == 0) {
+            if (i % 100 == 0) {
                 printf("read %4d of %4d\r", i, n);
+                outputStatistics("load_" + std::to_string(i));
             }
         }
+        outputStatistics("done");
         printf("\ndone!\n");
     }
     return 0;

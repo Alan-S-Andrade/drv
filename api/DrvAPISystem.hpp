@@ -71,7 +71,7 @@ public:
     /**
      * @brief output simulation statistics
      */
-    virtual void outputStatistics() {
+    virtual void outputStatistics(const std::string &tagname) {
         throw std::runtime_error("outputStatistics() not implemented");
     }
 };

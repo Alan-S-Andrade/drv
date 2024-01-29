@@ -430,7 +430,8 @@ public:
         }
     }
 
-    void outputStatistics() {
+    void outputStatistics(const std::string &tagname) {
+        tag_.verbose(CALL_INFO, 1, 0, "%lu,%s\n", getCurrentSimTime("1 ps"), tagname.c_str());
         performGlobalStatisticOutput();
     }
 
@@ -444,6 +445,7 @@ public:
 
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
+  SST::Output tag_; //!< for stats collection
   std::vector<DrvThread> threads_; //!< the threads on this core
   void *executable_; //!< the executable handle
   drv_api_main_t main_; //!< the main function in the executable

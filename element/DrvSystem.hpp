@@ -27,7 +27,7 @@ public:
     virtual uint64_t getCycleCount() override;
     virtual uint64_t getClockHz() override;
     virtual double getSeconds() override; 
-    virtual void outputStatistics() override;
+    virtual void outputStatistics(const std::string& tagname) override;
     DrvCore &core_;
 };
 

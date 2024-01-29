@@ -145,11 +145,22 @@ inline double seconds() {
     return DrvAPIThread::current()->getSystem()->getSeconds();
 }
 
+inline double picoseconds() {
+    return seconds() * 1e12;
+}
+
 /**
  * this will force the simulator to do a global statistics dump
  */
 inline void outputStatistics() {
-    DrvAPIThread::current()->getSystem()->outputStatistics();
+    DrvAPIThread::current()->getSystem()->outputStatistics("none");
+}
+
+/**
+ * this will force the simulator to do a global statistics dump with a tag
+ */
+inline void outputStatistics(const std::string& tag) {
+    DrvAPIThread::current()->getSystem()->outputStatistics(tag);
 }
 
 
