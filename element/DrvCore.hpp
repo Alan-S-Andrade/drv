@@ -86,7 +86,10 @@ public:
       Statistic<uint64_t> *load_remote_pxn;
       Statistic<uint64_t> *store_remote_pxn;
       Statistic<uint64_t> *atomic_remote_pxn;
+      Statistic<uint64_t> *tag_cycles; // cycles spent executing with a tag
   };
+
+  static constexpr uint32_t TAG_EXECUTION_LOAD_LEVEL = 3;
 
   // DOCUMENT STATISTICS
   SST_ELI_DOCUMENT_STATISTICS(
@@ -102,6 +105,7 @@ public:
       {"load_remote_pxn", "Number of loads to remote PXN", "count", 1},
       {"store_remote_pxn", "Number of stores to remote PXN", "count", 1},
       {"atomic_remote_pxn", "Number of atomics to remote PXN", "count", 1},
+      {"tag_cycles", "number of cycles spent executing with a tag", "count", 1},
       {"stall_cycles", "Number of stalled cycles", "count", 1},
       {"busy_cycles", "Number of busy cycles", "count", 1},
     )
@@ -287,6 +291,11 @@ public:
   void finish() override;
 
   /**
+   * update the tag counters
+   */
+  void updateTagCycles(int times);
+
+  /**
    * return the id of a thread
    */
   int getThreadID(DrvThread *thread) const {
@@ -333,6 +342,7 @@ public:
       output_->verbose(CALL_INFO, 2, DEBUG_RSP, "turning core on\n");
       reregister_cycle_ = system_callbacks_->getCycleCount();
       addStallCycleStat(reregister_cycle_ - unregister_cycle_);
+      updateTagCycles(reregister_cycle_ - unregister_cycle_);
       reregisterClock(clocktc_, clock_handler_);
     }
   }

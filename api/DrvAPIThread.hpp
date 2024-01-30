@@ -162,6 +162,21 @@ public:
   }
 
   /**
+   * @brief Set the execution tag
+   *
+   * @param tag
+   * @return the old tag
+   */
+  int setTag(int tag);
+
+  /**
+   * @brief Get the execution tag
+   *
+   * @return the tag
+   */
+  int getTag() const;
+
+  /**
    * @brief Convert a DrvAPIAddress to a native pointer
    */
   void addressToNative(DrvAPIAddress address, void **native, std::size_t *size);
@@ -193,8 +208,33 @@ private:
   int core_threads_; //!< Number of threads on this core
   int pod_id_; //!< Pod id in PXN
   int pxn_id_; //!< Pxn id
+  int tag_ = 0; //!< Execution tag
   bool stack_in_modeled_memory_ = false; //!< Stack is in modeled memory
 };
+
+/**
+ * @brief Thread tag guard - restores old tag when out of scope
+ */
+class DrvAPITagGuard {
+public:
+    DrvAPITagGuard(int tag) {
+        old_tag_ = DrvAPIThread::current()->setTag(tag);
+        printf("Thread %d: Setting tag %d: found %d\n",
+               DrvAPIThread::current()->threadId(), tag, old_tag_);
+    }
+    DrvAPITagGuard(const DrvAPITagGuard &) = delete;
+    DrvAPITagGuard &operator=(const DrvAPITagGuard &) = delete;
+    DrvAPITagGuard(DrvAPITagGuard &&) = delete;
+    DrvAPITagGuard &operator=(DrvAPITagGuard &&) = delete;
+
+    ~DrvAPITagGuard() {
+        int tag = DrvAPIThread::current()->setTag(old_tag_);
+        printf("Thread %d: Restoring tag %d: found %d\n",
+               DrvAPIThread::current()->threadId(), old_tag_, tag);
+    }
+    int old_tag_;
+};
+
 }
 
 /**

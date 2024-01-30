@@ -164,6 +164,27 @@ void DrvAPIThread::nativeToAddress(void *native, DrvAPIAddress *address, std::si
     *size = l1sp_base_size - (check - start);
 }
 
+/**
+ * @brief Set the execution tag
+ *
+ * @param tag
+ * @return the old tag
+ */
+int DrvAPIThread::setTag(int tag) {
+    int old_tag = tag_;
+    tag_ = tag;
+    return old_tag;
+}
+
+/**
+ * @brief Get the execution tag
+ *
+ * @return the tag
+ */
+int DrvAPIThread::getTag() const {
+    return tag_;
+}
+
 thread_local DrvAPIThread *DrvAPIThread::g_current_thread = nullptr;
 
 
