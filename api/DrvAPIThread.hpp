@@ -219,8 +219,6 @@ class DrvAPITagGuard {
 public:
     DrvAPITagGuard(int tag) {
         old_tag_ = DrvAPIThread::current()->setTag(tag);
-        printf("Thread %d: Setting tag %d: found %d\n",
-               DrvAPIThread::current()->threadId(), tag, old_tag_);
     }
     DrvAPITagGuard(const DrvAPITagGuard &) = delete;
     DrvAPITagGuard &operator=(const DrvAPITagGuard &) = delete;
@@ -229,8 +227,6 @@ public:
 
     ~DrvAPITagGuard() {
         int tag = DrvAPIThread::current()->setTag(old_tag_);
-        printf("Thread %d: Restoring tag %d: found %d\n",
-               DrvAPIThread::current()->threadId(), old_tag_, tag);
     }
     int old_tag_;
 };
