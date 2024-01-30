@@ -226,7 +226,7 @@ public:
     DrvAPITagGuard &operator=(DrvAPITagGuard &&) = delete;
 
     ~DrvAPITagGuard() {
-        int tag = DrvAPIThread::current()->setTag(old_tag_);
+        DrvAPIThread::current()->setTag(old_tag_);
     }
     int old_tag_;
 };
