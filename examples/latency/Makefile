@@ -9,7 +9,7 @@ include $(DRV_DIR)/mk/application_common.mk
 CORE   ?= 0
 THREAD ?= 0
 ADDR   ?= 0x0
-N      ?= 1000
+N      ?= 1
 
 SIM_OPTIONS += --core-stats --stats-load-level=1
 SIM_ARGS += $(CORE) $(THREAD) $(ADDR) $(N)

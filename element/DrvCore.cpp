@@ -219,6 +219,7 @@ void DrvCore::configureStatistics(Params &params) {
         stat->atomic_l2sp = registerStatistic<uint64_t>("atomic_l2sp", subid);
         stat->atomic_dram = registerStatistic<uint64_t>("atomic_dram", subid);
         stat->atomic_remote_pxn = registerStatistic<uint64_t>("atomic_remote_pxn", subid);
+        stat->tag_cycles = registerStatistic<uint64_t>("tag_cycles", subid);
     }
     busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
     stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");
@@ -404,6 +405,19 @@ bool DrvCore::allDone() {
   return done_ == 0;
 }
 
+void DrvCore::updateTagCycles(int times) {
+    // skip if these are null stats
+    if (getStatisticLoadLevel() < TAG_EXECUTION_LOAD_LEVEL) {
+        return;
+    }
+
+    for (auto &drv_thread : threads_) {
+        int tid = getThreadID(&drv_thread);
+        auto &thread_stats = thread_stats_[tid];
+        thread_stats.tag_cycles->addDataNTimes(times, drv_thread.getAPIThread().getTag());
+    }
+}
+
 bool DrvCore::clockTick(SST::Cycle_t cycle) {
   output_->verbose(CALL_INFO, 20, DEBUG_CLK, "tick!\n");
   // execute a ready thread
@@ -411,6 +425,7 @@ bool DrvCore::clockTick(SST::Cycle_t cycle) {
   if (allDone()) {
       primaryComponentOKToEndSim();
   }
+  updateTagCycles(1);
   bool unregister = shouldUnregisterClock();
   core_on_ = !unregister;
   if (unregister) {

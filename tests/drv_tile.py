@@ -121,6 +121,7 @@ class Tile(object):
         self.initRtr()
 
 class DrvXTile(Tile):
+    TILES = []
     """
     A tile with a DrvX core
     """
@@ -129,10 +130,18 @@ class DrvXTile(Tile):
         Create a tile with the given ID, pod, and PXN.
         """
         super().__init__(id, pod, pxn)
+        self.TILES += [self]
 
     @classmethod
     def enableAllCoreStats(clss):
         sst.enableAllStatisticsForComponentType("Drv.DrvCore")
+        for tile in clss.TILES:
+            tile.core.enableStatistics(['tag_cycles'],
+                                       {'type': 'sst.HistogramStatistic',
+                                        'minvalue' : '0',
+                                        'binwidth' : '1',
+                                        'numbins' : '4',
+                                        'IncludeOoutOfBounds' : '1'})
 
     def initCore(self):
         """
