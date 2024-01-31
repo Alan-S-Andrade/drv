@@ -25,6 +25,8 @@ class SharedMemoryBank(object):
             "clock" : "1GHz",
             "addr_range_start" : self.address_range.start,
             "addr_range_end"   : self.address_range.end,
+            "interleave_size" :  str(self.address_range.interleave_size) + 'B',
+            "interleave_step" : str(self.address_range.interleave_step) + 'B',
             "debug" : 1,
             "debug_level" : arguments.verbose_memory,
             "verbose" : arguments.verbose_memory,
@@ -70,6 +72,11 @@ class SharedMemoryBank(object):
             (self.mem_rtr, "port0", "1ns"),
         )
 
+        # print("{}: start={:016x} end={:016x}".format(
+        #     self.name,
+        #     self.address_range.start,
+        #     self.address_range.end,
+        # ))
 
     def make_id(self, bank, *args, **kwargs):
         """
