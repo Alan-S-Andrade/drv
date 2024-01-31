@@ -5,7 +5,7 @@
 #include <pandohammer/cpuinfo.h>
 #include <stdint.h>
 
-static  uint64_t *table = (uint64_t)DRAM_BASE;
+static  uint64_t *table = (uint64_t*)DRAM_BASE;
 static  int thread_updates = (int)THREAD_UPDATES;
 static  uint64_t table_size = (uint64_t)TABLE_SIZE;
 
@@ -21,7 +21,13 @@ static  uint64_t random(uint64_t *seed)
 
 int main()
 {
-    uint64_t seed = myThreadId();
+    uint64_t seed
+        = myThreadId()
+        + myCoreThreads() * myCoreId()
+        + myCoreThreads() * numPodCores() * myPodId()
+        + myCoreThreads() * numPodCores() * numPXNPods() * myPXNId();
+
+    ph_print_int(cycle());
     for (int u = 0; u < thread_updates; u++) {
         uint64_t index = random(&seed) % table_size;
         uint64_t *addr = &table[index];
