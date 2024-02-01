@@ -27,7 +27,6 @@ int main()
         + myCoreThreads() * numPodCores() * myPodId()
         + myCoreThreads() * numPodCores() * numPXNPods() * myPXNId();
 
-    ph_print_int(cycle());
     for (int u = 0; u < thread_updates; u++) {
         uint64_t index = random(&seed) % table_size;
         uint64_t *addr = &table[index];

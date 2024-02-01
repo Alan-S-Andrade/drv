@@ -73,6 +73,9 @@ run: $(RISCV_TARGET)
 disassemble: $(RISCV_TARGET)
 	$(RISCV_OBJDUMP) -D $(RISCV_TARGET)
 
+opcode-mix: $(RISCV_TARGET)
+	python3 $(DRV_DIR)/py/opcode-mix.py stats.csv tags.csv
+
 include $(DRV_DIR)/mk/command_processor.mk
 
 endif

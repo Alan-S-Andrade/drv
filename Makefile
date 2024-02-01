@@ -31,7 +31,7 @@ $(foreach example, $(EXAMPLES), $(example)-run): %-run:
 	$(MAKE) -C $* clean
 	$(MAKE) -C $* run
 
-clean: $(foreach example, $(EXAMPLES), $(example)-clean)
+clean: #$(foreach example, $(EXAMPLES), $(example)-clean)
 	$(MAKE) -C $(DRV_DIR)/element/ clean
 	$(MAKE) -C $(DRV_DIR)/api/ clean
 	$(MAKE) -C $(DRV_DIR)/interpreter/ clean
