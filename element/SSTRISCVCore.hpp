@@ -95,7 +95,7 @@ public:
     static const std::vector<SST::ElementInfoStatistic>& ELI_getStatistics()
     {
 #define DEFINSTR(mnemonic, ...)                                         \
-        {#mnemonic "_count", "Number of " #mnemonic " instructions", "instructions", 2},
+        {#mnemonic "_instruction", "Number of " #mnemonic " instructions", "instructions", 2},
 
         static std::vector<SST::ElementInfoStatistic> var    = {
 #include <InstructionTable.h>
