@@ -62,14 +62,16 @@ class SharedMemoryBank(object):
             "flit_size" : "8B",
             "input_buf_size" : "1KB",
             "output_buf_size" : "1KB",
+            'input_latency' : router_latency('mem_rtr'),
+            'output_latency' : router_latency('mem_rtr'),
             "debug" : 1,
         })
         self.mem_rtr.setSubComponent("topology","merlin.singlerouter")
         # setup connection rtr <-> mem
         self.mem_nic_link = sst.Link("{}_nic_link_{}".format(self.name,self.id))
         self.mem_nic_link.connect(
-            (self.nic, "port", "1ns"),
-            (self.mem_rtr, "port0", "1ns"),
+            (self.nic, "port", link_latency('mem_nic_link')),
+            (self.mem_rtr, "port0", link_latency('mem_nic_link')),
         )
 
         # print("{}: start={:016x} end={:016x}".format(
@@ -142,7 +144,7 @@ class L2MemoryBank(SharedMemoryBank):
         backend =  memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         backend.addParams({
             "verbose_level" : arguments.verbose_memory,
-            "access_time" : "32ns",
+            "access_time" : memory_latency('l2sp'),
             "mem_size" : L2SPRange.L2SP_BANK_SIZE_STR,
         })
         return backend
@@ -183,7 +185,7 @@ class MainMemoryBank(SharedMemoryBank):
             backend = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
             backend.addParams({
                 "verbose_level" : arguments.verbose_memory,
-                "access_time" : KNOBS["dram_access_time"],
+                "access_time" : memory_latency('dram'),
                 "mem_size" : MainMemoryRange.MAINMEM_BANK_SIZE_STR,
             })
             return backend

@@ -67,7 +67,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("program", help="program to run")
 parser.add_argument("argv", nargs=argparse.REMAINDER, help="arguments to program")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
-parser.add_argument("--dram-access-time", type=str, default="16ns", help="latency of DRAM (only valid if using the latency based model)")
+parser.add_argument("--dram-access-time", type=str, default="13ns", help="latency of DRAM (only valid if using the latency based model)")
 parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator'], help="backend timing model for DRAM")
 parser.add_argument("--dram-backend-config", type=str, default="/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
                     help="backend timing model configuration for DRAM")
@@ -101,6 +101,43 @@ parser.add_argument("--stats-load-level", type=int, default=0, help="load level 
 parser.add_argument("--trace-remote-pxn-memory", action="store_true", help="trace remote pxn memory accesses")
 
 arguments = parser.parse_args()
+
+#############################################
+# Latencies of various components and links #
+#############################################
+# determine latency of link
+LINK_LATENCIES = {
+}
+def link_latency(link_name):
+    if link_name not in LINK_LATENCIES:
+        return "1ps"
+
+    return LINK_LATENCIES[link_name]
+
+# determine the latency of a router
+ROUTER_LATENCIES = {
+    'tile_rtr': "250ps",
+    'mem_rtr': "250ps",
+    'chiprrtr': "250ps",
+    'offchiprtr': "70ns",
+}
+def router_latency(router_name):
+    if router_name not in ROUTER_LATENCIES:
+        return "1ps"
+
+    return ROUTER_LATENCIES[router_name]
+
+# determine the latency of a memory
+MEMORY_LATENCIES = {
+    'l1sp': "1ns",
+    'l2sp': "1ns",
+    'dram': arguments.dram_access_time,
+}
+def memory_latency(memory_name):
+    if memory_name not in MEMORY_LATENCIES:
+        return "1ps"
+
+    return MEMORY_LATENCIES[memory_name]
 
 ###################
 # router id bases #
@@ -144,7 +181,6 @@ CORE_DEBUG = {
 
 KNOBS = {
     "core_max_idle" : arguments.core_max_idle,
-    "dram_access_time" : arguments.dram_access_time,
 }
 
 SYSCONFIG['sys_num_pxn'] = arguments.num_pxn

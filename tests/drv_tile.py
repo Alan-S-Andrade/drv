@@ -43,7 +43,7 @@ class Tile(object):
         self.scratchpad = self.scratchpad_mectrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         self.scratchpad.addParams({
             "verbose_level" : arguments.verbose_memory,
-            "access_time" : "1ns",
+            "access_time" : memory_latency('l1sp'),
             "mem_size" : L1SPRange.L1SP_SIZE_STR,
         })
 
@@ -77,6 +77,8 @@ class Tile(object):
             "flit_size" : "8B",
             "input_buf_size" : "1KB",
             "output_buf_size" : "1KB",
+            'input_latency' : router_latency('tile_rtr'),
+            'output_latency' : router_latency('tile_rtr'),
             "debug" : 1,
         })
 
@@ -84,15 +86,15 @@ class Tile(object):
         self.tile_rtr.setSubComponent("topology","merlin.singlerouter")
         self.core_nic_link = sst.Link("core_nic_link_%d_pod%d_pxn%d" % (self.id, self.pod, self.pxn))
         self.core_nic_link.connect(
-            (self.core_nic, "port", "1ns"),
-            (self.tile_rtr, "port0", "1ns")
+            (self.core_nic, "port", link_latency('core_nic_link')),
+            (self.tile_rtr, "port0", link_latency('core_nic_link'))
         )
 
         # setup connection rtr <-> scratchpad
         self.scratchpad_nic_link = sst.Link("scratchpad_nic_link_%d_pod%d_pxn%d" % (self.id, self.pod, self.pxn))
         self.scratchpad_nic_link.connect(
-            (self.scratchpad_nic, "port", "1ns"),
-            (self.tile_rtr, "port1", "1ns")
+            (self.scratchpad_nic, "port", link_latency('scratchpad_nic_link')),
+            (self.tile_rtr, "port1", link_latency('scratchpad_nic_link'))
         )
 
     def initCore(self):

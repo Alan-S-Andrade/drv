@@ -9,7 +9,7 @@ include $(DRV_DIR)/mk/application_common.mk
 N      ?= 1000000
 TARGET ?= DRAM
 MEMOP  ?= LOAD
-DRAM_ACCESS_TIME ?= 16ns
+DRAM_ACCESS_TIME ?= 13ns
 MAX_IDLE ?= 1
 
 THREADS ?= 16
@@ -17,7 +17,7 @@ CORES   ?= 8
 PODS    ?= 2
 PXNS    ?= 2
 
-CXXFLAGS += -DNATOMICS=$(N) -DTARGET=TAGET_$(TARGET) -DMEMOP_$(MEMOP)
+CXXFLAGS += -DNATOMICS=$(N) -DTARGET_$(TARGET) -DMEMOP_$(MEMOP)
 SIM_OPTIONS += --core-threads=$(THREADS) --pod-cores=$(CORES) --pxn-pods=$(PODS) --num-pxn=$(PXNS)
 SIM_OPTIONS += --dram-access-time=$(DRAM_ACCESS_TIME)
 SIM_OPTIONS += --core-max-idle=$(MAX_IDLE)
