@@ -99,7 +99,7 @@ void RISCVCore::configureStatistics(Params &params) {
 #define DEFINSTR(mnemonic, ...)                                         \
         {                                                               \
             std::string name = #mnemonic;                               \
-            name += "_count";                                           \
+            name += "_instruction";                                     \
             auto *stat = registerStatistic<uint64_t>(name, subid);      \
             stats.instruction_count.push_back(stat);                    \
         }        
