@@ -147,7 +147,7 @@ def MakePANDOHammer(make_tile):
             # performance models
             "xbar_bw" : "256GB/s",
             "link_bw" : "256GB/s",
-            "flit_size" : "256B",
+            "flit_size" : "8B",
             "input_buf_size" : "16MB",
             "output_buf_size" : "16MB",
             "input_latency" : router_latency('offchiprtr'),
