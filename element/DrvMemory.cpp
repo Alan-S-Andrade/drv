@@ -2,6 +2,9 @@
 // Copyright (c) 2023 University of Washington
 
 #include <DrvMemory.hpp>
+#include <DrvCore.hpp>
+#include <sstream>
+#include <iomanip>
 
 using namespace SST;
 using namespace Drv;
@@ -22,7 +25,14 @@ DrvMemory::DrvMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *core)
         mask |= VERBOSE_RSP;
     
     // set up output
-    output_.init("[DrvMemory @t:@f:@l: @p]", verbose, mask, SST::Output::STDOUT);
+    std::stringstream ss;
+    ss << "[DrvMemory "
+       << "{PXN=" << std::setw(2) << core->pxn_
+       << ",POD=" << std::setw(2) <<  core->pod_
+       << ",CORE=" << std::setw(2) << core->id_
+       << "} @t:@f:@l: @p] ";
+
+    output_.init(ss.str(), verbose, mask, SST::Output::STDOUT);
     output_.verbose(CALL_INFO, 1, DrvMemory::VERBOSE_INIT, "constructor done\n");
 }
 

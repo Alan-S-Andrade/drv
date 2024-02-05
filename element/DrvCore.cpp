@@ -13,6 +13,9 @@
 #include <cstdio>
 #include <dlfcn.h>
 #include <cstring>
+#include <sstream>
+#include <iomanip>
+
 using namespace SST;
 using namespace Drv;
 
@@ -35,7 +38,13 @@ void DrvCore::configureOutput(SST::Params &params) {
     verbose_mask |= DEBUG_RSP;
   if (params.find<bool>("debug_mmio"))
     verbose_mask |= DEBUG_MMIO;
-  output_ = std::make_unique<SST::Output>("[DrvCore @t: @f:@l: @p] ", verbose_level, verbose_mask, Output::STDOUT);
+  std::stringstream ss;
+  ss << "[DrvCore "
+     << "{PXN=" << std::setw(2) << pxn_
+     << ",POD=" << std::setw(2) <<  pod_
+     << ",CORE=" << std::setw(2) << id_
+     << "} @t: @f:@l: @p] ";
+  output_ = std::make_unique<SST::Output>(ss.str(), verbose_level, verbose_mask, Output::STDOUT);
   output_->verbose(CALL_INFO, 1, DEBUG_INIT, "configured output logging\n");
 }
 
