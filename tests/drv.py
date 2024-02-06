@@ -19,46 +19,6 @@ def set_bits(word, hi, lo, value):
     word &= ~(mask << lo)
     word |= (value & mask) << lo
     return word
-
-class L1SPRange(object):
-    L1SP_SIZE = 0x0000000000020000
-    L1SP_SIZE_STR = "128KiB"
-    def __init__(self, pxn, pod, core_y, core_x):
-        start = 0
-        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L1SP)
-        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-        start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
-        start = set_bits(start, ADDR_CORE_Y_HI, ADDR_CORE_Y_LO, core_y)
-        start = set_bits(start, ADDR_CORE_X_HI, ADDR_CORE_X_LO, core_x)
-        self.start = start
-        self.end = start + self.L1SP_SIZE - 1
-
-class L2SPRange(object):
-    # 16MiB
-    L2SP_POD_BANKS = 4
-    L2SP_SIZE = 0x0000000001000000
-    L2SP_BANK_SIZE = L2SP_SIZE // L2SP_POD_BANKS
-    L2SP_SIZE_STR = "16MiB"
-    L2SP_BANK_SIZE_STR = "4MiB"
-    # interleave
-    L2SP_INTERLEAVE_SIZE = 64
-    L2SP_INTERLEAVE_SIZE_STR = "{}B".format(L2SP_INTERLEAVE_SIZE)
-    L2SP_INTERLEAVE_STEP = L2SP_INTERLEAVE_SIZE * L2SP_POD_BANKS
-    L2SP_INTERLEAVE_STEP_STR = "{}B".format(L2SP_INTERLEAVE_STEP)
-
-    def __init__(self, pxn, pod, bank):
-        start = 0
-        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L2SP)
-        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-        start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
-        self.interleave_size = self.L2SP_INTERLEAVE_SIZE
-        self.interleave_step = self.L2SP_INTERLEAVE_STEP
-        self.start = start \
-            + bank * self.interleave_size
-        self.end = start \
-            + self.L2SP_SIZE \
-            - (self.L2SP_POD_BANKS - bank - 1) * self.interleave_size \
-            - 1
         
 ################################
 # parse command line arguments #
@@ -85,8 +45,14 @@ parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
 parser.add_argument("--core-clock", type=str, default="1GHz", help="clock frequency of cores")
 parser.add_argument("--core-max-idle", type=int, default=1, help="max idle time of cores")
+
+parser.add_argument("--pod-l2sp-banks", type=int, default=8, help="number of l2sp banks per pod")
+parser.add_argument("--pod-l2sp-interleave", type=int, default=0, help="interleave size of l2sp addresses (defaults to no  interleaving)")
+
 parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
 parser.add_argument("--pxn-dram-size", type=int, default=1024**3, help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
+parser.add_argument("--pxn-dram-interleave", type=int, default=0, help="interleave size of dram addresses (defaults to no  interleaving)")
+
 parser.add_argument("--with-command-processor", type=str, default="",
                     help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
 parser.add_argument("--cp-verbose", type=int, default=0, help="verbosity of command processor")
@@ -139,6 +105,12 @@ def memory_latency(memory_name):
 
     return MEMORY_LATENCIES[memory_name]
 
+##################
+# Size Constants #
+##################
+POD_L2SP_SIZE = (1<<25)
+CORE_L1SP_SIZE = (1<<17)
+
 ###################
 # router id bases #
 ###################
@@ -152,13 +124,15 @@ SYSCONFIG = {
     "sys_pod_cores" : 8,
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
-    "sys_pod_l2_banks" : L2SPRange.L2SP_POD_BANKS,
-    "sys_pod_dram_ports" : arguments.pxn_dram_banks,
+    "sys_core_l1sp_size" : CORE_L1SP_SIZE,
+    "sys_pxn_dram_size" : arguments.pxn_dram_size,    
+    "sys_pxn_dram_ports" : arguments.pxn_dram_banks,
+    "sys_pxn_dram_interleave_size" : arguments.pxn_dram_interleave if arguments.pxn_dram_interleave else arguments.pxn_dram_size//arguments.pxn_dram_banks,
+    "sys_pod_l2sp_size" : POD_L2SP_SIZE,
+    "sys_pod_l2sp_banks" : arguments.pod_l2sp_banks,
+    "sys_pod_l2sp_interleave_size" : arguments.pod_l2sp_interleave if arguments.pod_l2sp_interleave else POD_L2SP_SIZE//arguments.pod_l2sp_banks,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
-    "sys_core_l1sp_size" : L1SPRange.L1SP_SIZE,
-    "sys_pod_l2sp_size" : L2SPRange.L2SP_SIZE,
-    "sys_pxn_dram_size" : arguments.pxn_dram_size,
     "sys_cp_present" : False,
 }
 
@@ -201,6 +175,46 @@ CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
 CORE_DEBUG['isa_test'] = arguments.drvr_isa_test
 CORE_DEBUG['test_name'] = arguments.test_name
 
+class L1SPRange(object):
+    L1SP_SIZE = SYSCONFIG['sys_core_l1sp_size']
+    L1SP_SIZE_STR = "128KiB"
+    def __init__(self, pxn, pod, core_y, core_x):
+        start = 0
+        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L1SP)
+        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
+        start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
+        start = set_bits(start, ADDR_CORE_Y_HI, ADDR_CORE_Y_LO, core_y)
+        start = set_bits(start, ADDR_CORE_X_HI, ADDR_CORE_X_LO, core_x)
+        self.start = start
+        self.end = start + self.L1SP_SIZE - 1
+
+class L2SPRange(object):
+    # 16MiB
+    L2SP_POD_BANKS = SYSCONFIG['sys_pod_l2sp_banks']
+    L2SP_SIZE = SYSCONFIG['sys_pod_l2sp_size']
+    L2SP_BANK_SIZE = L2SP_SIZE // L2SP_POD_BANKS
+    L2SP_SIZE_STR = "16MiB"
+    L2SP_BANK_SIZE_STR = "4MiB"
+    # interleave
+    L2SP_INTERLEAVE_SIZE = SYSCONFIG['sys_pod_l2sp_interleave_size']
+    L2SP_INTERLEAVE_SIZE_STR = "{}B".format(L2SP_INTERLEAVE_SIZE)
+    L2SP_INTERLEAVE_STEP = L2SP_INTERLEAVE_SIZE * L2SP_POD_BANKS
+    L2SP_INTERLEAVE_STEP_STR = "{}B".format(L2SP_INTERLEAVE_STEP)
+
+    def __init__(self, pxn, pod, bank):
+        start = 0
+        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L2SP)
+        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
+        start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
+        self.interleave_size = self.L2SP_INTERLEAVE_SIZE
+        self.interleave_step = self.L2SP_INTERLEAVE_STEP
+        self.start = start \
+            + bank * self.interleave_size
+        self.end = start \
+            + self.L2SP_SIZE \
+            - (self.L2SP_POD_BANKS - bank - 1) * self.interleave_size \
+            - 1
+
 def MakeMainMemoryRangeClass(banks, size):
     if (size > 8*1024*1024*1024):
         raise ValueError("PXN main memory size cannot be more than 8GiB")
@@ -215,7 +229,7 @@ def MakeMainMemoryRangeClass(banks, size):
         MAINMEM_SIZE_STR = "{}GiB".format(MAINMEM_SIZE // 1024**3)
         MAINMEM_BANK_SIZE_STR = "{}MiB".format(MAINMEM_BANK_SIZE // 1024**2)
         # interleave
-        MAINMEM_INTERLEAVE_SIZE = 64
+        MAINMEM_INTERLEAVE_SIZE = SYSCONFIG['sys_pxn_dram_interleave_size']
         MAINMEM_INTERLEAVE_SIZE_STR = "{}B".format(MAINMEM_INTERLEAVE_SIZE)
         MAINMEM_INTERLEAVE_STEP = MAINMEM_INTERLEAVE_SIZE * MAINMEM_BANKS
         MAINMEM_INTERLEAVE_STEP_STR = "{}B".format(MAINMEM_INTERLEAVE_STEP)
@@ -239,7 +253,7 @@ def MakeMainMemoryRangeClass(banks, size):
     return MainMemoryRange
 
 # create the main memory range class
-MainMemoryRange = MakeMainMemoryRangeClass(SYSCONFIG['sys_pod_dram_ports'], SYSCONFIG["sys_pxn_dram_size"])
+MainMemoryRange = MakeMainMemoryRangeClass(SYSCONFIG['sys_pxn_dram_ports'], SYSCONFIG["sys_pxn_dram_size"])
 
 class CommandProcessor(object):
     CORE_ID = -1

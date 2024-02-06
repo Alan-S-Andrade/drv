@@ -453,6 +453,14 @@ public:
         stall_cycles_->addData(cycles);
     }
 
+    DrvSysConfig &sysConfig() {
+        return sys_config_;
+    }
+
+    const DrvSysConfig &sysConfig() const {
+        return sys_config_;
+    }
+
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   SST::Output tag_; //!< for stats collection

@@ -46,6 +46,13 @@ inline int coreYFromId(int core) {
 }
 
 /**
+ * return a core's id from its x y
+ */
+inline int coreIdFromXY(int x, int y) {
+    return x + (y << 3);
+}
+
+/**
  * return my core's x  w.r.t my pod
  */
 inline int myCoreX() {
@@ -124,6 +131,30 @@ inline uint64_t pxnDRAMSize() {
     return DrvAPISysConfig::Get()->pxnDRAMSize();
 }
 
+/**
+ * number of dram ports
+ */
+inline int numPXNDRAMPorts() {
+    return DrvAPISysConfig::Get()->pxnDRAMPortCount();
+}
+
+/**
+ * size of the address interleave for dram
+ */
+inline uint64_t pxnDRAMAddressInterleave() {
+    return DrvAPISysConfig::Get()->pxnDRAMInterleaveSize();
+}
+
+/**
+ * number of pod l2sp banks
+ */
+inline int32_t numPodL2SPBanks() {
+    return DrvAPISysConfig::Get()->podL2SPBankCount();
+}
+
+inline uint32_t podL2SPAddressInterleave() {
+    return DrvAPISysConfig::Get()->podL2SPInterleaveSize();
+}
 //////////
 // Time //
 //////////
