@@ -14,6 +14,64 @@ using namespace Drv;
 using namespace Interfaces;
 
 
+DrvStdMemory::ToNativeMetaData DrvStdMemory::to_native_meta_data_; //!< metadata for toNative function
+
+void DrvStdMemory::ToNativeMetaData::init(DrvStdMemory *mem) {
+    bool init = initialized.exchange(true);
+    if (init) {
+        return;
+    }
+    DrvCore *core = mem->core_;
+    DrvAPI::DrvAPISysConfig cfg = core->sysConfig().config();
+    l1sp_mcs.resize(cfg.numPXN(), std::vector<std::vector<record_type>>(cfg.numPXNPods()));
+    l2sp_mcs.resize(cfg.numPXN(), std::vector<std::vector<record_type>>(cfg.numPXNPods()));
+    dram_mcs.resize(cfg.numPXN());
+    for (record_type &record : SST::MemHierarchy::MemController::AddrRangeToMC) {
+        DrvAPI::DrvAPIPAddress start, end;
+        SST::MemHierarchy::MemController *mc;
+        std::tie(start, end, mc) = record;
+        int pxn = start.pxn();
+        int pod = start.pod();
+        uint32_t type = start.type();
+        if (type == DrvAPI::DrvAPIPAddress::TYPE_L1SP) {
+            l1sp_mcs[pxn][pod].push_back(record);
+        } else if (type == DrvAPI::DrvAPIPAddress::TYPE_L2SP) {
+            l2sp_mcs[pxn][pod].push_back(record);
+        } else if (type == DrvAPI::DrvAPIPAddress::TYPE_DRAM) {
+            dram_mcs[pxn].push_back(record);
+        }
+    }
+    // sort the records by start address
+    for (int pxn = 0; pxn < cfg.numPXN(); pxn++) {
+        for (int pod = 0; pod < cfg.numPXNPods(); pod++) {
+            // check that we found one per core in pod
+            if (l1sp_mcs[pxn][pod].size() != (size_t)cfg.numPodCores()) {
+                mem->output_.fatal(CALL_INFO, -1, "Did not find correct number of L1SP banks for pod %d\n", pod);
+            }
+            std::sort(l1sp_mcs[pxn][pod].begin(), l1sp_mcs[pxn][pod].end(), [](const record_type &a, const record_type &b) {
+                return std::get<0>(a) < std::get<0>(b);
+            });
+            // check that we found correct number of banks for pod
+            if (l2sp_mcs[pxn][pod].size() != (size_t)cfg.podL2SPBankCount()) {
+                mem->output_.fatal(CALL_INFO, -1, "Did not find correct number of L2SP banks for pod %d\n", pod);
+            }
+            std::sort(l2sp_mcs[pxn][pod].begin(), l2sp_mcs[pxn][pod].end(), [](const record_type &a, const record_type &b) {
+                return std::get<0>(a) < std::get<0>(b);
+            });
+        }
+        // check that we found correct number of dram banks for pxn
+        if (dram_mcs[pxn].size() != (size_t)cfg.pxnDRAMPortCount()) {
+            mem->output_.fatal(CALL_INFO, -1, "Did not find correct number of DRAM banks for pxn %d\n", pxn);
+        }
+        std::sort(dram_mcs[pxn].begin(), dram_mcs[pxn].end(), [](const record_type &a, const record_type &b) {
+            return std::get<0>(a) < std::get<0>(b);
+        });
+    }
+
+    l2sp_interleave_decode = {cfg.podL2SPInterleaveSize(), cfg.podL2SPBankCount()};
+    dram_interleave_decode = {cfg.pxnDRAMInterleaveSize(), cfg.pxnDRAMPortCount()};
+}
+
 /**
  * @brief Construct a new DrvStdMemory object
  * 
@@ -55,48 +113,128 @@ DrvStdMemory::~DrvStdMemory() {
 }
 
 /**
+ * @brief init is called at the beginning of the simulation
+ */
+void DrvStdMemory::init(unsigned int phase) {
+    mem_->init(phase);
+}
+
+/**
+ * @brief setup is called during setup phase
+ */
+void DrvStdMemory::setup() {
+    mem_->setup();
+    to_native_meta_data_.init(this);
+}
+
+/**
+ * @brief translate a pgas pointer to a native pointer
+ */
+void
+DrvStdMemory::toNativePointerDRAM(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size) {
+    DrvAPI::DrvAPISysConfig cfg = core_->sysConfig().config();
+    uint32_t interleave = cfg.pxnDRAMInterleaveSize();
+    DrvAPI::DrvAPIPAddress decode(addr);
+    int pxn = decode.pxn();
+    std::vector<record_type> &dram_mcs = to_native_meta_data_.dram_mcs[pxn];
+    uint64_t dram_offset = decode.dram_offset();
+    uint64_t bank, offset;
+    std::tie(bank, offset)
+        = to_native_meta_data_
+        .dram_interleave_decode
+        .getBankOffset(dram_offset);
+
+    DrvAPI::DrvAPIPAddress start, stop;
+    SST::MemHierarchy::MemController *mc;
+    std::tie(start, stop, mc) = dram_mcs[bank];
+    uint64_t laddr = mc->translateToLocal(addr);
+    auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
+        (mc->backing_);
+    if (!backing) {
+        output_.fatal(CALL_INFO, -1, "L2SP backing is not a MMAP\n");
+    }
+    uint8_t *bptr = &backing->m_buffer[laddr];
+    *ptr = bptr;
+    *size = interleave - offset;
+}
+
+/**
+ * @brief translate a pgas pointer to a native pointer
+ */
+void
+DrvStdMemory::toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size) {
+    DrvAPI::DrvAPISysConfig cfg = core_->sysConfig().config();
+    uint32_t interleave = cfg.podL2SPInterleaveSize();
+    DrvAPI::DrvAPIPAddress decode(addr);
+    int pxn = decode.pxn();
+    int pod = decode.pod();
+    std::vector<record_type> &l2sp_mcs = to_native_meta_data_.l2sp_mcs[pxn][pod];
+
+    uint64_t l2_offset = decode.l2_offset();
+    uint64_t bank, offset;
+    std::tie(bank, offset)
+        = to_native_meta_data_
+        .l2sp_interleave_decode
+        .getBankOffset(l2_offset);
+
+
+    DrvAPI::DrvAPIPAddress start, stop;
+    SST::MemHierarchy::MemController *mc;
+    std::tie(start, stop, mc) = l2sp_mcs[bank];
+    uint64_t laddr = mc->translateToLocal(addr);
+    auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
+        (mc->backing_);
+    if (!backing) {
+        output_.fatal(CALL_INFO, -1, "L2SP backing is not a MMAP\n");
+    }
+    uint8_t *bptr = &backing->m_buffer[laddr];
+    *ptr = bptr;
+    *size = interleave - offset;
+}
+
+/**
+ * @brief translate a pgas pointer to a native pointer
+ */
+void
+DrvStdMemory::toNativePointerL1SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size) {
+    DrvAPI::DrvAPIPAddress decode(addr);
+    int pxn = decode.pxn();
+    int pod = decode.pod();
+    int core = DrvAPI::coreIdFromXY(decode.core_x(), decode.core_y());
+    // todo: we might not need a for loop here
+    DrvAPI::DrvAPIAddress start, end;
+    SST::MemHierarchy::MemController *mc;
+    std::tie(start, end, mc) = to_native_meta_data_.l1sp_mcs[pxn][pod][core];
+    if (start <= addr && addr < end) {
+        uint64_t laddr = mc->translateToLocal(addr);
+        auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
+            (mc->backing_);
+        if (!backing) {
+            output_.fatal(CALL_INFO, -1, "Backing is not MMAP\n");
+        }
+        uint8_t *bptr = &backing->m_buffer[laddr];
+        *ptr = bptr;
+        *size = backing->m_size - laddr;
+        return;
+    }
+    output_.fatal(CALL_INFO, -1, "Address 0x%lx not found in L1SP\n", addr);
+}
+
+/**
  * @brief translate a pgas pointer to a native pointer
  */
 void
 DrvStdMemory::toNativePointer(DrvAPI::DrvAPIAddress paddr, void **ptr, size_t *size) {
-    /* find the range this memory address belongs to */
-    auto it = std::lower_bound(SST::MemHierarchy::MemController::AddrRangeToMC.begin(),
-                               SST::MemHierarchy::MemController::AddrRangeToMC.end(),
-                               std::make_tuple(paddr, paddr, nullptr),
-                               [](const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &element,
-                                  const std::tuple<uint64_t, uint64_t, SST::MemHierarchy::MemController*> &value) {
-                                   return std::get<0>(element) <= std::get<0>(value);
-                               });
-    uint64_t addr_range_start, addr_range_stop;
-    SST::MemHierarchy::MemController *memory_controller;
-    if (it == SST::MemHierarchy::MemController::AddrRangeToMC.end() ||
-        it == SST::MemHierarchy::MemController::AddrRangeToMC.begin()) {
-        output_.fatal(CALL_INFO, -1,
-                      "Could not find memory controller for address %" PRIx64 "\n",
-                      paddr);
+    DrvAPI::DrvAPIPAddress decode{paddr};
+    if (decode.type() == DrvAPI::DrvAPIPAddress::TYPE_DRAM) {
+        return toNativePointerDRAM(paddr, ptr, size);
+    } else if (decode.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP) {
+        return toNativePointerL2SP(paddr, ptr, size);
+    } else if (decode.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP) {
+        return toNativePointerL1SP(paddr, ptr, size);
+    } else {
+        output_.fatal(CALL_INFO, -1, "Unknown address type\n");
     }
-
-    std::tie(addr_range_start, addr_range_stop, memory_controller) = *(--it);
-
-    // check that the address is within the range
-    if (paddr < addr_range_start || paddr > addr_range_stop) {
-        output_.fatal(CALL_INFO, -1,
-                      "Could not find memory controller for address %" PRIx64 "\n",
-                      paddr);
-    }
-
-    auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>
-        (memory_controller->backing_);
-    /* we only support if the backing store is a BackingMMAP */
-    if (!backing) {
-        output_.fatal(CALL_INFO, -1,
-                      "Memory controller does not have a BackingMMAP "
-                      "required for translation to native pointer\n");
-    }
-    uint64_t lpaddr = memory_controller->translateToLocal(paddr);
-    uint8_t *bptr = &backing->m_buffer[lpaddr];
-    *ptr = bptr;
-    *size = backing->m_size - lpaddr;
     return;
 
 }

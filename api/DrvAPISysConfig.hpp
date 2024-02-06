@@ -22,6 +22,10 @@ struct DrvAPISysConfigData
     uint64_t core_l1sp_size_; //!< size of the L1 scratchpad
     uint64_t pod_l2sp_size_; //!< size of the L2 scratchpad
     uint64_t pxn_dram_size_; //!< size of the PXN DRAM
+    int32_t  pxn_dram_ports_; //!< number of banks in the PXN DRAM
+    uint32_t  pxn_dram_interleave_size_; //!< size of the address interleave in the PXN DRAM
+    int32_t  pod_l2sp_banks_; //!< number of banks in the PXN L2 scratchpad
+    uint32_t  pod_l2sp_interleave_size_; //!< size of the address interleave in the PXN L2 scratchpad
 };
 
 
@@ -49,6 +53,10 @@ public:
     uint64_t coreL1SPSize() const { return data_.core_l1sp_size_; }
     uint64_t podL2SPSize() const { return data_.pod_l2sp_size_; }
     uint64_t pxnDRAMSize() const { return data_.pxn_dram_size_; }
+    int32_t pxnDRAMPortCount() const { return data_.pxn_dram_ports_; }
+    uint32_t pxnDRAMInterleaveSize() const { return data_.pxn_dram_interleave_size_; }
+    int32_t podL2SPBankCount() const { return data_.pod_l2sp_banks_; }
+    uint32_t podL2SPInterleaveSize() const { return data_.pod_l2sp_interleave_size_; }
 
     static DrvAPISysConfig *Get() { return &sysconfig; }
     static DrvAPISysConfig sysconfig;
