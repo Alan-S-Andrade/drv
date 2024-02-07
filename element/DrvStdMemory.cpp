@@ -351,6 +351,11 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                         "Received write response from addr=%" PRIx64 " size=%" PRIu64 "\n",
                         write_rsp->pAddr, write_rsp->size);
+        // trace
+        DrvAPI::DrvAPIPAddress paddr{write_rsp->pAddr};
+        if (paddr.pxn() != (uint64_t)core_->pxn_) {
+            core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_STORE, "write_rsp", write_rsp->pAddr, thread);
+        }
         // complete write
         mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(thread->getAPIThread().getState());
         if (mem_req) {
@@ -369,7 +374,11 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                         "Received read response from addr=%" PRIx64 " size=%" PRIu64 "\n",
                         read_rsp->pAddr, read_rsp->size);
-
+        // trace
+        DrvAPI::DrvAPIPAddress paddr{read_rsp->pAddr};
+        if (paddr.pxn() != (uint64_t)core_->pxn_) {
+            core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_LOAD, "read_rsp", read_rsp->pAddr, thread);
+        }
         // complete read, if this was a read request
         auto read_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemRead>(thread->getAPIThread().getState());
         if (read_req) {
@@ -390,6 +399,10 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
             output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                             "Received custom response\n");            
             DrvThread *thread = core_->getThread(custom_rsp->tid);
+            DrvAPI::DrvAPIPAddress paddr{areq_data->pAddr};
+            if (paddr.pxn() != (uint64_t)core_->pxn_) {
+                core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_ATOMIC, "atomic_rsp", areq_data->pAddr, thread);
+            }
             auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(thread->getAPIThread().getState());
             if (atomic_req) {
                 atomic_req->setResult(&areq_data->rdata[0]);

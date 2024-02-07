@@ -257,14 +257,14 @@ private:
   std::unique_ptr<SST::Output> trace_; //!< for tracing
 
 public:
-  void traceRemotePxnMem(uint32_t trace_mask, const char* opname,
-                         DrvAPI::DrvAPIPAddress paddr) const {
+  void traceRemotePxnMem(uint32_t trace_mask, const char* opname, DrvAPI::DrvAPIPAddress paddr, DrvThread *thread) const {
       trace_->verbose(CALL_INFO, 0, trace_mask
-                      ,"OP=%s:SRC_PXN=%d:SRC_POD=%d:SRC_CORE=%d:DST_PXN=%d:ADDR=%s\n"
+                      ,"OP=%s:SRC_PXN=%d:SRC_POD=%d:SRC_CORE=%d:SRC_THREAD=%d:DST_PXN=%d:ADDR=%s\n"
                       ,opname
                       ,pxn_
                       ,pod_
                       ,id_
+                      ,getThreadID(thread)
                       ,(int)paddr.pxn()
                       ,paddr.to_string().c_str()
                       );
@@ -399,7 +399,7 @@ public:
         } else if (isPAddressDRAM(addr)) {
             stats->load_dram->addData(1);
         } else if (isPAddressRemotePXN(addr))  {
-            traceRemotePxnMem(TRACE_REMOTE_PXN_LOAD, "read", addr);
+            traceRemotePxnMem(TRACE_REMOTE_PXN_LOAD, "read_req", addr, thread);
             stats->load_remote_pxn->addData(1);
         }
     }
@@ -417,7 +417,7 @@ public:
         } else if (isPAddressDRAM(addr)) {
             stats->store_dram->addData(1);
         } else if (isPAddressRemotePXN(addr)) {
-            traceRemotePxnMem(TRACE_REMOTE_PXN_STORE, "write", addr);
+            traceRemotePxnMem(TRACE_REMOTE_PXN_STORE, "write_req", addr, thread);
             stats->store_remote_pxn->addData(1);
         }
     }
@@ -435,7 +435,7 @@ public:
         } else if (isPAddressDRAM(addr)) {
             stats->atomic_dram->addData(1);
         } else if (isPAddressRemotePXN(addr))  {
-            traceRemotePxnMem(TRACE_REMOTE_PXN_ATOMIC, "atomic", addr);
+            traceRemotePxnMem(TRACE_REMOTE_PXN_ATOMIC, "atomic_req", addr, thread);
             stats->atomic_remote_pxn->addData(1);
         }
     }
