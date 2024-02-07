@@ -54,7 +54,6 @@ public:
     uint64_t increaseSizeBy(uint64_t incr_size) {
         // incr_size should be 8-byte aligned
         incr_size = (incr_size + 7) & ~7;
-        assert(incr_size > 0 && "incr_size should be positive");
         return size_.fetch_add(incr_size);
     }
 
