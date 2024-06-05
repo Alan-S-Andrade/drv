@@ -251,6 +251,8 @@ void
 DrvStdMemory::sendRequest(DrvCore *core
                           ,DrvThread *thread
                           ,const std::shared_ptr<DrvAPI::DrvAPIMem> &mem_req) {
+    DrvAPI::DrvAPIPAddress paddr = DrvAPI::DrvAPIPAddress{mem_req->getAddress()};
+    bool noncacheable = (paddr.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
     auto write_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemWrite>(mem_req);
     if (write_req) {
         /* do write */
@@ -263,6 +265,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         write_req->getPayload(&data[0]);
         StandardMem::Write *req = new StandardMem::Write(addr, size, data);
         req->tid = core->getThreadID(thread);
+        if (noncacheable) req->setNoncacheable();
         // add statistic
         core->addStoreStat(DrvAPI::DrvAPIPAddress{addr}, thread);
         mem_->send(req);
@@ -279,6 +282,7 @@ DrvStdMemory::sendRequest(DrvCore *core
                                 addr, size);
         StandardMem::Read *req = new StandardMem::Read(addr, size);
         req->tid = core->getThreadID(thread);
+        if (noncacheable) req->setNoncacheable();
         core->addLoadStat(DrvAPI::DrvAPIPAddress{addr}, thread);
         mem_->send(req);
         return;

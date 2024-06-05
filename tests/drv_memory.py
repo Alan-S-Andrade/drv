@@ -3,200 +3,293 @@
 import sst
 from drv import *
 
-class SharedMemoryBank(object):
-    NAME = "sharedmem"
-    def __init__(self, bank, *args, **kwargs):
-        """
-        @brief Initialize a shared memory bank
-        This constructor is the work horse of setting up the shared memory bank
-        We leave a handful of functions to be implemented by the subclass
 
-        id            : a unique identifier for this bank
-        address_range : {L1SPRanage, L2SPRange, MainMemoryRange}
-        name          : str
-        memctrl       : sst.Component ("memHierarchy.MemController")
-        memory        : sst.SubComponent ("memHierarchy.backend")
+class MemoryBank(object):
+    """
+    Base class for memory banks
+    """
+    def __init__(self, *args, **kwargs):
+        return
+
+class L2SPBank(MemoryBank):
+    """
+    A bank of L2 scratchpad memory
+    """
+    def __init__(self, pxn, pod, bank, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.pxn = pxn
+        self.pod = pod
+        self.bank = bank
+        self.address_range = L2SPRange(self.pxn, self.pod, self.bank)
+        self.make_memory()
+        self.make_network_interface()
+
+    def make_memory(self):
         """
-        self.id = self.make_id(bank, *args, **kwargs)
-        self.address_range = self.make_address_range(bank, *args, **kwargs)
-        self.name = self.make_name(*args, **kwargs)
-        self.memctrl = sst.Component("{}_memctrl_{}".format(self.name,self.id), "memHierarchy.MemController")
-        self.memctrl.addParams({
+        Create the memory controller
+        """
+        memory = sst.Component("{}_memctrl".format(self.name()), "memHierarchy.MemController")
+        memory.addParams({
             "clock" : "1GHz",
             "addr_range_start" : self.address_range.start,
-            "addr_range_end"   : self.address_range.end,
-            "interleave_size" :  str(self.address_range.interleave_size) + 'B',
-            "interleave_step" : str(self.address_range.interleave_step) + 'B',
-            "debug" : 1,
-            "debug_level" : arguments.verbose_memory,
-            "verbose" : arguments.verbose_memory,
+            "addr_range_end" : self.address_range.end,
+            "interleave_size" : self.address_range.interleave_size,
+            "interleave_step" : self.address_range.interleave_step,
         })
-        # set the backend memory system to Drv special memory
-        # (needed for AMOs)
-        self.memory = self.make_backend(self.memctrl)
-        # set the custom command handler
-        # we need to use the Drv custom command handler
-        # to handle our custom commands (AMOs)
-        self.customcmdhandler = self.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
-        self.customcmdhandler.addParams({
-            "verbose_level" : arguments.verbose_memory,
-        })
-        # network interface
-        self.nic = self.memctrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
-        self.nic.addParams({
-            "group" : 2,
-            "network_bw" : "256GB/s",
-            "verbose_level": arguments.verbose_memory,
-        })
+        self.memory = memory
+        self.make_backend()
+        self.make_cmdhandler()
 
-        # create the tile network
-        self.mem_rtr = sst.Component("{}_rtr_{}".format(self.name,self.id), "merlin.hr_router")
-        self.mem_rtr.addParams({
-            # semantics parameters
-            "id" : SHAREDMEM_RTR_ID+self.id,
-            "num_ports" : 2,
-            "topology" : "merlin.singlerouter",
-            # performance models
-            "xbar_bw" : "1024GB/s",
-            "link_bw" : "1024GB/s",
-            "flit_size" : "8B",
-            "input_buf_size" : "1KB",
-            "output_buf_size" : "1KB",
-            'input_latency' : router_latency('mem_rtr'),
-            'output_latency' : router_latency('mem_rtr'),
-            "debug" : 1,
-        })
-        self.mem_rtr.setSubComponent("topology","merlin.singlerouter")
-        # setup connection rtr <-> mem
-        self.mem_nic_link = sst.Link("{}_nic_link_{}".format(self.name,self.id))
-        self.mem_nic_link.connect(
-            (self.nic, "port", link_latency('mem_nic_link')),
-            (self.mem_rtr, "port0", link_latency('mem_nic_link')),
-        )
-
-        # print("{}: start={:016x} end={:016x}".format(
-        #     self.name,
-        #     self.address_range.start,
-        #     self.address_range.end,
-        # ))
-
-    def make_id(self, bank, *args, **kwargs):
+    def make_backend(self):
         """
-        @brief return a unique integer
-
-        Subclass defines this.
+        Create the backend timing model for the memory
         """
-        raise NotImplementedError
-
-    def make_address_range(self, bank, *args, **kwargs):
-        """
-        @brief return a L1SPRange, L2SPRange, or MainMemoryRange
-
-        Subclass defines this
-        """
-        raise NotImplementedError
-
-    def make_name(self, *args, **kwargs):
-        """
-        @brief return a string naming this bank
-
-        Subclass defines this
-        """
-        raise NotImplementedError
-
-    def make_backend(self, memctrl):
-        """
-        @brief return a sst.SubComponent ("memHierarchy.backend")
-
-        Subclass defines this
-        """
-        raise NotImplementedError
-
-
-class L2MemoryBank(SharedMemoryBank):
-    def __init__(self, bank, pod=0, pxn=0):
-        super().__init__(bank, pod, pxn)
-
-    def make_id(self, bank, pod=0, pxn=0):
-        """
-        @brief return a unique integer
-        """
-        pod_shift = ADDR_POD_HI - ADDR_POD_LO+1
-        pxn_shift = ADDR_PXN_LO - ADDR_PXN_LO+1 + pod_shift
-        return bank + (pod << pod_shift) + (pxn << pxn_shift)
-
-    def make_address_range(self, bank, pod=0, pxn=0):
-        """
-        @brief return a L1SPRange, L2SPRange, or MainMemoryRange
-        """
-        return L2SPRange(pxn, pod, bank)
-
-    def make_name(self, pod=0, pxn=0):
-        """
-        @brief return a string naming this bank
-        """
-        return "l2mem_pxn{}_pod{}".format(pxn, pod)
-
-    def make_backend(self, memctrl):
-        """
-        @brief return a sst.SubComponent ("memHierarchy.backend")
-        """
-        backend =  memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+        backend = self.memory.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
         backend.addParams({
             "verbose_level" : arguments.verbose_memory,
             "access_time" : memory_latency('l2sp'),
-            "mem_size" : L2SPRange.L2SP_BANK_SIZE_STR,
+            "mem_size" : self.address_range.bank_size,
         })
-        return backend
+        self.memory_backend = backend
 
-class MainMemoryBank(SharedMemoryBank):
-    def __init__(self, bank, pod=0, pxn=0):
-        super().__init__(bank, pod, pxn)
-
-    def make_id(self, bank, pod=0, pxn=0):
+    def make_cmdhandler(self):
         """
-        @brief return a unique integer
+        Create the custom command handler for the memory
         """
-        pod_shift = ADDR_POD_HI - ADDR_POD_LO+1
-        pxn_shift = ADDR_PXN_LO - ADDR_PXN_LO+1 + pod_shift
-        mainmem_shift = 1 + pxn_shift
-        return bank + (1 << mainmem_shift) + (pod << pod_shift) + (pxn << pxn_shift)
+        cmdhandler = self.memory.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+        cmdhandler.addParams({
+            "verbose_level" : arguments.verbose_memory,
+        })
+        self.memory_cmdhandler = cmdhandler
 
+    def make_network_interface(self):
+        """
+        Create the network interface for the memory
+        """
+        nic = self.memory.setSubComponent("cpulink", "memHierarchy.MemNIC")
+        nic.addParams({
+            "group" : 2,
+            "sources" : "0",
+            "network_bw" : "1024GB/s",
+        })
+        self.nwif = nic
+
+    def name(self):
+        """
+        Return the name of the memory bank
+        """
+        return "l2sp_pxn{}_pod{}_bank{}".format(self.pxn, self.pod, self.bank)
+
+    def network_if(self):
+        """
+        Return the network interface component, and port name
+        """
+        return (self.nwif, "port")
+
+class DRAMBankBase(MemoryBank):
+    """
+    Base class for DRAM banks
+    """
+    def __init__(self, pxn, bank, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.pxn = pxn
+        self.bank = bank
+        self.address_range = MainMemoryRange(self.pxn, pod=0, bank=self.bank)
+        self.cache_line_size = 64
+        self.make_memory()
+
+    def make_memory(self):
+        """
+        Create the memory controller
+        """
+        memory = sst.Component("{}_memctrl".format(self.name()), self.memory_controller_type)
+        memory.addParams({
+            "clock" : "1GHz",
+            "addr_range_start" : self.address_range.start,
+            "addr_range_end" : self.address_range.end,
+            "interleave_size" : self.address_range.interleave_size,
+            "interleave_step" : self.address_range.interleave_step,
+            "debug" : 0,
+            "debug_level" : 0,
+        })
+        self.memory = memory
+        self.make_cmdhandler()
+        self.make_backend()
+
+    def make_backend(self):
+        """
+        Create the backend timing model for the memory
+        """
+        if (arguments.dram_backend == "ramulator"):
+            backend = self.memory.setSubComponent("backend", "Drv.DrvRamulatorBackend")
+            backend.addParams({
+                "configFile" : arguments.dram_backend_config,
+                "mem_size" : self.address_range.bank_size,
+            })
+        elif (arguments.dram_backend == "dramsim3"):
+            backend = self.memory.setSubComponent("backend", "memHierarchy.dramsim3")
+            backend.addParams({
+                "config_ini" : arguments.dram_backend_config,
+                "mem_size" : self.address_range.bank_size,
+            })
+        else:
+            backend = self.memory.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+            backend.addParams({
+                "access_time" : memory_latency("dram"),
+                "mem_size" : self.address_range.bank_size,
+            })
+        self.memory_backend = backend
+
+    def make_cmdhandler(self):
+        """
+        Create the command handler for the memory
+        """
+        cmdhandler = self.memory.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
+        cmdhandler.addParams({
+            "cache_line_size" : self.cache_line_size if self.is_coherent else 0,
+            "shootdowns" : "true" if self.is_coherent else "false",
+        })
+        self.memory_cmdhandler = cmdhandler
+
+
+    @property
+    def memory_controller_type(self):
+        """
+        Return the type of memory controller
+        """
+        if self.is_coherent:
+            return "memHierarchy.CoherentMemController"
+        else:
+            return "memHierarchy.MemController"
+
+    @property
+    def is_coherent(self):
+        """
+        Return true if this bank is coherent
+        """
         raise NotImplementedError
 
-    def make_address_range(self, bank, pod=0, pxn=0):
-        """
-        @brief return a L1SPRange, L2SPRange, or MainMemoryRange
-        """
-        return MainMemoryRange(pxn, pod, bank)
 
-    def make_name(self, pod=0, pxn=0):
-        """
-        @brief return a string naming this bank
-        """
-        return "mainmem_pxn{}_pod{}".format(pxn, pod)
 
-    def make_backend(self, memctrl):
-        """
-        @brief return a sst.SubComponent ("memHierarchy.backend")
-        """
-        if (arguments.dram_backend == "simple"):
-            # throughput for this backend is the mem_clock requests / second
-            backend = self.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
-            backend.addParams({
-                "verbose_level" : arguments.verbose_memory,
-                "access_time" : memory_latency('dram'),
-                "mem_size" : MainMemoryRange.MAINMEM_BANK_SIZE_STR,
-            })
-            return backend
-        elif (arguments.dram_backend == "ramulator"):
-            backend = self.memctrl.setSubComponent("backend", "Drv.DrvRamulatorMemBackend")
-            backend.addParams({
-                "verbose_level" : arguments.verbose_memory,
-                "configFile" : arguments.dram_backend_config,
-                "mem_size" : MainMemoryRange.MAINMEM_BANK_SIZE_STR,
-            })
-            return backend
-        else:
-            raise Exception("Unknown DRAM backend: {}".format(arguments.dram_backend))
+class CachedDRAMBank(DRAMBankBase):
+    """
+    Cached DRAM bank
+    """
+    def __init__(self, pxn, bank, *args, **kwargs):
+        self.cache_line_size = 64
+        super().__init__(pxn, bank, *args, **kwargs)
+        self.make_cache()
+        self.connect_cache_to_memory()
+        self.make_network_interface()
 
+    def make_cache(self):
+        """
+        Create the cache controller
+        """
+        cache = sst.Component("{}_cache".format(self.name()), "memHierarchy.Cache")
+        cache.addParams({
+            "cache_frequency" : "1GHz",
+            # cache size and configuration
+            "cache_size" : "1MiB",
+            "associativity" : 2,
+            "cache_line_size" : self.cache_line_size,
+            "mshr_num_entries" : 2,
+            "replacement_policy" : "lru",
+            "access_latency_cycles" : 1,
+            # routing information
+            "addr_range_start" : self.address_range.start,
+            "addr_range_end" : self.address_range.end,
+            "interleave_size" : self.address_range.interleave_size,
+            "interleave_step" : self.address_range.interleave_step,
+            # required for this to work at all don't change
+            "L1" : "true",
+            "coherence_protocol" : "mesi",
+            "cache_type" : "inclusive",
+        })
+        self.cache = cache
+
+    def connect_cache_to_memory(self):
+        """
+        Connect the cache controller to the memory controller
+        """
+        mem_port = self.memory.setSubComponent("cpulink", "memHierarchy.MemLink")
+        cache_port = self.cache.setSubComponent("memlink", "memHierarchy.MemLink")
+        link = sst.Link("{}_cache_to_mem".format(self.name()))
+        link.connect(
+            (cache_port, "port", "1ns"),
+            (mem_port, "port", "1ns")
+        )
+        self.memory_port = mem_port
+        self.cache_port = cache_port
+        self.cache_to_mem = link
+
+    def make_network_interface(self):
+        """
+        Create the network interface
+        """
+        nwif = self.cache.setSubComponent("cpulink", "memHierarchy.MemNIC")
+        nwif.addParams({
+            "group" : 2,
+            "sources" : "0,1",
+            "network_bw" : "256GB/s",
+        })
+        self.nwif = nwif
+
+    def name(self):
+        """
+        Returns the name of the bank
+        """
+        return "cached_dram_pxn{}_bank{}".format(self.pxn, self.bank)
+
+    def network_if(self):
+        """
+        Returns (interface, portname) pair
+        Outputs should be connected to a merlin router
+        """
+        return (self.nwif, "port")
+
+    @property
+    def is_coherent(self):
+        """
+        Returns whether the bank is coherent
+        """
+        return True
+
+class UncachedDRAMBank(DRAMBankBase):
+    """
+    Uncached DRAM bank
+    """
+    def __init__(self, pxn, bank, *args, **kwargs):
+        super().__init__(pxn, bank, *args, **kwargs)
+        self.make_network_interface()
+
+    def make_network_interface(self):
+        """
+        Create the network interface
+        """
+        nwif = self.memory.setSubComponent("cpulink", "memHierarchy.MemNIC")
+        nwif.addParams({
+            "group" : 2,
+            "network_bw" : "256GB/s",
+        })
+        self.nwif = nwif
+
+    def name(self):
+        """
+        Returns the name of the bank
+        """
+        return "uncached_dram_pxn{}_bank{}".format(self.pxn, self.bank)
+
+    def network_if(self):
+        """
+        Returns (interface, portname) pair
+        Outputs should be connected to a merlin router
+        """
+        return (self.nwif, "port")
+
+    @property
+    def is_coherent(self):
+        """
+        Returns whether the bank is coherent
+        """
+        return False

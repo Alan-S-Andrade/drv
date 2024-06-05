@@ -21,6 +21,8 @@ DrvCmdMemHandler::DrvCmdMemHandler(SST::ComponentId_t id, SST::Params& params,
   int verbose_level = params.find<int>("verbose_level", 0);
   output = SST::Output("[@f:@l:@p]: ", verbose_level, 0, SST::Output::STDOUT);
   output.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
+  lineSize_ = params.find<MemHierarchy::Addr>("cache_line_size", 0);
+  shootdowns_ = params.find<bool>("shootdowns", false);
 }
 
 /* destructor */
@@ -34,7 +36,9 @@ DrvCmdMemHandler::~DrvCmdMemHandler() {
 CustomCmdMemHandler::MemEventInfo
 DrvCmdMemHandler::receive(MemEventBase* ev) {
   output.verbose(CALL_INFO, 1, 0,"%s\n", __PRETTY_FUNCTION__);
-  CustomCmdMemHandler::MemEventInfo MEI(ev->getRoutingAddress(),false);
+  MemHierarchy::Addr localAddr = translateGlobalToLocal(ev->getRoutingAddress());
+  localAddr &= ~(lineSize_ - 1);
+  CustomCmdMemHandler::MemEventInfo MEI(localAddr,shootdowns_);
   return MEI;
 }
 
