@@ -116,7 +116,8 @@ CORE_L1SP_SIZE = (1<<17)
 ###################
 COMPUTETILE_RTR_ID = 0
 SHAREDMEM_RTR_ID = 1024
-CHIPRTR_ID = 1024*1024
+SHAREDMEM_CACHE_RTR_ID = 1024*1024
+CHIPRTR_ID = 1024*1024*1024
 
 SYSCONFIG = {
     "sys_num_pxn" : 1,
@@ -206,14 +207,26 @@ class L2SPRange(object):
         start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L2SP)
         start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
         start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
-        self.interleave_size = self.L2SP_INTERLEAVE_SIZE
-        self.interleave_step = self.L2SP_INTERLEAVE_STEP
+        self._interleave_size = self.L2SP_INTERLEAVE_SIZE
+        self._interleave_step = self.L2SP_INTERLEAVE_STEP
         self.start = start \
-            + bank * self.interleave_size
+            + bank * self._interleave_size
         self.end = start \
             + self.L2SP_SIZE \
-            - (self.L2SP_POD_BANKS - bank - 1) * self.interleave_size \
+            - (self.L2SP_POD_BANKS - bank - 1) * self._interleave_size \
             - 1
+
+    @property
+    def interleave_size(self):
+        return str(self._interleave_size) + 'B'
+
+    @property
+    def interleave_step(self):
+        return str(self._interleave_step) + 'B'
+
+    @property
+    def bank_size(self):
+        return self.L2SP_BANK_SIZE_STR
 
 def MakeMainMemoryRangeClass(banks, size):
     if (size > 8*1024*1024*1024):
@@ -238,16 +251,28 @@ def MakeMainMemoryRangeClass(banks, size):
             start = 0
             start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
             start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-            self.interleave_size = self.MAINMEM_INTERLEAVE_SIZE
-            self.interleave_step = self.MAINMEM_INTERLEAVE_STEP
+            self._interleave_size = self.MAINMEM_INTERLEAVE_SIZE
+            self._interleave_step = self.MAINMEM_INTERLEAVE_STEP
             self.start = start \
                 + pod  * size  \
-                + bank * self.interleave_size
+                + bank * self._interleave_size
             self.end = start \
                 + pod * size \
-                + self.MAINMEM_SIZE \
-                - (self.MAINMEM_BANKS - bank - 1) * self.interleave_size \
+                    + self.MAINMEM_SIZE \
+                - (self.MAINMEM_BANKS - bank - 1) * self._interleave_size \
                 - 1
+
+        @property
+        def interleave_size(self):
+            return str(self._interleave_size) + 'B'
+
+        @property
+        def interleave_step(self):
+            return str(self._interleave_step) + 'B'
+
+        @property
+        def bank_size(self):
+            return self.MAINMEM_BANK_SIZE_STR
 
     # return the class
     return MainMemoryRange

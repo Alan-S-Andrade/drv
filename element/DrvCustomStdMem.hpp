@@ -125,6 +125,8 @@ public:
 
 private:
   SST::Output output;
+  bool shootdowns_;
+  MemHierarchy::Addr lineSize_;
 };
 
 /**

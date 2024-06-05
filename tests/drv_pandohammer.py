@@ -29,7 +29,7 @@ def MakePANDOHammer(make_tile):
         # build the main memory banks
         mainmem_banks = []
         for i in range(PXN_MAINMEM_BANKS):
-            mainmem_banks.append(MainMemoryBank(i,0,pxn))
+            mainmem_banks.append(CachedDRAMBank(pxn, i))
 
         # build the network crossbar
         chiprtr = sst.Component("chiprtr%d" % pxn, "merlin.hr_router")
@@ -62,7 +62,7 @@ def MakePANDOHammer(make_tile):
             # build the shared memory
             l2_banks = []
             for i in range(POD_L2_BANKS):
-                l2_banks.append(L2MemoryBank(i,pod,pxn))
+                l2_banks.append(L2SPBank(pxn, pod, i))
 
             # wire up the tiles network
             base_core_no = pod*(CORES+POD_L2_BANKS)
@@ -71,7 +71,7 @@ def MakePANDOHammer(make_tile):
                 bridge.addParams({
                     "translator" : "memHierarchy.MemNetBridge",
                     "debug" : 1,
-                    "debug_level" : 10,
+                    "debug_level" : 0,
                     "network_bw" : "256GB/s",
                 })
                 tile_bridge_link = sst.Link("tile_bridge_link_%d_pod%d_pxn%d" % (i, pod, pxn))
@@ -88,43 +88,21 @@ def MakePANDOHammer(make_tile):
             # wire up the shared memory
             base_l2_bankno = pod*(CORES+POD_L2_BANKS)+len(tiles)
             for (i, l2_bank) in enumerate(l2_banks):
-                bridge = sst.Component("bridge_%d_pod%d_pxn%d" % (base_l2_bankno+i, pod, pxn), "merlin.Bridge")
-                bridge.addParams({
-                    "translator" : "memHierarchy.MemNetBridge",
-                    "debug" : 1,
-                    "debug_level" : 10,
-                    "network_bw" : "256GB/s",
-                })
-                l2_bank_bridge_link = sst.Link("l2bank_bridge_link_%d_pod%d_pxn%d" % (i, pod, pxn))
-                l2_bank_bridge_link.connect(
-                    (bridge, "network0", link_latency('l2_bank_bridge_link')),
-                    (l2_bank.mem_rtr, "port1", link_latency('l2_bank_bridge_link'))
-                )
-                bridge_chiprtr_link = sst.Link("bridge_chip_memrtr_link_%d_pod%d_pxn%d" % (i, pod, pxn))
-                bridge_chiprtr_link.connect(
-                    (bridge, "network1", link_latency('bridge_chiprtr_link')),
-                    (chiprtr, "port%d" % (base_l2_bankno+i), link_latency('bridge_chiprtr_link'))
+                nwif, portname = l2_bank.network_if()
+                link = sst.Link("l2sp_link_%d_pod%d_pxn%d" % (i, pod, pxn))
+                link.connect(
+                    (nwif, portname, link_latency("l2sp_chiprtr_link")),
+                    (chiprtr, "port%d" % (base_l2_bankno+i), link_latency("l2sp_chiprtr_link"))
                 )
 
         # wire up the main memory
         base_mainmem_bankno = PODS*(CORES+POD_L2_BANKS)
         for (i, mainmem_bank) in enumerate(mainmem_banks):
-            bridge = sst.Component("mainmem_bridge_%d_pxn%d" % (i, pxn), "merlin.Bridge")
-            bridge.addParams({
-                "translator" : "memHierarchy.MemNetBridge",
-                "debug" : 1,
-                "debug_level" : 10,
-                "network_bw" : "256GB/s",
-            })
-            mainmem_bank_bridge_link = sst.Link("mainmem_bank_bridge_link_%d_pxn%d" % (i, pxn))
-            mainmem_bank_bridge_link.connect(
-                (bridge, "network0", link_latency('mainmem_bank_bridge_link')),
-                (mainmem_bank.mem_rtr, "port1", link_latency('mainmem_bank_bridge_link'))
-            )
-            bridge_chiprtr_link = sst.Link("bridge_chip_mainmem_memrtr_link_%d_pxn%d" % (i, pxn))
-            bridge_chiprtr_link.connect(
-                (bridge, "network1", link_latency('bridge_chiprtr_link')),
-                (chiprtr, "port%d" % (base_mainmem_bankno+i), link_latency('bridge_chiprtr_link'))
+            nwif,portname = mainmem_bank.network_if()
+            link = sst.Link("mainmem_link_%d_pxn%d" % (i, pxn))
+            link.connect(
+                (nwif, portname, link_latency('mainmem_bank_chiprtr_link')),
+                (chiprtr, "port%d" % (base_mainmem_bankno+i), link_latency('mainmem_bank_chiprtr_link'))
             )
 
         # wire up the command processor
@@ -162,7 +140,7 @@ def MakePANDOHammer(make_tile):
             bridge.addParams({
                 "translator" : "memHierarchy.MemNetBridge",
                 "debug" : 1,
-                "debug_level" : 10,
+                "debug_level" : 0,
                 "network_bw" : "256GB/s",
             })
             onchiprtr_bridge_link = sst.Link("onchiprtr_bridge_link_pxn_%d" % pxn)

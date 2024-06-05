@@ -88,6 +88,11 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
    addr = decode.encode();
 //   std::cout << std::hex << "addr: " << addr << std::dec << std::endl;
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
+
+   // determine if the address is cacheable
+   bool noncacheable = (decode.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+   if (noncacheable) rd->setNoncacheable();
+
    rd->tid = core_->getHartId(shart);
    shart.stalledMemory() = true;
    auto ird = i.rd();
@@ -142,6 +147,11 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
         ? static_cast<T>(hart.f(i.rs2()))
         : static_cast<T>(hart.x(i.rs2()));
     StandardMem::Write *wr = new StandardMem::Write(addr, sizeof(T), data);
+
+    // determine if the address is cacheable
+    bool noncacheable = (decode.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+    if (noncacheable) wr->setNoncacheable();
+
     wr->tid = core_->getHartId(shart);    
     shart.stalledMemory() = true; // stores are blocking
     RISCVCore::ICompletionHandler ch([&shart](StandardMem::Request *req) {
