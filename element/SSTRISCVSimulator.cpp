@@ -557,16 +557,15 @@ void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
     std::vector<unsigned char> sim_stat_s = _type_translator.nativeToSimulator_stat(&stat_s);
     // set the return value
     shart.a(0) = r;
+
+    std::function<void(void)>completion
+        ([&shart](void) {
+            shart.stalledMemory() = false;
+        });
+
     // issue a write request
     shart.stalledMemory() = true;
-    RISCVCore::ICompletionHandler ch([&shart, sim_stat_s](StandardMem::Request *req) {
-        // handle the write response
-        shart.stalledMemory() = false;
-        delete req;
-    });
-    auto wr = new StandardMem::Write(stat_buf, sim_stat_s.size(), sim_stat_s);
-    wr->tid = core_->getHartId(shart);
-    core_->issueMemoryRequest(wr, wr->tid, ch);
+    sysWriteBuffer(shart, stat_buf, sim_stat_s, std::move(completion));
 }
 
 void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
@@ -601,21 +600,37 @@ void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
 void RISCVSimulator::sysWriteBuffer(RISCVSimHart &shart, StandardMem::Addr paddr, std::vector<uint8_t> &data, std::function<void(void)> && cont) {
     // create a large request handler
     size_t reqSz = core_->getMaxReqSize();
-    size_t nReqs = (data.size() + reqSz - 1)/ reqSz;
-    std::shared_ptr<LargeWriteHandler> handler(new LargeWriteHandler(nReqs, std::move(cont)));
+    size_t nReqs = 0;
+    size_t payloadSz = data.size();
+    size_t payloadOff = 0;
+    std::shared_ptr<LargeWriteHandler> handler(new LargeWriteHandler(std::move(cont)));
 
     // create a completion handler for when small requests return
     RISCVCore::ICompletionHandler ch([handler](StandardMem::Request *req) {
         handler->recvRsp(req);
     });
 
-    for (size_t i = 0; i < nReqs; ++i) {
-        size_t sz = std::min(data.size() - i * reqSz, reqSz);
-        std::vector<uint8_t> wdata(data.begin() + i * reqSz, data.begin() + i * reqSz + sz);
-        auto wr = new StandardMem::Write(paddr + i * reqSz, sz, wdata);
+    bool noncacheable = (DrvAPI::DrvAPIPAddress{paddr}.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+
+    // issue writes along cache line boundaries
+    while  (payloadSz > 0) {
+        // determine the size of the next write
+        size_t sz = std::min(payloadSz, reqSz);
+        sz = std::min(sz, reqSz - (paddr % reqSz));
+        std::vector<uint8_t> wdata(data.begin() + payloadOff, data.begin() + payloadOff + sz);
+        // create the write request
+        auto wr = new StandardMem::Write(paddr, sz, wdata);
+        if (noncacheable) wr->setNoncacheable();
         wr->tid = core_->getHartId(shart);
         core_->issueMemoryRequest(wr, wr->tid, ch);
+        // increment bookkeeping
+        nReqs++;
+        paddr += sz;
+        payloadSz  -= sz;
+        payloadOff += sz;
     }
+
+    handler->n_requests = nReqs;
 }
 
 /**
@@ -624,20 +639,34 @@ void RISCVSimulator::sysWriteBuffer(RISCVSimHart &shart, StandardMem::Addr paddr
 void RISCVSimulator::sysReadBuffer(RISCVSimHart &shart, StandardMem::Addr paddr, size_t n, std::function<void(std::vector<uint8_t>&)> && cont) {
     // create a large request handler
     size_t reqSz = core_->getMaxReqSize();
-    size_t nReqs = (n + reqSz - 1)/ reqSz;
-    std::shared_ptr<LargeReadHandler> handler(new LargeReadHandler(nReqs, std::move(cont)));
+    size_t nReqs = 0;
+    size_t payloadSz = n;
+    size_t payloadOff = 0;
+    std::shared_ptr<LargeReadHandler> handler(new LargeReadHandler(std::move(cont)));
 
     // create a completion handler for when small requests return
     RISCVCore::ICompletionHandler ch([handler](StandardMem::Request *req) {
         handler->recvRsp(req);
     });
 
-    for (size_t i = 0; i < nReqs; ++i) {
-        size_t sz = std::min(n - i * reqSz, reqSz);
-        auto rd = new StandardMem::Read(paddr + i * reqSz, sz);
+    bool noncacheable = (DrvAPI::DrvAPIPAddress{paddr}.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+    // issue reads along cache line boundaries
+    while (payloadSz > 0) {
+        // determine the size of the next read
+        size_t sz = std::min(payloadSz, reqSz);
+        sz = std::min(sz, reqSz - (paddr % reqSz));
+        // create the read request
+        auto rd = new StandardMem::Read(paddr, sz);
+        if (noncacheable) rd->setNoncacheable();
         rd->tid = core_->getHartId(shart);
         core_->issueMemoryRequest(rd, rd->tid, ch);
+        // increment bookkeeping
+        nReqs++;
+        paddr += sz;
+        payloadSz  -= sz;
+        payloadOff += sz;
     }
+    handler->n_requests = nReqs;
 }
 
 void RISCVSimulator::sysCLOSE(RISCVSimHart &shart, RISCVInstruction &i) {

@@ -136,8 +136,8 @@ private:
     class LargeReadHandler {
     public:
         using ResponseType = SST::Interfaces::StandardMem::ReadResp;
-        LargeReadHandler(size_t n_requests, std::function<void(std::vector<uint8_t>&)> &&completion) :
-            n_requests(n_requests), completion(completion) {
+        LargeReadHandler(std::function<void(std::vector<uint8_t>&)> &&completion) :
+            n_requests(0), completion(completion) {
             responses.reserve(n_requests);
         }
         virtual ~LargeReadHandler() {
@@ -176,8 +176,8 @@ private:
     class LargeWriteHandler {
     public:
         using ResponseType = SST::Interfaces::StandardMem::WriteResp;
-        LargeWriteHandler(size_t n_requests, std::function<void()> &&completion) :
-            n_requests(n_requests), completion(completion) {
+        LargeWriteHandler(std::function<void()> &&completion) :
+            n_requests(0), completion(completion) {
             responses.reserve(n_requests);
         }
         virtual ~LargeWriteHandler() {
