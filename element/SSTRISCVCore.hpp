@@ -12,6 +12,7 @@
 #include <RISCVDecoder.hpp>
 #include <RISCVInterpreter.hpp>
 #include <ICacheBacking.hpp>
+#include <ICache.hpp>
 #include "SSTRISCVSimulator.hpp"
 #include "SSTRISCVHart.hpp"
 #include "DrvSysConfig.hpp"
@@ -62,6 +63,8 @@ public:
         {"debug_mmio", "Debug MMIO requests", "0"},
         {"isa_test", "Report ISA tests results", "0"},
         {"test_name", "Optional name of the test", ""},
+        {"icache_instructions",  "Number of icache instructions", "1024"},
+        {"icache_associativity", "Associativity of the icache", "1"},
     )
 
     // Document the ports that this component accepts
@@ -113,6 +116,7 @@ public:
             {"atomic_remote_pxn", "Number of atomics to remote PXN", "count", 1},
             {"stall_cycles", "Number of stalled cycles", "count", 1},
             {"busy_cycles", "Number of busy cycles", "count", 1},
+            {"icache_miss", "Number of icache misses", "count", 1},
         };
 
 #undef DEFINSTR
@@ -445,7 +449,7 @@ public:
     std::string test_name_; //!< test name
     Interfaces::StandardMem *mem_; //!< memory interface
     RISCVSimulator *sim_; //!< simulator
-    ICacheBacking *icache_; //!< icache
+    ICache *icache_; //!< icache
     RISCVDecoder decoder_; //!< decoder
     std::vector<RISCVSimHart> harts_; //!< harts
     std::map<int, ICompletionHandler> rsp_handlers_; //!< response handlers
@@ -462,6 +466,7 @@ public:
     std::vector<ThreadStats> thread_stats_; //!< thread stats
     Statistic<uint64_t> *busy_cycles_; //!< cycle count
     Statistic<uint64_t> *stall_cycles_; //!< stall cycle count
+    Statistic<uint64_t> *icache_miss_; //!< icache miss count
     DrvAPI::DrvAPIPAddress mmio_start_; //!< mmio start address
     DrvAPI::DrvAPIPAddress mmio_end_; //!< mmio end address
     SST::Link *loopback_; //!< loopback link
