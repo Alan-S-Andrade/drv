@@ -60,7 +60,10 @@ void RISCVCore::configureICache(Params &params) {
     if (program.empty()) {
         output_.fatal(CALL_INFO, -1, "No program specified\n");
     }
-    icache_ = new ICacheBacking(program.c_str());
+    uint64_t icache_instructions = params.find<uint64_t>("icache_instructions", 1024);
+    uint64_t icache_associativity = params.find<uint64_t>("icache_associativity", 1);
+    auto *backing = new ICacheBacking(program.c_str());
+    icache_ = new ICache(backing, icache_instructions, icache_associativity);
     load_program_ = params.find<bool>("load", false);
 }
 
@@ -119,6 +122,7 @@ void RISCVCore::configureStatistics(Params &params) {
     }
     busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
     stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");
+    icache_miss_ = registerStatistic<uint64_t>("icache_miss");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -166,7 +170,7 @@ void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
     output_.verbose(CALL_INFO, 1, 0, "Loading program segment: (paddr = 0x%lx, vaddr = 0x%lx)\n"
                     , phdr->p_paddr
                     , phdr->p_vaddr);
-    uint8_t *segp = static_cast<uint8_t*>(icache_->segment(phdr));
+    uint8_t *segp = static_cast<uint8_t*>(icache_->backing()->segment(phdr));
     size_t  segsz = phdr->p_filesz;
     size_t  reqsz = getMaxReqSize();
 
@@ -204,8 +208,8 @@ void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
 
 /* load program */
 void RISCVCore::loadProgram() {
-    for (int pidx = 0; pidx < icache_->ehdr()->e_phnum; pidx++) {
-        Elf64_Phdr *phdr = icache_->phdr(pidx);
+    for (int pidx = 0; pidx < icache_->backing()->ehdr()->e_phnum; pidx++) {
+        Elf64_Phdr *phdr = icache_->backing()->phdr(pidx);
         if (phdr->p_type == PT_LOAD) {
             loadProgramSegment(phdr);
         }
@@ -215,7 +219,7 @@ void RISCVCore::loadProgram() {
 /* init */
 void RISCVCore::init(unsigned int phase) {
     for (RISCVSimHart &hart : harts_) {
-        hart.resetPC() = icache_->getStartAddr();
+        hart.resetPC() = icache_->backing()->getStartAddr();
         hart.reset() = true;
     }
     auto stdmem = dynamic_cast<Interfaces::StandardMem*>(mem_);
@@ -360,7 +364,10 @@ bool RISCVCore::tick(Cycle_t cycle) {
     if (hart_id != NO_HART) {
         addBusyCycleStat(1);
         uint64_t pc = harts_[hart_id].pc();
-        uint32_t inst = icache_->read(pc);
+        auto [hit, inst] = icache_->read(pc);
+        if (!hit) {
+            icache_miss_->addData(1);
+        }
         RISCVInstruction *i = nullptr;
         try {
             i = decoder_.decode(inst);
