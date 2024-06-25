@@ -131,6 +131,9 @@ class DRAMBankBase(MemoryBank):
             backend.addParams({
                 "config_ini" : arguments.dram_backend_config,
                 "mem_size" : self.address_range.bank_size,
+                # todo : this is tied to hbm; we should read this from the config
+                # it's honestly a bug that the element doesn't read this from the config itself
+                "request_width" : 32,
             })
         else:
             backend = self.memory.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
@@ -190,10 +193,10 @@ class CachedDRAMBank(DRAMBankBase):
         cache.addParams({
             "cache_frequency" : "1GHz",
             # cache size and configuration
-            "cache_size" : "1MiB",
+            "cache_size" : "8KiB",
             "associativity" : 2,
             "cache_line_size" : self.cache_line_size,
-            "mshr_num_entries" : 2,
+            "mshr_num_entries" : 32,
             "replacement_policy" : "lru",
             "access_latency_cycles" : 1,
             # routing information
