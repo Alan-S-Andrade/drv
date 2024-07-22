@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2024 University of Washington
+#define PANDOCOMMAND_DEBUG
 #include <pandocommand/executable.hpp>
 #include <pandocommand/loader.hpp>
 #include <pandocommand/debug.hpp>
@@ -13,8 +14,8 @@ using namespace pandocommand;
 namespace pandocommand
 {
 void loadProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
-    DrvAPIVAddress vaddr{segpaddr};
-    cmd_dbg("Loading segment @ 0x%016" PRIx64 " (%s)\n", segpaddr, vaddr.to_string().c_str());
+    DrvAPIAddressInfo decode = decodeAddress(segpaddr);
+    cmd_dbg("Loading segment @ 0x%016" PRIx64 " (%s)\n", segpaddr, decode.to_string().c_str());
     size_t segsz = phdr->p_filesz;
     static constexpr size_t MAX_REQSZ = 64;
     char *data = executable.segment_data(phdr);
@@ -47,20 +48,17 @@ void loadProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddr
 
 void loadDRAMProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     // load once on this pxn
-    DrvAPIVAddress decode{segpaddr};
-    decode.global() = true;
-    decode.pxn() = myPXNId();
-    loadProgramSegment(executable, phdr, decode.encode());
+    loadProgramSegment(executable, phdr, toAbsoluteAddress(segpaddr));
 }
 
 void loadL2ProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     // load on each pod
     for (int pod = 0; pod < numPXNPods(); pod++) {
-        DrvAPIVAddress decode{segpaddr};
-        decode.global() = true;
-        decode.pxn() = myPXNId();
-        decode.pod() = pod;
-        loadProgramSegment(executable, phdr, decode.encode());
+        DrvAPIAddressInfo decode = decodeAddress(segpaddr);
+        decode.set_absolute(true)
+            .set_pxn(myPXNId())
+            .set_pod(pod);
+        loadProgramSegment(executable, phdr, encodeAddressInfo(decode));
     }
 }
 
@@ -68,13 +66,12 @@ void loadL1ProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAd
     // load on each core
     for (int pod = 0; pod < numPXNPods(); pod++) {
         for (int core = 0; core < numPodCores(); core++) {
-            DrvAPIVAddress decode{segpaddr};
-            decode.global() = true;
-            decode.pxn() = myPXNId();
-            decode.pod() = pod;
-            decode.core_y() = coreYFromId(core);
-            decode.core_x() = coreXFromId(core);
-            loadProgramSegment(executable, phdr, decode.encode());
+            DrvAPIAddressInfo decode = decodeAddress(segpaddr);
+            decode.set_absolute(true)
+                .set_pxn(myPXNId())
+                .set_pod(pod)
+                .set_core(core);
+            loadProgramSegment(executable, phdr, encodeAddressInfo(decode));
         }
     }
 }
@@ -87,18 +84,18 @@ void loadProgram(PANDOHammerExe &executable)
         if (phdr->p_type != PT_LOAD)
             continue;
         // decode the address of the segment
-        DrvAPIVAddress decoded{phdr->p_paddr};
+        DrvAPIAddressInfo decoded = decodeAddress(phdr->p_paddr);
         // if this is a dram segment, load once
         if (decoded.is_dram()) {
-            loadDRAMProgramSegment(executable, phdr, decoded.encode());
+            loadDRAMProgramSegment(executable, phdr, phdr->p_paddr);
         }
         // if this is a l2 segment, load onece per pod
-        else if (decoded.is_l2()) {
-            loadL2ProgramSegment(executable, phdr, decoded.encode());
+        else if (decoded.is_l2sp()) {
+            loadL2ProgramSegment(executable, phdr, phdr->p_paddr);
         }
         // if this is a l1 segment, load once per core
-        else if (decoded.is_l1()) {
-            loadL1ProgramSegment(executable, phdr, decoded.encode());
+        else if (decoded.is_l1sp()) {
+            loadL1ProgramSegment(executable, phdr, phdr->p_paddr);
         }
     }    
 }

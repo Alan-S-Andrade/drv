@@ -72,14 +72,8 @@ void RISCVCore::configureMemory(Params &params) {
         ("memory", ComponentInfo::SHARE_NONE, clocktc_,
          new Interfaces::StandardMem::Handler<RISCVCore>(this, &RISCVCore::handleMemEvent));
 
-    mmio_start_.type() = DrvAPI::DrvAPIPAddress::TYPE_CTRL;
-    mmio_start_.pxn() = pxn_;
-    mmio_start_.pod() = pod_;
-    mmio_start_.core_x() = DrvAPI::coreXFromId(core_);
-    mmio_start_.core_y() = DrvAPI::coreYFromId(core_);
-    mmio_start_.ctrl_offset() = 0;
-
-    mem_->setMemoryMappedAddressRegion(mmio_start_.encode(), 1<<DrvAPI::DrvAPIPAddress::CtrlOffsetHandle::bits());
+    mmio_start_ = address_decoder_.this_cores_absolute_ctrl_base();
+    mem_->setMemoryMappedAddressRegion(mmio_start_, 0x1000);
 }
 
 void RISCVCore::configureSimulator(Params &params) {
@@ -91,6 +85,7 @@ void RISCVCore::configureSysConfig(Params &params) {
     core_ = params.find<int>("core", 0);
     pod_  = params.find<int>("pod", 0);
     pxn_  = params.find<int>("pxn", 0);
+    address_decoder_ = DrvAPI::DrvAPIAddressDecoder(pxn_, pod_, core_, sys_config_.config());
 }
 
 void RISCVCore::configureStatistics(Params &params) {
@@ -158,9 +153,8 @@ RISCVCore::~RISCVCore() {
     delete sim_;
 }
 
-DrvAPI::DrvAPIPAddress RISCVCore::toPhysicalAddress(uint64_t addr) const {
-    return DrvAPI::DrvAPIVAddress::to_physical
-        (addr, pxn_, pod_, DrvAPI::coreYFromId(core_), DrvAPI::coreXFromId(core_));
+DrvAPI::DrvAPIAddressInfo RISCVCore::decodeAddress(uint64_t addr) const {
+    return address_decoder_.decode(addr);
 }
 
 /* load program segment */
@@ -174,14 +168,14 @@ void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
     size_t  segsz = phdr->p_filesz;
     size_t  reqsz = getMaxReqSize();
 
-    auto decoded_phys_addr = toPhysicalAddress(phdr->p_paddr);
+    auto decoded_phys_addr = decodeAddress(phdr->p_paddr);
 
     // skip if you are not the l2sp loader
-    if (!load_program_ && decoded_phys_addr.type() != DrvAPI::DrvAPIPAddress::TYPE_L1SP) {
+    if (!load_program_ && !decoded_phys_addr.is_l1sp()) {
         return;
     }
 
-    Addr segpaddr = decoded_phys_addr.encode(); // this turns a relative address into an absolute one
+    Addr segpaddr = address_decoder_.to_absolute(phdr->p_paddr);
     // write data
     for (;segsz > 0;) {
         size_t wrsz = std::min(reqsz, segsz);
@@ -292,9 +286,9 @@ void RISCVCore::handleMMIOWrite(Interfaces::StandardMem::Write *write_req) {
     }
     uint64_t v = *reinterpret_cast<uint64_t*>(&write_req->data[0]);
 
-    DrvAPIPAddress paddr{write_req->pAddr};
-    switch (paddr.ctrl_offset()) {
-    case DrvAPIPAddress::CTRL_CORE_RESET:
+    DrvAPIAddressInfo paddr = address_decoder_.decode(write_req->pAddr);
+    switch (paddr.offset()) {
+    case DrvAPI::CTRL_CORE_RESET:
         handleResetWrite(v);
         break;
     default:

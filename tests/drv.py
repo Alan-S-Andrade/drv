@@ -2,23 +2,13 @@
 # Copyright (c) 2023 University of Washington
 import sst
 import argparse
+import addressmap
 
-# common functions
-ADDR_TYPE_HI,ADDR_TYPE_LO     = (63, 58)
-ADDR_PXN_HI, ADDR_PXN_LO      = (57, 44)
-ADDR_POD_HI,ADDR_POD_LO       = (39, 34)
-ADDR_CORE_Y_HI,ADDR_CORE_Y_LO = (30, 28)
-ADDR_CORE_X_HI,ADDR_CORE_X_LO = (24, 22)
-
-ADDR_TYPE_L1SP    = 0b000000
-ADDR_TYPE_L2SP    = 0b000001
-ADDR_TYPE_MAINMEM = 0b000100
-
-def set_bits(word, hi, lo, value):
-    mask = (1 << (hi - lo + 1)) - 1
-    word &= ~(mask << lo)
-    word |= (value & mask) << lo
-    return word
+##################
+# Size Constants #
+##################
+POD_L2SP_SIZE = (1<<25)
+CORE_L1SP_SIZE = (1<<17)
         
 ################################
 # parse command line arguments #
@@ -27,7 +17,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("program", help="program to run")
 parser.add_argument("argv", nargs=argparse.REMAINDER, help="arguments to program")
 parser.add_argument("--verbose", type=int, default=0, help="verbosity of core")
-parser.add_argument("--dram-access-time", type=str, default="13ns", help="latency of DRAM (only valid if using the latency based model)")
+parser.add_argument("--dram-access-time", type=str, default="100ns", help="latency of DRAM (only valid if using the latency based model)")
 parser.add_argument("--dram-backend", type=str, default="simple", choices=['simple', 'ramulator','dramsim3'], help="backend timing model for DRAM")
 parser.add_argument("--dram-backend-config", type=str, default="/root/sst-ramulator-src/configs/hbm4-pando-config.cfg",
                     help="backend timing model configuration for DRAM")
@@ -45,9 +35,11 @@ parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
 parser.add_argument("--core-clock", type=str, default="1GHz", help="clock frequency of cores")
 parser.add_argument("--core-max-idle", type=int, default=1, help="max idle time of cores")
+parser.add_argument("--core-l1sp-size", type=int, default=CORE_L1SP_SIZE, help="size of l1sp per core")
 
 parser.add_argument("--pod-l2sp-banks", type=int, default=8, help="number of l2sp banks per pod")
 parser.add_argument("--pod-l2sp-interleave", type=int, default=0, help="interleave size of l2sp addresses (defaults to no  interleaving)")
+parser.add_argument("--pod-l2sp-size", type=int, default=POD_L2SP_SIZE, help="size of l2sp per pod (max {} bytes)".format(POD_L2SP_SIZE))
 
 parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
 parser.add_argument("--pxn-dram-size", type=int, default=1024**3, help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
@@ -105,11 +97,6 @@ def memory_latency(memory_name):
 
     return MEMORY_LATENCIES[memory_name]
 
-##################
-# Size Constants #
-##################
-POD_L2SP_SIZE = (1<<25)
-CORE_L1SP_SIZE = (1<<17)
 
 ###################
 # router id bases #
@@ -125,13 +112,13 @@ SYSCONFIG = {
     "sys_pod_cores" : 8,
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
-    "sys_core_l1sp_size" : CORE_L1SP_SIZE,
+    "sys_core_l1sp_size" : arguments.core_l1sp_size,
     "sys_pxn_dram_size" : arguments.pxn_dram_size,    
     "sys_pxn_dram_ports" : arguments.pxn_dram_banks,
     "sys_pxn_dram_interleave_size" : arguments.pxn_dram_interleave if arguments.pxn_dram_interleave else arguments.pxn_dram_size//arguments.pxn_dram_banks,
-    "sys_pod_l2sp_size" : POD_L2SP_SIZE,
+    "sys_pod_l2sp_size" : arguments.pod_l2sp_size,
     "sys_pod_l2sp_banks" : arguments.pod_l2sp_banks,
-    "sys_pod_l2sp_interleave_size" : arguments.pod_l2sp_interleave if arguments.pod_l2sp_interleave else POD_L2SP_SIZE//arguments.pod_l2sp_banks,
+    "sys_pod_l2sp_interleave_size" : arguments.pod_l2sp_interleave if arguments.pod_l2sp_interleave else arguments.pod_l2sp_size//arguments.pod_l2sp_banks,
     "sys_nw_flit_dwords" : 1,
     "sys_nw_obuf_dwords" : 8,
     "sys_cp_present" : False,
@@ -176,26 +163,50 @@ CORE_DEBUG["trace_remote_pxn"] = arguments.trace_remote_pxn_memory
 CORE_DEBUG['isa_test'] = arguments.drvr_isa_test
 CORE_DEBUG['test_name'] = arguments.test_name
 
+
+class Sysconfig(object):
+    def __init__(self):
+        """
+        Initialize the system configuration
+        """
+        self._pxns = SYSCONFIG['sys_num_pxn']
+        self._pxn_pods = SYSCONFIG['sys_pxn_pods']
+        self._pod_cores = SYSCONFIG['sys_pod_cores']
+
+    def pxns(self):
+        """
+        Return the number of PXNs in the system
+        """
+        return self._pxns
+
+    def pods(self):
+        """
+        Return the number of pods in a pxn
+        """
+        return self._pxn_pods
+
+    def cores(self):
+        """
+        Return the number of cores in a pod
+        """
+        return self._pod_cores
+
+ADDRESS_MAP = addressmap.AddressMap(Sysconfig())
+
 class L1SPRange(object):
     L1SP_SIZE = SYSCONFIG['sys_core_l1sp_size']
-    L1SP_SIZE_STR = "128KiB"
-    def __init__(self, pxn, pod, core_y, core_x):
-        start = 0
-        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L1SP)
-        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-        start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
-        start = set_bits(start, ADDR_CORE_Y_HI, ADDR_CORE_Y_LO, core_y)
-        start = set_bits(start, ADDR_CORE_X_HI, ADDR_CORE_X_LO, core_x)
-        self.start = start
-        self.end = start + self.L1SP_SIZE - 1
+    L1SP_SIZE_STR = str(L1SP_SIZE) + 'B'
+    def __init__(self, pxn, pod, core):
+        builder = addressmap.L1SPAddressBuilder(ADDRESS_MAP, self.L1SP_SIZE)
+        self.start, self.end, self.interleave_size, self.interleave_step = builder(pxn, pod, core)
 
 class L2SPRange(object):
     # 16MiB
     L2SP_POD_BANKS = SYSCONFIG['sys_pod_l2sp_banks']
     L2SP_SIZE = SYSCONFIG['sys_pod_l2sp_size']
     L2SP_BANK_SIZE = L2SP_SIZE // L2SP_POD_BANKS
-    L2SP_SIZE_STR = "16MiB"
-    L2SP_BANK_SIZE_STR = "4MiB"
+    L2SP_SIZE_STR = str(L2SP_SIZE) + 'B'
+    L2SP_BANK_SIZE_STR = str(L2SP_BANK_SIZE) +'B'
     # interleave
     L2SP_INTERLEAVE_SIZE = SYSCONFIG['sys_pod_l2sp_interleave_size']
     L2SP_INTERLEAVE_SIZE_STR = "{}B".format(L2SP_INTERLEAVE_SIZE)
@@ -203,18 +214,8 @@ class L2SPRange(object):
     L2SP_INTERLEAVE_STEP_STR = "{}B".format(L2SP_INTERLEAVE_STEP)
 
     def __init__(self, pxn, pod, bank):
-        start = 0
-        start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_L2SP)
-        start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-        start = set_bits(start, ADDR_POD_HI, ADDR_POD_LO, pod)
-        self._interleave_size = self.L2SP_INTERLEAVE_SIZE
-        self._interleave_step = self.L2SP_INTERLEAVE_STEP
-        self.start = start \
-            + bank * self._interleave_size
-        self.end = start \
-            + self.L2SP_SIZE \
-            - (self.L2SP_POD_BANKS - bank - 1) * self._interleave_size \
-            - 1
+        builder = addressmap.L2SPAddressBuilder(ADDRESS_MAP, self.L2SP_BANK_SIZE, self.L2SP_INTERLEAVE_SIZE, self.L2SP_INTERLEAVE_STEP)
+        self.start, self.end, self._interleave_size, self._interleave_step = builder(pxn, pod, bank)
 
     @property
     def interleave_size(self):
@@ -228,57 +229,37 @@ class L2SPRange(object):
     def bank_size(self):
         return self.L2SP_BANK_SIZE_STR
 
-def MakeMainMemoryRangeClass(banks, size):
-    if (size > 8*1024*1024*1024):
-        raise ValueError("PXN main memory size cannot be more than 8GiB")
+class MainMemoryRange(object):
+    # specs say upto 8TB
+    # we make this a parameter here
+    MAINMEM_BANKS = SYSCONFIG['sys_pxn_dram_ports']
+    MAINMEM_SIZE = SYSCONFIG['sys_pxn_dram_size']
+    MAINMEM_BANK_SIZE = MAINMEM_SIZE // MAINMEM_BANKS
+    # size strings
+    MAINMEM_SIZE_STR = "{}GiB".format(MAINMEM_SIZE // 1024**3)
+    MAINMEM_BANK_SIZE_STR = "{}MiB".format(MAINMEM_BANK_SIZE // 1024**2)
+    # interleave
+    MAINMEM_INTERLEAVE_SIZE = SYSCONFIG['sys_pxn_dram_interleave_size']
+    MAINMEM_INTERLEAVE_SIZE_STR = "{}B".format(MAINMEM_INTERLEAVE_SIZE)
+    MAINMEM_INTERLEAVE_STEP = MAINMEM_INTERLEAVE_SIZE * MAINMEM_BANKS
+    MAINMEM_INTERLEAVE_STEP_STR = "{}B".format(MAINMEM_INTERLEAVE_STEP)
 
-    class MainMemoryRange(object):
-        # specs say upto 8TB
-        # we make this a parameter here
-        MAINMEM_BANKS = banks
-        MAINMEM_SIZE = size
-        MAINMEM_BANK_SIZE = MAINMEM_SIZE // MAINMEM_BANKS
-        # size strings
-        MAINMEM_SIZE_STR = "{}GiB".format(MAINMEM_SIZE // 1024**3)
-        MAINMEM_BANK_SIZE_STR = "{}MiB".format(MAINMEM_BANK_SIZE // 1024**2)
-        # interleave
-        MAINMEM_INTERLEAVE_SIZE = SYSCONFIG['sys_pxn_dram_interleave_size']
-        MAINMEM_INTERLEAVE_SIZE_STR = "{}B".format(MAINMEM_INTERLEAVE_SIZE)
-        MAINMEM_INTERLEAVE_STEP = MAINMEM_INTERLEAVE_SIZE * MAINMEM_BANKS
-        MAINMEM_INTERLEAVE_STEP_STR = "{}B".format(MAINMEM_INTERLEAVE_STEP)
+    def __init__(self, pxn, pod, bank):
+        builder = addressmap.DRAMAddressBuilder(ADDRESS_MAP, self.MAINMEM_BANK_SIZE, self.MAINMEM_INTERLEAVE_SIZE, self.MAINMEM_INTERLEAVE_STEP)
+        self.start, self.end, self._interleave_size, self._interleave_step = builder(pxn, bank)
 
-        def __init__(self, pxn, pod, bank):
-            start = 0
-            start = set_bits(start, ADDR_TYPE_HI, ADDR_TYPE_LO, ADDR_TYPE_MAINMEM)
-            start = set_bits(start, ADDR_PXN_HI, ADDR_PXN_LO, pxn)
-            self._interleave_size = self.MAINMEM_INTERLEAVE_SIZE
-            self._interleave_step = self.MAINMEM_INTERLEAVE_STEP
-            self.start = start \
-                + pod  * size  \
-                + bank * self._interleave_size
-            self.end = start \
-                + pod * size \
-                    + self.MAINMEM_SIZE \
-                - (self.MAINMEM_BANKS - bank - 1) * self._interleave_size \
-                - 1
+    @property
+    def interleave_size(self):
+        return str(self._interleave_size) + 'B'
 
-        @property
-        def interleave_size(self):
-            return str(self._interleave_size) + 'B'
+    @property
+    def interleave_step(self):
+        return str(self._interleave_step) + 'B'
 
-        @property
-        def interleave_step(self):
-            return str(self._interleave_step) + 'B'
+    @property
+    def bank_size(self):
+        return self.MAINMEM_BANK_SIZE_STR
 
-        @property
-        def bank_size(self):
-            return self.MAINMEM_BANK_SIZE_STR
-
-    # return the class
-    return MainMemoryRange
-
-# create the main memory range class
-MainMemoryRange = MakeMainMemoryRangeClass(SYSCONFIG['sys_pxn_dram_ports'], SYSCONFIG["sys_pxn_dram_size"])
 
 class CommandProcessor(object):
     CORE_ID = -1

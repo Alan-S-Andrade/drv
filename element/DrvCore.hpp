@@ -46,10 +46,6 @@ public:
       {"pod", "Pod ID of this core", "0"},
       {"pxn", "PXN ID of this core", "0"},
       {"stack_in_l1sp", "Use modeled memory backing store for stack", "0"},
-      {"dram_base", "Base address of DRAM", "0x80000000"},
-      {"dram_size", "Size of DRAM", "0x100000000"},
-      {"l1sp_base", "Base address of L1SP", "0x00000000"},
-      {"l1sp_size", "Size of L1SP", "0x00001000"},
       /* debug flags */
       {"verbose", "Verbosity of logging", "0"},
       {"debug_init", "Print debug messages during initialization", "False"},
@@ -257,7 +253,7 @@ private:
   std::unique_ptr<SST::Output> trace_; //!< for tracing
 
 public:
-  void traceRemotePxnMem(uint32_t trace_mask, const char* opname, DrvAPI::DrvAPIPAddress paddr, DrvThread *thread) const {
+  void traceRemotePxnMem(uint32_t trace_mask, const char* opname, const DrvAPI::DrvAPIAddressInfo& paddr, DrvThread *thread) const {
       trace_->verbose(CALL_INFO, 0, trace_mask
                       ,"OP=%s:SRC_PXN=%d:SRC_POD=%d:SRC_CORE=%d:SRC_THREAD=%d:DST_PXN=%d:ADDR=%s\n"
                       ,opname
@@ -358,38 +354,38 @@ public:
     /**
      * is local l1sp for purpose of stats
      */
-    bool isPAddressL1SP(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    bool isPAddressL1SP(const DrvAPI::DrvAPIAddressInfo& addr) const {
+        return addr.pxn() == static_cast<int64_t>(pxn_)
+            && addr.is_l1sp();
     }
 
     /**
      * is  l2sp for purpose of stats
      */
-    bool isPAddressL2SP(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    bool isPAddressL2SP(const DrvAPI::DrvAPIAddressInfo & addr) const {
+        return addr.is_l2sp()
+            && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
      * is  dram for purpose of stats
      */
-    bool isPAddressDRAM(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_DRAM
-            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    bool isPAddressDRAM(const DrvAPI::DrvAPIAddressInfo & addr) const {
+        return addr.is_dram()
+            && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
      * is remote pxn memory for purpose of stats
      */
-    bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.pxn() != static_cast<uint64_t>(pxn_);
+    bool isPAddressRemotePXN(const DrvAPI::DrvAPIAddressInfo& addr) const {
+        return addr.pxn() != static_cast<int64_t>(pxn_);
     }
 
     /**
      * add load statistic
      */
-    void addLoadStat(DrvAPI::DrvAPIPAddress addr, DrvThread *thread) {
+    void addLoadStat(const DrvAPI::DrvAPIAddressInfo & addr, DrvThread *thread) {
         int tid = getThreadID(thread);
         ThreadStat *stats = &thread_stats_[tid];
         if (isPAddressL1SP(addr)) {
@@ -407,7 +403,7 @@ public:
     /**
      * add store statistic
      */
-    void addStoreStat(DrvAPI::DrvAPIPAddress addr, DrvThread *thread) {
+    void addStoreStat(const DrvAPI::DrvAPIAddressInfo & addr, DrvThread *thread) {
         int tid = getThreadID(thread);
         ThreadStat *stats = &thread_stats_[tid];
         if (isPAddressL1SP(addr)) {
@@ -425,7 +421,7 @@ public:
     /**
      * add atomic statistic
      */
-    void addAtomicStat(DrvAPI::DrvAPIPAddress addr, DrvThread *thread) {
+    void addAtomicStat(const DrvAPI::DrvAPIAddressInfo& addr, DrvThread *thread) {
         int tid = getThreadID(thread);
         ThreadStat *stats = &thread_stats_[tid];
         if (isPAddressL1SP(addr)) {
@@ -461,10 +457,15 @@ public:
         return sys_config_;
     }
 
+    const DrvAPI::DrvAPIAddressDecoder &decoder() const {
+        return decoder_;
+    }
+
 private:  
   std::unique_ptr<SST::Output> output_; //!< for logging
   SST::Output tag_; //!< for stats collection
   std::vector<DrvThread> threads_; //!< the threads on this core
+  DrvAPI::DrvAPIAddressDecoder decoder_; //!< the address decoder
   void *executable_; //!< the executable handle
   drv_api_main_t main_; //!< the main function in the executable
   drv_api_get_thread_context_t get_thread_context_; //!< the get_thread_context function in the executable

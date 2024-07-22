@@ -57,19 +57,17 @@ StaticMainMem<int64_t> this_pxns_num_cores_ready; //!< number of cores ready to 
 static DrvAPIPointer<int64_t> terminate_pointer()
 {
     /* pxn 0 holds the absolute */
-    DrvAPIVAddress vaddr = static_cast<DrvAPIAddress>(&this_pxns_terminate);
-    vaddr.not_scratchpad() = true;
-    vaddr.pxn() = 0;
-    return vaddr.encode();
+    DrvAPIAddressInfo info = decodeAddress(&this_pxns_terminate);
+    info.set_absolute(true).set_pxn(0);
+    return encodeAddressInfo(info);
 }
 
 static DrvAPIPointer<int64_t> num_cores_ready_pointer()
 {
     /* pxn 0 holds the absolute */
-    DrvAPIVAddress vaddr = static_cast<DrvAPIAddress>(&this_pxns_num_cores_ready);
-    vaddr.not_scratchpad() = true;
-    vaddr.pxn() = 0;
-    return vaddr.encode();
+    DrvAPIAddressInfo info = decodeAddress(&this_pxns_num_cores_ready);
+    info.set_absolute(true).set_pxn(0);
+    return encodeAddressInfo(info);
 }
 
 static int64_t num_cores()
@@ -81,14 +79,12 @@ static int64_t num_cores()
  * execute this task on a specific core
  */
 void execute_on(uint32_t pxn, uint32_t pod, uint32_t core, task* t) {
-    DrvAPIVAddress queue_vaddr = static_cast<DrvAPIAddress>(&this_cores_task_queue);
-    queue_vaddr.global() = true;
-    queue_vaddr.l2_not_l1() = false;
-    queue_vaddr.pxn() = pxn;
-    queue_vaddr.pod() = pod;
-    queue_vaddr.core_y() = coreYFromId(core);
-    queue_vaddr.core_x() = coreXFromId(core);
-    DrvAPIPointer<task_queue*> queue_absolute_addr = queue_vaddr.encode();
+    DrvAPIAddressInfo info = decodeAddress(&this_cores_task_queue);
+    info.set_absolute(true)
+        .set_pxn(pxn)
+        .set_pod(pod)
+        .set_core(core);
+    DrvAPIPointer<task_queue*> queue_absolute_addr = encodeAddressInfo(info);
     task_queue *tq = *queue_absolute_addr;
     tq->push(t);
 }

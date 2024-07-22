@@ -81,16 +81,16 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
    StandardMem::Addr addr = shart.x(i.rs1()) + i.SIimm();
 //   std::cout << std::hex << "addr: " << addr << " load rs1: " << shart.x(i.rs1()) << " siimm: " << i.SIimm() << std::dec << std::endl;
 
-   DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr).encode();
+   DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
    core_->addLoadStat(decode, shart); // add to statistics
 
    // create the read request
-   addr = decode.encode();
-//   std::cout << std::hex << "addr: " << addr << std::dec << std::endl;
+   addr = core_->address_decoder_.to_absolute(addr);
+   //   std::cout << std::hex << "addr: " << addr << std::dec << std::endl;
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
 
    // determine if the address is cacheable
-   bool noncacheable = (decode.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+   bool noncacheable = !decode.is_dram();
    if (noncacheable) rd->setNoncacheable();
 
    rd->tid = core_->getHartId(shart);
@@ -136,11 +136,11 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
         return;
     }
 
-    DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr);
+    DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
     core_->addStoreStat(decode, shart); // add to statistics
 
     // create the write request
-    addr = decode.encode();
+    addr = core_->address_decoder_.to_absolute(addr);
     std::vector<uint8_t> data(sizeof(T));
     T *ptr = (T*)&data[0];
     *ptr = FLOAT_REGISTERS
@@ -149,7 +149,7 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
     StandardMem::Write *wr = new StandardMem::Write(addr, sizeof(T), data);
 
     // determine if the address is cacheable
-    bool noncacheable = (decode.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+    bool noncacheable = !decode.is_dram();
     if (noncacheable) wr->setNoncacheable();
 
     wr->tid = core_->getHartId(shart);    
@@ -173,11 +173,12 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     StandardMem::Addr addr = shart.x(i.rs1());
 
-    DrvAPI::DrvAPIPAddress decode = core_->toPhysicalAddress(addr);
+    DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
     core_->addAtomicStat(decode, shart); // add to statistics
+    bool noncacheable = !decode.is_dram();
 
     AtomicReqData *data = new AtomicReqData();
-    addr = decode.encode();
+    addr = core_->address_decoder_.to_absolute(addr);
     data->pAddr = addr;
     data->size = sizeof(T);
     data->wdata.resize(sizeof(T));
@@ -188,6 +189,8 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
         *(T*)&data->extdata[0] = shart.x(i.rs3());
     }
     StandardMem::CustomReq *req = new StandardMem::CustomReq(data);
+    if (noncacheable) req->setNoncacheable();
+
     req->tid = core_->getHartId(shart);
     shart.stalledMemory() = true;
     int ird = i.rd();
@@ -493,7 +496,7 @@ void RISCVSimulator::visitCSRRCI(RISCVHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::sysWRITE(RISCVSimHart &hart, RISCVInstruction &i) {
     int fd = hart.sa(0);
-    uint64_t buf = core_->toPhysicalAddress(hart.a(1)).encode();
+    uint64_t buf = core_->address_decoder_.to_absolute(hart.a(1));
     uint64_t len = hart.a(2);
     std::function<void(std::vector<uint8_t>&)> completion
         ([this, buf, &hart, fd, len](std::vector<uint8_t> &data) {
@@ -510,7 +513,7 @@ void RISCVSimulator::sysWRITE(RISCVSimHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::sysREAD(RISCVSimHart &shart, RISCVInstruction &i) {
     int fd = shart.sa(0);
-    uint64_t buf = core_->toPhysicalAddress(shart.a(1)).encode();
+    uint64_t buf = core_->address_decoder_.to_absolute(shart.a(1));
     uint64_t len = shart.a(2);
     core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "READ: fd=%d, buf=%#lx, len=%lu\n", fd, buf, len);
     // call read on a simulation space buffer
@@ -528,7 +531,7 @@ void RISCVSimulator::sysREAD(RISCVSimHart &shart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::sysBRK(RISCVSimHart &shart, RISCVInstruction &i) {
-    uint64_t addr = core_->toPhysicalAddress(shart.a(0)).encode();
+    uint64_t addr = core_->address_decoder_.to_absolute(shart.a(0));
     core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "BRK: addr=%#lx\n", addr);
     shart.a(0) = -1;
 }
@@ -550,7 +553,7 @@ void RISCVSimulator::sysEXIT(RISCVSimHart &shart, RISCVInstruction &i) {
 
 void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
     int fd = shart.sa(0);
-    uint64_t stat_buf = core_->toPhysicalAddress(shart.a(1)).encode();
+    uint64_t stat_buf = core_->address_decoder_.to_absolute(shart.a(1));
     core_->output_.verbose(CALL_INFO, 1, RISCVCore::DEBUG_SYSCALLS, "FSTAT: fd=%d, stat_buf=%#lx\n", fd, stat_buf);
     struct stat stat_s;
     int r = fstat(fd, &stat_s);
@@ -569,7 +572,7 @@ void RISCVSimulator::sysFSTAT(RISCVSimHart &shart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::sysOPEN(RISCVSimHart &shart, RISCVInstruction &i) {
-    uint64_t path = core_->toPhysicalAddress(shart.a(0)).encode();
+    uint64_t path = core_->address_decoder_.to_absolute(shart.a(0));
     // TODO: these flags need to be translated
     // to native flags for the running host
     int32_t flags = _type_translator.simulatorToNative_openflags(shart.a(1));
@@ -610,7 +613,8 @@ void RISCVSimulator::sysWriteBuffer(RISCVSimHart &shart, StandardMem::Addr paddr
         handler->recvRsp(req);
     });
 
-    bool noncacheable = (DrvAPI::DrvAPIPAddress{paddr}.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+    DrvAPI::DrvAPIAddressInfo info = core_->address_decoder_.decode(paddr);
+    bool noncacheable = !info.is_dram();
 
     // issue writes along cache line boundaries
     while  (payloadSz > 0) {
@@ -649,7 +653,7 @@ void RISCVSimulator::sysReadBuffer(RISCVSimHart &shart, StandardMem::Addr paddr,
         handler->recvRsp(req);
     });
 
-    bool noncacheable = (DrvAPI::DrvAPIPAddress{paddr}.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+    bool noncacheable = !core_->address_decoder_.decode(paddr).is_dram();
     // issue reads along cache line boundaries
     while (payloadSz > 0) {
         // determine the size of the next read

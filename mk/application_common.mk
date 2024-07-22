@@ -11,6 +11,7 @@ include $(DRV_DIR)/mk/config.mk
 # include the test directory to the python path
 # so we can import modules from this directory
 export PYTHONPATH := $(DRV_DIR)/tests:$(PYTHONPATH)
+export PYTHONPATH := $(DRV_DIR)/py:$(PYTHONPATH)
 
 APP_PATH ?= $(DRV_DIR)/examples/$(APP_NAME)
 APP_EXE  ?= $(APP_PATH)/$(APP_NAME).so

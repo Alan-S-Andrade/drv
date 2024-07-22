@@ -3,5 +3,6 @@
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 TARGET := exe.riscv
+THREADS := 8
 RISCV_CXXSOURCE := $(wildcard *.cpp)
 include $(DRV_DIR)/mk/riscv_common.mk

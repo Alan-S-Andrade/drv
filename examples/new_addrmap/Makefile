@@ -3,7 +3,7 @@
 
 DRV_DIR := $(shell git rev-parse --show-toplevel)
 include $(DRV_DIR)/mk/config.mk
-APP_NAME := bitrangehandle
+APP_NAME := new_addrmap
+SIM_OPTIONS := --num-pxn=2 --pxn-pods=2 --pod-cores=2 --core-threads=1
 include $(DRV_DIR)/mk/application_common.mk
 
-SIM_OPTIONS += --core-threads=1 --pod-cores=1

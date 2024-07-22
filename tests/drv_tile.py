@@ -117,7 +117,7 @@ class Tile(object):
         self.id = id
         self.pod = pod
         self.pxn = pxn
-        self.l1sprange = L1SPRange(self.pxn, self.pod, self.y(), self.x())
+        self.l1sprange = L1SPRange(self.pxn, self.pod, self.id)
         self.initCore()
         self.initMem()
         self.initRtr()

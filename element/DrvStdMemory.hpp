@@ -3,6 +3,7 @@
 
 #pragma once
 #include <DrvAPIAddress.hpp>
+#include <DrvAPIAddressMap.hpp>
 #include "DrvMemory.hpp"
 #include <sst/core/component.h>
 #include <sst/core/link.h>
@@ -149,17 +150,17 @@ private:
     /**
      * @brief translate a pgas pointer to a native pointer
      */
-    void toNativePointerDRAM(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size);
+    void toNativePointerDRAM(DrvAPI::DrvAPIAddress addr, const DrvAPI::DrvAPIAddressInfo &decode, void **ptr, size_t *size);
 
     /**
      * @brief translate a pgas pointer to a native pointer
      */
-    void toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size);
+    void toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, const DrvAPI::DrvAPIAddressInfo &decode, void **ptr, size_t *size);
 
     /**
      * @brief translate a pgas pointer to a native pointer
      */
-    void toNativePointerL1SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size);
+    void toNativePointerL1SP(DrvAPI::DrvAPIAddress addr, const DrvAPI::DrvAPIAddressInfo &decode, void **ptr, size_t *size);
 
     Interfaces::StandardMem *mem_; //!< The memory
 

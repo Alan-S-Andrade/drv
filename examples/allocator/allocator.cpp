@@ -27,9 +27,9 @@ int AllocatorMain(int argc, char *argv[])
         DrvAPIPointer<int> p0 = DrvAPIMemoryAlloc(type, 0x1000);
         DrvAPIPointer<int> p1 = DrvAPIMemoryAlloc(type, 0x1000);
         std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
-        std::cout << "p0 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
+        std::cout << "p0 = " << decodeAddress(p0).to_string() << std::endl;
         std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
-        std::cout << "p1 = " << DrvAPIVAddress{p0}.to_string() << std::endl;
+        std::cout << "p1 = " << decodeAddress(p1).to_string() << std::endl;
         std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";
         std::cout << "p0 = 0x" << std::hex << p0 << std::endl;
         std::cout << "Core " << myCoreId() << " Thread " << myThreadId() <<":";

@@ -8,13 +8,9 @@ namespace DrvAPI {
 DrvAPIMem::DrvAPIMem(DrvAPIAddress address)
     : can_resume_(false)
     , address_(0) {
-    address_= DrvAPIVAddress::to_physical
-        (address
-         ,myPXNId()
-         ,myPodId()
-         ,myCoreY()
-         ,myCoreX()
-         ).encode();
+    DrvAPIThread *thread = DrvAPIThread::current();
+    const DrvAPIAddressDecoder &decoder = thread->getDecoder();
+    address_ = decoder.to_absolute(address);
 }
 
 }

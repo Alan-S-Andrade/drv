@@ -36,14 +36,8 @@ public:
             = l1sp_static_base
             + l1sp_statics.getSize();
 
-        DrvAPI::DrvAPIAddress l1sp_static_end = DrvAPI::toGlobalAddress
-            (l1sp_static_end_local
-             ,thread_->pxnId()
-             ,thread_->podId()
-             ,coreYFromId(thread_->coreId())
-             ,coreXFromId(thread_->coreId())
-             );
-
+        DrvAPI::DrvAPIAddress l1sp_static_end
+            = thread_->getDecoder().to_absolute(l1sp_static_end_local);
 
         // 2. determine the total available stack size and divide amongst theads
         // this is just the rest of l1sp
@@ -81,6 +75,7 @@ DrvAPIThread::DrvAPIThread()
 }
 
 void DrvAPIThread::start() {
+    decoder_ = DrvAPIAddressDecoder(pxnId(), podId(), coreId());
     auto coro_function = [this](coro_t::push_type &sink) {
         this->main_context_ = &sink;
         this->yield();
@@ -119,13 +114,7 @@ void DrvAPIThread::resume() {
 
 /* callable from anywhere */
 void DrvAPIThread::addressToNative(DrvAPIAddress address, void **native, std::size_t *size) {
-    DrvAPIAddress phys_address = DrvAPIVAddress::to_physical
-        (address
-         , pxn_id_
-         , pod_id_
-         , coreYFromId(core_id_)
-         , coreXFromId(core_id_)
-         ).encode();
+    DrvAPIAddress phys_address = getDecoder().to_absolute(address);
     getSystem()->addressToNative(phys_address, native, size);
 }
 
@@ -140,13 +129,7 @@ void DrvAPIThread::nativeToAddress(void *native, DrvAPIAddress *address, std::si
         throw std::runtime_error( "DrvAPIThread::nativeToAddress() only supported when using modeled memory for stack");
     }
     // 2. get native pointer to the base of l1sp
-    DrvAPIAddress l1sp_base = toGlobalAddress
-        (DrvAPIVAddress::MyL1Base().encode()
-         ,pxnId()
-         ,podId()
-         ,coreYFromId(coreId())
-         ,coreXFromId(coreId())
-         );
+    DrvAPIAddress l1sp_base = getDecoder().this_cores_absolute_l1sp_base();
     void *l1sp_base_native = nullptr;
     size_t l1sp_base_size = 0;
     addressToNative(l1sp_base, &l1sp_base_native, &l1sp_base_size);
