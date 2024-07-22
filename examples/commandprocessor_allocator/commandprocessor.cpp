@@ -23,7 +23,7 @@ int CPMain(int argc, char *argv[])
            ,myCoreId()
            ,myThreadId()
            ,static_cast<DrvAPIAddress>(p)
-           ,DrvAPIVAddress(p).to_string().c_str()
+           ,decodeAddress(p).to_string().c_str()
            );
 
     return 0;

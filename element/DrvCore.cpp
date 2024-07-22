@@ -175,23 +175,22 @@ void DrvCore::configureMemory(SST::Params &params) {
             output_->fatal(CALL_INFO, -1, "unable to load memory subcomponent\n");
         }
     }
+
     DrvAPI::DrvAPIAddress dram_base_default
-        = DrvAPI::DrvAPIVAddress::MainMemBase(pxn_).encode();
+        = decoder_.encode(DrvAPI::DrvAPIAddressInfo::RelativeDRAMBase());
     DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryDRAM)
         .setBase(dram_base_default, pxn_, pod_, id_);
 
     // default l2 statics to base of local l2 scratchpad
-    DrvAPI::DrvAPIAddress l2sp_base_default = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
-    uint64_t l2sp_base = params.find<uint64_t>("l2sp_base", l2sp_base_default);
+    DrvAPI::DrvAPIAddress l2sp_base_default
+        = decoder_.encode(DrvAPI::DrvAPIAddressInfo::RelativeL2SPBase());
     DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL2SP)
-        .setBase(l2sp_base, pxn_, pod_, id_);
+        .setBase(l2sp_base_default, pxn_, pod_, id_);
 
-
-    // default l1 statics to base of local l1 scratchpad
-    DrvAPI::DrvAPIAddress l1sp_base_default = DrvAPI::DrvAPIVAddress::MyL1Base().encode();
-    uint64_t l1sp_base = params.find<uint64_t>("l1sp_base", l1sp_base_default);
+    DrvAPI::DrvAPIAddress l1sp_base_default
+        = decoder_.encode(DrvAPI::DrvAPIAddressInfo::RelativeL1SPBase());
     DrvAPI::DrvAPISection::GetSection(DrvAPI::DrvAPIMemoryL1SP)
-        .setBase(l1sp_base, pxn_, pod_, id_);
+        .setBase(l1sp_base_default, pxn_, pod_, id_);
 }
 
 /*
@@ -253,6 +252,7 @@ void DrvCore::configureSysConfig(SST::Params &params) {
                      ,cfg.numPodCores()
                      ,numThreads()
                      );
+    decoder_ = DrvAPI::DrvAPIAddressDecoder(pxn_, pod_, id_, sys_config_.config());
 }
 
 void DrvCore::parseArgv(SST::Params &params) {
@@ -286,10 +286,10 @@ DrvCore::DrvCore(SST::ComponentId_t id, SST::Params& params)
   configureMemory(params);
   configureOtherLinks(params);
   configureExecutable(params);
+  setSysConfigApp();
   configureStatistics(params);
   parseArgv(params);
   configureThreads(params);
-  setSysConfigApp();
 }
 
 DrvCore::~DrvCore() {

@@ -15,8 +15,7 @@ int GupsMain(int argc, char *argv[])
     int pxns = numPXNs();
     DrvAPIAddress TABLE[pxns];
     for(int pxn=0; pxn<pxns; pxn++) {
-        auto base = DrvAPIVAddress::MainMemBase(pxn);
-        TABLE[pxn] = base.encode();
+        TABLE[pxn] = absolutePXNDRAMBase(pxn);
     }
 
     std::string tbl_size_str = "1048576";

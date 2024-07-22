@@ -39,7 +39,7 @@ DRV_API_REF_CLASS_BEGIN(global_memory_data)
              sz = (sz + 15) & ~15;
              // make a global address
              DrvAPIAddress localBase = section.getBase(myPXNId(), myPodId(), myCoreId());
-             DrvAPIAddress globalBase = toGlobalAddress(localBase, myPXNId(), myPodId(), myCoreY(), myCoreX());
+             DrvAPIAddress globalBase = DrvAPIThread::current()->getDecoder().to_absolute(localBase);
              base() = globalBase + sz;
              // TODO: FENCE
              status() = STATUS_INIT;

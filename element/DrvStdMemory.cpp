@@ -27,17 +27,20 @@ void DrvStdMemory::ToNativeMetaData::init(DrvStdMemory *mem) {
     l2sp_mcs.resize(cfg.numPXN(), std::vector<std::vector<record_type>>(cfg.numPXNPods()));
     dram_mcs.resize(cfg.numPXN());
     for (record_type &record : SST::MemHierarchy::MemController::AddrRangeToMC) {
-        DrvAPI::DrvAPIPAddress start, end;
+        DrvAPI::DrvAPIAddress start, end;
         SST::MemHierarchy::MemController *mc;
         std::tie(start, end, mc) = record;
-        int pxn = start.pxn();
-        int pod = start.pod();
-        uint32_t type = start.type();
-        if (type == DrvAPI::DrvAPIPAddress::TYPE_L1SP) {
+        DrvAPI::DrvAPIAddressInfo
+            start_info = core->decoder().decode(start),
+            end_info   = core->decoder().decode(end);
+
+        int pxn = start_info.pxn();
+        int pod = start_info.pod();
+        if (start_info.is_l1sp()) {
             l1sp_mcs[pxn][pod].push_back(record);
-        } else if (type == DrvAPI::DrvAPIPAddress::TYPE_L2SP) {
+        } else if (start_info.is_l2sp()) {
             l2sp_mcs[pxn][pod].push_back(record);
-        } else if (type == DrvAPI::DrvAPIPAddress::TYPE_DRAM) {
+        } else if (start_info.is_dram()) {
             dram_mcs[pxn].push_back(record);
         }
     }
@@ -94,14 +97,8 @@ DrvStdMemory::DrvStdMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *
              core->getClockTC(),
              new SST::Interfaces::StandardMem::Handler<DrvStdMemory>(this, &DrvStdMemory::handleEvent));        
     }
-    DrvAPI::DrvAPIPAddress mmio_start;
-    mmio_start.type() = DrvAPI::DrvAPIPAddress::TYPE_CTRL;
-    mmio_start.pxn() = core->pxn_;
-    mmio_start.pod() = core->pod_;
-    mmio_start.core_y() = DrvAPI::coreYFromId(core->id_);
-    mmio_start.core_x() = DrvAPI::coreXFromId(core->id_);
-    mmio_start.ctrl_offset() = 0;
-    mem_->setMemoryMappedAddressRegion(mmio_start.encode(), 1<<DrvAPI::DrvAPIPAddress::CtrlOffsetHandle::bits());
+    DrvAPI::DrvAPIAddress mmio_start = core_->decoder().this_cores_absolute_ctrl_base();
+    mem_->setMemoryMappedAddressRegion(mmio_start, 0x1000);
 }
 
 /**
@@ -131,20 +128,19 @@ void DrvStdMemory::setup() {
  * @brief translate a pgas pointer to a native pointer
  */
 void
-DrvStdMemory::toNativePointerDRAM(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size) {
+DrvStdMemory::toNativePointerDRAM(DrvAPI::DrvAPIAddress addr, const DrvAPI::DrvAPIAddressInfo &decode, void **ptr, size_t *size) {
     DrvAPI::DrvAPISysConfig cfg = core_->sysConfig().config();
     uint32_t interleave = cfg.pxnDRAMInterleaveSize();
-    DrvAPI::DrvAPIPAddress decode(addr);
     int pxn = decode.pxn();
     std::vector<record_type> &dram_mcs = to_native_meta_data_.dram_mcs[pxn];
-    uint64_t dram_offset = decode.dram_offset();
+    uint64_t dram_offset = decode.offset();
     uint64_t bank, offset;
     std::tie(bank, offset)
         = to_native_meta_data_
         .dram_interleave_decode
         .getBankOffset(dram_offset);
 
-    DrvAPI::DrvAPIPAddress start, stop;
+    DrvAPI::DrvAPIAddress start, stop;
     SST::MemHierarchy::MemController *mc;
     std::tie(start, stop, mc) = dram_mcs[bank];
     uint64_t laddr = mc->translateToLocal(addr);
@@ -162,15 +158,14 @@ DrvStdMemory::toNativePointerDRAM(DrvAPI::DrvAPIAddress addr, void **ptr, size_t
  * @brief translate a pgas pointer to a native pointer
  */
 void
-DrvStdMemory::toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size) {
+DrvStdMemory::toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, const DrvAPI::DrvAPIAddressInfo &decode, void **ptr, size_t *size) {
     DrvAPI::DrvAPISysConfig cfg = core_->sysConfig().config();
     uint32_t interleave = cfg.podL2SPInterleaveSize();
-    DrvAPI::DrvAPIPAddress decode(addr);
     int pxn = decode.pxn();
     int pod = decode.pod();
     std::vector<record_type> &l2sp_mcs = to_native_meta_data_.l2sp_mcs[pxn][pod];
 
-    uint64_t l2_offset = decode.l2_offset();
+    uint64_t l2_offset = decode.offset();
     uint64_t bank, offset;
     std::tie(bank, offset)
         = to_native_meta_data_
@@ -178,7 +173,7 @@ DrvStdMemory::toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t
         .getBankOffset(l2_offset);
 
 
-    DrvAPI::DrvAPIPAddress start, stop;
+    DrvAPI::DrvAPIAddress start, stop;
     SST::MemHierarchy::MemController *mc;
     std::tie(start, stop, mc) = l2sp_mcs[bank];
     uint64_t laddr = mc->translateToLocal(addr);
@@ -196,11 +191,10 @@ DrvStdMemory::toNativePointerL2SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t
  * @brief translate a pgas pointer to a native pointer
  */
 void
-DrvStdMemory::toNativePointerL1SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size) {
-    DrvAPI::DrvAPIPAddress decode(addr);
+DrvStdMemory::toNativePointerL1SP(DrvAPI::DrvAPIAddress addr, const DrvAPI::DrvAPIAddressInfo &decode, void **ptr, size_t *size) {
     int pxn = decode.pxn();
     int pod = decode.pod();
-    int core = DrvAPI::coreIdFromXY(decode.core_x(), decode.core_y());
+    int core = decode.core();
     // todo: we might not need a for loop here
     DrvAPI::DrvAPIAddress start, end;
     SST::MemHierarchy::MemController *mc;
@@ -225,13 +219,13 @@ DrvStdMemory::toNativePointerL1SP(DrvAPI::DrvAPIAddress addr, void **ptr, size_t
  */
 void
 DrvStdMemory::toNativePointer(DrvAPI::DrvAPIAddress paddr, void **ptr, size_t *size) {
-    DrvAPI::DrvAPIPAddress decode{paddr};
-    if (decode.type() == DrvAPI::DrvAPIPAddress::TYPE_DRAM) {
-        return toNativePointerDRAM(paddr, ptr, size);
-    } else if (decode.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP) {
-        return toNativePointerL2SP(paddr, ptr, size);
-    } else if (decode.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP) {
-        return toNativePointerL1SP(paddr, ptr, size);
+    DrvAPI::DrvAPIAddressInfo decode = core_->decoder().decode(paddr);
+    if (decode.is_dram()) {
+        return toNativePointerDRAM(paddr, decode, ptr, size);
+    } else if (decode.is_l2sp()) {
+        return toNativePointerL2SP(paddr, decode, ptr, size);
+    } else if (decode.is_l1sp()) {
+        return toNativePointerL1SP(paddr, decode, ptr, size);
     } else {
         output_.fatal(CALL_INFO, -1, "Unknown address type\n");
     }
@@ -251,8 +245,8 @@ void
 DrvStdMemory::sendRequest(DrvCore *core
                           ,DrvThread *thread
                           ,const std::shared_ptr<DrvAPI::DrvAPIMem> &mem_req) {
-    DrvAPI::DrvAPIPAddress paddr = DrvAPI::DrvAPIPAddress{mem_req->getAddress()};
-    bool noncacheable = (paddr.type() != DrvAPI::DrvAPIPAddress::TYPE_DRAM);
+    DrvAPI::DrvAPIAddressInfo paddr = core->decoder().decode(mem_req->getAddress());
+    bool noncacheable = !paddr.is_dram();
     auto write_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemWrite>(mem_req);
     if (write_req) {
         /* do write */
@@ -267,7 +261,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         req->tid = core->getThreadID(thread);
         if (noncacheable) req->setNoncacheable();
         // add statistic
-        core->addStoreStat(DrvAPI::DrvAPIPAddress{addr}, thread);
+        core->addStoreStat(paddr, thread);
         mem_->send(req);
         return;
     }
@@ -283,7 +277,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         StandardMem::Read *req = new StandardMem::Read(addr, size);
         req->tid = core->getThreadID(thread);
         if (noncacheable) req->setNoncacheable();
-        core->addLoadStat(DrvAPI::DrvAPIPAddress{addr}, thread);
+        core->addLoadStat(paddr, thread);
         mem_->send(req);
         return;
     }
@@ -311,7 +305,7 @@ DrvStdMemory::sendRequest(DrvCore *core
         output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                         "Sending atomic request addr=%" PRIx64 " size=%" PRIu64 "\n",
                         addr, size);
-        core->addAtomicStat(DrvAPI::DrvAPIPAddress{addr}, thread);
+        core->addAtomicStat(paddr, thread);
         AtomicReqData *data = new AtomicReqData();
         data->pAddr = addr;
         data->size = size;
@@ -356,9 +350,9 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
                         "Received write response from addr=%" PRIx64 " size=%" PRIu64 "\n",
                         write_rsp->pAddr, write_rsp->size);
         // trace
-        DrvAPI::DrvAPIPAddress paddr{write_rsp->pAddr};
-        if (paddr.pxn() != (uint64_t)core_->pxn_) {
-            core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_STORE, "write_rsp", write_rsp->pAddr, thread);
+        DrvAPI::DrvAPIAddressInfo paddr = core_->decoder().decode(write_rsp->pAddr);
+        if (paddr.pxn() != (int64_t)core_->pxn_) {
+            core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_STORE, "write_rsp", paddr, thread);
         }
         // complete write
         mem_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMem>(thread->getAPIThread().getState());
@@ -379,9 +373,9 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
                         "Received read response from addr=%" PRIx64 " size=%" PRIu64 "\n",
                         read_rsp->pAddr, read_rsp->size);
         // trace
-        DrvAPI::DrvAPIPAddress paddr{read_rsp->pAddr};
-        if (paddr.pxn() != (uint64_t)core_->pxn_) {
-            core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_LOAD, "read_rsp", read_rsp->pAddr, thread);
+        DrvAPI::DrvAPIAddressInfo paddr = core_->decoder().decode(read_rsp->pAddr);
+        if (paddr.pxn() != (int64_t)core_->pxn_) {
+            core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_LOAD, "read_rsp", paddr, thread);
         }
         // complete read, if this was a read request
         auto read_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemRead>(thread->getAPIThread().getState());
@@ -403,9 +397,9 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
             output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
                             "Received custom response\n");            
             DrvThread *thread = core_->getThread(custom_rsp->tid);
-            DrvAPI::DrvAPIPAddress paddr{areq_data->pAddr};
-            if (paddr.pxn() != (uint64_t)core_->pxn_) {
-                core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_ATOMIC, "atomic_rsp", areq_data->pAddr, thread);
+            DrvAPI::DrvAPIAddressInfo paddr = core_->decoder().decode(areq_data->pAddr);
+            if (paddr.pxn() != (int64_t)core_->pxn_) {
+                core_->traceRemotePxnMem(DrvCore::TRACE_REMOTE_PXN_ATOMIC, "atomic_rsp", paddr, thread);
             }
             auto atomic_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIMemAtomic>(thread->getAPIThread().getState());
             if (atomic_req) {

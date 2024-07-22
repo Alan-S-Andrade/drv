@@ -342,43 +342,40 @@ public:
     /**
      * decode a virtual address to a physical address
      */
-    DrvAPI::DrvAPIPAddress toPhysicalAddress(uint64_t addr) const;
+    DrvAPI::DrvAPIAddressInfo decodeAddress(uint64_t addr) const;
 
     /**
      * is local l1sp for purpose of stats
      */
-    bool isPAddressL1SP(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L1SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    bool isPAddressL1SP(const DrvAPI::DrvAPIAddressInfo & addr) const {
+        return addr.is_l1sp() && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
      * is  l2sp for purpose of stats
      */
-    bool isPAddressL2SP(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_L2SP
-            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    bool isPAddressL2SP(const DrvAPI::DrvAPIAddressInfo& addr) const {
+        return addr.is_l2sp() && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
      * is  dram for purpose of stats
      */
-    bool isPAddressDRAM(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.type() == DrvAPI::DrvAPIPAddress::TYPE_DRAM
-            && addr.pxn() == static_cast<uint64_t>(pxn_);
+    bool isPAddressDRAM(const DrvAPI::DrvAPIAddressInfo& addr) const {
+        return addr.is_dram() && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
      * is remote pxn memory for purpose of stats
      */
-    bool isPAddressRemotePXN(DrvAPI::DrvAPIPAddress addr) const {
-        return addr.pxn() != static_cast<uint64_t>(pxn_);
+    bool isPAddressRemotePXN(const DrvAPI::DrvAPIAddressInfo &addr) const {
+        return addr.pxn() != static_cast<int64_t>(pxn_);
     }
 
     /**
      * add load statistic
      */
-    void addLoadStat(DrvAPI::DrvAPIPAddress addr, RISCVSimHart &hart) {
+    void addLoadStat(const DrvAPI::DrvAPIAddressInfo& addr, RISCVSimHart &hart) {
         int id = getHartId(hart);
         ThreadStats &stats = thread_stats_[id];
         if (isPAddressL1SP(addr)) {
@@ -395,7 +392,7 @@ public:
     /**
      * add store statistic
      */
-    void addStoreStat(DrvAPI::DrvAPIPAddress addr, RISCVSimHart &hart) {
+    void addStoreStat(const DrvAPI::DrvAPIAddressInfo& addr, RISCVSimHart &hart) {
         int id = getHartId(hart);
         ThreadStats &stats = thread_stats_[id];        
         if (isPAddressL1SP(addr)) {
@@ -412,7 +409,7 @@ public:
     /**
      * add atomic statistic
      */
-    void addAtomicStat(DrvAPI::DrvAPIPAddress addr, RISCVSimHart &hart) {
+    void addAtomicStat(const DrvAPI::DrvAPIAddressInfo &addr, RISCVSimHart &hart) {
         int id = getHartId(hart);
         ThreadStats &stats = thread_stats_[id];
         if (isPAddressL1SP(addr)) {
@@ -451,6 +448,7 @@ public:
     RISCVSimulator *sim_; //!< simulator
     ICache *icache_; //!< icache
     RISCVDecoder decoder_; //!< decoder
+    DrvAPI::DrvAPIAddressDecoder address_decoder_; //!< address decoder
     std::vector<RISCVSimHart> harts_; //!< harts
     std::map<int, ICompletionHandler> rsp_handlers_; //!< response handlers
     SST::TimeConverter *clocktc_; //!< the clock time converter
@@ -467,8 +465,8 @@ public:
     Statistic<uint64_t> *busy_cycles_; //!< cycle count
     Statistic<uint64_t> *stall_cycles_; //!< stall cycle count
     Statistic<uint64_t> *icache_miss_; //!< icache miss count
-    DrvAPI::DrvAPIPAddress mmio_start_; //!< mmio start address
-    DrvAPI::DrvAPIPAddress mmio_end_; //!< mmio end address
+    DrvAPI::DrvAPIAddress mmio_start_; //!< mmio start address
+    DrvAPI::DrvAPIAddress mmio_end_; //!< mmio end address
     SST::Link *loopback_; //!< loopback link
 };
 

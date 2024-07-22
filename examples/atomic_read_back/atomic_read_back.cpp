@@ -22,8 +22,7 @@ int AtomicMain(int argc, char *argv[])
     if (!(myThreadId() == 0 && myCoreId() == 0 && myPodId() == 0 && myPXNId() == 0)) {
         return 0;
     }
-    DrvAPIVAddress target_v(&target);
-    printf("target = %s\n", target_v.to_string().c_str());
+    printf("target = %s\n", decodeAddress(target).to_string().c_str());
     DrvAPIAddress addr = &target;
     DrvAPI::write<int64_t>(addr, 1);
     DrvAPI::atomic_add<int64_t>(addr, 1);

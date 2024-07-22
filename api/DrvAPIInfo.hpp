@@ -5,7 +5,7 @@
 #define DRV_API_INFO_H
 #include <DrvAPIThread.hpp>
 #include <DrvAPISysConfig.hpp>
-
+#include <DrvAPICoreXY.hpp>
 namespace DrvAPI
 {
 
@@ -29,27 +29,6 @@ inline int myThreadId() {
  */
 inline int myCoreId() {
     return DrvAPIThread::current()->coreId();
-}
-
-/**
- * return a core's x  w.r.t my pod
- */
-inline int coreXFromId(int core) {
-    return core & 7;
-}
-
-/**
- * return a core's y  w.r.t my pod
- */
-inline int coreYFromId(int core) {
-    return (core >> 3) & 7;
-}
-
-/**
- * return a core's id from its x y
- */
-inline int coreIdFromXY(int x, int y) {
-    return x + (y << 3);
 }
 
 /**

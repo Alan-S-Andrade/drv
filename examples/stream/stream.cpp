@@ -73,7 +73,7 @@ StreamMain(int argc, char* argv[]) {
   ssize_t		    j;
   STREAM_TYPE		scalar;
   scalar = 5.0;
-  DRAM_START = DrvAPI::DrvAPIVAddress::MyL2Base().encode();
+  DRAM_START = myRelativeL2SPBase();
 
   if (DrvAPIThread::current()->coreId() == 0 &&
       DrvAPIThread::current()->threadId() == 0) {

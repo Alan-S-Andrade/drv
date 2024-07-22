@@ -49,46 +49,31 @@ public:
         return std::make_shared<PANDOHammerExe>(fname);
     }
 
-    DrvAPI::DrvAPIVAddress symbol(const std::string& symname) const {
+    DrvAPI::DrvAPIAddress symbol(const std::string& symname) const {
         if (symtab_.count(symname) == 0) {
             throw std::runtime_error("Symbol not found");
         }
-        return DrvAPI::DrvAPIVAddress{symtab_.at(symname)};
+        return DrvAPI::DrvAPIAddress{symtab_.at(symname)};
     }
 
     
     
     template <typename T>
     DrvAPI::DrvAPIPointer<T> symbol(const std::string& symname, const Place &place) const {
-        DrvAPI::DrvAPIVAddress addr = symbol(symname);
-        addr.global() = true;
-        if (addr.is_l1()) {
-            addr.pxn() = place.pxn;
-            addr.pod() = place.pod;
-            addr.core_y() = place.core_y;
-            addr.core_x() = place.core_x;
-        } else if (addr.is_l2()) {
-            addr.pxn() = place.pxn;
-            addr.pod() = place.pod;         
-        }
-        return DrvAPI::DrvAPIPointer<T>(addr.encode());
+        DrvAPI::DrvAPIAddress addr = symbol(symname);
+        DrvAPI::DrvAPIAddressInfo decode = DrvAPI::decodeAddress(addr);
+        decode.set_absolute(true)
+            .set_pxn(place.pxn)
+            .set_pod(place.pod)
+            .set_core(place.core);
+
+        return DrvAPI::DrvAPIPointer<T>(encodeAddressInfo(decode));
     }
 
     template <typename T>
     typename DrvAPI::DrvAPIPointer<T>::value_handle
     symbol_ref(const std::string& symname, const Place &place) const {
-        DrvAPI::DrvAPIVAddress addr = symbol(symname);
-        addr.global() = true;
-        if (addr.is_l1()) {
-            addr.pxn() = place.pxn;
-            addr.pod() = place.pod;
-            addr.core_y() = place.core_y;
-            addr.core_x() = place.core_x;
-        } else if (addr.is_l2()) {
-            addr.pxn() = place.pxn;
-            addr.pod() = place.pod;         
-        }
-        return *DrvAPI::DrvAPIPointer<T>(addr.encode());
+        return *symbol<T>(symname, place);
     }
 
     Elf64_Phdr *segments_begin() const {

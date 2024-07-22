@@ -66,15 +66,14 @@ class Endpoint(object):
         raise NotImplementedError
     
 class ComputeTile(Endpoint):
-    def __init__(self, y, x):
+    def __init__(self, core):
         """
         Build core and l1sp
         """
         super().__init__()        
-        self.x = x
-        self.y = y
-        pxn, pod, x, y = self.id()
-        self.l1sprange = L1SPRange(pxn, pod, y, x)
+        self.core = core
+        pxn, pod, core = self.id()
+        self.l1sprange = L1SPRange(pxn, pod, core)
         self.core = self.make_core()
         self.l1sp = self.make_l1sp()
         self.bridge = self.make_bridge()
@@ -140,18 +139,18 @@ class ComputeTile(Endpoint):
         """
         Return the PXN, POD, X, and Y coordinates of this tile
         """
-        return 0, 0, self.x, self.y
+        return 0, 0, self.core
 
     def name(self):
         """
         Return the name of this tile
         """
-        pxn, pod, x, y = self.id()
-        #return "pxn{}_pod{}_x{}_y{}".format(pxn, pod, x, y)
+        pxn, pod, core = self.id()
+        #return "pxn{}_pod{}_core{}".format(pxn, pod, core)
         return ""
     
     def make_core(self):
-        pxn, pod, x, y = self.id()
+        pxn, pod, coreid = self.id()
         #core_name = 'core_' + self.name()
         core_name = 'core'
         core = sst.Component(core_name,"Drv.DrvCore")
@@ -161,7 +160,7 @@ class ComputeTile(Endpoint):
             "executable": arguments.program,
             "args"      : ' '.join(arguments.argv),
             "max_idle"  : KNOBS["core_max_idle"],
-            "id" : (y << 3) | x,
+            "id" : coreid,
             "pod": pod,
             "pxn": pxn,
             "stack_in_l1sp": arguments.drvx_stack_in_l1sp,
@@ -488,8 +487,8 @@ class Network(object):
 
 
 network = Network()
-network.add_compute(ComputeTile(0,0))
-#network.add_compute(ComputeTile(0,1))
+network.add_compute(ComputeTile(0))
+#network.add_compute(ComputeTile(1))
 network.add_l2sp(L2SPTile())
 if sys['sys_pxn_dram_ports']:
     if cacheless:

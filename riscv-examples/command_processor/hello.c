@@ -2,9 +2,10 @@
 // Copyright (c) 2023 University of Washington
 
 #include <pandohammer/mmio.h>
+#include <pandohammer/staticdecl.h>
 #include <stdint.h>
-__attribute__((section(".dmem")))
-volatile uint64_t signal = 0;
+
+__dram__ uint64_t signal = 0;
 
 int main(int argc, char *argv[])
 {

@@ -16,18 +16,9 @@ int CommandProcessor(int argc, char *argv[])
 
     auto exe = PANDOHammerExe::Open(argv[1]);
     loadProgram(*exe);
-    
-    DrvAPIVAddress signal = 0;
-    signal.pxn() = 0;
-    signal.pod() = 0;
-    signal.global() = true;
-    signal.l2_not_l1() = false;
-    signal.core_x() = 0;
-    signal.core_y() = 0;
-    signal.l1_offset() = 0;
 
+    DrvAPIPointer<uint64_t> signal_p = exe->symbol<uint64_t>("signal", {0,0,0});
     assertResetAll(false);    
-    DrvAPIPointer<uint64_t> signal_p = signal.encode();
     *signal_p = 1;
     return 0;
 }

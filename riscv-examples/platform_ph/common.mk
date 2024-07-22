@@ -4,14 +4,24 @@
 DRV_DIR  ?= $(shell git rev-parse --show-toplevel)
 PLATFORM_DIR := $(DRV_DIR)/riscv-examples/platform_ph
 
+THREADS  ?= 1
+CORES    ?= 1
+PODS     ?= 1
+PXNS     ?= 1
+
 SCRIPT   := $(DRV_DIR)/tests/PANDOHammerDrvR.py
+
+SIM_OPTIONS := --core-threads $(THREADS) --pod-cores $(CORES) --pxn-pods $(PODS) --num-pxn $(PXNS)
 
 RISCV_COMPILE_FLAGS += -nostartfiles
 RISCV_COMPILE_FLAGS += -I$(DRV_DIR)/riscv-examples/platform_ph
+RISCV_COMPILE_FLAGS += -I.
+
 RISCV_CFLAGS   += $(RISCV_COMPILE_FLAGS)
 RISCV_CXXFLAGS += $(RISCV_COMPILE_FLAGS)
 
-RISCV_LDFLAGS += -Wl,-T$(DRV_DIR)/riscv-examples/platform_ph/bsg_link.ld
+LDSCRIPT ?= $(DRV_DIR)/riscv-examples/platform_ph/bsg_link.ld
+RISCV_LDFLAGS += -Wl,-T$(LDSCRIPT)
 RISCV_LDFLAGS += -L$(DRV_DIR)/riscv-examples/platform_ph/pandohammer
 
 # include platform crt by default
@@ -39,3 +49,20 @@ RISCV_CXXSOURCE                 += $(RISCV_PLATFORM_CXXSOURCE-yes)
 COMMAND_PROCESSOR_CXXSOURCE     += $(COMMAND_PROCESSOR_PLATFORM_CXXSOURCE-yes)
 COMMAND_PROCESSOR_CSOURCE       += $(COMMAND_PROCESSOR_PLATFORM_CSOURCE-yes)
 COMMAND_PROCESSOR_COMPILE_FLAGS += $(COMMAND_PROCESSOR_PLATFORM_COMPILE_FLAGS-yes)
+
+address_map.h: $(DRV_DIR)/py/addressmap.py
+	python3 $^ cheader \
+		--core-threads=$(THREADS) \
+		--pod-cores=$(CORES) \
+		--pxn-pods=$(PODS) \
+		--num-pxn=$(PXNS) \
+		> $@
+
+PLATFORM_HEADERS += address_map.h
+$(RISCV_COBJECT): address_map.h
+
+.PHONY: platform.clean
+platform.clean:
+	rm -f address_map.h
+
+clean: platform.clean

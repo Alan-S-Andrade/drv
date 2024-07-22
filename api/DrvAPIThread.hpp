@@ -7,6 +7,7 @@
 #include <DrvAPIMain.hpp>
 #include <DrvAPISysConfig.hpp>
 #include <DrvAPISystem.hpp>
+#include <DrvAPIAddressMap.hpp>
 #include <boost/coroutine2/all.hpp>
 #include <memory>
 namespace DrvAPI
@@ -186,6 +187,14 @@ public:
    */
   void nativeToAddress(void *native, DrvAPIAddress *address, std::size_t *size);
 
+
+  /**
+   * @brief Get the decoder for this thread
+   */
+  const DrvAPIAddressDecoder & getDecoder() const {
+      return decoder_;
+  }
+
   /**
    * @brief Get the current active thread
    * 
@@ -210,6 +219,7 @@ private:
   int pxn_id_; //!< Pxn id
   int tag_ = 0; //!< Execution tag
   bool stack_in_modeled_memory_ = false; //!< Stack is in modeled memory
+  DrvAPIAddressDecoder decoder_; //!< Address decoder
 };
 
 /**

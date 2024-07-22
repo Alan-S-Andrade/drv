@@ -16,11 +16,11 @@ int CPMain(int argc, char *argv[])
         }
     } else {
         // ctrl registers for pxn 0, pod 0, core 0
-        DrvAPIVAddress ctrl_v = DrvAPIVAddress::CoreCtrlBase(0, 0, 0, 0);
-        DrvAPIPAddress ctrl_p = ctrl_v.to_physical(myPXNId(), myPodId(), myCoreY(), myCoreX());
-        printf("ctrl_v = %s\n", ctrl_v.to_string().c_str());
-        printf("ctrl_p = %s\n", ctrl_p.to_string().c_str());
-        DrvAPI::write(ctrl_v.encode(), 0xdeadbeef);
+        DrvAPIAddress ctrl = absoluteCoreCtrlBase(0, 0, 0);
+        DrvAPIAddressInfo ctrl_info = decodeAddress(ctrl);
+        printf("ctrl      = 0x%" PRIx64 "\n", ctrl);
+        printf("ctrl_info = %s\n", ctrl_info.to_string().c_str());
+        DrvAPI::write(ctrl, 0xdeadbeef);
     }
     done = 1;
     return 0;
