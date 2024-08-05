@@ -1,243 +1,343 @@
 // SPDX-License-Identifier: MIT
-// Copyright (c) 2023 University of Washington
-
+// Copyright (c) 2024 University of Washington
 #ifndef DRV_API_POINTER_H
 #define DRV_API_POINTER_H
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIMemory.hpp>
+#include <DrvAPIAddressToNative.hpp>
 #include <cstddef>
 namespace DrvAPI
 {
-
 /**
- * @brief The pointer class
- * 
- * @tparam T 
+ * forward declaration of pointer
  */
 template <typename T>
-class DrvAPIPointer
-{
+class pointer;
+
+/**
+ * @brief default value_handle suitable for most builtin types
+ */
+template <typename T>
+class value_handle {
 public:
-    typedef DrvAPIPointer<T> pointer_type; //!< pointer type
-    typedef T value_type; //!< value type
+    value_handle(DrvAPI::DrvAPIAddress ptr):
+        _ptr(ptr) {
+    }
+    value_handle():
+        _ptr(0) {
+    }    
 
-    /**
-     * base constructor
-     */
-    DrvAPIPointer(DrvAPIAddress vaddr) :vaddr_(vaddr) {}
-
-    /**
-     * empty constructor
-     */
-    DrvAPIPointer() : DrvAPIPointer(DrvAPIAddress()) {}
-
-    /**
-     * copy constructor
-     */
-    DrvAPIPointer(const pointer_type &other) = default;
-
-    /**
-     * move constructor
-     */
-    DrvAPIPointer(pointer_type &&other) = default;
-
-    /**
-     * copy assignment
-     */
-    pointer_type &operator=(const pointer_type &other) = default;
-
-    /**
-     * move assignment
-     */
-    pointer_type &operator=(pointer_type &&other) = default;
-
-    /**
-     * destructor
-     */
-    ~DrvAPIPointer() = default;
-
-
-    /**
-     * cast to another pointer type
-     */
-    template <typename U>
-    operator DrvAPIPointer<U>() const {
-        return DrvAPIPointer<U>(vaddr_);
+    value_handle(const value_handle&o) {
+        _ptr = o.address();
+    }
+    
+    value_handle(value_handle && o) {
+        _ptr = o.address();
     }
 
-    /**
-     * cast operator to DrvAPIAddress
-     */
-    operator DrvAPIAddress() const {
-        return vaddr_;
-    }
-
-    /**
-     * handle
-     */
-    class value_handle {
-    public:
-        /**
-         * constructor
-         */
-        value_handle(const DrvAPIAddress &vaddr) :vaddr_(vaddr) {}        
-        value_handle() = delete;
-        value_handle(const value_handle &other) = delete;
-        value_handle(value_handle &&other) = default;
-        value_handle &operator=(const value_handle &other) = delete;
-        value_handle &operator=(value_handle &&other) = default;
-        ~value_handle() = default;
-
-        /**
-         * cast operator to type T
-         */
-        operator value_type() const {
-            return DrvAPI::read<T>(vaddr_);
-        }
-
-        /**
-         * assignment operator
-         */
-        value_handle &operator=(const T &value) {
-            DrvAPI::write<T>(vaddr_, value);
-            return *this;
-        }
-
-        /**
-         * address of operator
-         */
-        pointer_type operator&() {
-            return pointer_type(vaddr_);
-        }
-        
-        DrvAPIAddress vaddr_;
-    };
-        
-    /**
-     * dereference operator
-     */
-    value_handle operator*() const {
-        return value_handle(vaddr_);
-    }
-
-    /**
-     * post increment operator
-     */
-    pointer_type operator++(int) {
-        pointer_type tmp(*this);
-        vaddr_ += sizeof(value_type);
-        return tmp;
-    }
-
-    /**
-     * pre increment operator
-     */
-    pointer_type &operator++() {
-        vaddr_ += sizeof(value_type);
+    value_handle & operator=(const value_handle &other) {
+        *this = (T)other;
         return *this;
     }
 
-    /**
-     * post decrement operator
-     */
-    pointer_type operator--(int) {
-        pointer_type tmp(*this);
-        vaddr_ -= sizeof(value_type);
-        return tmp;
-    }
-
-    /**
-     * pre decrement operator
-     */
-    pointer_type &operator--() {
-        vaddr_ -= sizeof(value_type);
+    value_handle & operator=(value_handle &&other) {
+        *this = (T)other;
         return *this;
     }
 
-    /**
-     * add assignment operator
-     */
-    template <typename integer_type>
-    pointer_type &operator+=(integer_type rhs) {
-        vaddr_ += rhs*sizeof(value_type);
+    virtual ~value_handle() = default;
+
+    operator T() const {
+        return DrvAPI::read<T>(address());        
+    }
+
+    value_handle & operator=(const T&v) {
+        DrvAPI::write<T>(address(), v);
         return *this;
+    }    
+
+    pointer<T> operator&() {
+        return pointer<T>(address());
     }
 
-    /**
-     * subtract assignment operator
-     */
-    template <typename integer_type>
-    pointer_type &operator-=(integer_type  rhs) {
-        vaddr_ -= rhs*sizeof(value_type);
-        return *this;
+    virtual DrvAPI::DrvAPIAddress address() const {
+        return _ptr;
     }
 
+    const T get() const { return (T)*this; }
 
-    /**
-     * addition operator
-     */
-    template <typename integer_type>
-    pointer_type operator+(integer_type rhs) const {
-        pointer_type tmp(*this);
-        tmp += rhs;
-        return tmp;
-    }
+    T get() { return (T)*this; }
 
-    /**
-     * subtraction operator
-     */
-    template <typename integer_type>
-    pointer_type operator-(integer_type rhs) const {
-        pointer_type tmp(*this);
-        tmp -= rhs;
-        return tmp;
-    }
-
-    /**
-     * index operator
-     */
-    template <typename integer_type>
-    value_handle operator[](integer_type rhs) const {
-        return value_handle(vaddr_ + rhs*sizeof(value_type));
-    }
-
-    /**
-     * warning do not use this operator
-     * use the macros instead
-     */
-    value_type* operator->() {
-        return nullptr;
-    }
-
-    DrvAPIAddress vaddr_; //!< virtual address 
+    DrvAPI::DrvAPIAddress _ptr;
 };
 
-#define DRV_API_REF_CLASS_BEGIN(type)                                   \
-    class type##_ref {                                                  \
+/**
+ * generate default constructors for value_handle specializations
+ */
+#define DRV_API_VALUE_HANDLE_CONSTRUCTORS(type)             \
+    public:                                             \
+        value_handle(DrvAPI::DrvAPIAddress ptr):        \
+            _ptr(ptr) {                                 \
+        }                                               \
+        value_handle():                                 \
+            _ptr(0) {                                   \
+        }                                               \
+        value_handle(const value_handle& o) {           \
+            _ptr = o.address();                         \
+        }                                               \
+        value_handle(value_handle && o) {               \
+            _ptr = o.address();                         \
+        }                                               \
+        virtual ~value_handle() = default;               \
+
+/**
+ * generate default assignment operators for value_handle specializations
+ */
+#define DRV_API_VALUE_HANDLE_ASSIGNMENT_OPERATORS(type)      \
+    public:                                             \
+        value_handle & operator=(const value_handle &other) { \
+            *this = (type)other;                \
+            return *this;                       \
+        }                                       \
+        value_handle & operator=(value_handle &&other) { \
+            *this = (type)other;                \
+            return *this;                       \
+        }                                       \
+        value_handle & operator=(const type&v) { \
+            type::copy(*this, v);               \
+            return *this;                       \
+        }                                       \
+
+/**
+ * generate default assignment operators for value_handle specializations
+ * for scalar types
+ */
+#define DRV_API_VALUE_HANDLE_ASSIGNMENT_OPERATORS_TRIVIAL(type)      \
+    public:                                             \
+        value_handle & operator=(const value_handle &other) { \
+            *this = (type)other;                                  \
+            return *this;                       \
+        }                                       \
+        value_handle & operator=(value_handle &&other) { \
+             *this = (type)other;                \
+             return *this;                       \
+        }                                       \
+        value_handle & operator=(const type&v) { \
+            DrvAPI::write<type>(address(), v);      \
+            return *this;                       \
+        }
+
+/**
+ * generate default cast operators for value_handle specializations
+ */
+#define DRV_API_VALUE_HANDLE_CAST_OPERATORS(type)             \
+    public:                                             \
+        operator type() const {                 \
+            type r;                             \
+            type::copy(r, *this);               \
+            return r;                           \
+        }
+
+/**
+ * generate default cast operators for value_handle specializations
+ * for scalar types
+ */
+#define DRV_API_VALUE_HANDLE_CAST_OPERATORS_TRIVIAL(type)            \
     public:                                                             \
-    type##_ref(const DrvAPI::DrvAPIPointer<type>&ptr) : ptr_(ptr) {}    \
-    type##_ref(const DrvAPI::DrvAPIAddress &vaddr) : ptr_(vaddr) {}     \
-    type##_ref(uint64_t vaddr) : ptr_(vaddr) {}                         \
-    type##_ref() = delete;                                              \
-    type##_ref(const type##_ref &other) = default;                      \
-    type##_ref(type##_ref &&other) = default;                           \
-    type##_ref &operator=(const type##_ref &other) = default;           \
-    type##_ref &operator=(type##_ref &&other) = default;                \
-    ~type##_ref() = default;                                            \
-    DrvAPI::DrvAPIPointer<type> operator&() {                           \
-        return ptr_;                                                    \
-    }                                                                   \
-    DrvAPI::DrvAPIPointer<type> ptr_;
+    operator type() const {                                             \
+      return DrvAPI::read<type>(address());				\
+    }
 
-#define DRV_API_REF_CLASS_DATA_MEMBER(type, member)                     \
-    DrvAPI::DrvAPIPointer<decltype(std::declval<type>().member)>::value_handle \
-    member () const {                                                   \
-        return *DrvAPI::DrvAPIPointer<decltype(std::declval<type>().member)> \
-            (ptr_.vaddr_ + offsetof(type, member));                     \
-    }                                                                   \
+/**
+ * generate default addressof operators for value_handle specializations
+ */
+#define DRV_API_VALUE_HANDLE_ADDRESSOF_OPERATORS(type)         \
+    public:                                             \
+        pointer<type> operator&() {             \
+            return pointer<type>(address());        \
+        }
 
-#define DRV_API_REF_CLASS_END(type)                                     \
-    };                                                                  \
+/**
+ * generate the internal members for value_handle specializations
+ */
+#define DRV_API_VALUE_HANDLE_INTERNAL(type)          \
+    public:                                             \
+    virtual DrvAPI::DrvAPIAddress address() const {     \
+        return _ptr;                                    \
+    }                                                   \
+    DrvAPI::DrvAPIAddress _ptr;
+
+#define DRV_API_VALUE_HANDLE_DEFAULTS(type)	\
+  DRV_API_VALUE_HANDLE_CONSTRUCTORS(type)	\
+  DRV_API_VALUE_HANDLE_ASSIGNMENT_OPERATORS(type) \
+  DRV_API_VALUE_HANDLE_CAST_OPERATORS(type)	  \
+  DRV_API_VALUE_HANDLE_ADDRESSOF_OPERATORS(type)  \
+  DRV_API_VALUE_HANDLE_INTERNAL(type)
+
+#define DRV_API_VALUE_HANDLE_DEFAULTS_TRIVIAL(type)	  \
+  DRV_API_VALUE_HANDLE_CONSTRUCTORS(type)		  \
+  DRV_API_VALUE_HANDLE_ASSIGNMENT_OPERATORS_TRIVIAL(type) \
+  DRV_API_VALUE_HANDLE_CAST_OPERATORS_TRIVIAL(type)	  \
+  DRV_API_VALUE_HANDLE_ADDRESSOF_OPERATORS(type)	  \
+  DRV_API_VALUE_HANDLE_INTERNAL(type)
+
+/**
+ * begins specialization of value_handle for a type
+ * type - the type to specialize for
+ *
+ * it is expected that type defines static member functions
+ * of the following forms:
+ *
+ * static void copy(DstType& &dst, const SrcType &src);
+ * for DstType = [type, value_handle<type>] and SrcType = [type, value_handle<type>]
+ */
+#define DRV_API_VALUE_HANDLE_BEGIN(type)	\
+  template <>					\
+    class DrvAPI::value_handle<type> {		\
+    DRV_API_VALUE_HANDLE_DEFAULTS(type)
+
+/**
+ * generates accessors for data members
+ * type - the type of the object for which this is a handle
+ * field - the name of the field, will be accessed by value_handle<type>::field()
+ * field_type - the type of the field
+ * field_data - the data member of the field, this must be a concreete data member inside the type
+ */
+#define DRV_API_VALUE_HANDLE_FIELD(type, field, field_type, field_data) \
+    value_handle<field_type> field() {                                  \
+        return value_handle<field_type>(address() + offsetof(type, field_data)); \
+    }                                                                   \
+    const value_handle<field_type> field() const {                      \
+        return value_handle<field_type>(address() + offsetof(type, field_data)); \
+    }
+
+
+/**
+ * ends specialization of value_handle for a type
+ */
+#define DRV_API_VALUE_HANDLE_END(type)           \
+    };
+
+/**
+ * The pointer class
+ *
+ * This class is used to represent a pointer to a value in the target process
+ * supports dereferencing and array indexing
+ *
+ * To get support for the -> operator, use the value_handle class
+ * and the helper macros to specialize it for your type
+ */
+template <typename T>
+class pointer {
+public:
+    pointer(DrvAPI::DrvAPIAddress ptr):
+        _ptr(ptr) {
+    }
+
+    pointer():
+        _ptr(0) {
+    }
+
+    pointer(const pointer &other) = default;
+    pointer(pointer &&other) = default;
+    pointer & operator=(const pointer &other) = default;
+    pointer & operator=(pointer &&other) = default;
+    ~pointer() = default;
+
+    template <typename O>
+    pointer(const pointer<O> &other) {
+      _ptr = other._ptr;
+    }
+
+    template <typename O>
+    pointer(pointer<O> && other) {
+      _ptr = other._ptr;
+    }
+
+    operator DrvAPI::DrvAPIAddress() const {
+        return _ptr;
+    }
+
+    value_handle<T> operator*() {
+        value_handle<T> handle(_ptr);
+        return handle;
+    }
+
+    const value_handle<T> operator*() const {
+        value_handle<T> handle(_ptr);
+        return handle;
+    }
+
+    value_handle<T> operator[](size_t index) {
+        return value_handle<T>(_ptr + index * sizeof(T));
+    }
+
+    const value_handle<T> operator[](size_t index) const {
+        return value_handle<T>(_ptr + index * sizeof(T));
+    }
+
+    std::unique_ptr<value_handle<T>> operator->() {
+        return std::unique_ptr<value_handle<T>>(new value_handle<T>(_ptr));
+    }
+
+    std::unique_ptr<const value_handle<T>> operator->() const {
+        return std::unique_ptr<const value_handle<T>>(new value_handle<T>(_ptr));
+    }
+
+    T *to_native() {
+        void *p; size_t _;
+        DrvAPIAddressToNative(_ptr, &p, &_);
+        return reinterpret_cast<T*>(p);
+    }
+
+    DrvAPI::DrvAPIAddress _ptr;
+};
+
+/**
+ * Specialization of value_handle for pointer type
+ */
+template <typename T>
+class value_handle<pointer<T>> {
+    DRV_API_VALUE_HANDLE_CONSTRUCTORS(pointer<T>)
+    DRV_API_VALUE_HANDLE_CAST_OPERATORS_TRIVIAL(pointer<T>)
+    DRV_API_VALUE_HANDLE_ASSIGNMENT_OPERATORS_TRIVIAL(pointer<T>)
+    
+    value_handle & operator=(DrvAPI::DrvAPIAddress v) {
+        *this = pointer<T>(v);
+        return *this;
+    }
+
+    operator DrvAPI::DrvAPIAddress() const {
+        pointer<T> p = *this;
+        return (DrvAPI::DrvAPIAddress)p;
+    }
+
+    value_handle<T> operator[](size_t index) {
+        pointer<T> p = *this;
+        return p[index];
+    }
+
+    const value_handle<T> operator[](size_t index) const {
+        pointer<T> p = *this;
+        return p[index];
+    }
+
+    value_handle<T> operator*() {
+        pointer<T> p = *this;
+        return *p;
+    }
+
+    const value_handle<T> operator*() const {
+        pointer<T> p = *this;
+        return *p;
+    }
+
+    DRV_API_VALUE_HANDLE_ADDRESSOF_OPERATORS(pointer<T>)
+    DRV_API_VALUE_HANDLE_INTERNAL(pointer<T>)
+};
+
+template <typename T>
+using DrvAPIPointer = DrvAPI::pointer<T>;
 
 }
 #endif

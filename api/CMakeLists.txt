@@ -3,11 +3,11 @@ set(
   DrvAPIAddressToNative.cpp
   DrvAPIAddressMap.cpp
   DrvAPIAllocator.cpp
-  DrvAPIGlobal.cpp
   DrvAPINativeToAddress.cpp
   DrvAPISysConfig.cpp
   DrvAPIThread.cpp
   DrvAPIThreadState.cpp
+  DrvAPISection.cpp
   )
 
 set(
@@ -30,6 +30,8 @@ set(
   DrvAPISysConfig.hpp
   DrvAPISystem.hpp
   DrvAPIThread.hpp
+  DrvAPIVar.hpp
+  DrvAPISection.hpp
   )
 
 
