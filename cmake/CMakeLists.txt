@@ -1,0 +1,5 @@
+configure_file(FindDRV.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/FindDRV.cmake @ONLY)
+configure_file(DRVInclude.cmake ${CMAKE_CURRENT_BINARY_DIR}/DRVInclude.cmake @ONLY)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/FindDRV.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/DRVInclude.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake)
