@@ -1,6 +1,5 @@
+cmake_minimum_required(VERSION 3.30.0)
 project(drv)
-
-cmake_minimum_required(VERSION 3.25.0)
 
 include(ExternalProject)
 
@@ -63,3 +62,4 @@ add_subdirectory(pandocommand)
 add_subdirectory(cmake-drvx-example)
 add_subdirectory(cmake-drvr-example)
 add_subdirectory(cmake)
+add_subdirectory(drvx)

@@ -45,6 +45,16 @@ define_property(TARGET PROPERTY SST_RUN_DIR
   FULL_DOCS "Directory in which to run the simulation"
   )
 
+define_property(TARGET PROPERTY DRV_MODEL_WITH_COMMANDPROCESSOR
+  BRIEF_DOCS "The command processor will be used with the model"
+  FULL_DOCS "The command processor will be used with the model"
+  )
+
+define_property(TARGET PROPERTY DRV_MODEL_COMMANDPROCESSOR
+  BRIEF_DOCS "The command processor to use with the model"
+  FULL_DOCS "The command processor to use with the model"
+  )
+
 # creates a drvx "executable" (really a shared library)
 # will create a target "name"
 function (drvx_add_executable name)
@@ -63,12 +73,18 @@ function (drvx_target_link_libraries)
   endif()
 endfunction()
 
-# creates a drvx run target
-# ${name} should be a target created with add_drvx_executable
-# "ARGV" will be passed as the command line arguments to the drvx
-# program at runtime
-function (drvx_add_run_target run_target executable)
+# creates a drv run target
+# ${run_target} should be the name of the target to create
+# ${executable} should be a target created with drv(x|r)_add_executable
+# ${cpexecutable} should be a target created with drvx_add_executable
+#
+# it is left to the caller to set the properties of the run target
+# particularly DRV_MODEL, DRV_MODEL_OPTIONS, DRV_APPLICATION_ARGV
+function (drv_add_run_target run_target executable cpexecutable)
   if (NOT DEFINED ARCH_RV64)
+    set(NO_CP "$<STREQUAL:${cpexecutable},>")
+    set(CP "$<TARGET_FILE:${cpexecutable}>")
+    set(CP_OPT "$<IF:${NO_CP},,--with-command-processor=${CP}>")
     add_custom_target(
       ${run_target}
       COMMAND
@@ -79,6 +95,7 @@ function (drvx_add_run_target run_target executable)
       $<TARGET_PROPERTY:${run_target},SST_SIM_OPTIONS> # options for the simulator
       $<TARGET_PROPERTY:${run_target},DRV_MODEL> # the model to simulate
       --
+      ${CP_OPT} # the command processor
       $<TARGET_PROPERTY:${run_target},DRV_MODEL_OPTIONS> # options for the model
       --num-pxn=$<TARGET_PROPERTY:${run_target},DRV_MODEL_NUM_PXN>
       --pxn-pods=$<TARGET_PROPERTY:${run_target},DRV_MODEL_PXN_PODS>
@@ -97,11 +114,6 @@ function (drvx_add_run_target run_target executable)
     set_target_properties(
       ${run_target}
       PROPERTIES
-      DRV_MODEL ${DRV_SOURCE_DIR}/tests/PANDOHammerDrvX.py
-      )
-    set_target_properties(
-      ${run_target}
-      PROPERTIES
       DRV_MODEL_NUM_PXN 1
       DRV_MODEL_PXN_PODS 1
       DRV_MODEL_POD_CORES 1
@@ -110,9 +122,33 @@ function (drvx_add_run_target run_target executable)
     add_dependencies(
       ${run_target}
       ${executable}
+      ${cpexecutable}
       Drv
       )
   endif()
+endfunction()
+
+# creates a drvx run target
+# ${name} should be a target created with add_drvx_executable
+# "ARGV" will be passed as the command line arguments to the drvx
+# program at runtime
+function (drvx_add_run_target_with_command_processor run_target executable cpexecutable)
+  if (NOT DEFINED ARCH_RV64)
+    drv_add_run_target(${run_target} ${executable} "${cpexecutable}")
+    set_target_properties(
+      ${run_target}
+      PROPERTIES
+      DRV_MODEL ${DRV_SOURCE_DIR}/tests/PANDOHammerDrvX.py 
+      )
+  endif()
+endfunction()
+
+# creates a drvx run target
+# ${name} should be a target created with add_drvx_executable
+# "ARGV" will be passed as the command line arguments to the drvx
+# program at runtime
+function (drvx_add_run_target run_target executable)
+  drvx_add_run_target_with_command_processor(${run_target} ${executable} "")
 endfunction()
 
 # creates a drvr run target
@@ -122,62 +158,14 @@ endfunction()
 # program at runtime
 function (drvr_add_run_target_with_command_processor run_target rvexecutable cpexecutable)
   if (NOT DEFINED ARCH_RV64)
-    add_custom_target(
-      ${run_target}
-      COMMAND
-      mkdir -p $<TARGET_PROPERTY:${run_target},SST_RUN_DIR> &&
-      cd $<TARGET_PROPERTY:${run_target},SST_RUN_DIR> &&
-      PYTHONPATH=${DRV_SOURCE_DIR}/py:${DRV_SOURCE_DIR}/tests
-      $<TARGET_FILE:SST::SST> # the simulator
-      $<TARGET_PROPERTY:${run_target},SST_SIM_OPTIONS> # options for the simulator
-      $<TARGET_PROPERTY:${run_target},DRV_MODEL> # the model to simulate
-      --
-      --with-command-processor=$<TARGET_FILE:${cpexecutable}> # the command processor
-      $<TARGET_PROPERTY:${run_target},DRV_MODEL_OPTIONS> # options for the model
-      --num-pxn=$<TARGET_PROPERTY:${run_target},DRV_MODEL_NUM_PXN>
-      --pxn-pods=$<TARGET_PROPERTY:${run_target},DRV_MODEL_PXN_PODS>
-      --pod-cores=$<TARGET_PROPERTY:${run_target},DRV_MODEL_POD_CORES>
-      --core-threads=$<TARGET_PROPERTY:${run_target},DRV_MODEL_CORE_THREADS>
-      $<TARGET_FILE:RV64::${rvexecutable}> # the application to run
-      $<TARGET_PROPERTY:${run_target},DRV_APPLICATION_ARGV> # arguments for the application
-      2>&1 | tee $<TARGET_PROPERTY:${run_target},SST_RUN_DIR>/log.txt # log the output
-      DEPENDS ${rvexecutable} Drv
-      VERBATIM
-      )
-    set_target_properties(
-      ${run_target}
-      PROPERTIES
-      SST_RUN_DIR ${CMAKE_CURRENT_BINARY_DIR}/${run_target}
-      )
+    drv_add_run_target(${run_target} RV64::${rvexecutable} ${cpexecutable})
     set_target_properties(
       ${run_target}
       PROPERTIES
       DRV_MODEL ${DRV_SOURCE_DIR}/tests/PANDOHammerDrvR.py
       )
-    set_target_properties(
-      ${run_target}
-      PROPERTIES
-      DRV_MODEL_NUM_PXN 1
-      DRV_MODEL_PXN_PODS 1
-      DRV_MODEL_POD_CORES 1
-      DRV_MODEL_CORE_THREADS 1
-      )
-    add_dependencies(
-      ${run_target}
-      ${rvexecutable}
-      ${cpexecutable}
-      Drv
-      )
   endif()
 endfunction()
-
-# set a property on a drvr target
-function (drvr_set_run_target_properties target)
-if (NOT DEFINED ARCH_RV64)
-  set_target_properties(${target} ${ARGV})
-endif()
-endfunction()
-
 
 # creates a drvr run target
 # ${rvexecutable} should be a target created with add_drvr_executable
@@ -185,6 +173,23 @@ endfunction()
 # program at runtime
 function (drvr_add_run_target run_target rvexecutable)
   drvr_add_run_target_with_command_processor(${run_target} ${rvexecutable} pandocommand_loader)
+endfunction()
+
+# set a property on a drv run target
+function (drv_set_run_target_properties target)
+if (NOT DEFINED ARCH_RV64)
+  set_target_properties(${target} ${ARGV})
+endif()
+endfunction()
+
+# set a property on a drvr target
+function (drvr_set_run_target_properties target)
+  drv_set_run_target_properties(${target} ${ARGV})
+endfunction()
+
+# set a property on a drvx target
+function (drvx_set_run_target_properties target)
+  drv_set_run_target_properties(${target} ${ARGV})
 endfunction()
 
 # creates a drvr executable target

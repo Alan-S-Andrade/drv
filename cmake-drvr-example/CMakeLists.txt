@@ -1,6 +1,6 @@
-find_package(DRV REQUIRED)
+cmake_minimum_required(VERSION 3.30.0)
 project(drvr_example_project)
-cmake_minimum_required(VERSION 3.25.0)
+find_package(DRV REQUIRED)
 
 drvx_add_executable(
   command_processor
