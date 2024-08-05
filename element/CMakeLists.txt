@@ -52,9 +52,7 @@ set(DRV_R_SOURCES
   DrvNativeSimulationTranslator.hpp
   )
 
-if (SST_ENABLE_RISCV)
-  list(APPEND DRV_SOURCES ${DRV_R_SOURCES})
-endif()
+list(APPEND DRV_SOURCES ${DRV_R_SOURCES})
 
 add_sst_library(Drv ${DRV_SOURCES})
 
@@ -63,10 +61,8 @@ target_include_directories(Drv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(Drv PUBLIC ${SST_ELEMENTS_PREFIX}/include)
 target_compile_options(Drv PRIVATE ${CXX_STD})
 
-if (SST_ENABLE_RISCV)
-  target_link_libraries(Drv LINK_PUBLIC riscvinterpreter)
-  target_include_directories(Drv PUBLIC ${GNU_RISCV_TOOLCHAIN_PREFIX})
-endif()
+target_link_libraries(Drv LINK_PUBLIC riscvinterpreter)
+target_include_directories(Drv PUBLIC ${GNU_RISCV_TOOLCHAIN_PREFIX})
 
 add_custom_command(
   TARGET Drv
