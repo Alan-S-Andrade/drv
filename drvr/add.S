@@ -3,7 +3,7 @@
 
 #include <machine/syscall.h>
         .global _start
-_start:
+_start: 
         li      x1, -1
         srli    x1, x1, 32
         li      x2, 0

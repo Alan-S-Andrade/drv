@@ -7,6 +7,7 @@
 #include <elf.h>
 #include <unordered_map>
 #include <string>
+#include <inttypes.h>
 namespace pandocommand {
 
 class PANDOHammerExe {
@@ -60,6 +61,7 @@ public:
     template <typename T>
     DrvAPI::DrvAPIPointer<T> symbol(const std::string& symname, const Place &place) const {
         DrvAPI::DrvAPIAddress addr = symbol(symname);
+        printf("found %s at 0x%" PRIx64 "\n", symname.c_str(), addr);
         DrvAPI::DrvAPIAddressInfo decode = DrvAPI::decodeAddress(addr);
         decode.set_absolute(true)
             .set_pxn(place.pxn)

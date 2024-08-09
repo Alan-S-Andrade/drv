@@ -26,7 +26,7 @@ extern "C" {
 /**
  * thread id wrt my core
  */ 
-inline int myThreadId()
+static inline int myThreadId()
 {
     int64_t tid;
     asm volatile ("csrr %0, mhartid" : "=r"(tid));
@@ -36,7 +36,7 @@ inline int myThreadId()
 /**
  * core id wrt my pod
  */
-inline int myCoreId()
+static inline int myCoreId()
 {
     int64_t cid;
     asm volatile ("csrr %0, " __stringify(MCSR_MCOREID) : "=r"(cid));
@@ -46,7 +46,7 @@ inline int myCoreId()
 /**
  * pod id wrt my pxn
  */
-inline int myPodId()
+static inline int myPodId()
 {
     int64_t pid;
     asm volatile ("csrr %0, " __stringify(MCSR_MPODID) : "=r"(pid));
@@ -56,7 +56,7 @@ inline int myPodId()
 /**
  * pxn id
  */
-inline int myPXNId()
+static inline int myPXNId()
 {
     int64_t xid;
     asm volatile ("csrr %0, " __stringify(MCSR_MPXNID) : "=r"(xid));
@@ -66,7 +66,7 @@ inline int myPXNId()
 /**
  * number of hardware threads on my core
  */
-inline int myCoreThreads()
+static inline int myCoreThreads()
 {
     int64_t harts;
     asm volatile ("csrr %0, " __stringify(MCSR_MCOREHARTS) : "=r"(harts));
@@ -76,7 +76,7 @@ inline int myCoreThreads()
 /**
  * number of pxns in system
  */
-inline int numPXN()
+static inline int numPXN()
 {
     int64_t num;
     asm volatile ("csrr %0, " __stringify(MCSR_MNUMPXN) : "=r"(num));
@@ -86,7 +86,7 @@ inline int numPXN()
 /**
  * number of cores in a pod
  */
-inline int numPodCores()
+static inline int numPodCores()
 {
     int64_t cores;
     asm volatile ("csrr %0, " __stringify(MCSR_MPODCORES) : "=r"(cores));
@@ -96,7 +96,7 @@ inline int numPodCores()
 /**
  * number of pods in a pxn
  */
-inline int numPXNPods()
+static inline int numPXNPods()
 {
     int64_t pods;
     asm volatile ("csrr %0, " __stringify(MCSR_MPXNPODS) : "=r"(pods));
@@ -106,7 +106,7 @@ inline int numPXNPods()
 /**
  * size of l1sp in bytes
  */
-inline uint64_t coreL1SPSize() {
+static inline uint64_t coreL1SPSize() {
     uint64_t l1sp_size;
     asm volatile ("csrr %0, " __stringify(MCSR_MCOREL1SPSIZE) : "=r"(l1sp_size));
     return l1sp_size;
@@ -115,7 +115,7 @@ inline uint64_t coreL1SPSize() {
 /**
  * size of l2sp in bytes
  */
-inline uint64_t podL2SPSize() {
+static inline uint64_t podL2SPSize() {
     uint64_t l2sp_size;
     asm volatile ("csrr %0, " __stringify(MCSR_MPODL2SPSIZE) : "=r"(l2sp_size));
     return l2sp_size;
@@ -124,7 +124,7 @@ inline uint64_t podL2SPSize() {
 /**
  * size of pxn's dram in bytes
  */
-inline uint64_t pxnDRAMSize() {
+static inline uint64_t pxnDRAMSize() {
     uint64_t dram_size;
     asm volatile ("csrr %0, " __stringify(MCSR_MPXNDRAMSIZE) : "=r"(dram_size));
     return dram_size;
@@ -133,7 +133,7 @@ inline uint64_t pxnDRAMSize() {
 /**
  * get the current cycle count
  */
-inline uint64_t cycle() {
+static inline uint64_t cycle() {
     uint64_t cycle;
     asm volatile ("rdcycle %0" : "=r"(cycle));
     return cycle;

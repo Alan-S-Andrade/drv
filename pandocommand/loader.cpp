@@ -10,37 +10,46 @@
 using namespace DrvAPI;
 using namespace pandocommand;
 
+#define dbg(fmt, ...)                           \
+    cmd_dbg("%s: %d: " fmt, __FILE__, __LINE__, ##__VA_ARGS__)
+
 namespace pandocommand
 {
 void loadProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     DrvAPIAddressInfo decode = decodeAddress(segpaddr);
-    cmd_dbg("Loading segment @ 0x%016" PRIx64 " (%s)\n", segpaddr, decode.to_string().c_str());
+    dbg("Loading segment @ 0x%016" PRIx64 " (%s)\n", segpaddr, decode.to_string().c_str());
     size_t segsz = phdr->p_filesz;
     static constexpr size_t MAX_REQSZ = 64;
     char *data = executable.segment_data(phdr);
     size_t off = 0;
     // send segment data
-    for (; off < phdr->p_filesz && (off % sizeof(uint64_t)); off += 1) {
+    for (; off < phdr->p_filesz && (off % MAX_REQSZ); off += 1) {
+        dbg("writing  1 byte to 0x%016" PRIx64 "\n", segpaddr + off);
         DrvAPI::write<char>(segpaddr + off, data[off]);
     }
     for (; off + MAX_REQSZ <= phdr->p_filesz; off += MAX_REQSZ) {
         std::array<char, MAX_REQSZ> request;
         memcpy(&request[0], &data[off], MAX_REQSZ);
+        dbg("writing %zu bytes to 0x%016" PRIx64 "\n", MAX_REQSZ, segpaddr + off);
         DrvAPI::write(segpaddr + off, request);
     }
     for (; off < phdr->p_filesz; off += 1) {
+        dbg("writing  1 byte to 0x%016" PRIx64 "\n", segpaddr + off);
         DrvAPI::write(segpaddr + off, data[off]);
     }
     // send zero data
-    for (; off < phdr->p_memsz && (off % sizeof(uint64_t)); off += 1) {
+    for (; off < phdr->p_memsz && (off % MAX_REQSZ); off += 1) {
+        dbg("writing  1 byte to 0x%016" PRIx64 "\n", segpaddr + off);
         DrvAPI::write<char>(segpaddr + off, 0);
     }
     for (; off + MAX_REQSZ <= phdr->p_memsz; off += MAX_REQSZ) {
+        dbg("writing %zu bytes to 0x%016" PRIx64 "\n", MAX_REQSZ, segpaddr + off);
         std::array<char, MAX_REQSZ> request;
         request.fill(0);
         DrvAPI::write(segpaddr + off, request);
     }
     for (; off < phdr->p_memsz; off += 1) {
+        dbg("writing  1 byte to 0x%016" PRIx64 "\n", segpaddr + off);
         DrvAPI::write<char>(segpaddr + off, 0);
     }
 }

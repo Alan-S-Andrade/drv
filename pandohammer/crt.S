@@ -24,7 +24,6 @@ _start:
 .option norelax
 1:la    gp, __global_pointer$
 .option pop
-
   # Clear the bss segment
   la      a0, _edata
   la      a2, _end
