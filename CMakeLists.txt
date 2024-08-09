@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30.0)
-project(drv)
+project(drv LANGUAGES CXX C ASM)
 
 include(ExternalProject)
 
@@ -12,54 +12,49 @@ find_package(SST)
 if (NOT DEFINED SST_ELEMENTS_PREFIX)
   message(FATAL_ERROR "SST_ELEMENTS_PREFIX is not defined")
 endif()
-# define sst element libraries that we need to link against
-add_library(memHierarchy SHARED IMPORTED)
-set_target_properties(memHierarchy PROPERTIES IMPORTED_LOCATION ${SST_ELEMENTS_PREFIX}/lib/sst-elements-library/libmemHierarchy.so)
 
 if (NOT DEFINED GNU_RISCV_TOOLCHAIN_PREFIX)
   message(FATAL_ERROR "GNU_RISCV_TOOLCHAIN_PREFIX is not defined")
 endif()
 
-set(CXX_STD "-std=c++17")
-
-find_package(Boost REQUIRED COMPONENTS coroutine)
-
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 set(DRV_SOURCE_DIR ${PROJECT_SOURCE_DIR})
 set(DRV_BINARY_DIR ${PROJECT_BINARY_DIR})
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 find_package(DRV REQUIRED)
 
-ExternalProject_Add(
-  pandohammer_project
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pandohammer
-  BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/pandohammer
-  INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/pandohammer
-  CONFIGURE_COMMAND
-  cmake
-  -DCMAKE_C_COMPILER=${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-gcc
-  -DCMAKE_SYSTEM_NAME=Generic
-  -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/pandohammer
-  ${CMAKE_CURRENT_SOURCE_DIR}/pandohammer
-  # BUILD_COMMAND make
-  # INSTALL_COMMAND make install
-  )
+set(CXX_STD "-std=c++17")
 
-add_library(pandohammer STATIC IMPORTED)
-file(GLOB PANDOHAMMER_HEADERS ${CMAKE_CURRENT_BINARY_DIR}/pandohammer/include/pandohammer/*.h)
+if (NOT DEFINED ARCH_RV64)
+  ExternalProject_Add(
+    rv64
+    SOURCE_DIR ${DRV_SOURCE_DIR}
+    BINARY_DIR ${PROJECT_RV64_BINARY_DIR}
+    INSTALL_DIR ${PROJECT_RV64_BINARY_DIR}
+    CONFIGURE_COMMAND
+    cmake
+    -DARCH_RV64=1
+    -DCMAKE_C_COMPILER=${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-gcc
+    -DCMAKE_CXX_COMPILER=${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-g++
+    -DCMAKE_SYSTEM_NAME=Generic
+    -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/rv64
+    -DSST_CORE_PREFIX=${SST_CORE_PREFIX}
+    -DSST_ELEMENTS_PREFIX=${SST_ELEMENTS_PREFIX}
+    -DGNU_RISCV_TOOLCHAIN_PREFIX=${GNU_RISCV_TOOLCHAIN_PREFIX}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    BUILD_ALWAYS 1
+    )
+endif()
 
-set_target_properties(pandohammer PROPERTIES
-  IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/pandohammer/lib/libpandohammer.a
-  INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_BINARY_DIR}/pandohammer/include
-  PUBLIC_HEADER "${PANDOHAMMER_HEADERS}"
-  )
 
 add_subdirectory(interpreter)
 add_subdirectory(api)
 add_subdirectory(element)
 add_subdirectory(pandocommand)
+add_subdirectory(pandohammer)
 add_subdirectory(cmake-drvx-example)
 add_subdirectory(cmake-drvr-example)
 add_subdirectory(cmake)
 add_subdirectory(drvx)
+add_subdirectory(drvr)

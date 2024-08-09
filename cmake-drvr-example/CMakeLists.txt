@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.30.0)
-project(drvr_example_project)
-find_package(DRV REQUIRED)
-
 drvx_add_executable(
   command_processor
   command_processor.cpp
@@ -18,33 +14,28 @@ drvr_add_executable(
   hello.c
   )
 
+drvr_target_link_libraries(
+  drvr-example
+  PRIVATE
+  pandohammer
+  )
+
+drvr_set_build_target_properties(
+  drvr-example
+  PROPERTIES
+  DRV_BUILD_NUM_PXN      1
+  DRV_BUILD_PXN_PODS     1
+  DRV_BUILD_POD_CORES    1
+  DRV_BUILD_CORE_THREADS 1
+  )
+
 drvr_add_run_target(
   run-drvr-example
   drvr-example
   )
 
-drvr_set_run_target_properties(
-  run-drvr-example
-  PROPERTIES
-  DRV_MODEL_NUM_PXN      1
-  DRV_MODEL_PXN_PODS     1
-  DRV_MODEL_POD_CORES    1
-  DRV_MODEL_CORE_THREADS 1
-  )
-
-
-drvr_add_run_target_with_command_processor(
+drvr_add_run_target(
   run-drvr-example-with-command-processor
   drvr-example
   command_processor
-  )
-
-
-drvr_set_run_target_properties(
-  run-drvr-example-with-command-processor
-  PROPERTIES
-  DRV_MODEL_NUM_PXN      1
-  DRV_MODEL_PXN_PODS     1
-  DRV_MODEL_POD_CORES    1
-  DRV_MODEL_CORE_THREADS 1
   )

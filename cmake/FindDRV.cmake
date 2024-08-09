@@ -1,15 +1,6 @@
 if (NOT DEFINED ARCH_RV64)
   find_package(Boost REQUIRED)
   find_package(SST REQUIRED)
-else()
-  if (NOT TARGET pandohammer)
-    message("Adding pandohammer target")
-    add_library(pandohammer STATIC IMPORTED)
-    set_property(TARGET pandohammer PROPERTY IMPORTED_LOCATION ${DRV_BINARY_DIR}/pandohammer/libpandohammer.a)
-    set_property(TARGET pandohammer PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${DRV_SOURCE_DIR}/pandohammer)
-    set_property(TARGET pandohammer PROPERTY INTERFACE_LINK_OPTIONS -T ${DRV_SOURCE_DIR}/pandohammer/bsg_link.ld)
-  endif()
 endif()
-
 include(DRVInclude)
 

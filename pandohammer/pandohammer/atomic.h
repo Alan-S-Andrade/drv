@@ -4,34 +4,34 @@
 #ifndef PANDOHAMMER_ATOMIC_H
 #define PANDOHAMMER_ATOMIC_H
 #include <stdint.h>
-inline int32_t atomic_fetch_add_i32(volatile int32_t *ptr, int32_t val)
+static inline int32_t atomic_fetch_add_i32(volatile int32_t *ptr, int32_t val)
 {
     int32_t ret;
     asm volatile("amoadd.w %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(val));
     return ret;
 }
 
-inline int64_t atomic_fetch_add_i64(volatile int64_t *ptr, int64_t val)
+static inline int64_t atomic_fetch_add_i64(volatile int64_t *ptr, int64_t val)
 {
     int64_t ret;
     asm volatile("amoadd.d %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(val));
     return ret;
 }
-inline int32_t atomic_swap_i32(volatile int32_t *ptr, int32_t val)
+static inline int32_t atomic_swap_i32(volatile int32_t *ptr, int32_t val)
 {
     int32_t ret;
     asm volatile("amoswap.w %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(val));
     return ret;
 }
 
-inline int64_t atomic_swap_i64(volatile int64_t *ptr, int64_t val)
+static inline int64_t atomic_swap_i64(volatile int64_t *ptr, int64_t val)
 {
     int64_t ret;
     asm volatile("amoswap.d %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(val));
     return ret;
 }
 
-inline int32_t atomic_compare_and_swap_i32(volatile int32_t *ptr,
+static inline int32_t atomic_compare_and_swap_i32(volatile int32_t *ptr,
                                            int32_t oldval,
                                            int32_t newval)
 {
@@ -51,7 +51,7 @@ inline int32_t atomic_compare_and_swap_i32(volatile int32_t *ptr,
     return ret;
 }
 
-inline int64_t atomic_compare_and_swap_i64(volatile int64_t *ptr,
+static inline int64_t atomic_compare_and_swap_i64(volatile int64_t *ptr,
                                            int64_t oldval,
                                            int64_t newval)
 {
@@ -71,12 +71,12 @@ inline int64_t atomic_compare_and_swap_i64(volatile int64_t *ptr,
     return ret;
 }
 
-inline int32_t atomic_load_i32(volatile int32_t *ptr)
+static inline int32_t atomic_load_i32(volatile int32_t *ptr)
 {
     return *ptr;
 }
 
-inline int64_t atomic_load_i64(volatile int64_t *ptr)
+static inline int64_t atomic_load_i64(volatile int64_t *ptr)
 {
     return *ptr;
 }
