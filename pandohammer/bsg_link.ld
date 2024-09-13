@@ -15,7 +15,7 @@ SECTIONS
 *(.l1sp.*)
 . = ALIGN(16);
 } > L1SP_VMA
-
+l1sp_end = .;
 
 .l2sp :
 {
@@ -24,7 +24,7 @@ SECTIONS
 *(.l2sp.*)
 . = ALIGN(16);
 }> L2SP_VMA
-
+l2sp_end = .;
 
 .text.dram :
 {
@@ -89,6 +89,8 @@ __global_pointer$ = 0x40000000;
 _end = .;
 end = .;
 _edata = .;
+dram_end = .;
+
 ENTRY(_start)
 }
 
