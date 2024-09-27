@@ -42,7 +42,7 @@ parser.add_argument("--pod-l2sp-interleave", type=int, default=0, help="interlea
 parser.add_argument("--pod-l2sp-size", type=int, default=POD_L2SP_SIZE, help="size of l2sp per pod (max {} bytes)".format(POD_L2SP_SIZE))
 
 parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
-parser.add_argument("--pxn-dram-size", type=int, default=1024**3, help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
+parser.add_argument("--pxn-dram-size", type=int, default=2*(1024**3), help="size of main memory per pxn (max {} bytes)".format(8*1024*1024*1024))
 parser.add_argument("--pxn-dram-interleave", type=int, default=0, help="interleave size of dram addresses (defaults to no  interleaving)")
 
 parser.add_argument("--with-command-processor", type=str, default="",

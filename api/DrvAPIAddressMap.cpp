@@ -33,6 +33,17 @@ DrvAPIAddress myRelativeDRAMBase() {
 }
 
 /**
+ * Returns the relative address of the end of the local core's DRAM
+ */
+DrvAPIAddress myRelativeDRAMEnd() {
+    DrvAPIThread *thread = DrvAPIThread::current();
+    DrvAPIAddress base = thread->getDecoder().this_pxns_relative_dram_base();
+    using bitfield = DrvAPIAddressDecoder::bitfield;
+    bitfield is_dram_bit = thread->getDecoder().relative_is_dram_;
+    return base + (1ull << is_dram_bit.hi()) - 1;
+}
+
+/**
  * Returns the absolute address of the local core's L1 scratchpad
  */
 DrvAPIAddress myAbsoluteL1SPBase() {

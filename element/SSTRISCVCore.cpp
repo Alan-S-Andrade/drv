@@ -10,7 +10,8 @@ namespace Drv {
 
 void RISCVCore::configureClock(Params &params) {
     std::string clock = params.find<std::string>("clock", "1GHz");
-    clocktc_ = registerClock(clock, new Clock::Handler<RISCVCore>(this, &RISCVCore::tick));
+    clock_handler_ = new Clock::Handler<RISCVCore>(this, &RISCVCore::tick);
+    clocktc_ = registerClock(clock, clock_handler_);
 }
 
 void RISCVCore::configureOuptut(Params& params) {
@@ -265,6 +266,7 @@ void RISCVCore::handleResetWrite(uint64_t v) {
         for (RISCVSimHart &hart : harts_) {
             hart.reset() = false;
         }
+        assertCoreOn();
     } else {
         // assert reset
         for (RISCVSimHart &hart : harts_) {
@@ -308,18 +310,21 @@ void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
     if (rd_rsp) {
         output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received read response\n");
         tid = rd_rsp->tid;
+        assertCoreOn();
     }
 
     auto *wr_rsp = dynamic_cast<Interfaces::StandardMem::WriteResp*>(req);
     if (wr_rsp) {
         output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received write response\n");
         tid = wr_rsp->tid;
+        assertCoreOn();
     }
 
     auto *custom_rsp = dynamic_cast<Interfaces::StandardMem::CustomResp*>(req);
     if (custom_rsp) {
         output_.verbose(CALL_INFO, 0, DEBUG_RSP, "Received custom response\n");
         tid = custom_rsp->tid;
+        assertCoreOn();
     }
 
     auto *write_req = dynamic_cast<Interfaces::StandardMem::Write*>(req);
@@ -355,6 +360,7 @@ int RISCVCore::selectNextHart() {
 /* tick */
 bool RISCVCore::tick(Cycle_t cycle) {
     int hart_id = selectNextHart();
+    bool unregister = false;
     if (hart_id != NO_HART) {
         addBusyCycleStat(1);
         uint64_t pc = harts_[hart_id].pc();
@@ -382,14 +388,20 @@ bool RISCVCore::tick(Cycle_t cycle) {
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
-        addStallCycleStat(1);
+        unregister = shouldUnregisterClock();
+        if (unregister) {
+            output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "Unregistering clock\n");
+            unregister_cycle_ = getCycleCount();
+        }
+        //addStallCycleStat(1);
         output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "No harts ready to execute\n");
     }
 
     if (shouldExit())
         primaryComponentOKToEndSim();
-    
-    return shouldExit();
+
+    core_on_ = !unregister;
+    return unregister ||  shouldExit();
 }
 
 /**
@@ -403,6 +415,16 @@ void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &ha
 }
 
 /**
+ * put a hart to sleep
+ */
+void RISCVCore::putHartToSleep(RISCVSimHart &hart, uint64_t sleep_cycles) {
+    auto *wake = new Wake();
+    wake->hart() = getHartId(hart);
+    loopback_->send(sleep_cycles, clocktc_, wake);
+    hart.stalledSleep() = true;
+}
+
+/**
  * handle loopback event
  */
 void RISCVCore::handleLoopback(Event *evt) {
@@ -412,6 +434,14 @@ void RISCVCore::handleLoopback(Event *evt) {
         for (auto &hart : harts_) {
             hart.reset() = false;
         }
+        assertCoreOn();
+    }
+    Wake *wake = dynamic_cast<Wake*>(evt);
+    if (wake) {
+        output_.verbose(CALL_INFO, 1, 0, "Received wake event for hart %d\n"
+                        ,wake->hart_);
+        harts_[wake->hart_].stalledSleep() = false;
+        assertCoreOn();
     }
     delete evt;
 }

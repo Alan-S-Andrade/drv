@@ -4,6 +4,7 @@
 #ifndef PANDOHAMMER_CPUINFO_H
 #define PANDOHAMMER_CPUINFO_H
 #include <stdint.h>
+#include <pandohammer/stringify.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -17,11 +18,6 @@ extern "C" {
 #define MCSR_MCOREL1SPSIZE 0xF1C
 #define MCSR_MPODL2SPSIZE  0xF1D
 #define MCSR_MPXNDRAMSIZE  0xF1E
-
-#ifndef __stringify
-#define __stringify_1(x) #x
-#define __stringify(x) __stringify_1(x)
-#endif
 
 /**
  * thread id wrt my core

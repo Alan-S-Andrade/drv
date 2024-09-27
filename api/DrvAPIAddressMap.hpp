@@ -683,6 +683,11 @@ DrvAPIAddress myRelativeL2SPBase();
 DrvAPIAddress myRelativeDRAMBase();
 
 /**
+ * Returns the relative address of the end of the local core's DRAM
+ */
+DrvAPIAddress myRelativeDRAMEnd();
+
+/**
  * Returns the absolute address of the local core's L1 scratchpad
  */
 DrvAPIAddress myAbsoluteL1SPBase();
