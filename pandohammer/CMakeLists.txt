@@ -5,6 +5,8 @@ if (DEFINED ARCH_RV64)
     pandohammer/cpuinfo.h
     pandohammer/mmio.h
     pandohammer/staticdecl.h
+    pandohammer/stringify.h
+    pandohammer/hartsleep.h
     )
 
   set(PANDOHAMMER_SOURCES

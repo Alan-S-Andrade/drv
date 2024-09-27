@@ -13,7 +13,7 @@ public:
     /**
      * @brief ready
      */
-    bool ready() { return !reset() && !stalledMemory(); }
+    bool ready() { return !reset() && !stalledMemory() && !stalledSleep(); }
 
     /**
      * @brief reset
@@ -61,6 +61,12 @@ public:
     bool   stalledMemory() const { return _stalled_memory; }
 
     /**
+     * @brief stalledSleep
+     */
+    bool & stalledSleep() { return _stalled_sleep; }
+    bool   stalledSleep() const { return _stalled_sleep; }
+
+    /**
      * @brief exit
      */
     int & exit() { return _exit; }
@@ -78,6 +84,7 @@ public:
     uint64_t & resetPC() { return _reset_pc; }
     uint64_t   resetPC() const { return _reset_pc; }
 
+    bool _stalled_sleep = false;
     bool _stalled_memory = false;
     bool _reset = false;
     int  _exit = false;

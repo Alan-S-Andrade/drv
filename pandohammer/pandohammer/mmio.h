@@ -36,9 +36,9 @@ static inline void ph_puts(char *cstr)
     }
 }
 
-static inline void ph_print_time()
+static inline void ph_print_time(long tag)
 {
-    *(volatile char*)0xFFFFFFFFFFFF0018 = 0;
+    *(volatile char*)0xFFFFFFFFFFFF0018 = tag;
 }
 
 #ifdef __cplusplus

@@ -157,6 +157,12 @@ drvr_test_compile_options(vread -DVSIZE=64)
 # write
 drvr_test_with_pandohammer(write write.c)
 
+
+drvr_test_with_pandohammer(wait-with-sleep wait.c)
+drvr_test_compile_options(wait-with-sleep -DUSE_SLEEP=1)
+
+drvr_test_with_pandohammer(wait-without-sleep wait.c)
+
 # spmm; broken; not sure why
 if (FALSE)
   drvr_test_with_pandohammer(spmm spmm.cpp)

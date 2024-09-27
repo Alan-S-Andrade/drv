@@ -126,7 +126,8 @@ private:
     static constexpr uint64_t CSR_MTVEC   = 0x305; // where to jump on trap
     static constexpr uint64_t CSR_MEPC    = 0x341; // where to jump on exception
     static constexpr uint64_t CSR_CYCLE   = 0xC00;
-    
+
+    static constexpr uint64_t CSR_SLEEP = 0x7A5; // sleep for x cycles
 private:
 
     /**
