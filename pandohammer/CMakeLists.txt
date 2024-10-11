@@ -7,6 +7,7 @@ if (DEFINED ARCH_RV64)
     pandohammer/staticdecl.h
     pandohammer/stringify.h
     pandohammer/hartsleep.h
+    pandohammer/register.h
     )
 
   set(PANDOHAMMER_SOURCES

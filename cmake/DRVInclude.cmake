@@ -97,6 +97,13 @@ function (drvx_target_link_libraries)
   endif()
 endfunction()
 
+# target compile options for a drvx target
+function (drvx_target_compile_options)
+  if (NOT DEFINED ARCH_RV64)
+    target_compile_options(${ARGV})
+  endif()
+endfunction()
+
 # creates a drv run target
 # ${run_target} should be the name of the target to create
 # ${executable} should be a target created with drv(x|r)_add_executable
@@ -266,6 +273,19 @@ endfunction()
 function (drvr_target_link_options target)
   if ( DEFINED ARCH_RV64 )
     target_link_options(${target} ${ARGN})
+  endif()
+endfunction()
+
+# create a drvr disassembly target
+function (drvr_add_disassemble_target dis_target executable)
+  if (NOT DEFINED ARCH_RV64)
+    set(objdump ${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-objdump)
+    set(objdump_flags -D)
+    add_custom_target(${dis_target}
+      COMMAND ${objdump} ${objdump_flags} $<TARGET_FILE:${executable}> | tee $<TARGET_FILE:${executable}>.dis
+      DEPENDS ${executable}
+      VERBATIM
+      )
   endif()
 endfunction()
 

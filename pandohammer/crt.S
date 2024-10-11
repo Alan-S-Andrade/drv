@@ -10,7 +10,7 @@
 */
 // Copyright (c) 2023 University of Washington
 #include "newlib.h"
-
+#include "pandohammer/register.h"
 #=========================================================================
 # crt0.S : Entry point for RISC-V user programs
 #=========================================================================
@@ -27,6 +27,13 @@ _start:
   li      a0, 0xFFFFFFFFFFFF0008
   li      a1, 0x15eedeadface5
   sw      a1, 0(a0)
+  # Skip if not thread 0
+  csrr a0, mhartid
+  csrr a1, MCSR_MCOREID
+  csrr a2, MCSR_MPODID
+  or   a0, a0, a1
+  or   a0, a0, a2
+  bnez a0, _1f
   # Clear the bss segment
   la      a0, _edata
   la      a2, _end
@@ -48,7 +55,7 @@ _start:
 .Lweak_atexit:
 #endif
   call    __libc_init_array       # Run global initialization functions
-
+_1f:
   lw      a0, 0(sp)                  # a0 = argc
   addi    a1, sp, __SIZEOF_POINTER__ # a1 = argv
   li      a2, 0                      # a2 = envp = NULL
