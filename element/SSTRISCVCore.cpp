@@ -158,6 +158,17 @@ DrvAPI::DrvAPIAddressInfo RISCVCore::decodeAddress(uint64_t addr) const {
     return address_decoder_.decode(addr);
 }
 
+DrvAPI::DrvAPIAddress RISCVCore::l1spBase() const {
+    DrvAPI::DrvAPIAddressInfo info;
+    info.set_absolute(true)
+        .set_core(core_)
+        .set_pod(pod_)
+        .set_pxn(pxn_)
+        .set_l1sp()
+        .set_offset(0);
+    return address_decoder_.encode(info);
+}
+
 /* load program segment */
 void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
     using Write = Interfaces::StandardMem::Write;

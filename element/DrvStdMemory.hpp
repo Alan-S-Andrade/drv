@@ -88,6 +88,11 @@ public:
         SST::Drv::DrvMemory
     )
 
+    // memory mapped region
+    SST_ELI_DOCUMENT_PARAMS(
+        {"memory_region_start", "start of memory mapped region", "0"},
+        {"memory_region_size",  "size of memory mapped region", "4192"},
+    )
     // register subcomponent slots
     SST_ELI_DOCUMENT_SUBCOMPONENT_SLOTS(
         {"memory", "Memory component", "SST::Interfaces::StandardMem"}

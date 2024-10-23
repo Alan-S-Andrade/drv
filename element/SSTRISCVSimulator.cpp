@@ -412,6 +412,9 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
     case CSR_MPXNDRAMSIZE: // read-only
         rval = core_->sys().pxnDRAMSize();
         break;
+    case CSR_L1SPBASE: // read-only
+        rval = core_->l1spBase();
+        break;
     case CSR_SLEEP: // write-only
         core_->putHartToSleep(shart, wval);
         break;

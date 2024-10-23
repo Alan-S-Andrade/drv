@@ -6,3 +6,4 @@ install/
 deps/
 tests/__pycache__/
 *.csv
+__pycache__/

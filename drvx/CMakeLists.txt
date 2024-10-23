@@ -114,11 +114,14 @@ if (NOT DEFINED ARCH_RV64)
   drvx_test(gups) # more of a microbenchmark than a test
   drvx_test(gups_multi_node) # more of a microbenchmark than a test
 
-  math(EXPR gups_table_size "1 << 21")
+  math(EXPR gups_table_size "1 << 26")
   math(EXPR gups_thread_updates "1<<10")
   drvx_set_run_target_properties(
     drvx-run-gups
     PROPERTIES
+    DRV_MODEL_POD_CORES 2
+    DRV_MODEL_PXN_PODS 1
+    DRV_MODEL_OPTIONS "--pod-l2sp-banks=1 --pxn-dram-banks=4"
     DRV_APPLICATION_ARGV "${gups_table_size} ${gups_thread_updates}"
     )
   drvx_set_run_target_properties(
@@ -129,6 +132,14 @@ if (NOT DEFINED ARCH_RV64)
     )
   drvx_test(stream)
 
+  drvx_test(stride)
+  drvx_set_run_target_properties(
+    drvx-run-stride
+    PROPERTIES
+    DRV_MODEL_POD_CORES 1
+    DRV_MODEL_CORE_THREADS 1
+    DRV_APPLICATION_ARGV "1000 64"
+    )
 
   add_custom_target(drvx-run-all
     DEPENDS "${DRVX_TESTS}"

@@ -467,6 +467,28 @@ class AddressRangeBuilder(object):
         """
         return (self._address_map.encode(start_info), self._address_map.encode(stop_info), self._interleave_size, self._interleave_step)
 
+class CoreCtrlAddressBuilder(AddressRangeBuilder):
+    def __init__(self, address_map, memsize):
+        """
+        @brief constructor
+        @param address_map: the address map
+        @param memsize: the size of the memory
+        """
+        super().__init__(address_map, memsize)
+
+    def __call__(self, pxn, pod, core):
+        """
+        @brief build an address range for a core control memory
+        @param pxn: the pxn
+        @param pod: the pod
+        @param core: the core
+        @return (first byte, last byte)
+        """
+        start_info, stop_info = self.interleaved_address_range(0)
+        start_info.set_core_ctrl().set_pxn(pxn).set_pod(pod).set_core(core)
+        stop_info.set_core_ctrl().set_pxn(pxn).set_pod(pod).set_core(core)
+        return self.call_outputs(start_info, stop_info)
+
 class L1SPAddressBuilder(AddressRangeBuilder):
     def __init__(self, address_map, memsize):
         """

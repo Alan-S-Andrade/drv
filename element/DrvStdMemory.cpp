@@ -97,7 +97,9 @@ DrvStdMemory::DrvStdMemory(SST::ComponentId_t id, SST::Params& params, DrvCore *
              core->getClockTC(),
              new SST::Interfaces::StandardMem::Handler<DrvStdMemory>(this, &DrvStdMemory::handleEvent));        
     }
-    DrvAPI::DrvAPIAddress mmio_start = core_->decoder().this_cores_absolute_ctrl_base();
+    DrvAPI::DrvAPIAddress mmio_start = params.find<DrvAPI::DrvAPIAddress>("memory_region_start", 0);
+    DrvAPI::DrvAPIAddress mmio_size  = params.find<DrvAPI::DrvAPIAddress>("memory_region_size", 0x1000);
+    output_.verbose(CALL_INFO, 0, 10, "Setting memory-mapped region to start at 0x%" PRIx64 " and size 0x%" PRIx64 "\n", mmio_start, mmio_size);
     mem_->setMemoryMappedAddressRegion(mmio_start, 0x1000);
 }
 
