@@ -27,6 +27,22 @@ _start:
   li      a0, 0xFFFFFFFFFFFF0008
   li      a1, 0x15eedeadface5
   sw      a1, 0(a0)
+#if 1
+  # set the stack pointer
+  csrr a0, mhartid
+  addi a0, a0, 1
+  csrr a1, MCSR_MCOREHARTS
+  csrr a2, MCSR_L1SPBASE
+  csrr sp, MCSR_MCOREL1SPSIZE
+  srli sp, sp, 3
+  divu sp, sp, a1
+  slli sp, sp, 3
+  mul  sp, sp, a0
+  add  sp, sp, a2
+  addi sp, sp, -8
+  li a0, 0xFFFFFFFFFFFF0008
+  sw sp, 0(a0)
+#endif
   # Skip if not thread 0
   csrr a0, mhartid
   csrr a1, MCSR_MCOREID
@@ -48,7 +64,6 @@ _start:
   beqz    a0, .Lweak_atexit
   .weak   __libc_fini_array
 #endif
-
   la      a0, __libc_fini_array   # Register global termination functions
   call    atexit                  #  to be called upon exit
 #ifdef _LITE_EXIT

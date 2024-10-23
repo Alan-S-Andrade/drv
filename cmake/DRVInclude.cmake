@@ -104,6 +104,13 @@ function (drvx_target_compile_options)
   endif()
 endfunction()
 
+# target compile options for a drvx target
+function (drvx_target_compile_options)
+  if (NOT DEFINED ARCH_RV64)
+    target_compile_options(${ARGV})
+  endif()
+endfunction()
+
 # creates a drv run target
 # ${run_target} should be the name of the target to create
 # ${executable} should be a target created with drv(x|r)_add_executable
@@ -141,7 +148,7 @@ function (drv_add_run_target run_target executable cpexecutable)
       COMMAND
       mkdir -p $<TARGET_PROPERTY:${run_target},SST_RUN_DIR> &&
       cd $<TARGET_PROPERTY:${run_target},SST_RUN_DIR> &&
-      PYTHONPATH=${DRV_SOURCE_DIR}/py:${DRV_SOURCE_DIR}/tests
+      PYTHONPATH=${DRV_SOURCE_DIR}/py::${DRV_SOURCE_DIR}/model
       $<TARGET_FILE:SST::SST> # the simulator
       $<TARGET_PROPERTY:${run_target},SST_SIM_OPTIONS> # options for the simulator
       $<TARGET_PROPERTY:${run_target},DRV_MODEL> # the model to simulate
@@ -189,7 +196,7 @@ function (drvx_add_run_target_with_command_processor run_target executable cpexe
     set_target_properties(
       ${run_target}
       PROPERTIES
-      DRV_MODEL ${DRV_SOURCE_DIR}/tests/PANDOHammerDrvX.py 
+      DRV_MODEL ${DRV_SOURCE_DIR}/model/drvx.py
       )
   endif()
 endfunction()
@@ -213,7 +220,7 @@ function (drvr_add_run_target_with_command_processor run_target rvexecutable cpe
     set_target_properties(
       ${run_target}
       PROPERTIES
-      DRV_MODEL ${DRV_SOURCE_DIR}/tests/PANDOHammerDrvR.py
+      DRV_MODEL ${DRV_SOURCE_DIR}/model/drvr.py
       )
     add_dependencies(${run_target} ${rvexecutable})
   endif()
@@ -273,6 +280,19 @@ endfunction()
 function (drvr_target_link_options target)
   if ( DEFINED ARCH_RV64 )
     target_link_options(${target} ${ARGN})
+  endif()
+endfunction()
+
+# create a drvr disassembly target
+function (drvr_add_disassemble_target dis_target executable)
+  if (NOT DEFINED ARCH_RV64)
+    set(objdump ${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-objdump)
+    set(objdump_flags -D)
+    add_custom_target(${dis_target}
+      COMMAND ${objdump} ${objdump_flags} $<TARGET_FILE:${executable}> | tee $<TARGET_FILE:${executable}>.dis
+      DEPENDS ${executable}
+      VERBATIM
+      )
   endif()
 endfunction()
 

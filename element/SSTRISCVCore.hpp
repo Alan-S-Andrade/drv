@@ -371,6 +371,12 @@ public:
      */
     DrvAPI::DrvAPIAddressInfo decodeAddress(uint64_t addr) const;
 
+
+    /**
+     * get the top of this l1sp's address
+     */
+    DrvAPI::DrvAPIAddress l1spBase() const;
+
     /**
      * is local l1sp for purpose of stats
      */

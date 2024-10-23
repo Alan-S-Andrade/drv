@@ -128,6 +128,7 @@ private:
     static constexpr uint64_t CSR_CYCLE   = 0xC00;
 
     static constexpr uint64_t CSR_SLEEP = 0x7A5; // sleep for x cycles
+    static constexpr uint64_t CSR_L1SPBASE = 0x7A6; // get the absolute top of this cores L1 scratchpad
 private:
 
     /**

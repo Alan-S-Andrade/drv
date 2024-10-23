@@ -97,8 +97,9 @@ drvr_test_with_pandohammer(gups gups.cpp)
 drvr_test_compile_options(gups -DTHREAD_UPDATES=4 -DTABLE_SIZE=${gups_table_size})
 drvr_test_build_properties(gups
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 2
-  DRV_BUILD_POD_CORES 2
+  DRV_BUILD_CORE_THREADS 1
+  DRV_BUILD_POD_CORES 1
+  DRV_MODEL_OPTIONS --pxn-dram-banks=8
   )
 
 
@@ -136,7 +137,11 @@ drvr_test_with_pandohammer(print_int print_int.c)
 
 # puts
 drvr_test_with_pandohammer(puts puts.c)
-
+drvr_set_build_target_properties(drvr_puts
+  PROPERTIES
+  DRV_BUILD_POD_CORES 2
+  DRV_BUILD_CORE_THREADS 1
+  )
 # read
 drvr_test_with_pandohammer(read read.c)
 drvr_test_inputs(read read.txt)

@@ -1,7 +1,9 @@
 #ifndef PANDOHAMMER_REGISTER_H
 #define PANDOHAMMER_REGISTER_H
 
-#define MCSR_SLEEP 0x7A5
+#define MCSR_SLEEP     0x7A5
+#define MCSR_L1SPBASE  0x7A6
+
 #define MCSR_MCOREID    0xF15
 #define MCSR_MPODID     0xF16
 #define MCSR_MPXNID     0xF17
