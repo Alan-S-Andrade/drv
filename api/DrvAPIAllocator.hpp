@@ -36,6 +36,11 @@ void DrvAPIMemoryFree(const DrvAPIPointer<void> &ptr, size_t size);
 void DrvAPIMemoryAllocatorInit();
 
 /**
+ * @brief Initialize the allocator for a memory type
+ */
+void DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType type);
+
+/**
  * @brief allocate specific type
  * @tparam the type
  * @param the memory type

@@ -84,6 +84,24 @@ public:
     uint64_t & resetPC() { return _reset_pc; }
     uint64_t   resetPC() const { return _reset_pc; }
 
+    /**
+     * @brief xScoreboard
+     */
+    template <typename IdxT>
+    bool & xScoreboard(IdxT idx) { return _x_scoreboard[idx]; }
+    template <typename IdxT>
+    bool   xScoreboard(IdxT idx) const { return _x_scoreboard[idx]; }
+
+    /**
+     * @brief fScoreboard
+     */
+    template <typename IdxT>
+    bool & fScoreboard(IdxT idx) { return _f_scoreboard[idx]; }
+    template <typename IdxT>
+    bool   fScoreboard(IdxT idx) const { return _f_scoreboard[idx]; }
+
+    bool _x_scoreboard [32] = {false};
+    bool _f_scoreboard [32] = {false};
     bool _stalled_sleep = false;
     bool _stalled_memory = false;
     bool _reset = false;

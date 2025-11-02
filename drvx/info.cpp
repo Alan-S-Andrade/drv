@@ -9,12 +9,17 @@ int SimpleMain(int argc, char *argv[]) {
     printf("my pxn: %2d/%2d, "
            "my pod: %2d/%2d, "
            "my core: %2d/%2d, "
+           "my core x: %2d/%2d, "
+           "my core y: %2d/%2d, "
            "my thread: %2d/%2d \n"
            ,DrvAPI::myPXNId(), DrvAPI::numPXNs()
            ,DrvAPI::myPodId(), DrvAPI::numPXNPods()
            ,DrvAPI::myCoreId(),DrvAPI::numPodCores()
+           ,DrvAPI::myCoreX(), DrvAPI::numPodCoresX()
+           ,DrvAPI::myCoreY(), DrvAPI::numPodCoresY()
            ,DrvAPI::myThreadId(), DrvAPI::numCoreThreads()
            );
+#if 0
     if (DrvAPI::myPXNId() == 0
         && DrvAPI::myPodId() == 0
         && DrvAPI::myCoreId() == 0
@@ -23,6 +28,7 @@ int SimpleMain(int argc, char *argv[]) {
         printf("pod l2sp size  = %" PRIu64 " bytes\n", DrvAPI::podL2SPSize());
         printf("pxn dram size  = %" PRIu64 " bytes\n", DrvAPI::pxnDRAMSize());
     }
+#endif
     return 0;
 }
 

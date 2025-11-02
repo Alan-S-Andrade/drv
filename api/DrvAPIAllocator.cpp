@@ -946,15 +946,22 @@ dram_static<global_memory> dram_memory; // one of these per pxn
 /////////
 // API //
 /////////
-void DrvAPIMemoryAllocatorInit() {
-    if (!isCommandProcessor()) {
-        // 1. init l1sp
-        l1sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
-        // 2. init l2sp
-        l2sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+void DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType type) {
+    if (isCommandProcessor()) {
+        if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP) {
+            l1sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
+        } else if (type == DrvAPIMemoryType::DrvAPIMemoryL2SP) {
+            l2sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+        }
+    } else if (type == DrvAPIMemoryType::DrvAPIMemoryDRAM) {
+        dram_memory.init(DrvAPIMemoryType::DrvAPIMemoryDRAM);
     }
-    // 3. init dram
-    dram_memory.init(DrvAPIMemoryType::DrvAPIMemoryDRAM);
+}
+
+void DrvAPIMemoryAllocatorInit() {
+    DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType::DrvAPIMemoryL1SP);
+    DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType::DrvAPIMemoryL2SP);
+    DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType::DrvAPIMemoryDRAM);
 }
 
 DrvAPIPointer<void> DrvAPIMemoryAlloc(DrvAPIMemoryType type, size_t size) {

@@ -8,13 +8,15 @@
 #include "RISCVInterpreter.hpp"
 #include <cstdint>
 
-#define DEFINSTR(mnemonic, value_under_mask, mask...)                   \
+#define DEFINSTR(mnemonic, value_under_mask, mask, uses,...)            \
     class mnemonic##Instruction : public RISCVInstruction {             \
     public:                                                             \
     static constexpr uint32_t VALUE = value_under_mask;                 \
     static constexpr uint32_t MASK = mask;                              \
     static constexpr RISCVInstructionId ID = mnemonic ## InstructionId; \
-    mnemonic##Instruction(uint32_t instruction): RISCVInstruction(instruction) {} \
+    mnemonic##Instruction(uint32_t instruction): RISCVInstruction(instruction) { \
+        uses_ = uses;                                                   \
+    }                                                                   \
     void accept(RISCVHart &hart, RISCVInterpreter &interpreter) override { \
         interpreter.visit ## mnemonic(hart, *this);                     \
     }                                                                   \

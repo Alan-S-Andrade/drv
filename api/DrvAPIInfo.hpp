@@ -85,6 +85,14 @@ inline int numPodCores() {
     return DrvAPISysConfig::Get()->numPodCores();
 }
 
+inline int numPodCoresX() {
+    return DrvAPISysConfig::Get()->numPodCoresX();
+}
+
+inline int numPodCoresY() {
+    return DrvAPISysConfig::Get()->numPodCoresY();
+}
+
 inline int numCoreThreads() {
     return DrvAPISysConfig::Get()->numCoreThreads();
 }
@@ -115,6 +123,48 @@ inline uint64_t pxnDRAMSize() {
  */
 inline int numPXNDRAMPorts() {
     return DrvAPISysConfig::Get()->pxnDRAMPortCount();
+}
+
+/**
+ * number of banks in the dram cache array
+ */
+inline int numPXNDRAMCacheBanks() {
+    return DrvAPISysConfig::Get()->pxnDRAMCacheBankCount();
+}
+
+/**
+ * number of sets in the dram cache
+ */
+inline int numPXNDRAMCacheSets() {
+    return DrvAPISysConfig::Get()->pxnDRAMCacheSets();
+}
+
+/**
+ * number of ways in the dram cache
+ */
+inline int numPXNDRAMCacheWays() {
+    return DrvAPISysConfig::Get()->pxnDRAMCacheWays();
+}
+
+/**
+ * size of a cache line in the dram cache
+ */
+inline int numPXNDRAMCacheLineSize() {
+    return DrvAPISysConfig::Get()->pxnDRAMCacheLineSize();
+}
+
+/**
+ * number of cache lines in a dram cache bank
+ */
+inline int numPXNDRAMCacheLines() {
+    return numPXNDRAMCacheSets() * numPXNDRAMCacheWays();
+}
+
+/**
+ * return true if the dram has a cache
+ */
+inline int pxnDRAMHasCache() {
+    return numPXNDRAMCacheBanks() > 0;
 }
 
 /**

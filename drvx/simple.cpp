@@ -3,6 +3,7 @@
 
 #include <DrvAPI.hpp>
 #include <cstdio>
+static auto _drvapi_ref = DrvAPIGetCurrentContext();
 
 int SimpleMain(int argc, char *argv[]) {
     printf("Simple hello world\n");

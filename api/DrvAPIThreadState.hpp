@@ -72,8 +72,33 @@ public:
   DrvAPIAddress getAddress() const { return address_; }
 
 protected:
-  bool can_resume_;
+  bool can_resume_ = false;
   DrvAPIAddress address_;
+};
+
+
+/**
+ * @brief flush cache line thread state
+ */
+class DrvAPIFlushLine : public DrvAPIMem
+{
+public:
+    DrvAPIFlushLine(DrvAPIAddress address, DrvAPIAddress line) : DrvAPIMem(address), line_(line) {}
+    DrvAPIAddress getLine() const { return line_; }
+    void setLine(DrvAPIAddress line) { line_ = line; }
+    DrvAPIAddress line_ = 0;    
+};
+
+/**
+ * @brief invalidate cache line thread state
+ */
+class DrvAPIInvLine : public DrvAPIMem
+{
+public:
+    DrvAPIInvLine(DrvAPIAddress address, DrvAPIAddress line) : DrvAPIMem(address), line_(line) {}
+    DrvAPIAddress getLine() const { return line_; }
+    void setLine(DrvAPIAddress line) { line_ = line; }
+    DrvAPIAddress line_ = 0;    
 };
 
 /**

@@ -13,7 +13,7 @@ class RISCVInterpreter
 public:
     RISCVInterpreter(){}        
     
-    void visit(RISCVHart &hart, RISCVInstruction &instruction) {
+    virtual void visit(RISCVHart &hart, RISCVInstruction &instruction) {
         instruction.accept(hart, *this);
     }
 

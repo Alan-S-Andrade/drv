@@ -14,6 +14,16 @@ define_property(TARGET PROPERTY DRV_MODEL_OPTIONS
   FULL_DOCS "Parameters to pass to the model"
   )
 
+define_property(TARGET PROPERTY DRV_MODEL_OPTION0
+  BRIEF_DOCS "Parameters to pass to the model"
+  FULL_DOCS "Parameters to pass to the model"
+  )
+
+define_property(TARGET PROPERTY DRV_MODEL_OPTION1
+  BRIEF_DOCS "Parameters to pass to the model"
+  FULL_DOCS "Parameters to pass to the model"
+  )
+
 define_property(TARGET PROPERTY DRV_MODEL_NUM_PXN
   BRIEF_DOCS "Number of PXNs"
   FULL_DOCS "Number of PXNs"
@@ -24,7 +34,12 @@ define_property(TARGET PROPERTY DRV_MODEL_PXN_PODS
   FULL_DOCS "Number of pods per PXN"
   )
 
-define_property(TARGET PROPERTY DRV_MODEL_POD_CORES
+define_property(TARGET PROPERTY DRV_MODEL_POD_CORES_Y
+  BRIEF_DOCS "Number of cores per pod"
+  FULL_DOCS "Number of cores per pod"
+  )
+
+define_property(TARGET PROPERTY DRV_MODEL_POD_CORES_X
   BRIEF_DOCS "Number of cores per pod"
   FULL_DOCS "Number of cores per pod"
   )
@@ -44,7 +59,12 @@ define_property(TARGET PROPERTY DRV_BUILD_PXN_PODS
   FULL_DOCS "Number of pods per PXN (used for building)"
   )
 
-define_property(TARGET PROPERTY DRV_BUILD_POD_CORES
+define_property(TARGET PROPERTY DRV_BUILD_POD_CORES_X
+  BRIEF_DOCS "Number of cores per pod (used for building)"
+  FULL_DOCS "Number of cores per pod (used for building)"
+  )
+
+define_property(TARGET PROPERTY DRV_BUILD_POD_CORES_Y
   BRIEF_DOCS "Number of cores per pod (used for building)"
   FULL_DOCS "Number of cores per pod (used for building)"
   )
@@ -62,6 +82,11 @@ define_property(TARGET PROPERTY DRV_APPLICATION_ARGV
 define_property(TARGET PROPERTY SST_SIM_OPTIONS
   BRIEF_DOCS "Parameters to pass to the simulator"
   FULL_DOCS "Parameters to pass to the simulator"
+  )
+
+define_property(TARGET PROPERTY SST_SIM_THREADS
+  BRIEF_DOCS "Number of threads to use in the simulator"
+  FULL_DOCS "Number of threads to use in the simulator"
   )
 
 define_property(TARGET PROPERTY SST_RUN_DIR
@@ -111,6 +136,19 @@ function (drvx_target_compile_options)
   endif()
 endfunction()
 
+# target compile options for a drvx target
+function (drvx_target_compile_options)
+  if (NOT DEFINED ARCH_RV64)
+    target_compile_options(${ARGV})
+  endif()
+endfunction()
+
+function (drvx_target_include_directories)
+  if (NOT DEFINED ARCH_RV64)
+    target_include_directories(${ARGV})
+  endif()
+endfunction()
+
 # creates a drv run target
 # ${run_target} should be the name of the target to create
 # ${executable} should be a target created with drv(x|r)_add_executable
@@ -133,16 +171,26 @@ function (drv_add_run_target run_target executable cpexecutable)
     set(BUILD_PXN_PODS "$<TARGET_PROPERTY:${run_target},DRV_BUILD_PXN_PODS>")
     set(MODEL_PXN_PODS "$<IF:${BUILD_PXN_PODS_SET},${BUILD_PXN_PODS},$<TARGET_PROPERTY:${run_target},DRV_MODEL_PXN_PODS>>")
 
-    set(BUILD_POD_CORES "$<TARGET_PROPERTY:${executable},DRV_BUILD_POD_CORES>")
-    set(BUILD_POD_CORES_SET "$<BOOL:${BUILD_POD_CORES}>")
-    set(MODEL_POD_CORES "$<IF:${BUILD_POD_CORES_SET},${BUILD_POD_CORES},$<TARGET_PROPERTY:${run_target},DRV_MODEL_POD_CORES>>")
-    #set(MODEL_POD_CORES "$<IF:${BUILD_POD_CORES_SET},${BUILD_POD_CORES},${BUILD_POD_CORES}>")
-    #set(MODEL_POD_CORES "$<IF:${BUILD_POD_CORES_SET},yes,no>")
+    set(BUILD_POD_CORES_X "$<TARGET_PROPERTY:${executable},DRV_BUILD_POD_CORES_X>")
+    set(BUILD_POD_CORES_X_SET "$<BOOL:${BUILD_POD_CORES_X}>")
+    set(MODEL_POD_CORES_X "$<IF:${BUILD_POD_CORES_X_SET},${BUILD_POD_CORES_X},$<TARGET_PROPERTY:${run_target},DRV_MODEL_POD_CORES_X>>")
+
+    set(BUILD_POD_CORES_Y "$<TARGET_PROPERTY:${executable},DRV_BUILD_POD_CORES_Y>")
+    set(BUILD_POD_CORES_Y_SET "$<BOOL:${BUILD_POD_CORES_Y}>")
+    set(MODEL_POD_CORES_Y "$<IF:${BUILD_POD_CORES_Y_SET},${BUILD_POD_CORES_Y},$<TARGET_PROPERTY:${run_target},DRV_MODEL_POD_CORES_Y>>")
 
     set(BUILD_CORE_THREADS "$<TARGET_PROPERTY:${executable},DRV_BUILD_CORE_THREADS>")
     set(BUILD_CORE_THREADS_SET "$<BOOL:${BUILD_CORE_THREADS}>")
     set(MODEL_CORE_THREADS "$<IF:${BUILD_CORE_THREADS_SET},${BUILD_CORE_THREADS},$<TARGET_PROPERTY:${run_target},DRV_MODEL_CORE_THREADS>>")
 
+    set(MODEL_OPTIONS "$<TARGET_PROPERTY:${run_target},DRV_MODEL_OPTIONS>")
+    set(MODEL_OPTION0 "$<TARGET_PROPERTY:${run_target},DRV_MODEL_OPTION0>")
+    set(MODEL_OPTION1 "$<TARGET_PROPERTY:${run_target},DRV_MODEL_OPTION1>")
+
+    set(SIM_THREADS "-n $<TARGET_PROPERTY:${run_target},SST_SIM_THREADS>")
+    set(SIM_OPTIONS "$<TARGET_PROPERTY:${run_target},SST_SIM_OPTIONS>")
+    set(SIM_ALL_SIM_OPTIONS "${SIM_THREADS} ${SIM_OPTIONS}")
+    set(APP_ARGV "$<TARGET_GENEX_EVAL:${run_target},$<TARGET_PROPERTY:${run_target},DRV_APPLICATION_ARGV>>")
     add_custom_target(
       ${run_target}
       COMMAND
@@ -150,18 +198,21 @@ function (drv_add_run_target run_target executable cpexecutable)
       cd $<TARGET_PROPERTY:${run_target},SST_RUN_DIR> &&
       PYTHONPATH=${DRV_SOURCE_DIR}/py::${DRV_SOURCE_DIR}/model
       $<TARGET_FILE:SST::SST> # the simulator
-      $<TARGET_PROPERTY:${run_target},SST_SIM_OPTIONS> # options for the simulator
+      ${SIM_ALL_SIM_OPTIONS} # options for the simulator
       $<TARGET_PROPERTY:${run_target},DRV_MODEL> # the model to simulate
       --
       ${CP_OPT} # the command processor
-      $<TARGET_PROPERTY:${run_target},DRV_MODEL_OPTIONS> # options for the model
+      ${MODEL_OPTIONS} # options for the model
+      ${MODEL_OPTION0}
+      ${MODEL_OPTION1}
       --num-pxn=${MODEL_NUM_PXN}
       --pxn-pods=${MODEL_PXN_PODS}
-      --pod-cores=${MODEL_POD_CORES}
+      --pod-cores-x=${MODEL_POD_CORES_X}
+      --pod-cores-y=${MODEL_POD_CORES_Y}
       --core-threads=${MODEL_CORE_THREADS}
       $<TARGET_FILE:${executable}> # the application to run
-      $<TARGET_PROPERTY:${run_target},DRV_APPLICATION_ARGV> # arguments for the application
-      2>&1 | tee $<TARGET_PROPERTY:${run_target},SST_RUN_DIR>/log.txt # log the output
+      ${APP_ARGV} # the arguments to the application
+      | tee $<TARGET_PROPERTY:${run_target},SST_RUN_DIR>/output.txt
       DEPENDS ${executable} Drv
       )
     set_target_properties(
@@ -174,8 +225,10 @@ function (drv_add_run_target run_target executable cpexecutable)
       PROPERTIES
       DRV_MODEL_NUM_PXN 1
       DRV_MODEL_PXN_PODS 1
-      DRV_MODEL_POD_CORES 1
+      DRV_MODEL_POD_CORES_X 1
+      DRV_MODEL_POD_CORES_Y 1      
       DRV_MODEL_CORE_THREADS 1
+      SST_SIM_THREADS 1
       )
     add_dependencies(
       ${run_target}
@@ -196,7 +249,7 @@ function (drvx_add_run_target_with_command_processor run_target executable cpexe
     set_target_properties(
       ${run_target}
       PROPERTIES
-      DRV_MODEL ${DRV_SOURCE_DIR}/model/drvx.py
+      DRV_MODEL ${DRV_SOURCE_DIR}/model/hammerblade-x.py
       )
   endif()
 endfunction()
@@ -220,7 +273,7 @@ function (drvr_add_run_target_with_command_processor run_target rvexecutable cpe
     set_target_properties(
       ${run_target}
       PROPERTIES
-      DRV_MODEL ${DRV_SOURCE_DIR}/model/drvr.py
+      DRV_MODEL ${DRV_SOURCE_DIR}/model/hammerblade-r.py
       )
     add_dependencies(${run_target} ${rvexecutable})
   endif()
@@ -269,11 +322,23 @@ function (drvr_target_compile_options target)
   endif()
 endfunction()
 
+function (drv_run_target_dependencies target)
+  if (NOT DEFINED ARCH_RV64)
+    add_dependencies(${target} ${ARGN})
+  endif()
+endfunction()
+
 function (drvr_target_link_libraries target)
   if ( DEFINED ARCH_RV64 )
     target_link_libraries(${target} ${ARGN})
   else()
     add_dependencies(${target} ${ARGN})
+  endif()
+endfunction()
+
+function (drvr_target_include_directories target)
+  if ( DEFINED ARCH_RV64 )
+    target_include_directories(${target} ${ARGN})
   endif()
 endfunction()
 
@@ -287,20 +352,7 @@ endfunction()
 function (drvr_add_disassemble_target dis_target executable)
   if (NOT DEFINED ARCH_RV64)
     set(objdump ${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-objdump)
-    set(objdump_flags -D)
-    add_custom_target(${dis_target}
-      COMMAND ${objdump} ${objdump_flags} $<TARGET_FILE:${executable}> | tee $<TARGET_FILE:${executable}>.dis
-      DEPENDS ${executable}
-      VERBATIM
-      )
-  endif()
-endfunction()
-
-# create a drvr disassembly target
-function (drvr_add_disassemble_target dis_target executable)
-  if (NOT DEFINED ARCH_RV64)
-    set(objdump ${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-objdump)
-    set(objdump_flags -D)
+    set(objdump_flags -dx)
     add_custom_target(${dis_target}
       COMMAND ${objdump} ${objdump_flags} $<TARGET_FILE:${executable}> | tee $<TARGET_FILE:${executable}>.dis
       DEPENDS ${executable}
@@ -322,7 +374,8 @@ function (drvr_add_executable name)
       PROPERTIES
       IMPORTED_LOCATION ${PROJECT_RV64_BINARY_DIR}/${path}/${name}
       DRV_BUILD_CORE_THREADS 1
-      DRV_BUILD_POD_CORES 1
+      DRV_BUILD_POD_CORES_X 1
+      DRV_BUILD_POD_CORES_Y 1
       DRV_BUILD_PXN_PODS 1
       DRV_BUILD_NUM_PXN 1
       )
@@ -335,7 +388,8 @@ function (drvr_add_executable name)
       mkdir -p ${include_dir} &&
       python3 ${DRV_SOURCE_DIR}/py/addressmap.py
       --core-threads $<TARGET_PROPERTY:${name},DRV_BUILD_CORE_THREADS>
-      --pod-cores $<TARGET_PROPERTY:${name},DRV_BUILD_POD_CORES>
+      --pod-cores-x $<TARGET_PROPERTY:${name},DRV_BUILD_POD_CORES_X>
+      --pod-cores-y $<TARGET_PROPERTY:${name},DRV_BUILD_POD_CORES_Y>
       --pxn-pods $<TARGET_PROPERTY:${name},DRV_BUILD_PXN_PODS>
       --num-pxn $<TARGET_PROPERTY:${name},DRV_BUILD_NUM_PXN>
       cheader > ${include_dir}/address_map.h
@@ -344,7 +398,8 @@ function (drvr_add_executable name)
     set_target_properties(${name}
       PROPERTIES
       DRV_BUILD_CORE_THREADS 1
-      DRV_BUILD_POD_CORES 1
+      DRV_BUILD_POD_CORES_X 1
+      DRV_BUILD_POD_CORES_Y 1
       DRV_BUILD_PXN_PODS 1
       DRV_BUILD_NUM_PXN 1
       )

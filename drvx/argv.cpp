@@ -2,6 +2,8 @@
 // Copyright (c) 2023 University of Washington
 
 #include <DrvAPI.hpp>
+static auto _drvapi_ref = DrvAPIGetCurrentContext();
+
 #include <cstdio>
 
 int ArgvMain(int argc, char *argv[])
