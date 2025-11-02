@@ -1,0 +1,8 @@
+digraph "drvr_simple" {
+node [
+  fontsize = "12"
+];
+    "node51" [ label = "drvr_simple", shape = egg ];
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node51" -> "node28"  // drvr_simple -> pandohammer
+}

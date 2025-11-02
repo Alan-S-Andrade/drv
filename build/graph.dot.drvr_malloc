@@ -1,0 +1,8 @@
+digraph "drvr_malloc" {
+node [
+  fontsize = "12"
+];
+    "node42" [ label = "drvr_malloc", shape = egg ];
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node42" -> "node28"  // drvr_malloc -> pandohammer
+}

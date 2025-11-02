@@ -1,0 +1,8 @@
+digraph "Boost::context" {
+node [
+  fontsize = "12"
+];
+    "node9" [ label = "Boost::context", shape = doubleoctagon ];
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node9" -> "node5" [ style = dashed ] // Boost::context -> Boost::headers
+}

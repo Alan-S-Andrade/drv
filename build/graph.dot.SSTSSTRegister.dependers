@@ -1,0 +1,8 @@
+digraph "SST::SSTRegister" {
+node [
+  fontsize = "12"
+];
+    "node2" [ label = "SST::SSTRegister", shape = egg ];
+    "node0" [ label = "Drv", shape = tripleoctagon ];
+    "node0" -> "node2"  // Drv -> SST::SSTRegister
+}

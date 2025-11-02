@@ -1,0 +1,10 @@
+digraph "drvr-example" {
+node [
+  fontsize = "12"
+];
+    "node76" [ label = "drvr-example", shape = egg ];
+    "node77" [ label = "PRIVATE", shape = septagon ];
+    "node76" -> "node77"  // drvr-example -> PRIVATE
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node76" -> "node28"  // drvr-example -> pandohammer
+}

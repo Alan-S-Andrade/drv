@@ -3,8 +3,8 @@
 
 #include <DrvAPI.hpp>
 
-DrvAPI::DrvAPIGlobalL2SP<int64_t> signal_var;
-DrvAPI::DrvAPIGlobalL2SP<int64_t> barrier_var;
+DrvAPI::DrvAPIGlobalDRAM<int64_t> signal_var;
+DrvAPI::DrvAPIGlobalDRAM<int64_t> barrier_var;
 
 int AmoaddMain(int argc, char *argv[])
 {

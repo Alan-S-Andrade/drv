@@ -93,12 +93,15 @@ void execute_on(uint32_t pxn, uint32_t pod, uint32_t core, task* t) {
 /* every thread on every core in the system will call this function */
 int Start(int argc, char *argv[])
 {
-    DrvAPIMemoryAllocatorInit();
+    DrvAPIMemoryAllocatorInitType(DrvAPIMemoryL1SP);
+    DrvAPIMemoryAllocatorInitType(DrvAPIMemoryDRAM);
 
     if (isCommandProcessor()) {
         // wait for all cores to be ready
-        while (*num_cores_ready_pointer() != num_cores()) {
+        int64_t x;
+        while ((x = *num_cores_ready_pointer()) != num_cores()) {
             nop(1000);
+            //printf("CP: %ld/%ld cores ready\n", x, num_cores());
         }
         // only the command processor will run the main function
         pandoMain(argc, argv);

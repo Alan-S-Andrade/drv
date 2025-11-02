@@ -1,0 +1,8 @@
+digraph "Boost::atomic" {
+node [
+  fontsize = "12"
+];
+    "node7" [ label = "Boost::atomic", shape = doubleoctagon ];
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node7" -> "node5" [ style = dashed ] // Boost::atomic -> Boost::headers
+}

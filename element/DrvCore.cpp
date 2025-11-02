@@ -5,6 +5,7 @@
 #include <DrvAPIAllocator.hpp>
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIAddressMap.hpp>
+#include <DrvAPIThread.hpp>
 #include "DrvCore.hpp"
 #include "DrvSimpleMemory.hpp"
 #include "DrvSelfLinkMemory.hpp"

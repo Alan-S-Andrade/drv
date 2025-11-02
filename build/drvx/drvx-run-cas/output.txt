@@ -1,0 +1,14 @@
+
+        Core Clock: 1500000000.0 Hz
+        Pod Size: 1x1
+        L1SP Size: 4096
+        DRAM Clock: 1000000000.0 Hz
+        DRAM Size: 2147483648
+        $-Assoc: 2
+        $-Size:  32768 B
+        
+$ 
+C 
+$ 
+
+w = 42 ,c = 71, i = 0

@@ -1,0 +1,56 @@
+digraph "pandohammer" {
+node [
+  fontsize = "12"
+];
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node27" [ label = "drvr_addressmap", shape = egg ];
+    "node27" -> "node28"  // drvr_addressmap -> pandohammer
+    "node29" [ label = "drvr_amoswap", shape = egg ];
+    "node29" -> "node28"  // drvr_amoswap -> pandohammer
+    "node30" [ label = "drvr_cycle", shape = egg ];
+    "node30" -> "node28"  // drvr_cycle -> pandohammer
+    "node32" [ label = "drvr_fence", shape = egg ];
+    "node32" -> "node28"  // drvr_fence -> pandohammer
+    "node33" [ label = "drvr_fib", shape = egg ];
+    "node33" -> "node28"  // drvr_fib -> pandohammer
+    "node36" [ label = "drvr_fma-multith", shape = egg ];
+    "node36" -> "node28"  // drvr_fma-multith -> pandohammer
+    "node37" [ label = "drvr_fread", shape = egg ];
+    "node37" -> "node28"  // drvr_fread -> pandohammer
+    "node38" [ label = "drvr_fscanf", shape = egg ];
+    "node38" -> "node28"  // drvr_fscanf -> pandohammer
+    "node39" [ label = "drvr_fstat", shape = egg ];
+    "node39" -> "node28"  // drvr_fstat -> pandohammer
+    "node40" [ label = "drvr_gups", shape = egg ];
+    "node40" -> "node28"  // drvr_gups -> pandohammer
+    "node42" [ label = "drvr_malloc", shape = egg ];
+    "node42" -> "node28"  // drvr_malloc -> pandohammer
+    "node43" [ label = "drvr_multihart", shape = egg ];
+    "node43" -> "node28"  // drvr_multihart -> pandohammer
+    "node44" [ label = "drvr_ph_hello", shape = egg ];
+    "node44" -> "node28"  // drvr_ph_hello -> pandohammer
+    "node45" [ label = "drvr_poke", shape = egg ];
+    "node45" -> "node28"  // drvr_poke -> pandohammer
+    "node46" [ label = "drvr_print_int", shape = egg ];
+    "node46" -> "node28"  // drvr_print_int -> pandohammer
+    "node47" [ label = "drvr_printf", shape = egg ];
+    "node47" -> "node28"  // drvr_printf -> pandohammer
+    "node48" [ label = "drvr_puts", shape = egg ];
+    "node48" -> "node28"  // drvr_puts -> pandohammer
+    "node49" [ label = "drvr_read", shape = egg ];
+    "node49" -> "node28"  // drvr_read -> pandohammer
+    "node51" [ label = "drvr_simple", shape = egg ];
+    "node51" -> "node28"  // drvr_simple -> pandohammer
+    "node52" [ label = "drvr_snprintf", shape = egg ];
+    "node52" -> "node28"  // drvr_snprintf -> pandohammer
+    "node53" [ label = "drvr_vread", shape = egg ];
+    "node53" -> "node28"  // drvr_vread -> pandohammer
+    "node54" [ label = "drvr_wait-with-sleep", shape = egg ];
+    "node54" -> "node28"  // drvr_wait-with-sleep -> pandohammer
+    "node55" [ label = "drvr_wait-without-sleep", shape = egg ];
+    "node55" -> "node28"  // drvr_wait-without-sleep -> pandohammer
+    "node56" [ label = "drvr_write", shape = egg ];
+    "node56" -> "node28"  // drvr_write -> pandohammer
+    "node76" [ label = "drvr-example", shape = egg ];
+    "node76" -> "node28"  // drvr-example -> pandohammer
+}

@@ -4,7 +4,7 @@
 #include <pandohammer/atomic.h>
 #include <pandohammer/cpuinfo.h>
 #include <pandohammer/mmio.h>
-
+#include <pandohammer/hartsleep.h>
 #define NOBODY (-1)
 #define ME                                                      \
     (myThreadId() + myCoreId()*myCoreThreads())
@@ -62,7 +62,14 @@ __retarget_lock_acquire_recursive (_LOCK_T lock)
     if (lock->owner == ME) {
         return;
     }
-    while (atomic_compare_and_swap_i64(&lock->owner, NOBODY, ME) != NOBODY);
+    long w = 1;
+    long wmax = 8*1024;
+    while (atomic_compare_and_swap_i64(&lock->owner, NOBODY, ME) != NOBODY) {
+        if (w < wmax) {
+            w <<= 1;
+        }
+        hartsleep(w);
+    }
 }
 
 int
