@@ -1,0 +1,180 @@
+digraph "drv" {
+node [
+  fontsize = "12"
+];
+subgraph clusterLegend {
+  label = "Legend";
+  color = black;
+  edge [ style = invis ];
+  legendNode0 [ label = "Executable", shape = egg ];
+  legendNode1 [ label = "Static Library", shape = octagon ];
+  legendNode2 [ label = "Shared Library", shape = doubleoctagon ];
+  legendNode3 [ label = "Module Library", shape = tripleoctagon ];
+  legendNode4 [ label = "Interface Library", shape = pentagon ];
+  legendNode5 [ label = "Object Library", shape = hexagon ];
+  legendNode6 [ label = "Unknown Library", shape = septagon ];
+  legendNode7 [ label = "Custom Target", shape = box ];
+  legendNode0 -> legendNode1 [ style = solid ];
+  legendNode0 -> legendNode2 [ style = solid ];
+  legendNode0 -> legendNode3;
+  legendNode1 -> legendNode4 [ label = "Interface", style = dashed ];
+  legendNode2 -> legendNode5 [ label = "Private", style = dotted ];
+  legendNode3 -> legendNode6 [ style = solid ];
+  legendNode0 -> legendNode7;
+}
+    "node0" [ label = "Drv", shape = tripleoctagon ];
+    "node1" [ label = "SST::SSTCore", shape = pentagon ];
+    "node0" -> "node1"  // Drv -> SST::SSTCore
+    "node2" [ label = "SST::SSTRegister", shape = egg ];
+    "node0" -> "node2"  // Drv -> SST::SSTRegister
+    "node3" [ label = "drvapi", shape = doubleoctagon ];
+    "node4" [ label = "Boost::boost", shape = pentagon ];
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node4" -> "node5" [ style = dashed ] // Boost::boost -> Boost::headers
+    "node3" -> "node4"  // drvapi -> Boost::boost
+    "node6" [ label = "Boost::coroutine", shape = doubleoctagon ];
+    "node7" [ label = "Boost::atomic", shape = doubleoctagon ];
+    "node7" -> "node5" [ style = dashed ] // Boost::atomic -> Boost::headers
+    "node6" -> "node7" [ style = dashed ] // Boost::coroutine -> Boost::atomic
+    "node8" [ label = "Boost::chrono", shape = doubleoctagon ];
+    "node8" -> "node5" [ style = dashed ] // Boost::chrono -> Boost::headers
+    "node6" -> "node8" [ style = dashed ] // Boost::coroutine -> Boost::chrono
+    "node9" [ label = "Boost::context", shape = doubleoctagon ];
+    "node9" -> "node5" [ style = dashed ] // Boost::context -> Boost::headers
+    "node6" -> "node9" [ style = dashed ] // Boost::coroutine -> Boost::context
+    "node6" -> "node5" [ style = dashed ] // Boost::coroutine -> Boost::headers
+    "node10" [ label = "Boost::thread", shape = doubleoctagon ];
+    "node10" -> "node7" [ style = dashed ] // Boost::thread -> Boost::atomic
+    "node10" -> "node5" [ style = dashed ] // Boost::thread -> Boost::headers
+    "node11" [ label = "Threads::Threads", shape = pentagon ];
+    "node10" -> "node11" [ style = dashed ] // Boost::thread -> Threads::Threads
+    "node6" -> "node10" [ style = dashed ] // Boost::coroutine -> Boost::thread
+    "node3" -> "node6"  // drvapi -> Boost::coroutine
+    "node0" -> "node3"  // Drv -> drvapi
+    "node12" [ label = "memHierarchy", shape = doubleoctagon ];
+    "node0" -> "node12"  // Drv -> memHierarchy
+    "node13" [ label = "riscvinterpreter", shape = doubleoctagon ];
+    "node0" -> "node13"  // Drv -> riscvinterpreter
+    "node14" [ label = "addrmap", shape = doubleoctagon ];
+    "node14" -> "node3" [ style = dotted ] // addrmap -> drvapi
+    "node15" [ label = "allocator", shape = doubleoctagon ];
+    "node15" -> "node3" [ style = dotted ] // allocator -> drvapi
+    "node16" [ label = "amoadd", shape = doubleoctagon ];
+    "node16" -> "node3" [ style = dotted ] // amoadd -> drvapi
+    "node17" [ label = "argv", shape = doubleoctagon ];
+    "node17" -> "node3" [ style = dotted ] // argv -> drvapi
+    "node18" [ label = "atomic_read_back", shape = doubleoctagon ];
+    "node18" -> "node3" [ style = dotted ] // atomic_read_back -> drvapi
+    "node19" [ label = "cas", shape = doubleoctagon ];
+    "node19" -> "node3" [ style = dotted ] // cas -> drvapi
+    "node20" [ label = "comm", shape = doubleoctagon ];
+    "node20" -> "node3" [ style = dotted ] // comm -> drvapi
+    "node21" [ label = "command_processor", shape = doubleoctagon ];
+    "node21" -> "node3" [ style = dotted ] // command_processor -> drvapi
+    "node22" [ label = "pandocommand", shape = doubleoctagon ];
+    "node22" -> "node3"  // pandocommand -> drvapi
+    "node21" -> "node22" [ style = dotted ] // command_processor -> pandocommand
+    "node23" [ label = "dma", shape = doubleoctagon ];
+    "node23" -> "node3" [ style = dotted ] // dma -> drvapi
+    "node24" [ label = "SST::SST", shape = egg ];
+    "node25" [ label = "drvr_add", shape = egg ];
+    "node26" [ label = "pandocommand_loader", shape = doubleoctagon ];
+    "node26" -> "node3" [ style = dotted ] // pandocommand_loader -> drvapi
+    "node26" -> "node22"  // pandocommand_loader -> pandocommand
+    "node27" [ label = "drvr_addressmap", shape = egg ];
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node27" -> "node28"  // drvr_addressmap -> pandohammer
+    "node29" [ label = "drvr_amoswap", shape = egg ];
+    "node29" -> "node28"  // drvr_amoswap -> pandohammer
+    "node30" [ label = "drvr_cycle", shape = egg ];
+    "node30" -> "node28"  // drvr_cycle -> pandohammer
+    "node31" [ label = "drvr_exit", shape = egg ];
+    "node32" [ label = "drvr_fence", shape = egg ];
+    "node32" -> "node28"  // drvr_fence -> pandohammer
+    "node33" [ label = "drvr_fib", shape = egg ];
+    "node33" -> "node28"  // drvr_fib -> pandohammer
+    "node34" [ label = "drvr_float_lsu", shape = egg ];
+    "node35" [ label = "drvr_fma", shape = egg ];
+    "node36" [ label = "drvr_fma-multith", shape = egg ];
+    "node36" -> "node28"  // drvr_fma-multith -> pandohammer
+    "node37" [ label = "drvr_fread", shape = egg ];
+    "node37" -> "node28"  // drvr_fread -> pandohammer
+    "node38" [ label = "drvr_fscanf", shape = egg ];
+    "node38" -> "node28"  // drvr_fscanf -> pandohammer
+    "node39" [ label = "drvr_fstat", shape = egg ];
+    "node39" -> "node28"  // drvr_fstat -> pandohammer
+    "node40" [ label = "drvr_gups", shape = egg ];
+    "node40" -> "node28"  // drvr_gups -> pandohammer
+    "node41" [ label = "drvr_lsu", shape = egg ];
+    "node42" [ label = "drvr_malloc", shape = egg ];
+    "node42" -> "node28"  // drvr_malloc -> pandohammer
+    "node43" [ label = "drvr_multihart", shape = egg ];
+    "node43" -> "node28"  // drvr_multihart -> pandohammer
+    "node44" [ label = "drvr_ph_hello", shape = egg ];
+    "node44" -> "node28"  // drvr_ph_hello -> pandohammer
+    "node45" [ label = "drvr_poke", shape = egg ];
+    "node45" -> "node28"  // drvr_poke -> pandohammer
+    "node46" [ label = "drvr_print_int", shape = egg ];
+    "node46" -> "node28"  // drvr_print_int -> pandohammer
+    "node47" [ label = "drvr_printf", shape = egg ];
+    "node47" -> "node28"  // drvr_printf -> pandohammer
+    "node48" [ label = "drvr_puts", shape = egg ];
+    "node48" -> "node28"  // drvr_puts -> pandohammer
+    "node49" [ label = "drvr_read", shape = egg ];
+    "node49" -> "node28"  // drvr_read -> pandohammer
+    "node50" [ label = "drvr_shift", shape = egg ];
+    "node51" [ label = "drvr_simple", shape = egg ];
+    "node51" -> "node28"  // drvr_simple -> pandohammer
+    "node52" [ label = "drvr_snprintf", shape = egg ];
+    "node52" -> "node28"  // drvr_snprintf -> pandohammer
+    "node53" [ label = "drvr_vread", shape = egg ];
+    "node53" -> "node28"  // drvr_vread -> pandohammer
+    "node54" [ label = "drvr_wait-with-sleep", shape = egg ];
+    "node54" -> "node28"  // drvr_wait-with-sleep -> pandohammer
+    "node55" [ label = "drvr_wait-without-sleep", shape = egg ];
+    "node55" -> "node28"  // drvr_wait-without-sleep -> pandohammer
+    "node56" [ label = "drvr_write", shape = egg ];
+    "node56" -> "node28"  // drvr_write -> pandohammer
+    "node57" [ label = "drvx-example", shape = doubleoctagon ];
+    "node57" -> "node3" [ style = dotted ] // drvx-example -> drvapi
+    "node58" [ label = "fence", shape = doubleoctagon ];
+    "node58" -> "node3" [ style = dotted ] // fence -> drvapi
+    "node59" [ label = "flushinv", shape = doubleoctagon ];
+    "node59" -> "node3" [ style = dotted ] // flushinv -> drvapi
+    "node60" [ label = "globals", shape = doubleoctagon ];
+    "node60" -> "node3" [ style = dotted ] // globals -> drvapi
+    "node61" [ label = "gups", shape = doubleoctagon ];
+    "node61" -> "node3" [ style = dotted ] // gups -> drvapi
+    "node62" [ label = "gups_multi_node", shape = doubleoctagon ];
+    "node62" -> "node3" [ style = dotted ] // gups_multi_node -> drvapi
+    "node63" [ label = "info", shape = doubleoctagon ];
+    "node63" -> "node3" [ style = dotted ] // info -> drvapi
+    "node64" [ label = "lock", shape = doubleoctagon ];
+    "node64" -> "node3" [ style = dotted ] // lock -> drvapi
+    "node65" [ label = "mem", shape = doubleoctagon ];
+    "node65" -> "node3" [ style = dotted ] // mem -> drvapi
+    "node66" [ label = "multicore", shape = doubleoctagon ];
+    "node66" -> "node3" [ style = dotted ] // multicore -> drvapi
+    "node67" [ label = "multicoreamoadd", shape = doubleoctagon ];
+    "node67" -> "node3" [ style = dotted ] // multicoreamoadd -> drvapi
+    "node68" [ label = "nop", shape = doubleoctagon ];
+    "node68" -> "node3" [ style = dotted ] // nop -> drvapi
+    "node69" [ label = "pointer", shape = doubleoctagon ];
+    "node69" -> "node3" [ style = dotted ] // pointer -> drvapi
+    "node70" [ label = "simple", shape = doubleoctagon ];
+    "node70" -> "node3" [ style = dotted ] // simple -> drvapi
+    "node71" [ label = "stream", shape = doubleoctagon ];
+    "node71" -> "node3" [ style = dotted ] // stream -> drvapi
+    "node72" [ label = "stride", shape = doubleoctagon ];
+    "node72" -> "node3" [ style = dotted ] // stride -> drvapi
+    "node73" [ label = "super_simple_task_runtime", shape = doubleoctagon ];
+    "node73" -> "node3" [ style = dotted ] // super_simple_task_runtime -> drvapi
+    "node74" [ label = "to_address", shape = doubleoctagon ];
+    "node74" -> "node3" [ style = dotted ] // to_address -> drvapi
+    "node75" [ label = "to_native", shape = doubleoctagon ];
+    "node75" -> "node3" [ style = dotted ] // to_native -> drvapi
+    "node76" [ label = "drvr-example", shape = egg ];
+    "node77" [ label = "PRIVATE", shape = septagon ];
+    "node76" -> "node77"  // drvr-example -> PRIVATE
+    "node76" -> "node28"  // drvr-example -> pandohammer
+}

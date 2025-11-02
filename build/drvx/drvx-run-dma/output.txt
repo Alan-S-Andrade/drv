@@ -1,0 +1,38 @@
+
+        Core Clock: 1500000000.0 Hz
+        Pod Size: 1x1
+        L1SP Size: 4096
+        DRAM Clock: 1000000000.0 Hz
+        DRAM Size: 2147483648
+        $-Assoc: 2
+        $-Size:  32768 B
+        
+$ 
+C 
+$ 
+
+DMA (native => simulation) writing 0 from native 0x5625f4ac2548 to simulation 0
+DMA (native => simulation) writing 8 from native 0x5625f4ac2548 to simulation 8
+DMA (native => simulation) writing 40 from native 0x5625f4ac2548 to simulation 40
+DMA (native => simulation) writing 78 from native 0x5625f4ac2548 to simulation 78
+DMA (native => simulation) writing 80 from native 0x5625f4ac2548 to simulation 80
+DMA (native => simulation) writing 100 from native 0x5625f4ac2548 to simulation 100
+DMA (native => simulation) writing 40000000 from native 0x5625f4ac2548 to simulation 40000000
+DMA (native => simulation) writing 40000008 from native 0x5625f4ac2548 to simulation 40000008
+DMA (native => simulation) writing 40000040 from native 0x5625f4ac2548 to simulation 40000040
+DMA (native => simulation) writing 40000078 from native 0x5625f4ac2548 to simulation 40000078
+DMA (native => simulation) writing 40000080 from native 0x5625f4ac2548 to simulation 40000080
+DMA (native => simulation) writing 40000100 from native 0x5625f4ac2548 to simulation 40000100
+DMA (simulation => native) writing ffffffffffffffff from simulation 0 to native 0x5625f4ac2548
+DMA (simulation => native) writing fffffffffffffff7 from simulation 8 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffffffffbf from simulation 40 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffffffff87 from simulation 78 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffffffff7f from simulation 80 to native 0x5625f4ac2548
+DMA (simulation => native) writing fffffffffffffeff from simulation 100 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffbfffffff from simulation 40000000 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffbffffff7 from simulation 40000008 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffbfffffbf from simulation 40000040 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffbfffff87 from simulation 40000078 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffbfffff7f from simulation 40000080 to native 0x5625f4ac2548
+DMA (simulation => native) writing ffffffffbffffeff from simulation 40000100 to native 0x5625f4ac2548
+Simulation is complete, simulated time: 111.015 us

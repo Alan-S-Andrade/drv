@@ -1,0 +1,22 @@
+
+        Core Clock: 1500000000.0 Hz
+        Pod Size: 1x1
+        L1SP Size: 4096
+        DRAM Clock: 1000000000.0 Hz
+        DRAM Size: 2147483648
+        $-Assoc: 2
+        $-Size:  32768 B
+        
+$ 
+C 
+$ 
+
+Core    0: Thread    0: int PointerMain(int, char**)
+Core    0: Thread    0:  DRAM_BASE    = 0x0000000040000000
+Core    0: Thread    0: &DRAM_BASE[4] = 0x0000000040000020
+Core    0: Thread    0:  DRAM_BASE[0] = 0x0000000000000055
+Core    0: Thread    0: bref.obaz() = 7
+Core    0: Thread    0: bref.obar() = 3.141590
+Core    0: Thread    0: bref.sum()  = 10.141590
+Core    0: Thread    0: voidptr = 0x0000000020000000
+Simulation is complete, simulated time: 47.357 ns

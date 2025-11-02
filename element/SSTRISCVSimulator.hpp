@@ -30,6 +30,8 @@ public:
      */
     virtual ~RISCVSimulator() {}
 
+    void visit(RISCVHart &hart, RISCVInstruction &instruction) override;
+
     // load/stores
     void visitLB(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitLH(RISCVHart &hart, RISCVInstruction &instruction) override;
@@ -72,6 +74,12 @@ private:
     void visitAMOADDW_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitAMOADDW_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitAMOADDW_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
+
+    void visitAMOORW(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOORW_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOORW_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOORW_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
     
     void visitAMOSWAPD(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitAMOSWAPD_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
@@ -82,6 +90,11 @@ private:
     void visitAMOADDD_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitAMOADDD_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
     void visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+
+    void visitAMOORD(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOORD_RL(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOORD_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
+    void visitAMOORD_RL_AQ(RISCVHart &hart, RISCVInstruction &instruction) override;
 
     template <typename T>
     void visitAMOCAS(RISCVHart &hart, RISCVInstruction &i);
@@ -113,12 +126,13 @@ private:
     static constexpr uint64_t CSR_MPODID  = 0xF16;
     static constexpr uint64_t CSR_MPXNID  = 0xF17;
     static constexpr uint64_t CSR_MCOREHARTS = 0xF18;
-    static constexpr uint64_t CSR_MPODCORES  = 0xF19;
+    static constexpr uint64_t CSR_MPODCORESX = 0xF19;
     static constexpr uint64_t CSR_MPXNPODS   = 0xF1A;
     static constexpr uint64_t CSR_MNUMPXN    = 0xF1B;
     static constexpr uint64_t CSR_MCOREL1SPSIZE = 0xF1C;
     static constexpr uint64_t CSR_MPODL2SPSIZE  = 0xF1D;
     static constexpr uint64_t CSR_MPXNDRAMSIZE  = 0xF1E;
+    static constexpr uint64_t CSR_MPODCORESY = 0xF1F;
     static constexpr uint64_t CSR_MSTATUS = 0x300;
     
     static constexpr uint64_t CSR_FRM     = 0x002;

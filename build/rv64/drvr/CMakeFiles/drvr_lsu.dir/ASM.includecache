@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/users/alanandr/lib/drv/drvr/lsu.S
+machine/syscall.h
+/users/alanandr/lib/drv/drvr/machine/syscall.h
+

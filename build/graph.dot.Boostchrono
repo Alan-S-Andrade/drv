@@ -1,0 +1,8 @@
+digraph "Boost::chrono" {
+node [
+  fontsize = "12"
+];
+    "node8" [ label = "Boost::chrono", shape = doubleoctagon ];
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node8" -> "node5" [ style = dashed ] // Boost::chrono -> Boost::headers
+}

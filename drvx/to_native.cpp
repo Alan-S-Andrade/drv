@@ -35,26 +35,32 @@ int ToNativeMain(int argc, char *argv[])
     using namespace DrvAPI;
 
     std::vector<DrvAPIAddress> test_addresses = {
+#define L1SP
+#define DRAM
+#ifdef  L1SP
         myRelativeL1SPBase(),
         myRelativeL1SPBase() + 8,
         myRelativeL1SPBase() + 64,
         myRelativeL1SPBase() + 120,
         myRelativeL1SPBase() + 128,
         myRelativeL1SPBase() + 256,
-
+#endif
+#ifdef  L2SP
         myRelativeL2SPBase(),
         myRelativeL2SPBase() + 8,
         myRelativeL2SPBase() + 64,
         myRelativeL2SPBase() + 120,
         myRelativeL2SPBase() + 128,
         myRelativeL2SPBase() + 256,
-
+#endif
+#ifdef  DRAM
         myRelativeDRAMBase(),
         myRelativeDRAMBase() + 8,
         myRelativeDRAMBase() + 64,
         myRelativeDRAMBase() + 120,
         myRelativeDRAMBase() + 128,
         myRelativeDRAMBase() + 256,
+#endif
     };
 
     for (auto simaddr : test_addresses) {
@@ -66,23 +72,38 @@ int ToNativeMain(int argc, char *argv[])
         DrvAPIAddressToNative(addr, &addr_native, &size);
         pr_info("Translated to native pointer %p: size = %zu\n", addr_native, size);
 
-        DrvAPIPointer<uint64_t> as_sim_pointer = addr;
+        DrvAPIPointer<uint64_t> as_sim_pointer = toAbsoluteAddress(addr);
         auto *as_native_pointer = reinterpret_cast<uint64_t*>(addr_native);
         uint64_t wvalue = toAbsoluteAddress(addr);
-
         uint64_t rvalue = 0;
+#define DMA_WRITE
+#ifdef  DMA_READ
         pr_info("Writing %010" PRIx64 " to Simulator Address %" PRIx64"\n"
                 ,wvalue
                 ,(uint64_t)as_sim_pointer
                 );
 
         *as_sim_pointer = wvalue;
+        pxn_flush_cache(myPXNId());        
         rvalue = *as_native_pointer;
         pr_info("Reading %010" PRIx64 " from Native Address %p\n"
                 ,rvalue
                 ,as_native_pointer
                 );
-
+#else // DMA_WRITE
+        pxn_flush_cache(myPXNId());
+        pr_info("Writing %010" PRIx64 " to Native Address %p\n"
+                ,wvalue
+                ,as_native_pointer
+                );
+        *as_native_pointer = wvalue;
+        pxn_invalidate_cache(myPXNId());
+        rvalue = *as_sim_pointer;
+        pr_info("Reading %010" PRIx64 " from Simulator Address %" PRIx64"\n"
+                ,rvalue
+                ,(uint64_t)as_sim_pointer
+                );
+#endif
         if (rvalue != wvalue) {
             pr_error("MISMATCH: Wrote %16" PRIx64 ": Read %16" PRIx64 "\n"
                     ,wvalue

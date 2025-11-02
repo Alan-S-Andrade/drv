@@ -18,6 +18,6 @@
 #include <DrvAPIAddressMap.hpp>
 #include <DrvAPIAddressToNative.hpp>
 #include <DrvAPINativeToAddress.hpp>
-#include <DrvAPISection.hpp>
 #include <DrvAPISystem.hpp>
+#include <DrvAPIDMA.hpp>
 #endif

@@ -71,13 +71,72 @@ static inline int numPXN()
 }
 
 /**
+ * number of core columns in a pod
+ */
+static inline int numPodCoresX()
+{
+    int64_t cores;
+    asm volatile ("csrr %0, " __stringify(MCSR_MPODCORESX) : "=r"(cores));
+    return (int)cores;
+}
+
+/**
+ * number of core rows in a pod
+ */
+static inline int numPodCoresY()
+{
+    int64_t cores;
+    asm volatile ("csrr %0, " __stringify(MCSR_MPODCORESY) : "=r"(cores));
+    return (int)cores;
+}
+
+/**
  * number of cores in a pod
  */
 static inline int numPodCores()
 {
-    int64_t cores;
-    asm volatile ("csrr %0, " __stringify(MCSR_MPODCORES) : "=r"(cores));
-    return (int)cores;
+    return numPodCoresX() * numPodCoresY();
+}
+
+
+/**
+ * get the id from the x and y coordinates
+ */
+static inline int coreIdFromXY(int x, int y)
+{
+    return x + y*numPodCoresX();
+}
+
+/**
+ * get the x coordinate from the core id
+ */
+static inline int coreXFromId(int id)
+{
+    return id % numPodCoresX();
+}
+
+/**
+ * get the y coordinate from the core id
+ */
+static inline int coreYFromId(int id)
+{
+    return id / numPodCoresX();
+}
+
+/**
+ * get the x coordinate from the core id
+ */
+static inline int myCoreX()
+{
+   return coreXFromId(myCoreId());
+}
+
+/**
+ * get the y coordinate from the core id
+ */
+static inline int myCoreY()
+{
+    return coreYFromId(myCoreId());
 }
 
 /**

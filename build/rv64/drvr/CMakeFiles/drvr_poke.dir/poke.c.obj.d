@@ -1,0 +1,22 @@
+drvr/CMakeFiles/drvr_poke.dir/poke.c.obj: \
+ /users/alanandr/lib/drv/drvr/poke.c \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/math.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/reent.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_newlib_version.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/config.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/ieeefp.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/features.h \
+ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include/stddef.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_types.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_types.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_default_types.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/lock.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/cdefs.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
+ /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
+ /users/alanandr/lib/drv/pandohammer/pandohammer/mmio.h

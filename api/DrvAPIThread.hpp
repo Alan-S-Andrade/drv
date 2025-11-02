@@ -8,6 +8,7 @@
 #include <DrvAPISysConfig.hpp>
 #include <DrvAPISystem.hpp>
 #include <DrvAPIAddressMap.hpp>
+#include <DrvAPIBits.hpp>
 #include <boost/coroutine2/all.hpp>
 #include <memory>
 namespace DrvAPI

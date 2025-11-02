@@ -1,0 +1,14 @@
+digraph "Boost::thread" {
+node [
+  fontsize = "12"
+];
+    "node10" [ label = "Boost::thread", shape = doubleoctagon ];
+    "node7" [ label = "Boost::atomic", shape = doubleoctagon ];
+    "node10" -> "node7" [ style = dashed ] // Boost::thread -> Boost::atomic
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node7" -> "node5" [ style = dashed ] // Boost::atomic -> Boost::headers
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node10" -> "node5" [ style = dashed ] // Boost::thread -> Boost::headers
+    "node11" [ label = "Threads::Threads", shape = pentagon ];
+    "node10" -> "node11" [ style = dashed ] // Boost::thread -> Threads::Threads
+}

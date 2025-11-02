@@ -15,7 +15,8 @@ struct DrvAPISysConfigData
 {
     int64_t num_pxn_; //!< number of PXNs in the system
     int64_t pxn_pods_; //!< number of pods per PXN
-    int64_t pod_cores_; //!< number of cores per pod
+    int64_t pod_cores_x_; //!< number of core columns per pod
+    int64_t pod_cores_y_; //!< number of core rows per pod
     int64_t core_threads_; //!< number of threads per core
     int16_t nw_flit_dwords_; //!< number of dwords in a flit
     int16_t nw_obuf_dwords_; //!< number of dwords in an output buffer
@@ -24,6 +25,10 @@ struct DrvAPISysConfigData
     uint64_t pxn_dram_size_; //!< size of the PXN DRAM
     int32_t  pxn_dram_ports_; //!< number of banks in the PXN DRAM
     uint32_t  pxn_dram_interleave_size_; //!< size of the address interleave in the PXN DRAM
+    int32_t  pxn_dram_cache_sets_; //!< number of sets in the PXN DRAM cache array (0 if no cache)
+    int32_t  pxn_dram_cache_ways_; //!< number of ways in the PXN DRAM cache array (0 if no cache)
+    int32_t  pxn_dram_cache_line_size_; //!< size of the cache line in the PXN DRAM cache array (0 if no cache)
+    int32_t  pxn_dram_cache_banks_; //!< number of banks in the PXN DRAM cache array (0 if no cache)
     int32_t  pod_l2sp_banks_; //!< number of banks in the PXN L2 scratchpad
     uint32_t  pod_l2sp_interleave_size_; //!< size of the address interleave in the PXN L2 scratchpad
 };
@@ -46,7 +51,9 @@ public:
     
     int64_t numPXN() const { return data_.num_pxn_; }
     int64_t numPXNPods() const { return data_.pxn_pods_; }
-    int64_t numPodCores() const { return data_.pod_cores_; }
+    int64_t numPodCores() const { return numPodCoresX() * numPodCoresY(); }
+    int64_t numPodCoresX() const { return data_.pod_cores_x_; }
+    int64_t numPodCoresY() const { return data_.pod_cores_y_; }
     int64_t numCoreThreads() const { return data_.core_threads_; }
     int16_t numNWFlitDwords() const { return data_.nw_flit_dwords_; }
     int16_t numNWObufDwords() const { return data_.nw_obuf_dwords_; }
@@ -54,6 +61,10 @@ public:
     uint64_t podL2SPSize() const { return data_.pod_l2sp_size_; }
     uint64_t pxnDRAMSize() const { return data_.pxn_dram_size_; }
     int32_t pxnDRAMPortCount() const { return data_.pxn_dram_ports_; }
+    int32_t pxnDRAMCacheBankCount() const { return data_.pxn_dram_cache_banks_; }
+    int32_t pxnDRAMCacheSets() const { return data_.pxn_dram_cache_sets_; }
+    int32_t pxnDRAMCacheWays() const { return data_.pxn_dram_cache_ways_; }
+    int32_t pxnDRAMCacheLineSize() const { return data_.pxn_dram_cache_line_size_; }
     uint32_t pxnDRAMInterleaveSize() const { return data_.pxn_dram_interleave_size_; }
     int32_t podL2SPBankCount() const { return data_.pod_l2sp_banks_; }
     uint32_t podL2SPInterleaveSize() const { return data_.pod_l2sp_interleave_size_; }

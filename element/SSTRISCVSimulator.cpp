@@ -19,6 +19,12 @@ namespace SST {
 namespace Drv {
 using namespace SST::Interfaces;
 
+void RISCVSimulator::visit(RISCVHart &hart, RISCVInstruction &instruction) {
+    RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
+    // check the scoreboard
+    RISCVInterpreter::visit(hart, instruction);
+}
+
 bool RISCVSimulator::isMMIO(SST::Interfaces::StandardMem::Addr addr) {
     return (addr >= MMIO_BASE) && (addr < MMIO_BASE + MMIO_SIZE);
 }
@@ -301,6 +307,22 @@ void RISCVSimulator::visitAMOADDW_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicADD);
 }
 
+void RISCVSimulator::visitAMOORW(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
+void RISCVSimulator::visitAMOORW_RL(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
+void RISCVSimulator::visitAMOORW_AQ(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
+void RISCVSimulator::visitAMOORW_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
 void RISCVSimulator::visitAMOSWAPD(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicSWAP);
 }
@@ -331,6 +353,22 @@ void RISCVSimulator::visitAMOADDD_AQ(RISCVHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::visitAMOADDD_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicADD);
+}
+
+void RISCVSimulator::visitAMOORD(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
+void RISCVSimulator::visitAMOORD_RL(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
+void RISCVSimulator::visitAMOORD_AQ(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
+}
+
+void RISCVSimulator::visitAMOORD_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
+    visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicOR);
 }
 
 void RISCVSimulator::visitAMOCASW(RISCVHart &hart, RISCVInstruction &instruction) {
@@ -394,8 +432,11 @@ uint64_t RISCVSimulator::visitCSRRWUnderMask(RISCVHart &hart, uint64_t csr, uint
     case CSR_MCOREHARTS: // read-only
         rval = core_->numHarts();
         break;
-    case CSR_MPODCORES: // read-only
-        rval = core_->sys().numPodCores();
+    case CSR_MPODCORESX: // read-only
+        rval = core_->sys().numPodCoresX();
+        break;
+    case CSR_MPODCORESY: // read-only
+        rval = core_->sys().numPodCoresY();
         break;
     case CSR_MPXNPODS: // read-only
         rval = core_->sys().numPXNPods();

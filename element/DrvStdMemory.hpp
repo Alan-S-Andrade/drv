@@ -125,6 +125,24 @@ public:
                      ,const std::shared_ptr<DrvAPI::DrvAPIMem> &mem_req);
 
     /**
+     * @brief Send a request to flush and invalidate cache
+     *
+     * @param core
+     * @param thread
+     * @param flush_inv
+     */
+    void sendFlushLine(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIFlushLine> &flush);
+
+    /**
+     * @brief Send a request to invalidate a cache line
+     *
+     * @param core
+     * @param thread
+     * @param inv_req
+     */
+    void sendInvalidateLine(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIInvLine> &inv_req);
+
+    /**
      * @brief init is called at the beginning of the simulation
      */
     void init(unsigned int phase);

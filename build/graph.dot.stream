@@ -1,0 +1,36 @@
+digraph "stream" {
+node [
+  fontsize = "12"
+];
+    "node71" [ label = "stream", shape = doubleoctagon ];
+    "node3" [ label = "drvapi", shape = doubleoctagon ];
+    "node71" -> "node3" [ style = dotted ] // stream -> drvapi
+    "node4" [ label = "Boost::boost", shape = pentagon ];
+    "node3" -> "node4"  // drvapi -> Boost::boost
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node4" -> "node5" [ style = dashed ] // Boost::boost -> Boost::headers
+    "node6" [ label = "Boost::coroutine", shape = doubleoctagon ];
+    "node3" -> "node6"  // drvapi -> Boost::coroutine
+    "node7" [ label = "Boost::atomic", shape = doubleoctagon ];
+    "node6" -> "node7" [ style = dashed ] // Boost::coroutine -> Boost::atomic
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node7" -> "node5" [ style = dashed ] // Boost::atomic -> Boost::headers
+    "node8" [ label = "Boost::chrono", shape = doubleoctagon ];
+    "node6" -> "node8" [ style = dashed ] // Boost::coroutine -> Boost::chrono
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node8" -> "node5" [ style = dashed ] // Boost::chrono -> Boost::headers
+    "node9" [ label = "Boost::context", shape = doubleoctagon ];
+    "node6" -> "node9" [ style = dashed ] // Boost::coroutine -> Boost::context
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node9" -> "node5" [ style = dashed ] // Boost::context -> Boost::headers
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node6" -> "node5" [ style = dashed ] // Boost::coroutine -> Boost::headers
+    "node10" [ label = "Boost::thread", shape = doubleoctagon ];
+    "node6" -> "node10" [ style = dashed ] // Boost::coroutine -> Boost::thread
+    "node7" [ label = "Boost::atomic", shape = doubleoctagon ];
+    "node10" -> "node7" [ style = dashed ] // Boost::thread -> Boost::atomic
+    "node5" [ label = "Boost::headers", shape = pentagon ];
+    "node10" -> "node5" [ style = dashed ] // Boost::thread -> Boost::headers
+    "node11" [ label = "Threads::Threads", shape = pentagon ];
+    "node10" -> "node11" [ style = dashed ] // Boost::thread -> Threads::Threads
+}

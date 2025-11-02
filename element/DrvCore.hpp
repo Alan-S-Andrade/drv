@@ -15,6 +15,8 @@
 #include "DrvAPIMain.hpp"
 #include "DrvStats.hpp"
 #include <DrvAPI.hpp>
+#include <DrvAPIThread.hpp>
+
 namespace SST {
 namespace Drv {
 /**
@@ -42,7 +44,8 @@ public:
       {"threads", "Number of threads on this core", "1"},
       {"clock", "Clock rate of core", "125MHz"},
       {"max_idle", "Max idle cycles before we unregister the clock", "1000000"},
-      {"id", "ID for the core", "0"},
+      {"core_x", "ID for the core", "0"},
+      {"core_y", "ID for the core", "0"},
       {"pod", "Pod ID of this core", "0"},
       {"pxn", "PXN ID of this core", "0"},
       {"stack_in_l1sp", "Use modeled memory backing store for stack", "0"},

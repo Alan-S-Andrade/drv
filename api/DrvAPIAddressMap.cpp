@@ -93,6 +93,16 @@ DrvAPIAddress toAbsoluteAddress(DrvAPIAddress addr) {
 }
 
 /**
+ * Converts an address that may be absolute to a relative address
+ */
+DrvAPIAddress toRelativeAddress(DrvAPIAddress addr) {
+    DrvAPIThread *thread = DrvAPIThread::current();
+    DrvAPIAddressInfo info = thread->getDecoder().decode(addr);
+    info.set_absolute(false);
+    return thread->getDecoder().encode(info);
+}
+
+/**
  * Returns the absolute address of a core's control register
  */
 DrvAPIAddress absoluteCoreCtrlBase(int64_t pxn, int64_t pod, int64_t core) {

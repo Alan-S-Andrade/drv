@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <string>
 #include <RISCVInstructionId.hpp>
+#include <RISCVRegisterIndices.h>
 class RISCVInterpreter;
 
 /**
@@ -52,7 +53,16 @@ public:
     uint32_t shamt5() const { return shamt(); }
     uint32_t shamt6() const { return (instruction_ >> 20) & 0x3F; }
     uint32_t instruction() const { return instruction_; }
+    bool uses_rs1()  const { return uses_ & _RS1_; }
+    bool uses_rs2()  const { return uses_ & _RS2_; }
+    bool uses_rs3()  const { return uses_ & _RS3_; }
+    bool uses_rd()   const { return uses_ & _RD_; }
+    bool uses_frs1() const { return uses_ & _FRS1_; }
+    bool uses_frs2() const { return uses_ & _FRS2_; }
+    bool uses_frs3() const { return uses_ & _FRS3_; }
+    bool uses_frd()  const { return uses_ & _FRD_; }
     uint32_t instruction_;
+    uint32_t uses_;
 };
 
 #endif

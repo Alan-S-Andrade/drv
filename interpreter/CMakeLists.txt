@@ -8,6 +8,7 @@ if (NOT DEFINED ARCH_RV64)
     GLOB
     RISCV_INTERPRETER_HEADERS
     *.hpp
+    *.h
     )
   list(APPEND
     RISCV_INTERPRETER_SOURCES

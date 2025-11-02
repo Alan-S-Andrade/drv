@@ -75,7 +75,7 @@ RUN apt update -y \
         wget \
         && mkdir -p /downloads \
         && cd /downloads \
-        && wget https://archives.boost.io/release/1.82.0/source/boost_1_82_0.tar.gz \
+        && wget https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.gz \
         && tar zxf boost_1_82_0.tar.gz \
         && cd /downloads/boost_1_82_0 \
         && /downloads/boost_1_82_0/bootstrap.sh \

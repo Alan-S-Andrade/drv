@@ -51,6 +51,13 @@ public:
      */
     virtual void sendRequest(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIMem> & thread_mem_req) = 0;
 
+    /**
+     * @brief Send a flush/inv request
+     */
+    virtual void sendFlushLine(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIFlushLine> & flush) {
+        output_.fatal(CALL_INFO, -1, "sendFlushLine not implemented\n");
+    }
+
 protected:
     SST::Output output_; //!< @brief The output stream for this component
     DrvCore *core_; //!< @brief The core this memory is attached to

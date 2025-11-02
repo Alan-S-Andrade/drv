@@ -1,0 +1,8 @@
+digraph "drvr_cycle" {
+node [
+  fontsize = "12"
+];
+    "node30" [ label = "drvr_cycle", shape = egg ];
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node30" -> "node28"  // drvr_cycle -> pandohammer
+}

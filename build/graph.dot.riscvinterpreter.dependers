@@ -1,0 +1,8 @@
+digraph "riscvinterpreter" {
+node [
+  fontsize = "12"
+];
+    "node13" [ label = "riscvinterpreter", shape = doubleoctagon ];
+    "node0" [ label = "Drv", shape = tripleoctagon ];
+    "node0" -> "node13"  // Drv -> riscvinterpreter
+}

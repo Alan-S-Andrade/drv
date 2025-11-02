@@ -325,8 +325,18 @@ DrvStdMemory::sendRequest(DrvCore *core
         return;
     }
 
+    auto flush_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIFlushLine>(mem_req);
+    if (flush_req) {
+        return sendFlushLine(core, thread, flush_req);
+    }
+
+    auto inv_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIInvLine>(mem_req);
+    if (inv_req) {
+        return sendInvalidateLine(core, thread, inv_req);
+    }
+    
     // fatally error if we don't know the request type
-    if (!(write_req || read_req || to_native_req || atomic_req)) {
+    if (!(write_req || read_req || to_native_req || atomic_req || inv_req || flush_req)) {
         core->output()->fatal(CALL_INFO, -1, "Unknown memory request type\n");
     }
 }
@@ -424,13 +434,54 @@ DrvStdMemory::handleEvent(SST::Interfaces::StandardMem::Request *req) {
     }
 
 
-    // must delete the request
-    delete req;
+    auto flush_rsp = dynamic_cast<StandardMem::FlushLineResp*>(req);
+    if (flush_rsp) {
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                        "Received flush response\n");
+        DrvThread *thread = core_->getThread(flush_rsp->tid);
+        auto flush_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIFlushLine>(thread->getAPIThread().getState());
+        if (flush_req) {
+            flush_req->complete();
+        } else {
+            output_.fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", flush_rsp->tid);
+        }
+    }
+
+    auto inv_rsp = dynamic_cast<StandardMem::InvLineResp*>(req);
+    if (inv_rsp) {
+        output_.verbose(CALL_INFO, 10, DrvMemory::VERBOSE_REQ,
+                        "Received inv response\n");
+        DrvThread *thread = core_->getThread(inv_rsp->tid);
+        auto inv_req = std::dynamic_pointer_cast<DrvAPI::DrvAPIInvLine>(thread->getAPIThread().getState());
+        if (inv_req) {
+            inv_req->complete();
+        } else {
+            output_.fatal(CALL_INFO, -1, "Failed to find memory request for tid=%" PRIu32 "\n", inv_rsp->tid);
+        }
+    }
 
     // fatally error if we don't know the response type
-    if (!(write_rsp || read_rsp || (custom_rsp && areq_data) || write_req)) {
-        output_.fatal(CALL_INFO, -1, "Unknown memory response type\n");
+    if (!(write_rsp || read_rsp || (custom_rsp && areq_data) || write_req || flush_rsp || inv_rsp)) {
+        output_.fatal(CALL_INFO, -1, "Unknown memory response type: %s\n", req->getString().c_str());
     }
+
+    // must delete the request
+    delete req;    
     core_->assertCoreOn();
 }
 
+void DrvStdMemory::sendFlushLine(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIFlushLine> &flush) {
+    DrvAPI::DrvAPIAddress paddr = flush->getAddress();
+    DrvAPI::DrvAPIAddressInfo info = core->decoder().decode(paddr).set_absolute(true);        
+    StandardMem::FlushLine *req = new StandardMem::FlushLine(core_->decoder().encode(info), flush->line_);
+    req->tid = core->getThreadID(thread);
+    mem_->send(req);
+}
+
+void DrvStdMemory::sendInvalidateLine(DrvCore *core, DrvThread *thread, const std::shared_ptr<DrvAPI::DrvAPIInvLine> &inv_req) {
+    DrvAPI::DrvAPIAddress paddr = inv_req->getAddress();
+    DrvAPI::DrvAPIAddressInfo info = core->decoder().decode(paddr).set_absolute(true);        
+    StandardMem::InvLine *req = new StandardMem::InvLine(core_->decoder().encode(info), inv_req->line_);
+    req->tid = core->getThreadID(thread);
+    mem_->send(req);
+}

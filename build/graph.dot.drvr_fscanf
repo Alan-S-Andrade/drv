@@ -1,0 +1,8 @@
+digraph "drvr_fscanf" {
+node [
+  fontsize = "12"
+];
+    "node38" [ label = "drvr_fscanf", shape = egg ];
+    "node28" [ label = "pandohammer", shape = septagon ];
+    "node38" -> "node28"  // drvr_fscanf -> pandohammer
+}

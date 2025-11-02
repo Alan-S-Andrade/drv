@@ -1,0 +1,19 @@
+
+        Core Clock: 1500000000.0 Hz
+        Pod Size: 1x1
+        L1SP Size: 4096
+        DRAM Clock: 1000000000.0 Hz
+        DRAM Size: 2147483648
+        $-Assoc: 2
+        $-Size:  32768 B
+        
+H 
+$ 
+C 
+$ 
+
+PXN:   0 POD:  0 CORE:   0 THREAD:  0 : 0x15eedeadface5
+PXN:   0 POD:  0 CORE:   0 THREAD:  0 : 0x8000000000000ff8
+f = 0x40803498
+w=1 x=2 y=3 z=4
+Simulation is complete, simulated time: 61.4774 us

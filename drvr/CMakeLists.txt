@@ -1,8 +1,19 @@
 set(DRVR_TESTS)
+
 function (drvr_test executable)
   set(sources ${ARGN})
   drvr_add_executable(drvr_${executable} ${sources})
   drvr_add_run_target(drvr-run-${executable} drvr_${executable})
+  drvr_set_run_target_properties(drvr-run-${executable}
+    PROPERTIES
+    DRV_MODEL ${DRV_SOURCE_DIR}/model/hammerblade-r.py
+    )
+  drvr_set_build_target_properties(drvr_${executable}
+    PROPERTIES
+    DRV_BUILD_CORE_THREADS 1
+    DRV_BUILD_POD_CORES_X 1
+    DRV_BUILD_POD_CORES_Y 1
+    )
 endfunction()
 
 function (drvr_test_with_pandohammer executable)
@@ -15,7 +26,9 @@ endfunction()
 function (drvr_test_nostdlib executable)
   set(sources ${ARGN})
   drvr_test(${executable} ${sources})
-  drvr_target_link_options(drvr_${executable} PRIVATE -nostdlib)
+  drvr_target_link_options(drvr_${executable}
+    PRIVATE -nostdlib -T${PROJECT_SOURCE_DIR}/pandohammer/bsg_link.ld
+    )
   set(DRVR_TESTS ${DRVR_TESTS} drvr-run-${executable} PARENT_SCOPE)
 endfunction()
 
@@ -128,8 +141,7 @@ drvr_test_compile_options(poke -DSTORE_ADDR=0 -DSTORE_VALUE=0)
 drvr_test_with_pandohammer(printf printf.c)
 drvr_test_build_properties(printf
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 2
-  DRV_BUILD_POD_CORES 2
+  DRV_BUILD_CORE_THREADS 1
   )
 
 # print_int

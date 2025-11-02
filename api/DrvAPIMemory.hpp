@@ -103,6 +103,34 @@ T atomic_cas(DrvAPIAddress address, T compare, T value)
 }
 
 /**
+ * @brief flush and invalidate dram cache mapped to address
+ */
+static inline void flush_cache(DrvAPIAddress cacheAddress, DrvAPIAddress line)
+{
+    DrvAPIThread::current()->setState(std::make_shared<DrvAPIFlushLine>(cacheAddress, line));
+    DrvAPIThread::current()->yield();
+}
+
+/**
+ * @brief  invalidate dram cache mapped to address
+ */
+static inline void invalidate_cache(DrvAPIAddress cacheAddress, DrvAPIAddress line)
+{
+    DrvAPIThread::current()->setState(std::make_shared<DrvAPIInvLine>(cacheAddress, line));
+    DrvAPIThread::current()->yield();
+}
+
+/**
+ * @brief flush entire dram cache on pxn
+ */
+void pxn_flush_cache(int pxn);
+
+/**
+ * @brief invalidate entire dram cache on pxn
+ */
+void pxn_invalidate_cache(int pxn);
+
+/**
  * @brief memory fence
  *
  */
