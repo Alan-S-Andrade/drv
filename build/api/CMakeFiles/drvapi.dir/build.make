@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Include any dependencies generated for this target.
 include api/CMakeFiles/drvapi.dir/depend.make
@@ -73,144 +73,144 @@ api/CMakeFiles/drvapi.dir/codegen:
 .PHONY : api/CMakeFiles/drvapi.dir/codegen
 
 api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o: /users/alanandr/lib/drv/api/DrvAPIAddressToNative.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIAddressToNative.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIAddressToNative.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIAddressToNative.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIAddressToNative.cpp > CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIAddressToNative.cpp > CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIAddressToNative.cpp -o CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIAddressToNative.cpp -o CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o: /users/alanandr/lib/drv/api/DrvAPIAddressMap.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIAddressMap.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIAddressMap.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIAddressMap.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIAddressMap.cpp > CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIAddressMap.cpp > CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIAddressMap.cpp -o CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIAddressMap.cpp -o CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o: /users/alanandr/lib/drv/api/DrvAPIAllocator.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIAllocator.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIAllocator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIAllocator.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIAllocator.cpp > CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIAllocator.cpp > CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIAllocator.cpp -o CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIAllocator.cpp -o CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o: /users/alanandr/lib/drv/api/DrvAPINativeToAddress.cpp
+api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPINativeToAddress.cpp
 api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o -c /users/alanandr/lib/drv/api/DrvAPINativeToAddress.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPINativeToAddress.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPINativeToAddress.cpp > CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPINativeToAddress.cpp > CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPINativeToAddress.cpp -o CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPINativeToAddress.cpp -o CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: /users/alanandr/lib/drv/api/DrvAPISysConfig.cpp
+api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPISysConfig.cpp
 api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o -c /users/alanandr/lib/drv/api/DrvAPISysConfig.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPISysConfig.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPISysConfig.cpp > CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPISysConfig.cpp > CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPISysConfig.cpp -o CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPISysConfig.cpp -o CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o: /users/alanandr/lib/drv/api/DrvAPIThread.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIThread.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIThread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIThread.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIThread.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIThread.cpp > CMakeFiles/drvapi.dir/DrvAPIThread.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIThread.cpp > CMakeFiles/drvapi.dir/DrvAPIThread.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIThread.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIThread.cpp -o CMakeFiles/drvapi.dir/DrvAPIThread.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIThread.cpp -o CMakeFiles/drvapi.dir/DrvAPIThread.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o: /users/alanandr/lib/drv/api/DrvAPIThreadState.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIThreadState.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIThreadState.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIThreadState.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIThreadState.cpp > CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIThreadState.cpp > CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIThreadState.cpp -o CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIThreadState.cpp -o CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o: /users/alanandr/lib/drv/api/DrvAPISection.cpp
+api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPISection.cpp
 api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPISection.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPISection.cpp.o -c /users/alanandr/lib/drv/api/DrvAPISection.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPISection.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPISection.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPISection.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPISection.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPISection.cpp > CMakeFiles/drvapi.dir/DrvAPISection.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPISection.cpp > CMakeFiles/drvapi.dir/DrvAPISection.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPISection.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPISection.cpp -o CMakeFiles/drvapi.dir/DrvAPISection.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPISection.cpp -o CMakeFiles/drvapi.dir/DrvAPISection.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o: /users/alanandr/lib/drv/api/DrvAPIMemory.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIMemory.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIMemory.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIMemory.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIMemory.cpp > CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIMemory.cpp > CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIMemory.cpp -o CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIMemory.cpp -o CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.s
 
 api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o: api/CMakeFiles/drvapi.dir/flags.make
-api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o: /users/alanandr/lib/drv/api/DrvAPIDMA.cpp
+api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o: /users/alanandr/lib/mydrv/api/DrvAPIDMA.cpp
 api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o: api/CMakeFiles/drvapi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o -c /users/alanandr/lib/drv/api/DrvAPIDMA.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o -MF CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o.d -o CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o -c /users/alanandr/lib/mydrv/api/DrvAPIDMA.cpp
 
 api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.i"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/api/DrvAPIDMA.cpp > CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.i
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/api/DrvAPIDMA.cpp > CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.i
 
 api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.s"
-	cd /users/alanandr/lib/drv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/api/DrvAPIDMA.cpp -o CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.s
+	cd /users/alanandr/lib/mydrv/build/api && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/api/DrvAPIDMA.cpp -o CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.s
 
 # Object files for target drvapi
 drvapi_OBJECTS = \
@@ -245,18 +245,18 @@ api/libdrvapi.so: /usr/lib/x86_64-linux-gnu/libboost_context.so.1.74.0
 api/libdrvapi.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.74.0
 api/libdrvapi.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.74.0
 api/libdrvapi.so: api/CMakeFiles/drvapi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX shared library libdrvapi.so"
-	cd /users/alanandr/lib/drv/build/api && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvapi.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX shared library libdrvapi.so"
+	cd /users/alanandr/lib/mydrv/build/api && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvapi.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 api/CMakeFiles/drvapi.dir/build: api/libdrvapi.so
 .PHONY : api/CMakeFiles/drvapi.dir/build
 
 api/CMakeFiles/drvapi.dir/clean:
-	cd /users/alanandr/lib/drv/build/api && $(CMAKE_COMMAND) -P CMakeFiles/drvapi.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/api && $(CMAKE_COMMAND) -P CMakeFiles/drvapi.dir/cmake_clean.cmake
 .PHONY : api/CMakeFiles/drvapi.dir/clean
 
 api/CMakeFiles/drvapi.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/api /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/api /users/alanandr/lib/drv/build/api/CMakeFiles/drvapi.dir/DependInfo.cmake "--color=$(COLOR)" drvapi
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/api /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/api /users/alanandr/lib/mydrv/build/api/CMakeFiles/drvapi.dir/DependInfo.cmake "--color=$(COLOR)" drvapi
 .PHONY : api/CMakeFiles/drvapi.dir/depend
 

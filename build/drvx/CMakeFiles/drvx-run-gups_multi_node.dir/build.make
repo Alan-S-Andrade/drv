@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Utility rule file for drvx-run-gups_multi_node.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-gups_multi_node.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-gups_multi_node: drvx/libgups_multi_node.so
 drvx/CMakeFiles/drvx-run-gups_multi_node: element/libDrv.so
-	cd /users/alanandr/lib/drv/build/drvx && mkdir -p /users/alanandr/lib/drv/build/drvx/drvx-run-gups_multi_node && cd /users/alanandr/lib/drv/build/drvx/drvx-run-gups_multi_node && PYTHONPATH=/users/alanandr/lib/drv/py::/users/alanandr/lib/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/drv/model/hammerblade-x.py --     --num-pxn=2 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/drv/build/drvx/libgups_multi_node.so 67108864\ 16 | tee /users/alanandr/lib/drv/build/drvx/drvx-run-gups_multi_node/output.txt
+	cd /users/alanandr/lib/mydrv/build/drvx && mkdir -p /users/alanandr/lib/mydrv/build/drvx/drvx-run-gups_multi_node && cd /users/alanandr/lib/mydrv/build/drvx/drvx-run-gups_multi_node && PYTHONPATH=/users/alanandr/lib/mydrv/py::/users/alanandr/lib/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/mydrv/model/hammerblade-x.py --     --num-pxn=2 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/mydrv/build/drvx/libgups_multi_node.so 67108864\ 16 | tee /users/alanandr/lib/mydrv/build/drvx/drvx-run-gups_multi_node/output.txt
 
 drvx/CMakeFiles/drvx-run-gups_multi_node.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-gups_multi_node.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-gups_multi_node.dir/build: drvx-run-gups_multi_node
 .PHONY : drvx/CMakeFiles/drvx-run-gups_multi_node.dir/build
 
 drvx/CMakeFiles/drvx-run-gups_multi_node.dir/clean:
-	cd /users/alanandr/lib/drv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-gups_multi_node.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-gups_multi_node.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-gups_multi_node.dir/clean
 
 drvx/CMakeFiles/drvx-run-gups_multi_node.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/drvx /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/drvx /users/alanandr/lib/drv/build/drvx/CMakeFiles/drvx-run-gups_multi_node.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-gups_multi_node
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/drvx /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/drvx /users/alanandr/lib/mydrv/build/drvx/CMakeFiles/drvx-run-gups_multi_node.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-gups_multi_node
 .PHONY : drvx/CMakeFiles/drvx-run-gups_multi_node.dir/depend
 

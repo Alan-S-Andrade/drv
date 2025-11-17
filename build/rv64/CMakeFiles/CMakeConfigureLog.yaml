@@ -20,37 +20,27 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
-      - "/users/alanandr/local/openmpi/bin/uname"
       - "/usr/local/sbin/uname"
       - "/usr/local/bin/uname"
       - "/usr/sbin/uname"
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "message-v1"
@@ -81,37 +71,27 @@ events:
       - "make"
       - "smake"
     candidate_directories:
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
-      - "/users/alanandr/local/openmpi/bin/gmake"
       - "/usr/local/sbin/gmake"
       - "/usr/local/bin/gmake"
       - "/usr/sbin/gmake"
     found: "/usr/bin/gmake"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -140,18 +120,13 @@ events:
     found: "/users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "message-v1"
@@ -173,7 +148,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /users/alanandr/lib/drv/build/rv64/CMakeFiles/4.2.0-rc2/CompilerIdCXX/a.out
+        /users/alanandr/lib/mydrv/build/rv64/CMakeFiles/4.2.0-rc2/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
@@ -197,32 +172,23 @@ events:
       - "ar"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-ar"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -246,32 +212,23 @@ events:
       - "ranlib"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-ranlib"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -295,32 +252,23 @@ events:
       - "strip"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-strip"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -344,32 +292,23 @@ events:
       - "ld"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-ld"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -393,32 +332,23 @@ events:
       - "nm"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-nm"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -442,32 +372,23 @@ events:
       - "objdump"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-objdump"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -491,32 +412,23 @@ events:
       - "objcopy"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-objcopy"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -540,32 +452,23 @@ events:
       - "readelf"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-readelf"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -589,57 +492,40 @@ events:
       - "dlltool"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-dlltool"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/bin/riscv64-unknown-elfpandodrvsim-dlltool"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-dlltool"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-dlltool"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/users/alanandr/local/riscv/bin/dlltool"
-      - "/users/alanandr/local/openmpi/bin/dlltool"
       - "/usr/local/sbin/dlltool"
       - "/usr/local/bin/dlltool"
       - "/usr/sbin/dlltool"
       - "/usr/bin/dlltool"
       - "/sbin/dlltool"
       - "/bin/dlltool"
-      - "/usr/games/dlltool"
-      - "/usr/local/games/dlltool"
       - "/snap/bin/dlltool"
-      - "/users/alanandr/lib/drv/install/bin/dlltool"
     found: false
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -663,32 +549,23 @@ events:
       - "addr2line"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-addr2line"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -712,57 +589,40 @@ events:
       - "tapi"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-tapi"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/bin/riscv64-unknown-elfpandodrvsim-tapi"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-tapi"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-tapi"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-tapi"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/users/alanandr/local/riscv/bin/tapi"
-      - "/users/alanandr/local/openmpi/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/usr/sbin/tapi"
       - "/usr/bin/tapi"
       - "/sbin/tapi"
       - "/bin/tapi"
-      - "/usr/games/tapi"
-      - "/usr/local/games/tapi"
       - "/snap/bin/tapi"
-      - "/users/alanandr/lib/drv/install/bin/tapi"
     found: false
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -788,69 +648,48 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -876,69 +715,48 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -967,18 +785,13 @@ events:
     found: "/users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "message-v1"
@@ -1000,7 +813,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /users/alanandr/lib/drv/build/rv64/CMakeFiles/4.2.0-rc2/CompilerIdC/a.out
+        /users/alanandr/lib/mydrv/build/rv64/CMakeFiles/4.2.0-rc2/CompilerIdC/a.out
       
   -
     kind: "find-v1"
@@ -1026,69 +839,48 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -1114,69 +906,48 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -1202,18 +973,13 @@ events:
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "message-v1"
@@ -1252,57 +1018,40 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "find-v1"
@@ -1328,57 +1077,40 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
       - "/users/alanandr/local/riscv/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/usr/games/"
-      - "/usr/local/games/"
       - "/snap/bin/"
-      - "/users/alanandr/lib/drv/install/bin/"
     searched_directories:
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/users/alanandr/local/openmpi/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/usr/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/usr/local/games/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/users/alanandr/lib/drv/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
     found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
   -
     kind: "try_compile-v1"
@@ -1389,8 +1121,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t"
-      binary: "/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t"
+      source: "/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL"
+      binary: "/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1400,14 +1132,14 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t'
+        Change Dir: '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL'
         
-        Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_dd9d3/fast
-        gmake[3]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t'
-        /usr/bin/gmake  -f CMakeFiles/cmTC_dd9d3.dir/build.make CMakeFiles/cmTC_dd9d3.dir/build
-        gmake[4]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t'
-        Building CXX object CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4b644/fast
+        gmake[4]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4b644.dir/build.make CMakeFiles/cmTC_4b644.dir/build
+        gmake[5]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL'
+        Building CXX object CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj
+        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
         Target: riscv64-unknown-elfpandodrvsim
@@ -1415,17 +1147,18 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 (g2ee5e430018) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_dd9d3.dir/'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_dd9d3.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccPyDpPe.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4b644.dir/'
+         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_4b644.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/cck2F8FX.s
         GNU C++17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/users/alanandr/lib/drv/install/include"
+        ignoring nonexistent directory "/users/alanandr/lib/boost_1_89_0/include"
         ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"
         ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"
         #include "..." search starts here:
         #include <...> search starts here:
+         .
          /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0
          /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim
          /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward
@@ -1438,14 +1171,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 490039a0a39ea956ef0872658e55141c
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_dd9d3.dir/'
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccPyDpPe.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4b644.dir/'
+         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cck2F8FX.s
         GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214
         COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_dd9d3
-        /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dd9d3.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_4b644
+        /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4b644.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
         COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
@@ -1456,12 +1189,12 @@ events:
         gcc version 12.2.0 (g2ee5e430018) 
         COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dd9d3' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_dd9d3.'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cca0MDP5.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_dd9d3 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dd9d3' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_dd9d3.'
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_dd9d3
-        gmake[4]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t'
-        gmake[3]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4b644' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4b644.'
+         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cclOhJ28.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_4b644 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4b644' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4b644.'
+        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_4b644
+        gmake[5]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL'
+        gmake[4]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL'
         
       exitCode: 0
   -
@@ -1474,6 +1207,7 @@ events:
       Parsed CXX implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
+          add: [.]
           add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
           add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
           add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
@@ -1481,6 +1215,7 @@ events:
           add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
           add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
         end of search list found
+        skipping relative include dir [.]
         collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
         collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
         collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
@@ -1500,14 +1235,14 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t']
+        ignore line: [Change Dir: '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL']
         ignore line: []
-        ignore line: [Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_dd9d3/fast]
-        ignore line: [gmake[3]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t']
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_dd9d3.dir/build.make CMakeFiles/cmTC_dd9d3.dir/build]
-        ignore line: [gmake[4]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t']
-        ignore line: [Building CXX object CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj]
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4b644/fast]
+        ignore line: [gmake[4]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4b644.dir/build.make CMakeFiles/cmTC_4b644.dir/build]
+        ignore line: [gmake[5]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL']
+        ignore line: [Building CXX object CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
@@ -1515,17 +1250,18 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 (g2ee5e430018) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_dd9d3.dir/']
-        ignore line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_dd9d3.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccPyDpPe.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4b644.dir/']
+        ignore line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_4b644.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/cck2F8FX.s]
         ignore line: [GNU C++17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [ignoring nonexistent directory "/users/alanandr/lib/drv/install/include"]
+        ignore line: [ignoring nonexistent directory "/users/alanandr/lib/boost_1_89_0/include"]
         ignore line: [ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"]
         ignore line: [ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
+        ignore line: [ .]
         ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
         ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
         ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
@@ -1538,14 +1274,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 490039a0a39ea956ef0872658e55141c]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_dd9d3.dir/']
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccPyDpPe.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4b644.dir/']
+        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cck2F8FX.s]
         ignore line: [GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214]
         ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_dd9d3]
-        ignore line: [/users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dd9d3.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_4b644]
+        ignore line: [/users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4b644.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++]
         ignore line: [COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
@@ -1556,13 +1292,13 @@ events:
         ignore line: [gcc version 12.2.0 (g2ee5e430018) ]
         ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dd9d3' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_dd9d3.']
-        link line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cca0MDP5.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_dd9d3 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4b644' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4b644.']
+        link line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cclOhJ28.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_4b644 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
           arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cca0MDP5.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cclOhJ28.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgloss] ==> ignore
@@ -1570,13 +1306,13 @@ events:
           arg [--sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim] ==> ignore
           arg [-melf64lriscv] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_dd9d3] ==> ignore
+          arg [cmTC_4b644] ==> ignore
           arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
           arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
           arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
           arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
           arg [-L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
-          arg [CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc] ==> lib [gcc]
@@ -1586,10 +1322,10 @@ events:
           arg [--end-group] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dd9d3' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_dd9d3.']
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_dd9d3.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_dd9d3]
-        ignore line: [gmake[4]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t']
-        ignore line: [gmake[3]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-8dfN3t']
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4b644' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4b644.']
+        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_4b644.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_4b644]
+        ignore line: [gmake[5]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL']
+        ignore line: [gmake[4]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-ltwBkL']
         ignore line: []
         ignore line: []
         collapse obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
@@ -1611,8 +1347,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP"
-      binary: "/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP"
+      source: "/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF"
+      binary: "/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1621,14 +1357,14 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP'
+        Change Dir: '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF'
         
-        Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3e07b/fast
-        gmake[3]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP'
-        /usr/bin/gmake  -f CMakeFiles/cmTC_3e07b.dir/build.make CMakeFiles/cmTC_3e07b.dir/build
-        gmake[4]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP'
-        Building C object CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6945f/fast
+        gmake[4]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_6945f.dir/build.make CMakeFiles/cmTC_6945f.dir/build
+        gmake[5]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF'
+        Building C object CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj
+        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
         Target: riscv64-unknown-elfpandodrvsim
@@ -1636,13 +1372,12 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 (g2ee5e430018) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_3e07b.dir/'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_3e07b.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccWLwuop.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_6945f.dir/'
+         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_6945f.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccP5Qu5P.s
         GNU C17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/users/alanandr/lib/drv/install/include"
         ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"
         ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"
         #include "..." search starts here:
@@ -1656,14 +1391,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: c2ea3b3f5dd9c3464d52bdf987ded5e4
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_3e07b.dir/'
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj /tmp/ccWLwuop.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_6945f.dir/'
+         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj /tmp/ccP5Qu5P.s
         GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214
         COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_3e07b
-        /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3e07b.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_6945f
+        /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6945f.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
         COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
@@ -1674,12 +1409,12 @@ events:
         gcc version 12.2.0 (g2ee5e430018) 
         COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3e07b' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_3e07b.'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxzJ0W8.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_3e07b /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3e07b' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_3e07b.'
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj -o cmTC_3e07b
-        gmake[4]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP'
-        gmake[3]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6945f' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_6945f.'
+         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccta6u3I.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_6945f /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6945f' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_6945f.'
+        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj -o cmTC_6945f
+        gmake[5]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF'
+        gmake[4]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF'
         
       exitCode: 0
   -
@@ -1712,14 +1447,14 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP']
+        ignore line: [Change Dir: '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF']
         ignore line: []
-        ignore line: [Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3e07b/fast]
-        ignore line: [gmake[3]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP']
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_3e07b.dir/build.make CMakeFiles/cmTC_3e07b.dir/build]
-        ignore line: [gmake[4]: Entering directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP']
-        ignore line: [Building C object CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj]
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6945f/fast]
+        ignore line: [gmake[4]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_6945f.dir/build.make CMakeFiles/cmTC_6945f.dir/build]
+        ignore line: [gmake[5]: Entering directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF']
+        ignore line: [Building C object CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj -c /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
@@ -1727,13 +1462,12 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 (g2ee5e430018) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_3e07b.dir/']
-        ignore line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_3e07b.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccWLwuop.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_6945f.dir/']
+        ignore line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_6945f.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccP5Qu5P.s]
         ignore line: [GNU C17 (g2ee5e430018) version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [ignoring nonexistent directory "/users/alanandr/lib/drv/install/include"]
         ignore line: [ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"]
         ignore line: [ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"]
         ignore line: [#include "..." search starts here:]
@@ -1747,14 +1481,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: c2ea3b3f5dd9c3464d52bdf987ded5e4]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_3e07b.dir/']
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj /tmp/ccWLwuop.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_6945f.dir/']
+        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj /tmp/ccP5Qu5P.s]
         ignore line: [GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214]
         ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_3e07b]
-        ignore line: [/users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3e07b.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_6945f]
+        ignore line: [/users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6945f.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc]
         ignore line: [COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
@@ -1765,13 +1499,13 @@ events:
         ignore line: [gcc version 12.2.0 (g2ee5e430018) ]
         ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3e07b' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_3e07b.']
-        link line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxzJ0W8.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_3e07b /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6945f' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_6945f.']
+        link line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccta6u3I.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_6945f /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
           arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccxzJ0W8.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccta6u3I.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgloss] ==> ignore
@@ -1779,13 +1513,13 @@ events:
           arg [--sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim] ==> ignore
           arg [-melf64lriscv] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_3e07b] ==> ignore
+          arg [cmTC_6945f] ==> ignore
           arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
           arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
           arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
           arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
           arg [-L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
-          arg [CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--start-group] ==> ignore
           arg [-lc] ==> lib [c]
@@ -1793,10 +1527,10 @@ events:
           arg [--end-group] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3e07b' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_3e07b.']
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_3e07b.dir/CMakeCCompilerABI.c.obj -o cmTC_3e07b]
-        ignore line: [gmake[4]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP']
-        ignore line: [gmake[3]: Leaving directory '/users/alanandr/lib/drv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-uzFXMP']
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6945f' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_6945f.']
+        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_6945f.dir/CMakeCCompilerABI.c.obj -o cmTC_6945f]
+        ignore line: [gmake[5]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF']
+        ignore line: [gmake[4]: Leaving directory '/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-zJKNgF']
         ignore line: []
         ignore line: []
         collapse obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
@@ -1845,11 +1579,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/lib/drv/build/rv64/CMakeFiles/pkgRedirects/SSTConfig.cmake"
+        path: "/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/pkgRedirects/SSTConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/lib/drv/build/rv64/CMakeFiles/pkgRedirects/sst-config.cmake"
+        path: "/users/alanandr/lib/mydrv/build/rv64/CMakeFiles/pkgRedirects/sst-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -1868,17 +1602,12 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
         - "/usr/bin"
         - "/sbin"
         - "/bin"
-        - "/usr/games"
-        - "/usr/local/games"
         - "/snap/bin"
-        - "/users/alanandr/lib/drv/install/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local/rv64"
 ...

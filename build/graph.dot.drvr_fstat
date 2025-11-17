@@ -1,8 +1,0 @@
-digraph "drvr_fstat" {
-node [
-  fontsize = "12"
-];
-    "node39" [ label = "drvr_fstat", shape = egg ];
-    "node28" [ label = "pandohammer", shape = septagon ];
-    "node39" -> "node28"  // drvr_fstat -> pandohammer
-}

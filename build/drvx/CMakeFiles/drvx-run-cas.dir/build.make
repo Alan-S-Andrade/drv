@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Utility rule file for drvx-run-cas.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-cas.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-cas: drvx/libcas.so
 drvx/CMakeFiles/drvx-run-cas: element/libDrv.so
-	cd /users/alanandr/lib/drv/build/drvx && mkdir -p /users/alanandr/lib/drv/build/drvx/drvx-run-cas && cd /users/alanandr/lib/drv/build/drvx/drvx-run-cas && PYTHONPATH=/users/alanandr/lib/drv/py::/users/alanandr/lib/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/drv/build/drvx/libcas.so  | tee /users/alanandr/lib/drv/build/drvx/drvx-run-cas/output.txt
+	cd /users/alanandr/lib/mydrv/build/drvx && mkdir -p /users/alanandr/lib/mydrv/build/drvx/drvx-run-cas && cd /users/alanandr/lib/mydrv/build/drvx/drvx-run-cas && PYTHONPATH=/users/alanandr/lib/mydrv/py::/users/alanandr/lib/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/mydrv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/mydrv/build/drvx/libcas.so  | tee /users/alanandr/lib/mydrv/build/drvx/drvx-run-cas/output.txt
 
 drvx/CMakeFiles/drvx-run-cas.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-cas.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-cas.dir/build: drvx-run-cas
 .PHONY : drvx/CMakeFiles/drvx-run-cas.dir/build
 
 drvx/CMakeFiles/drvx-run-cas.dir/clean:
-	cd /users/alanandr/lib/drv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-cas.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-cas.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-cas.dir/clean
 
 drvx/CMakeFiles/drvx-run-cas.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/drvx /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/drvx /users/alanandr/lib/drv/build/drvx/CMakeFiles/drvx-run-cas.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-cas
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/drvx /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/drvx /users/alanandr/lib/mydrv/build/drvx/CMakeFiles/drvx-run-cas.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-cas
 .PHONY : drvx/CMakeFiles/drvx-run-cas.dir/depend
 

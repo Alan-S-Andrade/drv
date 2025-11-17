@@ -8,18 +8,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/users/alanandr/lib/drv/pandohammer/crt.S" "/users/alanandr/lib/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
+  "/users/alanandr/lib/mydrv/pandohammer/crt.S" "/users/alanandr/lib/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_ASM_TARGET_INCLUDE_PATH
-  "/users/alanandr/lib/drv/pandohammer"
+  "/users/alanandr/lib/mydrv/pandohammer"
   )
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/drv/pandohammer/lock.c" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj" "gcc" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj.d"
+  "/users/alanandr/lib/mydrv/pandohammer/lock.c" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj" "gcc" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

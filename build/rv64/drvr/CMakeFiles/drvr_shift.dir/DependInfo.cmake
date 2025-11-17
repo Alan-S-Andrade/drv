@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/users/alanandr/lib/drv/drvr/shift.S" "/users/alanandr/lib/drv/build/rv64/drvr/CMakeFiles/drvr_shift.dir/shift.S.obj"
+  "/users/alanandr/lib/mydrv/drvr/shift.S" "/users/alanandr/lib/mydrv/build/rv64/drvr/CMakeFiles/drvr_shift.dir/shift.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 

@@ -90,7 +90,7 @@ drvr_test_nostdlib(fma fma.S fma.c)
 drvr_test_with_pandohammer(fma-multith fma-multith.cpp)
 drvr_test_build_properties(fma-multith
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 8
+  DRV_BUILD_CORE_THREADS 2
   )
 
 # fread
@@ -113,8 +113,7 @@ drvr_test_build_properties(gups
   DRV_BUILD_CORE_THREADS 1
   DRV_BUILD_POD_CORES 1
   DRV_MODEL_OPTIONS --pxn-dram-banks=8
-  )
-
+)
 
 # lsu test
 drvr_test_nostdlib(lsu lsu.S)
@@ -122,13 +121,82 @@ drvr_test_nostdlib(lsu lsu.S)
 # malloc
 drvr_test_with_pandohammer(malloc malloc.c malloc-main.c)
 
+# leiden_single
+drvr_test_with_pandohammer(leiden_single leiden_single.c)
+
+# attention
+drvr_test_with_pandohammer(attn_fixed attn_fixed.cpp)
+drvr_test_build_properties(attn_fixed
+  PROPERTIES
+  DRV_BUILD_CORE_THREADS 1
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_MODEL_OPTIONS --pxn-dram-banks=8
+)
+
+# bfs_multi
+drvr_test_with_pandohammer(bfs_multi bfs_multi.cpp)
+
+# bfs
+drvr_test_with_pandohammer(bfs bfs_grid.cpp)
+drvr_test_build_properties(bfs
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  # DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 0
+)
+
+# bfs multi
+drvr_test_with_pandohammer(bfs-multith bfs_grid_multith.cpp)
+drvr_test_build_properties(bfs-multith
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 8
+)
+
+#tc
+drvr_test_with_pandohammer(tc tc.c)
+
+#tc_larger
+drvr_test_with_pandohammer(tc_larger tc_larger.cpp)
+
+# tc_galois
+#drvr_test_with_pandohammer(tc_galois tc_galois.cpp)
+
+# linked_list
+drvr_test_with_pandohammer(list_traverse list_traverse.cpp)
+drvr_test_compile_options(list_traverse -O2 -g -DNDEBUG)
+drvr_test_build_properties(list_traverse
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 2
+  DRV_BUILD_CORE_THREADS 1
+)
+
+#ptr_chase
+drvr_test_with_pandohammer(ptr_chase ptr_chase.cpp)
+drvr_test_build_properties(ptr_chase
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  # DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 4
+)
+
+# gemm_int_rand
+drvr_test_with_pandohammer(gemm_int_rand gemm_int.cpp)
+
+# gemm_int_deter
+drvr_test_with_pandohammer(gemm_int_deter gemm_int_deter.cpp)
+drvr_test_inputs(gemm_int_deter A.bin)
+drvr_test_inputs(gemm_int_deter B.bin)
+
 # multihart
 drvr_test_with_pandohammer(multihart multihart.c)
 drvr_test_build_properties(multihart
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 2
-  )
-
+  DRV_BUILD_CORE_THREADS 4
+)
 
 # ph_hello
 drvr_test_with_pandohammer(ph_hello ph_hello.c)
@@ -142,7 +210,7 @@ drvr_test_with_pandohammer(printf printf.c)
 drvr_test_build_properties(printf
   PROPERTIES
   DRV_BUILD_CORE_THREADS 1
-  )
+)
 
 # print_int
 drvr_test_with_pandohammer(print_int print_int.c)
@@ -173,7 +241,6 @@ drvr_test_compile_options(vread -DVSIZE=64)
 
 # write
 drvr_test_with_pandohammer(write write.c)
-
 
 drvr_test_with_pandohammer(wait-with-sleep wait.c)
 drvr_test_compile_options(wait-with-sleep -DUSE_SLEEP=1)

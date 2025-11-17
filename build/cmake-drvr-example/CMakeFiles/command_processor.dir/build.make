@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Include any dependencies generated for this target.
 include cmake-drvr-example/CMakeFiles/command_processor.dir/depend.make
@@ -73,18 +73,18 @@ cmake-drvr-example/CMakeFiles/command_processor.dir/codegen:
 .PHONY : cmake-drvr-example/CMakeFiles/command_processor.dir/codegen
 
 cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o: cmake-drvr-example/CMakeFiles/command_processor.dir/flags.make
-cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o: /users/alanandr/lib/drv/cmake-drvr-example/command_processor.cpp
+cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o: /users/alanandr/lib/mydrv/cmake-drvr-example/command_processor.cpp
 cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o: cmake-drvr-example/CMakeFiles/command_processor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o"
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o -MF CMakeFiles/command_processor.dir/command_processor.cpp.o.d -o CMakeFiles/command_processor.dir/command_processor.cpp.o -c /users/alanandr/lib/drv/cmake-drvr-example/command_processor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o -MF CMakeFiles/command_processor.dir/command_processor.cpp.o.d -o CMakeFiles/command_processor.dir/command_processor.cpp.o -c /users/alanandr/lib/mydrv/cmake-drvr-example/command_processor.cpp
 
 cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/command_processor.dir/command_processor.cpp.i"
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/cmake-drvr-example/command_processor.cpp > CMakeFiles/command_processor.dir/command_processor.cpp.i
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/cmake-drvr-example/command_processor.cpp > CMakeFiles/command_processor.dir/command_processor.cpp.i
 
 cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/command_processor.dir/command_processor.cpp.s"
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/cmake-drvr-example/command_processor.cpp -o CMakeFiles/command_processor.dir/command_processor.cpp.s
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/cmake-drvr-example/command_processor.cpp -o CMakeFiles/command_processor.dir/command_processor.cpp.s
 
 # Object files for target command_processor
 command_processor_OBJECTS = \
@@ -103,18 +103,18 @@ cmake-drvr-example/libcommand_processor.so: /usr/lib/x86_64-linux-gnu/libboost_c
 cmake-drvr-example/libcommand_processor.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.74.0
 cmake-drvr-example/libcommand_processor.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.74.0
 cmake-drvr-example/libcommand_processor.so: cmake-drvr-example/CMakeFiles/command_processor.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libcommand_processor.so"
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/command_processor.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libcommand_processor.so"
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/command_processor.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 cmake-drvr-example/CMakeFiles/command_processor.dir/build: cmake-drvr-example/libcommand_processor.so
 .PHONY : cmake-drvr-example/CMakeFiles/command_processor.dir/build
 
 cmake-drvr-example/CMakeFiles/command_processor.dir/clean:
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && $(CMAKE_COMMAND) -P CMakeFiles/command_processor.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && $(CMAKE_COMMAND) -P CMakeFiles/command_processor.dir/cmake_clean.cmake
 .PHONY : cmake-drvr-example/CMakeFiles/command_processor.dir/clean
 
 cmake-drvr-example/CMakeFiles/command_processor.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/cmake-drvr-example /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/cmake-drvr-example /users/alanandr/lib/drv/build/cmake-drvr-example/CMakeFiles/command_processor.dir/DependInfo.cmake "--color=$(COLOR)" command_processor
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/cmake-drvr-example /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/cmake-drvr-example /users/alanandr/lib/mydrv/build/cmake-drvr-example/CMakeFiles/command_processor.dir/DependInfo.cmake "--color=$(COLOR)" command_processor
 .PHONY : cmake-drvr-example/CMakeFiles/command_processor.dir/depend
 

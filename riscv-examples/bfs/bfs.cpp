@@ -14,7 +14,6 @@
 #include <array>
 #include "common.hpp"
 
-
 #define __l1sp__ __attribute__((section(".dmem")))
 #define __l2sp__ __attribute__((section(".dram"))) // TODO: this is actually l2sp; need fix in linker script
 
@@ -43,8 +42,7 @@ __l2sp__ barrier_data         g_barrier_data;
 /**
  * @brief Wait for the CP to complete initialization
  */
-int wait_for_cp()
-{
+int wait_for_cp() {
     //pr_dbg("Telling CP we're ready\n");
     // let ph know we're ready
     int64_t n = ph_ready.fetch_add(1, std::memory_order_relaxed);
@@ -97,7 +95,6 @@ int main()
     frontier_ref curr_frontier = &frontier[0];
     frontier_ref next_frontier = &frontier[1];
     frontier_ref tmp_frontier  = &frontier[2];
-
 
     while (curr_frontier.size() != 0) {
         vertex_t distance = iter+1;

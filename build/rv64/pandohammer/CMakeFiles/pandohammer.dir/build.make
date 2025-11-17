@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build/rv64
 
 # Include any dependencies generated for this target.
 include pandohammer/CMakeFiles/pandohammer.dir/depend.make
@@ -73,31 +73,31 @@ pandohammer/CMakeFiles/pandohammer.dir/codegen:
 .PHONY : pandohammer/CMakeFiles/pandohammer.dir/codegen
 
 pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj: pandohammer/CMakeFiles/pandohammer.dir/flags.make
-pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj: /users/alanandr/lib/drv/pandohammer/crt.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building ASM object pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/pandohammer.dir/crt.S.obj -c /users/alanandr/lib/drv/pandohammer/crt.S
+pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj: /users/alanandr/lib/mydrv/pandohammer/crt.S
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building ASM object pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/pandohammer.dir/crt.S.obj -c /users/alanandr/lib/mydrv/pandohammer/crt.S
 
 pandohammer/CMakeFiles/pandohammer.dir/crt.S.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing ASM source to CMakeFiles/pandohammer.dir/crt.S.i"
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /users/alanandr/lib/drv/pandohammer/crt.S > CMakeFiles/pandohammer.dir/crt.S.i
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /users/alanandr/lib/mydrv/pandohammer/crt.S > CMakeFiles/pandohammer.dir/crt.S.i
 
 pandohammer/CMakeFiles/pandohammer.dir/crt.S.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling ASM source to assembly CMakeFiles/pandohammer.dir/crt.S.s"
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /users/alanandr/lib/drv/pandohammer/crt.S -o CMakeFiles/pandohammer.dir/crt.S.s
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /users/alanandr/lib/mydrv/pandohammer/crt.S -o CMakeFiles/pandohammer.dir/crt.S.s
 
 pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj: pandohammer/CMakeFiles/pandohammer.dir/flags.make
-pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj: /users/alanandr/lib/drv/pandohammer/lock.c
+pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj: /users/alanandr/lib/mydrv/pandohammer/lock.c
 pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj: pandohammer/CMakeFiles/pandohammer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -MF CMakeFiles/pandohammer.dir/lock.c.obj.d -o CMakeFiles/pandohammer.dir/lock.c.obj -c /users/alanandr/lib/drv/pandohammer/lock.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -MF CMakeFiles/pandohammer.dir/lock.c.obj.d -o CMakeFiles/pandohammer.dir/lock.c.obj -c /users/alanandr/lib/mydrv/pandohammer/lock.c
 
 pandohammer/CMakeFiles/pandohammer.dir/lock.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/pandohammer.dir/lock.c.i"
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/lib/drv/pandohammer/lock.c > CMakeFiles/pandohammer.dir/lock.c.i
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/lib/mydrv/pandohammer/lock.c > CMakeFiles/pandohammer.dir/lock.c.i
 
 pandohammer/CMakeFiles/pandohammer.dir/lock.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/pandohammer.dir/lock.c.s"
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/lib/drv/pandohammer/lock.c -o CMakeFiles/pandohammer.dir/lock.c.s
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/lib/mydrv/pandohammer/lock.c -o CMakeFiles/pandohammer.dir/lock.c.s
 
 pandohammer: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 pandohammer: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
@@ -109,10 +109,10 @@ pandohammer/CMakeFiles/pandohammer.dir/build: pandohammer
 .PHONY : pandohammer/CMakeFiles/pandohammer.dir/build
 
 pandohammer/CMakeFiles/pandohammer.dir/clean:
-	cd /users/alanandr/lib/drv/build/rv64/pandohammer && $(CMAKE_COMMAND) -P CMakeFiles/pandohammer.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/rv64/pandohammer && $(CMAKE_COMMAND) -P CMakeFiles/pandohammer.dir/cmake_clean.cmake
 .PHONY : pandohammer/CMakeFiles/pandohammer.dir/clean
 
 pandohammer/CMakeFiles/pandohammer.dir/depend:
-	cd /users/alanandr/lib/drv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/pandohammer /users/alanandr/lib/drv/build/rv64 /users/alanandr/lib/drv/build/rv64/pandohammer /users/alanandr/lib/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/DependInfo.cmake "--color=$(COLOR)" pandohammer
+	cd /users/alanandr/lib/mydrv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/pandohammer /users/alanandr/lib/mydrv/build/rv64 /users/alanandr/lib/mydrv/build/rv64/pandohammer /users/alanandr/lib/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/DependInfo.cmake "--color=$(COLOR)" pandohammer
 .PHONY : pandohammer/CMakeFiles/pandohammer.dir/depend
 

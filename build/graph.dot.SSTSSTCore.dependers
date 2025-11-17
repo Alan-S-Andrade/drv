@@ -1,8 +1,0 @@
-digraph "SST::SSTCore" {
-node [
-  fontsize = "12"
-];
-    "node1" [ label = "SST::SSTCore", shape = pentagon ];
-    "node0" [ label = "Drv", shape = tripleoctagon ];
-    "node0" -> "node1"  // Drv -> SST::SSTCore
-}

@@ -1,8 +1,0 @@
-digraph "drvr_addressmap" {
-node [
-  fontsize = "12"
-];
-    "node27" [ label = "drvr_addressmap", shape = egg ];
-    "node28" [ label = "pandohammer", shape = septagon ];
-    "node27" -> "node28"  // drvr_addressmap -> pandohammer
-}

@@ -1,8 +1,0 @@
-digraph "drvr_amoswap" {
-node [
-  fontsize = "12"
-];
-    "node29" [ label = "drvr_amoswap", shape = egg ];
-    "node28" [ label = "pandohammer", shape = septagon ];
-    "node29" -> "node28"  // drvr_amoswap -> pandohammer
-}

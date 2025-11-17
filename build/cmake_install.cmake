@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/lib/drv
+# Install script for directory: /users/alanandr/lib/mydrv
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,58 +44,58 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/interpreter/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/interpreter/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/api/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/api/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/element/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/element/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/pandocommand/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/pandocommand/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/pandohammer/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/pandohammer/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/cmake-drvx-example/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/cmake-drvx-example/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/cmake-drvr-example/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/cmake-drvr-example/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/cmake/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/cmake/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/drvx/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/drvx/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/users/alanandr/lib/drv/build/drvr/cmake_install.cmake")
+  include("/users/alanandr/lib/mydrv/build/drvr/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/lib/drv/build/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/lib/mydrv/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -111,6 +111,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/lib/drv/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "/users/alanandr/lib/mydrv/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

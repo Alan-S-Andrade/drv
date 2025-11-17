@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Utility rule file for run-drvx-example-hello.
 
@@ -68,7 +68,7 @@ include cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/progress.make
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-hello: cmake-drvx-example/libdrvx-example.so
 cmake-drvx-example/CMakeFiles/run-drvx-example-hello: element/libDrv.so
-	cd /users/alanandr/lib/drv/build/cmake-drvx-example && mkdir -p /users/alanandr/lib/drv/build/cmake-drvx-example/run-drvx-example-hello && cd /users/alanandr/lib/drv/build/cmake-drvx-example/run-drvx-example-hello && PYTHONPATH=/users/alanandr/lib/drv/py::/users/alanandr/lib/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\ -n\ 2 /users/alanandr/lib/drv/model/hammerblade-x.py --  --num-pxn=1\ --pod-cores=1\ --pxn-pods=1\ --core-threads=1   --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/drv/build/cmake-drvx-example/libdrvx-example.so hello | tee /users/alanandr/lib/drv/build/cmake-drvx-example/run-drvx-example-hello/output.txt
+	cd /users/alanandr/lib/mydrv/build/cmake-drvx-example && mkdir -p /users/alanandr/lib/mydrv/build/cmake-drvx-example/run-drvx-example-hello && cd /users/alanandr/lib/mydrv/build/cmake-drvx-example/run-drvx-example-hello && PYTHONPATH=/users/alanandr/lib/mydrv/py::/users/alanandr/lib/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\ -n\ 2 /users/alanandr/lib/mydrv/model/hammerblade-x.py --  --num-pxn=1\ --pod-cores=1\ --pxn-pods=1\ --core-threads=1   --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/mydrv/build/cmake-drvx-example/libdrvx-example.so hello | tee /users/alanandr/lib/mydrv/build/cmake-drvx-example/run-drvx-example-hello/output.txt
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/codegen:
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/codegen
@@ -82,10 +82,10 @@ cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/build: run-drvx-example
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/build
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/clean:
-	cd /users/alanandr/lib/drv/build/cmake-drvx-example && $(CMAKE_COMMAND) -P CMakeFiles/run-drvx-example-hello.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/cmake-drvx-example && $(CMAKE_COMMAND) -P CMakeFiles/run-drvx-example-hello.dir/cmake_clean.cmake
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/clean
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/cmake-drvx-example /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/cmake-drvx-example /users/alanandr/lib/drv/build/cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/DependInfo.cmake "--color=$(COLOR)" run-drvx-example-hello
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/cmake-drvx-example /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/cmake-drvx-example /users/alanandr/lib/mydrv/build/cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/DependInfo.cmake "--color=$(COLOR)" run-drvx-example-hello
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-hello.dir/depend
 

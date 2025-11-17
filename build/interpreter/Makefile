@@ -57,10 +57,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/CMakeFiles /users/alanandr/lib/drv/build/interpreter//CMakeFiles/progress.marks
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/CMakeFiles 0
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/CMakeFiles /users/alanandr/lib/mydrv/build/interpreter//CMakeFiles/progress.marks
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/clean
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,22 +148,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/preinstall
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/preinstall
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 interpreter/CMakeFiles/riscvinterpreter.dir/rule:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/CMakeFiles/riscvinterpreter.dir/rule
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interpreter/CMakeFiles/riscvinterpreter.dir/rule
 .PHONY : interpreter/CMakeFiles/riscvinterpreter.dir/rule
 
 # Convenience name for target.
@@ -172,7 +172,7 @@ riscvinterpreter: interpreter/CMakeFiles/riscvinterpreter.dir/rule
 
 # fast build rule for target.
 riscvinterpreter/fast:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/build
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/build
 .PHONY : riscvinterpreter/fast
 
 interpreter.o: interpreter.cpp.o
@@ -180,7 +180,7 @@ interpreter.o: interpreter.cpp.o
 
 # target to build an object file
 interpreter.cpp.o:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o
 .PHONY : interpreter.cpp.o
 
 interpreter.i: interpreter.cpp.i
@@ -188,7 +188,7 @@ interpreter.i: interpreter.cpp.i
 
 # target to preprocess a source file
 interpreter.cpp.i:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.i
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.i
 .PHONY : interpreter.cpp.i
 
 interpreter.s: interpreter.cpp.s
@@ -196,7 +196,7 @@ interpreter.s: interpreter.cpp.s
 
 # target to generate assembly for a file
 interpreter.cpp.s:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.s
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f interpreter/CMakeFiles/riscvinterpreter.dir/build.make interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.s
 .PHONY : interpreter.cpp.s
 
 # Help Target
@@ -226,6 +226,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

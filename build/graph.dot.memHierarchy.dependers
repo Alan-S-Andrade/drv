@@ -1,8 +1,0 @@
-digraph "memHierarchy" {
-node [
-  fontsize = "12"
-];
-    "node12" [ label = "memHierarchy", shape = doubleoctagon ];
-    "node0" [ label = "Drv", shape = tripleoctagon ];
-    "node0" -> "node12"  // Drv -> memHierarchy
-}

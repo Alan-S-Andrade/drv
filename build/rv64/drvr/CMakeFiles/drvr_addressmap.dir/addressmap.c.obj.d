@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_addressmap.dir/addressmap.c.obj: \
- /users/alanandr/lib/drv/drvr/addressmap.c \
+ /users/alanandr/lib/mydrv/drvr/addressmap.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -36,15 +36,15 @@ drvr/CMakeFiles/drvr_addressmap.dir/addressmap.c.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/unistd.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/unistd.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/atomic.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/register.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/atomic.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/address.h \
- /users/alanandr/lib/drv/build/rv64/drvr/drvr_addressmap_include/address_map.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/staticdecl.h
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/address.h \
+ /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_addressmap_include/address_map.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/staticdecl.h
