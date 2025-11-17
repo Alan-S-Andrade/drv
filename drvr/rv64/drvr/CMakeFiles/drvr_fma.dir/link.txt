@@ -1,0 +1,1 @@
+/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/users/alanandr/lib/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_fma.dir/fma.S.obj CMakeFiles/drvr_fma.dir/fma.c.obj -o drvr_fma

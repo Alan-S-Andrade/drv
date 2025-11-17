@@ -1,0 +1,1 @@
+/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ -nostartfiles -T /users/alanandr/lib/mydrv/pandohammer/bsg_link.ld "CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj" ../pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj ../pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -o drvr_fma-multith
