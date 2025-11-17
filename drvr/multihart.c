@@ -50,10 +50,10 @@ int main() {
     ph_print_int(coreL1SPSize());
     ph_print_int(podL2SPSize());
     ph_print_int(pxnDRAMSize());
-    //int64_t id  = hartid();
-    //print_int(id);
+    int64_t id  = hartid();
+    ph_print_int(id);
     // swap id with x
-    //print_int(amoswap(id, &x));
-    //ph_print_int(amoadd(1, &y));
+    ph_print_int(amoswap(id, &x));
+    ph_print_int(amoadd(1, &y));
     return 0;
 }

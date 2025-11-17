@@ -1,17 +1,17 @@
 {
 	"InstallScripts" : 
 	[
-		"/users/alanandr/lib/drv/build/rv64/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/interpreter/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/api/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/element/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/pandocommand/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/pandohammer/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/cmake-drvx-example/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/cmake-drvr-example/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/cmake/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/drvx/cmake_install.cmake",
-		"/users/alanandr/lib/drv/build/rv64/drvr/cmake_install.cmake"
+		"/users/alanandr/lib/mydrv/build/rv64/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/interpreter/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/api/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/element/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/pandocommand/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/pandohammer/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/cmake-drvx-example/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/cmake-drvr-example/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/cmake/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/drvx/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/build/rv64/drvr/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

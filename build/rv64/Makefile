@@ -57,10 +57,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build/rv64
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/rv64/CMakeFiles /users/alanandr/lib/drv/build/rv64//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/rv64/CMakeFiles /users/alanandr/lib/mydrv/build/rv64//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/rv64/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/rv64/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -396,6 +396,136 @@ drvr_malloc/fast:
 .PHONY : drvr_malloc/fast
 
 #=============================================================================
+# Target rules for targets named drvr_leiden_single
+
+# Build rule for target.
+drvr_leiden_single: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_leiden_single
+.PHONY : drvr_leiden_single
+
+# fast build rule for target.
+drvr_leiden_single/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_leiden_single.dir/build.make drvr/CMakeFiles/drvr_leiden_single.dir/build
+.PHONY : drvr_leiden_single/fast
+
+#=============================================================================
+# Target rules for targets named drvr_attn_fixed
+
+# Build rule for target.
+drvr_attn_fixed: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_attn_fixed
+.PHONY : drvr_attn_fixed
+
+# fast build rule for target.
+drvr_attn_fixed/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_attn_fixed.dir/build.make drvr/CMakeFiles/drvr_attn_fixed.dir/build
+.PHONY : drvr_attn_fixed/fast
+
+#=============================================================================
+# Target rules for targets named drvr_bfs
+
+# Build rule for target.
+drvr_bfs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs
+.PHONY : drvr_bfs
+
+# fast build rule for target.
+drvr_bfs/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs.dir/build.make drvr/CMakeFiles/drvr_bfs.dir/build
+.PHONY : drvr_bfs/fast
+
+#=============================================================================
+# Target rules for targets named drvr_bfs-multith
+
+# Build rule for target.
+drvr_bfs-multith: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs-multith
+.PHONY : drvr_bfs-multith
+
+# fast build rule for target.
+drvr_bfs-multith/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs-multith.dir/build.make drvr/CMakeFiles/drvr_bfs-multith.dir/build
+.PHONY : drvr_bfs-multith/fast
+
+#=============================================================================
+# Target rules for targets named drvr_tc
+
+# Build rule for target.
+drvr_tc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_tc
+.PHONY : drvr_tc
+
+# fast build rule for target.
+drvr_tc/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_tc.dir/build.make drvr/CMakeFiles/drvr_tc.dir/build
+.PHONY : drvr_tc/fast
+
+#=============================================================================
+# Target rules for targets named drvr_tc_larger
+
+# Build rule for target.
+drvr_tc_larger: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_tc_larger
+.PHONY : drvr_tc_larger
+
+# fast build rule for target.
+drvr_tc_larger/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_tc_larger.dir/build.make drvr/CMakeFiles/drvr_tc_larger.dir/build
+.PHONY : drvr_tc_larger/fast
+
+#=============================================================================
+# Target rules for targets named drvr_list_traverse
+
+# Build rule for target.
+drvr_list_traverse: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_list_traverse
+.PHONY : drvr_list_traverse
+
+# fast build rule for target.
+drvr_list_traverse/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_list_traverse.dir/build.make drvr/CMakeFiles/drvr_list_traverse.dir/build
+.PHONY : drvr_list_traverse/fast
+
+#=============================================================================
+# Target rules for targets named drvr_ptr_chase
+
+# Build rule for target.
+drvr_ptr_chase: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_ptr_chase
+.PHONY : drvr_ptr_chase
+
+# fast build rule for target.
+drvr_ptr_chase/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ptr_chase.dir/build.make drvr/CMakeFiles/drvr_ptr_chase.dir/build
+.PHONY : drvr_ptr_chase/fast
+
+#=============================================================================
+# Target rules for targets named drvr_gemm_int_rand
+
+# Build rule for target.
+drvr_gemm_int_rand: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_gemm_int_rand
+.PHONY : drvr_gemm_int_rand
+
+# fast build rule for target.
+drvr_gemm_int_rand/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_rand.dir/build.make drvr/CMakeFiles/drvr_gemm_int_rand.dir/build
+.PHONY : drvr_gemm_int_rand/fast
+
+#=============================================================================
+# Target rules for targets named drvr_gemm_int_deter
+
+# Build rule for target.
+drvr_gemm_int_deter: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_gemm_int_deter
+.PHONY : drvr_gemm_int_deter
+
+# fast build rule for target.
+drvr_gemm_int_deter/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_deter.dir/build.make drvr/CMakeFiles/drvr_gemm_int_deter.dir/build
+.PHONY : drvr_gemm_int_deter/fast
+
+#=============================================================================
 # Target rules for targets named drvr_multihart
 
 # Build rule for target.
@@ -593,6 +723,9 @@ help:
 	@echo "... drvr_add"
 	@echo "... drvr_addressmap"
 	@echo "... drvr_amoswap"
+	@echo "... drvr_attn_fixed"
+	@echo "... drvr_bfs"
+	@echo "... drvr_bfs-multith"
 	@echo "... drvr_cycle"
 	@echo "... drvr_exit"
 	@echo "... drvr_fence"
@@ -603,7 +736,11 @@ help:
 	@echo "... drvr_fread"
 	@echo "... drvr_fscanf"
 	@echo "... drvr_fstat"
+	@echo "... drvr_gemm_int_deter"
+	@echo "... drvr_gemm_int_rand"
 	@echo "... drvr_gups"
+	@echo "... drvr_leiden_single"
+	@echo "... drvr_list_traverse"
 	@echo "... drvr_lsu"
 	@echo "... drvr_malloc"
 	@echo "... drvr_multihart"
@@ -611,11 +748,14 @@ help:
 	@echo "... drvr_poke"
 	@echo "... drvr_print_int"
 	@echo "... drvr_printf"
+	@echo "... drvr_ptr_chase"
 	@echo "... drvr_puts"
 	@echo "... drvr_read"
 	@echo "... drvr_shift"
 	@echo "... drvr_simple"
 	@echo "... drvr_snprintf"
+	@echo "... drvr_tc"
+	@echo "... drvr_tc_larger"
 	@echo "... drvr_vread"
 	@echo "... drvr_wait-with-sleep"
 	@echo "... drvr_wait-without-sleep"

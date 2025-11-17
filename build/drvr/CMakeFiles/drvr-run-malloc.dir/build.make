@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Utility rule file for drvr-run-malloc.
 
@@ -68,7 +68,7 @@ include drvr/CMakeFiles/drvr-run-malloc.dir/progress.make
 
 drvr/CMakeFiles/drvr-run-malloc: rv64/drvr/drvr_malloc
 drvr/CMakeFiles/drvr-run-malloc: element/libDrv.so
-	cd /users/alanandr/lib/drv/build/drvr && mkdir -p /users/alanandr/lib/drv/build/drvr/drvr-run-malloc && cd /users/alanandr/lib/drv/build/drvr/drvr-run-malloc && PYTHONPATH=/users/alanandr/lib/drv/py::/users/alanandr/lib/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/drv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/lib/drv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/drv/build/rv64/drvr/drvr_malloc  | tee /users/alanandr/lib/drv/build/drvr/drvr-run-malloc/output.txt
+	cd /users/alanandr/lib/mydrv/build/drvr && mkdir -p /users/alanandr/lib/mydrv/build/drvr/drvr-run-malloc && cd /users/alanandr/lib/mydrv/build/drvr/drvr-run-malloc && PYTHONPATH=/users/alanandr/lib/mydrv/py::/users/alanandr/lib/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/mydrv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/lib/mydrv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_malloc  | tee /users/alanandr/lib/mydrv/build/drvr/drvr-run-malloc/output.txt
 
 drvr/CMakeFiles/drvr-run-malloc.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr-run-malloc.dir/codegen
@@ -82,10 +82,10 @@ drvr/CMakeFiles/drvr-run-malloc.dir/build: drvr-run-malloc
 .PHONY : drvr/CMakeFiles/drvr-run-malloc.dir/build
 
 drvr/CMakeFiles/drvr-run-malloc.dir/clean:
-	cd /users/alanandr/lib/drv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-malloc.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-malloc.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr-run-malloc.dir/clean
 
 drvr/CMakeFiles/drvr-run-malloc.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/drvr /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/drvr /users/alanandr/lib/drv/build/drvr/CMakeFiles/drvr-run-malloc.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-malloc
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/drvr /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/drvr /users/alanandr/lib/mydrv/build/drvr/CMakeFiles/drvr-run-malloc.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-malloc
 .PHONY : drvr/CMakeFiles/drvr-run-malloc.dir/depend
 

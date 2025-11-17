@@ -4,7 +4,7 @@
 # compile ASM with /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/users/alanandr/lib/drv/build/rv64/drvr/drvr_add_include
+ASM_INCLUDES = -I/users/alanandr/lib/mydrv/build/rv64/drvr/drvr_add_include
 
 ASM_FLAGS = 
 

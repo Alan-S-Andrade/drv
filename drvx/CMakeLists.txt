@@ -37,6 +37,8 @@ if (NOT DEFINED ARCH_RV64)
   endfunction()
 
   drvx_test(simple) # google test candidate
+  drvx_test(leiden_single)
+  drvx_test(tc)
   drvx_test(allocator) # google test candidate
   drvx_test(atomic_read_back) # google test candidate
   drvx_test(amoadd) # tough test with google test

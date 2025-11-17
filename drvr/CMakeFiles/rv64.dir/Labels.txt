@@ -1,0 +1,13 @@
+# Target labels
+ rv64
+# Source files and their labels
+/users/alanandr/lib/mydrv/drvr/CMakeFiles/rv64
+/users/alanandr/lib/mydrv/drvr/CMakeFiles/rv64.rule
+/users/alanandr/lib/mydrv/drvr/CMakeFiles/rv64-complete.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-build.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-configure.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-download.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-install.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-mkdir.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-patch.rule
+/users/alanandr/lib/mydrv/drvr/rv64-prefix/src/rv64-stamp/rv64-update.rule

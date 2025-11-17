@@ -1,6 +1,6 @@
 drvr/CMakeFiles/drvr_vread.dir/vread.cpp.obj: \
- /users/alanandr/lib/drv/drvr/vread.cpp \
- /users/alanandr/lib/drv/drvr/vread.hpp \
+ /users/alanandr/lib/mydrv/drvr/vread.cpp \
+ /users/alanandr/lib/mydrv/drvr/vread.hpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/cstdint \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/os_defines.h \
@@ -38,15 +38,15 @@ drvr/CMakeFiles/drvr_vread.dir/vread.cpp.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/sched.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/types.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/stdio.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/atomic.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/register.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/atomic.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/staticdecl.h \
- /users/alanandr/lib/drv/pandohammer/pandohammer/address.h \
- /users/alanandr/lib/drv/build/rv64/drvr/drvr_vread_include/address_map.h
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/staticdecl.h \
+ /users/alanandr/lib/mydrv/pandohammer/pandohammer/address.h \
+ /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_vread_include/address_map.h

@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/lib/drv/pandocommand
+# Install script for directory: /users/alanandr/lib/mydrv/pandocommand
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,6 +40,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/lib/drv/build/rv64/pandocommand/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/lib/mydrv/build/rv64/pandocommand/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

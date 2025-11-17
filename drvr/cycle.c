@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <pandohammer/mmio.h>
+#include "pandohammer/mmio.h"
 #include <pandohammer/cpuinfo.h>
 
 

@@ -57,10 +57,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/CMakeFiles /users/alanandr/lib/drv/build/cmake-drvr-example//CMakeFiles/progress.marks
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/CMakeFiles 0
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/CMakeFiles /users/alanandr/lib/mydrv/build/cmake-drvr-example//CMakeFiles/progress.marks
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/clean
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,22 +148,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/preinstall
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/preinstall
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 cmake-drvr-example/CMakeFiles/command_processor.dir/rule:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/CMakeFiles/command_processor.dir/rule
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/CMakeFiles/command_processor.dir/rule
 .PHONY : cmake-drvr-example/CMakeFiles/command_processor.dir/rule
 
 # Convenience name for target.
@@ -172,12 +172,12 @@ command_processor: cmake-drvr-example/CMakeFiles/command_processor.dir/rule
 
 # fast build rule for target.
 command_processor/fast:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/build
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/build
 .PHONY : command_processor/fast
 
 # Convenience name for target.
 cmake-drvr-example/CMakeFiles/run-drvr-example.dir/rule:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/CMakeFiles/run-drvr-example.dir/rule
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/CMakeFiles/run-drvr-example.dir/rule
 .PHONY : cmake-drvr-example/CMakeFiles/run-drvr-example.dir/rule
 
 # Convenience name for target.
@@ -186,12 +186,12 @@ run-drvr-example: cmake-drvr-example/CMakeFiles/run-drvr-example.dir/rule
 
 # fast build rule for target.
 run-drvr-example/fast:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/run-drvr-example.dir/build.make cmake-drvr-example/CMakeFiles/run-drvr-example.dir/build
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/run-drvr-example.dir/build.make cmake-drvr-example/CMakeFiles/run-drvr-example.dir/build
 .PHONY : run-drvr-example/fast
 
 # Convenience name for target.
 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/rule:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/rule
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/rule
 .PHONY : cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/rule
 
 # Convenience name for target.
@@ -200,7 +200,7 @@ run-drvr-example-with-command-processor: cmake-drvr-example/CMakeFiles/run-drvr-
 
 # fast build rule for target.
 run-drvr-example-with-command-processor/fast:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/build.make cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/build
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/build.make cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/build
 .PHONY : run-drvr-example-with-command-processor/fast
 
 command_processor.o: command_processor.cpp.o
@@ -208,7 +208,7 @@ command_processor.o: command_processor.cpp.o
 
 # target to build an object file
 command_processor.cpp.o:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o
 .PHONY : command_processor.cpp.o
 
 command_processor.i: command_processor.cpp.i
@@ -216,7 +216,7 @@ command_processor.i: command_processor.cpp.i
 
 # target to preprocess a source file
 command_processor.cpp.i:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.i
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.i
 .PHONY : command_processor.cpp.i
 
 command_processor.s: command_processor.cpp.s
@@ -224,7 +224,7 @@ command_processor.s: command_processor.cpp.s
 
 # target to generate assembly for a file
 command_processor.cpp.s:
-	cd /users/alanandr/lib/drv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.s
+	cd /users/alanandr/lib/mydrv/build && $(MAKE) $(MAKESILENT) -f cmake-drvr-example/CMakeFiles/command_processor.dir/build.make cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.s
 .PHONY : command_processor.cpp.s
 
 # Help Target
@@ -256,6 +256,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

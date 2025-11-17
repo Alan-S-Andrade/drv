@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build/rv64
 
 # Include any dependencies generated for this target.
 include drvr/CMakeFiles/drvr_puts.dir/depend.make
@@ -70,25 +70,25 @@ include drvr/CMakeFiles/drvr_puts.dir/progress.make
 include drvr/CMakeFiles/drvr_puts.dir/flags.make
 
 drvr/drvr_puts_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_puts_include/address_map.h"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && mkdir -p /users/alanandr/lib/drv/build/rv64/drvr/drvr_puts_include && python3 /users/alanandr/lib/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/lib/drv/build/rv64/drvr/drvr_puts_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_puts_include/address_map.h"
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && mkdir -p /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_puts_include && python3 /users/alanandr/lib/mydrv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_puts_include/address_map.h
 
 drvr/CMakeFiles/drvr_puts.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_puts.dir/codegen
 
 drvr/CMakeFiles/drvr_puts.dir/puts.c.obj: drvr/CMakeFiles/drvr_puts.dir/flags.make
-drvr/CMakeFiles/drvr_puts.dir/puts.c.obj: /users/alanandr/lib/drv/drvr/puts.c
+drvr/CMakeFiles/drvr_puts.dir/puts.c.obj: /users/alanandr/lib/mydrv/drvr/puts.c
 drvr/CMakeFiles/drvr_puts.dir/puts.c.obj: drvr/CMakeFiles/drvr_puts.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_puts.dir/puts.c.obj"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_puts.dir/puts.c.obj -MF CMakeFiles/drvr_puts.dir/puts.c.obj.d -o CMakeFiles/drvr_puts.dir/puts.c.obj -c /users/alanandr/lib/drv/drvr/puts.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_puts.dir/puts.c.obj"
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_puts.dir/puts.c.obj -MF CMakeFiles/drvr_puts.dir/puts.c.obj.d -o CMakeFiles/drvr_puts.dir/puts.c.obj -c /users/alanandr/lib/mydrv/drvr/puts.c
 
 drvr/CMakeFiles/drvr_puts.dir/puts.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/drvr_puts.dir/puts.c.i"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/lib/drv/drvr/puts.c > CMakeFiles/drvr_puts.dir/puts.c.i
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/lib/mydrv/drvr/puts.c > CMakeFiles/drvr_puts.dir/puts.c.i
 
 drvr/CMakeFiles/drvr_puts.dir/puts.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/drvr_puts.dir/puts.c.s"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/lib/drv/drvr/puts.c -o CMakeFiles/drvr_puts.dir/puts.c.s
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/lib/mydrv/drvr/puts.c -o CMakeFiles/drvr_puts.dir/puts.c.s
 
 # Object files for target drvr_puts
 drvr_puts_OBJECTS = \
@@ -96,26 +96,26 @@ drvr_puts_OBJECTS = \
 
 # External object files for target drvr_puts
 drvr_puts_EXTERNAL_OBJECTS = \
-"/users/alanandr/lib/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/users/alanandr/lib/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/users/alanandr/lib/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/users/alanandr/lib/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 drvr/drvr_puts: drvr/CMakeFiles/drvr_puts.dir/puts.c.obj
 drvr/drvr_puts: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 drvr/drvr_puts: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 drvr/drvr_puts: drvr/CMakeFiles/drvr_puts.dir/build.make
 drvr/drvr_puts: drvr/CMakeFiles/drvr_puts.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr_puts"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_puts.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr_puts"
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_puts.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvr/CMakeFiles/drvr_puts.dir/build: drvr/drvr_puts
 .PHONY : drvr/CMakeFiles/drvr_puts.dir/build
 
 drvr/CMakeFiles/drvr_puts.dir/clean:
-	cd /users/alanandr/lib/drv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_puts.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_puts.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr_puts.dir/clean
 
 drvr/CMakeFiles/drvr_puts.dir/depend: drvr/drvr_puts_include/address_map.h
-	cd /users/alanandr/lib/drv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/drvr /users/alanandr/lib/drv/build/rv64 /users/alanandr/lib/drv/build/rv64/drvr /users/alanandr/lib/drv/build/rv64/drvr/CMakeFiles/drvr_puts.dir/DependInfo.cmake "--color=$(COLOR)" drvr_puts
+	cd /users/alanandr/lib/mydrv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/drvr /users/alanandr/lib/mydrv/build/rv64 /users/alanandr/lib/mydrv/build/rv64/drvr /users/alanandr/lib/mydrv/build/rv64/drvr/CMakeFiles/drvr_puts.dir/DependInfo.cmake "--color=$(COLOR)" drvr_puts
 .PHONY : drvr/CMakeFiles/drvr_puts.dir/depend
 

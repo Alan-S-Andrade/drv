@@ -57,10 +57,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/CMakeFiles /users/alanandr/lib/drv/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/CMakeFiles /users/alanandr/lib/mydrv/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/drv/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/lib/mydrv/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -355,6 +355,58 @@ drvx-run-simple: cmake_check_build_system
 drvx-run-simple/fast:
 	$(MAKE) $(MAKESILENT) -f drvx/CMakeFiles/drvx-run-simple.dir/build.make drvx/CMakeFiles/drvx-run-simple.dir/build
 .PHONY : drvx-run-simple/fast
+
+#=============================================================================
+# Target rules for targets named leiden_single
+
+# Build rule for target.
+leiden_single: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 leiden_single
+.PHONY : leiden_single
+
+# fast build rule for target.
+leiden_single/fast:
+	$(MAKE) $(MAKESILENT) -f drvx/CMakeFiles/leiden_single.dir/build.make drvx/CMakeFiles/leiden_single.dir/build
+.PHONY : leiden_single/fast
+
+#=============================================================================
+# Target rules for targets named drvx-run-leiden_single
+
+# Build rule for target.
+drvx-run-leiden_single: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvx-run-leiden_single
+.PHONY : drvx-run-leiden_single
+
+# fast build rule for target.
+drvx-run-leiden_single/fast:
+	$(MAKE) $(MAKESILENT) -f drvx/CMakeFiles/drvx-run-leiden_single.dir/build.make drvx/CMakeFiles/drvx-run-leiden_single.dir/build
+.PHONY : drvx-run-leiden_single/fast
+
+#=============================================================================
+# Target rules for targets named tc
+
+# Build rule for target.
+tc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tc
+.PHONY : tc
+
+# fast build rule for target.
+tc/fast:
+	$(MAKE) $(MAKESILENT) -f drvx/CMakeFiles/tc.dir/build.make drvx/CMakeFiles/tc.dir/build
+.PHONY : tc/fast
+
+#=============================================================================
+# Target rules for targets named drvx-run-tc
+
+# Build rule for target.
+drvx-run-tc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvx-run-tc
+.PHONY : drvx-run-tc
+
+# fast build rule for target.
+drvx-run-tc/fast:
+	$(MAKE) $(MAKESILENT) -f drvx/CMakeFiles/drvx-run-tc.dir/build.make drvx/CMakeFiles/drvx-run-tc.dir/build
+.PHONY : drvx-run-tc/fast
 
 #=============================================================================
 # Target rules for targets named allocator
@@ -1228,6 +1280,136 @@ drvr-run-malloc/fast:
 .PHONY : drvr-run-malloc/fast
 
 #=============================================================================
+# Target rules for targets named drvr-run-leiden_single
+
+# Build rule for target.
+drvr-run-leiden_single: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-leiden_single
+.PHONY : drvr-run-leiden_single
+
+# fast build rule for target.
+drvr-run-leiden_single/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-leiden_single.dir/build.make drvr/CMakeFiles/drvr-run-leiden_single.dir/build
+.PHONY : drvr-run-leiden_single/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-attn_fixed
+
+# Build rule for target.
+drvr-run-attn_fixed: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-attn_fixed
+.PHONY : drvr-run-attn_fixed
+
+# fast build rule for target.
+drvr-run-attn_fixed/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-attn_fixed.dir/build.make drvr/CMakeFiles/drvr-run-attn_fixed.dir/build
+.PHONY : drvr-run-attn_fixed/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-bfs
+
+# Build rule for target.
+drvr-run-bfs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-bfs
+.PHONY : drvr-run-bfs
+
+# fast build rule for target.
+drvr-run-bfs/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs.dir/build.make drvr/CMakeFiles/drvr-run-bfs.dir/build
+.PHONY : drvr-run-bfs/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-bfs-multith
+
+# Build rule for target.
+drvr-run-bfs-multith: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-bfs-multith
+.PHONY : drvr-run-bfs-multith
+
+# fast build rule for target.
+drvr-run-bfs-multith/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs-multith.dir/build.make drvr/CMakeFiles/drvr-run-bfs-multith.dir/build
+.PHONY : drvr-run-bfs-multith/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-tc
+
+# Build rule for target.
+drvr-run-tc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-tc
+.PHONY : drvr-run-tc
+
+# fast build rule for target.
+drvr-run-tc/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-tc.dir/build.make drvr/CMakeFiles/drvr-run-tc.dir/build
+.PHONY : drvr-run-tc/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-tc_larger
+
+# Build rule for target.
+drvr-run-tc_larger: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-tc_larger
+.PHONY : drvr-run-tc_larger
+
+# fast build rule for target.
+drvr-run-tc_larger/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-tc_larger.dir/build.make drvr/CMakeFiles/drvr-run-tc_larger.dir/build
+.PHONY : drvr-run-tc_larger/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-list_traverse
+
+# Build rule for target.
+drvr-run-list_traverse: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-list_traverse
+.PHONY : drvr-run-list_traverse
+
+# fast build rule for target.
+drvr-run-list_traverse/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-list_traverse.dir/build.make drvr/CMakeFiles/drvr-run-list_traverse.dir/build
+.PHONY : drvr-run-list_traverse/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-ptr_chase
+
+# Build rule for target.
+drvr-run-ptr_chase: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-ptr_chase
+.PHONY : drvr-run-ptr_chase
+
+# fast build rule for target.
+drvr-run-ptr_chase/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-ptr_chase.dir/build.make drvr/CMakeFiles/drvr-run-ptr_chase.dir/build
+.PHONY : drvr-run-ptr_chase/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-gemm_int_rand
+
+# Build rule for target.
+drvr-run-gemm_int_rand: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-gemm_int_rand
+.PHONY : drvr-run-gemm_int_rand
+
+# fast build rule for target.
+drvr-run-gemm_int_rand/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-gemm_int_rand.dir/build.make drvr/CMakeFiles/drvr-run-gemm_int_rand.dir/build
+.PHONY : drvr-run-gemm_int_rand/fast
+
+#=============================================================================
+# Target rules for targets named drvr-run-gemm_int_deter
+
+# Build rule for target.
+drvr-run-gemm_int_deter: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-gemm_int_deter
+.PHONY : drvr-run-gemm_int_deter
+
+# fast build rule for target.
+drvr-run-gemm_int_deter/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-gemm_int_deter.dir/build.make drvr/CMakeFiles/drvr-run-gemm_int_deter.dir/build
+.PHONY : drvr-run-gemm_int_deter/fast
+
+#=============================================================================
 # Target rules for targets named drvr-run-multihart
 
 # Build rule for target.
@@ -1438,6 +1620,9 @@ help:
 	@echo "... drvr-run-addressmap"
 	@echo "... drvr-run-all"
 	@echo "... drvr-run-amoswap"
+	@echo "... drvr-run-attn_fixed"
+	@echo "... drvr-run-bfs"
+	@echo "... drvr-run-bfs-multith"
 	@echo "... drvr-run-cycle"
 	@echo "... drvr-run-exit"
 	@echo "... drvr-run-fence"
@@ -1448,7 +1633,11 @@ help:
 	@echo "... drvr-run-fread"
 	@echo "... drvr-run-fscanf"
 	@echo "... drvr-run-fstat"
+	@echo "... drvr-run-gemm_int_deter"
+	@echo "... drvr-run-gemm_int_rand"
 	@echo "... drvr-run-gups"
+	@echo "... drvr-run-leiden_single"
+	@echo "... drvr-run-list_traverse"
 	@echo "... drvr-run-lsu"
 	@echo "... drvr-run-malloc"
 	@echo "... drvr-run-multihart"
@@ -1456,11 +1645,14 @@ help:
 	@echo "... drvr-run-poke"
 	@echo "... drvr-run-print_int"
 	@echo "... drvr-run-printf"
+	@echo "... drvr-run-ptr_chase"
 	@echo "... drvr-run-puts"
 	@echo "... drvr-run-read"
 	@echo "... drvr-run-shift"
 	@echo "... drvr-run-simple"
 	@echo "... drvr-run-snprintf"
+	@echo "... drvr-run-tc"
+	@echo "... drvr-run-tc_larger"
 	@echo "... drvr-run-vread"
 	@echo "... drvr-run-wait-with-sleep"
 	@echo "... drvr-run-wait-without-sleep"
@@ -1480,6 +1672,7 @@ help:
 	@echo "... drvx-run-gups"
 	@echo "... drvx-run-gups_multi_node"
 	@echo "... drvx-run-info"
+	@echo "... drvx-run-leiden_single"
 	@echo "... drvx-run-lock"
 	@echo "... drvx-run-mem"
 	@echo "... drvx-run-multicore"
@@ -1490,6 +1683,7 @@ help:
 	@echo "... drvx-run-stream"
 	@echo "... drvx-run-stride"
 	@echo "... drvx-run-super_simple_task_runtime"
+	@echo "... drvx-run-tc"
 	@echo "... drvx-run-to_address"
 	@echo "... drvx-run-to_native"
 	@echo "... install-drv-element"
@@ -1516,6 +1710,7 @@ help:
 	@echo "... gups"
 	@echo "... gups_multi_node"
 	@echo "... info"
+	@echo "... leiden_single"
 	@echo "... lock"
 	@echo "... mem"
 	@echo "... multicore"
@@ -1529,6 +1724,7 @@ help:
 	@echo "... stream"
 	@echo "... stride"
 	@echo "... super_simple_task_runtime"
+	@echo "... tc"
 	@echo "... to_address"
 	@echo "... to_native"
 .PHONY : help

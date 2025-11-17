@@ -5,13 +5,13 @@
 # compile C with /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/users/alanandr/lib/drv/build/rv64/drvr/drvr_amoswap_include -I/users/alanandr/lib/drv/pandohammer
+ASM_INCLUDES = -I/users/alanandr/lib/mydrv/build/rv64/drvr/drvr_amoswap_include -I/users/alanandr/lib/mydrv/pandohammer
 
 ASM_FLAGS = 
 
 C_DEFINES = 
 
-C_INCLUDES = -I/users/alanandr/lib/drv/build/rv64/drvr/drvr_amoswap_include -I/users/alanandr/lib/drv/pandohammer
+C_INCLUDES = -I/users/alanandr/lib/mydrv/build/rv64/drvr/drvr_amoswap_include -I/users/alanandr/lib/mydrv/pandohammer
 
 C_FLAGS = 
 

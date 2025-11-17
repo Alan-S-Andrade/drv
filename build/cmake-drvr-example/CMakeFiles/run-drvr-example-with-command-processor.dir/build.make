@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Utility rule file for run-drvr-example-with-command-processor.
 
@@ -68,7 +68,7 @@ include cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.di
 
 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor: rv64/cmake-drvr-example/drvr-example
 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor: element/libDrv.so
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && mkdir -p /users/alanandr/lib/drv/build/cmake-drvr-example/run-drvr-example-with-command-processor && cd /users/alanandr/lib/drv/build/cmake-drvr-example/run-drvr-example-with-command-processor && PYTHONPATH=/users/alanandr/lib/drv/py::/users/alanandr/lib/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/drv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/lib/drv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/drv/build/rv64/cmake-drvr-example/drvr-example  | tee /users/alanandr/lib/drv/build/cmake-drvr-example/run-drvr-example-with-command-processor/output.txt
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && mkdir -p /users/alanandr/lib/mydrv/build/cmake-drvr-example/run-drvr-example-with-command-processor && cd /users/alanandr/lib/mydrv/build/cmake-drvr-example/run-drvr-example-with-command-processor && PYTHONPATH=/users/alanandr/lib/mydrv/py::/users/alanandr/lib/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/lib/mydrv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/lib/mydrv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/lib/mydrv/build/rv64/cmake-drvr-example/drvr-example  | tee /users/alanandr/lib/mydrv/build/cmake-drvr-example/run-drvr-example-with-command-processor/output.txt
 
 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/codegen:
 .PHONY : cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/codegen
@@ -82,10 +82,10 @@ cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/build:
 .PHONY : cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/build
 
 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/clean:
-	cd /users/alanandr/lib/drv/build/cmake-drvr-example && $(CMAKE_COMMAND) -P CMakeFiles/run-drvr-example-with-command-processor.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/cmake-drvr-example && $(CMAKE_COMMAND) -P CMakeFiles/run-drvr-example-with-command-processor.dir/cmake_clean.cmake
 .PHONY : cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/clean
 
 cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/cmake-drvr-example /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/cmake-drvr-example /users/alanandr/lib/drv/build/cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/DependInfo.cmake "--color=$(COLOR)" run-drvr-example-with-command-processor
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/cmake-drvr-example /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/cmake-drvr-example /users/alanandr/lib/mydrv/build/cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/DependInfo.cmake "--color=$(COLOR)" run-drvr-example-with-command-processor
 .PHONY : cmake-drvr-example/CMakeFiles/run-drvr-example-with-command-processor.dir/depend
 

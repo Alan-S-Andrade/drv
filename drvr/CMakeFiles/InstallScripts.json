@@ -1,0 +1,17 @@
+{
+	"InstallScripts" : 
+	[
+		"/users/alanandr/lib/mydrv/drvr/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/interpreter/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/api/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/element/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/pandocommand/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/pandohammer/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/cmake-drvx-example/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/cmake-drvr-example/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/cmake/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/drvx/cmake_install.cmake",
+		"/users/alanandr/lib/mydrv/drvr/drvr/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

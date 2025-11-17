@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build/rv64
 
 # Include any dependencies generated for this target.
 include drvr/CMakeFiles/drvr_fma-multith.dir/depend.make
@@ -70,25 +70,25 @@ include drvr/CMakeFiles/drvr_fma-multith.dir/progress.make
 include drvr/CMakeFiles/drvr_fma-multith.dir/flags.make
 
 drvr/drvr_fma-multith_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_fma-multith_include/address_map.h"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && mkdir -p /users/alanandr/lib/drv/build/rv64/drvr/drvr_fma-multith_include && python3 /users/alanandr/lib/drv/py/addressmap.py --core-threads 8 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/lib/drv/build/rv64/drvr/drvr_fma-multith_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_fma-multith_include/address_map.h"
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && mkdir -p /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_fma-multith_include && python3 /users/alanandr/lib/mydrv/py/addressmap.py --core-threads 2 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_fma-multith_include/address_map.h
 
 drvr/CMakeFiles/drvr_fma-multith.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_fma-multith.dir/codegen
 
 drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: drvr/CMakeFiles/drvr_fma-multith.dir/flags.make
-drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: /users/alanandr/lib/drv/drvr/fma-multith.cpp
+drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: /users/alanandr/lib/mydrv/drvr/fma-multith.cpp
 drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: drvr/CMakeFiles/drvr_fma-multith.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj -MF CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj.d -o CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj -c /users/alanandr/lib/drv/drvr/fma-multith.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj"
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj -MF CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj.d -o CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj -c /users/alanandr/lib/mydrv/drvr/fma-multith.cpp
 
 drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.i"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/drvr/fma-multith.cpp > CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.i
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/drvr/fma-multith.cpp > CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.i
 
 drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.s"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/drvr/fma-multith.cpp -o CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.s
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/drvr/fma-multith.cpp -o CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.s
 
 # Object files for target drvr_fma-multith
 drvr_fma__multith_OBJECTS = \
@@ -96,26 +96,26 @@ drvr_fma__multith_OBJECTS = \
 
 # External object files for target drvr_fma-multith
 drvr_fma__multith_EXTERNAL_OBJECTS = \
-"/users/alanandr/lib/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/users/alanandr/lib/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/users/alanandr/lib/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/users/alanandr/lib/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 drvr/drvr_fma-multith: drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj
 drvr/drvr_fma-multith: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 drvr/drvr_fma-multith: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 drvr/drvr_fma-multith: drvr/CMakeFiles/drvr_fma-multith.dir/build.make
 drvr/drvr_fma-multith: drvr/CMakeFiles/drvr_fma-multith.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable drvr_fma-multith"
-	cd /users/alanandr/lib/drv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_fma-multith.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable drvr_fma-multith"
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_fma-multith.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvr/CMakeFiles/drvr_fma-multith.dir/build: drvr/drvr_fma-multith
 .PHONY : drvr/CMakeFiles/drvr_fma-multith.dir/build
 
 drvr/CMakeFiles/drvr_fma-multith.dir/clean:
-	cd /users/alanandr/lib/drv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_fma-multith.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_fma-multith.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr_fma-multith.dir/clean
 
 drvr/CMakeFiles/drvr_fma-multith.dir/depend: drvr/drvr_fma-multith_include/address_map.h
-	cd /users/alanandr/lib/drv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/drvr /users/alanandr/lib/drv/build/rv64 /users/alanandr/lib/drv/build/rv64/drvr /users/alanandr/lib/drv/build/rv64/drvr/CMakeFiles/drvr_fma-multith.dir/DependInfo.cmake "--color=$(COLOR)" drvr_fma-multith
+	cd /users/alanandr/lib/mydrv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/drvr /users/alanandr/lib/mydrv/build/rv64 /users/alanandr/lib/mydrv/build/rv64/drvr /users/alanandr/lib/mydrv/build/rv64/drvr/CMakeFiles/drvr_fma-multith.dir/DependInfo.cmake "--color=$(COLOR)" drvr_fma-multith
 .PHONY : drvr/CMakeFiles/drvr_fma-multith.dir/depend
 

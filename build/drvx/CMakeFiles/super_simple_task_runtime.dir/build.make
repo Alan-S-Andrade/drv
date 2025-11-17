@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Include any dependencies generated for this target.
 include drvx/CMakeFiles/super_simple_task_runtime.dir/depend.make
@@ -73,32 +73,32 @@ drvx/CMakeFiles/super_simple_task_runtime.dir/codegen:
 .PHONY : drvx/CMakeFiles/super_simple_task_runtime.dir/codegen
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o: drvx/CMakeFiles/super_simple_task_runtime.dir/flags.make
-drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o: /users/alanandr/lib/drv/drvx/runtime.cpp
+drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o: /users/alanandr/lib/mydrv/drvx/runtime.cpp
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o: drvx/CMakeFiles/super_simple_task_runtime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o"
-	cd /users/alanandr/lib/drv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o -MF CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o.d -o CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o -c /users/alanandr/lib/drv/drvx/runtime.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o -MF CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o.d -o CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o -c /users/alanandr/lib/mydrv/drvx/runtime.cpp
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.i"
-	cd /users/alanandr/lib/drv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/drvx/runtime.cpp > CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.i
+	cd /users/alanandr/lib/mydrv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/drvx/runtime.cpp > CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.i
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.s"
-	cd /users/alanandr/lib/drv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/drvx/runtime.cpp -o CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.s
+	cd /users/alanandr/lib/mydrv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/drvx/runtime.cpp -o CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.s
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o: drvx/CMakeFiles/super_simple_task_runtime.dir/flags.make
-drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o: /users/alanandr/lib/drv/drvx/runtime_main.cpp
+drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o: /users/alanandr/lib/mydrv/drvx/runtime_main.cpp
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o: drvx/CMakeFiles/super_simple_task_runtime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o"
-	cd /users/alanandr/lib/drv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o -MF CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o.d -o CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o -c /users/alanandr/lib/drv/drvx/runtime_main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o"
+	cd /users/alanandr/lib/mydrv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o -MF CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o.d -o CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o -c /users/alanandr/lib/mydrv/drvx/runtime_main.cpp
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.i"
-	cd /users/alanandr/lib/drv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/drv/drvx/runtime_main.cpp > CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.i
+	cd /users/alanandr/lib/mydrv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/lib/mydrv/drvx/runtime_main.cpp > CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.i
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.s"
-	cd /users/alanandr/lib/drv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/drv/drvx/runtime_main.cpp -o CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.s
+	cd /users/alanandr/lib/mydrv/build/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/lib/mydrv/drvx/runtime_main.cpp -o CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.s
 
 # Object files for target super_simple_task_runtime
 super_simple_task_runtime_OBJECTS = \
@@ -118,18 +118,18 @@ drvx/libsuper_simple_task_runtime.so: /usr/lib/x86_64-linux-gnu/libboost_context
 drvx/libsuper_simple_task_runtime.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.74.0
 drvx/libsuper_simple_task_runtime.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.74.0
 drvx/libsuper_simple_task_runtime.so: drvx/CMakeFiles/super_simple_task_runtime.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libsuper_simple_task_runtime.so"
-	cd /users/alanandr/lib/drv/build/drvx && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/super_simple_task_runtime.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/lib/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libsuper_simple_task_runtime.so"
+	cd /users/alanandr/lib/mydrv/build/drvx && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/super_simple_task_runtime.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvx/CMakeFiles/super_simple_task_runtime.dir/build: drvx/libsuper_simple_task_runtime.so
 .PHONY : drvx/CMakeFiles/super_simple_task_runtime.dir/build
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/clean:
-	cd /users/alanandr/lib/drv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/super_simple_task_runtime.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/super_simple_task_runtime.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/super_simple_task_runtime.dir/clean
 
 drvx/CMakeFiles/super_simple_task_runtime.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/drvx /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/drvx /users/alanandr/lib/drv/build/drvx/CMakeFiles/super_simple_task_runtime.dir/DependInfo.cmake "--color=$(COLOR)" super_simple_task_runtime
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/drvx /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/drvx /users/alanandr/lib/mydrv/build/drvx/CMakeFiles/super_simple_task_runtime.dir/DependInfo.cmake "--color=$(COLOR)" super_simple_task_runtime
 .PHONY : drvx/CMakeFiles/super_simple_task_runtime.dir/depend
 

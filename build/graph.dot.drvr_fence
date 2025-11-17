@@ -1,8 +1,0 @@
-digraph "drvr_fence" {
-node [
-  fontsize = "12"
-];
-    "node32" [ label = "drvr_fence", shape = egg ];
-    "node28" [ label = "pandohammer", shape = septagon ];
-    "node32" -> "node28"  // drvr_fence -> pandohammer
-}

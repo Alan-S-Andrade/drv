@@ -1,8 +1,0 @@
-digraph "drvr_wait-with-sleep" {
-node [
-  fontsize = "12"
-];
-    "node54" [ label = "drvr_wait-with-sleep", shape = egg ];
-    "node28" [ label = "pandohammer", shape = septagon ];
-    "node54" -> "node28"  // drvr_wait-with-sleep -> pandohammer
-}

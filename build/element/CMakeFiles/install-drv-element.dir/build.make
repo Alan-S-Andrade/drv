@@ -53,10 +53,10 @@ RM = /users/alanandr/lib/cmake-4.2.0-rc2-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/lib/drv
+CMAKE_SOURCE_DIR = /users/alanandr/lib/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/lib/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/lib/mydrv/build
 
 # Utility rule file for install-drv-element.
 
@@ -67,7 +67,7 @@ include element/CMakeFiles/install-drv-element.dir/compiler_depend.make
 include element/CMakeFiles/install-drv-element.dir/progress.make
 
 element/CMakeFiles/install-drv-element: element/libDrv.so
-	cd /users/alanandr/lib/drv/build/element && /users/alanandr/local/sstcore/bin/sst-register Drv Drv_LIBDIR=/usr/local/lib
+	cd /users/alanandr/lib/mydrv/build/element && /users/alanandr/local/sstcore/bin/sst-register Drv Drv_LIBDIR=/usr/local/lib
 
 element/CMakeFiles/install-drv-element.dir/codegen:
 .PHONY : element/CMakeFiles/install-drv-element.dir/codegen
@@ -81,10 +81,10 @@ element/CMakeFiles/install-drv-element.dir/build: install-drv-element
 .PHONY : element/CMakeFiles/install-drv-element.dir/build
 
 element/CMakeFiles/install-drv-element.dir/clean:
-	cd /users/alanandr/lib/drv/build/element && $(CMAKE_COMMAND) -P CMakeFiles/install-drv-element.dir/cmake_clean.cmake
+	cd /users/alanandr/lib/mydrv/build/element && $(CMAKE_COMMAND) -P CMakeFiles/install-drv-element.dir/cmake_clean.cmake
 .PHONY : element/CMakeFiles/install-drv-element.dir/clean
 
 element/CMakeFiles/install-drv-element.dir/depend:
-	cd /users/alanandr/lib/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/drv /users/alanandr/lib/drv/element /users/alanandr/lib/drv/build /users/alanandr/lib/drv/build/element /users/alanandr/lib/drv/build/element/CMakeFiles/install-drv-element.dir/DependInfo.cmake "--color=$(COLOR)" install-drv-element
+	cd /users/alanandr/lib/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/lib/mydrv /users/alanandr/lib/mydrv/element /users/alanandr/lib/mydrv/build /users/alanandr/lib/mydrv/build/element /users/alanandr/lib/mydrv/build/element/CMakeFiles/install-drv-element.dir/DependInfo.cmake "--color=$(COLOR)" install-drv-element
 .PHONY : element/CMakeFiles/install-drv-element.dir/depend
 
