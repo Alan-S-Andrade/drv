@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/users/alanandr/lib/mydrv/drvr/add.S
+/users/alanandr/mydrv/drvr/add.S
 machine/syscall.h
 -
 

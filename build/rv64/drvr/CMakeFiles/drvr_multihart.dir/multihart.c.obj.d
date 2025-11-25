@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_multihart.dir/multihart.c.obj: \
- /users/alanandr/lib/mydrv/drvr/multihart.c \
+ /users/alanandr/mydrv/drvr/multihart.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -21,7 +21,7 @@ drvr/CMakeFiles/drvr_multihart.dir/multihart.c.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/register.h

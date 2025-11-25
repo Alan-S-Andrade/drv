@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/mydrv/drvr/fib-main.c" "drvr/CMakeFiles/drvr_fib.dir/fib-main.c.obj" "gcc" "drvr/CMakeFiles/drvr_fib.dir/fib-main.c.obj.d"
-  "/users/alanandr/lib/mydrv/drvr/fib.c" "drvr/CMakeFiles/drvr_fib.dir/fib.c.obj" "gcc" "drvr/CMakeFiles/drvr_fib.dir/fib.c.obj.d"
+  "/users/alanandr/mydrv/drvr/fib-main.c" "drvr/CMakeFiles/drvr_fib.dir/fib-main.c.obj" "gcc" "drvr/CMakeFiles/drvr_fib.dir/fib-main.c.obj.d"
+  "/users/alanandr/mydrv/drvr/fib.c" "drvr/CMakeFiles/drvr_fib.dir/fib.c.obj" "gcc" "drvr/CMakeFiles/drvr_fib.dir/fib.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

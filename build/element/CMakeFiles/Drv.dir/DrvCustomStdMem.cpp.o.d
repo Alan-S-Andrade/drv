@@ -1,7 +1,7 @@
 element/CMakeFiles/Drv.dir/DrvCustomStdMem.cpp.o: \
- /users/alanandr/lib/mydrv/element/DrvCustomStdMem.cpp \
+ /users/alanandr/mydrv/element/DrvCustomStdMem.cpp \
  /usr/include/stdc-predef.h \
- /users/alanandr/lib/mydrv/api/DrvAPIReadModifyWrite.hpp \
+ /users/alanandr/mydrv/api/DrvAPIReadModifyWrite.hpp \
  /usr/include/c++/11/cstddef \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -152,7 +152,7 @@ element/CMakeFiles/Drv.dir/DrvCustomStdMem.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /users/alanandr/lib/mydrv/element/DrvCustomStdMem.hpp \
+ /users/alanandr/mydrv/element/DrvCustomStdMem.hpp \
  /users/alanandr/local/sstcore/include/sst/core/component.h \
  /users/alanandr/local/sstcore/include/sst/core/baseComponent.h \
  /users/alanandr/local/sstcore/include/sst/core/clock.h \
@@ -389,7 +389,7 @@ element/CMakeFiles/Drv.dir/DrvCustomStdMem.cpp.o: \
  /users/alanandr/local/sstelements/include/sst/elements/memHierarchy/membackend/simpleMemBackendConvertor.h \
  /users/alanandr/local/sstelements/include/sst/elements/memHierarchy/membackend/flagMemBackendConvertor.h \
  /users/alanandr/local/sstelements/include/sst/elements/memHierarchy/membackend/extMemBackendConvertor.h \
- /users/alanandr/lib/mydrv/api/DrvAPIThreadState.hpp \
- /users/alanandr/lib/mydrv/api/DrvAPIAddress.hpp \
- /users/alanandr/lib/mydrv/api/DrvAPISystem.hpp \
- /users/alanandr/lib/mydrv/api/DrvAPIAddress.hpp
+ /users/alanandr/mydrv/api/DrvAPIThreadState.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAddress.hpp \
+ /users/alanandr/mydrv/api/DrvAPISystem.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAddress.hpp

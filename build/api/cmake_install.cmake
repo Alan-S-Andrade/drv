@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/lib/mydrv/api
+# Install script for directory: /users/alanandr/mydrv/api
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,9 +49,13 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/lib/mydrv/build/api/libdrvapi.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/mydrv/build/api/libdrvapi.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so"
+         OLD_RPATH "/usr/local/lib:"
+         NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so")
     endif()
@@ -63,34 +67,34 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/users/alanandr/lib/mydrv/api/DrvAPIAddress.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIAddressMap.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIAddressToNative.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIAllocator.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPICoreXY.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIGlobal.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPI.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIInfo.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIMain.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIMemory.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPINativeToAddress.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIOp.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIPointer.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIReadModifyWrite.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIThreadState.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPISysConfig.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPISystem.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIThread.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIVar.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPISection.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIBits.hpp"
-    "/users/alanandr/lib/mydrv/api/DrvAPIDMA.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIAddress.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIAddressMap.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIAddressToNative.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIAllocator.hpp"
+    "/users/alanandr/mydrv/api/DrvAPICoreXY.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIGlobal.hpp"
+    "/users/alanandr/mydrv/api/DrvAPI.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIInfo.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIMain.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIMemory.hpp"
+    "/users/alanandr/mydrv/api/DrvAPINativeToAddress.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIOp.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIPointer.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIReadModifyWrite.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIThreadState.hpp"
+    "/users/alanandr/mydrv/api/DrvAPISysConfig.hpp"
+    "/users/alanandr/mydrv/api/DrvAPISystem.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIThread.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIVar.hpp"
+    "/users/alanandr/mydrv/api/DrvAPISection.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIBits.hpp"
+    "/users/alanandr/mydrv/api/DrvAPIDMA.hpp"
     )
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/lib/mydrv/build/api/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/mydrv/build/api/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

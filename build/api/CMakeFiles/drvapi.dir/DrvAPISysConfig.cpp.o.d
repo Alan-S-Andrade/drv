@@ -1,7 +1,6 @@
 api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: \
- /users/alanandr/lib/mydrv/api/DrvAPISysConfig.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/11/atomic \
- /usr/include/c++/11/bits/atomic_base.h \
+ /users/alanandr/mydrv/api/DrvAPISysConfig.cpp /usr/include/stdc-predef.h \
+ /usr/include/c++/11/atomic /usr/include/c++/11/bits/atomic_base.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -23,5 +22,5 @@ api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
  /usr/include/c++/11/bits/move.h /usr/include/c++/11/type_traits \
- /users/alanandr/lib/mydrv/api/DrvAPISysConfig.hpp \
+ /users/alanandr/mydrv/api/DrvAPISysConfig.hpp \
  /usr/include/c++/11/cstdint

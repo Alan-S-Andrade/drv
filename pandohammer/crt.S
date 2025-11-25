@@ -25,7 +25,7 @@ _start:
 1:la    gp, __global_pointer$
 .option pop
   li      a0, 0xFFFFFFFFFFFF0008
-  li      a1, 0xDEADBEEF
+  li      a1, 0xdeadbeef
   sw      a1, 0(a0)
 #if 1
   # set the stack pointer

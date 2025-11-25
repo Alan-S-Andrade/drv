@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/mydrv/drvr/ptr_chase.cpp" "drvr/CMakeFiles/drvr_ptr_chase.dir/ptr_chase.cpp.obj" "gcc" "drvr/CMakeFiles/drvr_ptr_chase.dir/ptr_chase.cpp.obj.d"
+  "/users/alanandr/mydrv/drvr/ptr_chase.cpp" "drvr/CMakeFiles/drvr_ptr_chase.dir/ptr_chase.cpp.obj" "gcc" "drvr/CMakeFiles/drvr_ptr_chase.dir/ptr_chase.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

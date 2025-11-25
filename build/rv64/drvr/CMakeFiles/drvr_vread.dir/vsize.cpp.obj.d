@@ -1,6 +1,6 @@
 drvr/CMakeFiles/drvr_vread.dir/vsize.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/vsize.cpp \
- /users/alanandr/lib/mydrv/drvr/vread.hpp \
+ /users/alanandr/mydrv/drvr/vsize.cpp \
+ /users/alanandr/mydrv/drvr/vread.hpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/cstdint \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/os_defines.h \

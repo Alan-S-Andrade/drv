@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/mydrv/pandocommand/control.cpp" "pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o" "gcc" "pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o.d"
-  "/users/alanandr/lib/mydrv/pandocommand/loader.cpp" "pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o" "gcc" "pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o.d"
+  "/users/alanandr/mydrv/pandocommand/control.cpp" "pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o" "gcc" "pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o.d"
+  "/users/alanandr/mydrv/pandocommand/loader.cpp" "pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o" "gcc" "pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

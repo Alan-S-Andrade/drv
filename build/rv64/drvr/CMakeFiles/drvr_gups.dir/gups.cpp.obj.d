@@ -1,6 +1,6 @@
 drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/gups.cpp \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/drvr/gups.cpp \
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -19,12 +19,12 @@ drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/staticdecl.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/address.h \
- /users/alanandr/lib/mydrv/build/rv64/drvr/drvr_gups_include/address_map.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/register.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/staticdecl.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/address.h \
+ /users/alanandr/mydrv/build/rv64/drvr/drvr_gups_include/address_map.h

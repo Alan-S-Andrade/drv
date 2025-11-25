@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_attn_fixed.dir/attn_fixed.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/attn_fixed.cpp \
+ /users/alanandr/mydrv/drvr/attn_fixed.cpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/cstdint \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/os_defines.h \

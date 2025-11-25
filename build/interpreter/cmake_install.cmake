@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/lib/mydrv/interpreter
+# Install script for directory: /users/alanandr/mydrv/interpreter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,7 +49,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libriscvinterpreter.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/lib/mydrv/build/interpreter/libriscvinterpreter.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/mydrv/build/interpreter/libriscvinterpreter.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libriscvinterpreter.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libriscvinterpreter.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -64,6 +64,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/lib/mydrv/build/interpreter/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/mydrv/build/interpreter/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

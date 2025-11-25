@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_gemm_int_deter.dir/gemm_int_deter.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/gemm_int_deter.cpp \
+ /users/alanandr/mydrv/drvr/gemm_int_deter.cpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/cstdint \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/os_defines.h \

@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_printf.dir/printf.c.obj: \
- /users/alanandr/lib/mydrv/drvr/printf.c \
+ /users/alanandr/mydrv/drvr/printf.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -36,13 +36,13 @@ drvr/CMakeFiles/drvr_printf.dir/printf.c.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/unistd.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/unistd.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/atomic.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/atomic.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/register.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/hartsleep.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/hartsleep.h

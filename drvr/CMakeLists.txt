@@ -134,8 +134,15 @@ drvr_test_build_properties(attn_fixed
   DRV_MODEL_OPTIONS --pxn-dram-banks=8
 )
 
-# bfs_multi
-drvr_test_with_pandohammer(bfs_multi bfs_multi.cpp)
+# bfs_sw_multi
+  drvr_test_with_pandohammer(bfs_multi_sw bfs_sw_hw_multi.cpp)
+  drvr_test_compile_options(bfs_multi_sw -DDEBUG)
+   drvr_test_build_properties(bfs_multi_sw
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  # DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 4
+)
 
 # bfs
 drvr_test_with_pandohammer(bfs bfs_grid.cpp)
@@ -148,15 +155,22 @@ drvr_test_build_properties(bfs
 
 # bfs multi
 drvr_test_with_pandohammer(bfs-multith bfs_grid_multith.cpp)
+drvr_test_compile_options(bfs-multith -DDEBUG)
 drvr_test_build_properties(bfs-multith
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  # DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 1
+)
+
+#tc
+drvr_test_with_pandohammer(tc tc.c)
+drvr_test_build_properties(tc
   PROPERTIES
   DRV_BUILD_POD_CORES_X 1
   DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 8
 )
-
-#tc
-drvr_test_with_pandohammer(tc tc.c)
 
 #tc_larger
 drvr_test_with_pandohammer(tc_larger tc_larger.cpp)
@@ -180,7 +194,7 @@ drvr_test_build_properties(ptr_chase
   PROPERTIES
   DRV_BUILD_POD_CORES_X 1
   # DRV_BUILD_POD_CORES_Y 1
-  DRV_BUILD_CORE_THREADS 4
+  DRV_BUILD_CORE_THREADS 3
 )
 
 # gemm_int_rand
@@ -244,6 +258,11 @@ drvr_test_with_pandohammer(write write.c)
 
 drvr_test_with_pandohammer(wait-with-sleep wait.c)
 drvr_test_compile_options(wait-with-sleep -DUSE_SLEEP=1)
+drvr_set_build_target_properties(drvr_wait-with-sleep
+  PROPERTIES
+  DRV_BUILD_POD_CORES 1
+  DRV_BUILD_CORE_THREADS 2
+  )
 
 drvr_test_with_pandohammer(wait-without-sleep wait.c)
 

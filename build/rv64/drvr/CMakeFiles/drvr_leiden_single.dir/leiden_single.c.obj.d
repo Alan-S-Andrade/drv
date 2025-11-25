@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj: \
- /users/alanandr/lib/mydrv/drvr/leiden_single.c \
+ /users/alanandr/mydrv/drvr/leiden_single.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/mydrv/drvx/flushinv.cpp" "drvx/CMakeFiles/flushinv.dir/flushinv.cpp.o" "gcc" "drvx/CMakeFiles/flushinv.dir/flushinv.cpp.o.d"
+  "/users/alanandr/mydrv/drvx/flushinv.cpp" "drvx/CMakeFiles/flushinv.dir/flushinv.cpp.o" "gcc" "drvx/CMakeFiles/flushinv.dir/flushinv.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

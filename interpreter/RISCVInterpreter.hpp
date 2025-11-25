@@ -6,6 +6,8 @@
 #include "RISCVHart.hpp"
 #include "RISCVInstructionBase.hpp"
 #include <stdexcept>
+#include <iostream>
+
 
 class RISCVInstruction;
 class RISCVInterpreter
@@ -14,6 +16,7 @@ public:
     RISCVInterpreter(){}        
     
     virtual void visit(RISCVHart &hart, RISCVInstruction &instruction) {
+        std::cout << instruction.getMnemonic() << std::endl;
         instruction.accept(hart, *this);
     }
 

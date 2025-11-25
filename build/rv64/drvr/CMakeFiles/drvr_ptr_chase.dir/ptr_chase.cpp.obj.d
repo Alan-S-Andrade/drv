@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_ptr_chase.dir/ptr_chase.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/ptr_chase.cpp \
+ /users/alanandr/mydrv/drvr/ptr_chase.cpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/cstdint \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/os_defines.h \

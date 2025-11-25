@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fib.dir/fib-main.c.obj: \
- /users/alanandr/lib/mydrv/drvr/fib-main.c \
+ /users/alanandr/mydrv/drvr/fib-main.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \

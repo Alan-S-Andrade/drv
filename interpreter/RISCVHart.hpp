@@ -11,6 +11,8 @@
 #include <cfenv>
 #include <cstring>
 
+class RISCVInstruction;
+
 namespace riscvbits
 {
 /**
@@ -30,6 +32,9 @@ public:
     InternalFPType  _f[32];
     int             _rm;
     uint64_t        _pc;
+
+    bool reservation_valid_flag;
+    uint64_t reservation_address;
 
     /**
      * @brief floating point class bitmasks

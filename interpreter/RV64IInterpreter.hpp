@@ -13,6 +13,13 @@ class RV64IInterpreter : public RISCVInterpreter
 {
 public:
     RV64IInterpreter() {}
+    void visitFSD(RISCVHart &hart, RISCVInstruction &i) override {
+        std::stringstream ss;
+        std::string str(hart.to_string());
+        ss << str << " ";
+        std::cout << ss.str() << std::endl;
+    }
+
     void visitLUI(RISCVHart &hart, RISCVInstruction &i) override {
         hart.sx(i.rd()) = static_cast<int64_t>(i.SUimm());
         hart.pc() += 4;
@@ -25,10 +32,49 @@ public:
         hart.x(i.rd()) = hart.pc() + 4;
         hart.pc() += i.Jimm();
     }
+
+    void visitLRW(RISCVHart &hart, RISCVInstruction &i) override {
+        uint32_t load = i.rs1();
+        hart.reservation_valid_flag = true;
+        hart.reservation_address = i.rs1();
+        hart.x(i.rd()) = load;
+        hart.pc() += 4;
+    }
+
+//    void visitLRW(RISCVHart &hart, RISCVInstruction &i) override {
+//        uint64_t addr = hart.x(i.rs1());        // address in memory, from rs1
+//        int32_t val  = atomic_load_i32(addr);   // load 32-bit word
+
+//        hart.x(i.rd()) = (int64_t)val;          // sign-extend to 64 bits
+//        hart.reservation_valid_flag = true;
+//        hart.reservation_address    = addr;
+
+//        hart.pc() += 4;
+//    }
+
+
+    void visitSCW(RISCVHart &hart, RISCVInstruction &i) override {
+        if (hart.reservation_valid_flag == true && hart.reservation_address == i.rs1()) {
+            hart.x(i.rs2()) = i.rs1();
+            hart.x(i.rd()) = 0;
+        } else {
+            hart.x(i.rd()) = 0xDEADBEEF;
+        }
+        hart.pc() += 4;
+    }
+
     void visitJALR(RISCVHart &hart, RISCVInstruction &i) override {
         uint64_t jmp_target = (hart.x(i.rs1()) + i.SIimm());
         hart.x(i.rd()) = hart.pc() + 4;
         hart.pc() = jmp_target;
+
+        int rs1 = i.rs1();
+        int rd = i.rd();
+        int64_t base = hart.sx(rs1);
+        const char * imm  = i.getMnemonic();
+
+        std::printf("JALR: pc=0x%lx rs1=%d rd=%d base=0x%lx imm=%s\n",
+            (uint64_t)hart.pc(), rs1, rd, (uint64_t)base, imm);
     }
     void visitBEQ(RISCVHart &hart, RISCVInstruction &i) override {
         if (hart.x(i.rs1()) == hart.x(i.rs2())) {

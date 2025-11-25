@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/mydrv/drvr/print_int.c" "drvr/CMakeFiles/drvr_print_int.dir/print_int.c.obj" "gcc" "drvr/CMakeFiles/drvr_print_int.dir/print_int.c.obj.d"
+  "/users/alanandr/mydrv/drvr/print_int.c" "drvr/CMakeFiles/drvr_print_int.dir/print_int.c.obj" "gcc" "drvr/CMakeFiles/drvr_print_int.dir/print_int.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

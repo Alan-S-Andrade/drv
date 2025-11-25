@@ -22,8 +22,8 @@ int AmoaddMain(int argc, char *argv[])
         return 0;
 
     if (DrvAPIThread::current()->coreId() == 0) {
-        printf("core %2d: writing %lx to data_addr\n", DrvAPIThread::current()->coreId(), 0xdeadbeefcafebabe);
-        DrvAPI::write<uint64_t>(data_addr, 0xdeadbeefcafebabe);
+        printf("core %2d: writing %lx to data_addr\n", DrvAPIThread::current()->coreId(), 0xCAFEBABE);
+        DrvAPI::write<uint64_t>(data_addr, 0xCAFEBABE);
         printf("core %2d: writing %lx to signal_addr\n", DrvAPIThread::current()->coreId(), signal);
         DrvAPI::write<uint64_t>(signal_addr, signal);
 

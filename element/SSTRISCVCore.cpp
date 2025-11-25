@@ -387,6 +387,11 @@ bool RISCVCore::tick(Cycle_t cycle) {
             ss << "Failed to decode instruction at pc = 0x" << std::hex << pc << ": " << e.what();
             throw std::runtime_error(ss.str());
         }
+        // std::stringstream ss;
+        // // std::cout << inst << std::endl;
+        // std::string str(i->getMnemonic());
+        // ss << str << " ";
+        // std::cout << ss.str() << std::endl;
         output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x%08" PRIx32" (%s)\n"
                         ,hart_id
                         ,pc
@@ -421,8 +426,10 @@ bool RISCVCore::tick(Cycle_t cycle) {
 void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler) {
     output_.verbose(CALL_INFO, 0, DEBUG_REQ, "Issuing memory request\n");
     // TODO: check if tid is valid
+    std::cout << "issueMemoryRequest" << std::endl;
     rsp_handlers_[tid] = handler;
     mem_->send(req);
+    std::cout << req << std::endl;
 }
 
 /**

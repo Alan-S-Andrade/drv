@@ -1,7 +1,7 @@
 element/CMakeFiles/Drv.dir/DrvNativeSimulationTranslator.cpp.o: \
- /users/alanandr/lib/mydrv/element/DrvNativeSimulationTranslator.cpp \
+ /users/alanandr/mydrv/element/DrvNativeSimulationTranslator.cpp \
  /usr/include/stdc-predef.h \
- /users/alanandr/lib/mydrv/element/DrvNativeSimulationTranslator.hpp \
+ /users/alanandr/mydrv/element/DrvNativeSimulationTranslator.hpp \
  /usr/include/x86_64-linux-gnu/sys/stat.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -96,10 +96,10 @@ element/CMakeFiles/Drv.dir/DrvNativeSimulationTranslator.cpp.o: \
  /usr/include/c++/11/bits/hash_bytes.h \
  /usr/include/c++/11/bits/range_access.h \
  /usr/include/c++/11/bits/vector.tcc \
- /users/alanandr/lib/mydrv/element/rv64simtypes/stat.h \
- /users/alanandr/lib/mydrv/element/rv64simtypes/types.h \
+ /users/alanandr/mydrv/element/rv64simtypes/stat.h \
+ /users/alanandr/mydrv/element/rv64simtypes/types.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /users/alanandr/lib/mydrv/element/rv64simtypes/fcntl.h
+ /users/alanandr/mydrv/element/rv64simtypes/fcntl.h

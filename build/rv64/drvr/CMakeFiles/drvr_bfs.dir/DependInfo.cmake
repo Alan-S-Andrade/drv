@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/lib/mydrv/drvr/bfs_grid.cpp" "drvr/CMakeFiles/drvr_bfs.dir/bfs_grid.cpp.obj" "gcc" "drvr/CMakeFiles/drvr_bfs.dir/bfs_grid.cpp.obj.d"
+  "/users/alanandr/mydrv/drvr/bfs_grid.cpp" "drvr/CMakeFiles/drvr_bfs.dir/bfs_grid.cpp.obj" "gcc" "drvr/CMakeFiles/drvr_bfs.dir/bfs_grid.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

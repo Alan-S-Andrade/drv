@@ -1,1 +1,1 @@
-/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/users/alanandr/lib/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_add.dir/add.S.obj -o drvr_add
+/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/users/alanandr/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_add.dir/add.S.obj -o drvr_add

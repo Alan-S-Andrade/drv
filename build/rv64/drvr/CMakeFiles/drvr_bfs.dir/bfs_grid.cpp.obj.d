@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_bfs.dir/bfs_grid.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/bfs_grid.cpp \
+ /users/alanandr/mydrv/drvr/bfs_grid.cpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/cstdint \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/os_defines.h \
@@ -101,7 +101,7 @@ drvr/CMakeFiles/drvr_bfs.dir/bfs_grid.cpp.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/bits/uniform_int_dist.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/pstl/glue_algorithm_defs.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/pstl/execution_defs.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/register.h

@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_ph_hello.dir/ph_hello.c.obj: \
- /users/alanandr/lib/mydrv/drvr/ph_hello.c \
+ /users/alanandr/mydrv/drvr/ph_hello.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/math.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/reent.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
@@ -19,4 +19,4 @@ drvr/CMakeFiles/drvr_ph_hello.dir/ph_hello.c.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h

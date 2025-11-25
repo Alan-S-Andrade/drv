@@ -86,7 +86,7 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
    RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
    // base address registers are always from the integer register file
    StandardMem::Addr addr = shart.x(i.rs1()) + i.SIimm();
-//   std::cout << std::hex << "addr: " << addr << " load rs1: " << shart.x(i.rs1()) << " siimm: " << i.SIimm() << std::dec << std::endl;
+    //std::cout << std::hex << "addr: " << addr << " load rs1: " << shart.x(i.rs1()) << " siimm: " << i.SIimm() << std::dec << std::endl;
 
    DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
    core_->addLoadStat(decode, shart); // add to statistics
@@ -248,6 +248,13 @@ void RISCVSimulator::visitLWU(RISCVHart &hart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::visitLD(RISCVHart &hart, RISCVInstruction &i) {
+    std::cout << "here" << std::endl;
+    int rs1 = i.rs1();
+    int64_t base = hart.sx(rs1);
+    const char * imm  = i.getMnemonic();
+
+    std::printf("LD: pc=0x%lx rs1=%d base=0x%lx imm=%s\n",
+            (uint64_t)hart.pc(), rs1, (uint64_t)base, imm);
     visitLoad<uint64_t, uint64_t>(hart, i);
 }
 

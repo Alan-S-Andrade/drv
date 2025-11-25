@@ -1,2 +1,1 @@
-drvr/CMakeFiles/drvr_fma.dir/fma.c.obj: \
- /users/alanandr/lib/mydrv/drvr/fma.c
+drvr/CMakeFiles/drvr_fma.dir/fma.c.obj: /users/alanandr/mydrv/drvr/fma.c

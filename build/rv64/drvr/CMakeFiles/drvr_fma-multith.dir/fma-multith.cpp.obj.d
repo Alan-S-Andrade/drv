@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/fma-multith.cpp \
+ /users/alanandr/mydrv/drvr/fma-multith.cpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/atomic \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/bits/atomic_base.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
@@ -46,8 +46,8 @@ drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/sched.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/types.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/stdio.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/register.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/mmio.h \
- /users/alanandr/lib/mydrv/pandohammer/pandohammer/staticdecl.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/register.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/staticdecl.h

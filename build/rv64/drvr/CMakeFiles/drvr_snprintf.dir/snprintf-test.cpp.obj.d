@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_snprintf.dir/snprintf-test.cpp.obj: \
- /users/alanandr/lib/mydrv/drvr/snprintf-test.cpp \
+ /users/alanandr/mydrv/drvr/snprintf-test.cpp \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/atomic \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/bits/atomic_base.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \

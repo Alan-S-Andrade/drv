@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fread.dir/fread.c.obj: \
- /users/alanandr/lib/mydrv/drvr/fread.c \
+ /users/alanandr/mydrv/drvr/fread.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \

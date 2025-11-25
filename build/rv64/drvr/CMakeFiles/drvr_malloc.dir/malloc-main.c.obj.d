@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_malloc.dir/malloc-main.c.obj: \
- /users/alanandr/lib/mydrv/drvr/malloc-main.c \
+ /users/alanandr/mydrv/drvr/malloc-main.c \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdlib.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/ieeefp.h \
  /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
