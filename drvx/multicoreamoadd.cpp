@@ -12,8 +12,7 @@ DrvAPIGlobalDRAM<int> counter;
                ##__VA_ARGS__);                                          \
     } while (0)
 
-int AmoaddMain(int argc, char *argv[])
-{
+int AmoaddMain(int argc, char *argv[]) {
     DrvAPIAddress addr = &counter;
 
     pr_info("adding 1\n");

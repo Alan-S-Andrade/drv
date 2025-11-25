@@ -52,6 +52,7 @@ public:
         hart.pc() += 4;
     }
     void visitLD(RISCVHart &hart, RISCVInstruction &i) override {
+        std::cout << "here" << std::endl;
         hart.x(i.rd()) = visitLoad<uint64_t, uint64_t>(hart, i);
         hart.pc() += 4;
     }

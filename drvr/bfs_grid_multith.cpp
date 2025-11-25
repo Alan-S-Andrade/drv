@@ -9,15 +9,22 @@
 #include <cstdarg>
 #include <cstring>
 #include <unistd.h>
+#include <iostream>
 #include <cstdio>
 #include <atomic>
 #include <array>
 #include "common.hpp"
 
+#define DEBUG
+#ifdef  DEBUG
+#define pr_dbg(fmt,...)                         \
+    pr_info(fmt, ##__VA_ARGS__)
+#else
+#define pr_dbg(fmt,...)
+#endif
 
 #define __l1sp__ __attribute__((section(".dmem")))
 #define __l2sp__ __attribute__((section(".dram"))) // TODO: this is actually l2sp; need fix in linker script
-
 
 __l2sp__ std::atomic<int64_t> ph_ready;
 __l2sp__ std::atomic<int64_t> cp_ready;
@@ -55,6 +62,7 @@ int wait_for_cp() {
     while (ready != 1) {
         // wait for command processor to be ready
         wait(numPodCores()*myCoreThreads());
+        std::cout << numPodCores()*myCoreThreads() << std::endl;
         ready = cp_ready.load(std::memory_order_relaxed);
         x++;
     }
@@ -68,21 +76,20 @@ int signal_ph_done()
     return 0;
 }
 
-int main()
-{
+int main() {
     wait_for_cp();
 //#define EMPTY_RUN
 #ifndef EMPTY_RUN
     barrier_ref barrier = &g_barrier_data;
     barrier.sync([=](){
-        pr_dbg("g_V           = %d\n", g_V);
-        pr_dbg("g_E           = %d\n", g_E);
-        pr_dbg("g_fwd_offsets = %lx\n", (unsigned long)g_fwd_offsets);
-        pr_dbg("g_fwd_edges   = %lx\n", (unsigned long)g_fwd_edges);
-        pr_dbg("g_rev_offsets = %lx\n", (unsigned long)g_rev_offsets);
-        pr_dbg("g_rev_edges   = %lx\n", (unsigned long)g_rev_edges);
-        pr_dbg("g_distance    = %lx\n", (unsigned long)g_distance);
-        pr_dbg("threads = %d, cores = %d, threads_per_core = %d\n"
+        pr_info("g_V           = %d\n", g_V);
+        pr_info("g_E           = %d\n", g_E);
+        pr_info("g_fwd_offsets = %lx\n", (unsigned long)g_fwd_offsets);
+        pr_info("g_fwd_edges   = %lx\n", (unsigned long)g_fwd_edges);
+        pr_info("g_rev_offsets = %lx\n", (unsigned long)g_rev_offsets);
+        pr_info("g_rev_edges   = %lx\n", (unsigned long)g_rev_edges);
+        pr_info("g_distance    = %lx\n", (unsigned long)g_distance);
+        pr_info("threads = %d, cores = %d, threads_per_core = %d\n"
                , threads(), numPodCores(), myCoreThreads());
     });
     // breadth first search

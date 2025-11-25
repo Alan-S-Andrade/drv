@@ -20,7 +20,7 @@ int CPMain(int argc, char *argv[])
         DrvAPIAddressInfo ctrl_info = decodeAddress(ctrl);
         printf("ctrl      = 0x%" PRIx64 "\n", ctrl);
         printf("ctrl_info = %s\n", ctrl_info.to_string().c_str());
-        DrvAPI::write(ctrl, 0xdeadbeef);
+        DrvAPI::write(ctrl, 0xCAFEBABE);
     }
     done = 1;
     return 0;

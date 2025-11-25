@@ -15,7 +15,7 @@ int MemMain(int argc, char *argv[]) {
 
     DrvAPIAddress addr = &g_ul2sp0;
 
-    uint64_t writeval = 0xdeadbeefcafebabe;
+    uint64_t writeval = 0xCAFEBABE;
     printf ("writing %lx\n", writeval);
     DrvAPI::write<uint64_t>(addr, writeval);
     uint64_t readback = DrvAPI::read<uint64_t>(addr);

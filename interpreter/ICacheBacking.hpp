@@ -29,6 +29,7 @@
 
 class ICacheBacking {
 public:
+    int size_;
     ICacheBacking(const char *file)
         : data_(nullptr)
         , fd_(-1) {
@@ -43,7 +44,7 @@ public:
             pr_info("failed to stat %s: %m\n", file);
             exit(1);
         }
-        
+        size_ = st.st_size;
         data_ = (uint8_t *)mmap(nullptr, st.st_size, PROT_READ, MAP_PRIVATE, fd_, 0);
         if (data_ == MAP_FAILED) {
             pr_info("failed to mmap %s: %m\n", file);
@@ -57,9 +58,10 @@ public:
         //printSectionsInfo();
         printProgramHeaders();
     }
+
     ~ICacheBacking() {
         if (data_ != nullptr) {
-            munmap(data_, sizeof(Elf64_Ehdr));
+            munmap(data_, size_);
         }
         if (fd_ >= 0) {
             close(fd_);
