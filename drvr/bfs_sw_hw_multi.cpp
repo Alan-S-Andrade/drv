@@ -66,7 +66,7 @@ static inline void barrier(int total_threads) {
 // ----------------- BFS globals (on "global" memory) -----------------
 
 // For simplicity, use fixed upper bound. Adjust if needed.
-static const int MAXN = 302 * 302;
+static const int MAXN = 250 * 350;
 
 static int  g_R, g_C, g_N;
 static int  g_desired_threads;
@@ -86,9 +86,9 @@ static volatile int32_t g_max_dist = 0;
 
 extern "C" int main(int argc, char** argv) {
     // Default grid size & desired software threads
-    int R = 1008;
+    int R = 100800;
     int C = 64;
-    int desired_threads = 4;    // e.g., 2 cores * 16 harts/core, adjust via --T
+    int desired_threads = 16;    // e.g., 2 cores * 16 harts/core, adjust via --T
 
     for (int i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "--R") && i + 1 < argc) {

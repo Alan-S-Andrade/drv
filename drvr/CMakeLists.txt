@@ -141,7 +141,7 @@ drvr_test_build_properties(attn_fixed
   PROPERTIES
   DRV_BUILD_POD_CORES_X 1
   # DRV_BUILD_POD_CORES_Y 1
-  DRV_BUILD_CORE_THREADS 4
+  DRV_BUILD_CORE_THREADS 16
 )
 
 # bfs

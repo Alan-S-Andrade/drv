@@ -402,7 +402,7 @@ class DrvRCoreBuilder(Identifiable):
             "program" : ARGUMENTS.program,
             "argv" : ' '.join(ARGUMENTS.argv),
             "core" : self.core_id(x, y),
-            "verbose" : CPU_VERBOSE_LEVEL,
+            "verbose" : 100,
             "debug_clock" : ARGUMENTS.debug_clock,
             "pod" : 0,
             "pxn" : 0,
