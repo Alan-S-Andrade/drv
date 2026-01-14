@@ -652,7 +652,7 @@ element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
  /users/alanandr/mydrv/element/DrvStats.hpp \
  /users/alanandr/mydrv/element/DrvStatsTable.hpp \
  /users/alanandr/mydrv/interpreter/InstructionTable.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/syscall.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/syscall.h \
  /users/alanandr/mydrv/element/DrvCustomStdMem.hpp \
  /users/alanandr/local/sstelements/include/sst/elements/memHierarchy/memEvent.h \
  /users/alanandr/local/sstelements/include/sst/elements/memHierarchy/util.h \

@@ -34,7 +34,7 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-objdump")
+  set(CMAKE_OBJDUMP "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-objdump")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT

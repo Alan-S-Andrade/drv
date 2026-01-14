@@ -44,15 +44,31 @@ void RISCVCore::configureOuptut(Params& params) {
 
 void RISCVCore::configureHarts(Params &params) {
     size_t num_harts = params.find<size_t>("num_harts", 1);
+    std::cout << "Configuring " << num_harts << " harts\n";
     for (size_t i = 0; i < num_harts; i++) {
         harts_.push_back(RISCVSimHart{});
     }
     std::vector<KeyValue<int, uint64_t>> sps;
     params.find_array<KeyValue<int, uint64_t>>("sp", sps);
-    output_.verbose(CALL_INFO, 1, 0, "Configuring sp for %lu harts\n", sps.size());
-    for (auto &sp : sps) {
-        output_.verbose(CALL_INFO, 1, 0, "Hart %d sp = 0x%lx\n", sp.key, sp.value);
-        harts_[sp.key].sp() = sp.value;
+    std::cout << "sp" << sps.size() << "\n";
+    if (sps.size() == 0) {
+        output_.verbose(CALL_INFO, 1, 0, "Dividing L1SP stack amongst %lu harts\n", num_harts);
+        output_.verbose(CALL_INFO, 1, 0, "L1SP base = 0x%lx coreL1SPSize = 0x%lx\n", l1spBase(), DrvAPI::coreL1SPSize());
+        uint64_t stack_bytes = DrvAPI::coreL1SPSize() / num_harts;
+        for (size_t i = 0; i < num_harts; i++) {
+            uint64_t sp = l1spBase() + DrvAPI::coreL1SPSize() - (i * stack_bytes);
+            output_.verbose(CALL_INFO, 1, 0, "Hart %lu sp = 0x%lx\n", i, sp);
+            harts_[i].sp() = sp;
+            harts_[i].spLow() = l1spBase() + (i * stack_bytes);
+            harts_[i].spHigh() = l1spBase() + ((i + 1) * stack_bytes);
+            output_.verbose(CALL_INFO, 1, 0, "Hart %lu spLow = 0x%lx spHigh = 0x%lx\n", i, harts_[i].spLow(), harts_[i].spHigh());
+        }
+    } else {
+        output_.verbose(CALL_INFO, 1, 0, "Configuring sp for %lu harts\n", sps.size());
+        for (auto &sp : sps) {
+            output_.verbose(CALL_INFO, 1, 0, "Hart %d sp = 0x%lx\n", sp.key, sp.value);
+            harts_[sp.key].sp() = sp.value;
+        }
     }
 }
 

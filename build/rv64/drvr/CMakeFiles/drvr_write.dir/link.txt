@@ -1,1 +1,1 @@
-/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostartfiles -T /users/alanandr/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_write.dir/write.c.obj ../pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj ../pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -o drvr_write
+/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostartfiles -T /users/alanandr/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_write.dir/write.c.obj ../pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj ../pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -o drvr_write

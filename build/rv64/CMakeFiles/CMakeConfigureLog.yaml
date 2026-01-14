@@ -4,7 +4,7 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_UNAME"
@@ -45,15 +45,15 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:207 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:207 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
       The target system is: Generic -  - 
-      The host system is: Linux - 5.15.0-161-generic - x86_64
+      The host system is: Linux - 5.15.0-160-generic - x86_64
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_MAKE_PROGRAM"
@@ -96,11 +96,11 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     mode: "file"
     variable: "src_in"
@@ -116,8 +116,8 @@ events:
     names:
       - "CMakeCXXCompilerId.cpp.in"
     candidate_directories:
-      - "/usr/share/cmake-4.1/Modules/"
-    found: "/usr/share/cmake-4.1/Modules/CMakeCXXCompilerId.cpp.in"
+      - "/usr/local/share/cmake-4.2/Modules/"
+    found: "/usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -131,13 +131,13 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ 
+      Compiler: /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ 
       Build flags: 
       Id flags:  
       
@@ -148,13 +148,13 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /users/alanandr/mydrv/build/rv64/CMakeFiles/4.1.2/CompilerIdCXX/a.out
+        /users/alanandr/mydrv/build/rv64/CMakeFiles/4.2.1/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_AR"
@@ -171,7 +171,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-ar"
       - "ar"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -179,7 +179,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-ar"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-ar"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -193,8 +193,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_RANLIB"
@@ -211,7 +211,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-ranlib"
       - "ranlib"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -219,7 +219,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-ranlib"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-ranlib"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -233,8 +233,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_STRIP"
@@ -251,7 +251,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-strip"
       - "strip"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -259,7 +259,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-strip"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-strip"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -273,8 +273,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_LINKER"
@@ -291,7 +291,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-ld"
       - "ld"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -299,7 +299,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-ld"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-ld"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -313,8 +313,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_NM"
@@ -331,7 +331,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-nm"
       - "nm"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -339,7 +339,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-nm"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-nm"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -353,8 +353,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_OBJDUMP"
@@ -371,7 +371,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-objdump"
       - "objdump"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -379,7 +379,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-objdump"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-objdump"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -393,8 +393,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_OBJCOPY"
@@ -411,7 +411,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-objcopy"
       - "objcopy"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -419,7 +419,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-objcopy"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-objcopy"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -433,8 +433,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_READELF"
@@ -451,7 +451,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-readelf"
       - "readelf"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -459,7 +459,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-readelf"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-readelf"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -473,8 +473,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_DLLTOOL"
@@ -491,7 +491,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-dlltool"
       - "dlltool"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -500,7 +500,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-dlltool"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
@@ -508,7 +508,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-dlltool"
-      - "/users/alanandr/local/riscv/bin/dlltool"
+      - "/users/alanandr/riscv/bin/dlltool"
       - "/usr/local/sbin/dlltool"
       - "/usr/local/bin/dlltool"
       - "/usr/sbin/dlltool"
@@ -530,8 +530,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ADDR2LINE"
@@ -548,7 +548,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-addr2line"
       - "addr2line"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -556,7 +556,7 @@ events:
       - "/sbin/"
       - "/bin/"
       - "/snap/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-addr2line"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-addr2line"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -570,8 +570,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_TAPI"
@@ -588,7 +588,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-tapi"
       - "tapi"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -597,7 +597,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-tapi"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-tapi"
@@ -605,7 +605,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-tapi"
-      - "/users/alanandr/local/riscv/bin/tapi"
+      - "/users/alanandr/riscv/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/usr/sbin/tapi"
@@ -627,8 +627,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER_AR"
@@ -647,7 +647,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -656,7 +656,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
@@ -664,7 +664,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
@@ -672,7 +672,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
@@ -680,7 +680,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -694,8 +694,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER_RANLIB"
@@ -714,7 +714,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -723,7 +723,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
@@ -731,7 +731,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
@@ -739,7 +739,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
@@ -747,7 +747,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -761,11 +761,11 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     mode: "file"
     variable: "src_in"
@@ -781,8 +781,8 @@ events:
     names:
       - "CMakeCCompilerId.c.in"
     candidate_directories:
-      - "/usr/share/cmake-4.1/Modules/"
-    found: "/usr/share/cmake-4.1/Modules/CMakeCCompilerId.c.in"
+      - "/usr/local/share/cmake-4.2/Modules/"
+    found: "/usr/local/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -796,13 +796,13 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-      Compiler: /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc 
+      Compiler: /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc 
       Build flags: 
       Id flags:  
       
@@ -813,13 +813,13 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /users/alanandr/mydrv/build/rv64/CMakeFiles/4.1.2/CompilerIdC/a.out
+        /users/alanandr/mydrv/build/rv64/CMakeFiles/4.2.1/CompilerIdC/a.out
       
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER_AR"
@@ -838,7 +838,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -847,7 +847,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
@@ -855,7 +855,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
@@ -863,7 +863,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
@@ -871,7 +871,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -885,8 +885,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER_RANLIB"
@@ -905,7 +905,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -914,7 +914,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
@@ -922,7 +922,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
@@ -930,7 +930,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
@@ -938,7 +938,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -952,8 +952,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:61 (_cmake_find_compiler)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:61 (_cmake_find_compiler)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ASM_COMPILER"
@@ -967,10 +967,10 @@ events:
       CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
       CMAKE_FIND_USE_INSTALL_PREFIX: true
     names:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc"
+      - "/users/alanandr/riscv/bin/"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -984,8 +984,8 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1290 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:1290 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
@@ -997,8 +997,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ASM_COMPILER_AR"
@@ -1017,7 +1017,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -1026,7 +1026,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
@@ -1034,7 +1034,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
@@ -1042,7 +1042,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ar"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -1056,8 +1056,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ASM_COMPILER_RANLIB"
@@ -1076,7 +1076,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
-      - "/users/alanandr/local/riscv/bin/"
+      - "/users/alanandr/riscv/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -1085,7 +1085,7 @@ events:
       - "/bin/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
@@ -1093,7 +1093,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-      - "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
+      - "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
@@ -1101,7 +1101,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/snap/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
-    found: "/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
+    found: "/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
@@ -1115,14 +1115,14 @@ events:
   -
     kind: "try_compile-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY"
-      binary: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY"
+      source: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs"
+      binary: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1132,185 +1132,190 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY'
+        Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_46ee4/fast
-        gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY'
-        /usr/bin/gmake  -f CMakeFiles/cmTC_46ee4.dir/build.make CMakeFiles/cmTC_46ee4.dir/build
-        gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY'
-        Building CXX object CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_71871/fast
+        gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_71871.dir/build.make CMakeFiles/cmTC_71871.dir/build
+        gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs'
+        Building CXX object CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj
+        /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
-        COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
+        COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
         Target: riscv64-unknown-elfpandodrvsim
         Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow'
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 () 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_46ee4.dir/'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_46ee4.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccUIuLOF.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_71871.dir/'
+         /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v -iprefix /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/ -isysroot /users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_71871.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccxAK5E9.s
         GNU C++17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version none
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"
-        ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include"
+        ignoring nonexistent directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/usr/local/include"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/include"
         #include "..." search starts here:
         #include <...> search starts here:
-         /usr/local/include
-         .
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include
         End of search list.
         GNU C++17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version none
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 0b067c9733444b8032dafcb286a7fa98
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_46ee4.dir/'
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccUIuLOF.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_71871.dir/'
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccxAK5E9.s
         GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214
-        COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
-        LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_46ee4
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_46ee4.dir/link.txt --verbose=1
+        COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
+        LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_71871
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_71871.dir/link.txt --verbose=1
         Using built-in specs.
-        COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
-        COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
+        COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
+        COLLECT_LTO_WRAPPER=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
         Target: riscv64-unknown-elfpandodrvsim
         Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow'
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 () 
-        COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
-        LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_46ee4' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_46ee4.'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccsF9EyL.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_46ee4 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_46ee4' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_46ee4.'
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_46ee4
-        gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY'
-        gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY'
+        COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
+        LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_71871' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_71871.'
+         /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgBS2Dt.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_71871 /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/riscv/bin/../lib/gcc -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_71871' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_71871.'
+        /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_71871
+        gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs'
+        gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs'
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed CXX implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
-          add: [/usr/local/include]
-          add: [.]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
         end of search list found
-        collapse include dir [/usr/local/include] ==> [/usr/local/include]
-        skipping relative include dir [.]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include] ==> [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed] ==> [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include]
-        implicit include dirs: [/usr/local/include;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include]
+        implicit include dirs: [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0;/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim;/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed;/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include]
       
       
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY']
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_46ee4/fast]
-        ignore line: [gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY']
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_46ee4.dir/build.make CMakeFiles/cmTC_46ee4.dir/build]
-        ignore line: [gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY']
-        ignore line: [Building CXX object CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj]
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_71871/fast]
+        ignore line: [gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_71871.dir/build.make CMakeFiles/cmTC_71871.dir/build]
+        ignore line: [gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs']
+        ignore line: [Building CXX object CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++]
+        ignore line: [COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
         ignore line: [Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow']
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 () ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_46ee4.dir/']
-        ignore line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_46ee4.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccUIuLOF.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_71871.dir/']
+        ignore line: [ /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v -iprefix /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/ -isysroot /users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_71871.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccxAK5E9.s]
         ignore line: [GNU C++17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version none]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"]
-        ignore line: [ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include"]
+        ignore line: [ignoring nonexistent directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
-        ignore line: [ /usr/local/include]
-        ignore line: [ .]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/backward]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
         ignore line: [End of search list.]
         ignore line: [GNU C++17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version none]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 0b067c9733444b8032dafcb286a7fa98]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_46ee4.dir/']
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccUIuLOF.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_71871.dir/']
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccxAK5E9.s]
         ignore line: [GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214]
-        ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
-        ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_46ee4]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_46ee4.dir/link.txt --verbose=1]
+        ignore line: [COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
+        ignore line: [LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_71871]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_71871.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++]
-        ignore line: [COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
+        ignore line: [COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
         ignore line: [Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow']
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 () ]
-        ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
-        ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_46ee4' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_46ee4.']
-        link line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccsF9EyL.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_46ee4 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-          arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
+        ignore line: [COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
+        ignore line: [LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_71871' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_71871.']
+        link line: [ /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgBS2Dt.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_71871 /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/riscv/bin/../lib/gcc -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+          arg [/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
-          arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
-          arg [-plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccsF9EyL.res] ==> ignore
+          arg [/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccgBS2Dt.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgloss] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [--sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim] ==> ignore
+          arg [--sysroot=/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim] ==> ignore
           arg [-melf64lriscv] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_46ee4] ==> ignore
-          arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
-          arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
-          arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
-          arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
-          arg [-L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
-          arg [CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [cmTC_71871] ==> ignore
+          arg [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
+          arg [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
+          arg [-L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
+          arg [-L/users/alanandr/riscv/bin/../lib/gcc] ==> dir [/users/alanandr/riscv/bin/../lib/gcc]
+          arg [-L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
+          arg [-L/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib]
+          arg [CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc] ==> lib [gcc]
@@ -1319,34 +1324,37 @@ events:
           arg [-lgloss] ==> lib [gloss]
           arg [--end-group] ==> ignore
           arg [-lgcc] ==> lib [gcc]
-          arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_46ee4' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_46ee4.']
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_46ee4.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_46ee4]
-        ignore line: [gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY']
-        ignore line: [gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-9kGSEY']
+          arg [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_71871' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_71871.']
+        ignore line: [/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_71871.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_71871]
+        ignore line: [gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs']
+        ignore line: [gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-t7rEDs']
         ignore line: []
         ignore line: []
-        collapse obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
-        collapse library dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
-        collapse library dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
-        collapse library dir [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
+        collapse obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
+        collapse obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
+        collapse obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        collapse library dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
+        collapse library dir [/users/alanandr/riscv/bin/../lib/gcc] ==> [/users/alanandr/riscv/lib/gcc]
+        collapse library dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib]
+        collapse library dir [/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib]
         implicit libs: [stdc++;m;gcc;c;gloss;gcc]
-        implicit objs: [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        implicit dirs: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
+        implicit objs: [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        implicit dirs: [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0;/users/alanandr/riscv/lib/gcc;/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib]
         implicit fwks: []
       
       
   -
     kind: "try_compile-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ"
-      binary: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ"
+      source: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa"
+      binary: "/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1355,185 +1363,195 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ'
+        Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_01819/fast
-        gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ'
-        /usr/bin/gmake  -f CMakeFiles/cmTC_01819.dir/build.make CMakeFiles/cmTC_01819.dir/build
-        gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ'
-        Building C object CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4bea6/fast
+        gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4bea6.dir/build.make CMakeFiles/cmTC_4bea6.dir/build
+        gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa'
+        Building C object CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj
+        /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
         Using built-in specs.
-        COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
+        COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
         Target: riscv64-unknown-elfpandodrvsim
         Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow'
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 () 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_01819.dir/'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_01819.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccqaqUAK.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4bea6.dir/'
+         /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v -iprefix /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/ -isysroot /users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4bea6.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccyZdWL2.s
         GNU C17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version none
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"
-        ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include"
+        ignoring nonexistent directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/usr/local/include"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include"
+        ignoring duplicate directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/include"
         #include "..." search starts here:
         #include <...> search starts here:
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include
         End of search list.
         GNU C17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version none
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 90e49c9e834ab07cefab4b07972ef54c
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_01819.dir/'
-         /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj /tmp/ccqaqUAK.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4bea6.dir/'
+         /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj /tmp/ccyZdWL2.s
         GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214
-        COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
-        LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_01819
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01819.dir/link.txt --verbose=1
+        COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
+        LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_4bea6
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4bea6.dir/link.txt --verbose=1
         Using built-in specs.
-        COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
-        COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
+        COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
+        COLLECT_LTO_WRAPPER=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
         Target: riscv64-unknown-elfpandodrvsim
         Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c,c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow'
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 () 
-        COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
-        LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_01819' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_01819.'
-         /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGVgbLm.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_01819 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_01819' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_01819.'
-        /users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj -o cmTC_01819
-        gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ'
-        gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ'
+        COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
+        LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4bea6' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4bea6.'
+         /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccN3uzgf.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_4bea6 /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/riscv/bin/../lib/gcc -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4bea6' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4bea6.'
+        /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj -o cmTC_4bea6
+        gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa'
+        gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa'
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed C implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
-          add: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
+          add: [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
         end of search list found
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include] ==> [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed] ==> [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
-        collapse include dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include]
-        implicit include dirs: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
+        collapse include dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include]
+        implicit include dirs: [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed;/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include]
       
       
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ']
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_01819/fast]
-        ignore line: [gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ']
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_01819.dir/build.make CMakeFiles/cmTC_01819.dir/build]
-        ignore line: [gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ']
-        ignore line: [Building C object CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj]
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4bea6/fast]
+        ignore line: [gmake[4]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4bea6.dir/build.make CMakeFiles/cmTC_4bea6.dir/build]
+        ignore line: [gmake[5]: Entering directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa']
+        ignore line: [Building C object CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc]
+        ignore line: [COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
         ignore line: [Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow']
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 () ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_01819.dir/']
-        ignore line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_01819.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccqaqUAK.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4bea6.dir/']
+        ignore line: [ /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v -iprefix /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/ -isysroot /users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4bea6.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccyZdWL2.s]
         ignore line: [GNU C17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version none]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-        ignore line: [ignoring nonexistent directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/usr/local/include"]
-        ignore line: [ignoring duplicate directory "/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include"]
+        ignore line: [ignoring nonexistent directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../lib/gcc/../../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include"]
+        ignore line: [ignoring duplicate directory "/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include-fixed]
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/include]
         ignore line: [End of search list.]
         ignore line: [GNU C17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version none]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 90e49c9e834ab07cefab4b07972ef54c]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_01819.dir/']
-        ignore line: [ /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj /tmp/ccqaqUAK.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4bea6.dir/']
+        ignore line: [ /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj /tmp/ccyZdWL2.s]
         ignore line: [GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214]
-        ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
-        ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_01819]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_01819.dir/link.txt --verbose=1]
+        ignore line: [COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
+        ignore line: [LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_4bea6]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4bea6.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc]
-        ignore line: [COLLECT_LTO_WRAPPER=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
+        ignore line: [COLLECT_GCC=/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc]
+        ignore line: [COLLECT_LTO_WRAPPER=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
         ignore line: [Configured with: /users/alanandr/lib/riscv-gnu-toolchain/gcc/configure --target=riscv64-unknown-elfpandodrvsim --prefix=/users/alanandr/local/riscv --disable-shared --disable-threads --enable-languages=c c++ --with-pkgversion= --with-system-zlib --enable-tls --with-newlib --with-sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim --with-native-system-header-dir=/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --disable-tm-clone-registry --src=.././gcc --enable-multilib --with-abi=lp64d --with-arch=rv64imafd --with-tune=rocket --with-isa-spec=20191213 'CFLAGS_FOR_TARGET=-Os    -mcmodel=medlow' 'CXXFLAGS_FOR_TARGET=-Os    -mcmodel=medlow']
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 () ]
-        ignore line: [COMPILER_PATH=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
-        ignore line: [LIBRARY_PATH=/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_01819' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_01819.']
-        link line: [ /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGVgbLm.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_01819 /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-          arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
+        ignore line: [COMPILER_PATH=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../libexec/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
+        ignore line: [LIBRARY_PATH=/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/users/alanandr/riscv/bin/../lib/gcc/:/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4bea6' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4bea6.']
+        link line: [ /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccN3uzgf.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_4bea6 /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/users/alanandr/riscv/bin/../lib/gcc -L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+          arg [/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
-          arg [/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
-          arg [-plugin-opt=/users/alanandr/local/riscv/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccGVgbLm.res] ==> ignore
+          arg [/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/users/alanandr/riscv/bin/../libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccN3uzgf.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgloss] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-          arg [--sysroot=/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim] ==> ignore
+          arg [--sysroot=/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim] ==> ignore
           arg [-melf64lriscv] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_01819] ==> ignore
-          arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
-          arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
-          arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
-          arg [-L/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
-          arg [-L/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
-          arg [CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [cmTC_4bea6] ==> ignore
+          arg [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
+          arg [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
+          arg [-L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
+          arg [-L/users/alanandr/riscv/bin/../lib/gcc] ==> dir [/users/alanandr/riscv/bin/../lib/gcc]
+          arg [-L/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
+          arg [-L/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib]
+          arg [CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--start-group] ==> ignore
           arg [-lc] ==> lib [c]
           arg [-lgloss] ==> lib [gloss]
           arg [--end-group] ==> ignore
           arg [-lgcc] ==> lib [gcc]
-          arg [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_01819' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_01819.']
-        ignore line: [/users/alanandr/local/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_01819.dir/CMakeCCompilerABI.c.obj -o cmTC_01819]
-        ignore line: [gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ']
-        ignore line: [gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-M6xmAZ']
+          arg [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4bea6' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4bea6.']
+        ignore line: [/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_4bea6.dir/CMakeCCompilerABI.c.obj -o cmTC_4bea6]
+        ignore line: [gmake[5]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa']
+        ignore line: [gmake[4]: Leaving directory '/users/alanandr/mydrv/build/rv64/CMakeFiles/CMakeScratch/TryCompile-RoEANa']
         ignore line: []
         ignore line: []
-        collapse obj [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
-        collapse library dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
-        collapse library dir [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
-        collapse library dir [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
+        collapse obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
+        collapse obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
+        collapse obj [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        collapse library dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
+        collapse library dir [/users/alanandr/riscv/bin/../lib/gcc] ==> [/users/alanandr/riscv/lib/gcc]
+        collapse library dir [/users/alanandr/riscv/bin/../lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib]
+        collapse library dir [/users/alanandr/riscv/bin/../riscv64-unknown-elfpandodrvsim/lib] ==> [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib]
         implicit libs: [gcc;c;gloss;gcc]
-        implicit objs: [/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o;/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        implicit dirs: [/users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0;/users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/lib]
+        implicit objs: [/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib/crt0.o;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o;/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        implicit dirs: [/users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0;/users/alanandr/riscv/lib/gcc;/users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/lib]
         implicit fwks: []
       
       
@@ -1594,7 +1612,7 @@ events:
       version: "-dev"
     search_context:
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"

@@ -4,7 +4,7 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_UNAME"
@@ -20,35 +20,44 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/.local/bin/uname"
       - "/users/alanandr/local/sstelements/bin/uname"
       - "/users/alanandr/local/sstcore/bin/uname"
-      - "/users/alanandr/local/openmpi/bin/uname"
-      - "/usr/local/sbin/uname"
-      - "/usr/local/bin/uname"
-      - "/usr/sbin/uname"
-    found: "/usr/bin/uname"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/uname"
+    found: "/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -61,14 +70,14 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      The system is: Linux - 5.15.0-161-generic - x86_64
+      The system is: Linux - 5.15.0-160-generic - x86_64
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_MAKE_PROGRAM"
@@ -86,35 +95,44 @@ events:
       - "make"
       - "smake"
     candidate_directories:
-      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/.local/bin/gmake"
       - "/users/alanandr/local/sstelements/bin/gmake"
       - "/users/alanandr/local/sstcore/bin/gmake"
-      - "/users/alanandr/local/openmpi/bin/gmake"
-      - "/usr/local/sbin/gmake"
-      - "/usr/local/bin/gmake"
-      - "/usr/sbin/gmake"
-    found: "/usr/bin/gmake"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gmake"
+    found: "/bin/gmake"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -127,8 +145,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:69 (_cmake_find_compiler)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:69 (_cmake_find_compiler)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER"
@@ -153,35 +171,44 @@ events:
       - "icx"
       - "clang++"
     candidate_directories:
-      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/users/alanandr/.local/bin/c++"
       - "/users/alanandr/local/sstelements/bin/c++"
       - "/users/alanandr/local/sstcore/bin/c++"
-      - "/users/alanandr/local/openmpi/bin/c++"
-      - "/usr/local/sbin/c++"
-      - "/usr/local/bin/c++"
-      - "/usr/sbin/c++"
-    found: "/usr/bin/c++"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/c++"
+    found: "/bin/c++"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -194,11 +221,11 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     mode: "file"
     variable: "src_in"
@@ -214,15 +241,28 @@ events:
     names:
       - "CMakeCXXCompilerId.cpp.in"
     candidate_directories:
-      - "/usr/share/cmake-4.1/Modules/"
-    found: "/usr/share/cmake-4.1/Modules/CMakeCXXCompilerId.cpp.in"
+      - "/usr/local/share/cmake-4.2/Modules/"
+    found: "/usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -235,13 +275,13 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /usr/bin/c++ 
+      Compiler: /bin/c++ 
       Build flags: 
       Id flags:  
       
@@ -252,13 +292,13 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /users/alanandr/mydrv/build/CMakeFiles/4.1.2/CompilerIdCXX/a.out
+        /users/alanandr/mydrv/build/CMakeFiles/4.2.1/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_AR"
@@ -274,27 +314,40 @@ events:
     names:
       - "ar"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/ar"
+    found: "/bin/ar"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -307,8 +360,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_RANLIB"
@@ -324,27 +377,40 @@ events:
     names:
       - "ranlib"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/ranlib"
+    found: "/bin/ranlib"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -357,8 +423,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_STRIP"
@@ -374,27 +440,40 @@ events:
     names:
       - "strip"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/strip"
+    found: "/bin/strip"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -407,8 +486,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_LINKER"
@@ -424,27 +503,40 @@ events:
     names:
       - "ld"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/ld"
+    found: "/bin/ld"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -457,8 +549,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_NM"
@@ -474,27 +566,40 @@ events:
     names:
       - "nm"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/nm"
+    found: "/bin/nm"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -507,8 +612,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_OBJDUMP"
@@ -524,27 +629,40 @@ events:
     names:
       - "objdump"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/objdump"
+    found: "/bin/objdump"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -557,8 +675,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_OBJCOPY"
@@ -574,27 +692,40 @@ events:
     names:
       - "objcopy"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/objcopy"
+    found: "/bin/objcopy"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -607,8 +738,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_READELF"
@@ -624,27 +755,40 @@ events:
     names:
       - "readelf"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/readelf"
+    found: "/bin/readelf"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -657,8 +801,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_DLLTOOL"
@@ -674,41 +818,54 @@ events:
     names:
       - "dlltool"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/dlltool"
-      - "/users/alanandr/.local/bin/dlltool"
+      - "/bin/dlltool"
       - "/users/alanandr/local/sstelements/bin/dlltool"
       - "/users/alanandr/local/sstcore/bin/dlltool"
-      - "/users/alanandr/local/openmpi/bin/dlltool"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/dlltool"
+      - "/users/alanandr/locla/sstelements/bin/dlltool"
       - "/usr/local/sbin/dlltool"
       - "/usr/local/bin/dlltool"
       - "/usr/sbin/dlltool"
+      - "/usr/bin/dlltool"
       - "/sbin/dlltool"
-      - "/bin/dlltool"
       - "/usr/games/dlltool"
       - "/usr/local/games/dlltool"
       - "/snap/bin/dlltool"
     found: false
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -721,8 +878,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ADDR2LINE"
@@ -738,27 +895,40 @@ events:
     names:
       - "addr2line"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
-    found: "/usr/bin/addr2line"
+    found: "/bin/addr2line"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -771,8 +941,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_TAPI"
@@ -788,41 +958,54 @@ events:
     names:
       - "tapi"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/tapi"
-      - "/users/alanandr/.local/bin/tapi"
+      - "/bin/tapi"
       - "/users/alanandr/local/sstelements/bin/tapi"
       - "/users/alanandr/local/sstcore/bin/tapi"
-      - "/users/alanandr/local/openmpi/bin/tapi"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/tapi"
+      - "/users/alanandr/locla/sstelements/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/usr/sbin/tapi"
+      - "/usr/bin/tapi"
       - "/sbin/tapi"
-      - "/bin/tapi"
       - "/usr/games/tapi"
       - "/usr/local/games/tapi"
       - "/snap/bin/tapi"
     found: false
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -835,8 +1018,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER_AR"
@@ -855,41 +1038,54 @@ events:
       - "gcc-ar11"
       - "gcc-ar"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/gcc-ar-11.4"
-      - "/users/alanandr/.local/bin/gcc-ar-11.4"
+      - "/bin/gcc-ar-11.4"
       - "/users/alanandr/local/sstelements/bin/gcc-ar-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-11.4"
-      - "/users/alanandr/local/openmpi/bin/gcc-ar-11.4"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ar-11.4"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ar-11.4"
       - "/usr/local/sbin/gcc-ar-11.4"
       - "/usr/local/bin/gcc-ar-11.4"
       - "/usr/sbin/gcc-ar-11.4"
+      - "/usr/bin/gcc-ar-11.4"
       - "/sbin/gcc-ar-11.4"
-      - "/bin/gcc-ar-11.4"
       - "/usr/games/gcc-ar-11.4"
       - "/usr/local/games/gcc-ar-11.4"
       - "/snap/bin/gcc-ar-11.4"
-    found: "/usr/bin/gcc-ar-11"
+    found: "/bin/gcc-ar-11"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -902,8 +1098,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_CXX_COMPILER_RANLIB"
@@ -922,41 +1118,54 @@ events:
       - "gcc-ranlib11"
       - "gcc-ranlib"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/gcc-ranlib-11.4"
-      - "/users/alanandr/.local/bin/gcc-ranlib-11.4"
+      - "/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/sstelements/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-11.4"
-      - "/users/alanandr/local/openmpi/bin/gcc-ranlib-11.4"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ranlib-11.4"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ranlib-11.4"
       - "/usr/local/sbin/gcc-ranlib-11.4"
       - "/usr/local/bin/gcc-ranlib-11.4"
       - "/usr/sbin/gcc-ranlib-11.4"
+      - "/usr/bin/gcc-ranlib-11.4"
       - "/sbin/gcc-ranlib-11.4"
-      - "/bin/gcc-ranlib-11.4"
       - "/usr/games/gcc-ranlib-11.4"
       - "/usr/local/games/gcc-ranlib-11.4"
       - "/snap/bin/gcc-ranlib-11.4"
-    found: "/usr/bin/gcc-ranlib-11"
+    found: "/bin/gcc-ranlib-11"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -969,8 +1178,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER"
@@ -992,15 +1201,28 @@ events:
       - "icx"
       - "clang"
     candidate_directories:
-      - "/usr/bin/"
-    found: "/usr/bin/cc"
+      - "/bin/"
+    found: "/bin/cc"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1013,11 +1235,11 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     mode: "file"
     variable: "src_in"
@@ -1033,15 +1255,28 @@ events:
     names:
       - "CMakeCCompilerId.c.in"
     candidate_directories:
-      - "/usr/share/cmake-4.1/Modules/"
-    found: "/usr/share/cmake-4.1/Modules/CMakeCCompilerId.c.in"
+      - "/usr/local/share/cmake-4.2/Modules/"
+    found: "/usr/local/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1054,13 +1289,13 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-      Compiler: /usr/bin/cc 
+      Compiler: /bin/cc 
       Build flags: 
       Id flags:  
       
@@ -1071,13 +1306,13 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /users/alanandr/mydrv/build/CMakeFiles/4.1.2/CompilerIdC/a.out
+        /users/alanandr/mydrv/build/CMakeFiles/4.2.1/CompilerIdC/a.out
       
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER_AR"
@@ -1096,41 +1331,54 @@ events:
       - "gcc-ar11"
       - "gcc-ar"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/gcc-ar-11.4"
-      - "/users/alanandr/.local/bin/gcc-ar-11.4"
+      - "/bin/gcc-ar-11.4"
       - "/users/alanandr/local/sstelements/bin/gcc-ar-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-11.4"
-      - "/users/alanandr/local/openmpi/bin/gcc-ar-11.4"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ar-11.4"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ar-11.4"
       - "/usr/local/sbin/gcc-ar-11.4"
       - "/usr/local/bin/gcc-ar-11.4"
       - "/usr/sbin/gcc-ar-11.4"
+      - "/usr/bin/gcc-ar-11.4"
       - "/sbin/gcc-ar-11.4"
-      - "/bin/gcc-ar-11.4"
       - "/usr/games/gcc-ar-11.4"
       - "/usr/local/games/gcc-ar-11.4"
       - "/snap/bin/gcc-ar-11.4"
-    found: "/usr/bin/gcc-ar-11"
+    found: "/bin/gcc-ar-11"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1143,8 +1391,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_C_COMPILER_RANLIB"
@@ -1163,41 +1411,54 @@ events:
       - "gcc-ranlib11"
       - "gcc-ranlib"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/gcc-ranlib-11.4"
-      - "/users/alanandr/.local/bin/gcc-ranlib-11.4"
+      - "/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/sstelements/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-11.4"
-      - "/users/alanandr/local/openmpi/bin/gcc-ranlib-11.4"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ranlib-11.4"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ranlib-11.4"
       - "/usr/local/sbin/gcc-ranlib-11.4"
       - "/usr/local/bin/gcc-ranlib-11.4"
       - "/usr/sbin/gcc-ranlib-11.4"
+      - "/usr/bin/gcc-ranlib-11.4"
       - "/sbin/gcc-ranlib-11.4"
-      - "/bin/gcc-ranlib-11.4"
       - "/usr/games/gcc-ranlib-11.4"
       - "/usr/local/games/gcc-ranlib-11.4"
       - "/snap/bin/gcc-ranlib-11.4"
-    found: "/usr/bin/gcc-ranlib-11"
+    found: "/bin/gcc-ranlib-11"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1210,8 +1471,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:61 (_cmake_find_compiler)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:61 (_cmake_find_compiler)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ASM_COMPILER"
@@ -1225,17 +1486,30 @@ events:
       CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
       CMAKE_FIND_USE_INSTALL_PREFIX: true
     names:
-      - "/usr/bin/cc"
+      - "/bin/cc"
     candidate_directories:
-      - "/usr/bin/"
-    found: "/usr/bin/cc"
+      - "/bin/"
+    found: "/bin/cc"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1248,8 +1522,8 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1290 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:1290 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
@@ -1261,8 +1535,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ASM_COMPILER_AR"
@@ -1281,54 +1555,67 @@ events:
       - "gcc-ar"
       - "gcc-ar"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/gcc-ar-"
-      - "/users/alanandr/.local/bin/gcc-ar-"
+      - "/bin/gcc-ar-"
       - "/users/alanandr/local/sstelements/bin/gcc-ar-"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-"
-      - "/users/alanandr/local/openmpi/bin/gcc-ar-"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ar-"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ar-"
       - "/usr/local/sbin/gcc-ar-"
       - "/usr/local/bin/gcc-ar-"
       - "/usr/sbin/gcc-ar-"
+      - "/usr/bin/gcc-ar-"
       - "/sbin/gcc-ar-"
-      - "/bin/gcc-ar-"
       - "/usr/games/gcc-ar-"
       - "/usr/local/games/gcc-ar-"
       - "/snap/bin/gcc-ar-"
-      - "/usr/bin/gcc-ar-"
-      - "/users/alanandr/.local/bin/gcc-ar-"
+      - "/bin/gcc-ar-"
       - "/users/alanandr/local/sstelements/bin/gcc-ar-"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-"
-      - "/users/alanandr/local/openmpi/bin/gcc-ar-"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ar-"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ar-"
       - "/usr/local/sbin/gcc-ar-"
       - "/usr/local/bin/gcc-ar-"
       - "/usr/sbin/gcc-ar-"
+      - "/usr/bin/gcc-ar-"
       - "/sbin/gcc-ar-"
-      - "/bin/gcc-ar-"
       - "/usr/games/gcc-ar-"
       - "/usr/local/games/gcc-ar-"
       - "/snap/bin/gcc-ar-"
-    found: "/usr/bin/gcc-ar"
+    found: "/bin/gcc-ar"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1341,8 +1628,8 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
+      - "/usr/local/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineASMCompiler.cmake:268 (include)"
       - "CMakeLists.txt:2 (project)"
     mode: "program"
     variable: "CMAKE_ASM_COMPILER_RANLIB"
@@ -1361,54 +1648,67 @@ events:
       - "gcc-ranlib"
       - "gcc-ranlib"
     candidate_directories:
-      - "/usr/bin/"
-      - "/users/alanandr/.local/bin/"
+      - "/bin/"
       - "/users/alanandr/local/sstelements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
-      - "/users/alanandr/local/openmpi/bin/"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/"
+      - "/users/alanandr/locla/sstelements/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
+      - "/usr/bin/"
       - "/sbin/"
-      - "/bin/"
       - "/usr/games/"
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
-      - "/usr/bin/gcc-ranlib-"
-      - "/users/alanandr/.local/bin/gcc-ranlib-"
+      - "/bin/gcc-ranlib-"
       - "/users/alanandr/local/sstelements/bin/gcc-ranlib-"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-"
-      - "/users/alanandr/local/openmpi/bin/gcc-ranlib-"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ranlib-"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ranlib-"
       - "/usr/local/sbin/gcc-ranlib-"
       - "/usr/local/bin/gcc-ranlib-"
       - "/usr/sbin/gcc-ranlib-"
+      - "/usr/bin/gcc-ranlib-"
       - "/sbin/gcc-ranlib-"
-      - "/bin/gcc-ranlib-"
       - "/usr/games/gcc-ranlib-"
       - "/usr/local/games/gcc-ranlib-"
       - "/snap/bin/gcc-ranlib-"
-      - "/usr/bin/gcc-ranlib-"
-      - "/users/alanandr/.local/bin/gcc-ranlib-"
+      - "/bin/gcc-ranlib-"
       - "/users/alanandr/local/sstelements/bin/gcc-ranlib-"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-"
-      - "/users/alanandr/local/openmpi/bin/gcc-ranlib-"
+      - "/users/alanandr/scratch/src/OpenMPI/bin/gcc-ranlib-"
+      - "/users/alanandr/locla/sstelements/bin/gcc-ranlib-"
       - "/usr/local/sbin/gcc-ranlib-"
       - "/usr/local/bin/gcc-ranlib-"
       - "/usr/sbin/gcc-ranlib-"
+      - "/usr/bin/gcc-ranlib-"
       - "/sbin/gcc-ranlib-"
-      - "/bin/gcc-ranlib-"
       - "/usr/games/gcc-ranlib-"
       - "/usr/local/games/gcc-ranlib-"
       - "/snap/bin/gcc-ranlib-"
-    found: "/usr/bin/gcc-ranlib"
+    found: "/bin/gcc-ranlib"
     search_context:
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1421,14 +1721,14 @@ events:
   -
     kind: "try_compile-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ"
-      binary: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ"
+      source: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK"
+      binary: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1438,15 +1738,15 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ'
+        Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_33d68/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_33d68.dir/build.make CMakeFiles/cmTC_33d68.dir/build
-        gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ'
-        Building CXX object CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_11e22/fast
+        /bin/gmake  -f CMakeFiles/cmTC_11e22.dir/build.make CMakeFiles/cmTC_11e22.dir/build
+        gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK'
+        Building CXX object CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o
+        /bin/c++   -v -o CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
-        COLLECT_GCC=/usr/bin/c++
+        COLLECT_GCC=/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
         OFFLOAD_TARGET_DEFAULT=1
         Target: x86_64-linux-gnu
@@ -1454,25 +1754,23 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_33d68.dir/'
-         /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_33d68.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccFFNhlA.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_11e22.dir/'
+         /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_11e22.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccv2JDAw.s
         GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/11"
         ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
-        ignoring duplicate directory "/usr/local/include"
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/include-fixed"
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/include"
         #include "..." search starts here:
         #include <...> search starts here:
-         /usr/local/include
-         .
          /usr/include/c++/11
          /usr/include/x86_64-linux-gnu/c++/11
          /usr/include/c++/11/backward
          /usr/lib/gcc/x86_64-linux-gnu/11/include
+         /usr/local/include
          /usr/include/x86_64-linux-gnu
          /usr/include
         End of search list.
@@ -1481,16 +1779,16 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 6c87588fc345655b93b8c25f48f88886
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_33d68.dir/'
-         as -v --64 -o CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccFFNhlA.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_11e22.dir/'
+         as -v --64 -o CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccv2JDAw.s
         GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_33d68
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_33d68.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_11e22
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11e22.dir/link.txt --verbose=1
         Using built-in specs.
-        COLLECT_GCC=/usr/bin/c++
+        COLLECT_GCC=/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
         OFFLOAD_TARGET_DEFAULT=1
@@ -1501,65 +1799,63 @@ events:
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_33d68' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_33d68.'
-         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccULOvUL.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_33d68 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_11e22' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_11e22.'
+         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEjxWt9.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_11e22 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         collect2 version 11.4.0
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccULOvUL.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_33d68 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        /bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEjxWt9.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_11e22 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.38
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_33d68' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_33d68.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_33d68
-        gmake[1]: Leaving directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_11e22' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_11e22.'
+        /bin/c++  -v -Wl,-v CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_11e22
+        gmake[1]: Leaving directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK'
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed CXX implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
-          add: [/usr/local/include]
-          add: [.]
           add: [/usr/include/c++/11]
           add: [/usr/include/x86_64-linux-gnu/c++/11]
           add: [/usr/include/c++/11/backward]
           add: [/usr/lib/gcc/x86_64-linux-gnu/11/include]
+          add: [/usr/local/include]
           add: [/usr/include/x86_64-linux-gnu]
           add: [/usr/include]
         end of search list found
-        collapse include dir [/usr/local/include] ==> [/usr/local/include]
-        skipping relative include dir [.]
         collapse include dir [/usr/include/c++/11] ==> [/usr/include/c++/11]
         collapse include dir [/usr/include/x86_64-linux-gnu/c++/11] ==> [/usr/include/x86_64-linux-gnu/c++/11]
         collapse include dir [/usr/include/c++/11/backward] ==> [/usr/include/c++/11/backward]
         collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/11/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/11/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
         collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
         collapse include dir [/usr/include] ==> [/usr/include]
-        implicit include dirs: [/usr/local/include;/usr/include/c++/11;/usr/include/x86_64-linux-gnu/c++/11;/usr/include/c++/11/backward;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/include/x86_64-linux-gnu;/usr/include]
+        implicit include dirs: [/usr/include/c++/11;/usr/include/x86_64-linux-gnu/c++/11;/usr/include/c++/11/backward;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
       
       
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ']
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_33d68/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_33d68.dir/build.make CMakeFiles/cmTC_33d68.dir/build]
-        ignore line: [gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ufKosJ']
-        ignore line: [Building CXX object CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_11e22/fast]
+        ignore line: [/bin/gmake  -f CMakeFiles/cmTC_11e22.dir/build.make CMakeFiles/cmTC_11e22.dir/build]
+        ignore line: [gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-KXpSdK']
+        ignore line: [Building CXX object CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/bin/c++   -v -o CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_GCC=/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
         ignore line: [Target: x86_64-linux-gnu]
@@ -1567,25 +1863,23 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_33d68.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_33d68.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccFFNhlA.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_11e22.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_11e22.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccv2JDAw.s]
         ignore line: [GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/11"]
         ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
-        ignore line: [ignoring duplicate directory "/usr/local/include"]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/include-fixed"]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
-        ignore line: [ /usr/local/include]
-        ignore line: [ .]
         ignore line: [ /usr/include/c++/11]
         ignore line: [ /usr/include/x86_64-linux-gnu/c++/11]
         ignore line: [ /usr/include/c++/11/backward]
         ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/include]
+        ignore line: [ /usr/local/include]
         ignore line: [ /usr/include/x86_64-linux-gnu]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
@@ -1594,16 +1888,16 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 6c87588fc345655b93b8c25f48f88886]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_33d68.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccFFNhlA.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_11e22.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccv2JDAw.s]
         ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_33d68]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_33d68.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_11e22]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11e22.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_GCC=/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
@@ -1614,13 +1908,13 @@ events:
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_33d68' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_33d68.']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccULOvUL.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_33d68 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_11e22' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_11e22.']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEjxWt9.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_11e22 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccULOvUL.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccEjxWt9.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1638,7 +1932,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_33d68] ==> ignore
+          arg [cmTC_11e22] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -1651,7 +1945,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1662,8 +1956,8 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 11.4.0]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccULOvUL.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_33d68 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_33d68.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
-        linker tool for 'CXX': /usr/bin/ld
+        ignore line: [/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEjxWt9.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_11e22 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_11e22.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'CXX': /bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
@@ -1684,24 +1978,24 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      Running the CXX compiler's linker: "/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.38
   -
     kind: "try_compile-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs"
-      binary: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs"
+      source: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW"
+      binary: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1710,15 +2004,15 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs'
+        Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_10d05/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_10d05.dir/build.make CMakeFiles/cmTC_10d05.dir/build
-        gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs'
-        Building C object CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_c0e29/fast
+        /bin/gmake  -f CMakeFiles/cmTC_c0e29.dir/build.make CMakeFiles/cmTC_c0e29.dir/build
+        gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW'
+        Building C object CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o
+        /bin/cc   -v -o CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
         Using built-in specs.
-        COLLECT_GCC=/usr/bin/cc
+        COLLECT_GCC=/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
         OFFLOAD_TARGET_DEFAULT=1
         Target: x86_64-linux-gnu
@@ -1726,8 +2020,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_10d05.dir/'
-         /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_10d05.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccQdEkO2.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0e29.dir/'
+         /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_c0e29.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccVvwf22.s
         GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1747,16 +2041,16 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_10d05.dir/'
-         as -v --64 -o CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o /tmp/ccQdEkO2.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0e29.dir/'
+         as -v --64 -o CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o /tmp/ccVvwf22.s
         GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_10d05
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10d05.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_c0e29
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0e29.dir/link.txt --verbose=1
         Using built-in specs.
-        COLLECT_GCC=/usr/bin/cc
+        COLLECT_GCC=/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
         OFFLOAD_TARGET_DEFAULT=1
@@ -1767,21 +2061,21 @@ events:
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_10d05' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_10d05.'
-         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmKaLiP.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_10d05 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0e29' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0e29.'
+         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc0AD1Ws.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c0e29 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         collect2 version 11.4.0
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmKaLiP.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_10d05 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        /bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc0AD1Ws.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c0e29 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.38
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_10d05' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_10d05.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -o cmTC_10d05
-        gmake[1]: Leaving directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0e29' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0e29.'
+        /bin/cc  -v -Wl,-v CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -o cmTC_c0e29
+        gmake[1]: Leaving directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW'
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed C implicit include dir info: rv=done
@@ -1802,22 +2096,22 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs']
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_10d05/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_10d05.dir/build.make CMakeFiles/cmTC_10d05.dir/build]
-        ignore line: [gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-hBmKxs']
-        ignore line: [Building C object CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_c0e29/fast]
+        ignore line: [/bin/gmake  -f CMakeFiles/cmTC_c0e29.dir/build.make CMakeFiles/cmTC_c0e29.dir/build]
+        ignore line: [gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-SkALXW']
+        ignore line: [Building C object CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/bin/cc   -v -o CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_GCC=/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
         ignore line: [Target: x86_64-linux-gnu]
@@ -1825,8 +2119,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_10d05.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.1/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_10d05.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccQdEkO2.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0e29.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_c0e29.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccVvwf22.s]
         ignore line: [GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1846,16 +2140,16 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_10d05.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o /tmp/ccQdEkO2.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0e29.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o /tmp/ccVvwf22.s]
         ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_10d05]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10d05.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_c0e29]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0e29.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
-        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_GCC=/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
@@ -1866,13 +2160,13 @@ events:
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_10d05' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_10d05.']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmKaLiP.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_10d05 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0e29' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c0e29.']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc0AD1Ws.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c0e29 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccmKaLiP.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc0AD1Ws.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1890,7 +2184,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_10d05] ==> ignore
+          arg [cmTC_c0e29] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -1903,7 +2197,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -1918,8 +2212,8 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 11.4.0]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmKaLiP.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_10d05 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_10d05.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
-        linker tool for 'C': /usr/bin/ld
+        ignore line: [/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc0AD1Ws.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_c0e29 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_c0e29.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'C': /bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
@@ -1940,12 +2234,12 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "/usr/share/cmake-4.1/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
-      - "/usr/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
-      - "/usr/share/cmake-4.1/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/usr/local/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      Running the C compiler's linker: "/usr/bin/ld" "-v"
+      Running the C compiler's linker: "/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.38
   -
     kind: "find_package-v1"
@@ -2004,13 +2298,26 @@ events:
       version: "-dev"
     search_context:
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2025,7 +2332,7 @@ events:
         - "/usr/local"
         - "/usr"
         - "/"
-        - "/usr"
+        - "/usr/local"
         - "/usr/local"
         - "/usr/X11R6"
         - "/usr/pkg"
@@ -2102,13 +2409,26 @@ events:
           package_paths:
             - "/usr/local"
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2123,7 +2443,7 @@ events:
         - "/usr/local"
         - "/usr"
         - "/"
-        - "/usr"
+        - "/usr/local"
         - "/usr/local"
         - "/usr/X11R6"
         - "/usr/pkg"
@@ -2181,27 +2501,51 @@ events:
         mode: "config"
         reason: "no_exist"
       -
-        path: "/usr/local/lib/cmake/boost_test_exec_monitor-1.89.0/BoostConfig.cmake"
+        path: "/usr/local/lib/cmake/boost_wserialization-1.89.0/BoostConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/usr/local/lib/cmake/boost_test_exec_monitor-1.89.0/boost-config.cmake"
+        path: "/usr/local/lib/cmake/boost_wserialization-1.89.0/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/usr/local/lib/cmake/boost_prg_exec_monitor-1.89.0/BoostConfig.cmake"
+        path: "/usr/local/lib/cmake/boost_wave-1.89.0/BoostConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/usr/local/lib/cmake/boost_prg_exec_monitor-1.89.0/boost-config.cmake"
+        path: "/usr/local/lib/cmake/boost_wave-1.89.0/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/usr/local/lib/cmake/boost_fiber-1.89.0/BoostConfig.cmake"
+        path: "/usr/local/lib/cmake/boost_url-1.89.0/BoostConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/usr/local/lib/cmake/boost_fiber-1.89.0/boost-config.cmake"
+        path: "/usr/local/lib/cmake/boost_url-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_unit_test_framework-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_unit_test_framework-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_type_erasure-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_type_erasure-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_timer-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_timer-1.89.0/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2213,11 +2557,347 @@ events:
         mode: "config"
         reason: "no_exist"
       -
+        path: "/usr/local/lib/cmake/boost_test_exec_monitor-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_test_exec_monitor-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_noop-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_noop-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_from_exception-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_from_exception-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_basic-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_basic-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_backtrace-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_backtrace-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_addr2line-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_stacktrace_addr2line-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_serialization-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_serialization-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_regex-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_regex-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_random-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_random-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_python-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_python-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_program_options-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_program_options-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
         path: "/usr/local/lib/cmake/boost_process-1.89.0/BoostConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
         path: "/usr/local/lib/cmake/boost_process-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_prg_exec_monitor-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_prg_exec_monitor-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_numpy-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_numpy-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_nowide-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_nowide-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_mpi_python-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_mpi_python-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_mpi-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_mpi-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_tr1l-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_tr1l-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_tr1f-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_tr1f-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_tr1-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_tr1-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_c99l-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_c99l-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_c99f-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_c99f-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_c99-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math_c99-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_math-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_log_setup-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_log_setup-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_log-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_log-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_locale-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_locale-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_json-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_json-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_iostreams-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_iostreams-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_headers-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_headers-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_graph_parallel-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_graph_parallel-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_graph-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_graph-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_filesystem-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_filesystem-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_fiber-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_fiber-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_exception-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_exception-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_date_time-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_date_time-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_coroutine-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_coroutine-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_contract-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_contract-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_context-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_context-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_container-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_container-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_chrono-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_chrono-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_charconv-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_charconv-1.89.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_atomic-1.89.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cmake/boost_atomic-1.89.0/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
     found:
@@ -2226,13 +2906,26 @@ events:
       version: "1.89.0"
     search_context:
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2247,7 +2940,7 @@ events:
         - "/usr/local"
         - "/usr"
         - "/"
-        - "/usr"
+        - "/usr/local"
         - "/usr/local"
         - "/usr/X11R6"
         - "/usr/pkg"
@@ -2326,13 +3019,26 @@ events:
           package_paths:
             - "/usr/local"
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2347,7 +3053,7 @@ events:
         - "/usr/local"
         - "/usr"
         - "/"
-        - "/usr"
+        - "/usr/local"
         - "/usr/local"
         - "/usr/X11R6"
         - "/usr/pkg"
@@ -2424,13 +3130,26 @@ events:
           package_paths:
             - "/usr/local"
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2445,7 +3164,7 @@ events:
         - "/usr/local"
         - "/usr"
         - "/"
-        - "/usr"
+        - "/usr/local"
         - "/usr/local"
         - "/usr/X11R6"
         - "/usr/pkg"
@@ -2521,13 +3240,26 @@ events:
           package_paths:
             - "/usr/local"
       CMAKE_PREFIX_PATH:
-        - "/users/alanandr/local/sstcore"
+        - "/users/alanandr/local/sstcore/"
       ENV{PATH}:
-        - "/users/alanandr/.local/bin"
-        - "/users/alanandr/local/sstelements/bin"
-        - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
-        - "/users/alanandr/.local/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/locla/sstelements//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
+        - "/bin"
+        - "/users/alanandr/local/sstcore//bin"
+        - "/users/alanandr/scratch/src/OpenMPI/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2542,7 +3274,7 @@ events:
         - "/usr/local"
         - "/usr"
         - "/"
-        - "/usr"
+        - "/usr/local"
         - "/usr/local"
         - "/usr/X11R6"
         - "/usr/pkg"

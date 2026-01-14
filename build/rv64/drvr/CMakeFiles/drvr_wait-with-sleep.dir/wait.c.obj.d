@@ -3,32 +3,32 @@ drvr/CMakeFiles/drvr_wait-with-sleep.dir/wait.c.obj: \
  /users/alanandr/mydrv/pandohammer/pandohammer/hartsleep.h \
  /users/alanandr/mydrv/pandohammer/pandohammer/register.h \
  /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_newlib_version.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/config.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/ieeefp.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/features.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/cdefs.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_default_types.h \
- /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include/stddef.h \
- /users/alanandr/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include/stdarg.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/reent.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_types.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_types.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/lock.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/types.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/endian.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_endian.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/select.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_sigset.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_timeval.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/timespec.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_timespec.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_pthreadtypes.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/sched.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/types.h \
- /users/alanandr/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/stdio.h
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_newlib_version.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/config.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/ieeefp.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/features.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/cdefs.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_default_types.h \
+ /users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include/stddef.h \
+ /users/alanandr/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include/stdarg.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/reent.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_types.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_types.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/lock.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/types.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/endian.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_endian.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/select.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_sigset.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_timeval.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/timespec.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_timespec.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_pthreadtypes.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/sched.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/types.h \
+ /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/stdio.h

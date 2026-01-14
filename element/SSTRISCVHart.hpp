@@ -67,6 +67,18 @@ public:
     bool   stalledSleep() const { return _stalled_sleep; }
 
     /**
+     * @brief spLow
+     */
+     uint64_t & spLow() { return sp_low_; }
+     uint64_t   spLow() const { return sp_low_; }
+
+    /**
+    * @brief spHigh
+    */
+     uint64_t & spHigh() { return sp_high_; }
+     uint64_t   spHigh() const { return sp_high_; }
+
+    /**
      * @brief exit
      */
     int & exit() { return _exit; }
@@ -108,6 +120,9 @@ public:
     int  _exit = false;
     int64_t _exit_code = 0;
     uint64_t _reset_pc = 0;
+    // sp boundaries
+    uint64_t sp_low_ = 0x0;
+    uint64_t sp_high_ = 0x10;
 };
 
 }
