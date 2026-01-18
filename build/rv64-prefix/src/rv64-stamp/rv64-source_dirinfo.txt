@@ -4,6 +4,6 @@
 
 method=source_dir
 command=
-source_dir=/users/alanandr/mydrv
+source_dir=/users/alanandr/2/drv
 work_dir=
 

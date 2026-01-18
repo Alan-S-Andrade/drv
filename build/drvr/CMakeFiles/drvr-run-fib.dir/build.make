@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/mydrv
+CMAKE_SOURCE_DIR = /users/alanandr/2/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/mydrv/build
+CMAKE_BINARY_DIR = /users/alanandr/2/drv/build
 
 # Utility rule file for drvr-run-fib.
 
@@ -68,7 +68,7 @@ include drvr/CMakeFiles/drvr-run-fib.dir/progress.make
 
 drvr/CMakeFiles/drvr-run-fib: rv64/drvr/drvr_fib
 drvr/CMakeFiles/drvr-run-fib: element/libDrv.so
-	cd /users/alanandr/mydrv/build/drvr && mkdir -p /users/alanandr/mydrv/build/drvr/drvr-run-fib && cd /users/alanandr/mydrv/build/drvr/drvr-run-fib && PYTHONPATH=/users/alanandr/mydrv/py::/users/alanandr/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/mydrv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/mydrv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/mydrv/build/rv64/drvr/drvr_fib  | tee /users/alanandr/mydrv/build/drvr/drvr-run-fib/output.txt
+	cd /users/alanandr/2/drv/build/drvr && mkdir -p /users/alanandr/2/drv/build/drvr/drvr-run-fib && cd /users/alanandr/2/drv/build/drvr/drvr-run-fib && PYTHONPATH=/users/alanandr/2/drv/py::/users/alanandr/2/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/2/drv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/2/drv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/2/drv/build/rv64/drvr/drvr_fib  | tee /users/alanandr/2/drv/build/drvr/drvr-run-fib/output.txt
 
 drvr/CMakeFiles/drvr-run-fib.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr-run-fib.dir/codegen
@@ -82,10 +82,10 @@ drvr/CMakeFiles/drvr-run-fib.dir/build: drvr-run-fib
 .PHONY : drvr/CMakeFiles/drvr-run-fib.dir/build
 
 drvr/CMakeFiles/drvr-run-fib.dir/clean:
-	cd /users/alanandr/mydrv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-fib.dir/cmake_clean.cmake
+	cd /users/alanandr/2/drv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-fib.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr-run-fib.dir/clean
 
 drvr/CMakeFiles/drvr-run-fib.dir/depend:
-	cd /users/alanandr/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvr /users/alanandr/mydrv/build /users/alanandr/mydrv/build/drvr /users/alanandr/mydrv/build/drvr/CMakeFiles/drvr-run-fib.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-fib
+	cd /users/alanandr/2/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvr /users/alanandr/2/drv/build /users/alanandr/2/drv/build/drvr /users/alanandr/2/drv/build/drvr/CMakeFiles/drvr-run-fib.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-fib
 .PHONY : drvr/CMakeFiles/drvr-run-fib.dir/depend
 

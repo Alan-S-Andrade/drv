@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_read.dir/read.c.obj: \
- /users/alanandr/mydrv/drvr/read.c \
+ /users/alanandr/2/drv/drvr/read.c \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \

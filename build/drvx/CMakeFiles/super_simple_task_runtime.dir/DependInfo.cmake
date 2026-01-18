@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/mydrv/drvx/runtime.cpp" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o" "gcc" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o.d"
-  "/users/alanandr/mydrv/drvx/runtime_main.cpp" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o" "gcc" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o.d"
+  "/users/alanandr/2/drv/drvx/runtime.cpp" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o" "gcc" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o.d"
+  "/users/alanandr/2/drv/drvx/runtime_main.cpp" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o" "gcc" "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

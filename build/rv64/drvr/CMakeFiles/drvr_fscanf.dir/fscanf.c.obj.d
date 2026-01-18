@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: \
- /users/alanandr/mydrv/drvr/fscanf.c \
+ /users/alanandr/2/drv/drvr/fscanf.c \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -44,6 +44,6 @@ drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/stat.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/time.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/time.h \
- /users/alanandr/mydrv/pandohammer/pandohammer/atomic.h \
+ /users/alanandr/2/drv/pandohammer/pandohammer/atomic.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h

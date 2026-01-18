@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/mydrv/pandohammer
+# Install script for directory: /users/alanandr/2/drv/pandohammer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,31 +39,31 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES
-    "/users/alanandr/mydrv/pandohammer/crt.S"
-    "/users/alanandr/mydrv/pandohammer/lock.c"
+    "/users/alanandr/2/drv/pandohammer/crt.S"
+    "/users/alanandr/2/drv/pandohammer/lock.c"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/pandohammer" TYPE FILE FILES
-    "/users/alanandr/mydrv/pandohammer/pandohammer/address.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/atomic.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/mmio.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/staticdecl.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/stringify.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/hartsleep.h"
-    "/users/alanandr/mydrv/pandohammer/pandohammer/register.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/address.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/atomic.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/cpuinfo.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/mmio.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/staticdecl.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/stringify.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/hartsleep.h"
+    "/users/alanandr/2/drv/pandohammer/pandohammer/register.h"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "/users/alanandr/mydrv/pandohammer/bsg_link.ld")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "/users/alanandr/2/drv/pandohammer/bsg_link.ld")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/mydrv/build/rv64/pandohammer/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/2/drv/build/rv64/pandohammer/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/mydrv/pandocommand
+# Install script for directory: /users/alanandr/2/drv/pandocommand
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 # Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/bin/objdump")
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -49,15 +49,15 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/mydrv/build/pandocommand/libpandocommand.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/2/drv/build/pandocommand/libpandocommand.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so"
-         OLD_RPATH "/users/alanandr/mydrv/build/api:/usr/local/lib:"
+         OLD_RPATH "/users/alanandr/2/drv/build/api:/usr/local/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so")
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so")
     endif()
   endif()
 endif()
@@ -67,16 +67,16 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/pandocommand" TYPE FILE FILES
-    "/users/alanandr/mydrv/pandocommand/control.hpp"
-    "/users/alanandr/mydrv/pandocommand/debug.hpp"
-    "/users/alanandr/mydrv/pandocommand/executable.hpp"
-    "/users/alanandr/mydrv/pandocommand/loader.hpp"
-    "/users/alanandr/mydrv/pandocommand/place.hpp"
+    "/users/alanandr/2/drv/pandocommand/control.hpp"
+    "/users/alanandr/2/drv/pandocommand/debug.hpp"
+    "/users/alanandr/2/drv/pandocommand/executable.hpp"
+    "/users/alanandr/2/drv/pandocommand/loader.hpp"
+    "/users/alanandr/2/drv/pandocommand/place.hpp"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/users/alanandr/mydrv/build/pandocommand/CMakeFiles/pandocommand.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
+  include("/users/alanandr/2/drv/build/pandocommand/CMakeFiles/pandocommand.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -86,15 +86,15 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so"
          RPATH "/usr/local/lib")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/mydrv/build/pandocommand/libpandocommand_loader.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/users/alanandr/2/drv/build/pandocommand/libpandocommand_loader.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so"
-         OLD_RPATH "/users/alanandr/mydrv/build/pandocommand:/users/alanandr/mydrv/build/api:/usr/local/lib:"
+         OLD_RPATH "/users/alanandr/2/drv/build/pandocommand:/users/alanandr/2/drv/build/api:/usr/local/lib:"
          NEW_RPATH "/usr/local/lib")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so")
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so")
     endif()
   endif()
 endif()
@@ -105,6 +105,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/mydrv/build/pandocommand/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/2/drv/build/pandocommand/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

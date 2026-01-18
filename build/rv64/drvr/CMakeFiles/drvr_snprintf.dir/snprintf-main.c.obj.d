@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_snprintf.dir/snprintf-main.c.obj: \
- /users/alanandr/mydrv/drvr/snprintf-main.c \
+ /users/alanandr/2/drv/drvr/snprintf-main.c \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/unistd.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/unistd.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \

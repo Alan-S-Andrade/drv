@@ -6,19 +6,19 @@
 # compile CXX with /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_gups_include -I/users/alanandr/mydrv/pandohammer
+ASM_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_gups_include -I/users/alanandr/2/drv/pandohammer
 
 ASM_FLAGS = -DTHREAD_UPDATES=4 -DTABLE_SIZE=1048576
 
 C_DEFINES = 
 
-C_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_gups_include -I/users/alanandr/mydrv/pandohammer
+C_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_gups_include -I/users/alanandr/2/drv/pandohammer
 
 C_FLAGS = -DTHREAD_UPDATES=4 -DTABLE_SIZE=1048576
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_gups_include -I/users/alanandr/mydrv/pandohammer
+CXX_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_gups_include -I/users/alanandr/2/drv/pandohammer
 
 CXX_FLAGS = -DTHREAD_UPDATES=4 -DTABLE_SIZE=1048576
 

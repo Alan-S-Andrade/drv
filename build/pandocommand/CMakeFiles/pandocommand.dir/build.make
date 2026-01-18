@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/mydrv
+CMAKE_SOURCE_DIR = /users/alanandr/2/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/mydrv/build
+CMAKE_BINARY_DIR = /users/alanandr/2/drv/build
 
 # Include any dependencies generated for this target.
 include pandocommand/CMakeFiles/pandocommand.dir/depend.make
@@ -73,32 +73,32 @@ pandocommand/CMakeFiles/pandocommand.dir/codegen:
 .PHONY : pandocommand/CMakeFiles/pandocommand.dir/codegen
 
 pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o: pandocommand/CMakeFiles/pandocommand.dir/flags.make
-pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o: /users/alanandr/mydrv/pandocommand/control.cpp
+pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o: /users/alanandr/2/drv/pandocommand/control.cpp
 pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o: pandocommand/CMakeFiles/pandocommand.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o"
-	cd /users/alanandr/mydrv/build/pandocommand && /bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o -MF CMakeFiles/pandocommand.dir/control.cpp.o.d -o CMakeFiles/pandocommand.dir/control.cpp.o -c /users/alanandr/mydrv/pandocommand/control.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/2/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o"
+	cd /users/alanandr/2/drv/build/pandocommand && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o -MF CMakeFiles/pandocommand.dir/control.cpp.o.d -o CMakeFiles/pandocommand.dir/control.cpp.o -c /users/alanandr/2/drv/pandocommand/control.cpp
 
 pandocommand/CMakeFiles/pandocommand.dir/control.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pandocommand.dir/control.cpp.i"
-	cd /users/alanandr/mydrv/build/pandocommand && /bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/mydrv/pandocommand/control.cpp > CMakeFiles/pandocommand.dir/control.cpp.i
+	cd /users/alanandr/2/drv/build/pandocommand && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/2/drv/pandocommand/control.cpp > CMakeFiles/pandocommand.dir/control.cpp.i
 
 pandocommand/CMakeFiles/pandocommand.dir/control.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pandocommand.dir/control.cpp.s"
-	cd /users/alanandr/mydrv/build/pandocommand && /bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/mydrv/pandocommand/control.cpp -o CMakeFiles/pandocommand.dir/control.cpp.s
+	cd /users/alanandr/2/drv/build/pandocommand && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/2/drv/pandocommand/control.cpp -o CMakeFiles/pandocommand.dir/control.cpp.s
 
 pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o: pandocommand/CMakeFiles/pandocommand.dir/flags.make
-pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o: /users/alanandr/mydrv/pandocommand/loader.cpp
+pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o: /users/alanandr/2/drv/pandocommand/loader.cpp
 pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o: pandocommand/CMakeFiles/pandocommand.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o"
-	cd /users/alanandr/mydrv/build/pandocommand && /bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o -MF CMakeFiles/pandocommand.dir/loader.cpp.o.d -o CMakeFiles/pandocommand.dir/loader.cpp.o -c /users/alanandr/mydrv/pandocommand/loader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/2/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o"
+	cd /users/alanandr/2/drv/build/pandocommand && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o -MF CMakeFiles/pandocommand.dir/loader.cpp.o.d -o CMakeFiles/pandocommand.dir/loader.cpp.o -c /users/alanandr/2/drv/pandocommand/loader.cpp
 
 pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pandocommand.dir/loader.cpp.i"
-	cd /users/alanandr/mydrv/build/pandocommand && /bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/mydrv/pandocommand/loader.cpp > CMakeFiles/pandocommand.dir/loader.cpp.i
+	cd /users/alanandr/2/drv/build/pandocommand && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/2/drv/pandocommand/loader.cpp > CMakeFiles/pandocommand.dir/loader.cpp.i
 
 pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pandocommand.dir/loader.cpp.s"
-	cd /users/alanandr/mydrv/build/pandocommand && /bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/mydrv/pandocommand/loader.cpp -o CMakeFiles/pandocommand.dir/loader.cpp.s
+	cd /users/alanandr/2/drv/build/pandocommand && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/2/drv/pandocommand/loader.cpp -o CMakeFiles/pandocommand.dir/loader.cpp.s
 
 # Object files for target pandocommand
 pandocommand_OBJECTS = \
@@ -115,18 +115,18 @@ pandocommand/libpandocommand.so: api/libdrvapi.so
 pandocommand/libpandocommand.so: /usr/local/lib/libboost_coroutine.so.1.89.0
 pandocommand/libpandocommand.so: /usr/local/lib/libboost_context.so.1.89.0
 pandocommand/libpandocommand.so: pandocommand/CMakeFiles/pandocommand.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/mydrv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libpandocommand.so"
-	cd /users/alanandr/mydrv/build/pandocommand && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pandocommand.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/2/drv/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libpandocommand.so"
+	cd /users/alanandr/2/drv/build/pandocommand && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pandocommand.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 pandocommand/CMakeFiles/pandocommand.dir/build: pandocommand/libpandocommand.so
 .PHONY : pandocommand/CMakeFiles/pandocommand.dir/build
 
 pandocommand/CMakeFiles/pandocommand.dir/clean:
-	cd /users/alanandr/mydrv/build/pandocommand && $(CMAKE_COMMAND) -P CMakeFiles/pandocommand.dir/cmake_clean.cmake
+	cd /users/alanandr/2/drv/build/pandocommand && $(CMAKE_COMMAND) -P CMakeFiles/pandocommand.dir/cmake_clean.cmake
 .PHONY : pandocommand/CMakeFiles/pandocommand.dir/clean
 
 pandocommand/CMakeFiles/pandocommand.dir/depend:
-	cd /users/alanandr/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/pandocommand /users/alanandr/mydrv/build /users/alanandr/mydrv/build/pandocommand /users/alanandr/mydrv/build/pandocommand/CMakeFiles/pandocommand.dir/DependInfo.cmake "--color=$(COLOR)" pandocommand
+	cd /users/alanandr/2/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/pandocommand /users/alanandr/2/drv/build /users/alanandr/2/drv/build/pandocommand /users/alanandr/2/drv/build/pandocommand/CMakeFiles/pandocommand.dir/DependInfo.cmake "--color=$(COLOR)" pandocommand
 .PHONY : pandocommand/CMakeFiles/pandocommand.dir/depend
 

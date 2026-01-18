@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/mydrv
+CMAKE_SOURCE_DIR = /users/alanandr/2/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/mydrv/build
+CMAKE_BINARY_DIR = /users/alanandr/2/drv/build
 
 # Utility rule file for drvx-run-all.
 
@@ -80,10 +80,10 @@ drvx/CMakeFiles/drvx-run-all.dir/build: drvx-run-all
 .PHONY : drvx/CMakeFiles/drvx-run-all.dir/build
 
 drvx/CMakeFiles/drvx-run-all.dir/clean:
-	cd /users/alanandr/mydrv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-all.dir/cmake_clean.cmake
+	cd /users/alanandr/2/drv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-all.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-all.dir/clean
 
 drvx/CMakeFiles/drvx-run-all.dir/depend:
-	cd /users/alanandr/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvx /users/alanandr/mydrv/build /users/alanandr/mydrv/build/drvx /users/alanandr/mydrv/build/drvx/CMakeFiles/drvx-run-all.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-all
+	cd /users/alanandr/2/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvx /users/alanandr/2/drv/build /users/alanandr/2/drv/build/drvx /users/alanandr/2/drv/build/drvx/CMakeFiles/drvx-run-all.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-all
 .PHONY : drvx/CMakeFiles/drvx-run-all.dir/depend
 

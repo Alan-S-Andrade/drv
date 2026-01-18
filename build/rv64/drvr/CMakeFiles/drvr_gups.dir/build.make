@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/mydrv
+CMAKE_SOURCE_DIR = /users/alanandr/2/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/mydrv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/2/drv/build/rv64
 
 # Include any dependencies generated for this target.
 include drvr/CMakeFiles/drvr_gups.dir/depend.make
@@ -70,25 +70,25 @@ include drvr/CMakeFiles/drvr_gups.dir/progress.make
 include drvr/CMakeFiles/drvr_gups.dir/flags.make
 
 drvr/drvr_gups_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_gups_include/address_map.h"
-	cd /users/alanandr/mydrv/build/rv64/drvr && mkdir -p /users/alanandr/mydrv/build/rv64/drvr/drvr_gups_include && python3 /users/alanandr/mydrv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/mydrv/build/rv64/drvr/drvr_gups_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_gups_include/address_map.h"
+	cd /users/alanandr/2/drv/build/rv64/drvr && mkdir -p /users/alanandr/2/drv/build/rv64/drvr/drvr_gups_include && python3 /users/alanandr/2/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/2/drv/build/rv64/drvr/drvr_gups_include/address_map.h
 
 drvr/CMakeFiles/drvr_gups.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/codegen
 
 drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj: drvr/CMakeFiles/drvr_gups.dir/flags.make
-drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj: /users/alanandr/mydrv/drvr/gups.cpp
+drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj: /users/alanandr/2/drv/drvr/gups.cpp
 drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj: drvr/CMakeFiles/drvr_gups.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj"
-	cd /users/alanandr/mydrv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj -MF CMakeFiles/drvr_gups.dir/gups.cpp.obj.d -o CMakeFiles/drvr_gups.dir/gups.cpp.obj -c /users/alanandr/mydrv/drvr/gups.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj"
+	cd /users/alanandr/2/drv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj -MF CMakeFiles/drvr_gups.dir/gups.cpp.obj.d -o CMakeFiles/drvr_gups.dir/gups.cpp.obj -c /users/alanandr/2/drv/drvr/gups.cpp
 
 drvr/CMakeFiles/drvr_gups.dir/gups.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/drvr_gups.dir/gups.cpp.i"
-	cd /users/alanandr/mydrv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/mydrv/drvr/gups.cpp > CMakeFiles/drvr_gups.dir/gups.cpp.i
+	cd /users/alanandr/2/drv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/alanandr/2/drv/drvr/gups.cpp > CMakeFiles/drvr_gups.dir/gups.cpp.i
 
 drvr/CMakeFiles/drvr_gups.dir/gups.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/drvr_gups.dir/gups.cpp.s"
-	cd /users/alanandr/mydrv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/mydrv/drvr/gups.cpp -o CMakeFiles/drvr_gups.dir/gups.cpp.s
+	cd /users/alanandr/2/drv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/alanandr/2/drv/drvr/gups.cpp -o CMakeFiles/drvr_gups.dir/gups.cpp.s
 
 # Object files for target drvr_gups
 drvr_gups_OBJECTS = \
@@ -96,26 +96,26 @@ drvr_gups_OBJECTS = \
 
 # External object files for target drvr_gups
 drvr_gups_EXTERNAL_OBJECTS = \
-"/users/alanandr/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/users/alanandr/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/users/alanandr/2/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/users/alanandr/2/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 drvr/drvr_gups: drvr/CMakeFiles/drvr_gups.dir/gups.cpp.obj
 drvr/drvr_gups: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 drvr/drvr_gups: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 drvr/drvr_gups: drvr/CMakeFiles/drvr_gups.dir/build.make
 drvr/drvr_gups: drvr/CMakeFiles/drvr_gups.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable drvr_gups"
-	cd /users/alanandr/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_gups.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable drvr_gups"
+	cd /users/alanandr/2/drv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_gups.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvr/CMakeFiles/drvr_gups.dir/build: drvr/drvr_gups
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/build
 
 drvr/CMakeFiles/drvr_gups.dir/clean:
-	cd /users/alanandr/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_gups.dir/cmake_clean.cmake
+	cd /users/alanandr/2/drv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_gups.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/clean
 
 drvr/CMakeFiles/drvr_gups.dir/depend: drvr/drvr_gups_include/address_map.h
-	cd /users/alanandr/mydrv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvr /users/alanandr/mydrv/build/rv64 /users/alanandr/mydrv/build/rv64/drvr /users/alanandr/mydrv/build/rv64/drvr/CMakeFiles/drvr_gups.dir/DependInfo.cmake "--color=$(COLOR)" drvr_gups
+	cd /users/alanandr/2/drv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvr /users/alanandr/2/drv/build/rv64 /users/alanandr/2/drv/build/rv64/drvr /users/alanandr/2/drv/build/rv64/drvr/CMakeFiles/drvr_gups.dir/DependInfo.cmake "--color=$(COLOR)" drvr_gups
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/depend
 

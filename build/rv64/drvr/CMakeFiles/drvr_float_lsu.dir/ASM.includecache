@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/users/alanandr/mydrv/drvr/float_lsu.S
+/users/alanandr/2/drv/drvr/float_lsu.S
 machine/syscall.h
 -
 

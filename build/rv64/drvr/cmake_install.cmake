@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/mydrv/drvr
+# Install script for directory: /users/alanandr/2/drv/drvr
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,6 +40,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/mydrv/build/rv64/drvr/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/2/drv/build/rv64/drvr/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

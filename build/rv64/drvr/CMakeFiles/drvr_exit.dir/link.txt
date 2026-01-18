@@ -1,1 +1,1 @@
-/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/users/alanandr/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_exit.dir/exit.S.obj -o drvr_exit
+/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/users/alanandr/2/drv/pandohammer/bsg_link.ld CMakeFiles/drvr_exit.dir/exit.S.obj -o drvr_exit

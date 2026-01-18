@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/mydrv/drvx/comm.cpp" "drvx/CMakeFiles/comm.dir/comm.cpp.o" "gcc" "drvx/CMakeFiles/comm.dir/comm.cpp.o.d"
+  "/users/alanandr/2/drv/drvx/comm.cpp" "drvx/CMakeFiles/comm.dir/comm.cpp.o" "gcc" "drvx/CMakeFiles/comm.dir/comm.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

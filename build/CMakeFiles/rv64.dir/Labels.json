@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/users/alanandr/mydrv/build/CMakeFiles/rv64"
+			"file" : "/users/alanandr/2/drv/build/CMakeFiles/rv64"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/CMakeFiles/rv64.rule"
+			"file" : "/users/alanandr/2/drv/build/CMakeFiles/rv64.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/CMakeFiles/rv64-complete.rule"
+			"file" : "/users/alanandr/2/drv/build/CMakeFiles/rv64-complete.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-build.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-build.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-configure.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-configure.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-download.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-download.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-install.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-install.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-mkdir.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-mkdir.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-patch.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-patch.rule"
 		},
 		{
-			"file" : "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-update.rule"
+			"file" : "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-update.rule"
 		}
 	],
 	"target" : 

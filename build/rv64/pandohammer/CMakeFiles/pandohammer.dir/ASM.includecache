@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/users/alanandr/mydrv/pandohammer/crt.S
+/users/alanandr/2/drv/pandohammer/crt.S
 newlib.h
-/users/alanandr/mydrv/pandohammer/newlib.h
+/users/alanandr/2/drv/pandohammer/newlib.h
 pandohammer/register.h
-/users/alanandr/mydrv/pandohammer/pandohammer/register.h
+/users/alanandr/2/drv/pandohammer/pandohammer/register.h
 
-/users/alanandr/mydrv/pandohammer/pandohammer/register.h
+/users/alanandr/2/drv/pandohammer/pandohammer/register.h
 

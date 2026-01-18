@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_write.dir/write.c.obj: \
- /users/alanandr/mydrv/drvr/write.c \
+ /users/alanandr/2/drv/drvr/write.c \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/unistd.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/unistd.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \

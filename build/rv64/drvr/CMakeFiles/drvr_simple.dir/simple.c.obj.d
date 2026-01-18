@@ -1,2 +1,2 @@
 drvr/CMakeFiles/drvr_simple.dir/simple.c.obj: \
- /users/alanandr/mydrv/drvr/simple.c
+ /users/alanandr/2/drv/drvr/simple.c
