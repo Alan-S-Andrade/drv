@@ -158,3 +158,8 @@ See `docker/Dockerfile`
 1. Find the container id with `docker ps`
 2. Connect with `docker attach <container-id>`
 
+docker build \
+  --build-arg ssh_prv_key="$(cat ~/.ssh/id_ed25519)" \
+  --build-arg ssh_pub_key="$(cat ~/.ssh/id_ed25519.pub)" \
+  -t myimage:latest .
+
