@@ -161,7 +161,11 @@ See `docker/Dockerfile`
 docker build \
   --build-arg ssh_prv_key="$(cat ~/.ssh/id_ed25519)" \
   --build-arg ssh_pub_key="$(cat ~/.ssh/id_ed25519.pub)" \
-  -t myimage:latest .
+  -t drv:latest . -f docker/Dockerfile
+  
+docker run -it --rm \
+  -v $PWD:/work \
+  drv:latest bash
 
 mkdir build && cd build
 cmake .. -DSST_CORE_PREFIX=$SST_CORE_HOME -DSST_ELEMENTS_PREFIX=$SST_ELEMENTS_HOME -DGNU_RISCV_TOOLCHAIN_PREFIX=$RISCV_HOME
