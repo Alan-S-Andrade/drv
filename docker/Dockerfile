@@ -25,7 +25,7 @@ RUN apt update -y \
         python3-dev \
         automake \
         git \
-        && git clone https://github.com/sstsimulator/sst-core.git /sst-core-src \
+        && git clone https://github.com/mrutt92/sst-core.git -b devel-drv-changes /sst-core-src \
         && cd /sst-core-src \
         && ./autogen.sh \
         && mkdir -p /sst-core-build \
@@ -38,23 +38,12 @@ RUN apt update -y \
         && apt remove -y git automake \
         && apt clean -y
 
-
-# install ramulator
-RUN apt update -y \
-        && apt install -y \
-        git \
-        clang \
-        && git clone https://github.com/mrutt92/ramulator /root/sst-ramulator-src \
-        && cd /root/sst-ramulator-src \
-        && git checkout mrutt \
-        && make -j `nproc` libramulator.so
-
 # install sst-elements
 RUN apt update -y \
         && apt install -y \
         git \
         libltdl-dev \
-        && git clone https://github.com/mrutt92/sst-elements.git /sst-elements-src \
+        && git clone https://github.com/mrutt92/sst-elements.git -b devel-drv-changes /sst-elements-src \
         && cd /sst-elements-src \
         && git checkout devel-drv-changes \
         && ./autogen.sh \
@@ -63,7 +52,6 @@ RUN apt update -y \
         && /sst-elements-src/configure \
         --prefix=${DRV_ROOT} \
         --with-sst-core=${DRV_ROOT} \
-        --with-ramulator=/root/sst-ramulator-src \
         && make -j `nproc` install \
         && rm -rf /sst-elements-build \
         && apt remove -y git libltdl-dev \
@@ -75,15 +63,14 @@ RUN apt update -y \
         wget \
         && mkdir -p /downloads \
         && cd /downloads \
-        && wget https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.gz \
-        && tar zxf boost_1_82_0.tar.gz \
-        && cd /downloads/boost_1_82_0 \
-        && /downloads/boost_1_82_0/bootstrap.sh \
-        && /downloads/boost_1_82_0/b2 --prefix=${DRV_ROOT} install \
+	&& wget https://archives.boost.io/release/1.89.0/source/boost_1_89_0.tar.bz2 \
+        && tar xf boost_1_89_0.tar.bz2 \
+        && cd /downloads/boost_1_89_0 \
+        && /downloads/boost_1_89_0/bootstrap.sh \
+        && /downloads/boost_1_89_0/b2 --prefix=${DRV_ROOT} install \
         && rm -rf /downloads \
         && apt remove -y wget \
         && apt clean -y
-
 
 RUN mkdir ~/.ssh
 ARG ssh_prv_key
@@ -99,9 +86,8 @@ RUN eval "$(ssh-agent -s)" && \
 
 RUN apt update -y \
         && apt install -y git automake gawk wget curl texinfo libgmp-dev flex bison \
-        && git clone git@github.com:AMDResearch/pando-riscv-gnu-toolchain /riscv-gnu-toolchain \
+        && git clone https://github.com/Alan-S-Andrade/riscv-gnu-toolchain.git -b pandodrvsim /riscv-gnu-toolchain \
         && cd /riscv-gnu-toolchain \
-	&& git checkout pandodrvsim \
         && ./configure --enable-multilib --with-arch=rv64imafd --disable-linux --prefix=${DRV_ROOT} \
         && make -j `nproc` \
         && make install \
@@ -120,7 +106,17 @@ RUN apt update -y \
         wget \
         && apt clean -y
 
-RUN pip3 install gdown
+RUN pip3 install gdown numpy
+
+RUN mkdir -p cmake-src \
+	&& cd cmake-src \
+	&& wget https://github.com/Kitware/CMake/releases/download/v4.2.1/cmake-4.2.1.tar.gz \
+	&& tar xf cmake-4.2.1.tar.gz \
+	&& cd cmake-4.2.1 \
+	&& apt install -y openssl libssl-dev \
+	&& ./bootstrap --prefix=/usr/local --parallel=`nproc` \
+	&& make -j `nproc` \
+	&& make -j `nproc` install 
 
 ENV PATH "${PATH}":${DRV_ROOT}/bin
 ENV PYTHONPATH "/root/drv/tests:${PYTHONPATH}"
@@ -135,7 +131,7 @@ COPY  . /root/drv/
 WORKDIR /root/drv/
 
 # build drv
-RUN cd /root/drv \
-    && make -j `nproc` install \
-    && make -j `nproc` examples
-RUN cd /root/drv
+RUN rm -rf /root/drv/build \
+        && mkdir -p /root/drv/build \
+        && cd /root/drv/build \
+	&& cmake .. -DSST_CORE_PREFIX=${DRV_ROOT} -DSST_ELEMENTS_PREFIX=${DRV_ROOT} -DGNU_RISCV_TOOLCHAIN_PREFIX=${DRV_ROOT}
