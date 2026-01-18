@@ -161,5 +161,8 @@ See `docker/Dockerfile`
 docker build \
   --build-arg ssh_prv_key="$(cat ~/.ssh/id_ed25519)" \
   --build-arg ssh_pub_key="$(cat ~/.ssh/id_ed25519.pub)" \
-  -t myimage:latest .
+  -t drv:latest .
+docker run -it --rm \
+  -v $PWD:/work \
+  drv:latest bash
 
