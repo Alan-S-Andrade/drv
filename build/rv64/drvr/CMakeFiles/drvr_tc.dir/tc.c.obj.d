@@ -1,4 +1,4 @@
-drvr/CMakeFiles/drvr_tc.dir/tc.c.obj: /users/alanandr/2/drv/drvr/tc.c \
+drvr/CMakeFiles/drvr_tc.dir/tc.c.obj: /users/alanandr/mydrv/drvr/tc.c \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \

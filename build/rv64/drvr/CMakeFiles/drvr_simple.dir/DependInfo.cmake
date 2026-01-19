@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/2/drv/drvr/simple-main.c" "drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj" "gcc" "drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj.d"
-  "/users/alanandr/2/drv/drvr/simple.c" "drvr/CMakeFiles/drvr_simple.dir/simple.c.obj" "gcc" "drvr/CMakeFiles/drvr_simple.dir/simple.c.obj.d"
+  "/users/alanandr/mydrv/drvr/simple-main.c" "drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj" "gcc" "drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj.d"
+  "/users/alanandr/mydrv/drvr/simple.c" "drvr/CMakeFiles/drvr_simple.dir/simple.c.obj" "gcc" "drvr/CMakeFiles/drvr_simple.dir/simple.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

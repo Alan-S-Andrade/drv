@@ -6,22 +6,22 @@ cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 # If CMAKE_DISABLE_SOURCE_CHANGES is set to true and the source directory is an
 # existing directory in our source tree, calling file(MAKE_DIRECTORY) on it
 # would cause a fatal error, even though it would be a no-op.
-if(NOT EXISTS "/users/alanandr/2/drv")
-  file(MAKE_DIRECTORY "/users/alanandr/2/drv")
+if(NOT EXISTS "/users/alanandr/mydrv")
+  file(MAKE_DIRECTORY "/users/alanandr/mydrv")
 endif()
 file(MAKE_DIRECTORY
-  "/users/alanandr/2/drv/build/rv64"
-  "/users/alanandr/2/drv/build/rv64"
-  "/users/alanandr/2/drv/build/rv64-prefix/tmp"
-  "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp"
-  "/users/alanandr/2/drv/build/rv64-prefix/src"
-  "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp"
+  "/users/alanandr/mydrv/build/rv64"
+  "/users/alanandr/mydrv/build/rv64"
+  "/users/alanandr/mydrv/build/rv64-prefix/tmp"
+  "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp"
+  "/users/alanandr/mydrv/build/rv64-prefix/src"
+  "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/${subDir}")
+    file(MAKE_DIRECTORY "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp${cfgdir}") # cfgdir has leading slash
 endif()

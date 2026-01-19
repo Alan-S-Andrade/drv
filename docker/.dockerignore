@@ -1,0 +1,11 @@
+# .dockerignore
+build/
+**/build/
+CMakeCache.txt
+CMakeFiles/
+**/CMakeFiles/
+*.o
+*.a
+*.so
+*.dylib
+*.log

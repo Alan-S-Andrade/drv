@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/users/alanandr/2/drv/drvr/float_lsu.S" "/users/alanandr/2/drv/build/rv64/drvr/CMakeFiles/drvr_float_lsu.dir/float_lsu.S.obj"
+  "/users/alanandr/mydrv/drvr/float_lsu.S" "/users/alanandr/mydrv/build/rv64/drvr/CMakeFiles/drvr_float_lsu.dir/float_lsu.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 
@@ -19,7 +19,7 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/2/drv/drvr/float_lsu.c" "drvr/CMakeFiles/drvr_float_lsu.dir/float_lsu.c.obj" "gcc" "drvr/CMakeFiles/drvr_float_lsu.dir/float_lsu.c.obj.d"
+  "/users/alanandr/mydrv/drvr/float_lsu.c" "drvr/CMakeFiles/drvr_float_lsu.dir/float_lsu.c.obj" "gcc" "drvr/CMakeFiles/drvr_float_lsu.dir/float_lsu.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

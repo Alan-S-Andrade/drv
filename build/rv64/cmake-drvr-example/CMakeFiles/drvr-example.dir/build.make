@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/2/drv
+CMAKE_SOURCE_DIR = /users/alanandr/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/2/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/mydrv/build/rv64
 
 # Include any dependencies generated for this target.
 include cmake-drvr-example/CMakeFiles/drvr-example.dir/depend.make
@@ -70,25 +70,25 @@ include cmake-drvr-example/CMakeFiles/drvr-example.dir/progress.make
 include cmake-drvr-example/CMakeFiles/drvr-example.dir/flags.make
 
 cmake-drvr-example/drvr-example_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr-example_include/address_map.h"
-	cd /users/alanandr/2/drv/build/rv64/cmake-drvr-example && mkdir -p /users/alanandr/2/drv/build/rv64/cmake-drvr-example/drvr-example_include && python3 /users/alanandr/2/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/2/drv/build/rv64/cmake-drvr-example/drvr-example_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr-example_include/address_map.h"
+	cd /users/alanandr/mydrv/build/rv64/cmake-drvr-example && mkdir -p /users/alanandr/mydrv/build/rv64/cmake-drvr-example/drvr-example_include && python3 /users/alanandr/mydrv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/mydrv/build/rv64/cmake-drvr-example/drvr-example_include/address_map.h
 
 cmake-drvr-example/CMakeFiles/drvr-example.dir/codegen:
 .PHONY : cmake-drvr-example/CMakeFiles/drvr-example.dir/codegen
 
 cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: cmake-drvr-example/CMakeFiles/drvr-example.dir/flags.make
-cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: /users/alanandr/2/drv/cmake-drvr-example/hello.c
+cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: /users/alanandr/mydrv/cmake-drvr-example/hello.c
 cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: cmake-drvr-example/CMakeFiles/drvr-example.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj"
-	cd /users/alanandr/2/drv/build/rv64/cmake-drvr-example && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj -MF CMakeFiles/drvr-example.dir/hello.c.obj.d -o CMakeFiles/drvr-example.dir/hello.c.obj -c /users/alanandr/2/drv/cmake-drvr-example/hello.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj"
+	cd /users/alanandr/mydrv/build/rv64/cmake-drvr-example && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj -MF CMakeFiles/drvr-example.dir/hello.c.obj.d -o CMakeFiles/drvr-example.dir/hello.c.obj -c /users/alanandr/mydrv/cmake-drvr-example/hello.c
 
 cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/drvr-example.dir/hello.c.i"
-	cd /users/alanandr/2/drv/build/rv64/cmake-drvr-example && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/2/drv/cmake-drvr-example/hello.c > CMakeFiles/drvr-example.dir/hello.c.i
+	cd /users/alanandr/mydrv/build/rv64/cmake-drvr-example && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/mydrv/cmake-drvr-example/hello.c > CMakeFiles/drvr-example.dir/hello.c.i
 
 cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/drvr-example.dir/hello.c.s"
-	cd /users/alanandr/2/drv/build/rv64/cmake-drvr-example && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/2/drv/cmake-drvr-example/hello.c -o CMakeFiles/drvr-example.dir/hello.c.s
+	cd /users/alanandr/mydrv/build/rv64/cmake-drvr-example && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/mydrv/cmake-drvr-example/hello.c -o CMakeFiles/drvr-example.dir/hello.c.s
 
 # Object files for target drvr-example
 drvr__example_OBJECTS = \
@@ -96,26 +96,26 @@ drvr__example_OBJECTS = \
 
 # External object files for target drvr-example
 drvr__example_EXTERNAL_OBJECTS = \
-"/users/alanandr/2/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/users/alanandr/2/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/users/alanandr/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/users/alanandr/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 cmake-drvr-example/drvr-example: cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj
 cmake-drvr-example/drvr-example: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 cmake-drvr-example/drvr-example: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 cmake-drvr-example/drvr-example: cmake-drvr-example/CMakeFiles/drvr-example.dir/build.make
 cmake-drvr-example/drvr-example: cmake-drvr-example/CMakeFiles/drvr-example.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr-example"
-	cd /users/alanandr/2/drv/build/rv64/cmake-drvr-example && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr-example.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr-example"
+	cd /users/alanandr/mydrv/build/rv64/cmake-drvr-example && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr-example.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 cmake-drvr-example/CMakeFiles/drvr-example.dir/build: cmake-drvr-example/drvr-example
 .PHONY : cmake-drvr-example/CMakeFiles/drvr-example.dir/build
 
 cmake-drvr-example/CMakeFiles/drvr-example.dir/clean:
-	cd /users/alanandr/2/drv/build/rv64/cmake-drvr-example && $(CMAKE_COMMAND) -P CMakeFiles/drvr-example.dir/cmake_clean.cmake
+	cd /users/alanandr/mydrv/build/rv64/cmake-drvr-example && $(CMAKE_COMMAND) -P CMakeFiles/drvr-example.dir/cmake_clean.cmake
 .PHONY : cmake-drvr-example/CMakeFiles/drvr-example.dir/clean
 
 cmake-drvr-example/CMakeFiles/drvr-example.dir/depend: cmake-drvr-example/drvr-example_include/address_map.h
-	cd /users/alanandr/2/drv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/cmake-drvr-example /users/alanandr/2/drv/build/rv64 /users/alanandr/2/drv/build/rv64/cmake-drvr-example /users/alanandr/2/drv/build/rv64/cmake-drvr-example/CMakeFiles/drvr-example.dir/DependInfo.cmake "--color=$(COLOR)" drvr-example
+	cd /users/alanandr/mydrv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/cmake-drvr-example /users/alanandr/mydrv/build/rv64 /users/alanandr/mydrv/build/rv64/cmake-drvr-example /users/alanandr/mydrv/build/rv64/cmake-drvr-example/CMakeFiles/drvr-example.dir/DependInfo.cmake "--color=$(COLOR)" drvr-example
 .PHONY : cmake-drvr-example/CMakeFiles/drvr-example.dir/depend
 

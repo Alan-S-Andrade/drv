@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/2/drv
+CMAKE_SOURCE_DIR = /users/alanandr/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/2/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/mydrv/build/rv64
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/2/drv/build/rv64/CMakeFiles /users/alanandr/2/drv/build/rv64//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/mydrv/build/rv64/CMakeFiles /users/alanandr/mydrv/build/rv64//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/2/drv/build/rv64/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /users/alanandr/mydrv/build/rv64/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

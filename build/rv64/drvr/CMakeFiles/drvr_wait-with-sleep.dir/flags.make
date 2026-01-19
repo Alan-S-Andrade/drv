@@ -5,13 +5,13 @@
 # compile C with /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_wait-with-sleep_include -I/users/alanandr/2/drv/pandohammer
+ASM_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_wait-with-sleep_include -I/users/alanandr/mydrv/pandohammer
 
 ASM_FLAGS = -DUSE_SLEEP=1
 
 C_DEFINES = 
 
-C_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_wait-with-sleep_include -I/users/alanandr/2/drv/pandohammer
+C_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_wait-with-sleep_include -I/users/alanandr/mydrv/pandohammer
 
 C_FLAGS = -DUSE_SLEEP=1
 

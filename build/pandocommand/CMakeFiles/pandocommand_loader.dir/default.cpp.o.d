@@ -1,9 +1,9 @@
 pandocommand/CMakeFiles/pandocommand_loader.dir/default.cpp.o: \
- /users/alanandr/2/drv/pandocommand/default.cpp \
+ /users/alanandr/mydrv/pandocommand/default.cpp \
  /usr/include/stdc-predef.h \
- /users/alanandr/2/drv/pandocommand/executable.hpp \
- /users/alanandr/2/drv/api/DrvAPI.hpp \
- /users/alanandr/2/drv/api/DrvAPIAddress.hpp /usr/include/c++/11/cstdint \
+ /users/alanandr/mydrv/pandocommand/executable.hpp \
+ /users/alanandr/mydrv/api/DrvAPI.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAddress.hpp /usr/include/c++/11/cstdint \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -152,10 +152,10 @@ pandocommand/CMakeFiles/pandocommand_loader.dir/default.cpp.o: \
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /users/alanandr/2/drv/api/DrvAPIMemory.hpp \
- /users/alanandr/2/drv/api/DrvAPIThread.hpp \
- /users/alanandr/2/drv/api/DrvAPIThreadState.hpp \
- /users/alanandr/2/drv/api/DrvAPIReadModifyWrite.hpp \
+ /users/alanandr/mydrv/api/DrvAPIMemory.hpp \
+ /users/alanandr/mydrv/api/DrvAPIThread.hpp \
+ /users/alanandr/mydrv/api/DrvAPIThreadState.hpp \
+ /users/alanandr/mydrv/api/DrvAPIReadModifyWrite.hpp \
  /usr/include/c++/11/cstddef /usr/include/c++/11/cassert \
  /usr/include/assert.h /usr/include/c++/11/iostream \
  /usr/include/c++/11/ostream /usr/include/c++/11/ios \
@@ -176,11 +176,11 @@ pandocommand/CMakeFiles/pandocommand_loader.dir/default.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /users/alanandr/2/drv/api/DrvAPISystem.hpp \
- /users/alanandr/2/drv/api/DrvAPIAddress.hpp /usr/include/c++/11/stdlib.h \
- /users/alanandr/2/drv/api/DrvAPIMain.hpp \
- /users/alanandr/2/drv/api/DrvAPISysConfig.hpp \
- /users/alanandr/2/drv/api/DrvAPIAddressMap.hpp \
+ /users/alanandr/mydrv/api/DrvAPISystem.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAddress.hpp /usr/include/c++/11/stdlib.h \
+ /users/alanandr/mydrv/api/DrvAPIMain.hpp \
+ /users/alanandr/mydrv/api/DrvAPISysConfig.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAddressMap.hpp \
  /usr/include/c++/11/iomanip /usr/include/c++/11/locale \
  /usr/include/c++/11/bits/locale_facets_nonio.h /usr/include/c++/11/ctime \
  /usr/include/x86_64-linux-gnu/c++/11/bits/time_members.h \
@@ -190,7 +190,7 @@ pandocommand/CMakeFiles/pandocommand_loader.dir/default.cpp.o: \
  /usr/include/c++/11/bits/locale_conv.h \
  /usr/include/c++/11/bits/quoted_string.h /usr/include/c++/11/sstream \
  /usr/include/c++/11/bits/sstream.tcc \
- /users/alanandr/2/drv/api/DrvAPIBits.hpp \
+ /users/alanandr/mydrv/api/DrvAPIBits.hpp \
  /usr/local/include/boost/coroutine2/all.hpp \
  /usr/local/include/boost/coroutine2/coroutine.hpp \
  /usr/local/include/boost/assert.hpp /usr/local/include/boost/config.hpp \
@@ -345,18 +345,18 @@ pandocommand/CMakeFiles/pandocommand_loader.dir/default.cpp.o: \
  /usr/include/c++/11/tr1/poly_hermite.tcc \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc \
- /users/alanandr/2/drv/api/DrvAPIPointer.hpp \
- /users/alanandr/2/drv/api/DrvAPIAddressToNative.hpp \
- /users/alanandr/2/drv/api/DrvAPIAllocator.hpp \
- /users/alanandr/2/drv/api/DrvAPIGlobal.hpp \
- /users/alanandr/2/drv/api/DrvAPISection.hpp \
- /users/alanandr/2/drv/api/DrvAPIInfo.hpp \
- /users/alanandr/2/drv/api/DrvAPICoreXY.hpp \
- /users/alanandr/2/drv/api/DrvAPIOp.hpp \
- /users/alanandr/2/drv/api/DrvAPINativeToAddress.hpp \
- /users/alanandr/2/drv/api/DrvAPIDMA.hpp \
- /users/alanandr/2/drv/pandocommand/place.hpp /usr/include/elf.h \
- /usr/include/inttypes.h /users/alanandr/2/drv/pandocommand/loader.hpp \
- /users/alanandr/2/drv/pandocommand/control.hpp \
- /users/alanandr/2/drv/pandocommand/debug.hpp /usr/include/string.h \
+ /users/alanandr/mydrv/api/DrvAPIPointer.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAddressToNative.hpp \
+ /users/alanandr/mydrv/api/DrvAPIAllocator.hpp \
+ /users/alanandr/mydrv/api/DrvAPIGlobal.hpp \
+ /users/alanandr/mydrv/api/DrvAPISection.hpp \
+ /users/alanandr/mydrv/api/DrvAPIInfo.hpp \
+ /users/alanandr/mydrv/api/DrvAPICoreXY.hpp \
+ /users/alanandr/mydrv/api/DrvAPIOp.hpp \
+ /users/alanandr/mydrv/api/DrvAPINativeToAddress.hpp \
+ /users/alanandr/mydrv/api/DrvAPIDMA.hpp \
+ /users/alanandr/mydrv/pandocommand/place.hpp /usr/include/elf.h \
+ /usr/include/inttypes.h /users/alanandr/mydrv/pandocommand/loader.hpp \
+ /users/alanandr/mydrv/pandocommand/control.hpp \
+ /users/alanandr/mydrv/pandocommand/debug.hpp /usr/include/string.h \
  /usr/include/strings.h

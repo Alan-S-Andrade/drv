@@ -1,5 +1,5 @@
 pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj: \
- /users/alanandr/2/drv/pandohammer/lock.c \
+ /users/alanandr/mydrv/pandohammer/lock.c \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdlib.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/ieeefp.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
@@ -17,16 +17,16 @@ pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj: \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/cdefs.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/machine/stdlib.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/alloca.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/atomic.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/atomic.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/cpuinfo.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/stringify.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/register.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/cpuinfo.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/stringify.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/register.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/hartsleep.h
+ /users/alanandr/mydrv/pandohammer/pandohammer/hartsleep.h

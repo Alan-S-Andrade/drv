@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dcommand_processor_EXPORTS
 
-CXX_INCLUDES = -I/users/alanandr/2/drv/api -I/users/alanandr/2/drv
+CXX_INCLUDES = -I/users/alanandr/mydrv/api -I/users/alanandr/mydrv
 
 CXX_FLAGS = -fPIC -std=c++17
 

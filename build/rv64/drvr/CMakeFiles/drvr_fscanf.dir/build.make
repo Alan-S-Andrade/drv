@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/2/drv
+CMAKE_SOURCE_DIR = /users/alanandr/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/2/drv/build/rv64
+CMAKE_BINARY_DIR = /users/alanandr/mydrv/build/rv64
 
 # Include any dependencies generated for this target.
 include drvr/CMakeFiles/drvr_fscanf.dir/depend.make
@@ -70,25 +70,25 @@ include drvr/CMakeFiles/drvr_fscanf.dir/progress.make
 include drvr/CMakeFiles/drvr_fscanf.dir/flags.make
 
 drvr/drvr_fscanf_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_fscanf_include/address_map.h"
-	cd /users/alanandr/2/drv/build/rv64/drvr && mkdir -p /users/alanandr/2/drv/build/rv64/drvr/drvr_fscanf_include && python3 /users/alanandr/2/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/2/drv/build/rv64/drvr/drvr_fscanf_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_fscanf_include/address_map.h"
+	cd /users/alanandr/mydrv/build/rv64/drvr && mkdir -p /users/alanandr/mydrv/build/rv64/drvr/drvr_fscanf_include && python3 /users/alanandr/mydrv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /users/alanandr/mydrv/build/rv64/drvr/drvr_fscanf_include/address_map.h
 
 drvr/CMakeFiles/drvr_fscanf.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_fscanf.dir/codegen
 
 drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: drvr/CMakeFiles/drvr_fscanf.dir/flags.make
-drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: /users/alanandr/2/drv/drvr/fscanf.c
+drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: /users/alanandr/mydrv/drvr/fscanf.c
 drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: drvr/CMakeFiles/drvr_fscanf.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj"
-	cd /users/alanandr/2/drv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj -MF CMakeFiles/drvr_fscanf.dir/fscanf.c.obj.d -o CMakeFiles/drvr_fscanf.dir/fscanf.c.obj -c /users/alanandr/2/drv/drvr/fscanf.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj"
+	cd /users/alanandr/mydrv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj -MF CMakeFiles/drvr_fscanf.dir/fscanf.c.obj.d -o CMakeFiles/drvr_fscanf.dir/fscanf.c.obj -c /users/alanandr/mydrv/drvr/fscanf.c
 
 drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/drvr_fscanf.dir/fscanf.c.i"
-	cd /users/alanandr/2/drv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/2/drv/drvr/fscanf.c > CMakeFiles/drvr_fscanf.dir/fscanf.c.i
+	cd /users/alanandr/mydrv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /users/alanandr/mydrv/drvr/fscanf.c > CMakeFiles/drvr_fscanf.dir/fscanf.c.i
 
 drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/drvr_fscanf.dir/fscanf.c.s"
-	cd /users/alanandr/2/drv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/2/drv/drvr/fscanf.c -o CMakeFiles/drvr_fscanf.dir/fscanf.c.s
+	cd /users/alanandr/mydrv/build/rv64/drvr && /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /users/alanandr/mydrv/drvr/fscanf.c -o CMakeFiles/drvr_fscanf.dir/fscanf.c.s
 
 # Object files for target drvr_fscanf
 drvr_fscanf_OBJECTS = \
@@ -96,26 +96,26 @@ drvr_fscanf_OBJECTS = \
 
 # External object files for target drvr_fscanf
 drvr_fscanf_EXTERNAL_OBJECTS = \
-"/users/alanandr/2/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/users/alanandr/2/drv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/users/alanandr/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/users/alanandr/mydrv/build/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 drvr/drvr_fscanf: drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj
 drvr/drvr_fscanf: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 drvr/drvr_fscanf: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 drvr/drvr_fscanf: drvr/CMakeFiles/drvr_fscanf.dir/build.make
 drvr/drvr_fscanf: drvr/CMakeFiles/drvr_fscanf.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/2/drv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr_fscanf"
-	cd /users/alanandr/2/drv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_fscanf.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/users/alanandr/mydrv/build/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr_fscanf"
+	cd /users/alanandr/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_fscanf.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvr/CMakeFiles/drvr_fscanf.dir/build: drvr/drvr_fscanf
 .PHONY : drvr/CMakeFiles/drvr_fscanf.dir/build
 
 drvr/CMakeFiles/drvr_fscanf.dir/clean:
-	cd /users/alanandr/2/drv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_fscanf.dir/cmake_clean.cmake
+	cd /users/alanandr/mydrv/build/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_fscanf.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr_fscanf.dir/clean
 
 drvr/CMakeFiles/drvr_fscanf.dir/depend: drvr/drvr_fscanf_include/address_map.h
-	cd /users/alanandr/2/drv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvr /users/alanandr/2/drv/build/rv64 /users/alanandr/2/drv/build/rv64/drvr /users/alanandr/2/drv/build/rv64/drvr/CMakeFiles/drvr_fscanf.dir/DependInfo.cmake "--color=$(COLOR)" drvr_fscanf
+	cd /users/alanandr/mydrv/build/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvr /users/alanandr/mydrv/build/rv64 /users/alanandr/mydrv/build/rv64/drvr /users/alanandr/mydrv/build/rv64/drvr/CMakeFiles/drvr_fscanf.dir/DependInfo.cmake "--color=$(COLOR)" drvr_fscanf
 .PHONY : drvr/CMakeFiles/drvr_fscanf.dir/depend
 

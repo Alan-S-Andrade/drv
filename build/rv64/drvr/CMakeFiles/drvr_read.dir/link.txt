@@ -1,1 +1,1 @@
-/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostartfiles -T /users/alanandr/2/drv/pandohammer/bsg_link.ld CMakeFiles/drvr_read.dir/read.c.obj ../pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj ../pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -o drvr_read
+/users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc -nostartfiles -T /users/alanandr/mydrv/pandohammer/bsg_link.ld CMakeFiles/drvr_read.dir/read.c.obj ../pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj ../pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -o drvr_read

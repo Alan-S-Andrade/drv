@@ -1,6 +1,6 @@
 drvr/CMakeFiles/drvr_print_int.dir/print_int.c.obj: \
- /users/alanandr/2/drv/drvr/print_int.c \
- /users/alanandr/2/drv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/drvr/print_int.c \
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \

@@ -1,13 +1,13 @@
 # Target labels
  rv64
 # Source files and their labels
-/users/alanandr/2/drv/build/CMakeFiles/rv64
-/users/alanandr/2/drv/build/CMakeFiles/rv64.rule
-/users/alanandr/2/drv/build/CMakeFiles/rv64-complete.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-build.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-configure.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-download.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-install.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-mkdir.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-patch.rule
-/users/alanandr/2/drv/build/rv64-prefix/src/rv64-stamp/rv64-update.rule
+/users/alanandr/mydrv/build/CMakeFiles/rv64
+/users/alanandr/mydrv/build/CMakeFiles/rv64.rule
+/users/alanandr/mydrv/build/CMakeFiles/rv64-complete.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-build.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-configure.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-download.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-install.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-mkdir.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-patch.rule
+/users/alanandr/mydrv/build/rv64-prefix/src/rv64-stamp/rv64-update.rule

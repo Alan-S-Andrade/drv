@@ -1,4 +1,4 @@
-# Install script for directory: /users/alanandr/2/drv/element
+# Install script for directory: /users/alanandr/mydrv/element
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,12 +49,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/users/alanandr/2/drv/build/element/libDrv.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/users/alanandr/mydrv/build/element/libDrv.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so"
-         OLD_RPATH "/users/alanandr/2/drv/build/api:/users/alanandr/local/elements/lib/sst-elements-library:/users/alanandr/2/drv/build/interpreter:/usr/local/lib:"
+         OLD_RPATH "/users/alanandr/mydrv/build/api:/users/alanandr/local/elements/lib/sst-elements-library:/users/alanandr/mydrv/build/interpreter:/usr/local/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so")
@@ -63,12 +63,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/users/alanandr/2/drv/build/element/CMakeFiles/Drv.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
+  include("/users/alanandr/mydrv/build/element/CMakeFiles/Drv.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/users/alanandr/2/drv/build/element/install_local_manifest.txt"
+  file(WRITE "/users/alanandr/mydrv/build/element/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

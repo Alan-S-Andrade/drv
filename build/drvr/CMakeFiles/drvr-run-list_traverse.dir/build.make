@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/2/drv
+CMAKE_SOURCE_DIR = /users/alanandr/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/2/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/mydrv/build
 
 # Utility rule file for drvr-run-list_traverse.
 
@@ -68,7 +68,7 @@ include drvr/CMakeFiles/drvr-run-list_traverse.dir/progress.make
 
 drvr/CMakeFiles/drvr-run-list_traverse: rv64/drvr/drvr_list_traverse
 drvr/CMakeFiles/drvr-run-list_traverse: element/libDrv.so
-	cd /users/alanandr/2/drv/build/drvr && mkdir -p /users/alanandr/2/drv/build/drvr/drvr-run-list_traverse && cd /users/alanandr/2/drv/build/drvr/drvr-run-list_traverse && PYTHONPATH=/users/alanandr/2/drv/py::/users/alanandr/2/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/2/drv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/2/drv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=2 --pod-cores-y=2 --core-threads=1 /users/alanandr/2/drv/build/rv64/drvr/drvr_list_traverse  | tee /users/alanandr/2/drv/build/drvr/drvr-run-list_traverse/output.txt
+	cd /users/alanandr/mydrv/build/drvr && mkdir -p /users/alanandr/mydrv/build/drvr/drvr-run-list_traverse && cd /users/alanandr/mydrv/build/drvr/drvr-run-list_traverse && PYTHONPATH=/users/alanandr/mydrv/py::/users/alanandr/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/mydrv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/mydrv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=2 --pod-cores-y=2 --core-threads=1 /users/alanandr/mydrv/build/rv64/drvr/drvr_list_traverse  | tee /users/alanandr/mydrv/build/drvr/drvr-run-list_traverse/output.txt
 
 drvr/CMakeFiles/drvr-run-list_traverse.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr-run-list_traverse.dir/codegen
@@ -82,10 +82,10 @@ drvr/CMakeFiles/drvr-run-list_traverse.dir/build: drvr-run-list_traverse
 .PHONY : drvr/CMakeFiles/drvr-run-list_traverse.dir/build
 
 drvr/CMakeFiles/drvr-run-list_traverse.dir/clean:
-	cd /users/alanandr/2/drv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-list_traverse.dir/cmake_clean.cmake
+	cd /users/alanandr/mydrv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-list_traverse.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr-run-list_traverse.dir/clean
 
 drvr/CMakeFiles/drvr-run-list_traverse.dir/depend:
-	cd /users/alanandr/2/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvr /users/alanandr/2/drv/build /users/alanandr/2/drv/build/drvr /users/alanandr/2/drv/build/drvr/CMakeFiles/drvr-run-list_traverse.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-list_traverse
+	cd /users/alanandr/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvr /users/alanandr/mydrv/build /users/alanandr/mydrv/build/drvr /users/alanandr/mydrv/build/drvr/CMakeFiles/drvr-run-list_traverse.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-list_traverse
 .PHONY : drvr/CMakeFiles/drvr-run-list_traverse.dir/depend
 

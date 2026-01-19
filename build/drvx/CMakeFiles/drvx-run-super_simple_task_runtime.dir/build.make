@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/2/drv
+CMAKE_SOURCE_DIR = /users/alanandr/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/2/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/mydrv/build
 
 # Utility rule file for drvx-run-super_simple_task_runtime.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime: drvx/libsuper_simple_task_runtime.so
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime: element/libDrv.so
-	cd /users/alanandr/2/drv/build/drvx && mkdir -p /users/alanandr/2/drv/build/drvx/drvx-run-super_simple_task_runtime && cd /users/alanandr/2/drv/build/drvx/drvx-run-super_simple_task_runtime && PYTHONPATH=/users/alanandr/2/drv/py::/users/alanandr/2/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/2/drv/model/mesh.py -- --with-command-processor=/users/alanandr/2/drv/build/drvx/libsuper_simple_task_runtime.so    --num-pxn=2 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/2/drv/build/drvx/libsuper_simple_task_runtime.so  | tee /users/alanandr/2/drv/build/drvx/drvx-run-super_simple_task_runtime/output.txt
+	cd /users/alanandr/mydrv/build/drvx && mkdir -p /users/alanandr/mydrv/build/drvx/drvx-run-super_simple_task_runtime && cd /users/alanandr/mydrv/build/drvx/drvx-run-super_simple_task_runtime && PYTHONPATH=/users/alanandr/mydrv/py::/users/alanandr/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/mydrv/model/mesh.py -- --with-command-processor=/users/alanandr/mydrv/build/drvx/libsuper_simple_task_runtime.so    --num-pxn=2 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/mydrv/build/drvx/libsuper_simple_task_runtime.so  | tee /users/alanandr/mydrv/build/drvx/drvx-run-super_simple_task_runtime/output.txt
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/build: drvx-run-super_sim
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/build
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/clean:
-	cd /users/alanandr/2/drv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-super_simple_task_runtime.dir/cmake_clean.cmake
+	cd /users/alanandr/mydrv/build/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-super_simple_task_runtime.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/clean
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/depend:
-	cd /users/alanandr/2/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvx /users/alanandr/2/drv/build /users/alanandr/2/drv/build/drvx /users/alanandr/2/drv/build/drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-super_simple_task_runtime
+	cd /users/alanandr/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvx /users/alanandr/mydrv/build /users/alanandr/mydrv/build/drvx /users/alanandr/mydrv/build/drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-super_simple_task_runtime
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/depend
 

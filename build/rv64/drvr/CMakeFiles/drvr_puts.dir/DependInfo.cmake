@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/2/drv/drvr/puts.c" "drvr/CMakeFiles/drvr_puts.dir/puts.c.obj" "gcc" "drvr/CMakeFiles/drvr_puts.dir/puts.c.obj.d"
+  "/users/alanandr/mydrv/drvr/puts.c" "drvr/CMakeFiles/drvr_puts.dir/puts.c.obj" "gcc" "drvr/CMakeFiles/drvr_puts.dir/puts.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

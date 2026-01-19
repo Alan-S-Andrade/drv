@@ -5,13 +5,13 @@
 # compile C with /users/alanandr/riscv/bin/riscv64-unknown-elfpandodrvsim-gcc
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_fma_include
+ASM_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_fma_include
 
 ASM_FLAGS = 
 
 C_DEFINES = 
 
-C_INCLUDES = -I/users/alanandr/2/drv/build/rv64/drvr/drvr_fma_include
+C_INCLUDES = -I/users/alanandr/mydrv/build/rv64/drvr/drvr_fma_include
 
 C_FLAGS = 
 

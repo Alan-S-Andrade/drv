@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/alanandr/2/drv
+CMAKE_SOURCE_DIR = /users/alanandr/mydrv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/alanandr/2/drv/build
+CMAKE_BINARY_DIR = /users/alanandr/mydrv/build
 
 # Utility rule file for drvr-run-float_lsu.
 
@@ -68,7 +68,7 @@ include drvr/CMakeFiles/drvr-run-float_lsu.dir/progress.make
 
 drvr/CMakeFiles/drvr-run-float_lsu: rv64/drvr/drvr_float_lsu
 drvr/CMakeFiles/drvr-run-float_lsu: element/libDrv.so
-	cd /users/alanandr/2/drv/build/drvr && mkdir -p /users/alanandr/2/drv/build/drvr/drvr-run-float_lsu && cd /users/alanandr/2/drv/build/drvr/drvr-run-float_lsu && PYTHONPATH=/users/alanandr/2/drv/py::/users/alanandr/2/drv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/2/drv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/2/drv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/2/drv/build/rv64/drvr/drvr_float_lsu  | tee /users/alanandr/2/drv/build/drvr/drvr-run-float_lsu/output.txt
+	cd /users/alanandr/mydrv/build/drvr && mkdir -p /users/alanandr/mydrv/build/drvr/drvr-run-float_lsu && cd /users/alanandr/mydrv/build/drvr/drvr-run-float_lsu && PYTHONPATH=/users/alanandr/mydrv/py::/users/alanandr/mydrv/model /users/alanandr/local/sstcore/bin/sst -n\ 1\  /users/alanandr/mydrv/model/hammerblade-r.py -- --with-command-processor=/users/alanandr/mydrv/build/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /users/alanandr/mydrv/build/rv64/drvr/drvr_float_lsu  | tee /users/alanandr/mydrv/build/drvr/drvr-run-float_lsu/output.txt
 
 drvr/CMakeFiles/drvr-run-float_lsu.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr-run-float_lsu.dir/codegen
@@ -82,10 +82,10 @@ drvr/CMakeFiles/drvr-run-float_lsu.dir/build: drvr-run-float_lsu
 .PHONY : drvr/CMakeFiles/drvr-run-float_lsu.dir/build
 
 drvr/CMakeFiles/drvr-run-float_lsu.dir/clean:
-	cd /users/alanandr/2/drv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-float_lsu.dir/cmake_clean.cmake
+	cd /users/alanandr/mydrv/build/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-float_lsu.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr-run-float_lsu.dir/clean
 
 drvr/CMakeFiles/drvr-run-float_lsu.dir/depend:
-	cd /users/alanandr/2/drv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/2/drv /users/alanandr/2/drv/drvr /users/alanandr/2/drv/build /users/alanandr/2/drv/build/drvr /users/alanandr/2/drv/build/drvr/CMakeFiles/drvr-run-float_lsu.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-float_lsu
+	cd /users/alanandr/mydrv/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/alanandr/mydrv /users/alanandr/mydrv/drvr /users/alanandr/mydrv/build /users/alanandr/mydrv/build/drvr /users/alanandr/mydrv/build/drvr/CMakeFiles/drvr-run-float_lsu.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-float_lsu
 .PHONY : drvr/CMakeFiles/drvr-run-float_lsu.dir/depend
 

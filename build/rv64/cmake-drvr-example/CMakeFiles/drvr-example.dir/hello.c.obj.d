@@ -1,6 +1,6 @@
 cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: \
- /users/alanandr/2/drv/cmake-drvr-example/hello.c \
- /users/alanandr/2/drv/pandohammer/pandohammer/mmio.h \
+ /users/alanandr/mydrv/cmake-drvr-example/hello.c \
+ /users/alanandr/mydrv/pandohammer/pandohammer/mmio.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/string.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -19,7 +19,7 @@ cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /users/alanandr/2/drv/pandohammer/pandohammer/staticdecl.h \
+ /users/alanandr/mydrv/pandohammer/pandohammer/staticdecl.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /users/alanandr/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h

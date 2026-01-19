@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/users/alanandr/2/drv/drvr/add.S" "/users/alanandr/2/drv/build/rv64/drvr/CMakeFiles/drvr_add.dir/add.S.obj"
+  "/users/alanandr/mydrv/drvr/add.S" "/users/alanandr/mydrv/build/rv64/drvr/CMakeFiles/drvr_add.dir/add.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 

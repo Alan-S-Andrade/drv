@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/2/drv/drvx/leiden_single.cpp" "drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o" "gcc" "drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o.d"
+  "/users/alanandr/mydrv/drvx/leiden_single.cpp" "drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o" "gcc" "drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -20,6 +20,7 @@ events:
     names:
       - "uname"
     candidate_directories:
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -33,6 +34,7 @@ events:
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
+      - "/users/alanandr/.local/bin/uname"
       - "/users/alanandr/local/elements/bin/uname"
       - "/users/alanandr/local/sstcore/bin/uname"
       - "/users/alanandr/local/openmpi/bin/uname"
@@ -42,9 +44,9 @@ events:
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -83,6 +85,7 @@ events:
       - "make"
       - "smake"
     candidate_directories:
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -96,6 +99,7 @@ events:
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
+      - "/users/alanandr/.local/bin/gmake"
       - "/users/alanandr/local/elements/bin/gmake"
       - "/users/alanandr/local/sstcore/bin/gmake"
       - "/users/alanandr/local/openmpi/bin/gmake"
@@ -105,9 +109,9 @@ events:
     found: "/usr/bin/gmake"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -147,6 +151,7 @@ events:
       - "icx"
       - "clang++"
     candidate_directories:
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -160,6 +165,7 @@ events:
       - "/usr/local/games/"
       - "/snap/bin/"
     searched_directories:
+      - "/users/alanandr/.local/bin/c++"
       - "/users/alanandr/local/elements/bin/c++"
       - "/users/alanandr/local/sstcore/bin/c++"
       - "/users/alanandr/local/openmpi/bin/c++"
@@ -169,9 +175,9 @@ events:
     found: "/usr/bin/c++"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -209,9 +215,9 @@ events:
     found: "/usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -242,7 +248,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /users/alanandr/2/drv/build/CMakeFiles/4.2.1/CompilerIdCXX/a.out
+        /users/alanandr/mydrv/build/CMakeFiles/4.2.1/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
@@ -265,6 +271,7 @@ events:
       - "ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -279,9 +286,9 @@ events:
     found: "/usr/bin/ar"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -313,6 +320,7 @@ events:
       - "ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -327,9 +335,9 @@ events:
     found: "/usr/bin/ranlib"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -361,6 +369,7 @@ events:
       - "strip"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -375,9 +384,9 @@ events:
     found: "/usr/bin/strip"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -409,6 +418,7 @@ events:
       - "ld"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -423,9 +433,9 @@ events:
     found: "/usr/bin/ld"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -457,6 +467,7 @@ events:
       - "nm"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -471,9 +482,9 @@ events:
     found: "/usr/bin/nm"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -505,6 +516,7 @@ events:
       - "objdump"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -519,9 +531,9 @@ events:
     found: "/usr/bin/objdump"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -553,6 +565,7 @@ events:
       - "objcopy"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -567,9 +580,9 @@ events:
     found: "/usr/bin/objcopy"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -601,6 +614,7 @@ events:
       - "readelf"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -615,9 +629,9 @@ events:
     found: "/usr/bin/readelf"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -649,6 +663,7 @@ events:
       - "dlltool"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -662,6 +677,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/dlltool"
+      - "/users/alanandr/.local/bin/dlltool"
       - "/users/alanandr/local/elements/bin/dlltool"
       - "/users/alanandr/local/sstcore/bin/dlltool"
       - "/users/alanandr/local/openmpi/bin/dlltool"
@@ -676,9 +692,9 @@ events:
     found: false
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -710,6 +726,7 @@ events:
       - "addr2line"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -724,9 +741,9 @@ events:
     found: "/usr/bin/addr2line"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -758,6 +775,7 @@ events:
       - "tapi"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -771,6 +789,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/tapi"
+      - "/users/alanandr/.local/bin/tapi"
       - "/users/alanandr/local/elements/bin/tapi"
       - "/users/alanandr/local/sstcore/bin/tapi"
       - "/users/alanandr/local/openmpi/bin/tapi"
@@ -785,9 +804,9 @@ events:
     found: false
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -822,6 +841,7 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -835,6 +855,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/gcc-ar-11.4"
+      - "/users/alanandr/.local/bin/gcc-ar-11.4"
       - "/users/alanandr/local/elements/bin/gcc-ar-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-11.4"
       - "/users/alanandr/local/openmpi/bin/gcc-ar-11.4"
@@ -849,9 +870,9 @@ events:
     found: "/usr/bin/gcc-ar-11"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -886,6 +907,7 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -899,6 +921,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-11.4"
+      - "/users/alanandr/.local/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/elements/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/openmpi/bin/gcc-ranlib-11.4"
@@ -913,9 +936,9 @@ events:
     found: "/usr/bin/gcc-ranlib-11"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -956,9 +979,9 @@ events:
     found: "/usr/bin/cc"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -996,9 +1019,9 @@ events:
     found: "/usr/local/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -1029,7 +1052,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /users/alanandr/2/drv/build/CMakeFiles/4.2.1/CompilerIdC/a.out
+        /users/alanandr/mydrv/build/CMakeFiles/4.2.1/CompilerIdC/a.out
       
   -
     kind: "find-v1"
@@ -1055,6 +1078,7 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -1068,6 +1092,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/gcc-ar-11.4"
+      - "/users/alanandr/.local/bin/gcc-ar-11.4"
       - "/users/alanandr/local/elements/bin/gcc-ar-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-11.4"
       - "/users/alanandr/local/openmpi/bin/gcc-ar-11.4"
@@ -1082,9 +1107,9 @@ events:
     found: "/usr/bin/gcc-ar-11"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -1119,6 +1144,7 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -1132,6 +1158,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-11.4"
+      - "/users/alanandr/.local/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/elements/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-11.4"
       - "/users/alanandr/local/openmpi/bin/gcc-ranlib-11.4"
@@ -1146,9 +1173,9 @@ events:
     found: "/usr/bin/gcc-ranlib-11"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -1183,9 +1210,9 @@ events:
     found: "/usr/bin/cc"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -1233,6 +1260,7 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -1246,6 +1274,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/gcc-ar-"
+      - "/users/alanandr/.local/bin/gcc-ar-"
       - "/users/alanandr/local/elements/bin/gcc-ar-"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-"
       - "/users/alanandr/local/openmpi/bin/gcc-ar-"
@@ -1258,6 +1287,7 @@ events:
       - "/usr/local/games/gcc-ar-"
       - "/snap/bin/gcc-ar-"
       - "/usr/bin/gcc-ar-"
+      - "/users/alanandr/.local/bin/gcc-ar-"
       - "/users/alanandr/local/elements/bin/gcc-ar-"
       - "/users/alanandr/local/sstcore/bin/gcc-ar-"
       - "/users/alanandr/local/openmpi/bin/gcc-ar-"
@@ -1272,9 +1302,9 @@ events:
     found: "/usr/bin/gcc-ar"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -1309,6 +1339,7 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/users/alanandr/.local/bin/"
       - "/users/alanandr/local/elements/bin/"
       - "/users/alanandr/local/sstcore/bin/"
       - "/users/alanandr/local/openmpi/bin/"
@@ -1322,6 +1353,7 @@ events:
       - "/snap/bin/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-"
+      - "/users/alanandr/.local/bin/gcc-ranlib-"
       - "/users/alanandr/local/elements/bin/gcc-ranlib-"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-"
       - "/users/alanandr/local/openmpi/bin/gcc-ranlib-"
@@ -1334,6 +1366,7 @@ events:
       - "/usr/local/games/gcc-ranlib-"
       - "/snap/bin/gcc-ranlib-"
       - "/usr/bin/gcc-ranlib-"
+      - "/users/alanandr/.local/bin/gcc-ranlib-"
       - "/users/alanandr/local/elements/bin/gcc-ranlib-"
       - "/users/alanandr/local/sstcore/bin/gcc-ranlib-"
       - "/users/alanandr/local/openmpi/bin/gcc-ranlib-"
@@ -1348,9 +1381,9 @@ events:
     found: "/usr/bin/gcc-ranlib"
     search_context:
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -1370,8 +1403,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ"
-      binary: "/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ"
+      source: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq"
+      binary: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1381,13 +1414,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ'
+        Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq'
         
-        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1fa2e/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_1fa2e.dir/build.make CMakeFiles/cmTC_1fa2e.dir/build
-        gmake[1]: Entering directory '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ'
-        Building CXX object CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_698aa/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_698aa.dir/build.make CMakeFiles/cmTC_698aa.dir/build
+        gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq'
+        Building CXX object CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -1397,8 +1430,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1fa2e.dir/'
-         /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_1fa2e.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccPDA4Ci.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_698aa.dir/'
+         /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_698aa.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccp9wIRC.s
         GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1422,14 +1455,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 6c87588fc345655b93b8c25f48f88886
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1fa2e.dir/'
-         as -v --64 -o CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccPDA4Ci.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_698aa.dir/'
+         as -v --64 -o CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccp9wIRC.s
         GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_1fa2e
-        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1fa2e.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_698aa
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_698aa.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
@@ -1442,14 +1475,14 @@ events:
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1fa2e' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1fa2e.'
-         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZLALUi.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1fa2e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_698aa' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_698aa.'
+         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccT93f0H.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_698aa /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         collect2 version 11.4.0
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZLALUi.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1fa2e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccT93f0H.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_698aa /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.38
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1fa2e' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1fa2e.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1fa2e
-        gmake[1]: Leaving directory '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_698aa' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_698aa.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_698aa
+        gmake[1]: Leaving directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq'
         
       exitCode: 0
   -
@@ -1490,13 +1523,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ']
+        ignore line: [Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1fa2e/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_1fa2e.dir/build.make CMakeFiles/cmTC_1fa2e.dir/build]
-        ignore line: [gmake[1]: Entering directory '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-1yNzDZ']
-        ignore line: [Building CXX object CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_698aa/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_698aa.dir/build.make CMakeFiles/cmTC_698aa.dir/build]
+        ignore line: [gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-ZTcvZq']
+        ignore line: [Building CXX object CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -1506,8 +1539,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1fa2e.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_1fa2e.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccPDA4Ci.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_698aa.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_698aa.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccp9wIRC.s]
         ignore line: [GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1531,14 +1564,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 6c87588fc345655b93b8c25f48f88886]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1fa2e.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccPDA4Ci.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_698aa.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccp9wIRC.s]
         ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_1fa2e]
-        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1fa2e.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_698aa]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_698aa.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
@@ -1551,13 +1584,13 @@ events:
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1fa2e' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1fa2e.']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZLALUi.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1fa2e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_698aa' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_698aa.']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccT93f0H.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_698aa /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccZLALUi.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccT93f0H.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1575,7 +1608,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_1fa2e] ==> ignore
+          arg [cmTC_698aa] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -1588,7 +1621,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1599,7 +1632,7 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 11.4.0]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZLALUi.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1fa2e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_1fa2e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccT93f0H.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_698aa /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_698aa.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
@@ -1637,8 +1670,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa"
-      binary: "/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa"
+      source: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd"
+      binary: "/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1647,13 +1680,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa'
+        Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd'
         
-        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4d65a/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_4d65a.dir/build.make CMakeFiles/cmTC_4d65a.dir/build
-        gmake[1]: Entering directory '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa'
-        Building C object CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_754fd/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_754fd.dir/build.make CMakeFiles/cmTC_754fd.dir/build
+        gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd'
+        Building C object CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -1663,8 +1696,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4d65a.dir/'
-         /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4d65a.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccBlajXG.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_754fd.dir/'
+         /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_754fd.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccb1Z5BC.s
         GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1684,14 +1717,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4d65a.dir/'
-         as -v --64 -o CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o /tmp/ccBlajXG.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_754fd.dir/'
+         as -v --64 -o CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o /tmp/ccb1Z5BC.s
         GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_4d65a
-        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4d65a.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_754fd
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_754fd.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
@@ -1704,14 +1737,14 @@ events:
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4d65a' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4d65a.'
-         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwvgj7o.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_4d65a /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_754fd' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_754fd.'
+         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3vS8kY.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_754fd /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         collect2 version 11.4.0
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwvgj7o.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_4d65a /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3vS8kY.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_754fd /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.38
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4d65a' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4d65a.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -o cmTC_4d65a
-        gmake[1]: Leaving directory '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_754fd' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_754fd.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -o cmTC_754fd
+        gmake[1]: Leaving directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd'
         
       exitCode: 0
   -
@@ -1746,13 +1779,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa']
+        ignore line: [Change Dir: '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4d65a/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4d65a.dir/build.make CMakeFiles/cmTC_4d65a.dir/build]
-        ignore line: [gmake[1]: Entering directory '/users/alanandr/2/drv/build/CMakeFiles/CMakeScratch/TryCompile-WfSSLa']
-        ignore line: [Building C object CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_754fd/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_754fd.dir/build.make CMakeFiles/cmTC_754fd.dir/build]
+        ignore line: [gmake[1]: Entering directory '/users/alanandr/mydrv/build/CMakeFiles/CMakeScratch/TryCompile-dWGrsd']
+        ignore line: [Building C object CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -1762,8 +1795,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4d65a.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4d65a.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccBlajXG.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_754fd.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_754fd.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccb1Z5BC.s]
         ignore line: [GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1783,14 +1816,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4d65a.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o /tmp/ccBlajXG.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_754fd.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o /tmp/ccb1Z5BC.s]
         ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_4d65a]
-        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4d65a.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_754fd]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_754fd.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
@@ -1803,13 +1836,13 @@ events:
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4d65a' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4d65a.']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwvgj7o.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_4d65a /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_754fd' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_754fd.']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3vS8kY.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_754fd /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccwvgj7o.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc3vS8kY.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1827,7 +1860,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_4d65a] ==> ignore
+          arg [cmTC_754fd] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -1840,7 +1873,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -1855,7 +1888,7 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 11.4.0]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwvgj7o.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_4d65a /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_4d65a.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3vS8kY.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_754fd /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_754fd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
@@ -1920,11 +1953,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/SSTConfig.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/SSTConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/sst-config.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/sst-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -1943,9 +1976,9 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -2009,11 +2042,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_headersConfig.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_headersConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_headers-config.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_headers-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2044,9 +2077,9 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -2104,11 +2137,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/BoostConfig.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/BoostConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost-config.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2117,6 +2150,14 @@ events:
         reason: "no_exist"
       -
         path: "/users/alanandr/local/sstcore/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/users/alanandr/.local/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/users/alanandr/.local/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2551,9 +2592,9 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -2575,7 +2616,7 @@ events:
         - "/usr/pkg"
         - "/opt"
       CMAKE_MODULE_PATH:
-        - "/users/alanandr/2/drv/cmake"
+        - "/users/alanandr/mydrv/cmake"
   -
     kind: "find_package-v1"
     backtrace:
@@ -2619,11 +2660,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_contextConfig.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_contextConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_context-config.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_context-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2654,9 +2695,9 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -2720,11 +2761,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_exceptionConfig.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_exceptionConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_exception-config.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_exception-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2755,9 +2796,9 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
@@ -2820,11 +2861,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_coroutineConfig.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_coroutineConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/users/alanandr/2/drv/build/CMakeFiles/pkgRedirects/boost_coroutine-config.cmake"
+        path: "/users/alanandr/mydrv/build/CMakeFiles/pkgRedirects/boost_coroutine-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2855,9 +2896,9 @@ events:
       CMAKE_PREFIX_PATH:
         - "/users/alanandr/local/sstcore"
       ENV{PATH}:
+        - "/users/alanandr/.local/bin"
         - "/users/alanandr/local/elements/bin"
         - "/users/alanandr/local/sstcore/bin"
-        - "/users/alanandr/local/openmpi/bin"
         - "/users/alanandr/local/openmpi/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"

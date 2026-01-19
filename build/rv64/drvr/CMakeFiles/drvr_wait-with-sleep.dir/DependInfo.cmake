@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/2/drv/drvr/wait.c" "drvr/CMakeFiles/drvr_wait-with-sleep.dir/wait.c.obj" "gcc" "drvr/CMakeFiles/drvr_wait-with-sleep.dir/wait.c.obj.d"
+  "/users/alanandr/mydrv/drvr/wait.c" "drvr/CMakeFiles/drvr_wait-with-sleep.dir/wait.c.obj" "gcc" "drvr/CMakeFiles/drvr_wait-with-sleep.dir/wait.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

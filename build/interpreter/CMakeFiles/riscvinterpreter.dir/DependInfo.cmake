@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/users/alanandr/2/drv/interpreter/interpreter.cpp" "interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o" "gcc" "interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o.d"
+  "/users/alanandr/mydrv/interpreter/interpreter.cpp" "interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o" "gcc" "interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
