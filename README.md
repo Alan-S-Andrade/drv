@@ -166,6 +166,3 @@ docker build \
 docker run -it --rm \
   -v $PWD:/work \
   drv:latest bash
-
-mkdir build && cd build
-cmake .. -DSST_CORE_PREFIX=$SST_CORE_HOME -DSST_ELEMENTS_PREFIX=$SST_ELEMENTS_HOME -DGNU_RISCV_TOOLCHAIN_PREFIX=$RISCV_HOME
