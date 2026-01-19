@@ -86,7 +86,7 @@ static volatile int32_t g_max_dist = 0;
 
 extern "C" int main(int argc, char** argv) {
     // Default grid size & desired software threads
-    int R = 100800;
+    int R = 100000;
     int C = 64;
     int desired_threads = 16;    // e.g., 2 cores * 16 harts/core, adjust via --T
 

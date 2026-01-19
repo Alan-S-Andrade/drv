@@ -58,9 +58,9 @@ void RISCVCore::configureHarts(Params &params) {
         for (size_t i = 0; i < num_harts; i++) {
             uint64_t sp = l1spBase() + DrvAPI::coreL1SPSize() - (i * stack_bytes);
             output_.verbose(CALL_INFO, 1, 0, "Hart %lu sp = 0x%lx\n", i, sp);
-            harts_[i].sp() = sp;
-            harts_[i].spLow() = l1spBase() + (i * stack_bytes);
-            harts_[i].spHigh() = l1spBase() + ((i + 1) * stack_bytes);
+            harts_[i].spHigh() = l1spBase() + DrvAPI::coreL1SPSize() - (i * stack_bytes);
+            harts_[i].spLow() = harts_[i].spHigh() - stack_bytes;
+            harts_[i].sp() = harts_[i].spHigh(); // we initialize the stack pointer at the top for it to grow downwards
             output_.verbose(CALL_INFO, 1, 0, "Hart %lu spLow = 0x%lx spHigh = 0x%lx\n", i, harts_[i].spLow(), harts_[i].spHigh());
         }
     } else {

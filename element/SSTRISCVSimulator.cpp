@@ -138,6 +138,11 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     // base address registers are always from the integer register file
     StandardMem::Addr addr = shart.x(i.rs1()) + i.Simm();
+    // if (addr < hart.spLow()) {
+    //     std::cout << "writing outside the stack bound for this hart " << core_->getHartId(shart) << ": addr=0x" 
+    //               << std::hex << addr << " spLow=0x" << hart.spLow() 
+    //               << " spHigh=0x" << hart.spHigh() << std::dec << std::endl; // put this in L2SP
+    // }
     if (isMMIO(addr)) {
         visitStoreMMIO<T>(shart, i);
         return;
@@ -248,7 +253,6 @@ void RISCVSimulator::visitLWU(RISCVHart &hart, RISCVInstruction &i) {
 }
 
 void RISCVSimulator::visitLD(RISCVHart &hart, RISCVInstruction &i) {
-    std::cout << "here" << std::endl;
     int rs1 = i.rs1();
     int64_t base = hart.sx(rs1);
     const char * imm  = i.getMnemonic();

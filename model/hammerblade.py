@@ -7,7 +7,7 @@ from clock import Clock
 from cmdline import parser
 import numpy as np
 
-p = parser(core_l1sp_size=4*1024)
+p = parser(core_l1sp_size=128*1024)
 
 ARGUMENTS = p.parse_args()
 
@@ -413,8 +413,8 @@ class DrvRCoreBuilder(Identifiable):
             "sys_core_threads" : ARGUMENTS.core_threads,
             "sys_core_clock" : f'{CORE_CLOCK}Hz',
             "sys_core_l1sp_size" : L1SPBuilder.size,
-            "sys_pod_l2sp_size" : 0,
-            "sys_pod_l2sp_banks" : 0,
+            "sys_pod_l2sp_size" : 256*1024,
+            "sys_pod_l2sp_banks" : 1,
             "sys_pod_l2sp_interleave_size" : 0,
             "sys_pxn_dram_size" : MEMSIZE,
             "sys_pxn_dram_ports" : 1,
