@@ -90,7 +90,7 @@ drvr_test_nostdlib(fma fma.S fma.c)
 drvr_test_with_pandohammer(fma-multith fma-multith.cpp)
 drvr_test_build_properties(fma-multith
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 2
+  DRV_BUILD_CORE_THREADS 16
   )
 
 # fread
@@ -120,6 +120,13 @@ drvr_test_nostdlib(lsu lsu.S)
 
 # malloc
 drvr_test_with_pandohammer(malloc malloc.c malloc-main.c)
+  drvr_test_compile_options(malloc -DDEBUG)
+   drvr_test_build_properties(malloc
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  # DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
 
 # leiden_single
 drvr_test_with_pandohammer(leiden_single leiden_single.c)
@@ -134,14 +141,34 @@ drvr_test_build_properties(attn_fixed
   DRV_MODEL_OPTIONS --pxn-dram-banks=8
 )
 
-# bfs_sw_multi
-  drvr_test_with_pandohammer(bfs_multi_sw bfs_sw_hw_multi.cpp)
-  drvr_test_compile_options(bfs_multi_sw -DDEBUG)
-   drvr_test_build_properties(bfs_multi_sw
-  PROPERTIES
-  DRV_BUILD_POD_CORES_X 1
-  # DRV_BUILD_POD_CORES_Y 1
-  DRV_BUILD_CORE_THREADS 16
+# bfs_multihart
+  drvr_test_with_pandohammer(bfs_multihart bfs_multihart.cpp)
+  drvr_test_compile_options(bfs_multihart -DDEBUG)
+   drvr_test_build_properties(bfs_multihart
+    PROPERTIES
+    DRV_BUILD_POD_CORES_X 1
+    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_CORE_THREADS 16
+)
+
+# pagerank_multihart
+  drvr_test_with_pandohammer(pagerank_multihart pagerank_multihart.cpp)
+  drvr_test_compile_options(pagerank_multihart -DDEBUG)
+   drvr_test_build_properties(pagerank_multihart
+    PROPERTIES
+    DRV_BUILD_POD_CORES_X 1
+    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_CORE_THREADS 16
+)
+
+# tc_multihart
+  drvr_test_with_pandohammer(tc_multihart tc_multihart.cpp)
+  drvr_test_compile_options(tc_multihart -DDEBUG)
+   drvr_test_build_properties(tc_multihart
+    PROPERTIES
+    DRV_BUILD_POD_CORES_X 1
+    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_CORE_THREADS 16
 )
 
 # bfs
@@ -209,7 +236,7 @@ drvr_test_inputs(gemm_int_deter B.bin)
 drvr_test_with_pandohammer(multihart multihart.c)
 drvr_test_build_properties(multihart
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 4
+  DRV_BUILD_CORE_THREADS 16
 )
 
 # ph_hello

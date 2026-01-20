@@ -259,7 +259,7 @@ void RISCVCore::setup() {
     output_.verbose(CALL_INFO, 1, 0, "memory: line size = %" PRIu64 "\n", stdmem->getLineSize());
     // load program data
     //output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
-    //loadProgram();
+    loadProgram();
     //output_.verbose(CALL_INFO, 1, 0, "Program loaded\n");
 }
 

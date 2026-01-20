@@ -13,7 +13,7 @@
 #include <pandohammer/atomic.h>    // atomic_fetch_add_i64, atomic_fetch_add_i32, atomic_compare_and_swap_i32
 #include <pandohammer/hartsleep.h> // hartsleep()
 
-static const int MAX_HARTS = 4;
+static const int MAX_HARTS = 16;
 static int64_t g_local_phase_arr[MAX_HARTS];
 
 // Simple CLI helper
@@ -86,8 +86,8 @@ static volatile int32_t g_max_dist = 0;
 
 extern "C" int main(int argc, char** argv) {
     // Default grid size & desired software threads
-    int R = 100000;
-    int C = 64;
+    int R = 5;
+    int C = 5;
     int desired_threads = 16;    // e.g., 2 cores * 16 harts/core, adjust via --T
 
     for (int i = 1; i < argc; ++i) {

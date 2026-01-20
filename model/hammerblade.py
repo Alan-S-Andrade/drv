@@ -7,7 +7,8 @@ from clock import Clock
 from cmdline import parser
 import numpy as np
 
-p = parser(core_l1sp_size=128*1024)
+p = parser(core_l1sp_size=256*1024) # as per the new panther grant proposal (June 2025)
+# l2sp size is: 16777216 per pod (16MB), 1GB per pxn (64 pods)
 
 ARGUMENTS = p.parse_args()
 
@@ -49,9 +50,9 @@ def vcache_coordinates():
     
 MEMSIZE = ARGUMENTS.pxn_dram_size
 
-CPU_VERBOSE_LEVEL   = 0
+CPU_VERBOSE_LEVEL   = 100
 NETWORK_DEBUG_LEVEL = 0
-MEMORY_DEBUG_LEVEL  = 0
+MEMORY_DEBUG_LEVEL  = 100
 UPDATES_PER_CORE = 1000
 
 CORE_CLOCK = Clock(1.5e9)
@@ -221,6 +222,8 @@ class L1SP(object):
     @property
     def network_interface(self):
         return (self.nic, "port", f'{CORE_CLOCK.cycle_ps}ps')
+
+
     
 class L1SPBuilder(Identifiable):
     """
@@ -413,7 +416,7 @@ class DrvRCoreBuilder(Identifiable):
             "sys_core_threads" : ARGUMENTS.core_threads,
             "sys_core_clock" : f'{CORE_CLOCK}Hz',
             "sys_core_l1sp_size" : L1SPBuilder.size,
-            "sys_pod_l2sp_size" : 256*1024,
+            "sys_pod_l2sp_size" : 16384*1024,
             "sys_pod_l2sp_banks" : 1,
             "sys_pod_l2sp_interleave_size" : 0,
             "sys_pxn_dram_size" : MEMSIZE,
@@ -642,7 +645,7 @@ class ComputeTileBuilder(MeshTileBuilder):
     """
     Builds a compute tile.
     """
-    core_builder = DrvXCoreBuilder
+    core_builder = DrvRCoreBuilder
     def __init__(self, xdim, ydim, meshid):
         self.core = self.core_builder(xdim, ydim, meshid)
         self.memory = L1SPBuilder(xdim, ydim, meshid)
