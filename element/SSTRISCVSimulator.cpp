@@ -350,6 +350,10 @@ void RISCVSimulator::visitAMOSWAPD_RL_AQ(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicSWAP);
 }
 
+// void RISCVSimulatr::visitAMOSWAPB(RISCVHart &hart, RISCVIinstruction &i) {
+//     visiotAMO<uint8_t>(hart, i, DrvAPI::DrvAPIMemAtomicSWAP);
+// }
+
 void RISCVSimulator::visitAMOADDD(RISCVHart &hart, RISCVInstruction &i) {
     visitAMO<int64_t>(hart, i, DrvAPI::DrvAPIMemAtomicADD);
 }

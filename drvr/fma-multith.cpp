@@ -4,6 +4,7 @@
 #include <atomic>
 #include <cstring>
 #include <cstdio>
+#include <iostream>
 #include <pandohammer/cpuinfo.h>
 #include <pandohammer/mmio.h>
 #include <pandohammer/staticdecl.h>
@@ -26,6 +27,7 @@ void update(uint64_t id) {
 
 int main() {
     uint64_t tid = (myCoreId() << 4) + myThreadId();
+    std::cout << "tid = " << tid << "\n" << std::endl;
 
     if (tid < num_elems) {
         update(tid);
