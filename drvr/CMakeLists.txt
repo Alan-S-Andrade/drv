@@ -146,8 +146,8 @@ drvr_test_build_properties(attn_fixed
   drvr_test_compile_options(bfs_multihart -DDEBUG)
    drvr_test_build_properties(bfs_multihart
     PROPERTIES
-    DRV_BUILD_POD_CORES_X 1
-    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_POD_CORES_X 2
+    DRV_BUILD_POD_CORES_Y 2
     DRV_BUILD_CORE_THREADS 16
 )
 
@@ -187,7 +187,7 @@ drvr_test_build_properties(bfs-multith
   PROPERTIES
   DRV_BUILD_POD_CORES_X 1
   # DRV_BUILD_POD_CORES_Y 1
-  DRV_BUILD_CORE_THREADS 1
+  DRV_BUILD_CORE_THREADS 16
 )
 
 #tc
@@ -296,13 +296,13 @@ drvr_test_with_pandohammer(wait-without-sleep wait.c)
 # spmm
   drvr_test_with_pandohammer(spmm spmm.cpp)
   drvr_test_inputs(spmm
-    large_spmm.features
-    large_spmm.graph.mtx
+    spmm.features
+    spmm.graph.mtx
   )
    drvr_test_build_properties(spmm
     PROPERTIES
     DRV_BUILD_POD_CORES_X 1
-    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_POD_CORES_Y 1
     DRV_BUILD_CORE_THREADS 16
 )
 
