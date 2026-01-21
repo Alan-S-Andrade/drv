@@ -295,7 +295,10 @@ drvr_test_with_pandohammer(wait-without-sleep wait.c)
 
 # spmm
   drvr_test_with_pandohammer(spmm spmm.cpp)
-  drvr_test_compile_options(spmm -DDEBUG)
+  drvr_test_inputs(spmm
+    large_spmm.features
+    large_spmm.graph.mtx
+  )
    drvr_test_build_properties(spmm
     PROPERTIES
     DRV_BUILD_POD_CORES_X 1

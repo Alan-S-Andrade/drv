@@ -295,6 +295,9 @@ void RISCVSimulator::visitFSW(RISCVHart &hart, RISCVInstruction &i) {
 void RISCVSimulator::visitFSD(RISCVHart &hart, RISCVInstruction &i) { //stores double float
     visitStore<double>(hart, i);
 }
+void RISCVSimulator::visitFLD(RISCVHart &hart, RISCVInstruction &i) {
+    visitLoad<double, double>(hart, i);
+}
 void RISCVSimulator::visitAMOSWAPW(RISCVHart &hart, RISCVInstruction &i) {    
     visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicSWAP);
 }
