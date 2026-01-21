@@ -168,13 +168,16 @@ docker run -it --rm \
   drv:latest bash
 
 
-  To run it on TACC - Stampede3
+## To run it on TACC - Stampede3
 
 ssh vineeth_architect@stampede3.tacc.utexas.edu
 
 Move to a compute node 
+
 cdw
+
 module load tacc-apptainer/1.4.1
+
 cd /work2/10238/vineeth_architect/stampede3/drv
 
 apptainer exec --cleanenv \
