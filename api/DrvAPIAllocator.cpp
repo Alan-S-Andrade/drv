@@ -949,6 +949,7 @@ dram_static<global_memory> dram_memory; // one of these per pxn
 void DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType type) {
     if (isCommandProcessor()) {
         if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP) {
+                    std::cout << "Initializing L1SP memory allocator" << std::endl;
             l1sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
         } else if (type == DrvAPIMemoryType::DrvAPIMemoryL2SP) {
             l2sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);
@@ -966,9 +967,8 @@ void DrvAPIMemoryAllocatorInit() {
 
 DrvAPIPointer<void> DrvAPIMemoryAlloc(DrvAPIMemoryType type, size_t size) {
     // if we use l1sp for stack, disallow allocation of l1sp
-    if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP
-        && DrvAPIThread::current()->stackInL1SP()) {
-        std::cerr << "ERROR: cannot allocate L1SP memory for stack" << std::endl;
+    if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP && DrvAPIThread::current()->stackInL1SP()) {
+        std::cerr << "ERROR: cannot allocate, L1SP memory for stack" << std::endl;
         exit(1);
     }
 

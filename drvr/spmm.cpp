@@ -1,378 +1,274 @@
+// Copyright (c) 2026 The University of Texas at Austin
 // SPDX-License-Identifier: MIT
-/* Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved. */
+
+// Real multihart SpMM (CSR * dense features) in the same “all harts run + barrier” style
+// as your BFS/PageRank.
+//
+// Key change vs your prototype:
+//   - Your code *simulates* 3 threads by calling MergePathSpMM() three times on hart0.
+//   - A real multihart version needs *all harts* to participate concurrently.
+//   - Also, your current MergePath partition can cause two threads to update the same output row
+//     at boundaries, which would require atomic float adds (not ideal / may not exist).
+//
+// This version avoids that problem entirely by giving each hart **exclusive ownership of a disjoint
+// range of rows**. Then each output[row][col] is written by exactly one hart → no atomics needed.
+//
+// If you still want true MergePath partitioning across (rows + nnz) for load balance, we can do it,
+// but you’ll need either atomic float adds or a two-phase reduction scheme.
 
 #include <algorithm>
-#include <ostream>
-#include <vector>
-#include <tuple>
-
 #include <cassert>
 #include <cstdio>
 #include <cstring>
-#include <unistd.h>
+#include <tuple>
+#include <vector>
 
 #include <pandohammer/cpuinfo.h>
 #include <pandohammer/mmio.h>
+#include <pandohammer/atomic.h>
+#include <pandohammer/hartsleep.h>
 
-std::vector<std::vector<float>> features;
-std::vector<std::vector<float>> output;
+static constexpr int HARTS = 16;
 
-struct coord {
-    int x;
-    int y;
-};
+static int64_t thread_phase_counter[HARTS];
+static volatile int64_t global_barrier_count = 0;
+static volatile int64_t global_barrier_phase = 0;
 
-template <
-    typename ValueType,
-    typename OffsetT = ptrdiff_t>
-struct CountingIterator
-{
-    typedef CountingIterator                self_type;
-    typedef OffsetT                         difference_type;
-    typedef ValueType                       value_type;
-    typedef ValueType*                      pointer;
-    typedef ValueType                       reference;
-    typedef std::random_access_iterator_tag iterator_category;
+static inline void barrier(int total_harts) {
+    uint64_t hid = (myCoreId() << 4) + myThreadId();
+    const int64_t cur = thread_phase_counter[hid];
 
-    ValueType val;
-
-    inline CountingIterator(
-        const ValueType &val)
-    :
-        val(val)
-    {}
-
-    template <typename Distance>
-    inline reference operator[](Distance n) const
-    {
-        return val + n;
+    const int64_t old = atomic_fetch_add_i64(&global_barrier_count, 1);
+    if (old == total_harts - 1) {
+        atomic_swap_i64(&global_barrier_count, 0);
+        atomic_fetch_add_i64(&global_barrier_phase, 1);
+    } else {
+        long w = 1;
+        long wmax = 8 * 1024;
+        while (global_barrier_phase == cur) {
+            if (w < wmax) w <<= 1;
+            hartsleep(w);
+        }
     }
-
-    friend std::ostream& operator<<(std::ostream& os, const self_type& itr)
-    {
-        os << "[" << itr.val << "]";
-        return os;
-    }
-};
+    thread_phase_counter[hid] = cur + 1;
+}
 
 class CSRMatrix {
 public:
-    std::vector<float> values;
-    std::vector<int> colIndices;
-    std::vector<int> rowOffsets;
-    int numRows;
-    CSRMatrix(int num_rows, int num_edges,
-        std::vector<int> &coo_row_indices,
-        std::vector<int> &coo_col_indices) : numRows(num_rows)
+    std::vector<float> values;     // nnz
+    std::vector<int>   colIndices; // nnz
+    std::vector<int>   rowOffsets; // numRows+1
+    int numRows = 0;
+
+    CSRMatrix(int num_rows,
+              int num_edges,
+              std::vector<int>& coo_row_indices,
+              std::vector<int>& coo_col_indices)
+        : numRows(num_rows)
     {
-        values.resize(num_edges, 1.0);
-        colIndices.resize(num_edges, 0);
+        values.assign(num_edges, 1.0f);
+        colIndices.resize(num_edges);
 
-        // creating a vector of tuples row and column indices
-        std::vector<std::tuple<int, int>> coo_tuples;
-        for (int i = 0; i < coo_row_indices.size(); i++) {
-            coo_tuples.push_back(std::make_tuple(coo_row_indices[i], coo_col_indices[i]));
+        // sort (row,col) by row then col (good for CSR + sorted neighbors)
+        std::vector<std::tuple<int,int>> t;
+        t.reserve(coo_row_indices.size());
+        for (size_t i = 0; i < coo_row_indices.size(); i++) {
+            t.emplace_back(coo_row_indices[i], coo_col_indices[i]);
         }
-
-        // sorting the tuples based on row indices
-        std::sort(coo_tuples.begin(), coo_tuples.end(),
-                  [](std::tuple<int, int> a, std::tuple<int, int> b)
-                  {
-                      return std::get<0>(a) < std::get<0>(b);
+        std::sort(t.begin(), t.end(),
+                  [](const auto& a, const auto& b) {
+                      if (std::get<0>(a) != std::get<0>(b)) return std::get<0>(a) < std::get<0>(b);
+                      return std::get<1>(a) < std::get<1>(b);
                   });
 
-        for (int i = 0; i < coo_tuples.size(); i++) {
-            coo_row_indices[i] = std::get<0>(coo_tuples[i]);
-            coo_col_indices[i] = std::get<1>(coo_tuples[i]);
+        for (size_t i = 0; i < t.size(); i++) {
+            coo_row_indices[i] = std::get<0>(t[i]);
+            coo_col_indices[i] = std::get<1>(t[i]);
         }
-
-        // moving column indices
         colIndices = std::move(coo_col_indices);
 
-        // creating row offsets
-        int prev_node = -1;
-        int count = 0;
-        for (auto index : coo_row_indices) {
-            if (index != prev_node) {
-                assert(index > prev_node);
-                for (int i = 0; i < index - prev_node; i++) {
-                    rowOffsets.push_back(count);
-                }
-                prev_node = index;
-            }
-            count++;
+        // Build rowOffsets of size numRows+1
+        rowOffsets.assign(numRows + 1, 0);
+        for (int idx : coo_row_indices) {
+            // assumes 0-based rows in file; if 1-based, subtract 1 when reading
+            assert(idx >= 0 && idx < numRows);
+            rowOffsets[idx + 1]++;
         }
-        rowOffsets.push_back(count);
+        // prefix sum
+        for (int r = 0; r < numRows; r++) rowOffsets[r + 1] += rowOffsets[r];
+
+        // NOTE: values[] is already 1.0, and colIndices already in row-major order,
+        // so we’re done. (If you needed stable placement from unsorted COO, you’d scatter.)
     }
 };
 
-int readMtx(const char *fname, int &num_rows, int &num_cols, int &num_nzs,
-        std::vector<int> &row_indices, std::vector<int> &col_indices)
-{
-    FILE *fp_ = fopen(fname, "r");
-    printf("Reading file '%s'\n", fname);
-    if (!fp_) {
-        fprintf(stdout, "Error: failed to open '%s': %s\n", fname, strerror(errno));
-        exit(1);
+static int readMtx(const char* fname, int& num_rows, int& num_cols, int& num_nzs, std::vector<int>& row_indices, std::vector<int>& col_indices) {
+    FILE* fp = fopen(fname, "r");
+    std::printf("Reading file '%s'\n", fname);
+    if (!fp) {
+        std::printf("Error: failed to open '%s'\n", fname);
+        return -1;
     }
 
-    int r = fscanf(fp_, "%d %d %d", &num_rows, &num_cols, &num_nzs);
-    if (r != 3) {
-        fprintf(stdout, "Error: failed to open '%s': %s\n", fname, strerror(errno));
-        fclose(fp_);
-        exit(1);
+    if (fscanf(fp, "%d %d %d", &num_rows, &num_cols, &num_nzs) != 3) {
+        std::printf("Error: bad header in '%s'\n", fname);
+        fclose(fp);
+        return -1;
     }
 
-    row_indices.resize(num_nzs, 0);
-    col_indices.resize(num_nzs, 0);
+    row_indices.resize(num_nzs);
+    col_indices.resize(num_nzs);
 
     for (int i = 0; i < num_nzs; i++) {
-        int src, dest;
-        int r = fscanf(fp_, "%d %d", &src, &dest);
-        row_indices[i] = src;
-        col_indices[i] = dest;
-        if (r != 2) {
-            fprintf(stderr, "Error: unexpected end of file for '%s': %m\n", fname);
-            fclose(fp_);
+        int src, dst;
+        if (fscanf(fp, "%d %d", &src, &dst) != 2) {
+            std::printf("Error: unexpected EOF in '%s'\n", fname);
+            fclose(fp);
             return -1;
         }
+
+        // IMPORTANT: if your file is 1-based, uncomment these:
+        // src--; dst--;
+
+        row_indices[i] = src;
+        col_indices[i] = dst;
     }
+
+    fclose(fp);
     return 0;
 }
 
-int readFeatures(const char *fname, std::vector<std::vector<float>> &features)
-{
-    FILE *fp_ = fopen(fname, "r");
-    printf("Reading file '%s'\n", fname);
-    if (!fp_) {
-        fprintf(stderr, "Error: failed to open '%s': %m\n", fname);
+static int readFeaturesFlat(const char* fname, int& feat_rows, int& feat_cols,
+                            std::vector<float>& feat) {
+    FILE* fp = fopen(fname, "r");
+    std::printf("Reading file '%s'\n", fname);
+    if (!fp) return -1;
+
+    if (fscanf(fp, "%d %d", &feat_rows, &feat_cols) != 2) {
+        fclose(fp);
         return -1;
     }
 
-    int num_rows, num_cols;
-    int r = fscanf(fp_, "%d %d", &num_rows, &num_cols);
-    if (r != 2) {
-        fprintf(stderr, "Error: unexpected end of file for '%s': %m\n", fname);
-        fclose(fp_);
-        return -1;
-    }
+    feat.resize((size_t)feat_rows * (size_t)feat_cols);
 
-    features.resize(num_rows);
-
-    for (int i = 0; i < num_rows; i++) {
-        features[i].resize(num_cols, (float)0.0);
-        float value;
-        for (int j = 0; j < num_cols; j++) {
-            int r = fscanf(fp_, "%f", &value);
-            if (r != 1) {
-                fprintf(stderr, "Error: unexpected end of file for '%s': %m\n", fname);
-                fclose(fp_);
+    for (int i = 0; i < feat_rows; i++) {
+        for (int j = 0; j < feat_cols; j++) {
+            float v;
+            if (fscanf(fp, "%f", &v) != 1) {
+                fclose(fp);
                 return -1;
             }
-            features[i][j] = value;
+            feat[(size_t)i * feat_cols + j] = v;
         }
     }
+
+    fclose(fp);
     return 0;
 }
 
-void SpMMValidation(CSRMatrix &graph,
-        std::vector<std::vector<float>> &features,
-        std::vector<std::vector<float>> &output)
-{
-#pragma unroll
-    for (int row = 0; row < graph.rowOffsets.size() - 1; row++) {
-//        for (int col = 0; col < features[0].size(); col++) {
-        int col = 0;
-        {
-            float nonzero = 0;
-            for (int offset = graph.rowOffsets[row];
-                 offset < graph.rowOffsets[row + 1]; offset++) {
-                nonzero += graph.values[offset] *
-                    features[graph.colIndices[offset]][col];
-                printf("row: %d col: %d offset: %d nonzero: %d\n",
-                        row , col , offset, nonzero);
+// -------------------- Multihart SpMM --------------------
+// output[row, col] = sum_{offset in row} values[offset] * features[colIndices[offset], col]
+static void SpMM_CSR_rowsliced_parallel(int total_harts, CSRMatrix& graph,
+                                       const std::vector<float>& features, // flat [numCols x featDim]?? actually [node][featDim]
+                                       int feat_rows,
+                                       int feat_cols,
+                                       std::vector<float>& output) {  // flat [numRows][feat_cols]
+    const uint64_t hid = (myCoreId() << 4) + myThreadId();
+
+    // Partition rows
+    const int numRows = graph.numRows;
+    const int begin = (numRows * hid) / total_harts;
+    const int end   = (numRows * (hid + 1)) / total_harts;
+
+    for (int row = begin; row < end; row++) {
+        const int start = graph.rowOffsets[row];
+        const int stop  = graph.rowOffsets[row + 1];
+
+        // For each feature dimension
+        for (int col = 0; col < feat_cols; col++) {
+            float acc = 0.0f;
+
+            for (int off = start; off < stop; off++) {
+                const int nbr = graph.colIndices[off];
+                // bounds: nbr should be in [0, feat_rows)
+                acc += graph.values[off] * features[(size_t)nbr * feat_cols + col];
             }
-//            ph_print_float(nonzero);
-            ph_print_int(row);
-            ph_print_int(col);
-//            printf("row: %d col: %d base: %p pointer: %p\n", row, col, &output[0][0], &output[row][col]);
-            ph_print_hex((uint64_t)&output[row][col]);
-            if (nonzero != output[row][col]) {
-//                printf("!row: %d col: %d nonzero: %d\n",
-//                        row , col , nonzero);
-                throw std::runtime_error("Invalid output matrix");
-            }
+
+            output[(size_t)row * feat_cols + col] = acc;
         }
     }
 }
 
-void SpMMPrint(CSRMatrix &graph,
-        std::vector<std::vector<float>> &features,
-        std::vector<std::vector<float>> &output)
-{
-#pragma unroll
-    for (int row = 0; row < graph.rowOffsets.size() - 1; row++) {
-//        for (int col = 0; col < features[0].size(); col++) {
-        int col = 0;
-        {
-            float nonzero = 0;
-            for (int offset = graph.rowOffsets[row];
-                 offset < graph.rowOffsets[row + 1]; offset++) {
-                nonzero += graph.values[offset] *
-                    features[graph.colIndices[offset]][col];
-                printf("row: %d col: %d offset: %d nonzero: %d\n",
-                        row , col , offset, nonzero);
+int main() {
+    // Use only threadId within a core, assuming HARTS harts participating.
+    // If you have multiple cores with harts each, you’ll want a global hart id and a global barrier.
+    const uint64_t hid = (myCoreId() << 4) + myThreadId();
+
+    if (hid == 0) {
+        for (int i = 0; i < HARTS; i++) thread_phase_counter[i] = 0;
+        printf("SpMM (real multihart, row-sliced)\n");
+    }
+
+    // Shared data, initialized by hart0
+    static CSRMatrix* graph_ptr = nullptr;
+    static int numRows = 0, numCols = 0, numNzs = 0;
+    static int feat_rows = 0, feat_cols = 0;
+    static std::vector<float> features; // flat
+    static std::vector<float> output;   // flat
+
+    if (hid == 0) {
+        printf("Reading the graph\n");
+        std::vector<int> rowIdx, colIdx;
+        if (readMtx("spmm.graph.mtx", numRows, numCols, numNzs, rowIdx, colIdx) != 0) {
+            printf("readMtx failed\n");
+            std::exit(1);
+        }
+
+        printf("Reading the features\n");
+        if (readFeaturesFlat("spmm.features", feat_rows, feat_cols, features) != 0) {
+            printf("readFeatures failed\n");
+            std::exit(1);
+        }
+
+        // Basic sanity checks
+        if (feat_rows < numCols) {
+            // If the graph columns index nodes, feat_rows must cover them.
+            std::printf("ERROR: features rows (%d) < graph numCols (%d)\n", feat_rows, numCols);
+            std::exit(1);
+        }
+
+        printf("Constructing CSR\n");
+        graph_ptr = new CSRMatrix(numRows, numNzs, rowIdx, colIdx);
+
+        printf("CSR: numRows=%d nnz=%d feat_cols=%d\n", numRows, numNzs, feat_cols);
+
+        // Allocate output [numRows][feat_cols], zero init
+        output.assign((size_t)numRows * (size_t)feat_cols, 0.0f);
+    }
+
+    barrier(HARTS);
+
+    // All harts participate in compute
+    SpMM_CSR_rowsliced_parallel(HARTS, *graph_ptr, features, feat_rows, feat_cols, output);
+
+    barrier(HARTS);
+
+    if (hid == 0) {
+        // Print a tiny checksum-ish sample to show it ran
+        ph_puts("Done. Sample output:\n");
+        const int sample_rows = std::min(numRows, 4);
+        const int sample_cols = std::min(feat_cols, 4);
+        for (int r = 0; r < sample_rows; r++) {
+            for (int c = 0; c < sample_cols; c++) {
+                float v = output[(size_t)r * feat_cols + c];
+                ph_print_float(v);
             }
         }
-    }
-}
 
-void CoordinatesSearch(int diagonal,
-        int* a,
-        CountingIterator<int> b,
-        int a_len,
-        int b_len,
-        coord &th_coord)
-{
-    int x_min = (diagonal - b_len) > 0 ? (diagonal - b_len) : 0;
-    int x_max = diagonal < a_len ? diagonal : a_len;
-
-    while(x_min < x_max) {
-        int x_pivot = (x_min + x_max) >> 1;
-        if (a[x_pivot] <= b[diagonal - x_pivot - 1]) {
-            x_min = x_pivot + 1;
-        } else {
-            x_max = x_pivot;
-        }
+        delete graph_ptr;
+        graph_ptr = nullptr;
     }
 
-    th_coord.x = std::min(x_min, a_len);
-    th_coord.y = diagonal - x_min;
-}
-
-void MergePathSpMM(int tid,
-        int num_threads,
-        CSRMatrix &graph,
-        std::vector<std::vector<float>> &features,
-        std::vector<std::vector<float>> &output)
-{
-    printf("Thread %d, %d thread(s)\n", tid, num_threads);
-
-    CountingIterator<int> nz_indices(0);
-
-    int num_merge_items = graph.numRows + graph.values.size();
-    int items_per_thread = (num_merge_items + num_threads - 1) / num_threads;
-
-    coord thread;
-    coord thread_end;
-    int start_diagonal = std::min(items_per_thread * tid, num_merge_items);
-    int end_diagonal = std::min(start_diagonal + items_per_thread, num_merge_items);
-
-    CoordinatesSearch(start_diagonal, &graph.rowOffsets[1], nz_indices, graph.rowOffsets.size() - 1, graph.colIndices.size(), thread);
-    CoordinatesSearch(end_diagonal, &graph.rowOffsets[1], nz_indices, graph.rowOffsets.size() - 1, graph.colIndices.size(), thread_end);
-
-    printf("num_merge_items: %d\n", num_merge_items);
-    printf("items_per_thread: %d\n", items_per_thread);
-    printf("start_diagonal: %d\n", start_diagonal);
-    printf("end_diagonal: %d\n", end_diagonal);
-    printf("thread.x: %d\n", thread.x);
-    printf("thread.y: %d\n", thread.y);
-    printf("thread_end.x: %d\n", thread_end.x);
-    printf("thread_end.y: %d\n", thread_end.y);
-
-    for (int col = 0; col < features[0].size(); col++) {
-        int x = thread.x;
-        int y = thread.y;
-        for (; x < thread_end.x; ++x) {
-            float nonzero = 0;
-            for (; y < graph.rowOffsets[x + 1]; ++y) {
-                nonzero += graph.values[y] *
-                    features[graph.colIndices[y]][col];
-                printf("1 row: %d col: %d offset: %d nonzero: %f\n",
-                    x, col, y, nonzero);
-            }
-
-//            std::atomic_ref<float> ref(output[x][col]);
-//            ref.fetch_add(nonzero);
-                output[x][col] += nonzero;
-
-            nonzero = 0;
-            for (; y < thread_end.y; y++) {
-                nonzero += graph.values[y] *
-                    features[graph.colIndices[y]][col];
-                printf("1 row: %d col: %d offset: %d nonzero: %f\n",
-                    thread_end.x, col, y, nonzero);
-            }
-
-            if (nonzero != 0) {
-//                std::atomic_ref<float> ref2(output[thread_end.x][col]);
-//                ref2.fetch_add(nonzero);
-                output[thread_end.x][col] += nonzero;
-            }
-        }
-    }
-}
-
-int main(int argc, const char *argv[])
-{
-    uint64_t tid = (myCoreId() << 4) + myThreadId();
-
-    if (tid != 0) return 0;
-
-    ph_puts("SpMM\n");
-    ph_puts("Reading the graph\n");
-    int numRows, numCols, numNzs;
-    std::vector<int> rowIndices;
-    std::vector<int> colIndices;
-    readMtx("spmm.graph.mtx", numRows, numCols, numNzs, rowIndices, colIndices);
-
-    ph_puts("Reading the features\n");
-    readFeatures("spmm.features", features);
-
-    ph_puts("Constructing CSR\n");
-    CSRMatrix graph(numRows, numNzs, rowIndices, colIndices);
-
-    printf("values %d\n", graph.values.size());
-    for (auto &elem: graph.values) {
-        ph_print_float(elem);
-    }
-    printf("\n");
-    printf("colIndices %d\n", graph.colIndices.size());
-    for (auto &elem: graph.colIndices) {
-        printf("%d ", elem);
-    }
-    printf("\n");
-    printf("rowOffsets %d\n", graph.rowOffsets.size());
-    for (auto &elem: graph.rowOffsets) {
-        printf("%d ", elem);
-    }
-    printf("\n");
-
-//    printf("Output matrix %d %d\n", graph.numRows, features[0].size());
-//    output.resize(graph.numRows);
-//    for (auto &col: output) {
-//        col.resize(features[0].size(), (float)0.0);
-//    }
-
-    ph_puts("MergePath SpMM\n");
-    int num_threads = 3;
-//    SpMMPrint(graph, features, output);
-    MergePathSpMM(0, num_threads, graph, features, output);
-    MergePathSpMM(1, num_threads, graph, features, output);
-    MergePathSpMM(2, num_threads, graph, features, output);
-
-//    ph_puts("Validation\n");
-//    SpMMValidation(graph, features, output);
-
-//    printf("Out matrix\n");
-//    for (auto &row: output) {
-//        for (auto &elem: row) {
-////            printf("%d ", elem);
-//            ph_print_int(elem);
-//        }
-////        printf("\n");
-//    }
-
-    printf("Done\n");
+    barrier(HARTS);
     return 0;
 }

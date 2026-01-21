@@ -24,6 +24,17 @@ static inline int32_t atomic_swap_i32(volatile int32_t *ptr, int32_t val)
     return ret;
 }
 
+static inline int64_t atomic_store_f64(volatile int64_t *ptr, double val) {
+    int64_t ret;
+    union {
+        double f;
+        int64_t i;
+    } u;
+    u.f = val;
+    asm volatile("amoswap.d %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(u.i));
+    return ret;
+}
+
 static inline int64_t atomic_swap_i64(volatile int64_t *ptr, int64_t val)
 {
     int64_t ret;
