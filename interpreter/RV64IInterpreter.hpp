@@ -13,12 +13,6 @@ class RV64IInterpreter : public RISCVInterpreter
 {
 public:
     RV64IInterpreter() {}
-    void visitFSD(RISCVHart &hart, RISCVInstruction &i) override {
-        std::stringstream ss;
-        std::string str(hart.to_string());
-        ss << str << " ";
-        std::cout << ss.str() << std::endl;
-    }
 
     void visitLUI(RISCVHart &hart, RISCVInstruction &i) override {
         hart.sx(i.rd()) = static_cast<int64_t>(i.SUimm());

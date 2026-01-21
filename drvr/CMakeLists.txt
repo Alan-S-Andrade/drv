@@ -293,14 +293,15 @@ drvr_set_build_target_properties(drvr_wait-with-sleep
 
 drvr_test_with_pandohammer(wait-without-sleep wait.c)
 
-# spmm; broken; not sure why
-if (FALSE)
+# spmm
   drvr_test_with_pandohammer(spmm spmm.cpp)
-  drvr_test_inputs(spmm
-    spmm.features
-    spmm.graph.mtx
-    )
-endif()
+  drvr_test_compile_options(spmm -DDEBUG)
+   drvr_test_build_properties(spmm
+    PROPERTIES
+    DRV_BUILD_POD_CORES_X 1
+    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_CORE_THREADS 16
+)
 
 # open; currently broken (fix would be in RISCVSimulator)
 if (FALSE)

@@ -138,12 +138,18 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     // base address registers are always from the integer register file
     StandardMem::Addr addr = shart.x(i.rs1()) + i.Simm();
-    // if (addr < hart.spLow()) {
+
+    // this might not necessarily be going to L1SP
+
+    // std::cout << std::hex << "addr: " << addr << " store rs1: " << shart.x(i.rs1()) << " simm: " << i.Simm() << std::dec << std::endl;
+    // if (addr < shart.spLow() || addr >= shart.spHigh()) {
     //     std::cout << "writing outside the stack bound for this hart " << core_->getHartId(shart) << ": addr=0x" 
-    //               << std::hex << addr << " spLow=0x" << hart.spLow() 
-    //               << " spHigh=0x" << hart.spHigh() << std::dec << std::endl; // put this in L2SP
+    //               << addr << " spLow=0x" << shart.spLow() 
+    //               << " spHigh=0x"  << shart.spHigh()  << std::endl; // retry putting this in L2SP - TODO
+    //               exit(-1);
     // }
-    if (isMMIO(addr)) {
+
+    if (isMMIO(addr)) { // this doesn't send to I/O ports it just prints to stdout
         visitStoreMMIO<T>(shart, i);
         return;
     }
@@ -286,6 +292,9 @@ void RISCVSimulator::visitFSW(RISCVHart &hart, RISCVInstruction &i) {
     visitStore<float>(hart, i);
 }
 
+void RISCVSimulator::visitFSD(RISCVHart &hart, RISCVInstruction &i) { //stores double float
+    visitStore<double>(hart, i);
+}
 void RISCVSimulator::visitAMOSWAPW(RISCVHart &hart, RISCVInstruction &i) {    
     visitAMO<int32_t>(hart, i, DrvAPI::DrvAPIMemAtomicSWAP);
 }

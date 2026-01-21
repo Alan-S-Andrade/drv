@@ -112,10 +112,6 @@ memory_instrs = [
     'AMOCASD_RL',
     'AMOCASD_AQ',
     'AMOCASD_RL_AQ',
-    'FLW',
-    'FSW',
-    'FLD',
-    'FSD',
 ]
 memory_instrs = [i + '_instruction' for i in memory_instrs]
 
@@ -190,6 +186,10 @@ branch_instrs = [
 branch_instrs = [i + '_instruction' for i in branch_instrs]
 
 float_instrs = [
+    'FLW',
+    'FSW',
+    'FLD',
+    'FSD',
     'FMADD_S_RNE',
     'FMADD_S_RTZ',
     'FMADD_S_RDN',

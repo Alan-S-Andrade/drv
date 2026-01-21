@@ -169,7 +169,6 @@ public:
         hart.pc() += 4;
     }
 
-
     void visitFCVT_S_LU_DYN(RISCVHart &hart, RISCVInstruction &i) override {
         RoundingModeGuard guard(hart.rm());
         uint64_t result = static_cast<uint64_t>(hart.x(i.rs1()));
