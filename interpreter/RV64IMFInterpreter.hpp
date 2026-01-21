@@ -127,6 +127,13 @@ public:
         hart.pc() += 4;
     }
 
+    void visitFCVT_D_WU_RNE(RISCVHart &hart, RISCVInstruction &i) override {
+        RoundingModeGuard guard(hart.rm());
+        uint32_t src = static_cast<uint32_t>(hart.x(i.rs1()));
+        hart.df(i.rd()) = static_cast<double>(src);
+        hart.pc() += 4;
+    }
+
     void visitFCVT_L_S_DYN(RISCVHart &hart, RISCVInstruction &i) override {
         RoundingModeGuard guard(hart.rm());
         int64_t result = std::rintf(hart.sf(i.rs1()));
@@ -152,6 +159,13 @@ public:
         RoundingModeGuard guard(hart.rm());
         int32_t result = static_cast<int32_t>(hart.x(i.rs1()));
         hart.f(i.rd()) = result;
+        hart.pc() += 4;
+    }
+
+    void visitFCVT_S_D_DYN(RISCVHart &hart, RISCVInstruction &i) override {
+        RoundingModeGuard guard(hart.rm());
+        double src = hart.df(i.rs1());
+        hart.f(i.rd()) = static_cast<float>(src);
         hart.pc() += 4;
     }
 
@@ -186,6 +200,26 @@ public:
         hart.pc() += 4;
     }
 
+    void visitFMV_X_D(RISCVHart &hart, RISCVInstruction &i) override {
+        union {
+            uint64_t u_;
+            double   f_;
+        } u;
+        u.f_ = hart.df(i.rs1());
+        hart.sx(i.rd()) = u.u_;
+        hart.pc() += 4;
+    }
+
+    void visitFMV_D_X(RISCVHart &hart, RISCVInstruction &i) override {
+        union {
+            uint64_t u_;
+            double   f_;
+        } u;
+        u.u_ = { static_cast<uint64_t>(hart.x(i.rs1())) };
+        hart.df(i.rd()) = u.f_;
+        hart.pc() += 4;
+    }
+
     void visitFMV_W_X(RISCVHart &hart, RISCVInstruction &i) override {
         union {
             uint32_t u_;
@@ -204,6 +238,16 @@ public:
             = std::isnan(f1)||std::isnan(f2)
             ? 0
             : hart.sf(i.rs1()) == hart.sf(i.rs2());
+        hart.pc() += 4;
+    }
+
+    void visitFEQ_D(RISCVHart &hart, RISCVInstruction &i) override {
+        double f1 = hart.df(i.rs1());
+        double f2 = hart.df(i.rs2());
+        hart.x(i.rd())
+            = std::isnan(f1)||std::isnan(f2)
+            ? 0
+            : hart.df(i.rs1()) == hart.df(i.rs2());
         hart.pc() += 4;
     }
 

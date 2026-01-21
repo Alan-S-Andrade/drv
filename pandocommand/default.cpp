@@ -15,7 +15,7 @@ int CommandProcessorMain(int argc, char *argv[])
 {
     const char *exe = argv[1];
     PANDOHammerExe executable(exe);
-    cmd_dbg("Loading %s\n", exe);
+    printf("CommandProcessorMain Loading %s\n", exe);
     loadProgram(executable);
 
     cmd_dbg("Releasing %d Cores on %d Pods from reset\n"

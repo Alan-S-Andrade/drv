@@ -140,6 +140,7 @@ void DrvCore::configureThread(int thread, int threads) {
   api_thread.setPodId(pod_);
   api_thread.setPxnId(pxn_);
   api_thread.setStackInL1SP(stack_in_l1sp_);
+  printf("stack in l1sp = %d\n", stack_in_l1sp_);
   api_thread.setSystem(system_callbacks_);
 }
 

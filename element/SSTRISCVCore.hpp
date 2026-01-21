@@ -378,21 +378,21 @@ public:
     DrvAPI::DrvAPIAddress l1spBase() const;
 
     /**
-     * is local l1sp for purpose of stats
+     * is l1sp for purpose of stats
      */
     bool isPAddressL1SP(const DrvAPI::DrvAPIAddressInfo & addr) const {
         return addr.is_l1sp() && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
-     * is  l2sp for purpose of stats
+     * is l2sp for purpose of stats
      */
     bool isPAddressL2SP(const DrvAPI::DrvAPIAddressInfo& addr) const {
         return addr.is_l2sp() && addr.pxn() == static_cast<int64_t>(pxn_);
     }
 
     /**
-     * is  dram for purpose of stats
+     * is dram for purpose of stats
      */
     bool isPAddressDRAM(const DrvAPI::DrvAPIAddressInfo& addr) const {
         return addr.is_dram() && addr.pxn() == static_cast<int64_t>(pxn_);

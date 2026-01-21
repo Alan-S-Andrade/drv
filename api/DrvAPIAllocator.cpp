@@ -949,7 +949,7 @@ dram_static<global_memory> dram_memory; // one of these per pxn
 void DrvAPIMemoryAllocatorInitType(DrvAPIMemoryType type) {
     if (isCommandProcessor()) {
         if (type == DrvAPIMemoryType::DrvAPIMemoryL1SP) {
-                    std::cout << "Initializing L1SP memory allocator" << std::endl;
+            std::cout << "Initializing L1SP memory allocator" << std::endl;
             l1sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL1SP);
         } else if (type == DrvAPIMemoryType::DrvAPIMemoryL2SP) {
             l2sp_memory.init(DrvAPIMemoryType::DrvAPIMemoryL2SP);

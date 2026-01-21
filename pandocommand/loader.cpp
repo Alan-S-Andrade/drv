@@ -17,7 +17,7 @@ namespace pandocommand
 {
 void loadProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     DrvAPIAddressInfo decode = decodeAddress(segpaddr);
-    dbg("Loading segment @ 0x%016" PRIx64 " (%s)\n", segpaddr, decode.to_string().c_str());
+    printf("Loading segment @ 0x%016" PRIx64 " (%s)\n", segpaddr, decode.to_string().c_str());
     size_t segsz = phdr->p_filesz;
     static constexpr size_t MAX_REQSZ = 64;
     char *data = executable.segment_data(phdr);
@@ -56,11 +56,15 @@ void loadProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddr
 
 void loadDRAMProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     // load once on this pxn
+            printf("loading on each node dram\n");
+
     loadProgramSegment(executable, phdr, toAbsoluteAddress(segpaddr));
 }
 
 void loadL2ProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     // load on each pod
+        printf("loading on each pod l2sp\n");
+
     for (int pod = 0; pod < numPXNPods(); pod++) {
         DrvAPIAddressInfo decode = decodeAddress(segpaddr);
         decode.set_absolute(true)
@@ -72,6 +76,7 @@ void loadL2ProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAd
 
 void loadL1ProgramSegment(PANDOHammerExe &executable, Elf64_Phdr *phdr, DrvAPIAddress segpaddr) {
     // load on each core
+    printf("loading on each core l1sp\n");
     for (int pod = 0; pod < numPXNPods(); pod++) {
         for (int core = 0; core < numPodCores(); core++) {
             DrvAPIAddressInfo decode = decodeAddress(segpaddr);
@@ -97,7 +102,7 @@ void loadProgram(PANDOHammerExe &executable)
         if (decoded.is_dram()) {
             loadDRAMProgramSegment(executable, phdr, phdr->p_paddr);
         }
-        // if this is a l2 segment, load onece per pod
+        // if this is a l2 segment, load once per pod
         else if (decoded.is_l2sp()) {
             loadL2ProgramSegment(executable, phdr, phdr->p_paddr);
         }

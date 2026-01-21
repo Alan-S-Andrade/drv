@@ -172,6 +172,7 @@ class DrvAPIMemWriteConcrete : public DrvAPIMemWrite
 public:
   DrvAPIMemWriteConcrete(DrvAPIAddress address, T value)
       : DrvAPIMemWrite(address), value_(value) {}
+  
   virtual void getPayload(void *p) override {
     *static_cast<T*>(p) = value_;
   }
