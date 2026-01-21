@@ -166,3 +166,33 @@ docker build \
 docker run -it --rm \
   -v $PWD:/work \
   drv:latest bash
+
+
+## To run it on TACC - Stampede3
+
+ssh vineeth_architect@stampede3.tacc.utexas.edu
+
+Move to a compute node 
+
+cdw
+
+module load tacc-apptainer/1.4.1
+
+cd /work2/10238/vineeth_architect/stampede3/drv
+
+apptainer exec --cleanenv \
+  --env XALT_EXECUTABLE_TRACKING=no \
+  --bind $PWD:/work \
+  $WORK/drv.sif \
+  bash
+
+export RISCV_HOME=/install
+export PATH=/install/bin:$PATH
+
+cmake .. \
+  -DSST_CORE_PREFIX=/install \
+  -DSST_ELEMENTS_PREFIX=/install \
+  -DCMAKE_INSTALL_PREFIX=/work/.local
+
+make -j32 drvr-run-bfs_multi_sw
+
