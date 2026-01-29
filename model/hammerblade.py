@@ -7,6 +7,13 @@ from clock import Clock
 from cmdline import parser
 import numpy as np
 
+
+#sst.setStatisticOutput("sst.statOutputConsole") set this for all stats
+sst.setStatisticOutput("sst.statOutputCSV", {
+    "filepath": "stats.csv",
+    "separator": ","
+})
+sst.setStatisticLoadLevel(1)
 p = parser(core_l1sp_size=128*1024)
 
 ARGUMENTS = p.parse_args()
@@ -396,6 +403,7 @@ class DrvRCoreBuilder(Identifiable):
     def build(self, x, y):
         core = Core()
         core.core = sst.Component(f"core_{x}_{y}_mesh{self.meshid}", "Drv.RISCVCore")
+        core.core.enableAllStatistics()
         core.core.addParams({
             "clock" : f'{CORE_CLOCK}Hz',
             "num_harts" : ARGUMENTS.core_threads,

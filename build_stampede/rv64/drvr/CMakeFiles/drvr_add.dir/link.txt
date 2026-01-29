@@ -1,0 +1,1 @@
+/install/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/work2/10238/vineeth_architect/stampede3/drv/pandohammer/bsg_link.ld CMakeFiles/drvr_add.dir/add.S.obj -o drvr_add

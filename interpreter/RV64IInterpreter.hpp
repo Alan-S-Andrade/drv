@@ -73,8 +73,8 @@ public:
         int64_t base = hart.sx(rs1);
         const char * imm  = i.getMnemonic();
 
-        std::printf("JALR: pc=0x%lx rs1=%d rd=%d base=0x%lx imm=%s\n",
-            (uint64_t)hart.pc(), rs1, rd, (uint64_t)base, imm);
+        //std::printf("JALR: pc=0x%lx rs1=%d rd=%d base=0x%lx imm=%s\n",
+        //    (uint64_t)hart.pc(), rs1, rd, (uint64_t)base, imm);
     }
     void visitBEQ(RISCVHart &hart, RISCVInstruction &i) override {
         if (hart.x(i.rs1()) == hart.x(i.rs2())) {

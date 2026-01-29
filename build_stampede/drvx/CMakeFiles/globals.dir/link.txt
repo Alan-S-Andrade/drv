@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -shared -Wl,-soname,libglobals.so -o libglobals.so CMakeFiles/globals.dir/globals.cpp.o  -Wl,-rpath,/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api ../api/libdrvapi.so /install/lib/libboost_coroutine.so.1.89.0 /install/lib/libboost_context.so.1.89.0

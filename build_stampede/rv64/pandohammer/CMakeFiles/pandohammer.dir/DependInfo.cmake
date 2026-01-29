@@ -1,0 +1,34 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "ASM"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_ASM
+  "/work2/10238/vineeth_architect/stampede3/drv/pandohammer/crt.S" "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
+  )
+set(CMAKE_ASM_COMPILER_ID "GNU")
+
+# The include file search paths:
+set(CMAKE_ASM_TARGET_INCLUDE_PATH
+  "/work2/10238/vineeth_architect/stampede3/drv/pandohammer"
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/work2/10238/vineeth_architect/stampede3/drv/pandohammer/lock.c" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj" "gcc" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj.d"
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

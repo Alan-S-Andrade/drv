@@ -1,0 +1,1 @@
+cmd='cmake;-DARCH_RV64=1;-DCMAKE_C_COMPILER=/install/bin/riscv64-unknown-elfpandodrvsim-gcc;-DCMAKE_CXX_COMPILER=/install/bin/riscv64-unknown-elfpandodrvsim-g++;-DCMAKE_SYSTEM_NAME=Generic;-DCMAKE_INSTALL_PREFIX=/work/.local/rv64;-DSST_CORE_PREFIX=/install;-DSST_ELEMENTS_PREFIX=/install;-DGNU_RISCV_TOOLCHAIN_PREFIX=/install;/work2/10238/vineeth_architect/stampede3/drv'

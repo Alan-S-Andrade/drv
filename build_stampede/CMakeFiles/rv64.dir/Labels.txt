@@ -1,0 +1,13 @@
+# Target labels
+ rv64
+# Source files and their labels
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/rv64
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/rv64.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/rv64-complete.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-build.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-configure.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-download.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-install.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-mkdir.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-patch.rule
+/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-update.rule

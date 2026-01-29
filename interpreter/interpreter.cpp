@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
     
     for (int i = 0; i < 200; i++) {
         RISCVInstruction*instr = decoder->decode(icache->read(hart->pc()));
-        std::cout << "instruction = " << instr->getMnemonic() << std::endl;
-        std::cout << "            = " << std::hex << std::setw(8) << std::setfill('0') << instr->instruction() << std::endl;
+        //std::cout << "instruction = " << instr->getMnemonic() << std::endl;
+        //std::cout << "            = " << std::hex << std::setw(8) << std::setfill('0') << instr->instruction() << std::endl;
         interpreter->visit(*hart, *instr);
     }
         

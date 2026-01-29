@@ -1,0 +1,13 @@
+/work/.local/rv64/lib/crt.S
+/work/.local/rv64/lib/lock.c
+/work/.local/rv64/include/pandohammer/address.h
+/work/.local/rv64/include/pandohammer/atomic.h
+/work/.local/rv64/include/pandohammer/cpuinfo.h
+/work/.local/rv64/include/pandohammer/mmio.h
+/work/.local/rv64/include/pandohammer/staticdecl.h
+/work/.local/rv64/include/pandohammer/stringify.h
+/work/.local/rv64/include/pandohammer/hartsleep.h
+/work/.local/rv64/include/pandohammer/register.h
+/work/.local/rv64/lib/bsg_link.ld
+/work/.local/rv64/cmake/FindDRV.cmake
+/work/.local/rv64/cmake/DRVInclude.cmake

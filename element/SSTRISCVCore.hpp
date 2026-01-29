@@ -117,6 +117,8 @@ public:
             {"stall_cycles", "Number of stalled cycles", "count", 1},
             {"busy_cycles", "Number of busy cycles", "count", 1},
             {"icache_miss", "Number of icache misses", "count", 1},
+	    {"memory_wait_cycles", "Cycles stalled waiting for memory", "count", 1},
+            {"active_idle_cycles", "Cycles active but idle (no harts ready)", "count", 1},
         };
 
 #undef DEFINSTR
@@ -376,7 +378,10 @@ public:
      * get the top of this l1sp's address
      */
     DrvAPI::DrvAPIAddress l1spBase() const;
-
+    
+    int64_t outstanding_requests_ = 0; //!< Counter for in-flight memory requests
+    Statistic<uint64_t> *memory_wait_cycles_; //!< Cycles ticking but waiting on memory
+    Statistic<uint64_t> *active_idle_cycles_; //!< Cycles ticking with absolutely no work
     /**
      * is local l1sp for purpose of stats
      */

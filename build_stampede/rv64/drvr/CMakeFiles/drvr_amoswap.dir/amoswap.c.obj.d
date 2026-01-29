@@ -1,0 +1,2 @@
+drvr/CMakeFiles/drvr_amoswap.dir/amoswap.c.obj: \
+ /work2/10238/vineeth_architect/stampede3/drv/drvr/amoswap.c

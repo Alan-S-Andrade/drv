@@ -1,0 +1,15 @@
+
+        Core Clock: 1500000000.0 Hz
+        Pod Size: 1x1
+        L1SP Size: 131072
+        DRAM Clock: 1000000000.0 Hz
+        DRAM Size: 2147483648
+        $-Assoc: 2
+        $-Size:  32768 B
+        
+H 
+$ 
+C 
+$ 
+
+BFS start: source=0 (r=0,c=0), N=10000, threads=16

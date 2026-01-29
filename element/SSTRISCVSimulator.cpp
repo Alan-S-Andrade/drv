@@ -46,7 +46,7 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
         } else {
             ss << ": " << shart.sx(i.rs2());
         }
-        std::cout << ss.str() << std::endl;
+        //std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_HEX:
         ss << "PXN: " << std::setw(3) << core_->getPXNId() << " ";
@@ -60,7 +60,7 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
             ss << ": 0x" << std::hex << std::setfill('0') << std::setw(sizeof(T)*2);
             ss << shart.x(i.rs2());
         }
-        std::cout << ss.str() << std::endl;
+        //std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_TIME:
         ss << "PXN: " << std::setw(3) << core_->getPXNId() << " ";
@@ -69,10 +69,10 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
         ss << "THREAD: " << std::setw(2) << core_->getHartId(shart) << " ";
         ss << "TAG:" << std::setw(9) << shart.sx(i.rs2()) << " ";
         ss << "TIME: " << core_->getElapsedSimTime() << " ";
-        std::cout << ss.str() << std::endl;
+        //std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_CHAR:
-        std::cout << static_cast<char>(shart.x(i.rs2()));
+        //std::cout << static_cast<char>(shart.x(i.rs2()));
         break;
     default:
         core_->output_.fatal(CALL_INFO, -1, "Unknown MMIO address: 0x%lx\n", addr);
@@ -257,8 +257,8 @@ void RISCVSimulator::visitLD(RISCVHart &hart, RISCVInstruction &i) {
     int64_t base = hart.sx(rs1);
     const char * imm  = i.getMnemonic();
 
-    std::printf("LD: pc=0x%lx rs1=%d base=0x%lx imm=%s\n",
-            (uint64_t)hart.pc(), rs1, (uint64_t)base, imm);
+    //std::printf("LD: pc=0x%lx rs1=%d base=0x%lx imm=%s\n",
+    //        (uint64_t)hart.pc(), rs1, (uint64_t)base, imm);
     visitLoad<uint64_t, uint64_t>(hart, i);
 }
 

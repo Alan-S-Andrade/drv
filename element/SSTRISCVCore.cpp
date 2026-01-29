@@ -50,7 +50,7 @@ void RISCVCore::configureHarts(Params &params) {
     }
     std::vector<KeyValue<int, uint64_t>> sps;
     params.find_array<KeyValue<int, uint64_t>>("sp", sps);
-    std::cout << "sp" << sps.size() << "\n";
+    //std::cout << "sp" << sps.size() << "\n";
     if (sps.size() == 0) {
         output_.verbose(CALL_INFO, 1, 0, "Dividing L1SP stack amongst %lu harts\n", num_harts);
         output_.verbose(CALL_INFO, 1, 0, "L1SP base = 0x%lx coreL1SPSize = 0x%lx\n", l1spBase(), DrvAPI::coreL1SPSize());
@@ -64,9 +64,9 @@ void RISCVCore::configureHarts(Params &params) {
             output_.verbose(CALL_INFO, 1, 0, "Hart %lu spLow = 0x%lx spHigh = 0x%lx\n", i, harts_[i].spLow(), harts_[i].spHigh());
         }
     } else {
-        output_.verbose(CALL_INFO, 1, 0, "Configuring sp for %lu harts\n", sps.size());
+        //output_.verbose(CALL_INFO, 1, 0, "Configuring sp for %lu harts\n", sps.size());
         for (auto &sp : sps) {
-            output_.verbose(CALL_INFO, 1, 0, "Hart %d sp = 0x%lx\n", sp.key, sp.value);
+            //output_.verbose(CALL_INFO, 1, 0, "Hart %d sp = 0x%lx\n", sp.key, sp.value);
             harts_[sp.key].sp() = sp.value;
         }
     }
@@ -135,6 +135,8 @@ void RISCVCore::configureStatistics(Params &params) {
     busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
     stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");
     icache_miss_ = registerStatistic<uint64_t>("icache_miss");
+    memory_wait_cycles_ = registerStatistic<uint64_t>("memory_wait_cycles");
+    active_idle_cycles_ = registerStatistic<uint64_t>("active_idle_cycles");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -189,9 +191,9 @@ DrvAPI::DrvAPIAddress RISCVCore::l1spBase() const {
 void RISCVCore::loadProgramSegment(Elf64_Phdr* phdr) {
     using Write = Interfaces::StandardMem::Write;
     using Addr = Interfaces::StandardMem::Addr;
-    output_.verbose(CALL_INFO, 1, 0, "Loading program segment: (paddr = 0x%lx, vaddr = 0x%lx)\n"
-                    , phdr->p_paddr
-                    , phdr->p_vaddr);
+    //output_.verbose(CALL_INFO, 1, 0, "Loading program segment: (paddr = 0x%lx, vaddr = 0x%lx)\n"
+   //                 , phdr->p_paddr
+   //                 , phdr->p_vaddr);
     uint8_t *segp = static_cast<uint8_t*>(icache_->backing()->segment(phdr));
     size_t  segsz = phdr->p_filesz;
     size_t  reqsz = getMaxReqSize();
@@ -256,7 +258,7 @@ void RISCVCore::setup() {
     if (stdmem) {
         stdmem->setup();
     }
-    output_.verbose(CALL_INFO, 1, 0, "memory: line size = %" PRIu64 "\n", stdmem->getLineSize());
+    //output_.verbose(CALL_INFO, 1, 0, "memory: line size = %" PRIu64 "\n", stdmem->getLineSize());
     // load program data
     //output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
     //loadProgram();
@@ -267,14 +269,14 @@ void RISCVCore::setup() {
 void RISCVCore::finish() {
     for (size_t hart_id = 0; hart_id < harts_.size(); hart_id++) {
         RISCVHart &hart = harts_[hart_id];
-        output_.verbose(CALL_INFO, 1, 0, "Hart %lu: hart: \n%s\n", hart_id, hart.to_string().c_str());
+        //output_.verbose(CALL_INFO, 1, 0, "Hart %lu: hart: \n%s\n", hart_id, hart.to_string().c_str());
     }
     // dump pc histogram
-    output_.verbose(CALL_INFO, 3, 0, "PC Histogram:\n");
+    //output_.verbose(CALL_INFO, 3, 0, "PC Histogram:\n");
     for (auto &pc : pchist_) {
-        output_.verbose(CALL_INFO, 3, 0, "0x%08lx: %9lu\n", pc.first, pc.second);
+        //output_.verbose(CALL_INFO, 3, 0, "0x%08lx: %9lu\n", pc.first, pc.second);
     }
-    output_.verbose(CALL_INFO, 3, 0, "End PC Histogram:\n");
+    //output_.verbose(CALL_INFO, 3, 0, "End PC Histogram:\n");
     auto stdmem = dynamic_cast<Interfaces::StandardMem*>(mem_);
     if (stdmem) {
         stdmem->finish();
@@ -360,6 +362,7 @@ void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
     }
 
     if (rd_rsp || wr_rsp || custom_rsp) {
+	outstanding_requests_--;
         auto it = rsp_handlers_.find(tid);
         if (it == rsp_handlers_.end()) {
             output_.fatal(CALL_INFO, -1, "Received memory response for unknown hart\n");
@@ -408,18 +411,29 @@ bool RISCVCore::tick(Cycle_t cycle) {
         // std::string str(i->getMnemonic());
         // ss << str << " ";
         // std::cout << ss.str() << std::endl;
-        output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x%08" PRIx32" (%s)\n"
-                        ,hart_id
-                        ,pc
-                        ,inst
-                        ,i->getMnemonic()
-                        );
+        //output_.verbose(CALL_INFO, 100, 0, "Ticking hart %2d: pc = 0x%016" PRIx64 ", instr = 0x%08" PRIx32" (%s)\n"
+        //                ,hart_id
+        //                ,pc
+        //                ,inst
+        //                 ,i->getMnemonic()
+        //                );
         profileInstruction(harts_[hart_id], *i);
         auto &stats = thread_stats_[hart_id];
         stats.instruction_count[i->getInstructionId()]->addData(1);
         sim_->visit(harts_[hart_id], *i);
         delete i;
     } else {
+
+	if (outstanding_requests_ > 0) {
+            // Reason: All threads are blocked, and at least one is waiting for memory.
+            // This is a True Memory Stall.
+            memory_wait_cycles_->addData(1);
+        } else {
+            // Reason: No memory requests are pending. 
+            // All threads are sleeping/waiting for interrupts.
+            // This is True Idle.
+            active_idle_cycles_->addData(1);
+        }
         unregister = shouldUnregisterClock();
         if (unregister) {
             output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "Unregistering clock\n");
@@ -442,10 +456,11 @@ bool RISCVCore::tick(Cycle_t cycle) {
 void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler) {
     output_.verbose(CALL_INFO, 0, DEBUG_REQ, "Issuing memory request\n");
     // TODO: check if tid is valid
-    std::cout << "issueMemoryRequest" << std::endl;
+    //std::cout << "issueMemoryRequest" << std::endl;
+    outstanding_requests_++;
     rsp_handlers_[tid] = handler;
     mem_->send(req);
-    std::cout << req << std::endl;
+    //std::cout << req << std::endl;
 }
 
 /**
@@ -464,7 +479,7 @@ void RISCVCore::putHartToSleep(RISCVSimHart &hart, uint64_t sleep_cycles) {
 void RISCVCore::handleLoopback(Event *evt) {
     DeassertReset *deassert = dynamic_cast<DeassertReset*>(evt);
     if (deassert) {
-        output_.verbose(CALL_INFO, 0, 0, "Received deassert reset event\n");
+        //output_.verbose(CALL_INFO, 0, 0, "Received deassert reset event\n");
         for (auto &hart : harts_) {
             hart.reset() = false;
         }
@@ -472,8 +487,8 @@ void RISCVCore::handleLoopback(Event *evt) {
     }
     Wake *wake = dynamic_cast<Wake*>(evt);
     if (wake) {
-        output_.verbose(CALL_INFO, 1, 0, "Received wake event for hart %d\n"
-                        ,wake->hart_);
+        //output_.verbose(CALL_INFO, 1, 0, "Received wake event for hart %d\n"
+         //               ,wake->hart_);
         harts_[wake->hart_].stalledSleep() = false;
         assertCoreOn();
     }

@@ -134,13 +134,25 @@ drvr_test_build_properties(attn_fixed
   DRV_MODEL_OPTIONS --pxn-dram-banks=8
 )
 
+
+#dense_gemm
+  drvr_test_with_pandohammer(dense_gemm dense_gemm.cpp)
+  drvr_test_compile_options(dense_gemm -DDEBUG)
+   drvr_test_build_properties(dense_gemm
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 4
+  #DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+
+
 # bfs_sw_multi
-  drvr_test_with_pandohammer(bfs_multi_sw bfs_sw_hw_multi.cpp)
+  drvr_test_with_pandohammer(bfs_multi_sw bfs_sw_hw_multi_final.cpp)
   drvr_test_compile_options(bfs_multi_sw -DDEBUG)
    drvr_test_build_properties(bfs_multi_sw
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 1
-  # DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
   DRV_BUILD_CORE_THREADS 16
 )
 
@@ -158,11 +170,20 @@ drvr_test_with_pandohammer(bfs-multith bfs_grid_multith.cpp)
 drvr_test_compile_options(bfs-multith -DDEBUG)
 drvr_test_build_properties(bfs-multith
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_X 4
   # DRV_BUILD_POD_CORES_Y 1
-  DRV_BUILD_CORE_THREADS 1
+  DRV_BUILD_CORE_THREADS 4
 )
 
+# bfs_multihart
+  drvr_test_with_pandohammer(bfs_multihart bfs_multihart.cpp)
+  drvr_test_compile_options(bfs_multihart -DDEBUG)
+   drvr_test_build_properties(bfs_multihart
+    PROPERTIES
+    DRV_BUILD_POD_CORES_X 1
+    # DRV_BUILD_POD_CORES_Y 1
+    DRV_BUILD_CORE_THREADS 2
+)
 #tc
 drvr_test_with_pandohammer(tc tc.c)
 drvr_test_build_properties(tc
