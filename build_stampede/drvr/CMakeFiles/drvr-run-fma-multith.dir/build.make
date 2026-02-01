@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvr-run-fma-multith.
 
@@ -68,7 +68,7 @@ include drvr/CMakeFiles/drvr-run-fma-multith.dir/progress.make
 
 drvr/CMakeFiles/drvr-run-fma-multith: rv64/drvr/drvr_fma-multith
 drvr/CMakeFiles/drvr-run-fma-multith: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/drvr-run-fma-multith && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/drvr-run-fma-multith && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-r.py -- --with-command-processor=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=2 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_fma-multith  | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/drvr-run-fma-multith/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fma-multith && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fma-multith && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/drvr.py -- --with-command-processor=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=2 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_fma-multith  | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fma-multith/output.txt
 
 drvr/CMakeFiles/drvr-run-fma-multith.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr-run-fma-multith.dir/codegen
@@ -82,10 +82,10 @@ drvr/CMakeFiles/drvr-run-fma-multith.dir/build: drvr-run-fma-multith
 .PHONY : drvr/CMakeFiles/drvr-run-fma-multith.dir/build
 
 drvr/CMakeFiles/drvr-run-fma-multith.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-fma-multith.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-fma-multith.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr-run-fma-multith.dir/clean
 
 drvr/CMakeFiles/drvr-run-fma-multith.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/CMakeFiles/drvr-run-fma-multith.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-fma-multith
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-fma-multith.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-fma-multith
 .PHONY : drvr/CMakeFiles/drvr-run-fma-multith.dir/depend
 

@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvr-run-write.
 
@@ -68,7 +68,7 @@ include drvr/CMakeFiles/drvr-run-write.dir/progress.make
 
 drvr/CMakeFiles/drvr-run-write: rv64/drvr/drvr_write
 drvr/CMakeFiles/drvr-run-write: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/drvr-run-write && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/drvr-run-write && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-r.py -- --with-command-processor=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_write  | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/drvr-run-write/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-write && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-write && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/drvr.py -- --with-command-processor=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/libpandocommand_loader.so    --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_write  | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-write/output.txt
 
 drvr/CMakeFiles/drvr-run-write.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr-run-write.dir/codegen
@@ -82,10 +82,10 @@ drvr/CMakeFiles/drvr-run-write.dir/build: drvr-run-write
 .PHONY : drvr/CMakeFiles/drvr-run-write.dir/build
 
 drvr/CMakeFiles/drvr-run-write.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-write.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr-run-write.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr-run-write.dir/clean
 
 drvr/CMakeFiles/drvr-run-write.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/CMakeFiles/drvr-run-write.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-write
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-write.dir/DependInfo.cmake "--color=$(COLOR)" drvr-run-write
 .PHONY : drvr/CMakeFiles/drvr-run-write.dir/depend
 

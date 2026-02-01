@@ -1,0 +1,225 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.6s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+[  2%] Performing build step for 'rv64'
+[  2%] Built target drvr_add
+[  6%] Built target drvr_exit
+[  6%] Built target pandohammer
+[ 12%] Built target drvr_fma
+[ 15%] Built target drvr_float_lsu
+[ 15%] Built target drvr_lsu
+[ 16%] Built target drvr_shift
+[ 18%] Built target riscvinterpreter
+[ 36%] Built target drvapi
+[ 25%] Built target drvr-example
+[ 25%] Built target drvr_addressmap
+[ 34%] Built target drvr_cycle
+[ 34%] Built target drvr_amoswap
+[ 42%] Built target drvr_fence
+[ 42%] Built target drvr_fscanf
+[ 42%] Built target drvr_fma-multith
+[ 42%] Built target drvr_fread
+[ 45%] Built target drvr_fstat
+[ 48%] Built target drvr_fib
+[ 48%] Built target drvr_leiden_single
+[ 48%] Built target drvr_malloc
+[ 49%] Built target drvr_gups
+[ 49%] Built target drvr_dense_gemm
+[ 50%] Built target drvr_bfs_multihart
+[ 51%] Built target drvr_tc
+[ 53%] Built target drvr_tc_larger
+[ 58%] Built target drvr_list_traverse
+[ 60%] Built target drvr_bfs
+[ 63%] Built target drvr_attn_fixed
+[ 65%] Built target drvr_bfs-multith
+[ 71%] Built target drvr_gemm_int_rand
+[ 71%] Built target drvr_multihart
+[ 75%] Built target drvr_ptr_chase
+[ 75%] Built target drvr_ph_hello
+[ 75%] Built target drvr_gemm_int_deter
+[ 79%] Built target drvr_poke
+[ 82%] Built target drvr_printf
+[ 82%] Built target drvr_print_int
+[ 83%] Built target drvr_puts
+[ 83%] Built target drvr_bfs_multi_sw
+[ 44%] Built target pandocommand
+[ 87%] Built target drvr_read
+[ 92%] Built target drvr_simple
+[ 99%] Built target drvr_write
+[ 99%] Built target drvr_wait-with-sleep
+[ 99%] Built target drvr_wait-without-sleep
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_vread
+[ 50%] Built target pandocommand_loader
+[ 60%] Performing install step for 'rv64'
+[ 84%] Built target Drv
+[  8%] Built target drvr_exit
+[ 11%] Built target drvr_add
+[ 11%] Built target drvr_lsu
+[ 14%] Built target pandohammer
+[ 15%] Built target drvr_shift
+[ 16%] Built target drvr_float_lsu
+[ 16%] Built target drvr_fma
+[ 20%] Built target drvr-example
+[ 21%] Built target drvr_addressmap
+[ 23%] Built target drvr_amoswap
+[ 25%] Built target drvr_cycle
+[ 29%] Built target drvr_fence
+[ 34%] Built target drvr_fma-multith
+[ 37%] Built target drvr_fib
+[ 39%] Built target drvr_fread
+[ 39%] Built target drvr_fstat
+[ 41%] Built target drvr_fscanf
+[ 51%] Built target drvr_attn_fixed
+[ 51%] Built target drvr_gups
+[ 51%] Built target drvr_leiden_single
+[ 53%] Built target drvr_dense_gemm
+[ 53%] Built target drvr_malloc
+[ 56%] Built target drvr_bfs-multith
+[ 56%] Built target drvr_bfs
+[ 56%] Built target drvr_bfs_multi_sw
+[ 61%] Built target drvr_tc
+[ 61%] Built target drvr_bfs_multihart
+[ 64%] Built target drvr_tc_larger
+[ 64%] Built target drvr_list_traverse
+[ 75%] Built target drvr_gemm_int_rand
+[ 75%] Built target drvr_ptr_chase
+[ 76%] Built target drvr_gemm_int_deter
+[ 76%] Built target drvr_multihart
+[ 78%] Built target drvr_ph_hello
+[ 82%] Built target drvr_poke
+[ 89%] Built target drvr_printf
+[ 89%] Built target drvr_puts
+[ 89%] Built target drvr_print_int
+[ 90%] Built target drvr_read
+[ 92%] Built target drvr_simple
+[ 94%] Built target drvr_vread
+[ 94%] Built target drvr_snprintf
+[100%] Built target drvr_write
+[100%] Built target drvr_wait-without-sleep
+[100%] Built target drvr_wait-with-sleep
+Install the project...
+-- Install configuration: ""
+-- Up-to-date: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 86%] Completed 'rv64'
+[100%] Built target rv64
+
+        Core Clock: 1500000000.0 Hz
+        Pod Size: 4x1
+        L1SP Size: 131072
+        DRAM Clock: 1000000000.0 Hz
+        DRAM Size: 2147483648
+        $-Assoc: 2
+        $-Size:  131072 B
+        
+H * * * 
+$ $ $ $ 
+C C C C 
+$ $ $ $ 
+
+Grid BFS: R=64 C=16 N=1024
+HW: total_harts=16, pxn=1 pods/pxn=1 cores/pod=4 harts/core=4
+Using total_threads=16
+ID EXAMPLE: pxn=0 pod=0 core=0 hart=0 => tid_global=0
+Full Verification: ENABLED
+BFS done in 78 iterations
+max_dist=78
+sum_dist=39936
+hi!
+PASS
+Running Full Grid Verification...
+node values 9  13  35 for 39 43 500
+ALL 1024 NODES PASSED.
+DBG: after reductions barrier
+SSTRISCVCore[RISCVCore:160]: Configuring RISCVCore
+Configuring 4 harts
+SSTRISCVCore[configureHarts:55]: Dividing L1SP stack amongst 4 harts
+SSTRISCVCore[configureHarts:56]: L1SP base = 0x8000000000000000 coreL1SPSize = 0x20000
+SSTRISCVCore[configureHarts:60]: Hart 0 sp = 0x8000000000020000
+SSTRISCVCore[configureHarts:64]: Hart 0 spLow = 0x8000000000018000 spHigh = 0x8000000000020000
+SSTRISCVCore[configureHarts:60]: Hart 1 sp = 0x8000000000018000
+SSTRISCVCore[configureHarts:64]: Hart 1 spLow = 0x8000000000010000 spHigh = 0x8000000000018000
+SSTRISCVCore[configureHarts:60]: Hart 2 sp = 0x8000000000010000
+SSTRISCVCore[configureHarts:64]: Hart 2 spLow = 0x8000000000008000 spHigh = 0x8000000000010000
+SSTRISCVCore[configureHarts:60]: Hart 3 sp = 0x8000000000008000
+SSTRISCVCore[configureHarts:64]: Hart 3 spLow = 0x8000000000000000 spHigh = 0x8000000000008000
+SSTRISCVCore[RISCVCore:160]: Configuring RISCVCore
+Configuring 4 harts
+SSTRISCVCore[configureHarts:55]: Dividing L1SP stack amongst 4 harts
+SSTRISCVCore[configureHarts:56]: L1SP base = 0x8000000000000000 coreL1SPSize = 0x20000
+SSTRISCVCore[configureHarts:60]: Hart 0 sp = 0x8000000000020000
+SSTRISCVCore[configureHarts:64]: Hart 0 spLow = 0x8000000000018000 spHigh = 0x8000000000020000
+SSTRISCVCore[configureHarts:60]: Hart 1 sp = 0x8000000000018000
+SSTRISCVCore[configureHarts:64]: Hart 1 spLow = 0x8000000000010000 spHigh = 0x8000000000018000
+SSTRISCVCore[configureHarts:60]: Hart 2 sp = 0x8000000000010000
+SSTRISCVCore[configureHarts:64]: Hart 2 spLow = 0x8000000000008000 spHigh = 0x8000000000010000
+SSTRISCVCore[configureHarts:60]: Hart 3 sp = 0x8000000000008000
+SSTRISCVCore[configureHarts:64]: Hart 3 spLow = 0x8000000000000000 spHigh = 0x8000000000008000
+SSTRISCVCore[RISCVCore:160]: Configuring RISCVCore
+Configuring 4 harts
+SSTRISCVCore[configureHarts:55]: Dividing L1SP stack amongst 4 harts
+SSTRISCVCore[configureHarts:56]: L1SP base = 0x8000000000000000 coreL1SPSize = 0x20000
+SSTRISCVCore[configureHarts:60]: Hart 0 sp = 0x8000000000020000
+SSTRISCVCore[configureHarts:64]: Hart 0 spLow = 0x8000000000018000 spHigh = 0x8000000000020000
+SSTRISCVCore[configureHarts:60]: Hart 1 sp = 0x8000000000018000
+SSTRISCVCore[configureHarts:64]: Hart 1 spLow = 0x8000000000010000 spHigh = 0x8000000000018000
+SSTRISCVCore[configureHarts:60]: Hart 2 sp = 0x8000000000010000
+SSTRISCVCore[configureHarts:64]: Hart 2 spLow = 0x8000000000008000 spHigh = 0x8000000000010000
+SSTRISCVCore[configureHarts:60]: Hart 3 sp = 0x8000000000008000
+SSTRISCVCore[configureHarts:64]: Hart 3 spLow = 0x8000000000000000 spHigh = 0x8000000000008000
+SSTRISCVCore[RISCVCore:160]: Configuring RISCVCore
+Configuring 4 harts
+SSTRISCVCore[configureHarts:55]: Dividing L1SP stack amongst 4 harts
+SSTRISCVCore[configureHarts:56]: L1SP base = 0x8000000000000000 coreL1SPSize = 0x20000
+SSTRISCVCore[configureHarts:60]: Hart 0 sp = 0x8000000000020000
+SSTRISCVCore[configureHarts:64]: Hart 0 spLow = 0x8000000000018000 spHigh = 0x8000000000020000
+SSTRISCVCore[configureHarts:60]: Hart 1 sp = 0x8000000000018000
+SSTRISCVCore[configureHarts:64]: Hart 1 spLow = 0x8000000000010000 spHigh = 0x8000000000018000
+SSTRISCVCore[configureHarts:60]: Hart 2 sp = 0x8000000000010000
+SSTRISCVCore[configureHarts:64]: Hart 2 spLow = 0x8000000000008000 spHigh = 0x8000000000010000
+SSTRISCVCore[configureHarts:60]: Hart 3 sp = 0x8000000000008000
+SSTRISCVCore[configureHarts:64]: Hart 3 spLow = 0x8000000000000000 spHigh = 0x8000000000008000
+SSTRISCVCore[finish:288]: Finished
+SSTRISCVCore[finish:288]: Finished
+SSTRISCVCore[finish:288]: Finished
+SSTRISCVCore[finish:288]: Finished
+Simulation is complete, simulated time: 8.44487 ms
+[100%] Built target drvr-run-bfs_multi_sw
+ERROR: drvr-run-bfs_multi_sw not found after build.
+./rv64/cmake-drvr-example/drvr-example
+./rv64/drvr/drvr_snprintf
+./rv64/drvr/drvr_wait-with-sleep
+./rv64/drvr/drvr_ptr_chase
+./rv64/drvr/drvr_wait-without-sleep
+./rv64/drvr/drvr_fma-multith
+./rv64/drvr/drvr_puts
+./rv64/drvr/drvr_printf
+./rv64/drvr/drvr_fread
+./rv64/drvr/drvr_fence
+./rv64/drvr/drvr_vread
+./rv64/drvr/drvr_dense_gemm
+./rv64/drvr/drvr_simple
+./rv64/drvr/drvr_add
+./rv64/drvr/drvr_addressmap
+./rv64/drvr/drvr_fma
+./rv64/drvr/drvr_amoswap
+./rv64/drvr/drvr_write
+./rv64/drvr/drvr_bfs
+./rv64/drvr/drvr_print_int

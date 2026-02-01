@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Include any dependencies generated for this target.
 include drvx/CMakeFiles/leiden_single.dir/depend.make
@@ -73,18 +73,18 @@ drvx/CMakeFiles/leiden_single.dir/codegen:
 .PHONY : drvx/CMakeFiles/leiden_single.dir/codegen
 
 drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o: drvx/CMakeFiles/leiden_single.dir/flags.make
-drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o: /work2/10238/vineeth_architect/stampede3/drv/drvx/leiden_single.cpp
+drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx/leiden_single.cpp
 drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o: drvx/CMakeFiles/leiden_single.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o -MF CMakeFiles/leiden_single.dir/leiden_single.cpp.o.d -o CMakeFiles/leiden_single.dir/leiden_single.cpp.o -c /work2/10238/vineeth_architect/stampede3/drv/drvx/leiden_single.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o -MF CMakeFiles/leiden_single.dir/leiden_single.cpp.o.d -o CMakeFiles/leiden_single.dir/leiden_single.cpp.o -c /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx/leiden_single.cpp
 
 drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/leiden_single.dir/leiden_single.cpp.i"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv/drvx/leiden_single.cpp > CMakeFiles/leiden_single.dir/leiden_single.cpp.i
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx/leiden_single.cpp > CMakeFiles/leiden_single.dir/leiden_single.cpp.i
 
 drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/leiden_single.dir/leiden_single.cpp.s"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv/drvx/leiden_single.cpp -o CMakeFiles/leiden_single.dir/leiden_single.cpp.s
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx/leiden_single.cpp -o CMakeFiles/leiden_single.dir/leiden_single.cpp.s
 
 # Object files for target leiden_single
 leiden_single_OBJECTS = \
@@ -99,18 +99,18 @@ drvx/libleiden_single.so: api/libdrvapi.so
 drvx/libleiden_single.so: /install/lib/libboost_coroutine.so.1.89.0
 drvx/libleiden_single.so: /install/lib/libboost_context.so.1.89.0
 drvx/libleiden_single.so: drvx/CMakeFiles/leiden_single.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libleiden_single.so"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/leiden_single.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libleiden_single.so"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/leiden_single.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvx/CMakeFiles/leiden_single.dir/build: drvx/libleiden_single.so
 .PHONY : drvx/CMakeFiles/leiden_single.dir/build
 
 drvx/CMakeFiles/leiden_single.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/leiden_single.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/leiden_single.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/leiden_single.dir/clean
 
 drvx/CMakeFiles/leiden_single.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/leiden_single.dir/DependInfo.cmake "--color=$(COLOR)" leiden_single
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/leiden_single.dir/DependInfo.cmake "--color=$(COLOR)" leiden_single
 .PHONY : drvx/CMakeFiles/leiden_single.dir/depend
 

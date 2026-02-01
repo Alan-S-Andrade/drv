@@ -1,17 +1,17 @@
 {
 	"InstallScripts" : 
 	[
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/interpreter/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/element/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandohammer/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvr-example/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/cmake_install.cmake",
-		"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvr/cmake_install.cmake"
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/interpreter/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/api/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandohammer/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvr-example/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/cmake_install.cmake",
+		"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvx-run-argv.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-argv.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-argv: drvx/libargv.so
 drvx/CMakeFiles/drvx-run-argv: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-argv && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-argv && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/libargv.so this\ should\ have\ 6\ arguments | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-argv/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-argv && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-argv && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/libargv.so this\ should\ have\ 6\ arguments | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-argv/output.txt
 
 drvx/CMakeFiles/drvx-run-argv.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-argv.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-argv.dir/build: drvx-run-argv
 .PHONY : drvx/CMakeFiles/drvx-run-argv.dir/build
 
 drvx/CMakeFiles/drvx-run-argv.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-argv.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-argv.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-argv.dir/clean
 
 drvx/CMakeFiles/drvx-run-argv.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/drvx-run-argv.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-argv
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/drvx-run-argv.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-argv
 .PHONY : drvx/CMakeFiles/drvx-run-argv.dir/depend
 

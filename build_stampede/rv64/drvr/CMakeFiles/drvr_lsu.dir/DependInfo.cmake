@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/work2/10238/vineeth_architect/stampede3/drv/drvr/lsu.S" "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/CMakeFiles/drvr_lsu.dir/lsu.S.obj"
+  "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/lsu.S" "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/CMakeFiles/drvr_lsu.dir/lsu.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 

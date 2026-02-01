@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvx-run-atomic_read_back.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-atomic_read_back.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-atomic_read_back: drvx/libatomic_read_back.so
 drvx/CMakeFiles/drvx-run-atomic_read_back: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-atomic_read_back && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-atomic_read_back && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/libatomic_read_back.so  | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-atomic_read_back/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-atomic_read_back && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-atomic_read_back && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/libatomic_read_back.so  | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-atomic_read_back/output.txt
 
 drvx/CMakeFiles/drvx-run-atomic_read_back.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-atomic_read_back.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-atomic_read_back.dir/build: drvx-run-atomic_read_back
 .PHONY : drvx/CMakeFiles/drvx-run-atomic_read_back.dir/build
 
 drvx/CMakeFiles/drvx-run-atomic_read_back.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-atomic_read_back.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-atomic_read_back.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-atomic_read_back.dir/clean
 
 drvx/CMakeFiles/drvx-run-atomic_read_back.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/drvx-run-atomic_read_back.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-atomic_read_back
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/drvx-run-atomic_read_back.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-atomic_read_back
 .PHONY : drvx/CMakeFiles/drvx-run-atomic_read_back.dir/depend
 

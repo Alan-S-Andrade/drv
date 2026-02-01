@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/fscanf.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/fscanf.c \
  /install/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -44,6 +44,6 @@ drvr/CMakeFiles/drvr_fscanf.dir/fscanf.c.obj: \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/stat.h \
  /install/riscv64-unknown-elfpandodrvsim/include/time.h \
  /install/riscv64-unknown-elfpandodrvsim/include/machine/time.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/atomic.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/atomic.h \
  /install/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h

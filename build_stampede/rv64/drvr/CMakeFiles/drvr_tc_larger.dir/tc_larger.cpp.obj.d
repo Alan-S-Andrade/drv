@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_tc_larger.dir/tc_larger.cpp.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/tc_larger.cpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/tc_larger.cpp \
  /install/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \

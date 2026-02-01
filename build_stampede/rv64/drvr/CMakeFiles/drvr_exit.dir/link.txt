@@ -1,1 +1,1 @@
-/install/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/work2/10238/vineeth_architect/stampede3/drv/pandohammer/bsg_link.ld CMakeFiles/drvr_exit.dir/exit.S.obj -o drvr_exit
+/install/bin/riscv64-unknown-elfpandodrvsim-gcc -nostdlib -T/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/bsg_link.ld CMakeFiles/drvr_exit.dir/exit.S.obj -o drvr_exit

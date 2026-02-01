@@ -21,6 +21,7 @@ events:
       - "uname"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -29,6 +30,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/uname"
+      - "/home1/10238/vineeth_architect/.local/bin/uname"
       - "/usr/local/sbin/uname"
       - "/usr/local/bin/uname"
       - "/usr/sbin/uname"
@@ -36,6 +38,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -51,7 +55,7 @@ events:
       - "CMakeLists.txt:2 (project)"
     message: |
       The target system is: Generic -  - 
-      The host system is: Linux - 5.14.0-362.24.1.el9_3.0.1.x86_64 - x86_64
+      The host system is: Linux - 5.14.0-503.23.2.el9_5.x86_64 - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -74,6 +78,7 @@ events:
       - "smake"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -82,6 +87,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/gmake"
+      - "/home1/10238/vineeth_architect/.local/bin/gmake"
       - "/usr/local/sbin/gmake"
       - "/usr/local/bin/gmake"
       - "/usr/sbin/gmake"
@@ -89,6 +95,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -125,6 +133,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -153,7 +163,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/4.2.1/CompilerIdCXX/a.out
+        /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/4.2.1/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
@@ -177,6 +187,7 @@ events:
       - "ar"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -187,6 +198,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -217,6 +230,7 @@ events:
       - "ranlib"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -227,6 +241,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -257,6 +273,7 @@ events:
       - "strip"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -267,6 +284,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -297,6 +316,7 @@ events:
       - "ld"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -307,6 +327,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -337,6 +359,7 @@ events:
       - "nm"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -347,6 +370,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -377,6 +402,7 @@ events:
       - "objdump"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -387,6 +413,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -417,6 +445,7 @@ events:
       - "objcopy"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -427,6 +456,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -457,6 +488,7 @@ events:
       - "readelf"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -467,6 +499,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -497,6 +531,7 @@ events:
       - "dlltool"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -505,6 +540,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-dlltool"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
@@ -512,6 +548,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/bin/riscv64-unknown-elfpandodrvsim-dlltool"
       - "/install/bin/dlltool"
+      - "/home1/10238/vineeth_architect/.local/bin/dlltool"
       - "/usr/local/sbin/dlltool"
       - "/usr/local/bin/dlltool"
       - "/usr/sbin/dlltool"
@@ -522,6 +559,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -552,6 +591,7 @@ events:
       - "addr2line"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -562,6 +602,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -592,6 +634,7 @@ events:
       - "tapi"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -600,6 +643,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-tapi"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-tapi"
@@ -607,6 +651,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/bin/riscv64-unknown-elfpandodrvsim-tapi"
       - "/install/bin/tapi"
+      - "/home1/10238/vineeth_architect/.local/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/usr/sbin/tapi"
@@ -617,6 +662,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -649,6 +696,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -657,6 +705,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
@@ -664,6 +713,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
@@ -671,6 +721,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
@@ -681,6 +732,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -713,6 +766,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -721,6 +775,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
@@ -728,6 +783,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
@@ -735,6 +791,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
@@ -745,6 +802,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -781,6 +840,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -809,7 +870,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/4.2.1/CompilerIdC/a.out
+        /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/4.2.1/CompilerIdC/a.out
       
   -
     kind: "find-v1"
@@ -835,6 +896,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -843,6 +905,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
@@ -850,6 +913,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12.2"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
@@ -857,6 +921,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-12"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar12"
@@ -867,6 +932,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -899,6 +966,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -907,6 +975,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
@@ -914,6 +983,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12.2"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
@@ -921,6 +991,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-12"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib12"
@@ -931,6 +1002,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -964,6 +1037,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1009,6 +1084,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ar"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -1017,6 +1093,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
@@ -1024,6 +1101,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ar-"
@@ -1034,6 +1112,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1066,6 +1146,7 @@ events:
       - "riscv64-unknown-elfpandodrvsim-gcc-ranlib"
     candidate_directories:
       - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
@@ -1074,6 +1155,7 @@ events:
       - "/bin/"
     searched_directories:
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
@@ -1081,6 +1163,7 @@ events:
       - "/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/install/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
+      - "/home1/10238/vineeth_architect/.local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/local/bin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
       - "/usr/sbin/riscv64-unknown-elfpandodrvsim-gcc-ranlib-"
@@ -1091,6 +1174,8 @@ events:
     search_context:
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1108,8 +1193,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb"
-      binary: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb"
+      source: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T"
+      binary: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1119,14 +1204,14 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb'
+        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T'
         
-        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c82cf/fast
-        gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb'
-        /usr/bin/gmake  -f CMakeFiles/cmTC_c82cf.dir/build.make CMakeFiles/cmTC_c82cf.dir/build
-        gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb'
-        Building CXX object CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj
-        /install/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4e5de/fast
+        gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4e5de.dir/build.make CMakeFiles/cmTC_4e5de.dir/build
+        gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T'
+        Building CXX object CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj
+        /install/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-g++
         Target: riscv64-unknown-elfpandodrvsim
@@ -1134,8 +1219,8 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 () 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c82cf.dir/'
-         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c82cf.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccVYyrsW.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4e5de.dir/'
+         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_4e5de.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccWX1i13.s
         GNU C++17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1157,14 +1242,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: b246d2f6882ad0cafdbb88e1515356e7
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c82cf.dir/'
-         /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccVYyrsW.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4e5de.dir/'
+         /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccWX1i13.s
         GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214
         COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_c82cf
-        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c82cf.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_4e5de
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4e5de.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-g++
         COLLECT_LTO_WRAPPER=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
@@ -1175,12 +1260,12 @@ events:
         gcc version 12.2.0 () 
         COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c82cf' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c82cf.'
-         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccoqrPaW.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_c82cf /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c82cf' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c82cf.'
-        /install/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_c82cf
-        gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb'
-        gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4e5de' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4e5de.'
+         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccDYpe9O.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_4e5de /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4e5de' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4e5de.'
+        /install/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_4e5de
+        gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T'
+        gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T'
         
       exitCode: 0
   -
@@ -1221,14 +1306,14 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb']
+        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c82cf/fast]
-        ignore line: [gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb']
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_c82cf.dir/build.make CMakeFiles/cmTC_c82cf.dir/build]
-        ignore line: [gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb']
-        ignore line: [Building CXX object CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj]
-        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4e5de/fast]
+        ignore line: [gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4e5de.dir/build.make CMakeFiles/cmTC_4e5de.dir/build]
+        ignore line: [gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T']
+        ignore line: [Building CXX object CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-g++   -v -o CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-g++]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
@@ -1236,8 +1321,8 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 () ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c82cf.dir/']
-        ignore line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c82cf.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccVYyrsW.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4e5de.dir/']
+        ignore line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1plus -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_4e5de.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccWX1i13.s]
         ignore line: [GNU C++17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1259,14 +1344,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: b246d2f6882ad0cafdbb88e1515356e7]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c82cf.dir/']
-        ignore line: [ /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccVYyrsW.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4e5de.dir/']
+        ignore line: [ /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccWX1i13.s]
         ignore line: [GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214]
         ignore line: [COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_c82cf]
-        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c82cf.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_4e5de]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4e5de.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-g++]
         ignore line: [COLLECT_LTO_WRAPPER=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
@@ -1277,13 +1362,13 @@ events:
         ignore line: [gcc version 12.2.0 () ]
         ignore line: [COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c82cf' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c82cf.']
-        link line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccoqrPaW.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_c82cf /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4e5de' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4e5de.']
+        link line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccDYpe9O.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_4e5de /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
           arg [/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccoqrPaW.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccDYpe9O.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgloss] ==> ignore
@@ -1291,13 +1376,13 @@ events:
           arg [--sysroot=/install/riscv64-unknown-elfpandodrvsim] ==> ignore
           arg [-melf64lriscv] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_c82cf] ==> ignore
+          arg [cmTC_4e5de] ==> ignore
           arg [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
           arg [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
           arg [-L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
           arg [-L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
           arg [-L/install/riscv64-unknown-elfpandodrvsim/lib] ==> dir [/install/riscv64-unknown-elfpandodrvsim/lib]
-          arg [CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc] ==> lib [gcc]
@@ -1307,10 +1392,10 @@ events:
           arg [--end-group] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c82cf' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c82cf.']
-        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_c82cf.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_c82cf]
-        ignore line: [gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb']
-        ignore line: [gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-gQBLTb']
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4e5de' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_4e5de.']
+        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-g++  -v CMakeFiles/cmTC_4e5de.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_4e5de]
+        ignore line: [gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T']
+        ignore line: [gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-AoiP0T']
         ignore line: []
         ignore line: []
         collapse obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/install/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
@@ -1332,8 +1417,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR"
-      binary: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR"
+      source: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV"
+      binary: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1342,14 +1427,14 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR'
+        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV'
         
-        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_336af/fast
-        gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR'
-        /usr/bin/gmake  -f CMakeFiles/cmTC_336af.dir/build.make CMakeFiles/cmTC_336af.dir/build
-        gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR'
-        Building C object CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj
-        /install/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c0a58/fast
+        gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV'
+        /usr/bin/gmake  -f CMakeFiles/cmTC_c0a58.dir/build.make CMakeFiles/cmTC_c0a58.dir/build
+        gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV'
+        Building C object CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj
+        /install/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-gcc
         Target: riscv64-unknown-elfpandodrvsim
@@ -1357,8 +1442,8 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 12.2.0 () 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_336af.dir/'
-         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_336af.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccFlVrv4.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c0a58.dir/'
+         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_c0a58.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccZTKsL9.s
         GNU C17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1377,14 +1462,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 3e3b5c6a85501da00df466fa2283de06
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_336af.dir/'
-         /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj /tmp/ccFlVrv4.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c0a58.dir/'
+         /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj /tmp/ccZTKsL9.s
         GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214
         COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_336af
-        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_336af.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_c0a58
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0a58.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-gcc
         COLLECT_LTO_WRAPPER=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper
@@ -1395,12 +1480,12 @@ events:
         gcc version 12.2.0 () 
         COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/
         LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_336af' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_336af.'
-         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnQH2dk.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_336af /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_336af' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_336af.'
-        /install/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj -o cmTC_336af
-        gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR'
-        gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0a58' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c0a58.'
+         /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3gNGgG.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_c0a58 /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0a58' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c0a58.'
+        /install/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj -o cmTC_c0a58
+        gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV'
+        gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV'
         
       exitCode: 0
   -
@@ -1435,14 +1520,14 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR']
+        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_336af/fast]
-        ignore line: [gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR']
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_336af.dir/build.make CMakeFiles/cmTC_336af.dir/build]
-        ignore line: [gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR']
-        ignore line: [Building C object CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj]
-        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c0a58/fast]
+        ignore line: [gmake[4]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV']
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_c0a58.dir/build.make CMakeFiles/cmTC_c0a58.dir/build]
+        ignore line: [gmake[5]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV']
+        ignore line: [Building C object CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-gcc   -v -o CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-gcc]
         ignore line: [Target: riscv64-unknown-elfpandodrvsim]
@@ -1450,8 +1535,8 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.2.0 () ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_336af.dir/']
-        ignore line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_336af.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccFlVrv4.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c0a58.dir/']
+        ignore line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/cc1 -quiet -v /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_c0a58.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=rocket -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -march=rv64imafd_zicsr -version -o /tmp/ccZTKsL9.s]
         ignore line: [GNU C17 () version 12.2.0 (riscv64-unknown-elfpandodrvsim)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1470,14 +1555,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 3e3b5c6a85501da00df466fa2283de06]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_336af.dir/']
-        ignore line: [ /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj /tmp/ccFlVrv4.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c0a58.dir/']
+        ignore line: [ /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/as -v --traditional-format -march=rv64imafd_zicsr -march=rv64imafd_zicsr -mabi=lp64d -misa-spec=20191213 -o CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj /tmp/ccZTKsL9.s]
         ignore line: [GNU assembler version 2.40.0 (riscv64-unknown-elfpandodrvsim) using BFD version (GNU Binutils) 2.40.0.20230214]
         ignore line: [COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_336af]
-        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_336af.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_c0a58]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0a58.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/install/bin/riscv64-unknown-elfpandodrvsim-gcc]
         ignore line: [COLLECT_LTO_WRAPPER=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper]
@@ -1488,13 +1573,13 @@ events:
         ignore line: [gcc version 12.2.0 () ]
         ignore line: [COMPILER_PATH=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/bin/]
         ignore line: [LIBRARY_PATH=/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/:/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/:/install/riscv64-unknown-elfpandodrvsim/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_336af' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_336af.']
-        link line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnQH2dk.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_336af /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0a58' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c0a58.']
+        link line: [ /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2 -plugin /install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so -plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3gNGgG.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc --sysroot=/install/riscv64-unknown-elfpandodrvsim -melf64lriscv -o cmTC_c0a58 /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0 -L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib -L/install/riscv64-unknown-elfpandodrvsim/lib CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc /install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
           arg [/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/install/libexec/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccnQH2dk.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc3gNGgG.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgloss] ==> ignore
@@ -1502,13 +1587,13 @@ events:
           arg [--sysroot=/install/riscv64-unknown-elfpandodrvsim] ==> ignore
           arg [-melf64lriscv] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_336af] ==> ignore
+          arg [cmTC_c0a58] ==> ignore
           arg [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o]
           arg [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o] ==> obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtbegin.o]
           arg [-L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0] ==> dir [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0]
           arg [-L/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib] ==> dir [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib]
           arg [-L/install/riscv64-unknown-elfpandodrvsim/lib] ==> dir [/install/riscv64-unknown-elfpandodrvsim/lib]
-          arg [CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--start-group] ==> ignore
           arg [-lc] ==> lib [c]
@@ -1516,10 +1601,10 @@ events:
           arg [--end-group] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o] ==> obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/crtend.o]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_336af' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_336af.']
-        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_336af.dir/CMakeCCompilerABI.c.obj -o cmTC_336af]
-        ignore line: [gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR']
-        ignore line: [gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-JNUpkR']
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c0a58' '-mtune=rocket' '-march=rv64imafd_zicsr' '-mabi=lp64d' '-misa-spec=20191213' '-march=rv64imafd_zicsr' '-dumpdir' 'cmTC_c0a58.']
+        ignore line: [/install/bin/riscv64-unknown-elfpandodrvsim-gcc  -v CMakeFiles/cmTC_c0a58.dir/CMakeCCompilerABI.c.obj -o cmTC_c0a58]
+        ignore line: [gmake[5]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV']
+        ignore line: [gmake[4]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/CMakeScratch/TryCompile-6C08pV']
         ignore line: []
         ignore line: []
         collapse obj [/install/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/../../../../riscv64-unknown-elfpandodrvsim/lib/crt0.o] ==> [/install/riscv64-unknown-elfpandodrvsim/lib/crt0.o]
@@ -1568,11 +1653,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/pkgRedirects/SSTConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/pkgRedirects/SSTConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles/pkgRedirects/sst-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles/pkgRedirects/sst-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -1592,6 +1677,8 @@ events:
         - "/install"
       ENV{PATH}:
         - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"

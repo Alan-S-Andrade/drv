@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvx-run-super_simple_task_runtime.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime: drvx/libsuper_simple_task_runtime.so
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-super_simple_task_runtime && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-super_simple_task_runtime && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/mesh.py -- --with-command-processor=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/libsuper_simple_task_runtime.so    --num-pxn=2 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/libsuper_simple_task_runtime.so  | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-super_simple_task_runtime/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-super_simple_task_runtime && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-super_simple_task_runtime && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/mesh.py -- --with-command-processor=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/libsuper_simple_task_runtime.so    --num-pxn=2 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/libsuper_simple_task_runtime.so  | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-super_simple_task_runtime/output.txt
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/build: drvx-run-super_sim
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/build
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-super_simple_task_runtime.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-super_simple_task_runtime.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/clean
 
 drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-super_simple_task_runtime
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-super_simple_task_runtime
 .PHONY : drvx/CMakeFiles/drvx-run-super_simple_task_runtime.dir/depend
 

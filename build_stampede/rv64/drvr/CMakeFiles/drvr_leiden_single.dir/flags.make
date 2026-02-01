@@ -5,13 +5,13 @@
 # compile C with /install/bin/riscv64-unknown-elfpandodrvsim-gcc
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_leiden_single_include -I/work2/10238/vineeth_architect/stampede3/drv/pandohammer
+ASM_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_leiden_single_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
 ASM_FLAGS = 
 
 C_DEFINES = 
 
-C_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_leiden_single_include -I/work2/10238/vineeth_architect/stampede3/drv/pandohammer
+C_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_leiden_single_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
 C_FLAGS = 
 

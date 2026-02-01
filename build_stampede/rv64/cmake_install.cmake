@@ -1,4 +1,4 @@
-# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv
+# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,58 +39,58 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/interpreter/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/interpreter/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/api/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/api/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/element/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/element/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandocommand/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandocommand/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandohammer/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/cmake-drvx-example/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/cmake-drvx-example/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/cmake-drvr-example/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/cmake-drvr-example/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/cmake/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/cmake/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvx/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvx/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/cmake_install.cmake")
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/install_local_manifest.txt"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -106,6 +106,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

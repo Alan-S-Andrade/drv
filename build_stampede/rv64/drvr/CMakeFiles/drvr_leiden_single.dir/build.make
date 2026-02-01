@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64
 
 # Include any dependencies generated for this target.
 include drvr/CMakeFiles/drvr_leiden_single.dir/depend.make
@@ -70,25 +70,25 @@ include drvr/CMakeFiles/drvr_leiden_single.dir/progress.make
 include drvr/CMakeFiles/drvr_leiden_single.dir/flags.make
 
 drvr/drvr_leiden_single_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_leiden_single_include/address_map.h"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_leiden_single_include && python3 /work2/10238/vineeth_architect/stampede3/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_leiden_single_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_leiden_single_include/address_map.h"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_leiden_single_include && python3 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_leiden_single_include/address_map.h
 
 drvr/CMakeFiles/drvr_leiden_single.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_leiden_single.dir/codegen
 
 drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj: drvr/CMakeFiles/drvr_leiden_single.dir/flags.make
-drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj: /work2/10238/vineeth_architect/stampede3/drv/drvr/leiden_single.c
+drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/leiden_single.c
 drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj: drvr/CMakeFiles/drvr_leiden_single.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj -MF CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj.d -o CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj -c /work2/10238/vineeth_architect/stampede3/drv/drvr/leiden_single.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj -MF CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj.d -o CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj -c /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/leiden_single.c
 
 drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/drvr_leiden_single.dir/leiden_single.c.i"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv/drvr/leiden_single.c > CMakeFiles/drvr_leiden_single.dir/leiden_single.c.i
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/leiden_single.c > CMakeFiles/drvr_leiden_single.dir/leiden_single.c.i
 
 drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/drvr_leiden_single.dir/leiden_single.c.s"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv/drvr/leiden_single.c -o CMakeFiles/drvr_leiden_single.dir/leiden_single.c.s
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/leiden_single.c -o CMakeFiles/drvr_leiden_single.dir/leiden_single.c.s
 
 # Object files for target drvr_leiden_single
 drvr_leiden_single_OBJECTS = \
@@ -96,26 +96,26 @@ drvr_leiden_single_OBJECTS = \
 
 # External object files for target drvr_leiden_single
 drvr_leiden_single_EXTERNAL_OBJECTS = \
-"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 drvr/drvr_leiden_single: drvr/CMakeFiles/drvr_leiden_single.dir/leiden_single.c.obj
 drvr/drvr_leiden_single: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 drvr/drvr_leiden_single: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 drvr/drvr_leiden_single: drvr/CMakeFiles/drvr_leiden_single.dir/build.make
 drvr/drvr_leiden_single: drvr/CMakeFiles/drvr_leiden_single.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr_leiden_single"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_leiden_single.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable drvr_leiden_single"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_leiden_single.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvr/CMakeFiles/drvr_leiden_single.dir/build: drvr/drvr_leiden_single
 .PHONY : drvr/CMakeFiles/drvr_leiden_single.dir/build
 
 drvr/CMakeFiles/drvr_leiden_single.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_leiden_single.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_leiden_single.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr_leiden_single.dir/clean
 
 drvr/CMakeFiles/drvr_leiden_single.dir/depend: drvr/drvr_leiden_single_include/address_map.h
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/CMakeFiles/drvr_leiden_single.dir/DependInfo.cmake "--color=$(COLOR)" drvr_leiden_single
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/CMakeFiles/drvr_leiden_single.dir/DependInfo.cmake "--color=$(COLOR)" drvr_leiden_single
 .PHONY : drvr/CMakeFiles/drvr_leiden_single.dir/depend
 

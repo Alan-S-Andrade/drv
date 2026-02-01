@@ -137,6 +137,10 @@ void RISCVCore::configureStatistics(Params &params) {
     icache_miss_ = registerStatistic<uint64_t>("icache_miss");
     memory_wait_cycles_ = registerStatistic<uint64_t>("memory_wait_cycles");
     active_idle_cycles_ = registerStatistic<uint64_t>("active_idle_cycles");
+    load_latency_total_ = registerStatistic<uint64_t>("load_latency_total");
+    load_request_count_ = registerStatistic<uint64_t>("load_request_count");
+    dram_load_latency_total_ = registerStatistic<uint64_t>("dram_load_latency_total");
+    dram_load_request_count_ = registerStatistic<uint64_t>("dram_load_request_count");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -363,6 +367,25 @@ void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
 
     if (rd_rsp || wr_rsp || custom_rsp) {
 	outstanding_requests_--;
+
+        // Calculate load-to-ready latency
+        auto issue_it = request_issue_cycle_.find(tid);
+        if (issue_it != request_issue_cycle_.end()) {
+            Cycle_t latency = getCycleCount() - issue_it->second;
+            load_latency_total_->addData(latency);
+            load_request_count_->addData(1);
+
+            // Track DRAM latency separately
+            auto dram_it = request_is_dram_.find(tid);
+            if (dram_it != request_is_dram_.end() && dram_it->second) {
+                dram_load_latency_total_->addData(latency);
+                dram_load_request_count_->addData(1);
+            }
+
+            request_issue_cycle_.erase(issue_it);
+            request_is_dram_.erase(tid);
+        }
+
         auto it = rsp_handlers_.find(tid);
         if (it == rsp_handlers_.end()) {
             output_.fatal(CALL_INFO, -1, "Received memory response for unknown hart\n");
@@ -453,11 +476,13 @@ bool RISCVCore::tick(Cycle_t cycle) {
 /**
  * issue a memory request
  */
-void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler) {
+void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler, bool is_dram) {
     output_.verbose(CALL_INFO, 0, DEBUG_REQ, "Issuing memory request\n");
     // TODO: check if tid is valid
     //std::cout << "issueMemoryRequest" << std::endl;
     outstanding_requests_++;
+    request_issue_cycle_[tid] = getCycleCount();  // Record issue time for latency tracking
+    request_is_dram_[tid] = is_dram;              // Track if this is a DRAM request
     rsp_handlers_[tid] = handler;
     mem_->send(req);
     //std::cout << req << std::endl;

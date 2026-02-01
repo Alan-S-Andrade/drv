@@ -119,6 +119,10 @@ public:
             {"icache_miss", "Number of icache misses", "count", 1},
 	    {"memory_wait_cycles", "Cycles stalled waiting for memory", "count", 1},
             {"active_idle_cycles", "Cycles active but idle (no harts ready)", "count", 1},
+            {"load_latency_total", "Total load-to-ready latency cycles", "cycles", 1},
+            {"load_request_count", "Number of load requests completed", "count", 1},
+            {"dram_load_latency_total", "Total DRAM load-to-ready latency cycles", "cycles", 1},
+            {"dram_load_request_count", "Number of DRAM load requests completed", "count", 1},
         };
 
 #undef DEFINSTR
@@ -330,7 +334,7 @@ public:
     /**
      * issue a memory request
      */
-    void issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler);
+    void issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler, bool is_dram = false);
 
     /**
      * put a hart to sleep */
@@ -382,6 +386,12 @@ public:
     int64_t outstanding_requests_ = 0; //!< Counter for in-flight memory requests
     Statistic<uint64_t> *memory_wait_cycles_; //!< Cycles ticking but waiting on memory
     Statistic<uint64_t> *active_idle_cycles_; //!< Cycles ticking with absolutely no work
+    std::map<int, Cycle_t> request_issue_cycle_; //!< Track when each request was issued (by tid)
+    std::map<int, bool> request_is_dram_;        //!< Track if each request is a DRAM request (by tid)
+    Statistic<uint64_t> *load_latency_total_;    //!< Total cycles for all load-to-ready
+    Statistic<uint64_t> *load_request_count_;    //!< Number of load requests (for avg calculation)
+    Statistic<uint64_t> *dram_load_latency_total_;  //!< Total cycles for DRAM load-to-ready
+    Statistic<uint64_t> *dram_load_request_count_;  //!< Number of DRAM load requests
     /**
      * is local l1sp for purpose of stats
      */

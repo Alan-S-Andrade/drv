@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64
 
 # Include any dependencies generated for this target.
 include drvr/CMakeFiles/drvr_simple.dir/depend.make
@@ -70,39 +70,39 @@ include drvr/CMakeFiles/drvr_simple.dir/progress.make
 include drvr/CMakeFiles/drvr_simple.dir/flags.make
 
 drvr/drvr_simple_include/address_map.h:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_simple_include/address_map.h"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_simple_include && python3 /work2/10238/vineeth_architect/stampede3/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_simple_include/address_map.h
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_simple_include/address_map.h"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_simple_include && python3 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/py/addressmap.py --core-threads 1 --pod-cores-x 1 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_simple_include/address_map.h
 
 drvr/CMakeFiles/drvr_simple.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/codegen
 
 drvr/CMakeFiles/drvr_simple.dir/simple.c.obj: drvr/CMakeFiles/drvr_simple.dir/flags.make
-drvr/CMakeFiles/drvr_simple.dir/simple.c.obj: /work2/10238/vineeth_architect/stampede3/drv/drvr/simple.c
+drvr/CMakeFiles/drvr_simple.dir/simple.c.obj: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple.c
 drvr/CMakeFiles/drvr_simple.dir/simple.c.obj: drvr/CMakeFiles/drvr_simple.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_simple.dir/simple.c.obj"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_simple.dir/simple.c.obj -MF CMakeFiles/drvr_simple.dir/simple.c.obj.d -o CMakeFiles/drvr_simple.dir/simple.c.obj -c /work2/10238/vineeth_architect/stampede3/drv/drvr/simple.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object drvr/CMakeFiles/drvr_simple.dir/simple.c.obj"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_simple.dir/simple.c.obj -MF CMakeFiles/drvr_simple.dir/simple.c.obj.d -o CMakeFiles/drvr_simple.dir/simple.c.obj -c /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple.c
 
 drvr/CMakeFiles/drvr_simple.dir/simple.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/drvr_simple.dir/simple.c.i"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv/drvr/simple.c > CMakeFiles/drvr_simple.dir/simple.c.i
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple.c > CMakeFiles/drvr_simple.dir/simple.c.i
 
 drvr/CMakeFiles/drvr_simple.dir/simple.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/drvr_simple.dir/simple.c.s"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv/drvr/simple.c -o CMakeFiles/drvr_simple.dir/simple.c.s
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple.c -o CMakeFiles/drvr_simple.dir/simple.c.s
 
 drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj: drvr/CMakeFiles/drvr_simple.dir/flags.make
-drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj: /work2/10238/vineeth_architect/stampede3/drv/drvr/simple-main.c
+drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple-main.c
 drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj: drvr/CMakeFiles/drvr_simple.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj -MF CMakeFiles/drvr_simple.dir/simple-main.c.obj.d -o CMakeFiles/drvr_simple.dir/simple-main.c.obj -c /work2/10238/vineeth_architect/stampede3/drv/drvr/simple-main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj -MF CMakeFiles/drvr_simple.dir/simple-main.c.obj.d -o CMakeFiles/drvr_simple.dir/simple-main.c.obj -c /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple-main.c
 
 drvr/CMakeFiles/drvr_simple.dir/simple-main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/drvr_simple.dir/simple-main.c.i"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv/drvr/simple-main.c > CMakeFiles/drvr_simple.dir/simple-main.c.i
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple-main.c > CMakeFiles/drvr_simple.dir/simple-main.c.i
 
 drvr/CMakeFiles/drvr_simple.dir/simple-main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/drvr_simple.dir/simple-main.c.s"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv/drvr/simple-main.c -o CMakeFiles/drvr_simple.dir/simple-main.c.s
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && /install/bin/riscv64-unknown-elfpandodrvsim-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/simple-main.c -o CMakeFiles/drvr_simple.dir/simple-main.c.s
 
 # Object files for target drvr_simple
 drvr_simple_OBJECTS = \
@@ -111,8 +111,8 @@ drvr_simple_OBJECTS = \
 
 # External object files for target drvr_simple
 drvr_simple_EXTERNAL_OBJECTS = \
-"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
-"/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
+"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj" \
+"/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj"
 
 drvr/drvr_simple: drvr/CMakeFiles/drvr_simple.dir/simple.c.obj
 drvr/drvr_simple: drvr/CMakeFiles/drvr_simple.dir/simple-main.c.obj
@@ -120,18 +120,18 @@ drvr/drvr_simple: pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
 drvr/drvr_simple: pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj
 drvr/drvr_simple: drvr/CMakeFiles/drvr_simple.dir/build.make
 drvr/drvr_simple: drvr/CMakeFiles/drvr_simple.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable drvr_simple"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_simple.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable drvr_simple"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/drvr_simple.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 drvr/CMakeFiles/drvr_simple.dir/build: drvr/drvr_simple
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/build
 
 drvr/CMakeFiles/drvr_simple.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_simple.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && $(CMAKE_COMMAND) -P CMakeFiles/drvr_simple.dir/cmake_clean.cmake
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/clean
 
 drvr/CMakeFiles/drvr_simple.dir/depend: drvr/drvr_simple_include/address_map.h
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/CMakeFiles/drvr_simple.dir/DependInfo.cmake "--color=$(COLOR)" drvr_simple
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/CMakeFiles/drvr_simple.dir/DependInfo.cmake "--color=$(COLOR)" drvr_simple
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/depend
 

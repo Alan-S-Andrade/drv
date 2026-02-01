@@ -1,6 +1,6 @@
 cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/cmake-drvr-example/hello.c \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/mmio.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/cmake-drvr-example/hello.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/string.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -19,7 +19,7 @@ cmake-drvr-example/CMakeFiles/drvr-example.dir/hello.c.obj: \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /install/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/staticdecl.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h \
  /install/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h

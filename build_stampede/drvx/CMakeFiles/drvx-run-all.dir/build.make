@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvx-run-all.
 
@@ -80,10 +80,10 @@ drvx/CMakeFiles/drvx-run-all.dir/build: drvx-run-all
 .PHONY : drvx/CMakeFiles/drvx-run-all.dir/build
 
 drvx/CMakeFiles/drvx-run-all.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-all.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-all.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-all.dir/clean
 
 drvx/CMakeFiles/drvx-run-all.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/drvx-run-all.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-all
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/drvx-run-all.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-all
 .PHONY : drvx/CMakeFiles/drvx-run-all.dir/depend
 

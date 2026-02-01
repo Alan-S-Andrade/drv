@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for rv64.
 
@@ -76,10 +76,10 @@ CMakeFiles/rv64-complete: rv64-prefix/src/rv64-stamp/rv64-patch
 CMakeFiles/rv64-complete: rv64-prefix/src/rv64-stamp/rv64-configure
 CMakeFiles/rv64-complete: rv64-prefix/src/rv64-stamp/rv64-build
 CMakeFiles/rv64-complete: rv64-prefix/src/rv64-stamp/rv64-install
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Completed 'rv64'"
-	/usr/local/bin/cmake -E make_directory /work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles
-	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/rv64-complete
-	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-done
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Completed 'rv64'"
+	/usr/local/bin/cmake -E make_directory /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles
+	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/rv64-complete
+	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-done
 
 rv64-prefix/src/rv64-stamp/rv64-install:
 .PHONY : rv64-prefix/src/rv64-stamp/rv64-install
@@ -91,44 +91,44 @@ rv64-prefix/src/rv64-stamp/rv64-install:
 .PHONY : rv64-prefix/src/rv64-stamp/rv64-install
 
 rv64-prefix/src/rv64-stamp/rv64-build: rv64-prefix/src/rv64-stamp/rv64-configure
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Performing build step for 'rv64'"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 && $(MAKE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Performing build step for 'rv64'"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE)
 
 rv64-prefix/src/rv64-stamp/rv64-configure: rv64-prefix/tmp/rv64-cfgcmd.txt
 rv64-prefix/src/rv64-stamp/rv64-configure: rv64-prefix/src/rv64-stamp/rv64-patch
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Performing configure step for 'rv64'"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 && cmake -DARCH_RV64=1 -DCMAKE_C_COMPILER=/install/bin/riscv64-unknown-elfpandodrvsim-gcc -DCMAKE_CXX_COMPILER=/install/bin/riscv64-unknown-elfpandodrvsim-g++ -DCMAKE_SYSTEM_NAME=Generic -DCMAKE_INSTALL_PREFIX=/work/.local/rv64 -DSST_CORE_PREFIX=/install -DSST_ELEMENTS_PREFIX=/install -DGNU_RISCV_TOOLCHAIN_PREFIX=/install /work2/10238/vineeth_architect/stampede3/drv
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 && /usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-configure
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Performing configure step for 'rv64'"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && cmake -DARCH_RV64=1 -DCMAKE_C_COMPILER=/install/bin/riscv64-unknown-elfpandodrvsim-gcc -DCMAKE_CXX_COMPILER=/install/bin/riscv64-unknown-elfpandodrvsim-g++ -DCMAKE_SYSTEM_NAME=Generic -DCMAKE_INSTALL_PREFIX=/work/.local/rv64 -DSST_CORE_PREFIX=/install -DSST_ELEMENTS_PREFIX=/install -DGNU_RISCV_TOOLCHAIN_PREFIX=/install /work2/10238/vineeth_architect/stampede3/drv_copy/drv
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && /usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-configure
 
 rv64-prefix/src/rv64-stamp/rv64-download: rv64-prefix/src/rv64-stamp/rv64-source_dirinfo.txt
 rv64-prefix/src/rv64-stamp/rv64-download: rv64-prefix/src/rv64-stamp/rv64-mkdir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "No download step for 'rv64'"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "No download step for 'rv64'"
 	/usr/local/bin/cmake -E echo_append
-	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-download
+	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-download
 
 rv64-prefix/src/rv64-stamp/rv64-install: rv64-prefix/src/rv64-stamp/rv64-build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Performing install step for 'rv64'"
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64 && $(MAKE) install
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Performing install step for 'rv64'"
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) install
 
 rv64-prefix/src/rv64-stamp/rv64-build:
 .PHONY : rv64-prefix/src/rv64-stamp/rv64-build
 
 rv64-prefix/src/rv64-stamp/rv64-mkdir:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'rv64'"
-	/usr/local/bin/cmake -Dcfgdir= -P /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/tmp/rv64-mkdirs.cmake
-	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-mkdir
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Creating directories for 'rv64'"
+	/usr/local/bin/cmake -Dcfgdir= -P /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/tmp/rv64-mkdirs.cmake
+	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-mkdir
 
 rv64-prefix/src/rv64-stamp/rv64-patch: rv64-prefix/src/rv64-stamp/rv64-patch-info.txt
 rv64-prefix/src/rv64-stamp/rv64-patch: rv64-prefix/src/rv64-stamp/rv64-update
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "No patch step for 'rv64'"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "No patch step for 'rv64'"
 	/usr/local/bin/cmake -E echo_append
-	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-patch
+	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-patch
 
 rv64-prefix/src/rv64-stamp/rv64-update: rv64-prefix/src/rv64-stamp/rv64-update-info.txt
 rv64-prefix/src/rv64-stamp/rv64-update: rv64-prefix/src/rv64-stamp/rv64-download
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "No update step for 'rv64'"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "No update step for 'rv64'"
 	/usr/local/bin/cmake -E echo_append
-	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-update
+	/usr/local/bin/cmake -E touch /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64-prefix/src/rv64-stamp/rv64-update
 
 CMakeFiles/rv64.dir/codegen:
 .PHONY : CMakeFiles/rv64.dir/codegen
@@ -154,6 +154,6 @@ CMakeFiles/rv64.dir/clean:
 .PHONY : CMakeFiles/rv64.dir/clean
 
 CMakeFiles/rv64.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/rv64.dir/DependInfo.cmake "--color=$(COLOR)" rv64
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/rv64.dir/DependInfo.cmake "--color=$(COLOR)" rv64
 .PHONY : CMakeFiles/rv64.dir/depend
 

@@ -725,13 +725,14 @@ class VictimCacheBuilder(Identifiable):
             "debug" : 1,
             "L1" : "true",
             "coherence" : "mesi",
-            "cache_type" : "inclusive",            
+            "cache_type" : "inclusive",
             "cache_line_size" : self.cache_line_size,
             "addr_range_start" : start,
             "addr_range_end" : stop,
             "interleave_size" : f'{interleave}B',
             "interleave_step" : f'{stride}B',
         })
+        victim_cache.cache.enableAllStatistics()
         victim_cache.cpulink = victim_cache.cache.setSubComponent("cpulink", "memHierarchy.MemNIC")
         victim_cache.cpulink.addParams({
             "group" : 1,

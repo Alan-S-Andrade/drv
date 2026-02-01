@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for run-drvx-example-world.
 
@@ -68,7 +68,7 @@ include cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/progress.make
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-world: cmake-drvx-example/libdrvx-example.so
 cmake-drvx-example/CMakeFiles/run-drvx-example-world: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example/run-drvx-example-world && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example/run-drvx-example-world && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-x.py --  --num-pxn=1\ --pod-cores=1\ --pxn-pods=1\ --core-threads=1   --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example/libdrvx-example.so world | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example/run-drvx-example-world/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example/run-drvx-example-world && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example/run-drvx-example-world && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/hammerblade-x.py --  --num-pxn=1\ --pod-cores=1\ --pxn-pods=1\ --core-threads=1   --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example/libdrvx-example.so world | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example/run-drvx-example-world/output.txt
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/codegen:
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/codegen
@@ -82,10 +82,10 @@ cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/build: run-drvx-example
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/build
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example && $(CMAKE_COMMAND) -P CMakeFiles/run-drvx-example-world.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example && $(CMAKE_COMMAND) -P CMakeFiles/run-drvx-example-world.dir/cmake_clean.cmake
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/clean
 
 cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/cmake-drvx-example /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example /work2/10238/vineeth_architect/stampede3/drv/build_stampede/cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/DependInfo.cmake "--color=$(COLOR)" run-drvx-example-world
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/cmake-drvx-example /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/DependInfo.cmake "--color=$(COLOR)" run-drvx-example-world
 .PHONY : cmake-drvx-example/CMakeFiles/run-drvx-example-world.dir/depend
 

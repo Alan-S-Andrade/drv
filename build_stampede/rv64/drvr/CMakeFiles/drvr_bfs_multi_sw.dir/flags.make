@@ -6,19 +6,19 @@
 # compile CXX with /install/bin/riscv64-unknown-elfpandodrvsim-g++
 ASM_DEFINES = 
 
-ASM_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_bfs_multi_sw_include -I/work2/10238/vineeth_architect/stampede3/drv/pandohammer
+ASM_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_bfs_multi_sw_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
 ASM_FLAGS = -DDEBUG
 
 C_DEFINES = 
 
-C_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_bfs_multi_sw_include -I/work2/10238/vineeth_architect/stampede3/drv/pandohammer
+C_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_bfs_multi_sw_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
 C_FLAGS = -DDEBUG
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/drvr/drvr_bfs_multi_sw_include -I/work2/10238/vineeth_architect/stampede3/drv/pandohammer
+CXX_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_bfs_multi_sw_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
 CXX_FLAGS = -DDEBUG
 

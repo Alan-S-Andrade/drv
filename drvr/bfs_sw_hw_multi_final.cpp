@@ -71,9 +71,9 @@ static volatile int32_t g_reached  = 0;
 static volatile int32_t g_max_dist = 0;
 
 extern "C" int main(int argc, char** argv) {
-    int R = 1000;
-    int C = 100;
-    int desired_threads = 1024;
+    int R = 64;
+    int C = 16;
+    int desired_threads = 16;
 
     for (int i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "--R") && i + 1 < argc) R = parse_i(argv[++i], R);

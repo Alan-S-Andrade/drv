@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_poke.dir/poke.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/poke.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/poke.c \
  /install/riscv64-unknown-elfpandodrvsim/include/math.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/reent.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
@@ -19,4 +19,4 @@ drvr/CMakeFiles/drvr_poke.dir/poke.c.obj: \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /install/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/mmio.h
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h

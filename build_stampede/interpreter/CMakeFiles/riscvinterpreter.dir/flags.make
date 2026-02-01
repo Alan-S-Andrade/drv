@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -Driscvinterpreter_EXPORTS
 
-CXX_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/interpreter
+CXX_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter
 
 CXX_FLAGS = -fPIC -std=c++17
 

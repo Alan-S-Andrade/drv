@@ -1,8 +1,8 @@
 drvr/CMakeFiles/drvr_wait-without-sleep.dir/wait.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/wait.c \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/hartsleep.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/register.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/stringify.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/wait.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h \
  /install/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \

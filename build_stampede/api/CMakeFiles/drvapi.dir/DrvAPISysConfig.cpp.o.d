@@ -1,5 +1,5 @@
 api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISysConfig.cpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISysConfig.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/atomic \
  /usr/include/c++/11/bits/atomic_base.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -23,5 +23,5 @@ api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
  /usr/include/c++/11/bits/move.h /usr/include/c++/11/type_traits \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISysConfig.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISysConfig.hpp \
  /usr/include/c++/11/cstdint

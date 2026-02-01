@@ -8,18 +8,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
-  "/work2/10238/vineeth_architect/stampede3/drv/pandohammer/crt.S" "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
+  "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/crt.S" "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_ASM_TARGET_INCLUDE_PATH
-  "/work2/10238/vineeth_architect/stampede3/drv/pandohammer"
+  "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer"
   )
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/work2/10238/vineeth_architect/stampede3/drv/pandohammer/lock.c" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj" "gcc" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj.d"
+  "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/lock.c" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj" "gcc" "pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

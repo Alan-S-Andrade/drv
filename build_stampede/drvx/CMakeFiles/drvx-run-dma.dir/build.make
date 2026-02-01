@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvx-run-dma.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-dma.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-dma: drvx/libdma.so
 drvx/CMakeFiles/drvx-run-dma: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-dma && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-dma && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/libdma.so  | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-dma/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-dma && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-dma && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/hammerblade-x.py --     --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 --pod-cores-y=1 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/libdma.so  | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-dma/output.txt
 
 drvx/CMakeFiles/drvx-run-dma.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-dma.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-dma.dir/build: drvx-run-dma
 .PHONY : drvx/CMakeFiles/drvx-run-dma.dir/build
 
 drvx/CMakeFiles/drvx-run-dma.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-dma.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-dma.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-dma.dir/clean
 
 drvx/CMakeFiles/drvx-run-dma.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/drvx-run-dma.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-dma
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/drvx-run-dma.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-dma
 .PHONY : drvx/CMakeFiles/drvx-run-dma.dir/depend
 

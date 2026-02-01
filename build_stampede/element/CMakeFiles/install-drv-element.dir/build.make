@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for install-drv-element.
 
@@ -67,7 +67,7 @@ include element/CMakeFiles/install-drv-element.dir/compiler_depend.make
 include element/CMakeFiles/install-drv-element.dir/progress.make
 
 element/CMakeFiles/install-drv-element: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/element && /install/bin/sst-register Drv Drv_LIBDIR=/work/.local/lib
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element && /install/bin/sst-register Drv Drv_LIBDIR=/work/.local/lib
 
 element/CMakeFiles/install-drv-element.dir/codegen:
 .PHONY : element/CMakeFiles/install-drv-element.dir/codegen
@@ -81,10 +81,10 @@ element/CMakeFiles/install-drv-element.dir/build: install-drv-element
 .PHONY : element/CMakeFiles/install-drv-element.dir/build
 
 element/CMakeFiles/install-drv-element.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/element && $(CMAKE_COMMAND) -P CMakeFiles/install-drv-element.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element && $(CMAKE_COMMAND) -P CMakeFiles/install-drv-element.dir/cmake_clean.cmake
 .PHONY : element/CMakeFiles/install-drv-element.dir/clean
 
 element/CMakeFiles/install-drv-element.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/element /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/element /work2/10238/vineeth_architect/stampede3/drv/build_stampede/element/CMakeFiles/install-drv-element.dir/DependInfo.cmake "--color=$(COLOR)" install-drv-element
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element/CMakeFiles/install-drv-element.dir/DependInfo.cmake "--color=$(COLOR)" install-drv-element
 .PHONY : element/CMakeFiles/install-drv-element.dir/depend
 

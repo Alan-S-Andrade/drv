@@ -20,91 +20,25 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/home1/apps/cmake/4.1.1/bin/"
-      - "/home1/apps/cmake/4.1.1/sbin/"
-      - "/home1/apps/cmake/4.1.1/"
-      - "/opt/intel/oneapi/ccl/2021.11/bin/"
-      - "/opt/intel/oneapi/ccl/2021.11/sbin/"
-      - "/opt/intel/oneapi/ccl/2021.11/"
-      - "/opt/intel/oneapi/mkl/2024.0/bin/"
-      - "/opt/intel/oneapi/mkl/2024.0/sbin/"
-      - "/opt/intel/oneapi/mkl/2024.0/"
-      - "/opt/intel/oneapi/ipp/2021.10/bin/"
-      - "/opt/intel/oneapi/ipp/2021.10/sbin/"
-      - "/opt/intel/oneapi/ipp/2021.10/"
-      - "/opt/intel/oneapi/ippcp/2021.9/bin/"
-      - "/opt/intel/oneapi/ippcp/2021.9/sbin/"
-      - "/opt/intel/oneapi/ippcp/2021.9/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/bin/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/sbin/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/bin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/sbin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/bin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sbin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/"
-      - "/opt/intel/oneapi/compiler/2024.0/bin/"
-      - "/opt/intel/oneapi/compiler/2024.0/sbin/"
-      - "/opt/intel/oneapi/compiler/2024.0/"
-      - "/opt/intel/oneapi/tbb/2021.11/bin/"
-      - "/opt/intel/oneapi/tbb/2021.11/sbin/"
-      - "/opt/intel/oneapi/tbb/2021.11/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
-      - "/home1/apps/cmake/4.1.1/bin/uname"
-      - "/home1/apps/cmake/4.1.1/sbin/uname"
-      - "/home1/apps/cmake/4.1.1/uname"
-      - "/opt/intel/oneapi/ccl/2021.11/bin/uname"
-      - "/opt/intel/oneapi/ccl/2021.11/sbin/uname"
-      - "/opt/intel/oneapi/ccl/2021.11/uname"
-      - "/opt/intel/oneapi/mkl/2024.0/bin/uname"
-      - "/opt/intel/oneapi/mkl/2024.0/sbin/uname"
-      - "/opt/intel/oneapi/mkl/2024.0/uname"
-      - "/opt/intel/oneapi/ipp/2021.10/bin/uname"
-      - "/opt/intel/oneapi/ipp/2021.10/sbin/uname"
-      - "/opt/intel/oneapi/ipp/2021.10/uname"
-      - "/opt/intel/oneapi/ippcp/2021.9/bin/uname"
-      - "/opt/intel/oneapi/ippcp/2021.9/sbin/uname"
-      - "/opt/intel/oneapi/ippcp/2021.9/uname"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/bin/uname"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/sbin/uname"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/uname"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/bin/uname"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/sbin/uname"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/uname"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/bin/uname"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sbin/uname"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/uname"
-      - "/opt/intel/oneapi/compiler/2024.0/bin/uname"
-      - "/opt/intel/oneapi/compiler/2024.0/sbin/uname"
-      - "/opt/intel/oneapi/compiler/2024.0/uname"
-      - "/opt/intel/oneapi/tbb/2021.11/bin/uname"
-      - "/opt/intel/oneapi/tbb/2021.11/sbin/uname"
-      - "/opt/intel/oneapi/tbb/2021.11/uname"
+      - "/install/bin/uname"
+      - "/home1/10238/vineeth_architect/.local/bin/uname"
       - "/usr/local/sbin/uname"
       - "/usr/local/bin/uname"
       - "/usr/sbin/uname"
     found: "/usr/bin/uname"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -112,13 +46,14 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "message-v1"
     backtrace:
       - "/usr/local/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      The system is: Linux - 5.14.0-362.24.1.el9_3.0.1.x86_64 - x86_64
+      The system is: Linux - 5.14.0-503.23.2.el9_5.x86_64 - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -140,91 +75,25 @@ events:
       - "make"
       - "smake"
     candidate_directories:
-      - "/home1/apps/cmake/4.1.1/bin/"
-      - "/home1/apps/cmake/4.1.1/sbin/"
-      - "/home1/apps/cmake/4.1.1/"
-      - "/opt/intel/oneapi/ccl/2021.11/bin/"
-      - "/opt/intel/oneapi/ccl/2021.11/sbin/"
-      - "/opt/intel/oneapi/ccl/2021.11/"
-      - "/opt/intel/oneapi/mkl/2024.0/bin/"
-      - "/opt/intel/oneapi/mkl/2024.0/sbin/"
-      - "/opt/intel/oneapi/mkl/2024.0/"
-      - "/opt/intel/oneapi/ipp/2021.10/bin/"
-      - "/opt/intel/oneapi/ipp/2021.10/sbin/"
-      - "/opt/intel/oneapi/ipp/2021.10/"
-      - "/opt/intel/oneapi/ippcp/2021.9/bin/"
-      - "/opt/intel/oneapi/ippcp/2021.9/sbin/"
-      - "/opt/intel/oneapi/ippcp/2021.9/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/bin/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/sbin/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/bin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/sbin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/bin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sbin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/"
-      - "/opt/intel/oneapi/compiler/2024.0/bin/"
-      - "/opt/intel/oneapi/compiler/2024.0/sbin/"
-      - "/opt/intel/oneapi/compiler/2024.0/"
-      - "/opt/intel/oneapi/tbb/2021.11/bin/"
-      - "/opt/intel/oneapi/tbb/2021.11/sbin/"
-      - "/opt/intel/oneapi/tbb/2021.11/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
-      - "/home1/apps/cmake/4.1.1/bin/gmake"
-      - "/home1/apps/cmake/4.1.1/sbin/gmake"
-      - "/home1/apps/cmake/4.1.1/gmake"
-      - "/opt/intel/oneapi/ccl/2021.11/bin/gmake"
-      - "/opt/intel/oneapi/ccl/2021.11/sbin/gmake"
-      - "/opt/intel/oneapi/ccl/2021.11/gmake"
-      - "/opt/intel/oneapi/mkl/2024.0/bin/gmake"
-      - "/opt/intel/oneapi/mkl/2024.0/sbin/gmake"
-      - "/opt/intel/oneapi/mkl/2024.0/gmake"
-      - "/opt/intel/oneapi/ipp/2021.10/bin/gmake"
-      - "/opt/intel/oneapi/ipp/2021.10/sbin/gmake"
-      - "/opt/intel/oneapi/ipp/2021.10/gmake"
-      - "/opt/intel/oneapi/ippcp/2021.9/bin/gmake"
-      - "/opt/intel/oneapi/ippcp/2021.9/sbin/gmake"
-      - "/opt/intel/oneapi/ippcp/2021.9/gmake"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/bin/gmake"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/sbin/gmake"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/gmake"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/bin/gmake"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/sbin/gmake"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/gmake"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/bin/gmake"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sbin/gmake"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/gmake"
-      - "/opt/intel/oneapi/compiler/2024.0/bin/gmake"
-      - "/opt/intel/oneapi/compiler/2024.0/sbin/gmake"
-      - "/opt/intel/oneapi/compiler/2024.0/gmake"
-      - "/opt/intel/oneapi/tbb/2021.11/bin/gmake"
-      - "/opt/intel/oneapi/tbb/2021.11/sbin/gmake"
-      - "/opt/intel/oneapi/tbb/2021.11/gmake"
+      - "/install/bin/gmake"
+      - "/home1/10238/vineeth_architect/.local/bin/gmake"
       - "/usr/local/sbin/gmake"
       - "/usr/local/bin/gmake"
       - "/usr/sbin/gmake"
     found: "/usr/bin/gmake"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -232,6 +101,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -261,91 +131,25 @@ events:
       - "icx"
       - "clang++"
     candidate_directories:
-      - "/home1/apps/cmake/4.1.1/bin/"
-      - "/home1/apps/cmake/4.1.1/sbin/"
-      - "/home1/apps/cmake/4.1.1/"
-      - "/opt/intel/oneapi/ccl/2021.11/bin/"
-      - "/opt/intel/oneapi/ccl/2021.11/sbin/"
-      - "/opt/intel/oneapi/ccl/2021.11/"
-      - "/opt/intel/oneapi/mkl/2024.0/bin/"
-      - "/opt/intel/oneapi/mkl/2024.0/sbin/"
-      - "/opt/intel/oneapi/mkl/2024.0/"
-      - "/opt/intel/oneapi/ipp/2021.10/bin/"
-      - "/opt/intel/oneapi/ipp/2021.10/sbin/"
-      - "/opt/intel/oneapi/ipp/2021.10/"
-      - "/opt/intel/oneapi/ippcp/2021.9/bin/"
-      - "/opt/intel/oneapi/ippcp/2021.9/sbin/"
-      - "/opt/intel/oneapi/ippcp/2021.9/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/bin/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/sbin/"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/bin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/sbin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/bin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sbin/"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/"
-      - "/opt/intel/oneapi/compiler/2024.0/bin/"
-      - "/opt/intel/oneapi/compiler/2024.0/sbin/"
-      - "/opt/intel/oneapi/compiler/2024.0/"
-      - "/opt/intel/oneapi/tbb/2021.11/bin/"
-      - "/opt/intel/oneapi/tbb/2021.11/sbin/"
-      - "/opt/intel/oneapi/tbb/2021.11/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/usr/bin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
-      - "/home1/apps/cmake/4.1.1/bin/c++"
-      - "/home1/apps/cmake/4.1.1/sbin/c++"
-      - "/home1/apps/cmake/4.1.1/c++"
-      - "/opt/intel/oneapi/ccl/2021.11/bin/c++"
-      - "/opt/intel/oneapi/ccl/2021.11/sbin/c++"
-      - "/opt/intel/oneapi/ccl/2021.11/c++"
-      - "/opt/intel/oneapi/mkl/2024.0/bin/c++"
-      - "/opt/intel/oneapi/mkl/2024.0/sbin/c++"
-      - "/opt/intel/oneapi/mkl/2024.0/c++"
-      - "/opt/intel/oneapi/ipp/2021.10/bin/c++"
-      - "/opt/intel/oneapi/ipp/2021.10/sbin/c++"
-      - "/opt/intel/oneapi/ipp/2021.10/c++"
-      - "/opt/intel/oneapi/ippcp/2021.9/bin/c++"
-      - "/opt/intel/oneapi/ippcp/2021.9/sbin/c++"
-      - "/opt/intel/oneapi/ippcp/2021.9/c++"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/bin/c++"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/sbin/c++"
-      - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL/c++"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/bin/c++"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/sbin/c++"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/c++"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/bin/c++"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sbin/c++"
-      - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/c++"
-      - "/opt/intel/oneapi/compiler/2024.0/bin/c++"
-      - "/opt/intel/oneapi/compiler/2024.0/sbin/c++"
-      - "/opt/intel/oneapi/compiler/2024.0/c++"
-      - "/opt/intel/oneapi/tbb/2021.11/bin/c++"
-      - "/opt/intel/oneapi/tbb/2021.11/sbin/c++"
-      - "/opt/intel/oneapi/tbb/2021.11/c++"
+      - "/install/bin/c++"
+      - "/home1/10238/vineeth_architect/.local/bin/c++"
       - "/usr/local/sbin/c++"
       - "/usr/local/bin/c++"
       - "/usr/sbin/c++"
     found: "/usr/bin/c++"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -353,6 +157,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -379,18 +184,9 @@ events:
       - "/usr/local/share/cmake-4.2/Modules/"
     found: "/usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -398,6 +194,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "message-v1"
     backtrace:
@@ -418,7 +215,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/4.2.1/CompilerIdCXX/a.out
+        /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/4.2.1/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
@@ -441,26 +238,18 @@ events:
       - "ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/ar"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -468,6 +257,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -489,26 +279,18 @@ events:
       - "ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/ranlib"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -516,6 +298,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -537,26 +320,18 @@ events:
       - "strip"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/strip"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -564,6 +339,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -585,26 +361,18 @@ events:
       - "ld"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/ld"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -612,6 +380,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -633,26 +402,18 @@ events:
       - "nm"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/nm"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -660,6 +421,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -681,26 +443,18 @@ events:
       - "objdump"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/objdump"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -708,6 +462,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -729,26 +484,18 @@ events:
       - "objcopy"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/objcopy"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -756,6 +503,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -777,26 +525,18 @@ events:
       - "readelf"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/readelf"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -804,6 +544,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -825,34 +566,27 @@ events:
       - "dlltool"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/dlltool"
+      - "/install/bin/dlltool"
+      - "/home1/10238/vineeth_architect/.local/bin/dlltool"
       - "/usr/local/sbin/dlltool"
       - "/usr/local/bin/dlltool"
       - "/usr/sbin/dlltool"
       - "/sbin/dlltool"
       - "/bin/dlltool"
-      - "/install/bin/dlltool"
     found: false
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -860,6 +594,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -881,26 +616,18 @@ events:
       - "addr2line"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     found: "/usr/bin/addr2line"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -908,6 +635,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -929,34 +657,27 @@ events:
       - "tapi"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/tapi"
+      - "/install/bin/tapi"
+      - "/home1/10238/vineeth_architect/.local/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/usr/sbin/tapi"
       - "/sbin/tapi"
       - "/bin/tapi"
-      - "/install/bin/tapi"
     found: false
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -964,6 +685,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -988,34 +710,27 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/gcc-ar-11.4"
+      - "/install/bin/gcc-ar-11.4"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ar-11.4"
       - "/usr/local/sbin/gcc-ar-11.4"
       - "/usr/local/bin/gcc-ar-11.4"
       - "/usr/sbin/gcc-ar-11.4"
       - "/sbin/gcc-ar-11.4"
       - "/bin/gcc-ar-11.4"
-      - "/install/bin/gcc-ar-11.4"
     found: "/usr/bin/gcc-ar-11"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1023,6 +738,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -1047,34 +763,27 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-11.4"
+      - "/install/bin/gcc-ranlib-11.4"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ranlib-11.4"
       - "/usr/local/sbin/gcc-ranlib-11.4"
       - "/usr/local/bin/gcc-ranlib-11.4"
       - "/usr/sbin/gcc-ranlib-11.4"
       - "/sbin/gcc-ranlib-11.4"
       - "/bin/gcc-ranlib-11.4"
-      - "/install/bin/gcc-ranlib-11.4"
     found: "/usr/bin/gcc-ranlib-11"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1082,6 +791,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -1111,18 +821,9 @@ events:
       - "/usr/bin/"
     found: "/usr/bin/cc"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1130,6 +831,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -1156,18 +858,9 @@ events:
       - "/usr/local/share/cmake-4.2/Modules/"
     found: "/usr/local/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1175,6 +868,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "message-v1"
     backtrace:
@@ -1195,7 +889,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/4.2.1/CompilerIdC/a.out
+        /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/4.2.1/CompilerIdC/a.out
       
   -
     kind: "find-v1"
@@ -1221,34 +915,27 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/gcc-ar-11.4"
+      - "/install/bin/gcc-ar-11.4"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ar-11.4"
       - "/usr/local/sbin/gcc-ar-11.4"
       - "/usr/local/bin/gcc-ar-11.4"
       - "/usr/sbin/gcc-ar-11.4"
       - "/sbin/gcc-ar-11.4"
       - "/bin/gcc-ar-11.4"
-      - "/install/bin/gcc-ar-11.4"
     found: "/usr/bin/gcc-ar-11"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1256,6 +943,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -1280,34 +968,27 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-11.4"
+      - "/install/bin/gcc-ranlib-11.4"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ranlib-11.4"
       - "/usr/local/sbin/gcc-ranlib-11.4"
       - "/usr/local/bin/gcc-ranlib-11.4"
       - "/usr/sbin/gcc-ranlib-11.4"
       - "/sbin/gcc-ranlib-11.4"
       - "/bin/gcc-ranlib-11.4"
-      - "/install/bin/gcc-ranlib-11.4"
     found: "/usr/bin/gcc-ranlib-11"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1315,6 +996,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -1338,18 +1020,9 @@ events:
       - "/usr/bin/"
     found: "/usr/bin/cc"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1357,6 +1030,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "message-v1"
     backtrace:
@@ -1394,41 +1068,35 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/gcc-ar-"
+      - "/install/bin/gcc-ar-"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ar-"
       - "/usr/local/sbin/gcc-ar-"
       - "/usr/local/bin/gcc-ar-"
       - "/usr/sbin/gcc-ar-"
       - "/sbin/gcc-ar-"
       - "/bin/gcc-ar-"
-      - "/install/bin/gcc-ar-"
       - "/usr/bin/gcc-ar-"
+      - "/install/bin/gcc-ar-"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ar-"
       - "/usr/local/sbin/gcc-ar-"
       - "/usr/local/bin/gcc-ar-"
       - "/usr/sbin/gcc-ar-"
       - "/sbin/gcc-ar-"
       - "/bin/gcc-ar-"
-      - "/install/bin/gcc-ar-"
     found: "/usr/bin/gcc-ar"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1436,6 +1104,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "find-v1"
     backtrace:
@@ -1460,41 +1129,35 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
+      - "/install/bin/"
+      - "/home1/10238/vineeth_architect/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/sbin/"
       - "/sbin/"
       - "/bin/"
-      - "/install/bin/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-"
+      - "/install/bin/gcc-ranlib-"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ranlib-"
       - "/usr/local/sbin/gcc-ranlib-"
       - "/usr/local/bin/gcc-ranlib-"
       - "/usr/sbin/gcc-ranlib-"
       - "/sbin/gcc-ranlib-"
       - "/bin/gcc-ranlib-"
-      - "/install/bin/gcc-ranlib-"
       - "/usr/bin/gcc-ranlib-"
+      - "/install/bin/gcc-ranlib-"
+      - "/home1/10238/vineeth_architect/.local/bin/gcc-ranlib-"
       - "/usr/local/sbin/gcc-ranlib-"
       - "/usr/local/bin/gcc-ranlib-"
       - "/usr/sbin/gcc-ranlib-"
       - "/sbin/gcc-ranlib-"
       - "/bin/gcc-ranlib-"
-      - "/install/bin/gcc-ranlib-"
     found: "/usr/bin/gcc-ranlib"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -1502,6 +1165,7 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
   -
     kind: "try_compile-v1"
     backtrace:
@@ -1511,8 +1175,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN"
-      binary: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN"
+      source: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053"
+      binary: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1522,13 +1186,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN'
+        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053'
         
-        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7238e/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_7238e.dir/build.make CMakeFiles/cmTC_7238e.dir/build
-        gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN'
-        Building CXX object CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9bec5/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9bec5.dir/build.make CMakeFiles/cmTC_9bec5.dir/build
+        gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053'
+        Building CXX object CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -1538,8 +1202,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7238e.dir/'
-         /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_7238e.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cceBQcWv.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9bec5.dir/'
+         /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_9bec5.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccdmlUOk.s
         GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1548,20 +1212,8 @@ events:
         ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/include-fixed"
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/ccl/2021.11/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/mpi/2021.11/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/mkl/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/ipp/2021.10/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/ippcp/2021.9/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/dpl/2022.3/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/dpcpp-ct/2024.0/include"
-        ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/dev-utilities/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/compiler/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/tbb/2021.11/include"
         #include "..." search starts here:
         #include <...> search starts here:
-         /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal
          /install/include
          /usr/include/c++/11
          /usr/include/x86_64-linux-gnu/c++/11
@@ -1576,14 +1228,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 6c87588fc345655b93b8c25f48f88886
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7238e.dir/'
-         as -v --64 -o CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o /tmp/cceBQcWv.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9bec5.dir/'
+         as -v --64 -o CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccdmlUOk.s
         GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
-        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
+        COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_7238e
-        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7238e.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_9bec5
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9bec5.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
@@ -1594,16 +1246,16 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
+        COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7238e' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_7238e.'
-         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5CgeDb.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7238e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9bec5' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9bec5.'
+         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9SNZVZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9bec5 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         collect2 version 11.4.0
-        /opt/apps/xalt/xalt/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5CgeDb.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7238e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9SNZVZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9bec5 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.38
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7238e' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_7238e.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_7238e
-        gmake[1]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9bec5' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9bec5.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_9bec5
+        gmake[1]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053'
         
       exitCode: 0
   -
@@ -1616,7 +1268,6 @@ events:
       Parsed CXX implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
-          add: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
           add: [/install/include]
           add: [/usr/include/c++/11]
           add: [/usr/include/x86_64-linux-gnu/c++/11]
@@ -1626,7 +1277,6 @@ events:
           add: [/usr/include/x86_64-linux-gnu]
           add: [/usr/include]
         end of search list found
-        collapse include dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
         collapse include dir [/install/include] ==> [/install/include]
         collapse include dir [/usr/include/c++/11] ==> [/usr/include/c++/11]
         collapse include dir [/usr/include/x86_64-linux-gnu/c++/11] ==> [/usr/include/x86_64-linux-gnu/c++/11]
@@ -1635,7 +1285,7 @@ events:
         collapse include dir [/usr/local/include] ==> [/usr/local/include]
         collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
         collapse include dir [/usr/include] ==> [/usr/include]
-        implicit include dirs: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal;/install/include;/usr/include/c++/11;/usr/include/x86_64-linux-gnu/c++/11;/usr/include/c++/11/backward;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+        implicit include dirs: [/install/include;/usr/include/c++/11;/usr/include/x86_64-linux-gnu/c++/11;/usr/include/c++/11/backward;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
       
       
   -
@@ -1648,13 +1298,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN']
+        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7238e/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_7238e.dir/build.make CMakeFiles/cmTC_7238e.dir/build]
-        ignore line: [gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-nQJ9aN']
-        ignore line: [Building CXX object CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9bec5/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_9bec5.dir/build.make CMakeFiles/cmTC_9bec5.dir/build]
+        ignore line: [gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-QuU053']
+        ignore line: [Building CXX object CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -1664,8 +1314,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7238e.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_7238e.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cceBQcWv.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9bec5.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_9bec5.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccdmlUOk.s]
         ignore line: [GNU C++17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1674,20 +1324,8 @@ events:
         ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/include-fixed"]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/ccl/2021.11/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/mpi/2021.11/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/mkl/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/ipp/2021.10/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/ippcp/2021.9/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/dpl/2022.3/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/dpcpp-ct/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/dev-utilities/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/compiler/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/tbb/2021.11/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
-        ignore line: [ /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
         ignore line: [ /install/include]
         ignore line: [ /usr/include/c++/11]
         ignore line: [ /usr/include/x86_64-linux-gnu/c++/11]
@@ -1702,14 +1340,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 6c87588fc345655b93b8c25f48f88886]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7238e.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o /tmp/cceBQcWv.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9bec5.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccdmlUOk.s]
         ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
-        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_7238e]
-        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7238e.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_9bec5]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9bec5.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
@@ -1720,15 +1358,15 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7238e' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_7238e.']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5CgeDb.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7238e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9bec5' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9bec5.']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9SNZVZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9bec5 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc5CgeDb.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc9SNZVZ.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1746,7 +1384,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_7238e] ==> ignore
+          arg [cmTC_9bec5] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -1761,7 +1399,7 @@ events:
           arg [-L/install/lib] ==> dir [/install/lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1772,8 +1410,8 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 11.4.0]
-        ignore line: [/opt/apps/xalt/xalt/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5CgeDb.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7238e /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_7238e.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
-        linker tool for 'CXX': /opt/apps/xalt/xalt/bin/ld
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9SNZVZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9bec5 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_9bec5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
@@ -1801,7 +1439,7 @@ events:
       - "/usr/local/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      Running the CXX compiler's linker: "/opt/apps/xalt/xalt/bin/ld" "-v"
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.38
   -
     kind: "try_compile-v1"
@@ -1812,8 +1450,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg"
-      binary: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg"
+      source: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9"
+      binary: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1822,13 +1460,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg'
+        Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9'
         
-        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_78f48/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_78f48.dir/build.make CMakeFiles/cmTC_78f48.dir/build
-        gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg'
-        Building C object CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0e8b6/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_0e8b6.dir/build.make CMakeFiles/cmTC_0e8b6.dir/build
+        gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9'
+        Building C object CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -1838,8 +1476,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_78f48.dir/'
-         /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_78f48.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccDuXC58.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0e8b6.dir/'
+         /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_0e8b6.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccPoiSt9.s
         GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)
         	compiled by GNU C version 11.4.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
         
@@ -1847,20 +1485,8 @@ events:
         ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/include-fixed"
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/ccl/2021.11/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/mpi/2021.11/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/mkl/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/ipp/2021.10/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/ippcp/2021.9/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/dpl/2022.3/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/dpcpp-ct/2024.0/include"
-        ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/dev-utilities/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/compiler/2024.0/include"
-        ignoring nonexistent directory "/opt/intel/oneapi/tbb/2021.11/include"
         #include "..." search starts here:
         #include <...> search starts here:
-         /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal
          /install/include
          /usr/lib/gcc/x86_64-linux-gnu/11/include
          /usr/local/include
@@ -1872,14 +1498,14 @@ events:
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_78f48.dir/'
-         as -v --64 -o CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o /tmp/ccDuXC58.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0e8b6.dir/'
+         as -v --64 -o CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o /tmp/ccPoiSt9.s
         GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38
-        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
+        COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_78f48
-        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_78f48.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_0e8b6
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0e8b6.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper
@@ -1890,16 +1516,16 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) 
-        COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
+        COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_78f48' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_78f48.'
-         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc87Gbks.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_78f48 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0e8b6' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_0e8b6.'
+         /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmJZrfX.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0e8b6 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         collect2 version 11.4.0
-        /opt/apps/xalt/xalt/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc87Gbks.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_78f48 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmJZrfX.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0e8b6 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Ubuntu) 2.38
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_78f48' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_78f48.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -o cmTC_78f48
-        gmake[1]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0e8b6' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_0e8b6.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -o cmTC_0e8b6
+        gmake[1]: Leaving directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9'
         
       exitCode: 0
   -
@@ -1912,20 +1538,18 @@ events:
       Parsed C implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
-          add: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
           add: [/install/include]
           add: [/usr/lib/gcc/x86_64-linux-gnu/11/include]
           add: [/usr/local/include]
           add: [/usr/include/x86_64-linux-gnu]
           add: [/usr/include]
         end of search list found
-        collapse include dir [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal] ==> [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
         collapse include dir [/install/include] ==> [/install/include]
         collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/11/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/11/include]
         collapse include dir [/usr/local/include] ==> [/usr/local/include]
         collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
         collapse include dir [/usr/include] ==> [/usr/include]
-        implicit include dirs: [/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal;/install/include;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+        implicit include dirs: [/install/include;/usr/lib/gcc/x86_64-linux-gnu/11/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
       
       
   -
@@ -1938,13 +1562,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg']
+        ignore line: [Change Dir: '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_78f48/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_78f48.dir/build.make CMakeFiles/cmTC_78f48.dir/build]
-        ignore line: [gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-GCTtGg']
-        ignore line: [Building C object CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0e8b6/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_0e8b6.dir/build.make CMakeFiles/cmTC_0e8b6.dir/build]
+        ignore line: [gmake[1]: Entering directory '/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/CMakeScratch/TryCompile-kHQMP9']
+        ignore line: [Building C object CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -1954,8 +1578,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_78f48.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_78f48.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccDuXC58.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0e8b6.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-4.2/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_0e8b6.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccPoiSt9.s]
         ignore line: [GNU C17 (Ubuntu 11.4.0-1ubuntu1~22.04.2) version 11.4.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 11.4.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
         ignore line: []
@@ -1963,20 +1587,8 @@ events:
         ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/include-fixed"]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/11/../../../../x86_64-linux-gnu/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/ccl/2021.11/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/mpi/2021.11/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/mkl/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/ipp/2021.10/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/ippcp/2021.9/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/dpl/2022.3/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/dpcpp-ct/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/dev-utilities/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/compiler/2024.0/include"]
-        ignore line: [ignoring nonexistent directory "/opt/intel/oneapi/tbb/2021.11/include"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
-        ignore line: [ /scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/include/dal]
         ignore line: [ /install/include]
         ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/11/include]
         ignore line: [ /usr/local/include]
@@ -1988,14 +1600,14 @@ events:
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [Compiler executable checksum: 4011c2103cba78949d7e02d0f0047a3d]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_78f48.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o /tmp/ccDuXC58.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0e8b6.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o /tmp/ccPoiSt9.s]
         ignore line: [GNU assembler version 2.38 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.38]
-        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_78f48]
-        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_78f48.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_0e8b6]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0e8b6.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper]
@@ -2006,15 +1618,15 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2) ]
-        ignore line: [COMPILER_PATH=/opt/apps/xalt/xalt/bin/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/install/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/11/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/install/lib/:/usr/lib/gcc/x86_64-linux-gnu/11/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_78f48' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_78f48.']
-        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc87Gbks.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_78f48 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_0e8b6' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_0e8b6.']
+        link line: [ /usr/lib/gcc/x86_64-linux-gnu/11/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmJZrfX.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0e8b6 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc87Gbks.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccmJZrfX.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -2032,7 +1644,7 @@ events:
           arg [-znow] ==> ignore
           arg [-zrelro] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_78f48] ==> ignore
+          arg [cmTC_0e8b6] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o]
@@ -2047,7 +1659,7 @@ events:
           arg [-L/install/lib] ==> dir [/install/lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/11/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -2062,8 +1674,8 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 11.4.0]
-        ignore line: [/opt/apps/xalt/xalt/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/cc87Gbks.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_78f48 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_78f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
-        linker tool for 'C': /opt/apps/xalt/xalt/bin/ld
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper -plugin-opt=-fresolution=/tmp/ccmJZrfX.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_0e8b6 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o -L/install/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/11 -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/install/lib -L/usr/lib/gcc/x86_64-linux-gnu/11/../../.. -v CMakeFiles/cmTC_0e8b6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
@@ -2091,7 +1703,7 @@ events:
       - "/usr/local/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      Running the C compiler's linker: "/opt/apps/xalt/xalt/bin/ld" "-v"
+      Running the C compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.38
   -
     kind: "find_package-v1"
@@ -2129,59 +1741,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/SSTConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/SSTConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/sst-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home1/apps/cmake/4.1.1/SSTConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home1/apps/cmake/4.1.1/sst-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/SSTConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/sst-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/local/SSTConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/local/sst-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/SSTConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/sst-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/SSTConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/sst-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/sst-elements-src/SSTConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/sst-elements-src/sst-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/sst-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2197,18 +1761,11 @@ events:
       mode: "config"
       version: "-dev"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
+      CMAKE_PREFIX_PATH:
+        - "/install"
       ENV{PATH}:
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2216,16 +1773,20 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
         - "/usr"
         - "/"
         - "/usr/local"
-        - "/usr/local"
+        - "/work/.local"
         - "/usr/X11R6"
         - "/usr/pkg"
         - "/opt"
+...
+
+---
+events:
   -
     kind: "find_package-v1"
     backtrace:
@@ -2269,11 +1830,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_headersConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_headersConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_headers-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_headers-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2297,18 +1858,12 @@ events:
         -
           package_paths:
             - "/install"
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
+      CMAKE_PREFIX_PATH:
+        - "/install"
       ENV{PATH}:
+        - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2316,13 +1871,13 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
         - "/usr"
         - "/"
         - "/usr/local"
-        - "/usr/local"
+        - "/work/.local"
         - "/usr/X11R6"
         - "/usr/pkg"
         - "/opt"
@@ -2363,11 +1918,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/BoostConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/BoostConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2787,18 +2342,12 @@ events:
         -
           package_paths:
             - "/install"
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
+      CMAKE_PREFIX_PATH:
+        - "/install"
       ENV{PATH}:
+        - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2806,18 +2355,18 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
         - "/usr"
         - "/"
         - "/usr/local"
-        - "/usr/local"
+        - "/work/.local"
         - "/usr/X11R6"
         - "/usr/pkg"
         - "/opt"
       CMAKE_MODULE_PATH:
-        - "/work2/10238/vineeth_architect/stampede3/drv/cmake"
+        - "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/cmake"
   -
     kind: "find_package-v1"
     backtrace:
@@ -2861,35 +2410,19 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_contextConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_contextConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_context-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_context-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home1/apps/cmake/4.1.1/boost_contextConfig.cmake"
+        path: "/install/boost_contextConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home1/apps/cmake/4.1.1/boost_context-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/boost_contextConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/boost_context-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/install/lib/cmake/boost_contextConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/install/lib/cmake/boost_context-config.cmake"
+        path: "/install/boost_context-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2901,18 +2434,12 @@ events:
       mode: "config"
       version: "1.89.0"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
+      CMAKE_PREFIX_PATH:
+        - "/install"
       ENV{PATH}:
+        - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -2920,13 +2447,13 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
         - "/usr"
         - "/"
         - "/usr/local"
-        - "/usr/local"
+        - "/work/.local"
         - "/usr/X11R6"
         - "/usr/pkg"
         - "/opt"
@@ -2973,35 +2500,19 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_exceptionConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_exceptionConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_exception-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_exception-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home1/apps/cmake/4.1.1/boost_exceptionConfig.cmake"
+        path: "/install/boost_exceptionConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home1/apps/cmake/4.1.1/boost_exception-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/boost_exceptionConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/boost_exception-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/install/lib/cmake/boost_exceptionConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/install/lib/cmake/boost_exception-config.cmake"
+        path: "/install/boost_exception-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -3013,18 +2524,12 @@ events:
       mode: "config"
       version: "1.89.0"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
+      CMAKE_PREFIX_PATH:
+        - "/install"
       ENV{PATH}:
+        - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -3032,13 +2537,13 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
         - "/usr"
         - "/"
         - "/usr/local"
-        - "/usr/local"
+        - "/work/.local"
         - "/usr/X11R6"
         - "/usr/pkg"
         - "/opt"
@@ -3084,35 +2589,19 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_coroutineConfig.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_coroutineConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/CMakeFiles/pkgRedirects/boost_coroutine-config.cmake"
+        path: "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles/pkgRedirects/boost_coroutine-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home1/apps/cmake/4.1.1/boost_coroutineConfig.cmake"
+        path: "/install/boost_coroutineConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home1/apps/cmake/4.1.1/boost_coroutine-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/boost_coroutineConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0/boost_coroutine-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/install/lib/cmake/boost_coroutineConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/install/lib/cmake/boost_coroutine-config.cmake"
+        path: "/install/boost_coroutine-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -3124,18 +2613,12 @@ events:
       mode: "config"
       version: "1.89.0"
     search_context:
-      ENV{CMAKE_PREFIX_PATH}:
-        - "/home1/apps/cmake/4.1.1"
-        - "/opt/intel/oneapi/ccl/2021.11"
-        - "/opt/intel/oneapi/mkl/2024.0"
-        - "/opt/intel/oneapi/ipp/2021.10"
-        - "/opt/intel/oneapi/ippcp/2021.9"
-        - "/opt/intel/oneapi/dpl/2022.3/lib/cmake/oneDPL"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dnnl/2024.0"
-        - "/scratch/projects/compilers/intel24.0/oneapi/dal/2024.0"
-        - "/opt/intel/oneapi/compiler/2024.0"
-        - "/opt/intel/oneapi/tbb/2021.11"
+      CMAKE_PREFIX_PATH:
+        - "/install"
       ENV{PATH}:
+        - "/install/bin"
+        - "/install/bin"
+        - "/home1/10238/vineeth_architect/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/sbin"
@@ -3143,13 +2626,13 @@ events:
         - "/sbin"
         - "/bin"
         - "/install/bin"
-      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_INSTALL_PREFIX: "/work/.local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
         - "/usr"
         - "/"
         - "/usr/local"
-        - "/usr/local"
+        - "/work/.local"
         - "/usr/X11R6"
         - "/usr/pkg"
         - "/opt"

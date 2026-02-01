@@ -6,7 +6,7 @@ function (drvr_test executable)
   drvr_add_run_target(drvr-run-${executable} drvr_${executable})
   drvr_set_run_target_properties(drvr-run-${executable}
     PROPERTIES
-    DRV_MODEL ${DRV_SOURCE_DIR}/model/hammerblade-r.py
+    DRV_MODEL ${DRV_SOURCE_DIR}/model/drvr.py
     )
   drvr_set_build_target_properties(drvr_${executable}
     PROPERTIES
@@ -149,11 +149,12 @@ drvr_test_build_properties(attn_fixed
 # bfs_sw_multi
   drvr_test_with_pandohammer(bfs_multi_sw bfs_sw_hw_multi_final.cpp)
   drvr_test_compile_options(bfs_multi_sw -DDEBUG)
-   drvr_test_build_properties(bfs_multi_sw
+  drvr_test_build_properties(bfs_multi_sw
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 8
-  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
+  DRV_MODEL_OPTIONS --dram-access-time=70ns
 )
 
 # bfs

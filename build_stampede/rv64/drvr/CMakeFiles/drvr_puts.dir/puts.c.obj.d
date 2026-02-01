@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_puts.dir/puts.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/puts.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/puts.c \
  /install/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \

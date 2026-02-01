@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_multihart.dir/multihart.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/multihart.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/multihart.c \
  /install/riscv64-unknown-elfpandodrvsim/include/string.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -21,7 +21,7 @@ drvr/CMakeFiles/drvr_multihart.dir/multihart.c.obj: \
  /install/riscv64-unknown-elfpandodrvsim/include/stdint.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/mmio.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/cpuinfo.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/stringify.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/register.h
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/cpuinfo.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h

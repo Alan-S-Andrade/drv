@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/work2/10238/vineeth_architect/stampede3/drv/pandohammer/crt.S
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/crt.S
 newlib.h
-/work2/10238/vineeth_architect/stampede3/drv/pandohammer/newlib.h
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/newlib.h
 pandohammer/register.h
-/work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/register.h
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h
 
-/work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/register.h
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h
 

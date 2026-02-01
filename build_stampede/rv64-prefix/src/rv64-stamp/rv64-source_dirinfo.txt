@@ -4,6 +4,6 @@
 
 method=source_dir
 command=
-source_dir=/work2/10238/vineeth_architect/stampede3/drv
+source_dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv
 work_dir=
 

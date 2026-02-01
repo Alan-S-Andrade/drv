@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/work2/10238/vineeth_architect/stampede3/drv/drvr/lsu.S
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/lsu.S
 machine/syscall.h
-/work2/10238/vineeth_architect/stampede3/drv/drvr/machine/syscall.h
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/machine/syscall.h
 

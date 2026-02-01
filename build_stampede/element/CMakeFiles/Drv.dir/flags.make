@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS
 
-CXX_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv/element -I/install -I/work2/10238/vineeth_architect/stampede3/drv/api -I/work2/10238/vineeth_architect/stampede3/drv/interpreter
+CXX_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/element -I/install -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter
 
 CXX_FLAGS = -fPIC -std=c++17
 

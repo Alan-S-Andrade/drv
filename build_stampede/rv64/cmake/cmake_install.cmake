@@ -1,4 +1,4 @@
-# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv/cmake
+# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/cmake
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -46,7 +46,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/work/.local/rv64/cmake" TYPE FILE FILES "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/cmake/FindDRV.cmake")
+  file(INSTALL DESTINATION "/work/.local/rv64/cmake" TYPE FILE FILES "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/cmake/FindDRV.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -58,12 +58,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/work/.local/rv64/cmake" TYPE FILE FILES "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/cmake/DRVInclude.cmake")
+  file(INSTALL DESTINATION "/work/.local/rv64/cmake" TYPE FILE FILES "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/cmake/DRVInclude.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/cmake/install_local_manifest.txt"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/cmake/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

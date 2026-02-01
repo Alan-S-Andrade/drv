@@ -1,4 +1,4 @@
-# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv/api
+# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,7 +49,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api/libdrvapi.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/api/libdrvapi.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdrvapi.so")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -63,34 +63,34 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAddress.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAddressMap.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAddressToNative.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAllocator.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPICoreXY.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIGlobal.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPI.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIInfo.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIMain.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIMemory.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPINativeToAddress.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIOp.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIPointer.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIReadModifyWrite.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIThreadState.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISysConfig.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISystem.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIThread.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIVar.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISection.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIBits.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIDMA.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAddress.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAddressMap.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAddressToNative.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAllocator.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPICoreXY.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIGlobal.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPI.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIInfo.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIMain.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIMemory.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPINativeToAddress.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIOp.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIPointer.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIReadModifyWrite.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIThreadState.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISysConfig.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISystem.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIThread.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIVar.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISection.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIBits.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIDMA.hpp"
     )
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api/install_local_manifest.txt"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/api/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

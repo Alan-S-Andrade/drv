@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv
+CMAKE_SOURCE_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv/build_stampede
+CMAKE_BINARY_DIR = /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
 
 # Utility rule file for drvx-run-gups.
 
@@ -68,7 +68,7 @@ include drvx/CMakeFiles/drvx-run-gups.dir/progress.make
 
 drvx/CMakeFiles/drvx-run-gups: drvx/libgups.so
 drvx/CMakeFiles/drvx-run-gups: element/libDrv.so
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-gups && cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-gups && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv/py::/work2/10238/vineeth_architect/stampede3/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv/model/hammerblade-x.py --  --pod-l2sp-banks=1\ --pxn-dram-banks=4   --num-pxn=1 --pxn-pods=1 --pod-cores-x=16 --pod-cores-y=16 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/libgups.so 67108864\ 16 | tee /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/drvx-run-gups/output.txt
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-gups && cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-gups && PYTHONPATH=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/py::/work2/10238/vineeth_architect/stampede3/drv_copy/drv/model /install/bin/sst -n\ 1\  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/model/hammerblade-x.py --  --pod-l2sp-banks=1\ --pxn-dram-banks=4   --num-pxn=1 --pxn-pods=1 --pod-cores-x=16 --pod-cores-y=16 --core-threads=1 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/libgups.so 67108864\ 16 | tee /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/drvx-run-gups/output.txt
 
 drvx/CMakeFiles/drvx-run-gups.dir/codegen:
 .PHONY : drvx/CMakeFiles/drvx-run-gups.dir/codegen
@@ -82,10 +82,10 @@ drvx/CMakeFiles/drvx-run-gups.dir/build: drvx-run-gups
 .PHONY : drvx/CMakeFiles/drvx-run-gups.dir/build
 
 drvx/CMakeFiles/drvx-run-gups.dir/clean:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-gups.dir/cmake_clean.cmake
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx && $(CMAKE_COMMAND) -P CMakeFiles/drvx-run-gups.dir/cmake_clean.cmake
 .PHONY : drvx/CMakeFiles/drvx-run-gups.dir/clean
 
 drvx/CMakeFiles/drvx-run-gups.dir/depend:
-	cd /work2/10238/vineeth_architect/stampede3/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv /work2/10238/vineeth_architect/stampede3/drv/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv/build_stampede/drvx/CMakeFiles/drvx-run-gups.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-gups
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /work2/10238/vineeth_architect/stampede3/drv_copy/drv /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvx/CMakeFiles/drvx-run-gups.dir/DependInfo.cmake "--color=$(COLOR)" drvx-run-gups
 .PHONY : drvx/CMakeFiles/drvx-run-gups.dir/depend
 

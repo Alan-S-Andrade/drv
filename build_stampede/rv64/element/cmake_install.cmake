@@ -1,4 +1,4 @@
-# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv/element
+# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,6 +40,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/rv64/element/install_local_manifest.txt"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/element/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

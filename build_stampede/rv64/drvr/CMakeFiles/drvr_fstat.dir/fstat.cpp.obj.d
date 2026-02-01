@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fstat.dir/fstat.cpp.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/fstat.cpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/fstat.cpp \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/types.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \

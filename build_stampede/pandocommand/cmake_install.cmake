@@ -1,4 +1,4 @@
-# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv/pandocommand
+# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandocommand
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,12 +49,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/libpandocommand.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/libpandocommand.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so"
-         OLD_RPATH "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api:"
+         OLD_RPATH "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/api:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand.so")
@@ -67,16 +67,16 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/pandocommand" TYPE FILE FILES
-    "/work2/10238/vineeth_architect/stampede3/drv/pandocommand/control.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/pandocommand/debug.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/pandocommand/executable.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/pandocommand/loader.hpp"
-    "/work2/10238/vineeth_architect/stampede3/drv/pandocommand/place.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandocommand/control.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandocommand/debug.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandocommand/executable.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandocommand/loader.hpp"
+    "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandocommand/place.hpp"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/CMakeFiles/pandocommand.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/CMakeFiles/pandocommand.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -86,12 +86,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so"
          RPATH "/work/.local/lib")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/libpandocommand_loader.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/libpandocommand_loader.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so"
-         OLD_RPATH "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand:/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api:"
+         OLD_RPATH "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand:/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/api:"
          NEW_RPATH "/work/.local/lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libpandocommand_loader.so")
@@ -105,6 +105,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/pandocommand/install_local_manifest.txt"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/pandocommand/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

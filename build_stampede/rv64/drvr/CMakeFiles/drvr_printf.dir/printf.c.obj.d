@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_printf.dir/printf.c.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/printf.c \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/printf.c \
  /install/riscv64-unknown-elfpandodrvsim/include/stdio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
  /install/riscv64-unknown-elfpandodrvsim/include/newlib.h \
@@ -36,13 +36,13 @@ drvr/CMakeFiles/drvr_printf.dir/printf.c.obj: \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_intsup.h \
  /install/riscv64-unknown-elfpandodrvsim/include/unistd.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/unistd.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/atomic.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/cpuinfo.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/stringify.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/register.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/mmio.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/atomic.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/cpuinfo.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
  /install/riscv64-unknown-elfpandodrvsim/include/string.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/_locale.h \
  /install/riscv64-unknown-elfpandodrvsim/include/strings.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/hartsleep.h
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h

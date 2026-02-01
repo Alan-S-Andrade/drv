@@ -1,5 +1,5 @@
 element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
- /work2/10238/vineeth_architect/stampede3/drv/element/SSTRISCVSimulator.cpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/SSTRISCVSimulator.cpp \
  /usr/include/stdc-predef.h /usr/include/x86_64-linux-gnu/sys/stat.h \
  /usr/include/features.h /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -174,10 +174,10 @@ element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
  /usr/include/c++/11/bits/ostream.tcc \
  /usr/include/c++/11/bits/istream.tcc \
  /usr/include/c++/11/bits/sstream.tcc \
- /work2/10238/vineeth_architect/stampede3/drv/element/SSTRISCVSimulator.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RV64IMFInterpreter.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVInstruction.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVHart.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/SSTRISCVSimulator.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RV64IMFInterpreter.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInstruction.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVHart.hpp \
  /usr/include/c++/11/iomanip /usr/include/c++/11/locale \
  /usr/include/c++/11/bits/locale_facets_nonio.h /usr/include/c++/11/ctime \
  /usr/include/x86_64-linux-gnu/c++/11/bits/time_members.h \
@@ -194,14 +194,14 @@ element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
  /usr/include/c++/11/fenv.h /usr/include/fenv.h \
  /usr/include/x86_64-linux-gnu/bits/fenv.h /usr/include/c++/11/cstring \
  /usr/include/string.h /usr/include/strings.h \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVInstructionBase.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVInstructionId.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/InstructionTable.h \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVRegisterIndices.h \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVInterpreter.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInstructionBase.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInstructionId.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/InstructionTable.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVRegisterIndices.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInterpreter.hpp \
  /usr/include/c++/11/iostream \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RV64IMInterpreter.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RV64IInterpreter.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RV64IMInterpreter.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RV64IInterpreter.hpp \
  /install/include/boost/multiprecision/cpp_int.hpp \
  /install/include/boost/multiprecision/detail/standalone_config.hpp \
  /usr/include/c++/11/climits \
@@ -619,33 +619,33 @@ element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
  /install/include/sst/core/statapi/statengine.h \
  /install/include/sst/core/statapi/statgroup.h \
  /install/include/sst/core/module.h \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAddress.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIReadModifyWrite.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/element/DrvNativeSimulationTranslator.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/element/SSTRISCVCore.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAddress.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIReadModifyWrite.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/DrvNativeSimulationTranslator.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/SSTRISCVCore.hpp \
  /install/include/sst/core/component.h \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVHart.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVInstruction.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVDecoder.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/RISCVInterpreter.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/ICacheBacking.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVHart.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInstruction.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVDecoder.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInterpreter.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/ICacheBacking.hpp \
  /usr/include/elf.h /usr/include/x86_64-linux-gnu/sys/mman.h \
  /usr/include/x86_64-linux-gnu/bits/mman.h \
  /usr/include/x86_64-linux-gnu/bits/mman-map-flags-generic.h \
  /usr/include/x86_64-linux-gnu/bits/mman-linux.h \
  /usr/include/x86_64-linux-gnu/bits/mman-shared.h \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/ICache.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/ICacheBacking.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/element/SSTRISCVHart.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/element/DrvSysConfig.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISysConfig.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAddressMap.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIBits.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/element/DrvStats.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/element/DrvStatsTable.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/interpreter/InstructionTable.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/ICache.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/ICacheBacking.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/SSTRISCVHart.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/DrvSysConfig.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISysConfig.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAddressMap.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIBits.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/DrvStats.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/DrvStatsTable.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/InstructionTable.h \
  /install/riscv64-unknown-elfpandodrvsim/include/machine/syscall.h \
- /work2/10238/vineeth_architect/stampede3/drv/element/DrvCustomStdMem.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/DrvCustomStdMem.hpp \
  /install/include/sst/elements/memHierarchy/memEvent.h \
  /install/include/sst/elements/memHierarchy/util.h \
  /install/include/sst/core/stringize.h /usr/include/c++/11/cstdarg \
@@ -660,6 +660,6 @@ element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
  /install/include/sst/elements/memHierarchy/membackend/simpleMemBackendConvertor.h \
  /install/include/sst/elements/memHierarchy/membackend/flagMemBackendConvertor.h \
  /install/include/sst/elements/memHierarchy/membackend/extMemBackendConvertor.h \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIThreadState.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPISystem.hpp \
- /work2/10238/vineeth_architect/stampede3/drv/api/DrvAPIAddress.hpp
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIThreadState.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPISystem.hpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIAddress.hpp

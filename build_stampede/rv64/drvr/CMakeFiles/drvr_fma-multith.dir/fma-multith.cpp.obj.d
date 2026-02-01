@@ -1,5 +1,5 @@
 drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: \
- /work2/10238/vineeth_architect/stampede3/drv/drvr/fma-multith.cpp \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/drvr/fma-multith.cpp \
  /install/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/atomic \
  /install/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/bits/atomic_base.h \
  /install/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/riscv64-unknown-elfpandodrvsim/bits/c++config.h \
@@ -46,8 +46,8 @@ drvr/CMakeFiles/drvr_fma-multith.dir/fma-multith.cpp.obj: \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/sched.h \
  /install/riscv64-unknown-elfpandodrvsim/include/machine/types.h \
  /install/riscv64-unknown-elfpandodrvsim/include/sys/stdio.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/cpuinfo.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/stringify.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/register.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/mmio.h \
- /work2/10238/vineeth_architect/stampede3/drv/pandohammer/pandohammer/staticdecl.h
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/cpuinfo.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h

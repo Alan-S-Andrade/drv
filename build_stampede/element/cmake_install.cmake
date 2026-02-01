@@ -1,4 +1,4 @@
-# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv/element
+# Install script for directory: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,12 +49,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/element/libDrv.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE MODULE FILES "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element/libDrv.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so"
-         OLD_RPATH "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/api:/install/lib/sst-elements-library:/work2/10238/vineeth_architect/stampede3/drv/build_stampede/interpreter:"
+         OLD_RPATH "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/api:/install/lib/sst-elements-library:/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/interpreter:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libDrv.so")
@@ -63,12 +63,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/work2/10238/vineeth_architect/stampede3/drv/build_stampede/element/CMakeFiles/Drv.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
+  include("/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element/CMakeFiles/Drv.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv/build_stampede/element/install_local_manifest.txt"
+  file(WRITE "/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/element/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

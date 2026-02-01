@@ -129,7 +129,7 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
                            ,static_cast<uint64_t>(shart.pc())
                            ,static_cast<uint64_t>(addr)
                            );
-   core_->issueMemoryRequest(rd, rd->tid, ch);
+   core_->issueMemoryRequest(rd, rd->tid, ch, decode.is_dram());
 }
 
 template <typename T>
