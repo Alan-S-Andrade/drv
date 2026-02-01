@@ -23,7 +23,7 @@
 #define pr_dbg(fmt,...)
 #endif
 
-#define __l1sp__ __attribute__((section(".dmem")))
+// #define __l1sp__ __attribute__((section(".dmem")))
 #define __l2sp__ __attribute__((section(".dram"))) // TODO: this is actually l2sp; need fix in linker script
 
 __l2sp__ std::atomic<int64_t> ph_ready;

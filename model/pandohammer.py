@@ -8,7 +8,7 @@ class PANDOHammer(object):
     """
     A PANDOHammer Simulation
     """
-    def __init__(self, arguments, core_builder=XCoreBuilder):
+    def __init__(self, arguments, core_builder=RCoreBuilder):
         """
         Initialize the PANDOHammer Simulation
         arguments are parsed from the command line
@@ -22,7 +22,7 @@ class PANDOHammer(object):
         l1sp = L1SPBuilder()
         l1sp.clock = "1GHz"
         l1sp.access_time = "1ns"
-        l1sp.size = 128*1024
+        l1sp.size = 256*1024
         l1sp.network_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
         
         # core
@@ -61,7 +61,7 @@ class PANDOHammer(object):
         pod.link_bw = f"{bandwidth_bytes_per_second_per_pod}B/s"
 
         # host core
-        hostcore = XCoreBuilder()
+        hostcore = RCoreBuilder()
         hostcore.clock = "1GHz"
         hostcore.threads = 1
         hostcore.executable = arguments.with_command_processor

@@ -50,9 +50,9 @@ def vcache_coordinates():
     
 MEMSIZE = ARGUMENTS.pxn_dram_size
 
-CPU_VERBOSE_LEVEL   = 0
+CPU_VERBOSE_LEVEL   = 100
 NETWORK_DEBUG_LEVEL = 0
-MEMORY_DEBUG_LEVEL  = 0
+MEMORY_DEBUG_LEVEL  = 100
 UPDATES_PER_CORE = 1000
 
 CORE_CLOCK = Clock(1.5e9)
@@ -123,36 +123,6 @@ def l1sp_range(xdim, ydim, core_id, memsize):
             addressmap.encode(stop_info),
             0,
             0)
-    
-def l2sp_range(xdim, ydim, pod_id, bank_id, memsize):
-    """
-    Address range for a L2SP bank.
-    return addr_start, addr_end, interleave, stride
-    """
-    addressmap = AddressMap(sysconfig())
-    banks = ARGUMENTS.pod_l2sp_banks
-    interleave = ARGUMENTS.pod_l2sp_interleave
-
-    if banks == 1:
-        bank_id = 0
-
-    stride = interleave * banks
-    start = bank_id * interleave
-    stop = memsize - (banks - bank_id - 1) * interleave - 1
-
-    start_info = AddressInfo().set_l2sp()\
-                            .set_absolute()\
-                            .set_pod(pod_id)\
-                            .set_offset(0)
-
-    stop_info = AddressInfo().set_l2sp()\
-                            .set_absolute()\
-                            .set_pod(pod_id)\
-                            .set_offset(memsize-1)
-    return (addressmap.encode(start_info),
-        addressmap.encode(stop_info),
-        0,
-        0)
 
 class Mesh(object):
     """
@@ -253,24 +223,8 @@ class L1SP(object):
     def network_interface(self):
         return (self.nic, "port", f'{CORE_CLOCK.cycle_ps}ps')
 
-class L2SP(object):
-    """
-    A base class for a L2SP
-    """
-    def __init__(self, name):
-        """
-        Initialize the L2 SP memory tile
-        """
-        self.name = name
-        self.memctrl = None
-        self.backend = None
-        self.cmdhandler = None
-        self.nic = None
-        return
 
-    def network_interface(self):
-        return (self.nic, "port", f'{CORE_CLOCK.cycle_ps}ps')
-
+    
 class L1SPBuilder(Identifiable):
     """
     Builds a scratchpad memory.
@@ -323,65 +277,6 @@ class L1SPBuilder(Identifiable):
             "debug" : 1,
         })
         return memory
-
-
-class L2SPBuilder(Identifiable):
-    """
-    A base class for a L2 SP memory tile builder
-    """
-    size = 16 * 1024 * 1024  # 16MB per pod
-    def __init__(self, xdim, ydim, meshid):
-        """
-        Initialize the L2 SP memory tile builder
-        """
-        super().__init__(xdim, ydim, meshid)
-        self.id = 0
-        self.interleave_size = 0
-        self.interleave_step = 0
-        self.network_bw = NETWORK_BANDWIDTH
-        self.clock = f'{CORE_CLOCK}Hz'
-        self.access_time = f'{CORE_CLOCK.cycle_ps}ps'
-        self.group = "1"
-        return
-
-    def memctrl_name(self, name):
-        """
-        Return the name of the memory controller
-        """
-        return name + "_memctrl"
-    
-    def build(self, pod_id=0):
-        l2sp = L2SP(f"l2sp_pod{pod_id}")
-        
-        start, end, *_ = l2sp_range(self.xdim, self.ydim, pod_id, self.id, L2SPBuilder.size)
-
-        l2sp.memctrl = sst.Component(self.memctrl_name(l2sp.name),
-                                     "memHierarchy.MemController")
-        l2sp.memctrl.addParams({
-            "clock" : self.clock,
-            "addr_range_start" : start,
-            "addr_range_end" : end,
-            "interleave_size" : f'{self.interleave_size}B',
-            "interleave_step" : f'{self.interleave_step}B'
-        })
-
-        l2sp.backend = l2sp.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
-        l2sp.backend.addParams({
-            "access_time" : self.access_time,
-            "max_requests_per_cycle" : 1,
-            "mem_size" : f'{L2SPBuilder.size}B',
-        })
-
-        l2sp.cmdhandler = \
-            l2sp.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
-
-        l2sp.nic = l2sp.memctrl.setSubComponent("cpulink", "memHierarchy.MemNIC")
-        l2sp.nic.addParams({
-            "group" : self.group,
-            "network_bw" : self.network_bw,
-        })
-        return l2sp
-
 
 class Core(object):
     """
@@ -521,8 +416,7 @@ class DrvRCoreBuilder(Identifiable):
             "sys_core_threads" : ARGUMENTS.core_threads,
             "sys_core_clock" : f'{CORE_CLOCK}Hz',
             "sys_core_l1sp_size" : L1SPBuilder.size,
-            "sys_pod_l2sp_size" : L2SPBuilder.size,
-            "sys_pod_l2sp_size" : 0,
+            "sys_pod_l2sp_size" : 16384*1024,
             "sys_pod_l2sp_banks" : 1,
             "sys_pod_l2sp_interleave_size" : 0,
             "sys_pxn_dram_size" : MEMSIZE,
@@ -755,7 +649,6 @@ class ComputeTileBuilder(MeshTileBuilder):
     def __init__(self, xdim, ydim, meshid):
         self.core = self.core_builder(xdim, ydim, meshid)
         self.memory = L1SPBuilder(xdim, ydim, meshid)
-        self.local_ports = 2
         super().__init__(xdim, ydim, meshid)
 
     def make_mesh_tile(self):
@@ -956,6 +849,7 @@ def build_hammerblade(core_builder):
     print(
         f"""
         Core Clock: {CORE_CLOCK} Hz
+        PXN Pods: {1}
         Pod Size: {CORES_X}x{CORES_Y}
         L1SP Size: {L1SPBuilder.size}
         DRAM Clock: {MEMORY_CLOCK} Hz
@@ -964,4 +858,3 @@ def build_hammerblade(core_builder):
         $-Size:  {VICTIM_CACHE_SIZE*VICTIM_CACHES} B
         """)
     print(mesh_str)
-    

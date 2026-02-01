@@ -21,7 +21,7 @@ LDFLAGS += $(SST_ELEMENTS_LDFLAGS)
 CXXFLAGS += -I$(DRV_DIR)/element/
 CXXFLAGS += -I$(DRV_INCLUDE_DIR)
 
-LIBS += -lboost_coroutine -lboost_context -ldrvapi
+LIBS += -lboost_coroutine -lboost_context
 
 CXXFLAGS-$(RAMULATOR) += $(RAMULATOR_CXXFLAGS)
 LDFLAGS-$(RAMULATOR)  += $(RAMULATOR_LDFLAGS)

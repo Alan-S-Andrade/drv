@@ -20,8 +20,8 @@ vpath %.S $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)
 vpath %.c $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)
 vpath %.cpp $(DRV_DIR)/riscv-examples/platform_$(RISCV_PLATFORM)
 
-RISCV_ARCH:=rv64imaf
-RISCV_ABI:=lp64f
+RISCV_ARCH:=rv64imafd
+RISCV_ABI:=lp64d
 
 RISCV_COMPILE_FLAGS += -O3 -march=$(RISCV_ARCH)
 RISCV_COMPILE_FLAGS += -mabi=$(RISCV_ABI)

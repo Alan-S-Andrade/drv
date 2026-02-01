@@ -42,12 +42,12 @@ static inline int64_t atomic_swap_i64(volatile int64_t *ptr, int64_t val)
     return ret;
 }
 
-// static inline uint8_t atomic_swap_u8(volatile uint8_t *ptr, uint8_t val)
-// {
-//     uint8_t ret;
-//     asm volatile("amoswap.b %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(val));
-//     return ret;
-// }
+static inline uint8_t atomic_swap_u8(volatile uint8_t *ptr, uint8_t val)
+{
+    uint8_t ret;
+    asm volatile("amoswap.b %0, %2, 0(%1)" : "=r"(ret): "r"(ptr) , "r"(val));
+    return ret;
+}
 
 static inline int32_t atomic_compare_and_swap_i32(volatile int32_t *ptr,
                                            int32_t oldval,

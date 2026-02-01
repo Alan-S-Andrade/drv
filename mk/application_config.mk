@@ -13,6 +13,7 @@ APP_CC  := clang
 APP_CCXXFLAGS += -Wall -Wextra -Werror -Wno-vla-extension -Wno-unused-parameter -O2
 APP_CCXXFLAGS += -Wno-unused-variable -Wno-unused-but-set-variable -Wno-gnu-zero-variadic-macro-arguments
 APP_CCXXFLAGS += -fPIC
+APP_CCXXFLAGS += -I$(DRV_DIR)/api
 APP_CCXXFLAGS += -I$(DRV_INSTALL_DIR)/include
 APP_CCXXFLAGS += $(BOOST_CXXFLAGS)
 
@@ -23,10 +24,11 @@ APP_CFLAGS += $(APP_CCXXFLAGS)
 APP_CFLAGS += -std=c11
 
 APP_LDFLAGS += -L$(DRV_INSTALL_DIR)/lib -Wl,-rpath,$(DRV_INSTALL_DIR)/lib
+APP_LDFLAGS += -L$(DRV_DIR)/build/api -Wl,-rpath,$(DRV_DIR)/build/api
 APP_LDFLAGS += -shared
 APP_LDFLAGS += -Wl,--no-as-needed
 APP_LDFLAGS += $(BOOST_LDFLAGS)
 
 APP_LIBS += -lboost_coroutine -lboost_context
-APP_LIBS += -ldrvapi #-ldrvapiapp
+APP_LIBS += -ldrvapi
 endif

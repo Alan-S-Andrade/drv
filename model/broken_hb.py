@@ -329,7 +329,7 @@ class L2SPBuilder(Identifiable):
     """
     A base class for a L2 SP memory tile builder
     """
-    size = 16 * 1024 * 1024  # 16MB per pod
+    size = 16777216
     def __init__(self, xdim, ydim, meshid):
         """
         Initialize the L2 SP memory tile builder
@@ -510,7 +510,7 @@ class DrvRCoreBuilder(Identifiable):
             "program" : ARGUMENTS.program,
             "argv" : ' '.join(ARGUMENTS.argv),
             "core" : self.core_id(x, y),
-            "verbose" : 100,
+            "verbose" : 0,
             "debug_clock" : ARGUMENTS.debug_clock,
             "pod" : 0,
             "pxn" : 0,
@@ -521,7 +521,7 @@ class DrvRCoreBuilder(Identifiable):
             "sys_core_threads" : ARGUMENTS.core_threads,
             "sys_core_clock" : f'{CORE_CLOCK}Hz',
             "sys_core_l1sp_size" : L1SPBuilder.size,
-            "sys_pod_l2sp_size" : L2SPBuilder.size,
+            # "sys_pod_l2sp_size" : L2SPBuilder.size,
             "sys_pod_l2sp_size" : 0,
             "sys_pod_l2sp_banks" : 1,
             "sys_pod_l2sp_interleave_size" : 0,
@@ -755,7 +755,8 @@ class ComputeTileBuilder(MeshTileBuilder):
     def __init__(self, xdim, ydim, meshid):
         self.core = self.core_builder(xdim, ydim, meshid)
         self.memory = L1SPBuilder(xdim, ydim, meshid)
-        self.local_ports = 2
+        # self.l2sp = L2SPBuilder()  # Add L2SPBuilder
+        self.local_ports = 3  # Increase from 2 to 3
         super().__init__(xdim, ydim, meshid)
 
     def make_mesh_tile(self):
@@ -770,6 +771,11 @@ class ComputeTileBuilder(MeshTileBuilder):
         tile.memory = self.memory.build(x, y)
         link = sst.Link(f"link_router_memory_{x}_{y}_mesh{self.meshid}")
         link.connect(tile.memory.network_interface, tile.local1)
+        
+        # Add L2SP connection
+        # tile.l2sp = self.l2sp.build(system_builder, f"l2sp_{x}_{y}")
+        # link = sst.Link(f"link_router_l2sp_{x}_{y}_mesh{self.meshid}")
+        # link.connect(tile.l2sp.network_interface, tile.local2)
 
 class VictimCache(object):
     """

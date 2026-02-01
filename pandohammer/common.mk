@@ -53,7 +53,7 @@ COMMAND_PROCESSOR_COMPILE_FLAGS += $(COMMAND_PROCESSOR_PLATFORM_COMPILE_FLAGS-ye
 address_map.h: $(DRV_DIR)/py/addressmap.py
 	python3 $^ cheader \
 		--core-threads=$(THREADS) \
-		--pod-cores=$(CORES) \
+		--pod-cores-x=$(CORES) \
 		--pxn-pods=$(PODS) \
 		--num-pxn=$(PXNS) \
 		> $@

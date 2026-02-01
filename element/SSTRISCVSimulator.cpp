@@ -263,8 +263,7 @@ void RISCVSimulator::visitLD(RISCVHart &hart, RISCVInstruction &i) {
     int64_t base = hart.sx(rs1);
     const char * imm  = i.getMnemonic();
 
-    std::printf("LD: pc=0x%lx rs1=%d base=0x%lx imm=%s\n",
-            (uint64_t)hart.pc(), rs1, (uint64_t)base, imm);
+    // std::printf("LD: pc=0x%lx rs1=%d base=0x%lx imm=%s\n",(uint64_t)hart.pc(), rs1, (uint64_t)base, imm);
     visitLoad<uint64_t, uint64_t>(hart, i);
 }
 

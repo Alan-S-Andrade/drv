@@ -442,10 +442,10 @@ bool RISCVCore::tick(Cycle_t cycle) {
 void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &handler) {
     output_.verbose(CALL_INFO, 0, DEBUG_REQ, "Issuing memory request\n");
     // TODO: check if tid is valid
-    std::cout << "issueMemoryRequest" << std::endl;
+    // std::cout << "issueMemoryRequest" << std::endl;
     rsp_handlers_[tid] = handler;
     mem_->send(req);
-    std::cout << req << std::endl;
+    // std::cout << req << std::endl;
 }
 
 /**

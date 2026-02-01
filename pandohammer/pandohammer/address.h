@@ -424,7 +424,6 @@ static inline uintptr_t ph_address_relative_is_l1sp(uintptr_t address)
     return !ph_address_relative_is_dram(address) && !ph_address_relative_is_l2sp(address);
 }
 
-
 /**
  * @brief Get the dram offset of a relative address
  * 
@@ -481,4 +480,26 @@ static inline uintptr_t ph_address_relative_l1sp_to_absolute(uintptr_t address,
     return absolute;
 
 }
+
+static inline uintptr_t ph_address_relative_l2sp_to_absolute(uintptr_t rel,
+                                                             uintptr_t pxn,
+                                                             uintptr_t pod) {
+    uintptr_t abs = 0;
+    abs = ph_address_set_absolute(abs, 1);
+    abs = ph_address_absolute_set_l2sp(abs, 1);
+    abs = ph_address_absolute_set_pxn(abs, pxn);
+    abs = ph_address_absolute_set_pod(abs, pod);
+    abs = ph_address_absolute_set_l2sp_offset(abs, ph_address_relative_l2sp_offset(rel));
+    return abs;
+}
+
+static inline uintptr_t ph_address_relative_dram_to_absolute(uintptr_t rel, uintptr_t pxn) {
+    uintptr_t abs = 0;
+    abs = ph_address_set_absolute(abs, 1);
+    abs = ph_address_absolute_set_dram(abs, 1);
+    abs = ph_address_absolute_set_pxn(abs, pxn);
+    abs = ph_address_absolute_set_dram_offset(abs, ph_address_relative_dram_offset(rel));
+    return abs;
+}
+
 #endif
