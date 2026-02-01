@@ -19,7 +19,7 @@ def MakePANDOHammer(make_tile):
     """
     PXNS = SYSCONFIG["sys_num_pxn"]
     PODS = SYSCONFIG["sys_pxn_pods"]
-    CORES = SYSCONFIG["sys_pod_cores"]
+    CORES = SYSCONFIG["sys_pod_cores_x"] * SYSCONFIG["sys_pod_cores_y"]
     POD_L2_BANKS = SYSCONFIG["sys_pod_l2sp_banks"]
     PXN_MAINMEM_BANKS = SYSCONFIG["sys_pxn_dram_ports"]
 

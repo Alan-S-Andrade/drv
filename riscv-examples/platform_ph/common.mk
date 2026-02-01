@@ -4,14 +4,15 @@
 DRV_DIR  ?= $(shell git rev-parse --show-toplevel)
 PLATFORM_DIR := $(DRV_DIR)/riscv-examples/platform_ph
 
-THREADS  ?= 1
-CORES    ?= 1
-PODS     ?= 1
-PXNS     ?= 1
+THREADS    ?= 1
+CORES_X    ?= 1
+CORES_Y    ?= 1
+PODS       ?= 1
+PXNS       ?= 1
 
 SCRIPT   := $(DRV_DIR)/tests/PANDOHammerDrvR.py
 
-SIM_OPTIONS := --core-threads $(THREADS) --pod-cores $(CORES) --pxn-pods $(PODS) --num-pxn $(PXNS)
+SIM_OPTIONS := --core-threads $(THREADS) --pod-cores-x $(CORES_X) --pod-cores-y $(CORES_Y) --pxn-pods $(PODS) --num-pxn $(PXNS)
 
 RISCV_COMPILE_FLAGS += -nostartfiles
 RISCV_COMPILE_FLAGS += -I$(DRV_DIR)/riscv-examples/platform_ph
@@ -53,7 +54,8 @@ COMMAND_PROCESSOR_COMPILE_FLAGS += $(COMMAND_PROCESSOR_PLATFORM_COMPILE_FLAGS-ye
 address_map.h: $(DRV_DIR)/py/addressmap.py
 	python3 $^ cheader \
 		--core-threads=$(THREADS) \
-		--pod-cores=$(CORES) \
+		--pod-cores-x=$(CORES_X) \
+		--pod-cores-y=$(CORES_Y) \
 		--pxn-pods=$(PODS) \
 		--num-pxn=$(PXNS) \
 		> $@

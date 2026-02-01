@@ -7,8 +7,8 @@ import addressmap
 ##################
 # Size Constants #
 ##################
-POD_L2SP_SIZE = (1<<25)
-CORE_L1SP_SIZE = (1<<17)
+POD_L2SP_SIZE =  16384*1024  # 16 MiB
+CORE_L1SP_SIZE = (1<<17) * 2
         
 ################################
 # parse command line arguments #
@@ -29,7 +29,8 @@ parser.add_argument("--debug-syscalls", action="store_true", help="enable debug 
 parser.add_argument("--debug-clock", action="store_true", help="enable debug of clock ticks")
 parser.add_argument("--debug-mmio", action="store_true", help="enable debug of mmio requests to the core")
 parser.add_argument("--verbose-memory", type=int, default=0, help="verbosity of memory")
-parser.add_argument("--pod-cores", type=int, default=8, help="number of cores per pod")
+parser.add_argument("--pod-cores-x", type=int, default=1, help="number of cores in x dimension of pod")
+parser.add_argument("--pod-cores-y", type=int, default=1, help="number of cores in y dimension of pod")
 parser.add_argument("--pxn-pods", type=int, default=1, help="number of pods")
 parser.add_argument("--num-pxn", type=int, default=1, help="number of pxns")
 parser.add_argument("--core-threads", type=int, default=16, help="number of threads per core")
@@ -37,8 +38,8 @@ parser.add_argument("--core-clock", type=str, default="1GHz", help="clock freque
 parser.add_argument("--core-max-idle", type=int, default=1, help="max idle time of cores")
 parser.add_argument("--core-l1sp-size", type=int, default=CORE_L1SP_SIZE, help="size of l1sp per core")
 
-parser.add_argument("--pod-l2sp-banks", type=int, default=8, help="number of l2sp banks per pod")
-parser.add_argument("--pod-l2sp-interleave", type=int, default=0, help="interleave size of l2sp addresses (defaults to no  interleaving)")
+parser.add_argument("--pod-l2sp-banks", type=int, default=1, help="number of l2sp banks per pod")
+parser.add_argument("--pod-l2sp-interleave", type=int, default=0, help="interleave size of l2sp addresses (defaults to no interleaving)")
 parser.add_argument("--pod-l2sp-size", type=int, default=POD_L2SP_SIZE, help="size of l2sp per pod (max {} bytes)".format(POD_L2SP_SIZE))
 
 parser.add_argument("--pxn-dram-banks", type=int, default=8, help="number of dram banks per pxn")
@@ -74,7 +75,7 @@ def link_latency(link_name):
 
 # determine the latency of a router
 ROUTER_LATENCIES = {
-    'tile_rtr': "1ns"
+    'tile_rtr': "1ns",
     'mem_rtr': "1ns",
     'chiprrtr': "1ns",
     'offchiprtr': "70ns",
@@ -109,7 +110,8 @@ CHIPRTR_ID = 1024*1024*1024
 SYSCONFIG = {
     "sys_num_pxn" : 1,
     "sys_pxn_pods" : 1,
-    "sys_pod_cores" : 8,
+    "sys_pod_cores_x" : 8,
+    "sys_pod_cores_y" : 8,
     "sys_core_threads" : 16,
     "sys_core_clock" : "1GHz",
     "sys_core_l1sp_size" : arguments.core_l1sp_size,
@@ -147,7 +149,8 @@ KNOBS = {
 
 SYSCONFIG['sys_num_pxn'] = arguments.num_pxn
 SYSCONFIG['sys_pxn_pods'] = arguments.pxn_pods
-SYSCONFIG['sys_pod_cores'] = arguments.pod_cores
+SYSCONFIG['sys_pod_cores_x'] = arguments.pod_cores_x
+SYSCONFIG['sys_pod_cores_y'] = arguments.pod_cores_y
 SYSCONFIG['sys_core_threads'] = arguments.core_threads
 SYSCONFIG['sys_cp_present'] = bool(arguments.with_command_processor)
 SYSCONFIG['sys_core_clock'] = arguments.core_clock
@@ -171,7 +174,7 @@ class Sysconfig(object):
         """
         self._pxns = SYSCONFIG['sys_num_pxn']
         self._pxn_pods = SYSCONFIG['sys_pxn_pods']
-        self._pod_cores = SYSCONFIG['sys_pod_cores']
+        self._pod_cores = SYSCONFIG['sys_pod_cores_x'] * SYSCONFIG['sys_pod_cores_y']
 
     def pxns(self):
         """
