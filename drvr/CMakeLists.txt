@@ -90,7 +90,7 @@ drvr_test_nostdlib(fma fma.S fma.c)
 drvr_test_with_pandohammer(fma-multith fma-multith.cpp)
 drvr_test_build_properties(fma-multith
   PROPERTIES
-  DRV_BUILD_CORE_THREADS 2
+  DRV_BUILD_CORE_THREADS 8
   )
 
 # fread
@@ -157,6 +157,16 @@ drvr_test_build_properties(attn_fixed
   DRV_MODEL_OPTIONS --dram-access-time=70ns
 )
 
+#bfs_multihart
+drvr_test_with_pandohammer(bfs_multihart bfs_multihart.cpp)
+  drvr_test_compile_options(bfs_multihart -DDEBUG)
+  drvr_test_build_properties(bfs_multihart
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
 # bfs
 drvr_test_with_pandohammer(bfs bfs_grid.cpp)
 drvr_test_build_properties(bfs
@@ -176,15 +186,6 @@ drvr_test_build_properties(bfs-multith
   DRV_BUILD_CORE_THREADS 4
 )
 
-# bfs_multihart
-  drvr_test_with_pandohammer(bfs_multihart bfs_multihart.cpp)
-  drvr_test_compile_options(bfs_multihart -DDEBUG)
-   drvr_test_build_properties(bfs_multihart
-    PROPERTIES
-    DRV_BUILD_POD_CORES_X 1
-    # DRV_BUILD_POD_CORES_Y 1
-    DRV_BUILD_CORE_THREADS 2
-)
 #tc
 drvr_test_with_pandohammer(tc tc.c)
 drvr_test_build_properties(tc
