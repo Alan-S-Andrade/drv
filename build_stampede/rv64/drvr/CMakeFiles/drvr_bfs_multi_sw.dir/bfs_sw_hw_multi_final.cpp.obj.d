@@ -51,4 +51,6 @@ drvr/CMakeFiles/drvr_bfs_multi_sw.dir/bfs_sw_hw_multi_final.cpp.obj: \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/atomic.h \
- /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
+ /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h

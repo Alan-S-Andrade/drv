@@ -90,7 +90,17 @@ public:
         Statistic<uint64_t> *atomic_dram;
         Statistic<uint64_t> *load_remote_pxn;
         Statistic<uint64_t> *store_remote_pxn;
-        Statistic<uint64_t> *atomic_remote_pxn;        
+        Statistic<uint64_t> *atomic_remote_pxn;
+        // "useful" counters: only incremented when hart.stat_phase_ == 1
+        Statistic<uint64_t> *useful_load_l1sp;
+        Statistic<uint64_t> *useful_store_l1sp;
+        Statistic<uint64_t> *useful_atomic_l1sp;
+        Statistic<uint64_t> *useful_load_l2sp;
+        Statistic<uint64_t> *useful_store_l2sp;
+        Statistic<uint64_t> *useful_atomic_l2sp;
+        Statistic<uint64_t> *useful_load_dram;
+        Statistic<uint64_t> *useful_store_dram;
+        Statistic<uint64_t> *useful_atomic_dram;
     };
     
     // DOCUMENT STATISTICS
@@ -114,6 +124,15 @@ public:
             {"load_remote_pxn", "Number of loads to remote PXN", "count", 1},
             {"store_remote_pxn", "Number of stores to remote PXN", "count", 1},
             {"atomic_remote_pxn", "Number of atomics to remote PXN", "count", 1},
+            {"useful_load_l1sp", "Number of useful loads to local L1SP", "count", 1},
+            {"useful_store_l1sp", "Number of useful stores to local L1SP", "count", 1},
+            {"useful_atomic_l1sp", "Number of useful atomics to local L1SP", "count", 1},
+            {"useful_load_l2sp", "Number of useful loads to L2SP", "count", 1},
+            {"useful_store_l2sp", "Number of useful stores to L2SP", "count", 1},
+            {"useful_atomic_l2sp", "Number of useful atomics to L2SP", "count", 1},
+            {"useful_load_dram", "Number of useful loads to DRAM", "count", 1},
+            {"useful_store_dram", "Number of useful stores to DRAM", "count", 1},
+            {"useful_atomic_dram", "Number of useful atomics to DRAM", "count", 1},
             {"stall_cycles", "Number of stalled cycles", "count", 1},
             {"busy_cycles", "Number of busy cycles", "count", 1},
             {"icache_miss", "Number of icache misses", "count", 1},
@@ -428,10 +447,13 @@ public:
         ThreadStats &stats = thread_stats_[id];
         if (isPAddressL1SP(addr)) {
             stats.load_l1sp->addData(1);
+            if (hart.stat_phase_) stats.useful_load_l1sp->addData(1);
         } else if (isPAddressL2SP(addr)) {
             stats.load_l2sp->addData(1);
+            if (hart.stat_phase_) stats.useful_load_l2sp->addData(1);
         } else if (isPAddressDRAM(addr)) {
             stats.load_dram->addData(1);
+            if (hart.stat_phase_) stats.useful_load_dram->addData(1);
         } else if (isPAddressRemotePXN(addr)) {
             stats.load_remote_pxn->addData(1);
         }
@@ -442,15 +464,18 @@ public:
      */
     void addStoreStat(const DrvAPI::DrvAPIAddressInfo& addr, RISCVSimHart &hart) {
         int id = getHartId(hart);
-        ThreadStats &stats = thread_stats_[id];        
+        ThreadStats &stats = thread_stats_[id];
         if (isPAddressL1SP(addr)) {
-            stats.load_l1sp->addData(1);
+            stats.store_l1sp->addData(1);
+            if (hart.stat_phase_) stats.useful_store_l1sp->addData(1);
         } else if (isPAddressL2SP(addr)) {
-            stats.load_l2sp->addData(1);
+            stats.store_l2sp->addData(1);
+            if (hart.stat_phase_) stats.useful_store_l2sp->addData(1);
         } else if (isPAddressDRAM(addr)) {
-            stats.load_dram->addData(1);
+            stats.store_dram->addData(1);
+            if (hart.stat_phase_) stats.useful_store_dram->addData(1);
         } else if (isPAddressRemotePXN(addr)) {
-            stats.load_remote_pxn->addData(1);
+            stats.store_remote_pxn->addData(1);
         }
     }
 
@@ -462,10 +487,13 @@ public:
         ThreadStats &stats = thread_stats_[id];
         if (isPAddressL1SP(addr)) {
             stats.atomic_l1sp->addData(1);
+            if (hart.stat_phase_) stats.useful_atomic_l1sp->addData(1);
         } else if (isPAddressL2SP(addr)) {
             stats.atomic_l2sp->addData(1);
+            if (hart.stat_phase_) stats.useful_atomic_l2sp->addData(1);
         } else if (isPAddressDRAM(addr)) {
             stats.atomic_dram->addData(1);
+            if (hart.stat_phase_) stats.useful_atomic_dram->addData(1);
         } else if (isPAddressRemotePXN(addr)) {
             stats.atomic_remote_pxn->addData(1);
         }

@@ -4,11 +4,14 @@ import collections
 
 # Config: The columns we care about
 INTERESTING_STATS = [
-    "busy_cycles", 
-    "memory_wait_cycles", 
-    "active_idle_cycles", 
-    "load_dram", 
+    "busy_cycles",
+    "memory_wait_cycles",
+    "active_idle_cycles",
+    "load_dram",
     "load_l1sp",
+    "store_l1sp",
+    "useful_load_l1sp",
+    "useful_store_l1sp",
     "icache_miss"
 ]
 

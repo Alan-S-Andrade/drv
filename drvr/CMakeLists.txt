@@ -151,8 +151,30 @@ drvr_test_build_properties(attn_fixed
   drvr_test_compile_options(bfs_multi_sw -DDEBUG)
   drvr_test_build_properties(bfs_multi_sw
   PROPERTIES
+  DRV_BUILD_POD_CORES_X 4
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_MODEL_OPTIONS --dram-access-time=70ns
+)
+
+# bfs_sw_multi_l2sp (L2SP-optimized version)
+drvr_test_with_pandohammer(bfs_multi_sw_l2sp bfs_sw_hw_multi_l2sp.cpp)
+drvr_test_compile_options(bfs_multi_sw_l2sp -DDEBUG)
+drvr_test_build_properties(bfs_multi_sw_l2sp
+  PROPERTIES
   DRV_BUILD_POD_CORES_X 2
   DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_MODEL_OPTIONS --dram-access-time=70ns
+)
+
+# bfs_sw_multi_barrier (improved barrier, NO L2SP for data - for comparison)
+drvr_test_with_pandohammer(bfs_multi_sw_barrier bfs_sw_hw_multi_barrier.cpp)
+drvr_test_compile_options(bfs_multi_sw_barrier -DDEBUG)
+drvr_test_build_properties(bfs_multi_sw_barrier
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
   DRV_BUILD_CORE_THREADS 16
   DRV_MODEL_OPTIONS --dram-access-time=70ns
 )

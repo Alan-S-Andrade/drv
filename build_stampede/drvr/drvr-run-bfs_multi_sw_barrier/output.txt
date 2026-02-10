@@ -1,0 +1,7 @@
+Parsing arguments
+Building system
+Running simualation
+Grid BFS (barrier version, NO L2SP data): R=512 C=512 N=262144
+HW: total_harts=1024, pxn=1 pods/pxn=1 cores/pod=64 harts/core=16
+Using total_threads=1024 (within single pod for comparison)
+Full Verification: DISABLED

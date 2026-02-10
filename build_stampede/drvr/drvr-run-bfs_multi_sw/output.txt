@@ -17,4 +17,4 @@ ALL 1024 NODES PASSED.
 DBG: after reductions barrier
 Configuring 16 harts
 Configuring 16 harts
-Simulation is complete, simulated time: 20.6208 ms
+Simulation is complete, simulated time: 12.9484 ms

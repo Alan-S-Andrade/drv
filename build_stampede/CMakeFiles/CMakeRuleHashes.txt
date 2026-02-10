@@ -12,7 +12,9 @@ ab7a3ed86589dc87fdfbaab5b4e03810 CMakeFiles/rv64
 d1759b31a924b10f139d567a49f61dab drvr/CMakeFiles/drvr-run-attn_fixed
 4751f31b95da6c5488ae0c787be471f1 drvr/CMakeFiles/drvr-run-bfs
 88cdfb7840d8c604e8fc6be89bb34f75 drvr/CMakeFiles/drvr-run-bfs-multith
-639357822a1a62360985b223516016e5 drvr/CMakeFiles/drvr-run-bfs_multi_sw
+bb1f856098aa24c65d797368a172ced6 drvr/CMakeFiles/drvr-run-bfs_multi_sw
+315cf6deeeb731e08e88f3df45af4517 drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier
+3994066c526f54e9adb2a229eb1c074e drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp
 10cc8f3d2f2859c0349aa53f1e35a387 drvr/CMakeFiles/drvr-run-bfs_multihart
 bc41d781b8156914d445857bdafbda58 drvr/CMakeFiles/drvr-run-cycle
 24b7ddc3f441e1c14942e327bdfd8aaa drvr/CMakeFiles/drvr-run-dense_gemm

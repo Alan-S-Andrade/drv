@@ -9,6 +9,8 @@
 #include <pandohammer/cpuinfo.h>
 #include <pandohammer/atomic.h>
 #include <pandohammer/hartsleep.h>
+#include <pandohammer/mmio.h>
+#include <pandohammer/staticdecl.h>
 
 // ---------- Configuration ----------
 
@@ -28,8 +30,7 @@ static inline int id(int r, int c, int C) { return r * C + c; }
 // Must be >= maximum global threads you will run with.
 static const int MAX_THREADS = 1024;
 static int64_t g_local_phase_arr[MAX_THREADS];
-
-static volatile int64_t g_barrier_count = 0;
+__l2sp__ static volatile int64_t g_barrier_count = 0;
 static volatile int64_t g_barrier_phase = 0;
 static volatile int g_sim_exit = 0;
 
@@ -132,14 +133,17 @@ extern "C" int main(int argc, char** argv) {
     }
 
     // init arrays
+    ph_stat_phase(1); // useful work: init arrays
     for (int i = tid_global; i < g_N; i += total_threads) {
         g_dist[i] = -1;
         g_frontier[i] = 0;
         g_next_frontier[i] = 0;
     }
+    ph_stat_phase(0); // overhead: barrier
     barrier(tid_global, total_threads);
 
     // init BFS source
+    ph_stat_phase(1); // useful work: init BFS source
     if (tid_global == 0) {
         const int source = 0;
         g_dist[source] = 0;
@@ -150,6 +154,7 @@ extern "C" int main(int argc, char** argv) {
         g_reached  = 0;
         g_max_dist = 0;
     }
+    ph_stat_phase(0); // overhead: barrier
     barrier(tid_global, total_threads);
 
     const int dr[4] = {-1, 1, 0, 0};
@@ -159,6 +164,7 @@ extern "C" int main(int argc, char** argv) {
 
     while (true) {
         // expand frontier
+        ph_stat_phase(1); // useful work: expand frontier
         for (int v = tid_global; v < g_N; v += total_threads) {
             if (!g_frontier[v]) continue;
 
@@ -180,9 +186,11 @@ extern "C" int main(int argc, char** argv) {
             }
         }
 
+        ph_stat_phase(0); // overhead: barrier
         barrier(tid_global, total_threads);
 
         // swap frontiers + done check
+        ph_stat_phase(1); // useful work: swap frontiers
         if (tid_global == 0) {
             int any = 0;
             for (int i = 0; i < g_N; ++i) {
@@ -194,6 +202,7 @@ extern "C" int main(int argc, char** argv) {
             g_bfs_done = any ? 0 : 1;
         }
 
+        ph_stat_phase(0); // overhead: barrier
         barrier(tid_global, total_threads);
 
         if (g_bfs_done) break;
@@ -201,6 +210,7 @@ extern "C" int main(int argc, char** argv) {
     }
 
     // reductions
+    ph_stat_phase(1); // useful work: reductions
     long long local_sum = 0;
     int local_reached = 0;
     int local_max = 0;
@@ -224,6 +234,7 @@ extern "C" int main(int argc, char** argv) {
         old_max = prev;
     }
 
+    ph_stat_phase(0); // overhead: barrier
     barrier(tid_global, total_threads);
 
     if (tid_global == 0) {

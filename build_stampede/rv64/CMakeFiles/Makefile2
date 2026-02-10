@@ -214,6 +214,8 @@ drvr/all: drvr/CMakeFiles/drvr_leiden_single.dir/all
 drvr/all: drvr/CMakeFiles/drvr_attn_fixed.dir/all
 drvr/all: drvr/CMakeFiles/drvr_dense_gemm.dir/all
 drvr/all: drvr/CMakeFiles/drvr_bfs_multi_sw.dir/all
+drvr/all: drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/all
+drvr/all: drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/all
 drvr/all: drvr/CMakeFiles/drvr_bfs.dir/all
 drvr/all: drvr/CMakeFiles/drvr_bfs-multith.dir/all
 drvr/all: drvr/CMakeFiles/drvr_bfs_multihart.dir/all
@@ -260,6 +262,8 @@ drvr/codegen: drvr/CMakeFiles/drvr_leiden_single.dir/codegen
 drvr/codegen: drvr/CMakeFiles/drvr_attn_fixed.dir/codegen
 drvr/codegen: drvr/CMakeFiles/drvr_dense_gemm.dir/codegen
 drvr/codegen: drvr/CMakeFiles/drvr_bfs_multi_sw.dir/codegen
+drvr/codegen: drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/codegen
+drvr/codegen: drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/codegen
 drvr/codegen: drvr/CMakeFiles/drvr_bfs.dir/codegen
 drvr/codegen: drvr/CMakeFiles/drvr_bfs-multith.dir/codegen
 drvr/codegen: drvr/CMakeFiles/drvr_bfs_multihart.dir/codegen
@@ -310,6 +314,8 @@ drvr/clean: drvr/CMakeFiles/drvr_leiden_single.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr_attn_fixed.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr_dense_gemm.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr_bfs_multi_sw.dir/clean
+drvr/clean: drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/clean
+drvr/clean: drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr_bfs.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr_bfs-multith.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr_bfs_multihart.dir/clean
@@ -597,7 +603,7 @@ drvr/CMakeFiles/drvr_amoswap.dir/clean:
 drvr/CMakeFiles/drvr_cycle.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_cycle.dir/build.make drvr/CMakeFiles/drvr_cycle.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_cycle.dir/build.make drvr/CMakeFiles/drvr_cycle.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=20,21 "Built target drvr_cycle"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=23,24 "Built target drvr_cycle"
 .PHONY : drvr/CMakeFiles/drvr_cycle.dir/all
 
 # Build rule for subdir invocation for target.
@@ -614,7 +620,7 @@ drvr_cycle: drvr/CMakeFiles/drvr_cycle.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_cycle.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_cycle.dir/build.make drvr/CMakeFiles/drvr_cycle.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=20,21 "Finished codegen for target drvr_cycle"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=23,24 "Finished codegen for target drvr_cycle"
 .PHONY : drvr/CMakeFiles/drvr_cycle.dir/codegen
 
 # clean rule for target.
@@ -629,7 +635,7 @@ drvr/CMakeFiles/drvr_cycle.dir/clean:
 drvr/CMakeFiles/drvr_exit.dir/all:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_exit.dir/build.make drvr/CMakeFiles/drvr_exit.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_exit.dir/build.make drvr/CMakeFiles/drvr_exit.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=24,25 "Built target drvr_exit"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=27,28 "Built target drvr_exit"
 .PHONY : drvr/CMakeFiles/drvr_exit.dir/all
 
 # Build rule for subdir invocation for target.
@@ -646,7 +652,7 @@ drvr_exit: drvr/CMakeFiles/drvr_exit.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_exit.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_exit.dir/build.make drvr/CMakeFiles/drvr_exit.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=24,25 "Finished codegen for target drvr_exit"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=27,28 "Finished codegen for target drvr_exit"
 .PHONY : drvr/CMakeFiles/drvr_exit.dir/codegen
 
 # clean rule for target.
@@ -661,7 +667,7 @@ drvr/CMakeFiles/drvr_exit.dir/clean:
 drvr/CMakeFiles/drvr_fence.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fence.dir/build.make drvr/CMakeFiles/drvr_fence.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fence.dir/build.make drvr/CMakeFiles/drvr_fence.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=26,27 "Built target drvr_fence"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=29,30 "Built target drvr_fence"
 .PHONY : drvr/CMakeFiles/drvr_fence.dir/all
 
 # Build rule for subdir invocation for target.
@@ -678,7 +684,7 @@ drvr_fence: drvr/CMakeFiles/drvr_fence.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fence.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fence.dir/build.make drvr/CMakeFiles/drvr_fence.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=26,27 "Finished codegen for target drvr_fence"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=29,30 "Finished codegen for target drvr_fence"
 .PHONY : drvr/CMakeFiles/drvr_fence.dir/codegen
 
 # clean rule for target.
@@ -693,7 +699,7 @@ drvr/CMakeFiles/drvr_fence.dir/clean:
 drvr/CMakeFiles/drvr_fib.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fib.dir/build.make drvr/CMakeFiles/drvr_fib.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fib.dir/build.make drvr/CMakeFiles/drvr_fib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=28,29,30 "Built target drvr_fib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=31,32,33 "Built target drvr_fib"
 .PHONY : drvr/CMakeFiles/drvr_fib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -710,7 +716,7 @@ drvr_fib: drvr/CMakeFiles/drvr_fib.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fib.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fib.dir/build.make drvr/CMakeFiles/drvr_fib.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=28,29,30 "Finished codegen for target drvr_fib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=31,32,33 "Finished codegen for target drvr_fib"
 .PHONY : drvr/CMakeFiles/drvr_fib.dir/codegen
 
 # clean rule for target.
@@ -725,7 +731,7 @@ drvr/CMakeFiles/drvr_fib.dir/clean:
 drvr/CMakeFiles/drvr_float_lsu.dir/all:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_float_lsu.dir/build.make drvr/CMakeFiles/drvr_float_lsu.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_float_lsu.dir/build.make drvr/CMakeFiles/drvr_float_lsu.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=31,32,33 "Built target drvr_float_lsu"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=34,35,36 "Built target drvr_float_lsu"
 .PHONY : drvr/CMakeFiles/drvr_float_lsu.dir/all
 
 # Build rule for subdir invocation for target.
@@ -742,7 +748,7 @@ drvr_float_lsu: drvr/CMakeFiles/drvr_float_lsu.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_float_lsu.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_float_lsu.dir/build.make drvr/CMakeFiles/drvr_float_lsu.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=31,32,33 "Finished codegen for target drvr_float_lsu"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=34,35,36 "Finished codegen for target drvr_float_lsu"
 .PHONY : drvr/CMakeFiles/drvr_float_lsu.dir/codegen
 
 # clean rule for target.
@@ -757,12 +763,12 @@ drvr/CMakeFiles/drvr_float_lsu.dir/clean:
 drvr/CMakeFiles/drvr_fma.dir/all:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fma.dir/build.make drvr/CMakeFiles/drvr_fma.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fma.dir/build.make drvr/CMakeFiles/drvr_fma.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=34,35,36 "Built target drvr_fma"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=37,38 "Built target drvr_fma"
 .PHONY : drvr/CMakeFiles/drvr_fma.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_fma.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_fma.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_fma.dir/rule
@@ -774,7 +780,7 @@ drvr_fma: drvr/CMakeFiles/drvr_fma.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fma.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fma.dir/build.make drvr/CMakeFiles/drvr_fma.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=34,35,36 "Finished codegen for target drvr_fma"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=37,38 "Finished codegen for target drvr_fma"
 .PHONY : drvr/CMakeFiles/drvr_fma.dir/codegen
 
 # clean rule for target.
@@ -789,7 +795,7 @@ drvr/CMakeFiles/drvr_fma.dir/clean:
 drvr/CMakeFiles/drvr_fma-multith.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fma-multith.dir/build.make drvr/CMakeFiles/drvr_fma-multith.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fma-multith.dir/build.make drvr/CMakeFiles/drvr_fma-multith.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=37,38 "Built target drvr_fma-multith"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=39,40 "Built target drvr_fma-multith"
 .PHONY : drvr/CMakeFiles/drvr_fma-multith.dir/all
 
 # Build rule for subdir invocation for target.
@@ -806,7 +812,7 @@ drvr_fma-multith: drvr/CMakeFiles/drvr_fma-multith.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fma-multith.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fma-multith.dir/build.make drvr/CMakeFiles/drvr_fma-multith.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=37,38 "Finished codegen for target drvr_fma-multith"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=39,40 "Finished codegen for target drvr_fma-multith"
 .PHONY : drvr/CMakeFiles/drvr_fma-multith.dir/codegen
 
 # clean rule for target.
@@ -821,7 +827,7 @@ drvr/CMakeFiles/drvr_fma-multith.dir/clean:
 drvr/CMakeFiles/drvr_fread.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fread.dir/build.make drvr/CMakeFiles/drvr_fread.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fread.dir/build.make drvr/CMakeFiles/drvr_fread.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=39,40 "Built target drvr_fread"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=41,42 "Built target drvr_fread"
 .PHONY : drvr/CMakeFiles/drvr_fread.dir/all
 
 # Build rule for subdir invocation for target.
@@ -838,7 +844,7 @@ drvr_fread: drvr/CMakeFiles/drvr_fread.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fread.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fread.dir/build.make drvr/CMakeFiles/drvr_fread.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=39,40 "Finished codegen for target drvr_fread"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=41,42 "Finished codegen for target drvr_fread"
 .PHONY : drvr/CMakeFiles/drvr_fread.dir/codegen
 
 # clean rule for target.
@@ -853,7 +859,7 @@ drvr/CMakeFiles/drvr_fread.dir/clean:
 drvr/CMakeFiles/drvr_fscanf.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fscanf.dir/build.make drvr/CMakeFiles/drvr_fscanf.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fscanf.dir/build.make drvr/CMakeFiles/drvr_fscanf.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=41,42 "Built target drvr_fscanf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=43,44 "Built target drvr_fscanf"
 .PHONY : drvr/CMakeFiles/drvr_fscanf.dir/all
 
 # Build rule for subdir invocation for target.
@@ -870,7 +876,7 @@ drvr_fscanf: drvr/CMakeFiles/drvr_fscanf.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fscanf.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fscanf.dir/build.make drvr/CMakeFiles/drvr_fscanf.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=41,42 "Finished codegen for target drvr_fscanf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=43,44 "Finished codegen for target drvr_fscanf"
 .PHONY : drvr/CMakeFiles/drvr_fscanf.dir/codegen
 
 # clean rule for target.
@@ -885,7 +891,7 @@ drvr/CMakeFiles/drvr_fscanf.dir/clean:
 drvr/CMakeFiles/drvr_fstat.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fstat.dir/build.make drvr/CMakeFiles/drvr_fstat.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fstat.dir/build.make drvr/CMakeFiles/drvr_fstat.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=43,44 "Built target drvr_fstat"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=45,46 "Built target drvr_fstat"
 .PHONY : drvr/CMakeFiles/drvr_fstat.dir/all
 
 # Build rule for subdir invocation for target.
@@ -902,7 +908,7 @@ drvr_fstat: drvr/CMakeFiles/drvr_fstat.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_fstat.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_fstat.dir/build.make drvr/CMakeFiles/drvr_fstat.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=43,44 "Finished codegen for target drvr_fstat"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=45,46 "Finished codegen for target drvr_fstat"
 .PHONY : drvr/CMakeFiles/drvr_fstat.dir/codegen
 
 # clean rule for target.
@@ -917,12 +923,12 @@ drvr/CMakeFiles/drvr_fstat.dir/clean:
 drvr/CMakeFiles/drvr_gups.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gups.dir/build.make drvr/CMakeFiles/drvr_gups.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gups.dir/build.make drvr/CMakeFiles/drvr_gups.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=49,50,51 "Built target drvr_gups"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=52,53 "Built target drvr_gups"
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_gups.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_gups.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/rule
@@ -934,7 +940,7 @@ drvr_gups: drvr/CMakeFiles/drvr_gups.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_gups.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gups.dir/build.make drvr/CMakeFiles/drvr_gups.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=49,50,51 "Finished codegen for target drvr_gups"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=52,53 "Finished codegen for target drvr_gups"
 .PHONY : drvr/CMakeFiles/drvr_gups.dir/codegen
 
 # clean rule for target.
@@ -949,7 +955,7 @@ drvr/CMakeFiles/drvr_gups.dir/clean:
 drvr/CMakeFiles/drvr_lsu.dir/all:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_lsu.dir/build.make drvr/CMakeFiles/drvr_lsu.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_lsu.dir/build.make drvr/CMakeFiles/drvr_lsu.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=56,57 "Built target drvr_lsu"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=58,59 "Built target drvr_lsu"
 .PHONY : drvr/CMakeFiles/drvr_lsu.dir/all
 
 # Build rule for subdir invocation for target.
@@ -966,7 +972,7 @@ drvr_lsu: drvr/CMakeFiles/drvr_lsu.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_lsu.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_lsu.dir/build.make drvr/CMakeFiles/drvr_lsu.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=56,57 "Finished codegen for target drvr_lsu"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=58,59 "Finished codegen for target drvr_lsu"
 .PHONY : drvr/CMakeFiles/drvr_lsu.dir/codegen
 
 # clean rule for target.
@@ -981,12 +987,12 @@ drvr/CMakeFiles/drvr_lsu.dir/clean:
 drvr/CMakeFiles/drvr_malloc.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_malloc.dir/build.make drvr/CMakeFiles/drvr_malloc.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_malloc.dir/build.make drvr/CMakeFiles/drvr_malloc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=58,59,60 "Built target drvr_malloc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=60,61 "Built target drvr_malloc"
 .PHONY : drvr/CMakeFiles/drvr_malloc.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_malloc.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_malloc.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_malloc.dir/rule
@@ -998,7 +1004,7 @@ drvr_malloc: drvr/CMakeFiles/drvr_malloc.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_malloc.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_malloc.dir/build.make drvr/CMakeFiles/drvr_malloc.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=58,59,60 "Finished codegen for target drvr_malloc"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=60,61 "Finished codegen for target drvr_malloc"
 .PHONY : drvr/CMakeFiles/drvr_malloc.dir/codegen
 
 # clean rule for target.
@@ -1013,7 +1019,7 @@ drvr/CMakeFiles/drvr_malloc.dir/clean:
 drvr/CMakeFiles/drvr_leiden_single.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_leiden_single.dir/build.make drvr/CMakeFiles/drvr_leiden_single.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_leiden_single.dir/build.make drvr/CMakeFiles/drvr_leiden_single.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=52,53 "Built target drvr_leiden_single"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=54,55 "Built target drvr_leiden_single"
 .PHONY : drvr/CMakeFiles/drvr_leiden_single.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1030,7 +1036,7 @@ drvr_leiden_single: drvr/CMakeFiles/drvr_leiden_single.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_leiden_single.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_leiden_single.dir/build.make drvr/CMakeFiles/drvr_leiden_single.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=52,53 "Finished codegen for target drvr_leiden_single"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=54,55 "Finished codegen for target drvr_leiden_single"
 .PHONY : drvr/CMakeFiles/drvr_leiden_single.dir/codegen
 
 # clean rule for target.
@@ -1077,7 +1083,7 @@ drvr/CMakeFiles/drvr_attn_fixed.dir/clean:
 drvr/CMakeFiles/drvr_dense_gemm.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_dense_gemm.dir/build.make drvr/CMakeFiles/drvr_dense_gemm.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_dense_gemm.dir/build.make drvr/CMakeFiles/drvr_dense_gemm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=22,23 "Built target drvr_dense_gemm"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=25,26 "Built target drvr_dense_gemm"
 .PHONY : drvr/CMakeFiles/drvr_dense_gemm.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1094,7 +1100,7 @@ drvr_dense_gemm: drvr/CMakeFiles/drvr_dense_gemm.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_dense_gemm.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_dense_gemm.dir/build.make drvr/CMakeFiles/drvr_dense_gemm.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=22,23 "Finished codegen for target drvr_dense_gemm"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=25,26 "Finished codegen for target drvr_dense_gemm"
 .PHONY : drvr/CMakeFiles/drvr_dense_gemm.dir/codegen
 
 # clean rule for target.
@@ -1109,12 +1115,12 @@ drvr/CMakeFiles/drvr_dense_gemm.dir/clean:
 drvr/CMakeFiles/drvr_bfs_multi_sw.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=15,16,17 "Built target drvr_bfs_multi_sw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=15,16 "Built target drvr_bfs_multi_sw"
 .PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_bfs_multi_sw.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw.dir/rule
@@ -1126,13 +1132,77 @@ drvr_bfs_multi_sw: drvr/CMakeFiles/drvr_bfs_multi_sw.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_bfs_multi_sw.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=15,16,17 "Finished codegen for target drvr_bfs_multi_sw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=15,16 "Finished codegen for target drvr_bfs_multi_sw"
 .PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw.dir/codegen
 
 # clean rule for target.
 drvr/CMakeFiles/drvr_bfs_multi_sw.dir/clean:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw.dir/clean
 .PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw.dir/clean
+
+#=============================================================================
+# Target rules for target drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir
+
+# All Build rule for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/depend
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=19,20 "Built target drvr_bfs_multi_sw_l2sp"
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/all
+
+# Build rule for subdir invocation for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
+
+# Convenience name for target.
+drvr_bfs_multi_sw_l2sp: drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
+.PHONY : drvr_bfs_multi_sw_l2sp
+
+# codegen rule for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=19,20 "Finished codegen for target drvr_bfs_multi_sw_l2sp"
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/codegen
+
+# clean rule for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/clean
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/clean
+
+#=============================================================================
+# Target rules for target drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir
+
+# All Build rule for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/depend
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=17,18 "Built target drvr_bfs_multi_sw_barrier"
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/all
+
+# Build rule for subdir invocation for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule
+
+# Convenience name for target.
+drvr_bfs_multi_sw_barrier: drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule
+.PHONY : drvr_bfs_multi_sw_barrier
+
+# codegen rule for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=17,18 "Finished codegen for target drvr_bfs_multi_sw_barrier"
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/codegen
+
+# clean rule for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/clean:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/clean
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/clean
 
 #=============================================================================
 # Target rules for target drvr/CMakeFiles/drvr_bfs.dir
@@ -1205,7 +1275,7 @@ drvr/CMakeFiles/drvr_bfs-multith.dir/clean:
 drvr/CMakeFiles/drvr_bfs_multihart.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=18,19 "Built target drvr_bfs_multihart"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=21,22 "Built target drvr_bfs_multihart"
 .PHONY : drvr/CMakeFiles/drvr_bfs_multihart.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1222,7 +1292,7 @@ drvr_bfs_multihart: drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_bfs_multihart.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=18,19 "Finished codegen for target drvr_bfs_multihart"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=21,22 "Finished codegen for target drvr_bfs_multihart"
 .PHONY : drvr/CMakeFiles/drvr_bfs_multihart.dir/codegen
 
 # clean rule for target.
@@ -1301,7 +1371,7 @@ drvr/CMakeFiles/drvr_tc_larger.dir/clean:
 drvr/CMakeFiles/drvr_list_traverse.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_list_traverse.dir/build.make drvr/CMakeFiles/drvr_list_traverse.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_list_traverse.dir/build.make drvr/CMakeFiles/drvr_list_traverse.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=54,55 "Built target drvr_list_traverse"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=56,57 "Built target drvr_list_traverse"
 .PHONY : drvr/CMakeFiles/drvr_list_traverse.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1318,7 +1388,7 @@ drvr_list_traverse: drvr/CMakeFiles/drvr_list_traverse.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_list_traverse.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_list_traverse.dir/build.make drvr/CMakeFiles/drvr_list_traverse.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=54,55 "Finished codegen for target drvr_list_traverse"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=56,57 "Finished codegen for target drvr_list_traverse"
 .PHONY : drvr/CMakeFiles/drvr_list_traverse.dir/codegen
 
 # clean rule for target.
@@ -1333,12 +1403,12 @@ drvr/CMakeFiles/drvr_list_traverse.dir/clean:
 drvr/CMakeFiles/drvr_ptr_chase.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ptr_chase.dir/build.make drvr/CMakeFiles/drvr_ptr_chase.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ptr_chase.dir/build.make drvr/CMakeFiles/drvr_ptr_chase.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=71,72,73 "Built target drvr_ptr_chase"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=73,74 "Built target drvr_ptr_chase"
 .PHONY : drvr/CMakeFiles/drvr_ptr_chase.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_ptr_chase.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_ptr_chase.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_ptr_chase.dir/rule
@@ -1350,7 +1420,7 @@ drvr_ptr_chase: drvr/CMakeFiles/drvr_ptr_chase.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_ptr_chase.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ptr_chase.dir/build.make drvr/CMakeFiles/drvr_ptr_chase.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=71,72,73 "Finished codegen for target drvr_ptr_chase"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=73,74 "Finished codegen for target drvr_ptr_chase"
 .PHONY : drvr/CMakeFiles/drvr_ptr_chase.dir/codegen
 
 # clean rule for target.
@@ -1365,12 +1435,12 @@ drvr/CMakeFiles/drvr_ptr_chase.dir/clean:
 drvr/CMakeFiles/drvr_gemm_int_rand.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_rand.dir/build.make drvr/CMakeFiles/drvr_gemm_int_rand.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_rand.dir/build.make drvr/CMakeFiles/drvr_gemm_int_rand.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=47,48 "Built target drvr_gemm_int_rand"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=49,50,51 "Built target drvr_gemm_int_rand"
 .PHONY : drvr/CMakeFiles/drvr_gemm_int_rand.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_gemm_int_rand.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_gemm_int_rand.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_gemm_int_rand.dir/rule
@@ -1382,7 +1452,7 @@ drvr_gemm_int_rand: drvr/CMakeFiles/drvr_gemm_int_rand.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_gemm_int_rand.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_rand.dir/build.make drvr/CMakeFiles/drvr_gemm_int_rand.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=47,48 "Finished codegen for target drvr_gemm_int_rand"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=49,50,51 "Finished codegen for target drvr_gemm_int_rand"
 .PHONY : drvr/CMakeFiles/drvr_gemm_int_rand.dir/codegen
 
 # clean rule for target.
@@ -1397,7 +1467,7 @@ drvr/CMakeFiles/drvr_gemm_int_rand.dir/clean:
 drvr/CMakeFiles/drvr_gemm_int_deter.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_deter.dir/build.make drvr/CMakeFiles/drvr_gemm_int_deter.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_deter.dir/build.make drvr/CMakeFiles/drvr_gemm_int_deter.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=45,46 "Built target drvr_gemm_int_deter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=47,48 "Built target drvr_gemm_int_deter"
 .PHONY : drvr/CMakeFiles/drvr_gemm_int_deter.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1414,7 +1484,7 @@ drvr_gemm_int_deter: drvr/CMakeFiles/drvr_gemm_int_deter.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_gemm_int_deter.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_gemm_int_deter.dir/build.make drvr/CMakeFiles/drvr_gemm_int_deter.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=45,46 "Finished codegen for target drvr_gemm_int_deter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=47,48 "Finished codegen for target drvr_gemm_int_deter"
 .PHONY : drvr/CMakeFiles/drvr_gemm_int_deter.dir/codegen
 
 # clean rule for target.
@@ -1429,7 +1499,7 @@ drvr/CMakeFiles/drvr_gemm_int_deter.dir/clean:
 drvr/CMakeFiles/drvr_multihart.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_multihart.dir/build.make drvr/CMakeFiles/drvr_multihart.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_multihart.dir/build.make drvr/CMakeFiles/drvr_multihart.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=61,62 "Built target drvr_multihart"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=62,63 "Built target drvr_multihart"
 .PHONY : drvr/CMakeFiles/drvr_multihart.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1446,7 +1516,7 @@ drvr_multihart: drvr/CMakeFiles/drvr_multihart.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_multihart.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_multihart.dir/build.make drvr/CMakeFiles/drvr_multihart.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=61,62 "Finished codegen for target drvr_multihart"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=62,63 "Finished codegen for target drvr_multihart"
 .PHONY : drvr/CMakeFiles/drvr_multihart.dir/codegen
 
 # clean rule for target.
@@ -1461,7 +1531,7 @@ drvr/CMakeFiles/drvr_multihart.dir/clean:
 drvr/CMakeFiles/drvr_ph_hello.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ph_hello.dir/build.make drvr/CMakeFiles/drvr_ph_hello.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ph_hello.dir/build.make drvr/CMakeFiles/drvr_ph_hello.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=63,64 "Built target drvr_ph_hello"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=64,65 "Built target drvr_ph_hello"
 .PHONY : drvr/CMakeFiles/drvr_ph_hello.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1478,7 +1548,7 @@ drvr_ph_hello: drvr/CMakeFiles/drvr_ph_hello.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_ph_hello.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_ph_hello.dir/build.make drvr/CMakeFiles/drvr_ph_hello.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=63,64 "Finished codegen for target drvr_ph_hello"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=64,65 "Finished codegen for target drvr_ph_hello"
 .PHONY : drvr/CMakeFiles/drvr_ph_hello.dir/codegen
 
 # clean rule for target.
@@ -1493,12 +1563,12 @@ drvr/CMakeFiles/drvr_ph_hello.dir/clean:
 drvr/CMakeFiles/drvr_poke.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_poke.dir/build.make drvr/CMakeFiles/drvr_poke.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_poke.dir/build.make drvr/CMakeFiles/drvr_poke.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=65,66 "Built target drvr_poke"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=66,67,68 "Built target drvr_poke"
 .PHONY : drvr/CMakeFiles/drvr_poke.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_poke.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_poke.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_poke.dir/rule
@@ -1510,7 +1580,7 @@ drvr_poke: drvr/CMakeFiles/drvr_poke.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_poke.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_poke.dir/build.make drvr/CMakeFiles/drvr_poke.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=65,66 "Finished codegen for target drvr_poke"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=66,67,68 "Finished codegen for target drvr_poke"
 .PHONY : drvr/CMakeFiles/drvr_poke.dir/codegen
 
 # clean rule for target.
@@ -1525,7 +1595,7 @@ drvr/CMakeFiles/drvr_poke.dir/clean:
 drvr/CMakeFiles/drvr_printf.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_printf.dir/build.make drvr/CMakeFiles/drvr_printf.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_printf.dir/build.make drvr/CMakeFiles/drvr_printf.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=69,70 "Built target drvr_printf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=71,72 "Built target drvr_printf"
 .PHONY : drvr/CMakeFiles/drvr_printf.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1542,7 +1612,7 @@ drvr_printf: drvr/CMakeFiles/drvr_printf.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_printf.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_printf.dir/build.make drvr/CMakeFiles/drvr_printf.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=69,70 "Finished codegen for target drvr_printf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=71,72 "Finished codegen for target drvr_printf"
 .PHONY : drvr/CMakeFiles/drvr_printf.dir/codegen
 
 # clean rule for target.
@@ -1557,7 +1627,7 @@ drvr/CMakeFiles/drvr_printf.dir/clean:
 drvr/CMakeFiles/drvr_print_int.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_print_int.dir/build.make drvr/CMakeFiles/drvr_print_int.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_print_int.dir/build.make drvr/CMakeFiles/drvr_print_int.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=67,68 "Built target drvr_print_int"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=69,70 "Built target drvr_print_int"
 .PHONY : drvr/CMakeFiles/drvr_print_int.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1574,7 +1644,7 @@ drvr_print_int: drvr/CMakeFiles/drvr_print_int.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_print_int.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_print_int.dir/build.make drvr/CMakeFiles/drvr_print_int.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=67,68 "Finished codegen for target drvr_print_int"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=69,70 "Finished codegen for target drvr_print_int"
 .PHONY : drvr/CMakeFiles/drvr_print_int.dir/codegen
 
 # clean rule for target.
@@ -1589,7 +1659,7 @@ drvr/CMakeFiles/drvr_print_int.dir/clean:
 drvr/CMakeFiles/drvr_puts.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_puts.dir/build.make drvr/CMakeFiles/drvr_puts.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_puts.dir/build.make drvr/CMakeFiles/drvr_puts.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=74,75 "Built target drvr_puts"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=75,76 "Built target drvr_puts"
 .PHONY : drvr/CMakeFiles/drvr_puts.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1606,7 +1676,7 @@ drvr_puts: drvr/CMakeFiles/drvr_puts.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_puts.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_puts.dir/build.make drvr/CMakeFiles/drvr_puts.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=74,75 "Finished codegen for target drvr_puts"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=75,76 "Finished codegen for target drvr_puts"
 .PHONY : drvr/CMakeFiles/drvr_puts.dir/codegen
 
 # clean rule for target.
@@ -1621,7 +1691,7 @@ drvr/CMakeFiles/drvr_puts.dir/clean:
 drvr/CMakeFiles/drvr_read.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_read.dir/build.make drvr/CMakeFiles/drvr_read.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_read.dir/build.make drvr/CMakeFiles/drvr_read.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=76,77 "Built target drvr_read"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=77,78 "Built target drvr_read"
 .PHONY : drvr/CMakeFiles/drvr_read.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1638,7 +1708,7 @@ drvr_read: drvr/CMakeFiles/drvr_read.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_read.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_read.dir/build.make drvr/CMakeFiles/drvr_read.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=76,77 "Finished codegen for target drvr_read"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=77,78 "Finished codegen for target drvr_read"
 .PHONY : drvr/CMakeFiles/drvr_read.dir/codegen
 
 # clean rule for target.
@@ -1653,7 +1723,7 @@ drvr/CMakeFiles/drvr_read.dir/clean:
 drvr/CMakeFiles/drvr_shift.dir/all:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shift.dir/build.make drvr/CMakeFiles/drvr_shift.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shift.dir/build.make drvr/CMakeFiles/drvr_shift.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=78,79 "Built target drvr_shift"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=79,80 "Built target drvr_shift"
 .PHONY : drvr/CMakeFiles/drvr_shift.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1670,7 +1740,7 @@ drvr_shift: drvr/CMakeFiles/drvr_shift.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_shift.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shift.dir/build.make drvr/CMakeFiles/drvr_shift.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=78,79 "Finished codegen for target drvr_shift"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=79,80 "Finished codegen for target drvr_shift"
 .PHONY : drvr/CMakeFiles/drvr_shift.dir/codegen
 
 # clean rule for target.
@@ -1685,12 +1755,12 @@ drvr/CMakeFiles/drvr_shift.dir/clean:
 drvr/CMakeFiles/drvr_simple.dir/all: pandohammer/CMakeFiles/pandohammer.dir/all
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_simple.dir/build.make drvr/CMakeFiles/drvr_simple.dir/depend
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_simple.dir/build.make drvr/CMakeFiles/drvr_simple.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=80,81,82 "Built target drvr_simple"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=81,82 "Built target drvr_simple"
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/all
 
 # Build rule for subdir invocation for target.
 drvr/CMakeFiles/drvr_simple.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_simple.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles 0
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/rule
@@ -1702,7 +1772,7 @@ drvr_simple: drvr/CMakeFiles/drvr_simple.dir/rule
 # codegen rule for target.
 drvr/CMakeFiles/drvr_simple.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_simple.dir/build.make drvr/CMakeFiles/drvr_simple.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=80,81,82 "Finished codegen for target drvr_simple"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=81,82 "Finished codegen for target drvr_simple"
 .PHONY : drvr/CMakeFiles/drvr_simple.dir/codegen
 
 # clean rule for target.

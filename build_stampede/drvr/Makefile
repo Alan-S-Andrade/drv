@@ -442,6 +442,34 @@ drvr-run-bfs_multi_sw/fast:
 .PHONY : drvr-run-bfs_multi_sw/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
+
+# Convenience name for target.
+drvr-run-bfs_multi_sw_l2sp: drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
+.PHONY : drvr-run-bfs_multi_sw_l2sp
+
+# fast build rule for target.
+drvr-run-bfs_multi_sw_l2sp/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/build
+.PHONY : drvr-run-bfs_multi_sw_l2sp/fast
+
+# Convenience name for target.
+drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/rule
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/rule
+
+# Convenience name for target.
+drvr-run-bfs_multi_sw_barrier: drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/rule
+.PHONY : drvr-run-bfs_multi_sw_barrier
+
+# fast build rule for target.
+drvr-run-bfs_multi_sw_barrier/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/build
+.PHONY : drvr-run-bfs_multi_sw_barrier/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr-run-bfs.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs.dir/rule
 .PHONY : drvr/CMakeFiles/drvr-run-bfs.dir/rule
@@ -797,6 +825,8 @@ help:
 	@echo "... drvr-run-bfs"
 	@echo "... drvr-run-bfs-multith"
 	@echo "... drvr-run-bfs_multi_sw"
+	@echo "... drvr-run-bfs_multi_sw_barrier"
+	@echo "... drvr-run-bfs_multi_sw_l2sp"
 	@echo "... drvr-run-bfs_multihart"
 	@echo "... drvr-run-cycle"
 	@echo "... drvr-run-dense_gemm"

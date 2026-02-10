@@ -131,6 +131,15 @@ void RISCVCore::configureStatistics(Params &params) {
         stats.load_remote_pxn = registerStatistic<uint64_t>("load_remote_pxn", subid);
         stats.store_remote_pxn = registerStatistic<uint64_t>("store_remote_pxn", subid);
         stats.atomic_remote_pxn = registerStatistic<uint64_t>("atomic_remote_pxn", subid);
+        stats.useful_load_l1sp = registerStatistic<uint64_t>("useful_load_l1sp", subid);
+        stats.useful_store_l1sp = registerStatistic<uint64_t>("useful_store_l1sp", subid);
+        stats.useful_atomic_l1sp = registerStatistic<uint64_t>("useful_atomic_l1sp", subid);
+        stats.useful_load_l2sp = registerStatistic<uint64_t>("useful_load_l2sp", subid);
+        stats.useful_store_l2sp = registerStatistic<uint64_t>("useful_store_l2sp", subid);
+        stats.useful_atomic_l2sp = registerStatistic<uint64_t>("useful_atomic_l2sp", subid);
+        stats.useful_load_dram = registerStatistic<uint64_t>("useful_load_dram", subid);
+        stats.useful_store_dram = registerStatistic<uint64_t>("useful_store_dram", subid);
+        stats.useful_atomic_dram = registerStatistic<uint64_t>("useful_atomic_dram", subid);
     }
     busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
     stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");

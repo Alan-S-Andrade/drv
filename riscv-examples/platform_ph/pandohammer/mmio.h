@@ -41,6 +41,11 @@ static inline void ph_print_time()
     *(volatile char*)0xFFFFFFFFFFFF0018 = 0;
 }
 
+static inline void ph_stat_phase(long phase)
+{
+    *(volatile long*)0xFFFFFFFFFFFF0020 = phase;
+}
+
 #ifdef __cplusplus
 }
 #endif

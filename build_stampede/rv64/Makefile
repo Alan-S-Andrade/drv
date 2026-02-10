@@ -448,6 +448,32 @@ drvr_bfs_multi_sw/fast:
 .PHONY : drvr_bfs_multi_sw/fast
 
 #=============================================================================
+# Target rules for targets named drvr_bfs_multi_sw_l2sp
+
+# Build rule for target.
+drvr_bfs_multi_sw_l2sp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs_multi_sw_l2sp
+.PHONY : drvr_bfs_multi_sw_l2sp
+
+# fast build rule for target.
+drvr_bfs_multi_sw_l2sp/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build
+.PHONY : drvr_bfs_multi_sw_l2sp/fast
+
+#=============================================================================
+# Target rules for targets named drvr_bfs_multi_sw_barrier
+
+# Build rule for target.
+drvr_bfs_multi_sw_barrier: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs_multi_sw_barrier
+.PHONY : drvr_bfs_multi_sw_barrier
+
+# fast build rule for target.
+drvr_bfs_multi_sw_barrier/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build
+.PHONY : drvr_bfs_multi_sw_barrier/fast
+
+#=============================================================================
 # Target rules for targets named drvr_bfs
 
 # Build rule for target.
@@ -766,6 +792,8 @@ help:
 	@echo "... drvr_bfs"
 	@echo "... drvr_bfs-multith"
 	@echo "... drvr_bfs_multi_sw"
+	@echo "... drvr_bfs_multi_sw_barrier"
+	@echo "... drvr_bfs_multi_sw_l2sp"
 	@echo "... drvr_bfs_multihart"
 	@echo "... drvr_cycle"
 	@echo "... drvr_dense_gemm"

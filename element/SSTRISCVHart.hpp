@@ -123,6 +123,8 @@ public:
     // sp boundaries
     uint64_t sp_low_ = 0x0;
     uint64_t sp_high_ = 0x10;
+    // stat phase: when 1, memory accesses are counted as "useful"
+    int stat_phase_ = 0;
 };
 
 }

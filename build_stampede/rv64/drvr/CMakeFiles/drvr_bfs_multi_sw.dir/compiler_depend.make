@@ -51,9 +51,13 @@ drvr/CMakeFiles/drvr_bfs_multi_sw.dir/bfs_sw_hw_multi_final.cpp.obj: /work2/1023
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/atomic.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/cpuinfo.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h \
+  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h \
+  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h
 
+
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h:
 
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h:
 
@@ -108,6 +112,8 @@ drvr/CMakeFiles/drvr_bfs_multi_sw.dir/bfs_sw_hw_multi_final.cpp.obj: /work2/1023
 /install/riscv64-unknown-elfpandodrvsim/include/c++/12.2.0/bits/std_abs.h:
 
 /install/riscv64-unknown-elfpandodrvsim/include/_newlib_version.h:
+
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h:
 
 /install/riscv64-unknown-elfpandodrvsim/include/sys/config.h:
 

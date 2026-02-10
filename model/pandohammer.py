@@ -22,7 +22,7 @@ class PANDOHammer(object):
         l1sp = L1SPBuilder()
         l1sp.clock = "1GHz"
         l1sp.access_time = "1ns"
-        l1sp.size = 128*1024
+        l1sp.size = 256*1024
         l1sp.network_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
         
         # core
@@ -45,7 +45,7 @@ class PANDOHammer(object):
         # l2sp tile
         l2sp = L2SPBuilder()
         l2sp.clock = "1GHz"
-        l2sp.access_time = "10ns"
+        l2sp.access_time = "4ns"
         l2sp.network_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
 
         # pod

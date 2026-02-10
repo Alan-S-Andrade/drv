@@ -417,7 +417,7 @@ class CachedDRAMBuilder(DRAMBuilder):
             "cache_line_size" : self.cache_line_size,
             "mshr_num_entries" : self.mshr_num_entries,
             "replacement_policy" : "lru",
-            "access_latency_cycles" : 20,
+            "access_latency_cycles" : 1,
             # routing information
             "addr_range_start" : addr_start,
             "addr_range_end" : addr_stop,

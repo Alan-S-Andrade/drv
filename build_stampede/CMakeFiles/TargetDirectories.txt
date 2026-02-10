@@ -148,6 +148,8 @@
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-attn_fixed.dir
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-dense_gemm.dir
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-bfs_multi_sw.dir
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-bfs.dir
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-bfs-multith.dir
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/CMakeFiles/drvr-run-bfs_multihart.dir

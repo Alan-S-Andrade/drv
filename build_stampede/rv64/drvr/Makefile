@@ -442,6 +442,34 @@ drvr_bfs_multi_sw/fast:
 .PHONY : drvr_bfs_multi_sw/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
+
+# Convenience name for target.
+drvr_bfs_multi_sw_l2sp: drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
+.PHONY : drvr_bfs_multi_sw_l2sp
+
+# fast build rule for target.
+drvr_bfs_multi_sw_l2sp/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build
+.PHONY : drvr_bfs_multi_sw_l2sp/fast
+
+# Convenience name for target.
+drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule
+.PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule
+
+# Convenience name for target.
+drvr_bfs_multi_sw_barrier: drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/rule
+.PHONY : drvr_bfs_multi_sw_barrier
+
+# fast build rule for target.
+drvr_bfs_multi_sw_barrier/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build
+.PHONY : drvr_bfs_multi_sw_barrier/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr_bfs.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs.dir/rule
 .PHONY : drvr/CMakeFiles/drvr_bfs.dir/rule
@@ -915,6 +943,30 @@ bfs_multihart.cpp.s:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/bfs_multihart.cpp.s
 .PHONY : bfs_multihart.cpp.s
 
+bfs_sw_hw_multi_barrier.obj: bfs_sw_hw_multi_barrier.cpp.obj
+.PHONY : bfs_sw_hw_multi_barrier.obj
+
+# target to build an object file
+bfs_sw_hw_multi_barrier.cpp.obj:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/bfs_sw_hw_multi_barrier.cpp.obj
+.PHONY : bfs_sw_hw_multi_barrier.cpp.obj
+
+bfs_sw_hw_multi_barrier.i: bfs_sw_hw_multi_barrier.cpp.i
+.PHONY : bfs_sw_hw_multi_barrier.i
+
+# target to preprocess a source file
+bfs_sw_hw_multi_barrier.cpp.i:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/bfs_sw_hw_multi_barrier.cpp.i
+.PHONY : bfs_sw_hw_multi_barrier.cpp.i
+
+bfs_sw_hw_multi_barrier.s: bfs_sw_hw_multi_barrier.cpp.s
+.PHONY : bfs_sw_hw_multi_barrier.s
+
+# target to generate assembly for a file
+bfs_sw_hw_multi_barrier.cpp.s:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/bfs_sw_hw_multi_barrier.cpp.s
+.PHONY : bfs_sw_hw_multi_barrier.cpp.s
+
 bfs_sw_hw_multi_final.obj: bfs_sw_hw_multi_final.cpp.obj
 .PHONY : bfs_sw_hw_multi_final.obj
 
@@ -938,6 +990,30 @@ bfs_sw_hw_multi_final.s: bfs_sw_hw_multi_final.cpp.s
 bfs_sw_hw_multi_final.cpp.s:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw.dir/bfs_sw_hw_multi_final.cpp.s
 .PHONY : bfs_sw_hw_multi_final.cpp.s
+
+bfs_sw_hw_multi_l2sp.obj: bfs_sw_hw_multi_l2sp.cpp.obj
+.PHONY : bfs_sw_hw_multi_l2sp.obj
+
+# target to build an object file
+bfs_sw_hw_multi_l2sp.cpp.obj:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/bfs_sw_hw_multi_l2sp.cpp.obj
+.PHONY : bfs_sw_hw_multi_l2sp.cpp.obj
+
+bfs_sw_hw_multi_l2sp.i: bfs_sw_hw_multi_l2sp.cpp.i
+.PHONY : bfs_sw_hw_multi_l2sp.i
+
+# target to preprocess a source file
+bfs_sw_hw_multi_l2sp.cpp.i:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/bfs_sw_hw_multi_l2sp.cpp.i
+.PHONY : bfs_sw_hw_multi_l2sp.cpp.i
+
+bfs_sw_hw_multi_l2sp.s: bfs_sw_hw_multi_l2sp.cpp.s
+.PHONY : bfs_sw_hw_multi_l2sp.s
+
+# target to generate assembly for a file
+bfs_sw_hw_multi_l2sp.cpp.s:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/build.make drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/bfs_sw_hw_multi_l2sp.cpp.s
+.PHONY : bfs_sw_hw_multi_l2sp.cpp.s
 
 cycle.obj: cycle.c.obj
 .PHONY : cycle.obj
@@ -1865,6 +1941,8 @@ help:
 	@echo "... drvr_bfs"
 	@echo "... drvr_bfs-multith"
 	@echo "... drvr_bfs_multi_sw"
+	@echo "... drvr_bfs_multi_sw_barrier"
+	@echo "... drvr_bfs_multi_sw_l2sp"
 	@echo "... drvr_bfs_multihart"
 	@echo "... drvr_cycle"
 	@echo "... drvr_dense_gemm"
@@ -1920,9 +1998,15 @@ help:
 	@echo "... bfs_multihart.obj"
 	@echo "... bfs_multihart.i"
 	@echo "... bfs_multihart.s"
+	@echo "... bfs_sw_hw_multi_barrier.obj"
+	@echo "... bfs_sw_hw_multi_barrier.i"
+	@echo "... bfs_sw_hw_multi_barrier.s"
 	@echo "... bfs_sw_hw_multi_final.obj"
 	@echo "... bfs_sw_hw_multi_final.i"
 	@echo "... bfs_sw_hw_multi_final.s"
+	@echo "... bfs_sw_hw_multi_l2sp.obj"
+	@echo "... bfs_sw_hw_multi_l2sp.i"
+	@echo "... bfs_sw_hw_multi_l2sp.s"
 	@echo "... cycle.obj"
 	@echo "... cycle.i"
 	@echo "... cycle.s"

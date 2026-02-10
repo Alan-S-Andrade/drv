@@ -1,1 +1,2 @@
 INFO:    gocryptfs not found, will not be able to use gocryptfs
+slurmstepd: error: *** JOB 2797145 ON c462-210 CANCELLED AT 2026-02-01T20:40:45 DUE TO TIME LIMIT ***

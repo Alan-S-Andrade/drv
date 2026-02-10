@@ -97,6 +97,8 @@ set(CMAKE_DEPEND_INFO_FILES
   "drvr/CMakeFiles/drvr_attn_fixed.dir/DependInfo.cmake"
   "drvr/CMakeFiles/drvr_dense_gemm.dir/DependInfo.cmake"
   "drvr/CMakeFiles/drvr_bfs_multi_sw.dir/DependInfo.cmake"
+  "drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/DependInfo.cmake"
+  "drvr/CMakeFiles/drvr_bfs_multi_sw_barrier.dir/DependInfo.cmake"
   "drvr/CMakeFiles/drvr_bfs.dir/DependInfo.cmake"
   "drvr/CMakeFiles/drvr_bfs-multith.dir/DependInfo.cmake"
   "drvr/CMakeFiles/drvr_bfs_multihart.dir/DependInfo.cmake"
