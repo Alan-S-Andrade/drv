@@ -1,0 +1,2 @@
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+/var/spool/slurmd/job2829028/slurm_script: line 66: syntax error near unexpected token `)'

@@ -442,6 +442,20 @@ drvr_bfs_multi_sw/fast:
 .PHONY : drvr_bfs_multi_sw/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/rule
+.PHONY : drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/rule
+
+# Convenience name for target.
+drvr_stream_bw_l2sp: drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/rule
+.PHONY : drvr_stream_bw_l2sp
+
+# fast build rule for target.
+drvr_stream_bw_l2sp/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build
+.PHONY : drvr_stream_bw_l2sp/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
 .PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
@@ -470,6 +484,20 @@ drvr_bfs_multi_sw_barrier/fast:
 .PHONY : drvr_bfs_multi_sw_barrier/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr_bfs_multihart.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
+.PHONY : drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
+
+# Convenience name for target.
+drvr_bfs_multihart: drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
+.PHONY : drvr_bfs_multihart
+
+# fast build rule for target.
+drvr_bfs_multihart/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/build
+.PHONY : drvr_bfs_multihart/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr_bfs.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs.dir/rule
 .PHONY : drvr/CMakeFiles/drvr_bfs.dir/rule
@@ -496,20 +524,6 @@ drvr_bfs-multith: drvr/CMakeFiles/drvr_bfs-multith.dir/rule
 drvr_bfs-multith/fast:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs-multith.dir/build.make drvr/CMakeFiles/drvr_bfs-multith.dir/build
 .PHONY : drvr_bfs-multith/fast
-
-# Convenience name for target.
-drvr/CMakeFiles/drvr_bfs_multihart.dir/rule:
-	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
-.PHONY : drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
-
-# Convenience name for target.
-drvr_bfs_multihart: drvr/CMakeFiles/drvr_bfs_multihart.dir/rule
-.PHONY : drvr_bfs_multihart
-
-# fast build rule for target.
-drvr_bfs_multihart/fast:
-	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/build
-.PHONY : drvr_bfs_multihart/fast
 
 # Convenience name for target.
 drvr/CMakeFiles/drvr_tc.dir/rule:
@@ -1775,6 +1789,30 @@ snprintf-test.cpp.s:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_snprintf.dir/build.make drvr/CMakeFiles/drvr_snprintf.dir/snprintf-test.cpp.s
 .PHONY : snprintf-test.cpp.s
 
+stream_bw_l2sp.obj: stream_bw_l2sp.cpp.obj
+.PHONY : stream_bw_l2sp.obj
+
+# target to build an object file
+stream_bw_l2sp.cpp.obj:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/stream_bw_l2sp.cpp.obj
+.PHONY : stream_bw_l2sp.cpp.obj
+
+stream_bw_l2sp.i: stream_bw_l2sp.cpp.i
+.PHONY : stream_bw_l2sp.i
+
+# target to preprocess a source file
+stream_bw_l2sp.cpp.i:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/stream_bw_l2sp.cpp.i
+.PHONY : stream_bw_l2sp.cpp.i
+
+stream_bw_l2sp.s: stream_bw_l2sp.cpp.s
+.PHONY : stream_bw_l2sp.s
+
+# target to generate assembly for a file
+stream_bw_l2sp.cpp.s:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/stream_bw_l2sp.cpp.s
+.PHONY : stream_bw_l2sp.cpp.s
+
 tc.obj: tc.c.obj
 .PHONY : tc.obj
 
@@ -1973,6 +2011,7 @@ help:
 	@echo "... drvr_shift"
 	@echo "... drvr_simple"
 	@echo "... drvr_snprintf"
+	@echo "... drvr_stream_bw_l2sp"
 	@echo "... drvr_tc"
 	@echo "... drvr_tc_larger"
 	@echo "... drvr_vread"
@@ -2102,6 +2141,9 @@ help:
 	@echo "... snprintf-test.obj"
 	@echo "... snprintf-test.i"
 	@echo "... snprintf-test.s"
+	@echo "... stream_bw_l2sp.obj"
+	@echo "... stream_bw_l2sp.i"
+	@echo "... stream_bw_l2sp.s"
 	@echo "... tc.obj"
 	@echo "... tc.i"
 	@echo "... tc.s"

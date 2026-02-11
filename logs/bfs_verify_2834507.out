@@ -1,0 +1,137 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.5s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+Building binary...
+[ 12%] Performing build step for 'rv64'
+[  3%] Built target drvr_add
+[ 10%] Built target drvr_exit
+[ 10%] Built target drvr_lsu
+[ 13%] Built target drvr_shift
+[ 16%] Built target drvr_float_lsu
+[ 16%] Built target drvr_fma
+[ 16%] Built target pandohammer
+[ 31%] Built target drvr-example
+[ 35%] Built target drvr_cycle
+[ 31%] Built target drvr_fma-multith
+[ 31%] Built target drvr_fence
+[ 39%] Built target drvr_fscanf
+[ 39%] Built target drvr_amoswap
+[ 39%] Built target drvr_addressmap
+[ 42%] Built target drvr_fstat
+[ 42%] Built target drvr_gups
+[ 42%] Built target drvr_fib
+[ 42%] Built target drvr_fread
+[ 44%] Built target drvr_leiden_single
+[ 47%] Built target drvr_dense_gemm
+[ 47%] Built target drvr_malloc
+[ 48%] Built target drvr_bfs_multi_sw
+[ 49%] Built target drvr_stream_bw_l2sp
+[ 54%] Built target drvr_tc
+[ 59%] Built target drvr_bfs_multi_sw_barrier
+[ 60%] Built target drvr_bfs_multihart
+[ 60%] Built target drvr_attn_fixed
+[ 60%] Built target drvr_bfs_multi_sw_l2sp
+[ 67%] Built target drvr_tc_larger
+[ 67%] Built target drvr_bfs-multith
+[ 70%] Built target drvr_list_traverse
+[ 70%] Built target drvr_bfs
+[ 70%] Built target drvr_ptr_chase
+[ 75%] Built target drvr_multihart
+[ 80%] Built target drvr_ph_hello
+[ 80%] Built target drvr_gemm_int_deter
+[ 80%] Built target drvr_poke
+[ 80%] Built target drvr_gemm_int_rand
+[ 80%] Built target drvr_printf
+[ 84%] Built target drvr_read
+[ 84%] Built target drvr_print_int
+[ 87%] Built target drvr_puts
+[ 97%] Built target drvr_write
+[ 97%] Built target drvr_simple
+[100%] Built target drvr_vread
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_wait-without-sleep
+[ 25%] Performing install step for 'rv64'
+[  9%] Built target drvr_add
+[  9%] Built target drvr_exit
+[ 11%] Built target pandohammer
+[ 16%] Built target drvr_shift
+[ 16%] Built target drvr_float_lsu
+[ 16%] Built target drvr_lsu
+[ 16%] Built target drvr_fma
+[ 22%] Built target drvr_addressmap
+[ 22%] Built target drvr-example
+[ 23%] Built target drvr_amoswap
+[ 25%] Built target drvr_cycle
+[ 31%] Built target drvr_fence
+[ 35%] Built target drvr_fma-multith
+[ 35%] Built target drvr_fib
+[ 37%] Built target drvr_fread
+[ 37%] Built target drvr_fscanf
+[ 44%] Built target drvr_gups
+[ 44%] Built target drvr_fstat
+[ 46%] Built target drvr_malloc
+[ 48%] Built target drvr_attn_fixed
+[ 48%] Built target drvr_leiden_single
+[ 48%] Built target drvr_dense_gemm
+[ 48%] Built target drvr_bfs_multi_sw
+[ 50%] Built target drvr_stream_bw_l2sp
+[ 54%] Built target drvr_bfs_multi_sw_barrier
+[ 54%] Built target drvr_bfs_multi_sw_l2sp
+[ 62%] Built target drvr_bfs
+[ 62%] Built target drvr_bfs_multihart
+[ 67%] Built target drvr_bfs-multith
+[ 69%] Built target drvr_tc_larger
+[ 69%] Built target drvr_tc
+[ 69%] Built target drvr_list_traverse
+[ 76%] Built target drvr_gemm_int_deter
+[ 76%] Built target drvr_ptr_chase
+[ 80%] Built target drvr_multihart
+[ 80%] Built target drvr_gemm_int_rand
+[ 82%] Built target drvr_poke
+[ 82%] Built target drvr_ph_hello
+[ 82%] Built target drvr_print_int
+[ 82%] Built target drvr_printf
+[ 93%] Built target drvr_vread
+[ 93%] Built target drvr_puts
+[ 93%] Built target drvr_read
+[ 98%] Built target drvr_simple
+[100%] Built target drvr_wait-without-sleep
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_write
+[100%] Built target drvr_wait-with-sleep
+Install the project...
+-- Install configuration: ""
+-- Up-to-date: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 37%] Completed 'rv64'
+[100%] Built target rv64
+[ 16%] Built target riscvinterpreter
+[ 52%] Built target drvapi
+[100%] Built target Drv
+[ 68%] Built target drvapi
+[ 87%] Built target pandocommand
+[100%] Built target pandocommand_loader
+Build complete
+==============================================
+RUN: verify_c4_r70_c70 (4x1 cores, 16 threads/core, grid 70x70)
+==============================================
+Parsing arguments
+Building system
+Running simualation

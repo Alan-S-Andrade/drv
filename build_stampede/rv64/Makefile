@@ -448,6 +448,19 @@ drvr_bfs_multi_sw/fast:
 .PHONY : drvr_bfs_multi_sw/fast
 
 #=============================================================================
+# Target rules for targets named drvr_stream_bw_l2sp
+
+# Build rule for target.
+drvr_stream_bw_l2sp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_stream_bw_l2sp
+.PHONY : drvr_stream_bw_l2sp
+
+# fast build rule for target.
+drvr_stream_bw_l2sp/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/build
+.PHONY : drvr_stream_bw_l2sp/fast
+
+#=============================================================================
 # Target rules for targets named drvr_bfs_multi_sw_l2sp
 
 # Build rule for target.
@@ -474,6 +487,19 @@ drvr_bfs_multi_sw_barrier/fast:
 .PHONY : drvr_bfs_multi_sw_barrier/fast
 
 #=============================================================================
+# Target rules for targets named drvr_bfs_multihart
+
+# Build rule for target.
+drvr_bfs_multihart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs_multihart
+.PHONY : drvr_bfs_multihart
+
+# fast build rule for target.
+drvr_bfs_multihart/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/build
+.PHONY : drvr_bfs_multihart/fast
+
+#=============================================================================
 # Target rules for targets named drvr_bfs
 
 # Build rule for target.
@@ -498,19 +524,6 @@ drvr_bfs-multith: cmake_check_build_system
 drvr_bfs-multith/fast:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs-multith.dir/build.make drvr/CMakeFiles/drvr_bfs-multith.dir/build
 .PHONY : drvr_bfs-multith/fast
-
-#=============================================================================
-# Target rules for targets named drvr_bfs_multihart
-
-# Build rule for target.
-drvr_bfs_multihart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs_multihart
-.PHONY : drvr_bfs_multihart
-
-# fast build rule for target.
-drvr_bfs_multihart/fast:
-	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/build
-.PHONY : drvr_bfs_multihart/fast
 
 #=============================================================================
 # Target rules for targets named drvr_tc
@@ -824,6 +837,7 @@ help:
 	@echo "... drvr_shift"
 	@echo "... drvr_simple"
 	@echo "... drvr_snprintf"
+	@echo "... drvr_stream_bw_l2sp"
 	@echo "... drvr_tc"
 	@echo "... drvr_tc_larger"
 	@echo "... drvr_vread"

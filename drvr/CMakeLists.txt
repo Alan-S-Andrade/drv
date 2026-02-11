@@ -112,6 +112,9 @@ drvr_test_build_properties(gups
   PROPERTIES
   DRV_BUILD_CORE_THREADS 1
   DRV_BUILD_POD_CORES 1
+)
+drvr_test_run_properties(gups
+  PROPERTIES
   DRV_MODEL_OPTIONS --pxn-dram-banks=8
 )
 
@@ -131,6 +134,9 @@ drvr_test_build_properties(attn_fixed
   DRV_BUILD_CORE_THREADS 1
   DRV_BUILD_POD_CORES_X 2
   DRV_BUILD_POD_CORES_Y 1
+)
+drvr_test_run_properties(attn_fixed
+  PROPERTIES
   DRV_MODEL_OPTIONS --pxn-dram-banks=8
 )
 
@@ -154,7 +160,24 @@ drvr_test_build_properties(attn_fixed
   DRV_BUILD_POD_CORES_X 4
   DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(bfs_multi_sw
+  PROPERTIES
   DRV_MODEL_OPTIONS --dram-access-time=70ns
+)
+
+# stream_bw_l2sp (streaming bandwidth benchmark, L2SP, no barriers)
+drvr_test_with_pandohammer(stream_bw_l2sp stream_bw_l2sp.cpp)
+drvr_test_build_properties(stream_bw_l2sp
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(stream_bw_l2sp
+  PROPERTIES
+  DRV_MODEL_OPTIONS --pod-l2sp-banks=4
+  DRV_MODEL_OPTION0 --pod-l2sp-interleave=64
 )
 
 # bfs_sw_multi_l2sp (L2SP-optimized version)
@@ -165,7 +188,12 @@ drvr_test_build_properties(bfs_multi_sw_l2sp
   DRV_BUILD_POD_CORES_X 2
   DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(bfs_multi_sw_l2sp
+  PROPERTIES
   DRV_MODEL_OPTIONS --dram-access-time=70ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=4
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
 )
 
 # bfs_sw_multi_barrier (improved barrier, NO L2SP for data - for comparison)
@@ -176,6 +204,9 @@ drvr_test_build_properties(bfs_multi_sw_barrier
   DRV_BUILD_POD_CORES_X 8
   DRV_BUILD_POD_CORES_Y 8
   DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(bfs_multi_sw_barrier
+  PROPERTIES
   DRV_MODEL_OPTIONS --dram-access-time=70ns
 )
 

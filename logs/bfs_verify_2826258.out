@@ -1,0 +1,161 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.6s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+Building binary...
+[  2%] Performing build step for 'rv64'
+[ 13%] Built target riscvinterpreter
+[ 36%] Built target drvapi
+-- Configuring done (0.2s)
+[ 44%] Built target pandocommand
+[ 50%] Built target pandocommand_loader
+[ 81%] Built target Drv
+-- Generating done (1.0s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64
+[  4%] Built target drvr_add
+[  8%] Built target drvr_lsu
+[  8%] Built target drvr_exit
+[  9%] Built target drvr_shift
+[ 15%] Built target drvr_fma
+[ 15%] Built target pandohammer
+[ 15%] Built target drvr_float_lsu
+[ 16%] Generating drvr_fma-multith_include/address_map.h
+[ 17%] Generating drvr_bfs_multihart_include/address_map.h
+[ 19%] Built target drvr-example
+[ 23%] Built target drvr_addressmap
+[ 24%] Built target drvr_amoswap
+[ 25%] Built target drvr_cycle
+[ 27%] Built target drvr_fence
+[ 32%] Built target drvr_fib
+[ 32%] Built target drvr_fread
+[ 34%] Built target drvr_fscanf
+[ 36%] Built target drvr_fstat
+[ 38%] Built target drvr_gups
+[ 40%] Built target drvr_malloc
+[ 42%] Built target drvr_leiden_single
+[ 44%] Built target drvr_attn_fixed
+[ 48%] Built target drvr_bfs_multi_sw
+[ 48%] Built target drvr_dense_gemm
+[ 52%] Built target drvr_bfs_multi_sw_l2sp
+[ 53%] Built target drvr_bfs_multi_sw_barrier
+[ 54%] Built target drvr_bfs
+[ 60%] Built target drvr_bfs-multith
+[ 60%] Built target drvr_tc
+[ 60%] Built target drvr_tc_larger
+[ 62%] Built target drvr_list_traverse
+[ 64%] Built target drvr_ptr_chase
+[ 69%] Built target drvr_gemm_int_rand
+[ 69%] Built target drvr_gemm_int_deter
+[ 73%] Built target drvr_multihart
+[ 77%] Built target drvr_ph_hello
+[ 82%] Built target drvr_printf
+[ 83%] Built target drvr_poke
+[ 85%] Built target drvr_print_int
+[ 86%] Built target drvr_puts
+[ 88%] Built target drvr_read
+[ 91%] Built target drvr_simple
+[ 94%] Built target drvr_snprintf
+[ 94%] Built target drvr_vread
+[ 94%] Built target drvr_write
+[ 94%] Linking CXX executable drvr_fma-multith
+[ 94%] Building CXX object drvr/CMakeFiles/drvr_bfs_multihart.dir/bfs_multihart.cpp.obj
+[ 96%] Built target drvr_wait-with-sleep
+[ 98%] Built target drvr_wait-without-sleep
+[ 99%] Built target drvr_fma-multith
+[100%] Linking CXX executable drvr_bfs_multihart
+[100%] Built target drvr_bfs_multihart
+[ 84%] Performing install step for 'rv64'
+[ 11%] Built target drvr_exit
+[ 11%] Built target drvr_add
+[ 13%] Built target drvr_lsu
+[ 13%] Built target pandohammer
+[ 15%] Built target drvr_fma
+[ 15%] Built target drvr_shift
+[ 15%] Built target drvr_float_lsu
+[ 17%] Built target drvr-example
+[ 22%] Built target drvr_addressmap
+[ 22%] Built target drvr_amoswap
+[ 26%] Built target drvr_cycle
+[ 33%] Built target drvr_fence
+[ 35%] Built target drvr_fread
+[ 38%] Built target drvr_fstat
+[ 38%] Built target drvr_fma-multith
+[ 38%] Built target drvr_fib
+[ 38%] Built target drvr_fscanf
+[ 44%] Built target drvr_gups
+[ 47%] Built target drvr_leiden_single
+[ 47%] Built target drvr_malloc
+[ 50%] Built target drvr_attn_fixed
+[ 51%] Built target drvr_bfs_multi_sw
+[ 51%] Built target drvr_dense_gemm
+[ 52%] Built target drvr_bfs_multi_sw_l2sp
+[ 52%] Built target drvr_bfs_multi_sw_barrier
+[ 57%] Built target drvr_bfs-multith
+[ 57%] Built target drvr_bfs
+[ 64%] Built target drvr_tc
+[ 66%] Built target drvr_bfs_multihart
+[ 66%] Built target drvr_tc_larger
+[ 69%] Built target drvr_list_traverse
+[ 75%] Built target drvr_multihart
+[ 75%] Built target drvr_ptr_chase
+[ 78%] Built target drvr_gemm_int_rand
+[ 78%] Built target drvr_gemm_int_deter
+[ 86%] Built target drvr_poke
+[ 86%] Built target drvr_ph_hello
+[ 86%] Built target drvr_printf
+[ 90%] Built target drvr_print_int
+[ 93%] Built target drvr_puts
+[ 93%] Built target drvr_read
+[ 94%] Built target drvr_simple
+[ 96%] Built target drvr_snprintf
+[ 96%] Built target drvr_write
+[ 96%] Built target drvr_vread
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_wait-without-sleep
+Install the project...
+-- Install configuration: ""
+-- Up-to-date: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 86%] Completed 'rv64'
+[100%] Built target rv64
+Parsing arguments
+Building system
+Running simualation
+Grid BFS (L2SP version): R=48 C=18 N=864
+HW: total_harts=32, pxn=1 pods/pxn=1 cores/pod=2 harts/core=16
+Using total_threads=32 (within single pod for L2SP)
+Full Verification: DISABLED
+BFS done in 64 iterations
+max_dist=64
+sum_dist=27648
+BFS complete, signaling exit.
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 37.8726 ms
+[100%] Built target drvr-run-bfs_multi_sw_l2sp
+Build complete
+==============================================
+RUN: verify_c4_r48_c16 (4x1 cores, 16 threads/core, grid 48x16)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+[ICACHE BACKING]: failed to open /work/build_stampede/rv64/drvr/drvr-run-bfs_multi_sw_l2sp: No such file or directory
+
+--- Summary for verify_c4_r48_c16 ---
+Error: 'stats.csv' not found. Did you run the simulation?

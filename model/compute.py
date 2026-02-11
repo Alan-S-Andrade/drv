@@ -242,12 +242,16 @@ class RCoreBuilder(CoreBuilder):
             "clock" : self.clock,
             "num_harts" : self.threads,
             "program" : self.executable,
+            "argv" : self.argv,
             "core" : self.id,
             "release_reset" : 10000,
             "pod" : system_builder.pxn.pod.id,
             "pxn" : system_builder.pxn.id,
         }
         # set the stack pointer
+        # Reserve 256 bytes at top of each hart's stack for argc/argv data.
+        # Must match the ARGV_RESERVE constant in crt.S.
+        ARGV_RESERVE = 256
         addrmap = system_builder.addressmap()
         addrangebuilder = L1SPAddressBuilder(addrmap, system_builder.pxn.pod.compute.l1sp.size)
         addr_start, addr_stop, *_ = addrangebuilder(system_builder.pxn.id, system_builder.pxn.pod.id, self.id)
@@ -258,7 +262,7 @@ class RCoreBuilder(CoreBuilder):
         thread_stack_bytes = thread_stack_words * 8
         # build a string of stack pointers
         # to pass a parameter to the core
-        sp_v = [f"{i} {stack_base + ((i+1)*thread_stack_bytes) - 8}" for i in range(self.threads)]
+        sp_v = [f"{i} {stack_base + ((i+1)*thread_stack_bytes) - ARGV_RESERVE}" for i in range(self.threads)]
         sp_str = "[" + ", ".join(sp_v) + "]"
         p["sp"] = sp_str
         return p

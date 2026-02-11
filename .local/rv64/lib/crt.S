@@ -39,7 +39,7 @@ _start:
   slli sp, sp, 3
   mul  sp, sp, a0
   add  sp, sp, a2
-  addi sp, sp, -8
+  addi sp, sp, -256  # reserve 256 bytes for argc/argv data (ARGV_RESERVE)
   li a0, 0xFFFFFFFFFFFF0008
   sw sp, 0(a0)
 #endif

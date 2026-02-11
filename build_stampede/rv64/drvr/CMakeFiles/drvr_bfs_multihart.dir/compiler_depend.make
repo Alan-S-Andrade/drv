@@ -47,17 +47,26 @@ drvr/CMakeFiles/drvr_bfs_multihart.dir/bfs_multihart.cpp.obj: /work2/10238/vinee
   /install/riscv64-unknown-elfpandodrvsim/include/sys/string.h \
   /install/riscv64-unknown-elfpandodrvsim/include/sys/timespec.h \
   /install/riscv64-unknown-elfpandodrvsim/include/sys/types.h \
+  drvr/drvr_bfs_multihart_include/address_map.h \
+  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/address.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/atomic.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/cpuinfo.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/mmio.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/register.h \
+  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h \
   /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/stringify.h
 
+
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/staticdecl.h:
 
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/hartsleep.h:
 
 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/atomic.h:
+
+/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/pandohammer/address.h:
+
+drvr/drvr_bfs_multihart_include/address_map.h:
 
 /install/riscv64-unknown-elfpandodrvsim/include/sys/timespec.h:
 

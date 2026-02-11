@@ -88,13 +88,10 @@ __l2sp__ int g_R;
 __l2sp__ int g_C;
 __l2sp__ int g_N;
 
-// BFS arrays - the main data structures
-// Note: For larger grids, consider dynamic allocation or DRAM
-static const int MAXN = 1000 * 100;
-
-__l2sp__ int32_t g_dist[MAXN];
-__l2sp__ uint8_t g_frontier[MAXN];
-__l2sp__ uint8_t g_next_frontier[MAXN];
+// Pointers to dynamically-sized BFS arrays (allocated from free L2SP at runtime)
+__l2sp__ int32_t* g_dist;
+__l2sp__ uint8_t* g_frontier;
+__l2sp__ uint8_t* g_next_frontier;
 
 // BFS control flags
 __l2sp__ volatile int g_bfs_done;
@@ -106,6 +103,9 @@ __l2sp__ volatile int32_t g_max_dist;
 
 // Simulation exit flag
 __l2sp__ volatile int g_sim_exit;
+
+// Linker symbol: first free byte in L2SP after static data
+extern "C" char l2sp_end[];
 
 // ---------- Main ----------
 extern "C" int main(int argc, char** argv) {
@@ -177,26 +177,45 @@ extern "C" int main(int argc, char** argv) {
         wait(10);
     }
 
-    // Initialize grid dimensions (thread 0 only, then barrier)
+    // Initialize grid dimensions and allocate BFS arrays from free L2SP
     ph_stat_phase(0); // overhead: barrier
     barrier.sync([&]() {
         ph_stat_phase(1); // useful work inside lambda
         g_R = R;
         g_C = C;
-        g_N = R * C;
+        int N = R * C;
         g_sim_exit = 0;
         g_bfs_done = 0;
         g_sum_dist = 0;
         g_reached = 0;
         g_max_dist = 0;
 
-        if (g_N > MAXN) {
-            std::printf("N=%d exceeds MAXN=%d\n", g_N, MAXN);
+        // Allocate BFS arrays from free L2SP after static data
+        uintptr_t heap = ((uintptr_t)l2sp_end + 7) & ~(uintptr_t)7;
+        g_dist = (int32_t*)heap;
+        heap += N * sizeof(int32_t);
+        heap = (heap + 7) & ~(uintptr_t)7;
+        g_frontier = (uint8_t*)heap;
+        heap += N * sizeof(uint8_t);
+        heap = (heap + 7) & ~(uintptr_t)7;
+        g_next_frontier = (uint8_t*)heap;
+        heap += N * sizeof(uint8_t);
+
+        // Check allocation fits within physical L2SP
+        uintptr_t l2sp_base = 0x20000000;  // from linker script L2SP_VMA
+        if (heap - l2sp_base > podL2SPSize()) {
+            std::printf("ERROR: N=%d requires %lu bytes of L2SP, only %lu available\n",
+                        N, (unsigned long)(heap - l2sp_base), (unsigned long)podL2SPSize());
+            g_N = 0;
+        } else {
+            g_N = N;
         }
         ph_stat_phase(0);
     });
 
-    if (g_N > MAXN) {
+    if (g_N == 0) {
+        if (tid_local == 0) g_sim_exit = 1;
+        while (g_sim_exit == 0) hartsleep(100);
         return 1;
     }
 

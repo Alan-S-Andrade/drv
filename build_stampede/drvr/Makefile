@@ -442,6 +442,20 @@ drvr-run-bfs_multi_sw/fast:
 .PHONY : drvr-run-bfs_multi_sw/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule
+.PHONY : drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule
+
+# Convenience name for target.
+drvr-run-stream_bw_l2sp: drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule
+.PHONY : drvr-run-stream_bw_l2sp
+
+# fast build rule for target.
+drvr-run-stream_bw_l2sp/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build
+.PHONY : drvr-run-stream_bw_l2sp/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
 .PHONY : drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
@@ -470,6 +484,20 @@ drvr-run-bfs_multi_sw_barrier/fast:
 .PHONY : drvr-run-bfs_multi_sw_barrier/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
+
+# Convenience name for target.
+drvr-run-bfs_multihart: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
+.PHONY : drvr-run-bfs_multihart
+
+# fast build rule for target.
+drvr-run-bfs_multihart/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build
+.PHONY : drvr-run-bfs_multihart/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr-run-bfs.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs.dir/rule
 .PHONY : drvr/CMakeFiles/drvr-run-bfs.dir/rule
@@ -496,20 +524,6 @@ drvr-run-bfs-multith: drvr/CMakeFiles/drvr-run-bfs-multith.dir/rule
 drvr-run-bfs-multith/fast:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs-multith.dir/build.make drvr/CMakeFiles/drvr-run-bfs-multith.dir/build
 .PHONY : drvr-run-bfs-multith/fast
-
-# Convenience name for target.
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule:
-	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
-.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
-
-# Convenience name for target.
-drvr-run-bfs_multihart: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
-.PHONY : drvr-run-bfs_multihart
-
-# fast build rule for target.
-drvr-run-bfs_multihart/fast:
-	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build
-.PHONY : drvr-run-bfs_multihart/fast
 
 # Convenience name for target.
 drvr/CMakeFiles/drvr-run-tc.dir/rule:
@@ -857,6 +871,7 @@ help:
 	@echo "... drvr-run-shift"
 	@echo "... drvr-run-simple"
 	@echo "... drvr-run-snprintf"
+	@echo "... drvr-run-stream_bw_l2sp"
 	@echo "... drvr-run-tc"
 	@echo "... drvr-run-tc_larger"
 	@echo "... drvr-run-vread"

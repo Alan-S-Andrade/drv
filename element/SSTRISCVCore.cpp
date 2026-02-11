@@ -77,6 +77,8 @@ void RISCVCore::configureICache(Params &params) {
     if (program.empty()) {
         output_.fatal(CALL_INFO, -1, "No program specified\n");
     }
+    program_ = program;
+    argv_ = params.find<std::string>("argv", "");
     uint64_t icache_instructions = params.find<uint64_t>("icache_instructions", 1024);
     uint64_t icache_associativity = params.find<uint64_t>("icache_associativity", 1);
     auto *backing = new ICacheBacking(program.c_str());
@@ -276,6 +278,79 @@ void RISCVCore::setup() {
     //output_.verbose(CALL_INFO, 1, 0, "Loading program\n");
     //loadProgram();
     //output_.verbose(CALL_INFO, 1, 0, "Program loaded\n");
+    writeArgvToStack();
+}
+
+/* write argc/argv to each hart's stack */
+void RISCVCore::writeArgvToStack() {
+    using Write = Interfaces::StandardMem::Write;
+    using Addr = Interfaces::StandardMem::Addr;
+
+    // Build argument list: argv[0] = program name, rest from argv_ string
+    std::vector<std::string> args;
+    args.push_back(program_);
+    if (!argv_.empty()) {
+        std::istringstream iss(argv_);
+        std::string token;
+        while (iss >> token) {
+            args.push_back(token);
+        }
+    }
+
+    int argc = static_cast<int>(args.size());
+
+    // Stack layout at each hart's sp (must fit within 256-byte ARGV_RESERVE):
+    //   sp+0:               argc  (32-bit, lw in crt.S)
+    //   sp+4:               padding
+    //   sp+8:               argv[0] pointer (64-bit)
+    //   sp+16:              argv[1] pointer
+    //   ...
+    //   sp+8+argc*8:        NULL terminator (64-bit)
+    //   sp+8+(argc+1)*8:    string data begins
+    size_t ptr_area_size = 8 + (argc + 1) * 8;  // argc slot + pointer array + NULL
+    size_t str_data_size = 0;
+    for (auto &a : args) {
+        str_data_size += a.size() + 1;
+    }
+    size_t total_size = ptr_area_size + str_data_size;
+    if (total_size > 256) {
+        output_.fatal(CALL_INFO, -1, "argv data (%zu bytes) exceeds 256-byte ARGV_RESERVE\n", total_size);
+    }
+
+    size_t reqsz = getMaxReqSize();
+
+    for (size_t hart_id = 0; hart_id < harts_.size(); hart_id++) {
+        Addr sp_addr = static_cast<Addr>(harts_[hart_id].sp());
+
+        // Build the data buffer
+        std::vector<uint8_t> buf(total_size, 0);
+
+        // argc as 32-bit word at offset 0
+        uint32_t argc_val = static_cast<uint32_t>(argc);
+        memcpy(&buf[0], &argc_val, sizeof(uint32_t));
+
+        // String data base address
+        Addr str_base = sp_addr + ptr_area_size;
+
+        // Fill argv pointers and copy string data
+        Addr str_offset = 0;
+        for (int i = 0; i < argc; i++) {
+            uint64_t str_addr = str_base + str_offset;
+            memcpy(&buf[8 + i * 8], &str_addr, sizeof(uint64_t));
+            memcpy(&buf[ptr_area_size + str_offset], args[i].c_str(), args[i].size() + 1);
+            str_offset += args[i].size() + 1;
+        }
+        // argv[argc] = NULL is already zero-initialized
+
+        // Write buffer to memory in chunks
+        for (size_t off = 0; off < total_size; ) {
+            size_t wrsz = std::min(reqsz, total_size - off);
+            std::vector<uint8_t> data(buf.begin() + off, buf.begin() + off + wrsz);
+            Write *wr = new Write(sp_addr + off, wrsz, data, true);
+            mem_->send(wr);
+            off += wrsz;
+        }
+    }
 }
 
 /* finish */

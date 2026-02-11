@@ -1,0 +1,16 @@
+Parsing arguments
+Building system
+Running simualation
+Grid BFS (L2SP version): R=70 C=70 N=4900
+HW: total_harts=64, pxn=1 pods/pxn=1 cores/pod=4 harts/core=16
+Using total_threads=64 (within single pod for L2SP)
+Full Verification: DISABLED
+BFS done in 138 iterations
+max_dist=138
+sum_dist=338100
+BFS complete, signaling exit.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 328.126 ms

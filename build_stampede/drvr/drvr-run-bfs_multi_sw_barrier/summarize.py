@@ -13,11 +13,23 @@ CORE_STATS = [
     "store_dram",
     "store_l1sp",
     "store_l2sp",
+    "atomic_l1sp",
+    "atomic_l2sp",
+    "atomic_dram",
     "icache_miss",
     "load_latency_total",
     "load_request_count",
     "dram_load_latency_total",
-    "dram_load_request_count"
+    "dram_load_request_count",
+    "useful_load_l1sp",
+    "useful_store_l1sp",
+    "useful_atomic_l1sp",
+    "useful_load_l2sp",
+    "useful_store_l2sp",
+    "useful_atomic_l2sp",
+    "useful_load_dram",
+    "useful_store_dram",
+    "useful_atomic_dram",
 ]
 
 # DRAM cache statistics
@@ -28,6 +40,19 @@ CACHE_STATS = [
     "latency_GetX_hit",
     "latency_GetS_miss",
     "latency_GetX_miss",
+]
+
+# MemController statistics (SST built-in + custom)
+MEMCTRL_STATS = [
+    "outstanding_requests",
+    "cycles_with_issue",
+    "cycles_attempted_issue_but_rejected",
+    "total_cycles",
+    "requests_received_GetS",
+    "requests_received_GetX",
+    "requests_received_Write",
+    "latency_GetS",
+    "latency_Write",
 ]
 
 def is_dram_cache(name):
@@ -46,9 +71,14 @@ def short_cache_name(full_name):
     """Convert system_pxn0_dram0_cache to pxn0_dram0"""
     return full_name.replace("system_", "").replace("_cache", "")
 
+def short_memctrl_name(full_name):
+    """Convert system_pxn0_pod0_l2sp0_memctrl to pxn0_pod0_l2sp0"""
+    return full_name.replace("system_", "").replace("_memctrl", "")
+
 def main():
     core_stats = collections.defaultdict(lambda: collections.defaultdict(int))
     cache_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "count": 0}))
+    memctrl_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "count": 0, "min": 0, "max": 0}))
 
     # 1. Read the CSV produced by SST
     try:
@@ -71,6 +101,13 @@ def main():
                         cache_stats[cache_id][stat_name]["sum"] += int(row["Sum.u64"])
                         cache_stats[cache_id][stat_name]["count"] += int(row["Count.u64"])
 
+                # MemController stats (L1SP, L2SP, DRAM)
+                if "memctrl" in full_name and stat_name in MEMCTRL_STATS:
+                    memctrl_stats[full_name][stat_name]["sum"] += int(row["Sum.u64"])
+                    memctrl_stats[full_name][stat_name]["count"] += int(row["Count.u64"])
+                    memctrl_stats[full_name][stat_name]["min"] = int(row["Min.u64"])
+                    memctrl_stats[full_name][stat_name]["max"] = int(row["Max.u64"])
+
     except FileNotFoundError:
         print("Error: 'stats.csv' not found. Did you run the simulation?")
         sys.exit(1)
@@ -82,6 +119,20 @@ def main():
     total_store_l1sp = sum(d["store_l1sp"] for d in core_stats.values())
     total_store_l2sp = sum(d["store_l2sp"] for d in core_stats.values())
     total_store_dram = sum(d["store_dram"] for d in core_stats.values())
+    total_atomic_l1sp = sum(d["atomic_l1sp"] for d in core_stats.values())
+    total_atomic_l2sp = sum(d["atomic_l2sp"] for d in core_stats.values())
+    total_atomic_dram = sum(d["atomic_dram"] for d in core_stats.values())
+
+    # Useful stats
+    total_useful_load_l1sp = sum(d["useful_load_l1sp"] for d in core_stats.values())
+    total_useful_store_l1sp = sum(d["useful_store_l1sp"] for d in core_stats.values())
+    total_useful_atomic_l1sp = sum(d["useful_atomic_l1sp"] for d in core_stats.values())
+    total_useful_load_l2sp = sum(d["useful_load_l2sp"] for d in core_stats.values())
+    total_useful_store_l2sp = sum(d["useful_store_l2sp"] for d in core_stats.values())
+    total_useful_atomic_l2sp = sum(d["useful_atomic_l2sp"] for d in core_stats.values())
+    total_useful_load_dram = sum(d["useful_load_dram"] for d in core_stats.values())
+    total_useful_store_dram = sum(d["useful_store_dram"] for d in core_stats.values())
+    total_useful_atomic_dram = sum(d["useful_atomic_dram"] for d in core_stats.values())
 
     total_cache_hits = sum(d["CacheHits"]["sum"] for d in cache_stats.values())
     total_cache_misses = sum(d["CacheMisses"]["sum"] for d in cache_stats.values())
@@ -131,6 +182,33 @@ def main():
     print(f"\n{'DRAM Address Space Accesses':<45} {dram_space_accesses:<15} {dram_space_pct:.1f}% of all accesses")
     print(f"  - Loads{'':<39} {total_load_dram:<15}")
     print(f"  - Stores{'':<38} {total_store_dram:<15}")
+
+    # Useful accesses breakdown
+    print(f"\n{'--- Useful vs Total Accesses (stat_phase filtering) ---':<45}")
+
+    total_l1sp = total_load_l1sp + total_store_l1sp + total_atomic_l1sp
+    useful_l1sp = total_useful_load_l1sp + total_useful_store_l1sp + total_useful_atomic_l1sp
+    overhead_l1sp_pct = ((total_l1sp - useful_l1sp) / total_l1sp * 100) if total_l1sp > 0 else 0
+    print(f"{'L1SP Total':<30} {total_l1sp:<12} {'Useful:':<10} {useful_l1sp:<12} {'Overhead:':<10} {overhead_l1sp_pct:.1f}%")
+    print(f"  - Loads:  total={total_load_l1sp:<10} useful={total_useful_load_l1sp:<10}")
+    print(f"  - Stores: total={total_store_l1sp:<10} useful={total_useful_store_l1sp:<10}")
+    print(f"  - Atomic: total={total_atomic_l1sp:<10} useful={total_useful_atomic_l1sp:<10}")
+
+    total_l2sp = total_load_l2sp + total_store_l2sp + total_atomic_l2sp
+    useful_l2sp = total_useful_load_l2sp + total_useful_store_l2sp + total_useful_atomic_l2sp
+    overhead_l2sp_pct = ((total_l2sp - useful_l2sp) / total_l2sp * 100) if total_l2sp > 0 else 0
+    print(f"{'L2SP Total':<30} {total_l2sp:<12} {'Useful:':<10} {useful_l2sp:<12} {'Overhead:':<10} {overhead_l2sp_pct:.1f}%")
+    print(f"  - Loads:  total={total_load_l2sp:<10} useful={total_useful_load_l2sp:<10}")
+    print(f"  - Stores: total={total_store_l2sp:<10} useful={total_useful_store_l2sp:<10}")
+    print(f"  - Atomic: total={total_atomic_l2sp:<10} useful={total_useful_atomic_l2sp:<10}")
+
+    total_dram_all = total_load_dram + total_store_dram + total_atomic_dram
+    useful_dram = total_useful_load_dram + total_useful_store_dram + total_useful_atomic_dram
+    overhead_dram_pct = ((total_dram_all - useful_dram) / total_dram_all * 100) if total_dram_all > 0 else 0
+    print(f"{'DRAM Total':<30} {total_dram_all:<12} {'Useful:':<10} {useful_dram:<12} {'Overhead:':<10} {overhead_dram_pct:.1f}%")
+    print(f"  - Loads:  total={total_load_dram:<10} useful={total_useful_load_dram:<10}")
+    print(f"  - Stores: total={total_store_dram:<10} useful={total_useful_store_dram:<10}")
+    print(f"  - Atomic: total={total_atomic_dram:<10} useful={total_useful_atomic_dram:<10}")
 
     # DRAM cache stats
     cache_hit_rate = (total_cache_hits / total_cache_accesses * 100) if total_cache_accesses > 0 else 0
@@ -214,6 +292,43 @@ def main():
 
             display_name = short_cache_name(cache)
             print(f"{display_name:<20} {hits:<12} {misses:<12} {hit_rate:<10.1f} {avg_hit:<15.1f} {avg_miss:<15.1f}")
+
+    # 6. Print MemController Statistics (L2SP, L1SP, DRAM)
+    def print_memctrl_table(title, banks):
+        if not banks:
+            return
+        print("\n" + "=" * 120)
+        print(f"{title}")
+        print("=" * 120)
+        headers = ["Bank", "Reads", "Writes", "Util %", "Avg Queue", "Max Queue", "Avg Rd Lat", "Avg Wr Lat"]
+        print(f"{headers[0]:<28} {headers[1]:<10} {headers[2]:<10} {headers[3]:<10} {headers[4]:<12} {headers[5]:<12} {headers[6]:<12} {headers[7]:<12}")
+        print("-" * 120)
+        for bank in sorted(banks.keys()):
+            d = banks[bank]
+            reads = d["requests_received_GetS"]["sum"]
+            writes = d["requests_received_Write"]["sum"]
+            total_cyc = d["total_cycles"]["sum"] if d["total_cycles"]["sum"] > 0 else 1
+            issue_cyc = d["cycles_with_issue"]["sum"]
+            util = (issue_cyc / total_cyc) * 100
+
+            oq = d["outstanding_requests"]
+            avg_q = oq["sum"] / oq["count"] if oq["count"] > 0 else 0
+            max_q = oq["max"]
+
+            avg_rd = d["latency_GetS"]["sum"] / d["latency_GetS"]["count"] if d["latency_GetS"]["count"] > 0 else 0
+            avg_wr = d["latency_Write"]["sum"] / d["latency_Write"]["count"] if d["latency_Write"]["count"] > 0 else 0
+
+            display = short_memctrl_name(bank)
+            print(f"{display:<28} {reads:<10} {writes:<10} {util:<10.1f} {avg_q:<12.2f} {max_q:<12} {avg_rd:<12.1f} {avg_wr:<12.1f}")
+
+    if memctrl_stats:
+        l2sp_mc = {k: v for k, v in memctrl_stats.items() if "l2sp" in k}
+        l1sp_mc = {k: v for k, v in memctrl_stats.items() if "l1sp" in k}
+        dram_mc = {k: v for k, v in memctrl_stats.items() if "dram" in k and "l2sp" not in k and "l1sp" not in k}
+
+        print_memctrl_table("L2SP BANK STATISTICS (per-bank MemController)", l2sp_mc)
+        print_memctrl_table("L1SP BANK STATISTICS (per-bank MemController)", l1sp_mc)
+        print_memctrl_table("DRAM BANK STATISTICS (per-bank MemController)", dram_mc)
 
 if __name__ == "__main__":
     main()

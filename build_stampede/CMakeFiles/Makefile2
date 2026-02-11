@@ -233,11 +233,12 @@ drvr/clean: drvr/CMakeFiles/drvr-run-leiden_single.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-attn_fixed.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-dense_gemm.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-bfs_multi_sw.dir/clean
+drvr/clean: drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/clean
+drvr/clean: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-bfs.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-bfs-multith.dir/clean
-drvr/clean: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-tc.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-tc_larger.dir/clean
 drvr/clean: drvr/CMakeFiles/drvr-run-list_traverse.dir/clean
@@ -3534,6 +3535,41 @@ drvr/CMakeFiles/drvr-run-bfs_multi_sw.dir/clean:
 .PHONY : drvr/CMakeFiles/drvr-run-bfs_multi_sw.dir/clean
 
 #=============================================================================
+# Target rules for target drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir
+
+# All Build rule for target.
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all: CMakeFiles/rv64.dir/all
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all: element/CMakeFiles/Drv.dir/all
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all: pandocommand/CMakeFiles/pandocommand_loader.dir/all
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/depend
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num= "Built target drvr-run-stream_bw_l2sp"
+.PHONY : drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all
+
+# Build rule for subdir invocation for target.
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles 38
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles 0
+.PHONY : drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule
+
+# Convenience name for target.
+drvr-run-stream_bw_l2sp: drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/rule
+.PHONY : drvr-run-stream_bw_l2sp
+
+# codegen rule for target.
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/codegen: element/CMakeFiles/Drv.dir/all
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/codegen: pandocommand/CMakeFiles/pandocommand_loader.dir/all
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num= "Finished codegen for target drvr-run-stream_bw_l2sp"
+.PHONY : drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/codegen
+
+# clean rule for target.
+drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/clean:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/clean
+.PHONY : drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/clean
+
+#=============================================================================
 # Target rules for target drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir
 
 # All Build rule for target.
@@ -3604,6 +3640,41 @@ drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/clean:
 .PHONY : drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/clean
 
 #=============================================================================
+# Target rules for target drvr/CMakeFiles/drvr-run-bfs_multihart.dir
+
+# All Build rule for target.
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all: CMakeFiles/rv64.dir/all
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all: element/CMakeFiles/Drv.dir/all
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all: pandocommand/CMakeFiles/pandocommand_loader.dir/all
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/depend
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num= "Built target drvr-run-bfs_multihart"
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
+
+# Build rule for subdir invocation for target.
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles 38
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles 0
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
+
+# Convenience name for target.
+drvr-run-bfs_multihart: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
+.PHONY : drvr-run-bfs_multihart
+
+# codegen rule for target.
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen: element/CMakeFiles/Drv.dir/all
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen: pandocommand/CMakeFiles/pandocommand_loader.dir/all
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num= "Finished codegen for target drvr-run-bfs_multihart"
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen
+
+# clean rule for target.
+drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean
+
+#=============================================================================
 # Target rules for target drvr/CMakeFiles/drvr-run-bfs.dir
 
 # All Build rule for target.
@@ -3672,41 +3743,6 @@ drvr/CMakeFiles/drvr-run-bfs-multith.dir/codegen: pandocommand/CMakeFiles/pandoc
 drvr/CMakeFiles/drvr-run-bfs-multith.dir/clean:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs-multith.dir/build.make drvr/CMakeFiles/drvr-run-bfs-multith.dir/clean
 .PHONY : drvr/CMakeFiles/drvr-run-bfs-multith.dir/clean
-
-#=============================================================================
-# Target rules for target drvr/CMakeFiles/drvr-run-bfs_multihart.dir
-
-# All Build rule for target.
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all: CMakeFiles/rv64.dir/all
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all: element/CMakeFiles/Drv.dir/all
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all: pandocommand/CMakeFiles/pandocommand_loader.dir/all
-	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/depend
-	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num= "Built target drvr-run-bfs_multihart"
-.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
-
-# Build rule for subdir invocation for target.
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles 38
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles 0
-.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
-
-# Convenience name for target.
-drvr-run-bfs_multihart: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/rule
-.PHONY : drvr-run-bfs_multihart
-
-# codegen rule for target.
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen: element/CMakeFiles/Drv.dir/all
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen: pandocommand/CMakeFiles/pandocommand_loader.dir/all
-	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/CMakeFiles --progress-num= "Finished codegen for target drvr-run-bfs_multihart"
-.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/codegen
-
-# clean rule for target.
-drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean:
-	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_multihart.dir/build.make drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean
-.PHONY : drvr/CMakeFiles/drvr-run-bfs_multihart.dir/clean
 
 #=============================================================================
 # Target rules for target drvr/CMakeFiles/drvr-run-tc.dir
@@ -4432,11 +4468,12 @@ drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-leiden_single.dir
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-attn_fixed.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-dense_gemm.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs_multi_sw.dir/all
+drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/all
+drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs-multith.dir/all
-drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-tc.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-tc_larger.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/all: drvr/CMakeFiles/drvr-run-list_traverse.dir/all
@@ -4494,11 +4531,12 @@ drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-leiden_single
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-attn_fixed.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-dense_gemm.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs_multi_sw.dir/all
+drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-stream_bw_l2sp.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier.dir/all
+drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs-multith.dir/all
-drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-bfs_multihart.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-tc.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-tc_larger.dir/all
 drvr/CMakeFiles/drvr-run-all.dir/codegen: drvr/CMakeFiles/drvr-run-list_traverse.dir/all

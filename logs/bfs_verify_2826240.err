@@ -1,0 +1,2 @@
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+make: *** No rule to make target 'drvr_bfs_multi_sw'.  Stop.

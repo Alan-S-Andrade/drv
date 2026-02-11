@@ -1,0 +1,7 @@
+Parsing arguments
+Building system
+Running simualation
+Grid BFS (L2SP version): R=100 C=100 N=10000
+HW: total_harts=128, pxn=1 pods/pxn=1 cores/pod=8 harts/core=16
+Using total_threads=128 (within single pod for L2SP)
+Full Verification: DISABLED

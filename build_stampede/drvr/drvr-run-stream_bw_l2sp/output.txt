@@ -1,0 +1,8 @@
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 32 harts, 1024 words/hart (8192 B), 20 iters
+Total footprint: 256 KB in L2SP
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 15.7902 ms

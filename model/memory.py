@@ -67,7 +67,7 @@ class L1SPBuilder(MemoryBuilder):
         """
         super().__init__()
         self.network_bw = "24GB/s"
-        self.size = 4*1024
+        self.size = 256*1024
         self.clock = "1GHz"
         self.access_time = "1ns"
         return
@@ -146,7 +146,7 @@ class L2SPBuilder(MemoryBuilder):
         Initialize the L2 SP memory tile builder
         """
         self.id = 0
-        self.size = 64*1024
+        self.size = 1024*1024
         self.interleave_size = 0
         self.interleave_step = 0
         self.network_bw = "1GB/s"
@@ -188,6 +188,7 @@ class L2SPBuilder(MemoryBuilder):
             "max_requests_per_cycle" : 1,
             "mem_size" : f'{self.size}B',
         })
+        l2sp.memctrl.enableAllStatistics()
 
         l2sp.cmdhandler = \
             l2sp.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")

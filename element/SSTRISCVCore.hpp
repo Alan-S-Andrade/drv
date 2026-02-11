@@ -40,6 +40,7 @@ public:
     SST_ELI_DOCUMENT_PARAMS(
         /* input */
         {"program", "Program to run", "/path/to/r64elf"},
+        {"argv", "Program arguments (space-separated)", ""},
         {"load", "Load program into memory", "0"},
         {"release_reset", "Time to release from reset", "0"},
         /* control */
@@ -291,6 +292,11 @@ public:
      * configure system config
      */
     void configureSysConfig(Params &params);
+
+    /**
+     * write argc/argv to each hart's stack
+     */
+    void writeArgvToStack();
 
     /**
      * configure links
@@ -557,6 +563,8 @@ public:
     SST::TimeConverter *clocktc_; //!< the clock time converter
     int last_hart_; //!< last hart to execute
     bool load_program_; //!< load program
+    std::string program_; //!< program path (used as argv[0])
+    std::string argv_; //!< program arguments (space-separated)
     DrvSysConfig sys_config_; //!< system configuration
     std::map<uint64_t, int64_t> pchist_; //!< program counter history
     int core_; //!< core id wrt pod

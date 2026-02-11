@@ -1,0 +1,267 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.7s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+Building binary...
+[ 12%] Performing build step for 'rv64'
+[  6%] Built target drvr_add
+[  6%] Built target drvr_exit
+[  7%] Built target drvr_lsu
+[ 11%] Built target drvr_shift
+[ 14%] Built target drvr_float_lsu
+[ 14%] Built target drvr_fma
+[ 15%] Building ASM object pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj
+[ 16%] Built target pandohammer
+[ 17%] Linking C executable drvr-example
+[ 19%] Linking C executable drvr_fib
+[ 21%] Linking C executable drvr_cycle
+[ 21%] Linking C executable drvr_amoswap
+[ 22%] Linking C executable drvr_addressmap
+[ 22%] Linking C executable drvr_fread
+[ 25%] Linking CXX executable drvr_fence
+[ 25%] Linking CXX executable drvr_fstat
+[ 25%] Linking C executable drvr_fscanf
+[ 25%] Linking CXX executable drvr_fma-multith
+[ 26%] Linking CXX executable drvr_gups
+[ 26%] Linking C executable drvr_malloc
+[ 27%] Linking C executable drvr_leiden_single
+[ 30%] Linking CXX executable drvr_stream_bw_l2sp
+[ 30%] Linking CXX executable drvr_bfs_multi_sw
+[ 30%] Linking CXX executable drvr_dense_gemm
+[ 31%] Linking CXX executable drvr_bfs_multihart
+[ 32%] Linking C executable drvr_tc
+[ 33%] Linking CXX executable drvr_tc_larger
+[ 33%] Linking C executable drvr_multihart
+[ 33%] Linking C executable drvr_ph_hello
+[ 33%] Linking C executable drvr_poke
+[ 36%] Linking CXX executable drvr_ptr_chase
+[ 36%] Linking CXX executable drvr_bfs_multi_sw_barrier
+[ 36%] Linking CXX executable drvr_bfs_multi_sw_l2sp
+[ 37%] Linking CXX executable drvr_list_traverse
+[ 37%] Linking CXX executable drvr_bfs
+[ 38%] Linking CXX executable drvr_attn_fixed
+[ 39%] Linking CXX executable drvr_bfs-multith
+[ 41%] Linking CXX executable drvr_gemm_int_deter
+[ 41%] Linking CXX executable drvr_gemm_int_rand
+[ 41%] Linking C executable drvr_printf
+[ 43%] Built target drvr_multihart
+[ 44%] Built target drvr-example
+[ 45%] Built target drvr_addressmap
+[ 47%] Built target drvr_amoswap
+[ 47%] Built target drvr_cycle
+[ 50%] Built target drvr_fence
+[ 50%] Built target drvr_fib
+[ 52%] Built target drvr_fread
+[ 52%] Built target drvr_fma-multith
+[ 53%] Built target drvr_fscanf
+[ 55%] Built target drvr_fstat
+[ 55%] Built target drvr_gups
+[ 57%] Built target drvr_malloc
+[ 59%] Built target drvr_leiden_single
+[ 59%] Built target drvr_attn_fixed
+[ 60%] Built target drvr_dense_gemm
+[ 61%] Built target drvr_bfs_multi_sw
+[ 63%] Built target drvr_stream_bw_l2sp
+[ 63%] Built target drvr_bfs_multi_sw_l2sp
+[ 64%] Built target drvr_bfs_multi_sw_barrier
+[ 66%] Built target drvr_bfs_multihart
+[ 66%] Built target drvr_bfs
+[ 67%] Built target drvr_tc
+[ 68%] Built target drvr_tc_larger
+[ 72%] Built target drvr_list_traverse
+[ 72%] Built target drvr_ptr_chase
+[ 72%] Built target drvr_gemm_int_rand
+[ 77%] Built target drvr_ph_hello
+[ 77%] Built target drvr_poke
+[ 77%] Built target drvr_gemm_int_deter
+[ 79%] Built target drvr_printf
+[ 79%] Linking C executable drvr_print_int
+[ 79%] Linking C executable drvr_read
+[ 79%] Linking C executable drvr_puts
+[ 80%] Linking C executable drvr_simple
+[ 80%] Linking C executable drvr_write
+[ 80%] Linking C executable drvr_wait-with-sleep
+[ 80%] Linking C executable drvr_wait-without-sleep
+[ 81%] Linking CXX executable drvr_vread
+[ 81%] Linking CXX executable drvr_snprintf
+[ 83%] Built target drvr_print_int
+[ 88%] Built target drvr_puts
+[ 88%] Built target drvr_write
+[ 93%] Built target drvr_wait-without-sleep
+[ 93%] Built target drvr_wait-with-sleep
+[ 93%] Built target drvr_simple
+[ 97%] Built target drvr_vread
+[ 97%] Built target drvr_read
+[ 99%] Built target drvr_snprintf
+[100%] Built target drvr_bfs-multith
+[ 25%] Performing install step for 'rv64'
+[ 11%] Built target drvr_exit
+[ 12%] Built target drvr_add
+[ 12%] Built target pandohammer
+[ 16%] Built target drvr_shift
+[ 16%] Built target drvr_fma
+[ 16%] Built target drvr_float_lsu
+[ 16%] Built target drvr_lsu
+[ 19%] Built target drvr-example
+[ 21%] Built target drvr_addressmap
+[ 27%] Built target drvr_amoswap
+[ 30%] Built target drvr_cycle
+[ 32%] Built target drvr_fib
+[ 32%] Built target drvr_fence
+[ 34%] Built target drvr_fma-multith
+[ 37%] Built target drvr_fread
+[ 41%] Built target drvr_fscanf
+[ 44%] Built target drvr_gups
+[ 44%] Built target drvr_fstat
+[ 49%] Built target drvr_malloc
+[ 50%] Built target drvr_dense_gemm
+[ 50%] Built target drvr_leiden_single
+[ 52%] Built target drvr_attn_fixed
+[ 52%] Built target drvr_bfs_multi_sw
+[ 52%] Built target drvr_stream_bw_l2sp
+[ 52%] Built target drvr_bfs_multi_sw_l2sp
+[ 54%] Built target drvr_bfs_multi_sw_barrier
+[ 57%] Built target drvr_bfs_multihart
+[ 60%] Built target drvr_bfs
+[ 64%] Built target drvr_bfs-multith
+[ 66%] Built target drvr_tc
+[ 69%] Built target drvr_tc_larger
+[ 70%] Built target drvr_list_traverse
+[ 74%] Built target drvr_ptr_chase
+[ 76%] Built target drvr_gemm_int_deter
+[ 76%] Built target drvr_gemm_int_rand
+[ 81%] Built target drvr_multihart
+[ 83%] Built target drvr_ph_hello
+[ 84%] Built target drvr_print_int
+[ 84%] Built target drvr_printf
+[ 84%] Built target drvr_poke
+[ 84%] Built target drvr_puts
+[ 97%] Built target drvr_read
+[ 97%] Built target drvr_simple
+[ 99%] Built target drvr_vread
+[ 99%] Built target drvr_write
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_wait-without-sleep
+Install the project...
+-- Install configuration: ""
+-- Installing: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 37%] Completed 'rv64'
+[100%] Built target rv64
+[ 16%] Built target riscvinterpreter
+[ 52%] Built target drvapi
+[ 56%] Building CXX object element/CMakeFiles/Drv.dir/SSTRISCVCore.cpp.o
+[ 60%] Building CXX object element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o
+[ 64%] Linking CXX shared module libDrv.so
+[100%] Built target Drv
+[ 68%] Built target drvapi
+[ 87%] Built target pandocommand
+[100%] Built target pandocommand_loader
+Build complete
+==============================================
+RUN: verify_c4_r64_c16 (4x1 cores, 16 threads/core, grid 64x16)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+Grid BFS (L2SP version): R=64 C=16 N=1024
+HW: total_harts=64, pxn=1 pods/pxn=1 cores/pod=4 harts/core=16
+Using total_threads=64 (within single pod for L2SP)
+Full Verification: DISABLED
+BFS done in 78 iterations
+max_dist=78
+sum_dist=39936
+BFS complete, signaling exit.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 45.4506 ms
+
+--- Summary for verify_c4_r64_c16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 65252596        98.9% of all accesses
+  - Loads                                        48605100       
+  - Stores                                       16647496       
+
+L2 Scratchpad (L2SP) Accesses                 632904          1.0% of all accesses
+  - Loads                                        457226         
+  - Stores                                       175678         
+
+DRAM Address Space Accesses                   80703           0.1% of all accesses
+  - Loads                                        78578          
+  - Stores                                       2125           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     65252596     Useful:    1356648      Overhead:  97.9%
+  - Loads:  total=48605100   useful=1034403   
+  - Stores: total=16647496   useful=322245    
+  - Atomic: total=0          useful=0         
+L2SP Total                     647337       Useful:    517113       Overhead:  20.1%
+  - Loads:  total=457226     useful=347072    
+  - Stores: total=175678     useful=165976    
+  - Atomic: total=14433      useful=4065      
+DRAM Total                     81873        Useful:    0            Overhead:  100.0%
+  - Loads:  total=78578      useful=0         
+  - Stores: total=2125       useful=0         
+  - Atomic: total=1170       useful=0         
+
+DRAM Cache Hits                               79155           98.1% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1562           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          14.5 cycles
+  Estimated Cache Hit Latency                 12.4 cycles
+  Estimated Cache Miss Latency                120.8 cycles
+  Interconnect Overhead (round-trip)          10.3 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           2.2 cycles
+  Cache Miss Latency                          110.5 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         2.2 cycles
+
+========================================================================================================================
+PER-CORE STATISTICS
+========================================================================================================================
+Core                      Busy %     MemWait %  Idle %     L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0            0            0            0         
+pxn0_pod00                100.0      0.0        0.0        12155293     98213        20661        239064    
+pxn0_pod01                100.0      0.0        0.0        12164017     74094        19461        228479    
+pxn0_pod02                100.0      0.0        0.0        12161150     84244        19517        237625    
+pxn0_pod03                100.0      0.0        0.0        12124640     200675       18939        211956    
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~10 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           79155        1562         98.1       2.2             110.5          
+
+==============================================
+VERIFICATION RUN COMPLETE
+Results in: build_stampede/drvr/sweep_results/
+==============================================

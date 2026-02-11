@@ -4,17 +4,11 @@
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p pvc   
+#SBATCH -p pvc   # Using dev queue for verification
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 32
-#SBATCH -t 01:00:00
-
-# NOTE: 
-# I changed '-p icx' to '-p development' for faster start time during verification.
-# When you are ready for the full run, change it back to:
-# #SBATCH -p icx
-# #SBATCH -t 06:00:00
+#SBATCH -c 96
+#SBATCH -t 10:00:00
 
 set -eo pipefail
 
@@ -32,7 +26,9 @@ if [[ ! -f "$SIF" ]]; then
     exit 1
 fi
 
-# First: build inside the container
+# ------------------------------------------------------------------
+# STEP 1: BUILD
+# ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
   --bind "$SLURM_SUBMIT_DIR:/work" \
@@ -46,11 +42,16 @@ apptainer exec --cleanenv \
       -DSST_CORE_PREFIX=/install \
       -DSST_ELEMENTS_PREFIX=/install \
       -DCMAKE_INSTALL_PREFIX=/work/.local
-    make -j'"${SLURM_CPUS_PER_TASK}"' drvr_bfs_multi_sw_l2sp Drv
+    
+    # Build only (rv64 builds all RISC-V binaries, Drv + pandocommand_loader for SST)
+    echo "Building binary..."
+    make -j'"${SLURM_CPUS_PER_TASK}"' rv64 Drv pandocommand_loader
     echo "Build complete"
   '
 
-# Second: run the sweep inside the container
+# ------------------------------------------------------------------
+# STEP 2: RUN VERIFICATION (4 Cores, 48x16 Grid)
+# ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
   --bind "$SLURM_SUBMIT_DIR:/work" \
@@ -61,25 +62,28 @@ apptainer exec --cleanenv \
     export PATH=/install/bin:$PATH
 
     MODEL=/work/model/drvr.py
+    
+    # Binary name is drvr_<name> (underscores), NOT drvr-run-<name> (the CMake run dir)
     BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_multi_sw_l2sp
+    
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/sweep_results
+    SWEEP_DIR=/work/build_stampede/drvr/sweep_results_2
 
     mkdir -p "$SWEEP_DIR"
 
-    # ---- SWEEP CONFIGURATION ----
-    # Format: "CORES_X CORES_Y THREADS R C"
-    # Cores = CORES_X * CORES_Y, Threads per core = 16 (fixed)
-    # Grid = R x C nodes
-    CONFIGS=(
-      # VERIFICATION RUN: 4 Cores (4x1), 16 Threads, 48x16 Grid
-      "4 1 16 48 16"
+    # ---- VERIFICATION CONFIGURATION ----
+    # 4 Cores, 16 Threads, 48x16 Grid
+    CONFIGS=(	    
+      "8 1 16 100 100"
+      #"4 1 16 70 70"
+      #"2 1 16 50 50"
+
     )
 
     for cfg in "${CONFIGS[@]}"; do
       read -r CX CY THR R C <<< "$cfg"
       CORES=$((CX * CY))
-      RUN_NAME="c${CORES}_r${R}_c${C}"
+      RUN_NAME="verify_c${CORES}_r${R}_c${C}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
@@ -87,9 +91,7 @@ apptainer exec --cleanenv \
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
-
-      # Copy summarize.py to run dir
-      cp /work/build_stampede/drvr/drvr-run-bfs_multi_sw_l2sp/summarize.py "$RUN_DIR/"
+      cp /work/build_stampede/drvr/drvr-run-bfs_multi_sw_l2sp/summarize.py "$RUN_DIR/" || echo "Warning: summarize.py not found in source dir"
 
       cd "$RUN_DIR"
 
@@ -108,8 +110,10 @@ apptainer exec --cleanenv \
         | tee "$RUN_DIR/output.txt"
 
       echo ""
-      echo "--- Summary for ${RUN_NAME} ---"
-      python3 "$RUN_DIR/summarize.py"
+      if [ -f "summarize.py" ]; then
+          echo "--- Summary for ${RUN_NAME} ---"
+          python3 summarize.py
+      fi
       echo ""
 
       cd /work
@@ -117,6 +121,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "VERIFICATION RUN COMPLETE"
-    echo "Results in: build_stampede/drvr/sweep_results/"
+    echo "Results in: build_stampede/drvr/sweep_results_2/"
     echo "=============================================="
   '
