@@ -8,14 +8,15 @@
 #include <pandohammer/cpuinfo.h>
 
 
-#define __l1sp__ __attribute__((section(".dmem")))
-#define __l2sp__ __attribute__((section(".dram")))
+//#define __l1sp__ __attribute__((section(".dmem")))
+#define __l2sp__ __attribute__((section(".l2sp")))
 
-__l1sp__ volatile int x;
+__l2sp__ volatile int x;
 int main() {
     for (int i = 0; i < READS; i++) {
         int i = x;
-        ph_print_int(cycle());
+        //ph_print_int(cycle());
+	ph_print_int(cycle());
     }
     return 0;
 }

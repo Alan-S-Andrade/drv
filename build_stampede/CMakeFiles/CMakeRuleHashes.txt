@@ -14,9 +14,9 @@ ab7a3ed86589dc87fdfbaab5b4e03810 CMakeFiles/rv64
 88cdfb7840d8c604e8fc6be89bb34f75 drvr/CMakeFiles/drvr-run-bfs-multith
 6d6a91f1466e319ebeec086f25709316 drvr/CMakeFiles/drvr-run-bfs_multi_sw
 27cd20e5586527e76825e9c1f820e701 drvr/CMakeFiles/drvr-run-bfs_multi_sw_barrier
-1f379ecf1d7c131ebba69a61e6436589 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp
+dca80a41c865defb7ef4b0a998f68168 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp
 3f17851e26551e3a21aa0e3c8c8b6fba drvr/CMakeFiles/drvr-run-bfs_multihart
-bc41d781b8156914d445857bdafbda58 drvr/CMakeFiles/drvr-run-cycle
+2df04b05c208671dd423ca399c14f51d drvr/CMakeFiles/drvr-run-cycle
 24b7ddc3f441e1c14942e327bdfd8aaa drvr/CMakeFiles/drvr-run-dense_gemm
 f64b0c4f1b743f446ca27c8920f4b24e drvr/CMakeFiles/drvr-run-exit
 262d91971965bd7c5aa337b120f8c753 drvr/CMakeFiles/drvr-run-fence
@@ -42,10 +42,11 @@ f350f9324abe33ad45e465b11b257e4d drvr/CMakeFiles/drvr-run-print_int
 4c957b3d7143dfa744a83dfb78131535 drvr/CMakeFiles/drvr-run-ptr_chase
 90eb26d3ed2d816379a9db968ebce64b drvr/CMakeFiles/drvr-run-puts
 6dfd818b268cf76dd76c8fd659b4aeba drvr/CMakeFiles/drvr-run-read
+207703d7b31334a962f534d601e6940f drvr/CMakeFiles/drvr-run-shared_read_l2sp
 9a3cf401ec707d978edcca123d5889e4 drvr/CMakeFiles/drvr-run-shift
 98bc751fcfd7584df5a78a1bd4b61a2f drvr/CMakeFiles/drvr-run-simple
 2d8e7802dbd7f1b457cbcb8b31019064 drvr/CMakeFiles/drvr-run-snprintf
-a57003c0c35635424199dc8e65653b50 drvr/CMakeFiles/drvr-run-stream_bw_l2sp
+e45992e72d0109c9757ca629521704db drvr/CMakeFiles/drvr-run-stream_bw_l2sp
 ea6b415c53b77a78c60dd9930b5dae08 drvr/CMakeFiles/drvr-run-tc
 e7727bb7b03aab879dab1f1d118ce643 drvr/CMakeFiles/drvr-run-tc_larger
 dfcb85fc7db291eaae064be016e0f453 drvr/CMakeFiles/drvr-run-vread

@@ -623,6 +623,10 @@ element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o: \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/api/DrvAPIReadModifyWrite.hpp \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/DrvNativeSimulationTranslator.hpp \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/element/SSTRISCVCore.hpp \
+ /usr/include/c++/11/fstream \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+ /usr/include/c++/11/bits/fstream.tcc \
  /install/include/sst/core/component.h \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVHart.hpp \
  /work2/10238/vineeth_architect/stampede3/drv_copy/drv/interpreter/RISCVInstruction.hpp \

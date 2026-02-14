@@ -1345,6 +1345,19 @@ drvr-run-stream_bw_l2sp/fast:
 .PHONY : drvr-run-stream_bw_l2sp/fast
 
 #=============================================================================
+# Target rules for targets named drvr-run-shared_read_l2sp
+
+# Build rule for target.
+drvr-run-shared_read_l2sp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-shared_read_l2sp
+.PHONY : drvr-run-shared_read_l2sp
+
+# fast build rule for target.
+drvr-run-shared_read_l2sp/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/build
+.PHONY : drvr-run-shared_read_l2sp/fast
+
+#=============================================================================
 # Target rules for targets named drvr-run-bfs_multi_sw_l2sp
 
 # Build rule for target.
@@ -1731,6 +1744,7 @@ help:
 	@echo "... drvr-run-ptr_chase"
 	@echo "... drvr-run-puts"
 	@echo "... drvr-run-read"
+	@echo "... drvr-run-shared_read_l2sp"
 	@echo "... drvr-run-shift"
 	@echo "... drvr-run-simple"
 	@echo "... drvr-run-snprintf"

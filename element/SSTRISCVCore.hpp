@@ -3,6 +3,8 @@
 
 #pragma once
 #include <sstream>
+#include <fstream>
+#include <vector>
 #include <map>
 #include <string>
 #include <sst/core/component.h>
@@ -143,6 +145,14 @@ public:
             {"load_request_count", "Number of load requests completed", "count", 1},
             {"dram_load_latency_total", "Total DRAM load-to-ready latency cycles", "cycles", 1},
             {"dram_load_request_count", "Number of DRAM load requests completed", "count", 1},
+            {"useful_busy_cycles", "Busy cycles during stat_phase=1", "count", 1},
+            {"useful_memory_wait_cycles", "Memory wait cycles during stat_phase=1", "count", 1},
+            {"useful_active_idle_cycles", "Active idle cycles during stat_phase=1", "count", 1},
+            {"useful_load_latency_total", "Load-to-ready latency cycles during stat_phase=1", "cycles", 1},
+            {"useful_load_request_count", "Load requests completed during stat_phase=1", "count", 1},
+            {"useful_dram_load_latency_total", "DRAM load-to-ready latency during stat_phase=1", "cycles", 1},
+            {"useful_dram_load_request_count", "DRAM load requests during stat_phase=1", "count", 1},
+            {"l2sp_interarrival", "Cycles between consecutive L2SP accesses per hart", "cycles", 1},
         };
 
 #undef DEFINSTR
@@ -417,6 +427,24 @@ public:
     Statistic<uint64_t> *load_request_count_;    //!< Number of load requests (for avg calculation)
     Statistic<uint64_t> *dram_load_latency_total_;  //!< Total cycles for DRAM load-to-ready
     Statistic<uint64_t> *dram_load_request_count_;  //!< Number of DRAM load requests
+    // Phase-aware stats (only counted when stat_phase_==1)
+    Statistic<uint64_t> *useful_busy_cycles_;
+    Statistic<uint64_t> *useful_memory_wait_cycles_;
+    Statistic<uint64_t> *useful_active_idle_cycles_;
+    Statistic<uint64_t> *useful_load_latency_total_;
+    Statistic<uint64_t> *useful_load_request_count_;
+    Statistic<uint64_t> *useful_dram_load_latency_total_;
+    Statistic<uint64_t> *useful_dram_load_request_count_;
+    /**
+     * return true if any hart on this core has stat_phase_ == 1
+     */
+    bool anyHartInStatPhase() const {
+        for (const auto &hart : harts_) {
+            if (hart.stat_phase_) return true;
+        }
+        return false;
+    }
+
     /**
      * is local l1sp for purpose of stats
      */
@@ -446,6 +474,14 @@ public:
     }
 
     /**
+     * record L2SP access timestamp (for post-processing interarrival across cores)
+     */
+    void recordL2SPInterarrival() {
+        uint64_t now = getCycleCount();
+        l2sp_access_timestamps_.push_back(now);
+    }
+
+    /**
      * add load statistic
      */
     void addLoadStat(const DrvAPI::DrvAPIAddressInfo& addr, RISCVSimHart &hart) {
@@ -457,6 +493,7 @@ public:
         } else if (isPAddressL2SP(addr)) {
             stats.load_l2sp->addData(1);
             if (hart.stat_phase_) stats.useful_load_l2sp->addData(1);
+            recordL2SPInterarrival();
         } else if (isPAddressDRAM(addr)) {
             stats.load_dram->addData(1);
             if (hart.stat_phase_) stats.useful_load_dram->addData(1);
@@ -477,6 +514,7 @@ public:
         } else if (isPAddressL2SP(addr)) {
             stats.store_l2sp->addData(1);
             if (hart.stat_phase_) stats.useful_store_l2sp->addData(1);
+            recordL2SPInterarrival();
         } else if (isPAddressDRAM(addr)) {
             stats.store_dram->addData(1);
             if (hart.stat_phase_) stats.useful_store_dram->addData(1);
@@ -497,6 +535,7 @@ public:
         } else if (isPAddressL2SP(addr)) {
             stats.atomic_l2sp->addData(1);
             if (hart.stat_phase_) stats.useful_atomic_l2sp->addData(1);
+            recordL2SPInterarrival();
         } else if (isPAddressDRAM(addr)) {
             stats.atomic_dram->addData(1);
             if (hart.stat_phase_) stats.useful_atomic_dram->addData(1);
@@ -527,9 +566,11 @@ public:
 
     /**
      * return true if we should unregister the clock
+     * Keep ticking while memory requests are outstanding so that
+     * memory_wait_cycles (and useful_memory_wait_cycles) are counted.
      */
     bool shouldUnregisterClock() const {
-        return true;
+        return outstanding_requests_ == 0;
     }
 
     /**
@@ -537,7 +578,7 @@ public:
      */
     void assertCoreOn() {
         if (!core_on_) {
-            core_on_;
+            core_on_ = true;
             Cycle_t reregister_cycle = getCycleCount();
             addStallCycleStat(reregister_cycle - unregister_cycle_);
             reregisterClock(clocktc_, clock_handler_);
@@ -581,6 +622,9 @@ public:
     SST::Link *loopback_; //!< loopback link
     bool core_on_ = true; //!< core on
     Cycle_t unregister_cycle_; //!< cycle clock was unregistered
+    // L2SP access timestamps (for post-processing interarrival across cores/pod)
+    Statistic<uint64_t> *l2sp_interarrival_;
+    std::vector<uint64_t> l2sp_access_timestamps_;
 };
 
 

@@ -1,0 +1,22 @@
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 256 harts, 128 shared words (1024 B), 160 iters
+Hart 0: read 5841988 cyc (163840 bytes)
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 7.89126 ms

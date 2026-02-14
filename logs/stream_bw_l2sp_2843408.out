@@ -1,0 +1,351 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.6s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+Building binary...
+[ 12%] Performing build step for 'rv64'
+[  2%] Built target drvr_add
+[  9%] Built target drvr_exit
+[ 10%] Built target drvr_lsu
+[ 12%] Built target drvr_shift
+[ 15%] Built target pandohammer
+[ 15%] Built target drvr_fma
+[ 15%] Built target drvr_float_lsu
+[ 22%] Built target drvr-example
+[ 44%] Built target drvr_cycle
+[ 52%] Built target drvr_bfs_multi_sw
+[ 44%] Built target drvr_amoswap
+[ 44%] Built target drvr_addressmap
+[ 44%] Built target drvr_fence
+[ 44%] Built target drvr_gups
+[ 44%] Built target drvr_dense_gemm
+[ 45%] Built target drvr_fstat
+[ 44%] Built target drvr_fma-multith
+[ 44%] Built target drvr_fread
+[ 55%] Built target drvr_fscanf
+[ 61%] Built target drvr_tc
+[ 55%] Built target drvr_leiden_single
+[ 55%] Built target drvr_stream_bw_l2sp
+[ 55%] Built target drvr_shared_read_l2sp
+[ 55%] Built target drvr_bfs_multihart
+[ 64%] Built target drvr_fib
+[ 64%] Built target drvr_attn_fixed
+[ 64%] Built target drvr_bfs_multi_sw_barrier
+[ 64%] Built target drvr_malloc
+[ 73%] Built target drvr_tc_larger
+[ 75%] Built target drvr_bfs-multith
+[ 73%] Built target drvr_multihart
+[ 73%] Built target drvr_bfs_multi_sw_l2sp
+[ 81%] Built target drvr_bfs
+[ 81%] Built target drvr_list_traverse
+[ 81%] Built target drvr_gemm_int_rand
+[ 81%] Built target drvr_ptr_chase
+[ 91%] Built target drvr_gemm_int_deter
+[ 91%] Built target drvr_printf
+[ 91%] Built target drvr_print_int
+[ 91%] Built target drvr_ph_hello
+[ 91%] Built target drvr_poke
+[ 98%] Built target drvr_read
+[ 98%] Built target drvr_simple
+[ 98%] Built target drvr_puts
+[100%] Built target drvr_wait-without-sleep
+[100%] Built target drvr_write
+[100%] Built target drvr_vread
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_snprintf
+[ 25%] Performing install step for 'rv64'
+[  6%] Built target drvr_add
+[ 11%] Built target drvr_exit
+[ 12%] Built target pandohammer
+[ 14%] Built target drvr_lsu
+[ 14%] Built target drvr_float_lsu
+[ 15%] Built target drvr_shift
+[ 15%] Built target drvr_fma
+[ 16%] Built target drvr-example
+[ 22%] Built target drvr_addressmap
+[ 22%] Built target drvr_amoswap
+[ 24%] Built target drvr_cycle
+[ 33%] Built target drvr_fence
+[ 35%] Built target drvr_fma-multith
+[ 35%] Built target drvr_fread
+[ 35%] Built target drvr_fib
+[ 38%] Built target drvr_gups
+[ 38%] Built target drvr_fscanf
+[ 42%] Built target drvr_fstat
+[ 47%] Built target drvr_attn_fixed
+[ 47%] Built target drvr_malloc
+[ 47%] Built target drvr_leiden_single
+[ 47%] Built target drvr_dense_gemm
+[ 47%] Built target drvr_bfs_multi_sw
+[ 50%] Built target drvr_stream_bw_l2sp
+[ 53%] Built target drvr_shared_read_l2sp
+[ 55%] Built target drvr_bfs_multi_sw_l2sp
+[ 56%] Built target drvr_bfs_multi_sw_barrier
+[ 69%] Built target drvr_bfs
+[ 69%] Built target drvr_bfs_multihart
+[ 69%] Built target drvr_bfs-multith
+[ 69%] Built target drvr_tc
+[ 76%] Built target drvr_ptr_chase
+[ 76%] Built target drvr_list_traverse
+[ 76%] Built target drvr_tc_larger
+[ 78%] Built target drvr_gemm_int_rand
+[ 78%] Built target drvr_gemm_int_deter
+[ 79%] Built target drvr_multihart
+[ 79%] Built target drvr_ph_hello
+[ 79%] Built target drvr_poke
+[ 82%] Built target drvr_printf
+[ 85%] Built target drvr_print_int
+[ 95%] Built target drvr_vread
+[ 96%] Built target drvr_puts
+[ 96%] Built target drvr_read
+[ 96%] Built target drvr_simple
+[100%] Built target drvr_wait-without-sleep
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_write
+[100%] Built target drvr_snprintf
+Install the project...
+-- Install configuration: ""
+-- Up-to-date: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 37%] Completed 'rv64'
+[100%] Built target rv64
+[ 12%] Built target riscvinterpreter
+[ 52%] Built target drvapi
+[100%] Built target Drv
+[ 68%] Built target drvapi
+[ 87%] Built target pandocommand
+[100%] Built target pandocommand_loader
+Build complete
+==============================================
+RUN: stream_c64_t16 (8x8 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 1024 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 512 KB in L2SP
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 68.6017 ms
+
+--- Summary for stream_c64_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 109986999       91.2% of all accesses
+  - Loads                                        77990934       
+  - Stores                                       31996065       
+
+L2 Scratchpad (L2SP) Accesses                 10559488        8.8% of all accesses
+  - Loads                                        10485760       
+  - Stores                                       73728          
+
+DRAM Address Space Accesses                   18901           0.0% of all accesses
+  - Loads                                        16123          
+  - Stores                                       2778           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     109986999    Useful:    85051392     Overhead:  22.7%
+  - Loads:  total=77990934   useful=63741952  
+  - Stores: total=31996065   useful=21309440  
+  - Atomic: total=0          useful=0         
+L2SP Total                     10559488     Useful:    10485760     Overhead:  0.7%
+  - Loads:  total=10485760   useful=10485760  
+  - Stores: total=73728      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     828383       Useful:    0            Overhead:  100.0%
+  - Loads:  total=16123      useful=0         
+  - Stores: total=2778       useful=0         
+  - Atomic: total=809482     useful=0         
+
+DRAM Cache Hits                               15489           81.9% hit rate
+DRAM Cache Misses (actual DRAM accesses)      3414           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          2066.6 cycles
+  Estimated Cache Hit Latency                 -878.7 cycles
+  Estimated Cache Miss Latency                15429.0 cycles
+  Interconnect Overhead (round-trip)          -1202.8 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           324.1 cycles
+  Cache Miss Latency                          16631.8 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         368.0 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            10488479        cycles (10.488 ms)
+  Total Simulation Duration (max core)        68375803        cycles (68.376 ms)
+  Startup/Teardown Overhead                   84.7%
+  Avg Load Latency (useful phase)             107.2 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                89.5       10.5       0.0        34.9       65.1       0.0        1172083      163840       827          3458      
+pxn0_pod010               83.6       16.4       0.0        34.8       65.2       0.0        1246090      163840       240          652       
+pxn0_pod011               89.5       10.5       0.0        34.8       65.2       0.0        1235100      163840       250          711       
+pxn0_pod012               51.5       48.5       0.0        34.8       65.2       0.0        1225469      163840       240          652       
+pxn0_pod013               89.5       10.5       0.0        34.8       65.2       0.0        1218899      163840       273          838       
+pxn0_pod014               76.9       23.1       0.0        34.8       65.2       0.0        1199612      163840       240          652       
+pxn0_pod015               82.1       17.9       0.0        34.8       65.2       0.0        1229413      163840       240          652       
+pxn0_pod016               86.0       14.0       0.0        34.8       65.2       0.0        1239528      163840       240          652       
+pxn0_pod017               74.5       25.5       0.0        34.8       65.2       0.0        1185230      163840       240          652       
+pxn0_pod018               84.4       15.6       0.0        34.8       65.2       0.0        1222120      163840       240          652       
+pxn0_pod019               69.9       30.1       0.0        34.8       65.2       0.0        1226846      163840       240          652       
+pxn0_pod01                87.6       12.4       0.0        34.8       65.2       0.0        1182714      163840       240          652       
+pxn0_pod020               66.9       33.1       0.0        34.8       65.2       0.0        1250051      163840       240          652       
+pxn0_pod021               78.2       21.8       0.0        34.8       65.2       0.0        1208877      163840       240          652       
+pxn0_pod022               58.9       41.1       0.0        34.8       65.2       0.0        1266116      163840       240          652       
+pxn0_pod023               56.3       43.7       0.0        34.8       65.2       0.0        1244764      163840       240          652       
+pxn0_pod024               89.7       10.3       0.0        34.8       65.2       0.0        1207842      163840       280          914       
+pxn0_pod025               79.1       20.9       0.0        34.8       65.2       0.0        1204712      163840       240          652       
+pxn0_pod026               74.3       25.7       0.0        34.8       65.2       0.0        1233782      163840       240          652       
+pxn0_pod027               89.1       10.9       0.0        34.8       65.2       0.0        1207101      163840       240          652       
+pxn0_pod028               73.2       26.8       0.0        34.8       65.2       0.0        1175098      163840       240          652       
+pxn0_pod029               77.1       22.9       0.0        34.8       65.2       0.0        1243472      163840       240          652       
+pxn0_pod02                86.1       13.9       0.0        34.8       65.2       0.0        1196501      163840       240          652       
+pxn0_pod030               64.1       35.9       0.0        34.8       65.2       0.0        1240752      163840       240          652       
+pxn0_pod031               88.9       11.1       0.0        34.8       65.2       0.0        1209687      163840       240          652       
+pxn0_pod032               80.2       19.8       0.0        34.8       65.2       0.0        1266252      163840       240          652       
+pxn0_pod033               85.6       14.4       0.0        34.8       65.2       0.0        1218652      163840       240          652       
+pxn0_pod034               79.3       20.7       0.0        34.8       65.2       0.0        1240106      163840       240          652       
+pxn0_pod035               86.9       13.1       0.0        34.8       65.2       0.0        1175047      163840       240          652       
+pxn0_pod036               77.4       22.6       0.0        34.8       65.2       0.0        1175659      163840       240          652       
+pxn0_pod037               89.5       10.5       0.0        34.8       65.2       0.0        1194169      163840       250          711       
+pxn0_pod038               74.9       25.1       0.0        34.8       65.2       0.0        1180912      163840       240          652       
+pxn0_pod039               83.5       16.5       0.0        34.8       65.2       0.0        1175540      163840       240          652       
+pxn0_pod03                86.5       13.5       0.0        34.8       65.2       0.0        1231980      163840       240          652       
+pxn0_pod040               61.1       38.9       0.0        34.8       65.2       0.0        1209625      163840       240          652       
+pxn0_pod041               89.7       10.3       0.0        34.8       65.2       0.0        1201383      163840       270          779       
+pxn0_pod042               89.3       10.7       0.0        34.8       65.2       0.0        1186413      163840       250          711       
+pxn0_pod043               87.4       12.6       0.0        34.8       65.2       0.0        1284782      163840       240          652       
+pxn0_pod044               85.5       14.5       0.0        34.8       65.2       0.0        1201397      163840       240          652       
+pxn0_pod045               88.5       11.5       0.0        34.8       65.2       0.0        1197740      163840       240          652       
+pxn0_pod046               64.4       35.6       0.0        34.8       65.2       0.0        1285547      163840       240          652       
+pxn0_pod047               77.2       22.8       0.0        34.8       65.2       0.0        1225707      163840       240          652       
+pxn0_pod048               86.3       13.7       0.0        34.8       65.2       0.0        1189718      163840       240          652       
+pxn0_pod049               49.3       50.7       0.0        34.8       65.2       0.0        1248980      163840       240          652       
+pxn0_pod04                89.0       11.0       0.0        34.8       65.2       0.0        1181136      163840       263          803       
+pxn0_pod050               60.6       39.4       0.0        34.8       65.2       0.0        1236145      163840       240          652       
+pxn0_pod051               66.4       33.6       0.0        34.8       65.2       0.0        1267663      163840       240          652       
+pxn0_pod052               84.7       15.3       0.0        34.8       65.2       0.0        1223531      163840       240          652       
+pxn0_pod053               88.0       12.0       0.0        34.8       65.2       0.0        1171647      163840       240          652       
+pxn0_pod054               75.2       24.8       0.0        34.8       65.2       0.0        1204236      163840       240          652       
+pxn0_pod055               75.7       24.3       0.0        34.8       65.2       0.0        1208724      163840       240          652       
+pxn0_pod056               84.9       15.1       0.0        34.8       65.2       0.0        1199850      163840       240          652       
+pxn0_pod057               88.3       11.7       0.0        34.8       65.2       0.0        1210373      163840       240          652       
+pxn0_pod058               61.1       38.9       0.0        34.8       65.2       0.0        1248300      163840       240          652       
+pxn0_pod059               89.6       10.4       0.0        34.8       65.2       0.0        1224782      163840       250          711       
+pxn0_pod05                82.8       17.2       0.0        34.8       65.2       0.0        1151502      163840       240          652       
+pxn0_pod060               81.7       18.3       0.0        34.8       65.2       0.0        1245359      163840       240          652       
+pxn0_pod061               65.3       34.7       0.0        34.8       65.2       0.0        1254811      163840       240          652       
+pxn0_pod062               71.7       28.3       0.0        34.8       65.2       0.0        1227917      163840       240          652       
+pxn0_pod063               68.2       31.8       0.0        34.8       65.2       0.0        1219298      163840       240          652       
+pxn0_pod06                58.1       41.9       0.0        34.8       65.2       0.0        1307188      163840       240          652       
+pxn0_pod07                87.1       12.9       0.0        34.8       65.2       0.0        1174231      163840       240          652       
+pxn0_pod08                60.4       39.6       0.0        34.8       65.2       0.0        1261458      163840       240          652       
+pxn0_pod09                89.3       10.7       0.0        34.8       65.2       0.0        1211315      163840       250          711       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-1203 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           15489        3414         81.9       324.1           16631.8        
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              10485760   73728      15.4     100.0    0          146.43     979        343.50     952.0      5          978        10.82      847.1      6.50       1.00      
+
+==============================================
+STREAM BW SWEEP COMPLETE
+Results in: build_stampede/drvr/stream_bw_results_64_bank1/
+==============================================

@@ -143,6 +143,7 @@ void RISCVCore::configureStatistics(Params &params) {
         stats.useful_store_dram = registerStatistic<uint64_t>("useful_store_dram", subid);
         stats.useful_atomic_dram = registerStatistic<uint64_t>("useful_atomic_dram", subid);
     }
+    l2sp_interarrival_ = registerStatistic<uint64_t>("l2sp_interarrival");
     busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
     stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");
     icache_miss_ = registerStatistic<uint64_t>("icache_miss");
@@ -152,6 +153,13 @@ void RISCVCore::configureStatistics(Params &params) {
     load_request_count_ = registerStatistic<uint64_t>("load_request_count");
     dram_load_latency_total_ = registerStatistic<uint64_t>("dram_load_latency_total");
     dram_load_request_count_ = registerStatistic<uint64_t>("dram_load_request_count");
+    useful_busy_cycles_ = registerStatistic<uint64_t>("useful_busy_cycles");
+    useful_memory_wait_cycles_ = registerStatistic<uint64_t>("useful_memory_wait_cycles");
+    useful_active_idle_cycles_ = registerStatistic<uint64_t>("useful_active_idle_cycles");
+    useful_load_latency_total_ = registerStatistic<uint64_t>("useful_load_latency_total");
+    useful_load_request_count_ = registerStatistic<uint64_t>("useful_load_request_count");
+    useful_dram_load_latency_total_ = registerStatistic<uint64_t>("useful_dram_load_latency_total");
+    useful_dram_load_request_count_ = registerStatistic<uint64_t>("useful_dram_load_request_count");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -365,6 +373,21 @@ void RISCVCore::finish() {
         //output_.verbose(CALL_INFO, 3, 0, "0x%08lx: %9lu\n", pc.first, pc.second);
     }
     //output_.verbose(CALL_INFO, 3, 0, "End PC Histogram:\n");
+
+    // Dump L2SP access timestamps to CSV (for pod-level interarrival post-processing)
+    {
+        std::string filename = "l2sp_timestamps_pxn" + std::to_string(pxn_)
+            + "_pod" + std::to_string(pod_)
+            + "_core" + std::to_string(core_) + ".csv";
+        std::ofstream ofs(filename);
+        if (ofs.is_open()) {
+            ofs << "cycle\n";
+            for (uint64_t t : l2sp_access_timestamps_) {
+                ofs << t << "\n";
+            }
+        }
+    }
+
     auto stdmem = dynamic_cast<Interfaces::StandardMem*>(mem_);
     if (stdmem) {
         stdmem->finish();
@@ -459,11 +482,23 @@ void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
             load_latency_total_->addData(latency);
             load_request_count_->addData(1);
 
+            // Phase-aware latency: check if this hart is currently in stat_phase
+            bool in_phase = (tid >= 0 && static_cast<size_t>(tid) < harts_.size()
+                             && harts_[tid].stat_phase_);
+            if (in_phase) {
+                useful_load_latency_total_->addData(latency);
+                useful_load_request_count_->addData(1);
+            }
+
             // Track DRAM latency separately
             auto dram_it = request_is_dram_.find(tid);
             if (dram_it != request_is_dram_.end() && dram_it->second) {
                 dram_load_latency_total_->addData(latency);
                 dram_load_request_count_->addData(1);
+                if (in_phase) {
+                    useful_dram_load_latency_total_->addData(latency);
+                    useful_dram_load_request_count_->addData(1);
+                }
             }
 
             request_issue_cycle_.erase(issue_it);
@@ -500,6 +535,9 @@ bool RISCVCore::tick(Cycle_t cycle) {
     bool unregister = false;
     if (hart_id != NO_HART) {
         addBusyCycleStat(1);
+        if (anyHartInStatPhase()) {
+            useful_busy_cycles_->addData(1);
+        }
         uint64_t pc = harts_[hart_id].pc();
         auto [hit, inst] = icache_->read(pc);
         if (!hit) {
@@ -535,11 +573,17 @@ bool RISCVCore::tick(Cycle_t cycle) {
             // Reason: All threads are blocked, and at least one is waiting for memory.
             // This is a True Memory Stall.
             memory_wait_cycles_->addData(1);
+            if (anyHartInStatPhase()) {
+                useful_memory_wait_cycles_->addData(1);
+            }
         } else {
-            // Reason: No memory requests are pending. 
+            // Reason: No memory requests are pending.
             // All threads are sleeping/waiting for interrupts.
             // This is True Idle.
             active_idle_cycles_->addData(1);
+            if (anyHartInStatPhase()) {
+                useful_active_idle_cycles_->addData(1);
+            }
         }
         unregister = shouldUnregisterClock();
         if (unregister) {

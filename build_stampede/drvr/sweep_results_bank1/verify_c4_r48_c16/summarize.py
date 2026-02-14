@@ -1,5 +1,6 @@
 import csv
 import sys
+import math
 import collections
 
 # Core statistics we care about
@@ -30,6 +31,13 @@ CORE_STATS = [
     "useful_load_dram",
     "useful_store_dram",
     "useful_atomic_dram",
+    "useful_busy_cycles",
+    "useful_memory_wait_cycles",
+    "useful_active_idle_cycles",
+    "useful_load_latency_total",
+    "useful_load_request_count",
+    "useful_dram_load_latency_total",
+    "useful_dram_load_request_count",
 ]
 
 # DRAM cache statistics
@@ -78,7 +86,7 @@ def short_memctrl_name(full_name):
 def main():
     core_stats = collections.defaultdict(lambda: collections.defaultdict(int))
     cache_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "count": 0}))
-    memctrl_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "count": 0, "min": 0, "max": 0}))
+    memctrl_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "sumsq": 0, "count": 0, "min": 0, "max": 0}))
 
     # 1. Read the CSV produced by SST
     try:
@@ -104,6 +112,7 @@ def main():
                 # MemController stats (L1SP, L2SP, DRAM)
                 if "memctrl" in full_name and stat_name in MEMCTRL_STATS:
                     memctrl_stats[full_name][stat_name]["sum"] += int(row["Sum.u64"])
+                    memctrl_stats[full_name][stat_name]["sumsq"] += int(row["SumSQ.u64"])
                     memctrl_stats[full_name][stat_name]["count"] += int(row["Count.u64"])
                     memctrl_stats[full_name][stat_name]["min"] = int(row["Min.u64"])
                     memctrl_stats[full_name][stat_name]["max"] = int(row["Max.u64"])
@@ -149,6 +158,33 @@ def main():
     total_dram_lat_count = sum(d["dram_load_request_count"] for d in core_stats.values())
     total_load_lat_sum = sum(d["load_latency_total"] for d in core_stats.values())
     total_load_lat_count = sum(d["load_request_count"] for d in core_stats.values())
+
+    # Useful-phase latency aggregates
+    useful_load_lat_sum = sum(d["useful_load_latency_total"] for d in core_stats.values())
+    useful_load_lat_count = sum(d["useful_load_request_count"] for d in core_stats.values())
+    useful_dram_lat_sum = sum(d["useful_dram_load_latency_total"] for d in core_stats.values())
+    useful_dram_lat_count = sum(d["useful_dram_load_request_count"] for d in core_stats.values())
+
+    # Useful-phase cycle aggregates (across all cores)
+    total_useful_busy = sum(d["useful_busy_cycles"] for d in core_stats.values())
+    total_useful_memwait = sum(d["useful_memory_wait_cycles"] for d in core_stats.values())
+    total_useful_idle = sum(d["useful_active_idle_cycles"] for d in core_stats.values())
+
+    # Useful phase duration: max across cores (the phase window length)
+    useful_phase_per_core = []
+    for d in core_stats.values():
+        phase_cyc = d["useful_busy_cycles"] + d["useful_memory_wait_cycles"] + d["useful_active_idle_cycles"]
+        if phase_cyc > 0:
+            useful_phase_per_core.append(phase_cyc)
+    max_useful_phase_cycles = max(useful_phase_per_core) if useful_phase_per_core else 0
+
+    # Total simulation cycles (from any core)
+    total_sim_per_core = []
+    for d in core_stats.values():
+        sim_cyc = d["busy_cycles"] + d["memory_wait_cycles"] + d["active_idle_cycles"]
+        if sim_cyc > 0:
+            total_sim_per_core.append(sim_cyc)
+    max_sim_cycles = max(total_sim_per_core) if total_sim_per_core else 0
 
     # 3. Print Summary Statistics
     print("=" * 90)
@@ -246,13 +282,32 @@ def main():
     print(f"\n{'--- Overall Memory Performance ---':<45}")
     print(f"{'  Avg Load Latency (all memory types)':<45} {avg_load_lat:.1f} cycles")
 
-    # 4. Print Per-Core Statistics
-    print("\n" + "=" * 120)
-    print("PER-CORE STATISTICS")
-    print("=" * 120)
-    headers = ["Core", "Busy %", "MemWait %", "Idle %", "L1SP Ld", "L2SP Ld", "DRAM Ld", "I-Miss"]
-    print(f"{headers[0]:<25} {headers[1]:<10} {headers[2]:<10} {headers[3]:<10} {headers[4]:<12} {headers[5]:<12} {headers[6]:<12} {headers[7]:<10}")
-    print("-" * 120)
+    # Useful-phase latencies
+    useful_avg_load_lat = useful_load_lat_sum / useful_load_lat_count if useful_load_lat_count > 0 else 0
+    useful_avg_dram_lat = useful_dram_lat_sum / useful_dram_lat_count if useful_dram_lat_count > 0 else 0
+
+    print(f"\n{'--- Useful Phase Memory Performance (stat_phase=1 only) ---':<45}")
+    print(f"{'  Useful Phase Duration (max core)':<45} {max_useful_phase_cycles:<15} cycles ({max_useful_phase_cycles/1e6:.3f} ms)")
+    print(f"{'  Total Simulation Duration (max core)':<45} {max_sim_cycles:<15} cycles ({max_sim_cycles/1e6:.3f} ms)")
+    startup_pct = ((max_sim_cycles - max_useful_phase_cycles) / max_sim_cycles * 100) if max_sim_cycles > 0 else 0
+    print(f"{'  Startup/Teardown Overhead':<45} {startup_pct:.1f}%")
+    print(f"{'  Avg Load Latency (useful phase)':<45} {useful_avg_load_lat:.1f} cycles")
+    if useful_dram_lat_count > 0:
+        print(f"{'  Avg DRAM Load Latency (useful phase)':<45} {useful_avg_dram_lat:.1f} cycles")
+
+    # 4. Print Per-Core Statistics (Total and Useful Phase)
+    print("\n" + "=" * 170)
+    print("PER-CORE STATISTICS (Total | Useful Phase)")
+    print("=" * 170)
+    headers = ["Core",
+               "Busy %", "MemWait %", "Idle %",
+               "uBusy %", "uMemW %", "uIdle %",
+               "L1SP Ld", "L2SP Ld", "DRAM Ld", "I-Miss"]
+    print(f"{headers[0]:<25} "
+          f"{headers[1]:<10} {headers[2]:<10} {headers[3]:<10} "
+          f"{headers[4]:<10} {headers[5]:<10} {headers[6]:<10} "
+          f"{headers[7]:<12} {headers[8]:<12} {headers[9]:<12} {headers[10]:<10}")
+    print("-" * 170)
 
     for core in sorted(core_stats.keys()):
         d = core_stats[core]
@@ -263,8 +318,18 @@ def main():
         wait_pct = (d["memory_wait_cycles"] / total_active) * 100
         idle_pct = (d["active_idle_cycles"] / total_active) * 100
 
+        # Useful-phase percentages
+        useful_active = d["useful_busy_cycles"] + d["useful_memory_wait_cycles"] + d["useful_active_idle_cycles"]
+        if useful_active == 0: useful_active = 1
+        u_busy_pct = (d["useful_busy_cycles"] / useful_active) * 100
+        u_wait_pct = (d["useful_memory_wait_cycles"] / useful_active) * 100
+        u_idle_pct = (d["useful_active_idle_cycles"] / useful_active) * 100
+
         display_name = short_core_name(core)
-        print(f"{display_name:<25} {busy_pct:<10.1f} {wait_pct:<10.1f} {idle_pct:<10.1f} {d['load_l1sp']:<12} {d['load_l2sp']:<12} {d['load_dram']:<12} {d['icache_miss']:<10}")
+        print(f"{display_name:<25} "
+              f"{busy_pct:<10.1f} {wait_pct:<10.1f} {idle_pct:<10.1f} "
+              f"{u_busy_pct:<10.1f} {u_wait_pct:<10.1f} {u_idle_pct:<10.1f} "
+              f"{d['load_l1sp']:<12} {d['load_l2sp']:<12} {d['load_dram']:<12} {d['icache_miss']:<10}")
 
     # 5. Print DRAM Cache Table
     if cache_stats:
@@ -294,15 +359,33 @@ def main():
             print(f"{display_name:<20} {hits:<12} {misses:<12} {hit_rate:<10.1f} {avg_hit:<15.1f} {avg_miss:<15.1f}")
 
     # 6. Print MemController Statistics (L2SP, L1SP, DRAM)
-    def print_memctrl_table(title, banks):
+    def compute_stddev(sumsq, sumv, count):
+        """Compute stddev from SumSQ, Sum, and Count."""
+        if count < 2:
+            return 0.0
+        mean = sumv / count
+        variance = (sumsq / count) - (mean * mean)
+        return math.sqrt(max(variance, 0.0))
+
+    def print_memctrl_table(title, banks, useful_phase_cycles=0, useful_total_reqs=0):
         if not banks:
             return
-        print("\n" + "=" * 120)
+        num_banks = len(banks)
+        useful_reqs_per_bank = useful_total_reqs / num_banks if num_banks > 0 else 0
+        print("\n" + "=" * 210)
         print(f"{title}")
-        print("=" * 120)
-        headers = ["Bank", "Reads", "Writes", "Util %", "Avg Queue", "Max Queue", "Avg Rd Lat", "Avg Wr Lat"]
-        print(f"{headers[0]:<28} {headers[1]:<10} {headers[2]:<10} {headers[3]:<10} {headers[4]:<12} {headers[5]:<12} {headers[6]:<12} {headers[7]:<12}")
-        print("-" * 120)
+        print("=" * 210)
+        headers = ["Bank", "Reads", "Writes", "Util %", "uUtil %",
+                   "Rejected",
+                   "Avg Queue", "Max Queue", "Queue SD",
+                   "Avg Rd Lat", "Min Rd Lat", "Max Rd Lat", "Rd Lat SD",
+                   "Avg Wr Lat", "Avg IAT", "uIAT"]
+        print(f"{headers[0]:<28} {headers[1]:<10} {headers[2]:<10} {headers[3]:<8} {headers[4]:<8} "
+              f"{headers[5]:<10} "
+              f"{headers[6]:<10} {headers[7]:<10} {headers[8]:<10} "
+              f"{headers[9]:<10} {headers[10]:<10} {headers[11]:<10} {headers[12]:<10} "
+              f"{headers[13]:<10} {headers[14]:<10} {headers[15]:<10}")
+        print("-" * 210)
         for bank in sorted(banks.keys()):
             d = banks[bank]
             reads = d["requests_received_GetS"]["sum"]
@@ -310,25 +393,56 @@ def main():
             total_cyc = d["total_cycles"]["sum"] if d["total_cycles"]["sum"] > 0 else 1
             issue_cyc = d["cycles_with_issue"]["sum"]
             util = (issue_cyc / total_cyc) * 100
+            rejected = d["cycles_attempted_issue_but_rejected"]["sum"]
 
+            # Useful-phase utilization: core-side useful requests / useful_phase_cycles
+            # Distributed evenly across banks (assumes interleaved addressing)
+            u_util = (useful_reqs_per_bank / useful_phase_cycles * 100) if useful_phase_cycles > 0 else 0
+
+            # Queue depth stats
             oq = d["outstanding_requests"]
             avg_q = oq["sum"] / oq["count"] if oq["count"] > 0 else 0
             max_q = oq["max"]
+            q_sd = compute_stddev(oq["sumsq"], oq["sum"], oq["count"])
 
-            avg_rd = d["latency_GetS"]["sum"] / d["latency_GetS"]["count"] if d["latency_GetS"]["count"] > 0 else 0
+            # Read latency stats
+            rl = d["latency_GetS"]
+            avg_rd = rl["sum"] / rl["count"] if rl["count"] > 0 else 0
+            min_rd = rl["min"] if rl["count"] > 0 else 0
+            max_rd = rl["max"] if rl["count"] > 0 else 0
+            rd_sd = compute_stddev(rl["sumsq"], rl["sum"], rl["count"])
+
+            # Write latency stats
             avg_wr = d["latency_Write"]["sum"] / d["latency_Write"]["count"] if d["latency_Write"]["count"] > 0 else 0
 
+            # Average inter-arrival time (total cycles / total requests)
+            total_reqs = reads + writes
+            avg_iat = total_cyc / total_reqs if total_reqs > 0 else 0
+            # Useful IAT: useful phase cycles / useful requests per bank
+            u_iat = useful_phase_cycles / useful_reqs_per_bank if useful_reqs_per_bank > 0 else 0
+
             display = short_memctrl_name(bank)
-            print(f"{display:<28} {reads:<10} {writes:<10} {util:<10.1f} {avg_q:<12.2f} {max_q:<12} {avg_rd:<12.1f} {avg_wr:<12.1f}")
+            print(f"{display:<28} {reads:<10} {writes:<10} {util:<8.1f} {u_util:<8.1f} "
+                  f"{rejected:<10} "
+                  f"{avg_q:<10.2f} {max_q:<10} {q_sd:<10.2f} "
+                  f"{avg_rd:<10.1f} {min_rd:<10} {max_rd:<10} {rd_sd:<10.2f} "
+                  f"{avg_wr:<10.1f} {avg_iat:<10.2f} {u_iat:<10.2f}")
 
     if memctrl_stats:
         l2sp_mc = {k: v for k, v in memctrl_stats.items() if "l2sp" in k}
         l1sp_mc = {k: v for k, v in memctrl_stats.items() if "l1sp" in k}
         dram_mc = {k: v for k, v in memctrl_stats.items() if "dram" in k and "l2sp" not in k and "l1sp" not in k}
 
-        print_memctrl_table("L2SP BANK STATISTICS (per-bank MemController)", l2sp_mc)
-        print_memctrl_table("L1SP BANK STATISTICS (per-bank MemController)", l1sp_mc)
-        print_memctrl_table("DRAM BANK STATISTICS (per-bank MemController)", dram_mc)
+        useful_l2sp_reqs = total_useful_load_l2sp + total_useful_store_l2sp + total_useful_atomic_l2sp
+        useful_l1sp_reqs = total_useful_load_l1sp + total_useful_store_l1sp + total_useful_atomic_l1sp
+        useful_dram_reqs = total_useful_load_dram + total_useful_store_dram + total_useful_atomic_dram
+
+        print_memctrl_table("L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
+                            l2sp_mc, max_useful_phase_cycles, useful_l2sp_reqs)
+        print_memctrl_table("L1SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
+                            l1sp_mc, max_useful_phase_cycles, useful_l1sp_reqs)
+        print_memctrl_table("DRAM BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
+                            dram_mc, max_useful_phase_cycles, useful_dram_reqs)
 
 if __name__ == "__main__":
     main()

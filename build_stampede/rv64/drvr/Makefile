@@ -456,6 +456,20 @@ drvr_stream_bw_l2sp/fast:
 .PHONY : drvr_stream_bw_l2sp/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr_shared_read_l2sp.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_shared_read_l2sp.dir/rule
+.PHONY : drvr/CMakeFiles/drvr_shared_read_l2sp.dir/rule
+
+# Convenience name for target.
+drvr_shared_read_l2sp: drvr/CMakeFiles/drvr_shared_read_l2sp.dir/rule
+.PHONY : drvr_shared_read_l2sp
+
+# fast build rule for target.
+drvr_shared_read_l2sp/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shared_read_l2sp.dir/build.make drvr/CMakeFiles/drvr_shared_read_l2sp.dir/build
+.PHONY : drvr_shared_read_l2sp/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
 .PHONY : drvr/CMakeFiles/drvr_bfs_multi_sw_l2sp.dir/rule
@@ -1685,6 +1699,30 @@ read.c.s:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_read.dir/build.make drvr/CMakeFiles/drvr_read.dir/read.c.s
 .PHONY : read.c.s
 
+shared_read_l2sp.obj: shared_read_l2sp.cpp.obj
+.PHONY : shared_read_l2sp.obj
+
+# target to build an object file
+shared_read_l2sp.cpp.obj:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shared_read_l2sp.dir/build.make drvr/CMakeFiles/drvr_shared_read_l2sp.dir/shared_read_l2sp.cpp.obj
+.PHONY : shared_read_l2sp.cpp.obj
+
+shared_read_l2sp.i: shared_read_l2sp.cpp.i
+.PHONY : shared_read_l2sp.i
+
+# target to preprocess a source file
+shared_read_l2sp.cpp.i:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shared_read_l2sp.dir/build.make drvr/CMakeFiles/drvr_shared_read_l2sp.dir/shared_read_l2sp.cpp.i
+.PHONY : shared_read_l2sp.cpp.i
+
+shared_read_l2sp.s: shared_read_l2sp.cpp.s
+.PHONY : shared_read_l2sp.s
+
+# target to generate assembly for a file
+shared_read_l2sp.cpp.s:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_shared_read_l2sp.dir/build.make drvr/CMakeFiles/drvr_shared_read_l2sp.dir/shared_read_l2sp.cpp.s
+.PHONY : shared_read_l2sp.cpp.s
+
 shift.obj: shift.S.obj
 .PHONY : shift.obj
 
@@ -2008,6 +2046,7 @@ help:
 	@echo "... drvr_ptr_chase"
 	@echo "... drvr_puts"
 	@echo "... drvr_read"
+	@echo "... drvr_shared_read_l2sp"
 	@echo "... drvr_shift"
 	@echo "... drvr_simple"
 	@echo "... drvr_snprintf"
@@ -2128,6 +2167,9 @@ help:
 	@echo "... read.obj"
 	@echo "... read.i"
 	@echo "... read.s"
+	@echo "... shared_read_l2sp.obj"
+	@echo "... shared_read_l2sp.i"
+	@echo "... shared_read_l2sp.s"
 	@echo "... shift.obj"
 	@echo "... simple-main.obj"
 	@echo "... simple-main.i"

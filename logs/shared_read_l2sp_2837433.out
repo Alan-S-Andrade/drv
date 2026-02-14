@@ -1,0 +1,475 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.5s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+Building binary...
+[ 12%] Performing build step for 'rv64'
+[  8%] Built target drvr_exit
+[  8%] Built target drvr_add
+[ 11%] Built target drvr_lsu
+[ 14%] Built target drvr_float_lsu
+[ 15%] Built target pandohammer
+[ 15%] Built target drvr_shift
+[ 15%] Built target drvr_fma
+[ 17%] Built target drvr-example
+[ 21%] Built target drvr_addressmap
+[ 23%] Built target drvr_amoswap
+[ 26%] Built target drvr_cycle
+[ 30%] Built target drvr_fence
+[ 36%] Built target drvr_fib
+[ 36%] Built target drvr_fread
+[ 36%] Built target drvr_fma-multith
+[ 38%] Built target drvr_gups
+[ 38%] Built target drvr_fscanf
+[ 41%] Built target drvr_fstat
+[ 45%] Built target drvr_leiden_single
+[ 52%] Built target drvr_dense_gemm
+[ 52%] Built target drvr_attn_fixed
+[ 57%] Built target drvr_bfs_multi_sw
+[ 57%] Built target drvr_stream_bw_l2sp
+[ 57%] Built target drvr_malloc
+[ 59%] Built target drvr_bfs_multihart
+[ 59%] Built target drvr_bfs_multi_sw_l2sp
+[ 59%] Built target drvr_bfs_multi_sw_barrier
+[ 59%] Built target drvr_shared_read_l2sp
+[ 59%] Built target drvr_bfs
+[ 67%] Built target drvr_tc
+[ 69%] Built target drvr_tc_larger
+[ 69%] Built target drvr_bfs-multith
+[ 73%] Built target drvr_list_traverse
+[ 75%] Built target drvr_ptr_chase
+[ 75%] Built target drvr_gemm_int_rand
+[ 80%] Built target drvr_multihart
+[ 84%] Built target drvr_ph_hello
+[ 84%] Built target drvr_gemm_int_deter
+[ 88%] Built target drvr_poke
+[ 88%] Built target drvr_printf
+[ 92%] Built target drvr_puts
+[ 92%] Built target drvr_print_int
+[ 92%] Built target drvr_simple
+[ 96%] Built target drvr_read
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_vread
+[100%] Built target drvr_write
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_wait-without-sleep
+[ 25%] Performing install step for 'rv64'
+[  6%] Built target drvr_add
+[ 11%] Built target drvr_exit
+[ 11%] Built target pandohammer
+[ 12%] Built target drvr_float_lsu
+[ 15%] Built target drvr_fma
+[ 15%] Built target drvr_shift
+[ 15%] Built target drvr_lsu
+[ 16%] Built target drvr-example
+[ 22%] Built target drvr_amoswap
+[ 22%] Built target drvr_addressmap
+[ 24%] Built target drvr_fence
+[ 24%] Built target drvr_cycle
+[ 33%] Built target drvr_fma-multith
+[ 39%] Built target drvr_fread
+[ 39%] Built target drvr_gups
+[ 39%] Built target drvr_fib
+[ 39%] Built target drvr_fscanf
+[ 41%] Built target drvr_fstat
+[ 45%] Built target drvr_leiden_single
+[ 46%] Built target drvr_attn_fixed
+[ 47%] Built target drvr_dense_gemm
+[ 47%] Built target drvr_malloc
+[ 47%] Built target drvr_bfs_multi_sw
+[ 50%] Built target drvr_stream_bw_l2sp
+[ 54%] Built target drvr_shared_read_l2sp
+[ 54%] Built target drvr_bfs_multi_sw_l2sp
+[ 59%] Built target drvr_bfs_multi_sw_barrier
+[ 62%] Built target drvr_bfs_multihart
+[ 63%] Built target drvr_bfs
+[ 65%] Built target drvr_bfs-multith
+[ 69%] Built target drvr_tc
+[ 71%] Built target drvr_list_traverse
+[ 71%] Built target drvr_tc_larger
+[ 75%] Built target drvr_gemm_int_rand
+[ 75%] Built target drvr_ptr_chase
+[ 77%] Built target drvr_multihart
+[ 77%] Built target drvr_gemm_int_deter
+[ 77%] Built target drvr_ph_hello
+[ 80%] Built target drvr_poke
+[ 83%] Built target drvr_print_int
+[ 87%] Built target drvr_printf
+[ 89%] Built target drvr_puts
+[ 92%] Built target drvr_read
+[ 96%] Built target drvr_simple
+[ 97%] Built target drvr_vread
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_write
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_wait-without-sleep
+Install the project...
+-- Install configuration: ""
+-- Up-to-date: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 37%] Completed 'rv64'
+[100%] Built target rv64
+[ 24%] Built target riscvinterpreter
+[ 52%] Built target drvapi
+[100%] Built target Drv
+[ 68%] Built target drvapi
+[ 87%] Built target pandocommand
+[100%] Built target pandocommand_loader
+Build complete
+==============================================
+RUN: shared_c1_t16 (1x1 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 16 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Simulation is complete, simulated time: 6.21793 ms
+
+
+==============================================
+RUN: shared_c2_t16 (2x1 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 32 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 6.20423 ms
+
+
+==============================================
+RUN: shared_c4_t16 (4x1 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 64 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 6.28321 ms
+
+
+==============================================
+RUN: shared_c8_t16 (8x1 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 128 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 6.41134 ms
+
+
+==============================================
+RUN: shared_c16_t16 (8x2 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 256 harts, 128 shared words (1024 B), 160 iters
+Hart 0: read 5841988 cyc (163840 bytes)
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 7.89126 ms
+
+
+==============================================
+RUN: shared_c32_t16 (8x4 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 512 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 21.8515 ms
+
+
+==============================================
+RUN: shared_c64_t16 (8x8 cores, 16 threads/core)
+==============================================
+Warning: summarize.py not found in source dir
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 1024 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 79.0371 ms
+
+--- Summary for shared_c64_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 172479466       89.2% of all accesses
+  - Loads                                        119560894      
+  - Stores                                       52918572       
+
+L2 Scratchpad (L2SP) Accesses                 20972672        10.8% of all accesses
+  - Loads                                        20971520       
+  - Stores                                       1152           
+
+DRAM Address Space Accesses                   18619           0.0% of all accesses
+  - Loads                                        15935          
+  - Stores                                       2684           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     172479466    Useful:    147965952    Overhead:  14.2%
+  - Loads:  total=119560894  useful=105684992 
+  - Stores: total=52918572   useful=42280960  
+  - Atomic: total=0          useful=0         
+L2SP Total                     20972672     Useful:    20971520     Overhead:  0.0%
+  - Loads:  total=20971520   useful=20971520  
+  - Stores: total=1152       useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     829632       Useful:    0            Overhead:  100.0%
+  - Loads:  total=15935      useful=0         
+  - Stores: total=2684       useful=0         
+  - Atomic: total=811013     useful=0         
+
+DRAM Cache Hits                               15211           81.7% hit rate
+DRAM Cache Misses (actual DRAM accesses)      3410           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          2026.6 cycles
+  Estimated Cache Hit Latency                 -987.6 cycles
+  Estimated Cache Miss Latency                15472.2 cycles
+  Interconnect Overhead (round-trip)          -1225.4 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           237.8 cycles
+  Cache Miss Latency                          16697.6 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         284.4 cycles
+
+========================================================================================================================
+PER-CORE STATISTICS
+========================================================================================================================
+Core                      Busy %     MemWait %  Idle %     L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0            0            0            0         
+pxn0_pod00                97.4       2.6        0.0        1892440      327680       617          2654      
+pxn0_pod010               97.9       2.1        0.0        1874521      327680       240          613       
+pxn0_pod011               97.5       2.5        0.0        1857368      327680       240          613       
+pxn0_pod012               98.1       1.9        0.0        1869727      327680       240          613       
+pxn0_pod013               97.9       2.1        0.0        1824592      327680       240          613       
+pxn0_pod014               98.2       1.8        0.0        1848742      327680       260          752       
+pxn0_pod015               96.3       3.7        0.0        1884262      327680       240          613       
+pxn0_pod016               97.8       2.2        0.0        1917990      327680       240          613       
+pxn0_pod017               97.7       2.3        0.0        1857249      327680       240          613       
+pxn0_pod018               98.2       1.8        0.0        1865045      327680       342          1266      
+pxn0_pod019               98.0       2.0        0.0        1855753      327680       240          613       
+pxn0_pod01                98.2       1.8        0.0        1853167      327680       260          752       
+pxn0_pod020               98.1       1.9        0.0        1834010      327680       240          613       
+pxn0_pod021               98.2       1.8        0.0        1879597      327680       240          613       
+pxn0_pod022               97.8       2.2        0.0        1896859      327680       240          613       
+pxn0_pod023               98.0       2.0        0.0        1871580      327680       240          613       
+pxn0_pod024               98.2       1.8        0.0        1849195      327680       240          613       
+pxn0_pod025               98.1       1.9        0.0        1857980      327680       240          613       
+pxn0_pod026               97.1       2.9        0.0        1918211      327680       240          613       
+pxn0_pod027               97.8       2.2        0.0        1849616      327680       240          613       
+pxn0_pod028               97.8       2.2        0.0        1871733      327680       240          613       
+pxn0_pod029               97.7       2.3        0.0        1868741      327680       240          613       
+pxn0_pod02                96.8       3.2        0.0        1875660      327680       240          613       
+pxn0_pod030               98.2       1.8        0.0        1884616      327680       240          613       
+pxn0_pod031               97.9       2.1        0.0        1895431      327680       240          613       
+pxn0_pod032               97.9       2.1        0.0        1874436      327680       240          613       
+pxn0_pod033               98.2       1.8        0.0        1869852      327680       263          764       
+pxn0_pod034               97.1       2.9        0.0        1887033      327680       240          613       
+pxn0_pod035               98.0       2.0        0.0        1867381      327680       240          613       
+pxn0_pod036               97.9       2.1        0.0        1864134      327680       240          613       
+pxn0_pod037               98.1       1.9        0.0        1804106      327680       240          613       
+pxn0_pod038               97.6       2.4        0.0        1890552      327680       240          613       
+pxn0_pod039               96.6       3.4        0.0        1916290      327680       240          613       
+pxn0_pod03                98.0       2.0        0.0        1850517      327680       240          613       
+pxn0_pod040               98.0       2.0        0.0        1906107      327680       240          613       
+pxn0_pod041               98.2       1.8        0.0        1841802      327680       263          764       
+pxn0_pod042               97.3       2.7        0.0        1922053      327680       240          613       
+pxn0_pod043               98.1       1.9        0.0        1823113      327680       240          613       
+pxn0_pod044               98.1       1.9        0.0        1936758      327680       240          613       
+pxn0_pod045               98.1       1.9        0.0        1817112      327680       240          613       
+pxn0_pod046               97.9       2.1        0.0        1869047      327680       240          613       
+pxn0_pod047               95.2       4.8        0.0        1942878      327680       240          613       
+pxn0_pod048               97.0       3.0        0.0        1852047      327680       240          613       
+pxn0_pod049               97.8       2.2        0.0        1901585      327680       240          613       
+pxn0_pod04                98.0       2.0        0.0        1846760      327680       240          613       
+pxn0_pod050               97.9       2.1        0.0        1865562      327680       240          613       
+pxn0_pod051               97.3       2.7        0.0        1872668      327680       240          613       
+pxn0_pod052               97.4       2.6        0.0        1860598      327680       240          613       
+pxn0_pod053               98.2       1.8        0.0        1809304      327680       240          613       
+pxn0_pod054               98.1       1.9        0.0        1821549      327680       240          613       
+pxn0_pod055               98.0       2.0        0.0        1890229      327680       240          613       
+pxn0_pod056               97.4       2.6        0.0        1875694      327680       240          613       
+pxn0_pod057               98.2       1.8        0.0        1849786      327680       240          613       
+pxn0_pod058               98.1       1.9        0.0        1860190      327680       240          613       
+pxn0_pod059               98.0       2.0        0.0        1870594      327680       240          613       
+pxn0_pod05                98.2       1.8        0.0        1828322      327680       250          716       
+pxn0_pod060               97.8       2.2        0.0        1886064      327680       240          613       
+pxn0_pod061               98.0       2.0        0.0        1851265      327680       240          613       
+pxn0_pod062               97.9       2.1        0.0        1855124      327680       240          613       
+pxn0_pod063               98.0       2.0        0.0        1885656      327680       240          613       
+pxn0_pod06                97.6       2.4        0.0        1862434      327680       240          613       
+pxn0_pod07                98.1       1.9        0.0        1863046      327680       240          613       
+pxn0_pod08                98.0       2.0        0.0        1867942      327680       240          613       
+pxn0_pod09                98.0       2.0        0.0        1847219      327680       240          613       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-1225 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           15211        3410         81.7       237.8           16697.6        
+
+====================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController)
+====================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              20971520   1152       26.5     0          257.01     985        427.69     968.6      5          985        10.18      112.0      3.77      
+
+==============================================
+SHARED READ SWEEP COMPLETE
+Results in: build_stampede/drvr/shared_read_results/
+==============================================

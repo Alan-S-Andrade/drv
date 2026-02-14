@@ -71,7 +71,7 @@ include drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/flags.make
 
 drvr/drvr_stream_bw_l2sp_include/address_map.h:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating drvr_stream_bw_l2sp_include/address_map.h"
-	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_stream_bw_l2sp_include && python3 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/py/addressmap.py --core-threads 16 --pod-cores-x 2 --pod-cores-y 1 --pxn-pods 1 --num-pxn 1 cheader > /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_stream_bw_l2sp_include/address_map.h
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr && mkdir -p /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_stream_bw_l2sp_include && python3 /work2/10238/vineeth_architect/stampede3/drv_copy/drv/py/addressmap.py --core-threads 16 --pod-cores-x 8 --pod-cores-y 2 --pxn-pods 1 --num-pxn 1 cheader > /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_stream_bw_l2sp_include/address_map.h
 
 drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/codegen:
 .PHONY : drvr/CMakeFiles/drvr_stream_bw_l2sp.dir/codegen

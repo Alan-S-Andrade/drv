@@ -456,6 +456,20 @@ drvr-run-stream_bw_l2sp/fast:
 .PHONY : drvr-run-stream_bw_l2sp/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/rule:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/rule
+.PHONY : drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/rule
+
+# Convenience name for target.
+drvr-run-shared_read_l2sp: drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/rule
+.PHONY : drvr-run-shared_read_l2sp
+
+# fast build rule for target.
+drvr-run-shared_read_l2sp/fast:
+	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/build.make drvr/CMakeFiles/drvr-run-shared_read_l2sp.dir/build
+.PHONY : drvr-run-shared_read_l2sp/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule:
 	cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
 .PHONY : drvr/CMakeFiles/drvr-run-bfs_multi_sw_l2sp.dir/rule
@@ -868,6 +882,7 @@ help:
 	@echo "... drvr-run-ptr_chase"
 	@echo "... drvr-run-puts"
 	@echo "... drvr-run-read"
+	@echo "... drvr-run-shared_read_l2sp"
 	@echo "... drvr-run-shift"
 	@echo "... drvr-run-simple"
 	@echo "... drvr-run-snprintf"

@@ -1,0 +1,1 @@
+/install/bin/riscv64-unknown-elfpandodrvsim-g++ -nostartfiles -T /work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer/bsg_link.ld CMakeFiles/drvr_shared_read_l2sp.dir/shared_read_l2sp.cpp.obj ../pandohammer/CMakeFiles/pandohammer.dir/crt.S.obj ../pandohammer/CMakeFiles/pandohammer.dir/lock.c.obj -o drvr_shared_read_l2sp

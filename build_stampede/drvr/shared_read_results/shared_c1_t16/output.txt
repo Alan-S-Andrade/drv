@@ -1,0 +1,6 @@
+Parsing arguments
+Building system
+Running simualation
+SHARED_READ_L2SP: 16 harts, 128 shared words (1024 B), 160 iters
+Configuring 16 harts
+Simulation is complete, simulated time: 6.21793 ms

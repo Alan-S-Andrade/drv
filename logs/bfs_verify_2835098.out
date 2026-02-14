@@ -139,3 +139,99 @@ Grid BFS (L2SP version): R=100 C=100 N=10000
 HW: total_harts=128, pxn=1 pods/pxn=1 cores/pod=8 harts/core=16
 Using total_threads=128 (within single pod for L2SP)
 Full Verification: DISABLED
+BFS done in 198 iterations
+max_dist=198
+sum_dist=990000
+BFS complete, signaling exit.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 942.525 ms
+
+--- Summary for verify_c8_r100_c100 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 2733666000      99.2% of all accesses
+  - Loads                                        2047121586     
+  - Stores                                       686544414      
+
+L2 Scratchpad (L2SP) Accesses                 21354786        0.8% of all accesses
+  - Loads                                        17333752       
+  - Stores                                       4021034        
+
+DRAM Address Space Accesses                   1576040         0.1% of all accesses
+  - Loads                                        1573846        
+  - Stores                                       2194           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     2733666000   Useful:    29868847     Overhead:  98.9%
+  - Loads:  total=2047121586 useful=23201413  
+  - Stores: total=686544414  useful=6667434   
+  - Atomic: total=0          useful=0         
+L2SP Total                     21446106     Useful:    20284931     Overhead:  5.4%
+  - Loads:  total=17333752   useful=16224856  
+  - Stores: total=4021034    useful=4020211   
+  - Atomic: total=91320      useful=39864     
+DRAM Total                     1579068      Useful:    0            Overhead:  100.0%
+  - Loads:  total=1573846    useful=0         
+  - Stores: total=2194       useful=0         
+  - Atomic: total=3028       useful=0         
+
+DRAM Cache Hits                               1574337         99.9% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1711           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          14.1 cycles
+  Estimated Cache Hit Latency                 13.9 cycles
+  Estimated Cache Miss Latency                171.9 cycles
+  Interconnect Overhead (round-trip)          11.8 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           2.1 cycles
+  Cache Miss Latency                          160.1 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         2.2 cycles
+
+========================================================================================================================
+PER-CORE STATISTICS
+========================================================================================================================
+Core                      Busy %     MemWait %  Idle %     L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0            0            0            0         
+pxn0_pod00                100.0      0.0        0.0        255929092    1831415      198072       102485    
+pxn0_pod01                100.0      0.0        0.0        255788065    3121193      195567       101484    
+pxn0_pod02                100.0      0.0        0.0        256016094    1022531      197815       98194     
+pxn0_pod03                100.0      0.0        0.0        255815378    2771504      195930       100296    
+pxn0_pod04                100.0      0.0        0.0        255808340    2871258      195806       103248    
+pxn0_pod05                100.0      0.0        0.0        255906713    2071769      196681       97927     
+pxn0_pod06                100.0      0.0        0.0        255947831    1672093      197195       98972     
+pxn0_pod07                100.0      0.0        0.0        255910073    1971989      196780       100698    
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~12 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           1574337      1711         99.9       2.1             160.1          
+
+========================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController)
+========================================================================================================================
+Bank                         Reads      Writes     Util %     Avg Queue    Max Queue    Avg Rd Lat   Avg Wr Lat  
+------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              17333752   4021034    2.3        0.48         118          24.7         5.9         
+
+==============================================
+VERIFICATION RUN COMPLETE
+Results in: build_stampede/drvr/sweep_results_2/
+==============================================

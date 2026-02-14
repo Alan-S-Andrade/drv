@@ -69,8 +69,13 @@ drvr_test_with_pandohammer(amoswap amoswap.c)
 
 # cycle
 drvr_test_with_pandohammer(cycle cycle.c)
-drvr_test_compile_options(cycle -DREADS=10)
-
+drvr_test_compile_options(cycle -DREADS=500)
+drvr_test_build_properties(cycle
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_CORE_THREADS 16
+)
 # exit
 drvr_test_nostdlib(exit exit.S)
 
@@ -170,14 +175,28 @@ drvr_test_run_properties(bfs_multi_sw
 drvr_test_with_pandohammer(stream_bw_l2sp stream_bw_l2sp.cpp)
 drvr_test_build_properties(stream_bw_l2sp
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 2
-  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 2
   DRV_BUILD_CORE_THREADS 16
 )
 drvr_test_run_properties(stream_bw_l2sp
   PROPERTIES
-  DRV_MODEL_OPTIONS --pod-l2sp-banks=4
-  DRV_MODEL_OPTION0 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTIONS --pod-l2sp-banks=1
+  #DRV_MODEL_OPTION0 --pod-l2sp-interleave=64
+)
+
+# shared_read_l2sp (shared-read benchmark, L2SP, all harts read same array)
+drvr_test_with_pandohammer(shared_read_l2sp shared_read_l2sp.cpp)
+drvr_test_build_properties(shared_read_l2sp
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(shared_read_l2sp
+  PROPERTIES
+  DRV_MODEL_OPTIONS --pod-l2sp-banks=1
+  #DRV_MODEL_OPTION0 --pod-l2sp-interleave=64
 )
 
 # bfs_sw_multi_l2sp (L2SP-optimized version)
@@ -185,8 +204,8 @@ drvr_test_with_pandohammer(bfs_multi_sw_l2sp bfs_sw_hw_multi_l2sp.cpp)
 drvr_test_compile_options(bfs_multi_sw_l2sp -DDEBUG)
 drvr_test_build_properties(bfs_multi_sw_l2sp
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 2
-  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
   DRV_BUILD_CORE_THREADS 16
 )
 drvr_test_run_properties(bfs_multi_sw_l2sp

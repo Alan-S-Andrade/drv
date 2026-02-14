@@ -7,11 +7,11 @@ ASM_DEFINES =
 
 ASM_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_cycle_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
-ASM_FLAGS = -DREADS=10
+ASM_FLAGS = -DREADS=500
 
 C_DEFINES = 
 
 C_INCLUDES = -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/rv64/drvr/drvr_cycle_include -I/work2/10238/vineeth_architect/stampede3/drv_copy/drv/pandohammer
 
-C_FLAGS = -DREADS=10
+C_FLAGS = -DREADS=500
 

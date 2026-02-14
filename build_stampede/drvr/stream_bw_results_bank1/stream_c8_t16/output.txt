@@ -1,0 +1,17 @@
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 128 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 64 KB in L2SP
+Hart 0: read 3558444 cyc (81920 bytes)
+sink=332800
+Done.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 4.28094 ms

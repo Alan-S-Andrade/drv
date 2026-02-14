@@ -1,0 +1,28 @@
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+INFO:    gocryptfs not found, will not be able to use gocryptfs
+usage: sstsim.x [-h] [--verbose VERBOSE] [--dram-access-time DRAM_ACCESS_TIME]
+                [--dram-backend {simple,ramulator,dramsim3}]
+                [--dram-backend-config DRAM_BACKEND_CONFIG] [--debug-init]
+                [--debug-memory] [--debug-requests] [--debug-responses]
+                [--debug-syscalls] [--debug-clock] [--debug-mmio]
+                [--verbose-memory VERBOSE_MEMORY] [--pod-cores-x POD_CORES_X]
+                [--pod-cores-y POD_CORES_Y] [--pxn-pods PXN_PODS]
+                [--num-pxn NUM_PXN] [--core-threads CORE_THREADS]
+                [--core-clock CORE_CLOCK] [--core-max-idle CORE_MAX_IDLE]
+                [--core-l1sp-size CORE_L1SP_SIZE]
+                [--pod-l2sp-banks POD_L2SP_BANKS]
+                [--pod-l2sp-interleave POD_L2SP_INTERLEAVE]
+                [--pod-l2sp-size POD_L2SP_SIZE]
+                [--pxn-dram-banks PXN_DRAM_BANKS]
+                [--pxn-dram-size PXN_DRAM_SIZE]
+                [--pxn-dram-interleave PXN_DRAM_INTERLEAVE]
+                [--without-pxn-dram-cache]
+                [--with-command-processor WITH_COMMAND_PROCESSOR]
+                [--cp-verbose CP_VERBOSE] [--cp-verbose-init]
+                [--cp-verbose-requests] [--cp-verbose-responses]
+                [--drvx-stack-in-l1sp] [--drvr-isa-test]
+                [--test-name TEST_NAME] [--core-stats]
+                [--stats-load-level STATS_LOAD_LEVEL]
+                [--trace-remote-pxn-memory]
+                program ...
+sstsim.x: error: the following arguments are required: program, argv

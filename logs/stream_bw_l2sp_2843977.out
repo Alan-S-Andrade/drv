@@ -1,0 +1,1026 @@
+-- Copying fread.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fread/fread.txt
+-- Copying fscanf.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-fscanf/fscanf.txt
+-- Copying A.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/A.bin
+-- Copying B.bin to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-gemm_int_deter/B.bin
+-- Copying read.txt to /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede/drvr/drvr-run-read/read.txt
+-- Configuring done (0.3s)
+-- Generating done (1.6s)
+-- Build files have been written to: /work2/10238/vineeth_architect/stampede3/drv_copy/drv/build_stampede
+Building binary...
+[ 12%] Performing build step for 'rv64'
+[  2%] Built target drvr_add
+[  6%] Built target drvr_exit
+[ 11%] Built target drvr_lsu
+[ 13%] Built target drvr_shift
+[ 14%] Built target drvr_float_lsu
+[ 14%] Built target drvr_fma
+[ 15%] Built target pandohammer
+[ 21%] Built target drvr-example
+[ 39%] Built target drvr_fstat
+[ 38%] Built target drvr_fence
+[ 38%] Built target drvr_cycle
+[ 38%] Built target drvr_addressmap
+[ 38%] Built target drvr_leiden_single
+[ 38%] Built target drvr_gups
+[ 38%] Built target drvr_amoswap
+[ 38%] Built target drvr_fma-multith
+[ 46%] Built target drvr_fscanf
+[ 46%] Built target drvr_fread
+[ 54%] Built target drvr_bfs_multi_sw
+[ 54%] Built target drvr_fib
+[ 54%] Built target drvr_bfs_multihart
+[ 54%] Built target drvr_dense_gemm
+[ 54%] Built target drvr_stream_bw_l2sp
+[ 59%] Built target drvr_malloc
+[ 59%] Built target drvr_bfs_multi_sw_l2sp
+[ 64%] Built target drvr_shared_read_l2sp
+[ 65%] Built target drvr_bfs-multith
+[ 64%] Built target drvr_bfs
+[ 69%] Built target drvr_attn_fixed
+[ 69%] Built target drvr_bfs_multi_sw_barrier
+[ 69%] Built target drvr_tc
+[ 77%] Built target drvr_list_traverse
+[ 84%] Built target drvr_poke
+[ 77%] Built target drvr_tc_larger
+[ 85%] Built target drvr_gemm_int_rand
+[ 85%] Built target drvr_ptr_chase
+[ 85%] Built target drvr_ph_hello
+[ 85%] Built target drvr_gemm_int_deter
+[ 85%] Built target drvr_multihart
+[ 94%] Built target drvr_printf
+[ 94%] Built target drvr_read
+[ 94%] Built target drvr_print_int
+[ 94%] Built target drvr_puts
+[ 98%] Built target drvr_simple
+[100%] Built target drvr_write
+[100%] Built target drvr_vread
+[100%] Built target drvr_wait-without-sleep
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_snprintf
+[ 25%] Performing install step for 'rv64'
+[  4%] Built target drvr_add
+[ 12%] Built target pandohammer
+[ 12%] Built target drvr_exit
+[ 14%] Built target drvr_lsu
+[ 15%] Built target drvr_float_lsu
+[ 15%] Built target drvr_shift
+[ 15%] Built target drvr_fma
+[ 17%] Built target drvr-example
+[ 20%] Built target drvr_addressmap
+[ 21%] Built target drvr_amoswap
+[ 26%] Built target drvr_cycle
+[ 31%] Built target drvr_fence
+[ 32%] Built target drvr_fma-multith
+[ 34%] Built target drvr_fread
+[ 32%] Built target drvr_fib
+[ 38%] Built target drvr_fscanf
+[ 38%] Built target drvr_fstat
+[ 38%] Built target drvr_gups
+[ 47%] Built target drvr_attn_fixed
+[ 47%] Built target drvr_malloc
+[ 47%] Built target drvr_leiden_single
+[ 47%] Built target drvr_dense_gemm
+[ 47%] Built target drvr_bfs_multi_sw
+[ 51%] Built target drvr_stream_bw_l2sp
+[ 53%] Built target drvr_bfs_multi_sw_l2sp
+[ 53%] Built target drvr_shared_read_l2sp
+[ 61%] Built target drvr_bfs_multi_sw_barrier
+[ 63%] Built target drvr_bfs_multihart
+[ 63%] Built target drvr_bfs
+[ 65%] Built target drvr_bfs-multith
+[ 68%] Built target drvr_tc
+[ 72%] Built target drvr_tc_larger
+[ 75%] Built target drvr_ptr_chase
+[ 75%] Built target drvr_list_traverse
+[ 77%] Built target drvr_gemm_int_rand
+[ 79%] Built target drvr_multihart
+[ 79%] Built target drvr_gemm_int_deter
+[ 79%] Built target drvr_ph_hello
+[ 79%] Built target drvr_poke
+[ 81%] Built target drvr_read
+[ 90%] Built target drvr_printf
+[ 90%] Built target drvr_print_int
+[ 90%] Built target drvr_puts
+[ 93%] Built target drvr_simple
+[100%] Built target drvr_write
+[100%] Built target drvr_vread
+[100%] Built target drvr_wait-with-sleep
+[100%] Built target drvr_snprintf
+[100%] Built target drvr_wait-without-sleep
+Install the project...
+-- Install configuration: ""
+-- Up-to-date: /work/.local/rv64/lib/crt.S
+-- Up-to-date: /work/.local/rv64/lib/lock.c
+-- Up-to-date: /work/.local/rv64/include/pandohammer/address.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/atomic.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/cpuinfo.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/mmio.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/staticdecl.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/stringify.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/hartsleep.h
+-- Up-to-date: /work/.local/rv64/include/pandohammer/register.h
+-- Up-to-date: /work/.local/rv64/lib/bsg_link.ld
+-- Up-to-date: /work/.local/rv64/cmake/FindDRV.cmake
+-- Up-to-date: /work/.local/rv64/cmake/DRVInclude.cmake
+[ 37%] Completed 'rv64'
+[100%] Built target rv64
+[ 16%] Built target riscvinterpreter
+[ 52%] Built target drvapi
+[100%] Built target Drv
+[ 68%] Built target drvapi
+[ 87%] Built target pandocommand
+[100%] Built target pandocommand_loader
+Build complete
+==============================================
+RUN: stream_c1_t16 (1x1 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 16 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 8 KB in L2SP
+Configuring 16 harts
+Simulation is complete, simulated time: 4.04889 ms
+
+--- Summary for stream_c1_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 1349809         88.5% of all accesses
+  - Loads                                        1009376        
+  - Stores                                       340433         
+
+L2 Scratchpad (L2SP) Accesses                 173056          11.3% of all accesses
+  - Loads                                        163840         
+  - Stores                                       9216           
+
+DRAM Address Space Accesses                   2758            0.2% of all accesses
+  - Loads                                        999            
+  - Stores                                       1759           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     1349809      Useful:    1328928      Overhead:  1.5%
+  - Loads:  total=1009376    useful=995968    
+  - Stores: total=340433     useful=332960    
+  - Atomic: total=0          useful=0         
+L2SP Total                     173056       Useful:    163840       Overhead:  5.3%
+  - Loads:  total=163840     useful=163840    
+  - Stores: total=9216       useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     3019         Useful:    0            Overhead:  100.0%
+  - Loads:  total=999        useful=0         
+  - Stores: total=1759       useful=0         
+  - Atomic: total=261        useful=0         
+
+DRAM Cache Hits                               1344            48.7% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1416           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          22.5 cycles
+  Estimated Cache Hit Latency                 -16.6 cycles
+  Estimated Cache Miss Latency                59.6 cycles
+  Interconnect Overhead (round-trip)          -19.1 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           2.5 cycles
+  Cache Miss Latency                          78.7 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         3.3 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3751404         cycles (3.751 ms)
+  Total Simulation Duration (max core)        3806768         cycles (3.807 ms)
+  Startup/Teardown Overhead                   1.5%
+  Avg Load Latency (useful phase)             3.2 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                100.0      0.0        0.0        100.0      0.0        0.0        1009376      163840       999          4089      
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-19 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           1344         1416         48.7       2.5             78.7           
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              40960      2304       1.1      1.1      0          0.05       5          0.41       5.0        5          5          0.00       5.0        93.59      91.59     
+pxn0_pod0_l2sp1              40960      2304       1.1      1.1      0          0.05       5          0.41       5.0        5          5          0.00       5.0        93.59      91.59     
+pxn0_pod0_l2sp2              40960      2304       1.1      1.1      0          0.05       5          0.41       5.0        5          5          0.00       5.0        93.59      91.59     
+pxn0_pod0_l2sp3              40960      2304       1.1      1.1      0          0.05       5          0.41       5.0        5          5          0.00       5.0        93.59      91.59     
+
+==============================================
+RUN: stream_c2_t16 (2x1 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 32 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 16 KB in L2SP
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 4.05007 ms
+
+--- Summary for stream_c2_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 2696756         88.8% of all accesses
+  - Loads                                        2017427        
+  - Stores                                       679329         
+
+L2 Scratchpad (L2SP) Accesses                 337920          11.1% of all accesses
+  - Loads                                        327680         
+  - Stores                                       10240          
+
+DRAM Address Space Accesses                   3004            0.1% of all accesses
+  - Loads                                        1223           
+  - Stores                                       1781           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     2696756      Useful:    2657856      Overhead:  1.4%
+  - Loads:  total=2017427    useful=1991936   
+  - Stores: total=679329     useful=665920    
+  - Atomic: total=0          useful=0         
+L2SP Total                     337920       Useful:    327680       Overhead:  3.0%
+  - Loads:  total=327680     useful=327680    
+  - Stores: total=10240      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     3532         Useful:    0            Overhead:  100.0%
+  - Loads:  total=1223       useful=0         
+  - Stores: total=1781       useful=0         
+  - Atomic: total=528        useful=0         
+
+DRAM Cache Hits                               1568            52.2% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1438           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          33.2 cycles
+  Estimated Cache Hit Latency                 -6.1 cycles
+  Estimated Cache Miss Latency                76.1 cycles
+  Interconnect Overhead (round-trip)          -15.2 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           9.1 cycles
+  Cache Miss Latency                          91.3 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         3.4 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3680515         cycles (3.681 ms)
+  Total Simulation Duration (max core)        3807947         cycles (3.808 ms)
+  Startup/Teardown Overhead                   3.3%
+  Avg Load Latency (useful phase)             3.3 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                100.0      0.0        0.0        100.0      0.0        0.0        1009184      163840       867          3677      
+pxn0_pod01                99.8       0.2        0.0        100.0      0.0        0.0        1008243      163840       356          1171      
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-15 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           1568         1438         52.2       9.1             91.3           
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              81920      2560       2.1      2.2      0          0.10       8          0.56       5.0        5          5          0.00       5.0        47.94      44.93     
+pxn0_pod0_l2sp1              81920      2560       2.1      2.2      0          0.10       7          0.56       5.0        5          5          0.00       5.0        47.94      44.93     
+pxn0_pod0_l2sp2              81920      2560       2.1      2.2      0          0.10       5          0.56       5.0        5          5          0.00       5.0        47.94      44.93     
+pxn0_pod0_l2sp3              81920      2560       2.1      2.2      0          0.10       5          0.56       5.0        5          5          0.00       5.0        47.94      44.93     
+
+==============================================
+RUN: stream_c4_t16 (4x1 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 64 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 32 KB in L2SP
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 4.10496 ms
+
+--- Summary for stream_c4_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 5395107         88.9% of all accesses
+  - Loads                                        4036047        
+  - Stores                                       1359060        
+
+L2 Scratchpad (L2SP) Accesses                 667648          11.0% of all accesses
+  - Loads                                        655360         
+  - Stores                                       12288          
+
+DRAM Address Space Accesses                   3472            0.1% of all accesses
+  - Loads                                        1669           
+  - Stores                                       1803           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     5395107      Useful:    5315712      Overhead:  1.5%
+  - Loads:  total=4036047    useful=3983872   
+  - Stores: total=1359060    useful=1331840   
+  - Atomic: total=0          useful=0         
+L2SP Total                     667648       Useful:    655360       Overhead:  1.8%
+  - Loads:  total=655360     useful=655360    
+  - Stores: total=12288      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     4679         Useful:    0            Overhead:  100.0%
+  - Loads:  total=1669       useful=0         
+  - Stores: total=1803       useful=0         
+  - Atomic: total=1207       useful=0         
+
+DRAM Cache Hits                               1982            57.1% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1492           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          48.3 cycles
+  Estimated Cache Hit Latency                 8.1 cycles
+  Estimated Cache Miss Latency                101.7 cycles
+  Interconnect Overhead (round-trip)          -11.4 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           19.5 cycles
+  Cache Miss Latency                          113.1 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         3.8 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3671737         cycles (3.672 ms)
+  Total Simulation Duration (max core)        3879196         cycles (3.879 ms)
+  Startup/Teardown Overhead                   5.3%
+  Avg Load Latency (useful phase)             3.3 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                99.4       0.6        0.0        99.8       0.2        0.0        1009821      163840       843          3641      
+pxn0_pod01                99.1       0.9        0.0        100.0      0.0        0.0        1008641      163840       273          846       
+pxn0_pod02                99.1       0.9        0.0        100.0      0.0        0.0        1008936      163840       283          898       
+pxn0_pod03                99.2       0.8        0.0        100.0      0.0        0.0        1008649      163840       270          779       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-11 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           1982         1492         57.1       19.5            113.1          
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              163840     3072       4.1      4.5      0          0.20       13         0.71       5.0        5          7          0.17       5.2        24.59      22.41     
+pxn0_pod0_l2sp1              163840     3072       4.1      4.5      0          0.20       9          0.71       5.0        5          6          0.17       5.2        24.59      22.41     
+pxn0_pod0_l2sp2              163840     3072       4.1      4.5      0          0.20       8          0.71       5.0        5          6          0.17       5.1        24.59      22.41     
+pxn0_pod0_l2sp3              163840     3072       4.1      4.5      0          0.20       7          0.71       5.0        5          6          0.17       5.1        24.59      22.41     
+
+==============================================
+RUN: stream_c8_t16 (8x1 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 128 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 64 KB in L2SP
+Hart 0: read 3557701 cyc (81920 bytes)
+sink=332800
+Done.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 4.27355 ms
+
+--- Summary for stream_c8_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 10806764        89.0% of all accesses
+  - Loads                                        8081695        
+  - Stores                                       2725069        
+
+L2 Scratchpad (L2SP) Accesses                 1327104         10.9% of all accesses
+  - Loads                                        1310720        
+  - Stores                                       16384          
+
+DRAM Address Space Accesses                   4789            0.0% of all accesses
+  - Loads                                        2847           
+  - Stores                                       1942           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     10806764     Useful:    10631424     Overhead:  1.6%
+  - Loads:  total=8081695    useful=7967744   
+  - Stores: total=2725069    useful=2663680   
+  - Atomic: total=0          useful=0         
+L2SP Total                     1327104      Useful:    1310720      Overhead:  1.2%
+  - Loads:  total=1310720    useful=1310720   
+  - Stores: total=16384      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     7824         Useful:    0            Overhead:  100.0%
+  - Loads:  total=2847       useful=0         
+  - Stores: total=1942       useful=0         
+  - Atomic: total=3035       useful=0         
+
+DRAM Cache Hits                               3175            66.2% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1619           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          67.0 cycles
+  Estimated Cache Hit Latency                 21.9 cycles
+  Estimated Cache Miss Latency                155.5 cycles
+  Interconnect Overhead (round-trip)          -9.5 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           31.4 cycles
+  Cache Miss Latency                          165.0 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         4.4 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3667318         cycles (3.667 ms)
+  Total Simulation Duration (max core)        4042093         cycles (4.042 ms)
+  Startup/Teardown Overhead                   9.3%
+  Avg Load Latency (useful phase)             3.3 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                98.1       1.9        0.0        99.8       0.2        0.0        1010940      163840       1055         4143      
+pxn0_pod01                97.7       2.3        0.0        100.0      0.0        0.0        1009877      163840       322          1034      
+pxn0_pod02                97.4       2.6        0.0        100.0      0.0        0.0        1010657      163840       240          652       
+pxn0_pod03                97.8       2.2        0.0        100.0      0.0        0.0        1011009      163840       260          745       
+pxn0_pod04                97.3       2.7        0.0        100.0      0.0        0.0        1010045      163840       240          652       
+pxn0_pod05                97.5       2.5        0.0        100.0      0.0        0.0        1009619      163840       240          652       
+pxn0_pod06                97.8       2.2        0.0        100.0      0.0        0.0        1009741      163840       250          711       
+pxn0_pod07                97.4       2.6        0.0        100.0      0.0        0.0        1009807      163840       240          652       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-9 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           3175         1619         66.2       31.4            165.0          
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              327680     4096       7.8      8.9      0          0.45       17         1.28       5.7        5          17         1.16       5.8        12.88      11.19     
+pxn0_pod0_l2sp1              327680     4096       7.8      8.9      0          0.45       16         1.28       5.7        5          16         1.17       5.6        12.88      11.19     
+pxn0_pod0_l2sp2              327680     4096       7.8      8.9      0          0.45       17         1.28       5.7        5          17         1.17       5.4        12.88      11.19     
+pxn0_pod0_l2sp3              327680     4096       7.8      8.9      0          0.44       16         1.27       5.7        5          16         1.15       5.3        12.88      11.19     
+
+==============================================
+RUN: stream_c16_t16 (8x2 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 256 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 128 KB in L2SP
+Hart 0: read 3557708 cyc (81920 bytes)
+sink=332800
+Done.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 5.73515 ms
+
+--- Summary for stream_c16_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 22127693        89.3% of all accesses
+  - Loads                                        16455040       
+  - Stores                                       5672653        
+
+L2 Scratchpad (L2SP) Accesses                 2646016         10.7% of all accesses
+  - Loads                                        2621440        
+  - Stores                                       24576          
+
+DRAM Address Space Accesses                   6849            0.0% of all accesses
+  - Loads                                        4777           
+  - Stores                                       2072           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     22127693     Useful:    21262848     Overhead:  3.9%
+  - Loads:  total=16455040   useful=15935488  
+  - Stores: total=5672653    useful=5327360   
+  - Atomic: total=0          useful=0         
+L2SP Total                     2646016      Useful:    2621440      Overhead:  0.9%
+  - Loads:  total=2621440    useful=2621440   
+  - Stores: total=24576      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     30165        Useful:    0            Overhead:  100.0%
+  - Loads:  total=4777       useful=0         
+  - Stores: total=2072       useful=0         
+  - Atomic: total=23316      useful=0         
+
+DRAM Cache Hits                               4985            72.7% hit rate
+DRAM Cache Misses (actual DRAM accesses)      1869           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          202.7 cycles
+  Estimated Cache Hit Latency                 -20.8 cycles
+  Estimated Cache Miss Latency                798.9 cycles
+  Interconnect Overhead (round-trip)          -62.9 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           42.1 cycles
+  Cache Miss Latency                          861.8 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         10.5 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3666395         cycles (3.666 ms)
+  Total Simulation Duration (max core)        5504517         cycles (5.505 ms)
+  Startup/Teardown Overhead                   33.4%
+  Avg Load Latency (useful phase)             3.7 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                96.6       3.4        0.0        99.8       0.2        0.0        1028017      163840       1068         4146      
+pxn0_pod010               92.2       7.8        0.0        100.0      0.0        0.0        1029901      163840       240          652       
+pxn0_pod011               94.8       5.2        0.0        100.0      0.0        0.0        1024019      163840       240          652       
+pxn0_pod012               92.0       8.0        0.0        100.0      0.0        0.0        1028167      163840       240          652       
+pxn0_pod013               92.9       7.1        0.0        100.0      0.0        0.0        1021996      163840       240          652       
+pxn0_pod014               96.4       3.6        0.0        100.0      0.0        0.0        1024770      163840       250          711       
+pxn0_pod015               94.1       5.9        0.0        100.0      0.0        0.0        1029017      163840       240          652       
+pxn0_pod01                96.5       3.5        0.0        100.0      0.0        0.0        1027480      163840       339          1148      
+pxn0_pod02                88.9       11.1       0.0        100.0      0.0        0.0        1032587      163840       240          652       
+pxn0_pod03                84.1       15.9       0.0        100.0      0.0        0.0        1030870      163840       240          652       
+pxn0_pod04                85.3       14.7       0.0        100.0      0.0        0.0        1031210      163840       240          652       
+pxn0_pod05                83.0       17.0       0.0        100.0      0.0        0.0        1030632      163840       240          652       
+pxn0_pod06                95.4       4.6        0.0        100.0      0.0        0.0        1029697      163840       240          652       
+pxn0_pod07                93.7       6.3        0.0        100.0      0.0        0.0        1027895      163840       240          652       
+pxn0_pod08                92.7       7.3        0.0        100.0      0.0        0.0        1030768      163840       240          652       
+pxn0_pod09                94.4       5.6        0.0        100.0      0.0        0.0        1028014      163840       240          652       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-63 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           4985         1869         72.7       42.1            861.8          
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              655360     6144       11.5     17.9     0          0.97       33         2.73       8.5        5          21         2.76       7.8        8.67       5.59      
+pxn0_pod0_l2sp1              655360     6144       11.5     17.9     0          0.98       22         2.73       8.5        5          21         2.77       7.1        8.67       5.59      
+pxn0_pod0_l2sp2              655360     6144       11.5     17.9     0          0.98       23         2.73       8.5        5          23         2.77       6.3        8.67       5.59      
+pxn0_pod0_l2sp3              655360     6144       11.5     17.9     0          0.97       22         2.73       8.5        5          22         2.77       6.3        8.67       5.59      
+
+==============================================
+RUN: stream_c32_t16 (8x4 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 512 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 256 KB in L2SP
+Hart 0: read 3573660 cyc (81920 bytes)
+sink=332800
+Done.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 15.3331 ms
+
+--- Summary for stream_c32_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 47587559        90.0% of all accesses
+  - Loads                                        34798591       
+  - Stores                                       12788968       
+
+L2 Scratchpad (L2SP) Accesses                 5283840         10.0% of all accesses
+  - Loads                                        5242880        
+  - Stores                                       40960          
+
+DRAM Address Space Accesses                   10978           0.0% of all accesses
+  - Loads                                        8647           
+  - Stores                                       2331           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     47587559     Useful:    42525696     Overhead:  10.6%
+  - Loads:  total=34798591   useful=31870976  
+  - Stores: total=12788968   useful=10654720  
+  - Atomic: total=0          useful=0         
+L2SP Total                     5283840      Useful:    5242880      Overhead:  0.8%
+  - Loads:  total=5242880    useful=5242880   
+  - Stores: total=40960      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     168786       Useful:    0            Overhead:  100.0%
+  - Loads:  total=8647       useful=0         
+  - Stores: total=2331       useful=0         
+  - Atomic: total=157808     useful=0         
+
+DRAM Cache Hits                               8603            78.3% hit rate
+DRAM Cache Misses (actual DRAM accesses)      2380           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          869.2 cycles
+  Estimated Cache Hit Latency                 -74.8 cycles
+  Estimated Cache Miss Latency                4281.6 cycles
+  Interconnect Overhead (round-trip)          -319.5 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           244.7 cycles
+  Cache Miss Latency                          4601.1 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         58.6 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3669849         cycles (3.670 ms)
+  Total Simulation Duration (max core)        15106999        cycles (15.107 ms)
+  Startup/Teardown Overhead                   75.7%
+  Avg Load Latency (useful phase)             3.3 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                98.1       1.9        0.0        99.8       0.2        0.0        1071561      163840       1065         4247      
+pxn0_pod010               90.6       9.4        0.0        100.0      0.0        0.0        1090931      163840       240          652       
+pxn0_pod011               95.0       5.0        0.0        100.0      0.0        0.0        1077076      163840       240          652       
+pxn0_pod012               92.6       7.4        0.0        100.0      0.0        0.0        1089656      163840       240          652       
+pxn0_pod013               98.0       2.0        0.0        100.0      0.0        0.0        1083155      163840       260          745       
+pxn0_pod014               97.6       2.4        0.0        100.0      0.0        0.0        1102221      163840       273          838       
+pxn0_pod015               87.3       12.7       0.0        100.0      0.0        0.0        1089979      163840       240          652       
+pxn0_pod016               93.7       6.3        0.0        100.0      0.0        0.0        1084284      163840       240          652       
+pxn0_pod017               95.7       4.3        0.0        100.0      0.0        0.0        1076209      163840       240          652       
+pxn0_pod018               80.8       19.2       0.0        100.0      0.0        0.0        1092495      163840       240          652       
+pxn0_pod019               91.0       9.0        0.0        100.0      0.0        0.0        1087344      163840       240          652       
+pxn0_pod01                85.7       14.3       0.0        100.0      0.0        0.0        1091203      163840       240          652       
+pxn0_pod020               74.1       25.9       0.0        100.0      0.0        0.0        1093566      163840       240          652       
+pxn0_pod021               88.3       11.7       0.0        100.0      0.0        0.0        1082754      163840       240          652       
+pxn0_pod022               84.4       15.6       0.0        100.0      0.0        0.0        1091662      163840       240          652       
+pxn0_pod023               94.7       5.3        0.0        100.0      0.0        0.0        1084675      163840       240          652       
+pxn0_pod024               92.3       7.7        0.0        100.0      0.0        0.0        1086052      163840       240          652       
+pxn0_pod025               96.1       3.9        0.0        100.0      0.0        0.0        1079286      163840       240          652       
+pxn0_pod026               63.1       36.9       0.0        100.0      0.0        0.0        1099193      163840       240          652       
+pxn0_pod027               74.5       25.5       0.0        100.0      0.0        0.0        1109461      163840       240          652       
+pxn0_pod028               79.5       20.5       0.0        100.0      0.0        0.0        1084726      163840       240          652       
+pxn0_pod029               98.0       2.0        0.0        100.0      0.0        0.0        1088717      163840       270          779       
+pxn0_pod02                97.9       2.1        0.0        100.0      0.0        0.0        1075227      163840       250          711       
+pxn0_pod030               97.1       2.9        0.0        100.0      0.0        0.0        1066381      163840       240          652       
+pxn0_pod031               97.5       2.5        0.0        100.0      0.0        0.0        1084059      163840       240          652       
+pxn0_pod03                82.2       17.8       0.0        100.0      0.0        0.0        1098921      163840       240          652       
+pxn0_pod04                91.9       8.1        0.0        100.0      0.0        0.0        1093549      163840       240          652       
+pxn0_pod05                94.0       6.0        0.0        100.0      0.0        0.0        1080204      163840       240          652       
+pxn0_pod06                77.9       22.1       0.0        100.0      0.0        0.0        1092223      163840       240          652       
+pxn0_pod07                76.7       23.3       0.0        100.0      0.0        0.0        1095096      163840       240          652       
+pxn0_pod08                98.0       2.0        0.0        100.0      0.0        0.0        1078042      163840       289          935       
+pxn0_pod09                87.6       12.4       0.0        100.0      0.0        0.0        1098683      163840       240          652       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-319 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           8603         2380         78.3       244.7           4601.1         
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              1310720    10240      8.6      35.7     0          0.58       305        4.58       5.8        5          186        4.39       120.2      11.61      2.80      
+pxn0_pod0_l2sp1              1310720    10240      8.6      35.7     0          0.59       457        5.92       5.8        5          130        3.57       139.0      11.61      2.80      
+pxn0_pod0_l2sp2              1310720    10240      8.6      35.7     0          0.57       456        5.26       5.7        5          98         3.31       116.4      11.61      2.80      
+pxn0_pod0_l2sp3              1310720    10240      8.6      35.7     0          0.54       334        3.72       5.7        5          79         2.93       75.6       11.61      2.80      
+
+==============================================
+RUN: stream_c64_t16 (8x8 cores, 16 threads/core)
+==============================================
+Parsing arguments
+Building system
+Running simualation
+STREAM_BW_L2SP: 1024 harts, 64 words/hart (512 B), 160 iters
+Total footprint: 512 KB in L2SP
+Hart 0: read 3595249 cyc (81920 bytes)
+sink=332800
+Done.
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Simulation is complete, simulated time: 62.7675 ms
+
+--- Summary for stream_c64_t16 ---
+==========================================================================================
+MEMORY ACCESS SUMMARY (PANDOHammer)
+==========================================================================================
+
+Metric                                        Value           Details                  
+------------------------------------------------------------------------------------------
+L1 Scratchpad (L1SP) Accesses                 110413250       91.3% of all accesses
+  - Loads                                        78232465       
+  - Stores                                       32180785       
+
+L2 Scratchpad (L2SP) Accesses                 10559488        8.7% of all accesses
+  - Loads                                        10485760       
+  - Stores                                       73728          
+
+DRAM Address Space Accesses                   19138           0.0% of all accesses
+  - Loads                                        16297          
+  - Stores                                       2841           
+
+--- Useful vs Total Accesses (stat_phase filtering) ---
+L1SP Total                     110413250    Useful:    85051392     Overhead:  23.0%
+  - Loads:  total=78232465   useful=63741952  
+  - Stores: total=32180785   useful=21309440  
+  - Atomic: total=0          useful=0         
+L2SP Total                     10559488     Useful:    10485760     Overhead:  0.7%
+  - Loads:  total=10485760   useful=10485760  
+  - Stores: total=73728      useful=0         
+  - Atomic: total=0          useful=0         
+DRAM Total                     842817       Useful:    0            Overhead:  100.0%
+  - Loads:  total=16297      useful=0         
+  - Stores: total=2841       useful=0         
+  - Atomic: total=823679     useful=0         
+
+DRAM Cache Hits                               15754           82.3% hit rate
+DRAM Cache Misses (actual DRAM accesses)      3389           
+
+--- Core-Perspective Latencies (includes interconnect) ---
+  Avg DRAM Load Latency (end-to-end)          2139.5 cycles
+  Estimated Cache Hit Latency                 -811.4 cycles
+  Estimated Cache Miss Latency                15856.9 cycles
+  Interconnect Overhead (round-trip)          -1196.4 cycles
+
+--- Cache-Local Latencies (excludes interconnect) ---
+  Cache Hit Latency                           385.0 cycles
+  Cache Miss Latency                          17053.4 cycles
+
+--- Overall Memory Performance ---           
+  Avg Load Latency (all memory types)         292.8 cycles
+
+--- Useful Phase Memory Performance (stat_phase=1 only) ---
+  Useful Phase Duration (max core)            3660834         cycles (3.661 ms)
+  Total Simulation Duration (max core)        62541376        cycles (62.541 ms)
+  Startup/Teardown Overhead                   94.1%
+  Avg Load Latency (useful phase)             3.6 cycles
+
+==========================================================================================================================================================================
+PER-CORE STATISTICS (Total | Useful Phase)
+==========================================================================================================================================================================
+Core                      Busy %     MemWait %  Idle %     uBusy %    uMemW %    uIdle %    L1SP Ld      L2SP Ld      DRAM Ld      I-Miss    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_hostcore             100.0      0.0        0.0        0.0        0.0        0.0        0            0            0            0         
+pxn0_pod00                77.4       22.6       0.0        99.9       0.1        0.0        1256640      163840       995          3870      
+pxn0_pod010               88.7       11.3       0.0        100.0      0.0        0.0        1190891      163840       240          652       
+pxn0_pod011               81.4       18.6       0.0        100.0      0.0        0.0        1232728      163840       240          652       
+pxn0_pod012               61.4       38.6       0.0        100.0      0.0        0.0        1258908      163840       240          652       
+pxn0_pod013               81.1       18.9       0.0        100.0      0.0        0.0        1251462      163840       240          652       
+pxn0_pod014               79.6       20.4       0.0        100.0      0.0        0.0        1255236      163840       240          652       
+pxn0_pod015               78.2       21.8       0.0        100.0      0.0        0.0        1238763      163840       240          652       
+pxn0_pod016               98.1       1.9        0.0        100.0      0.0        0.0        1200088      163840       240          652       
+pxn0_pod017               55.3       44.7       0.0        100.0      0.0        0.0        1302071      163840       240          652       
+pxn0_pod018               89.6       10.4       0.0        100.0      0.0        0.0        1223854      163840       240          652       
+pxn0_pod019               84.0       16.0       0.0        100.0      0.0        0.0        1202094      163840       240          652       
+pxn0_pod01                96.2       3.8        0.0        100.0      0.0        0.0        1196161      163840       240          652       
+pxn0_pod020               88.9       11.1       0.0        100.0      0.0        0.0        1212532      163840       240          652       
+pxn0_pod021               93.7       6.3        0.0        100.0      0.0        0.0        1176611      163840       240          652       
+pxn0_pod022               94.7       5.3        0.0        100.0      0.0        0.0        1259877      163840       240          652       
+pxn0_pod023               53.5       46.5       0.0        100.0      0.0        0.0        1301697      163840       240          652       
+pxn0_pod024               57.1       42.9       0.0        100.0      0.0        0.0        1257735      163840       240          652       
+pxn0_pod025               92.9       7.1        0.0        100.0      0.0        0.0        1249609      163840       240          652       
+pxn0_pod026               91.6       8.4        0.0        100.0      0.0        0.0        1226591      163840       240          652       
+pxn0_pod027               98.5       1.5        0.0        100.0      0.0        0.0        1231587      163840       240          652       
+pxn0_pod028               44.4       55.6       0.0        100.0      0.0        0.0        1285428      163840       240          652       
+pxn0_pod029               83.3       16.7       0.0        100.0      0.0        0.0        1183751      163840       240          652       
+pxn0_pod02                70.5       29.5       0.0        100.0      0.0        0.0        1266473      163840       240          652       
+pxn0_pod030               82.1       17.9       0.0        100.0      0.0        0.0        1212838      163840       240          652       
+pxn0_pod031               98.7       1.3        0.0        100.0      0.0        0.0        1179995      163840       273          838       
+pxn0_pod032               73.7       26.3       0.0        100.0      0.0        0.0        1219434      163840       240          652       
+pxn0_pod033               46.9       53.1       0.0        100.0      0.0        0.0        1310588      163840       240          652       
+pxn0_pod034               89.2       10.8       0.0        100.0      0.0        0.0        1235669      163840       240          652       
+pxn0_pod035               85.1       14.9       0.0        100.0      0.0        0.0        1197691      163840       240          652       
+pxn0_pod036               93.9       6.1        0.0        100.0      0.0        0.0        1258857      163840       240          652       
+pxn0_pod037               91.3       8.7        0.0        100.0      0.0        0.0        1202961      163840       240          652       
+pxn0_pod038               96.4       3.6        0.0        100.0      0.0        0.0        1156330      163840       240          652       
+pxn0_pod039               93.3       6.7        0.0        100.0      0.0        0.0        1159866      163840       240          652       
+pxn0_pod03                97.2       2.8        0.0        100.0      0.0        0.0        1241500      163840       240          652       
+pxn0_pod040               95.7       4.3        0.0        100.0      0.0        0.0        1210611      163840       240          652       
+pxn0_pod041               98.9       1.1        0.0        100.0      0.0        0.0        1213978      163840       250          711       
+pxn0_pod042               98.9       1.1        0.0        100.0      0.0        0.0        1170995      163840       260          745       
+pxn0_pod043               61.2       38.8       0.0        100.0      0.0        0.0        1240752      163840       240          652       
+pxn0_pod044               98.3       1.7        0.0        100.0      0.0        0.0        1226081      163840       240          652       
+pxn0_pod045               94.3       5.7        0.0        100.0      0.0        0.0        1231011      163840       240          652       
+pxn0_pod046               98.7       1.3        0.0        100.0      0.0        0.0        1225193      163840       240          652       
+pxn0_pod047               84.5       15.5       0.0        100.0      0.0        0.0        1222494      163840       240          652       
+pxn0_pod048               74.6       25.4       0.0        100.0      0.0        0.0        1233663      163840       240          652       
+pxn0_pod049               87.3       12.7       0.0        100.0      0.0        0.0        1189463      163840       240          652       
+pxn0_pod04                62.3       37.7       0.0        100.0      0.0        0.0        1249337      163840       240          652       
+pxn0_pod050               89.8       10.2       0.0        100.0      0.0        0.0        1236196      163840       240          652       
+pxn0_pod051               97.8       2.2        0.0        100.0      0.0        0.0        1198218      163840       240          652       
+pxn0_pod052               95.3       4.7        0.0        100.0      0.0        0.0        1204134      163840       240          652       
+pxn0_pod053               93.5       6.5        0.0        100.0      0.0        0.0        1230178      163840       240          652       
+pxn0_pod054               91.0       9.0        0.0        100.0      0.0        0.0        1251700      163840       240          652       
+pxn0_pod055               79.5       20.5       0.0        100.0      0.0        0.0        1252686      163840       240          652       
+pxn0_pod056               87.0       13.0       0.0        100.0      0.0        0.0        1195566      163840       240          652       
+pxn0_pod057               93.9       6.1        0.0        100.0      0.0        0.0        1172599      163840       240          652       
+pxn0_pod058               80.1       19.9       0.0        100.0      0.0        0.0        1212260      163840       240          652       
+pxn0_pod059               98.9       1.1        0.0        100.0      0.0        0.0        1142420      163840       260          745       
+pxn0_pod05                78.9       21.1       0.0        100.0      0.0        0.0        1248810      163840       240          652       
+pxn0_pod060               92.7       7.3        0.0        100.0      0.0        0.0        1263243      163840       240          652       
+pxn0_pod061               89.4       10.6       0.0        100.0      0.0        0.0        1167873      163840       240          652       
+pxn0_pod062               85.5       14.5       0.0        100.0      0.0        0.0        1214232      163840       240          652       
+pxn0_pod063               96.0       4.0        0.0        100.0      0.0        0.0        1214487      163840       240          652       
+pxn0_pod06                87.9       12.1       0.0        100.0      0.0        0.0        1184125      163840       240          652       
+pxn0_pod07                98.9       1.1        0.0        100.0      0.0        0.0        1217953      163840       289          931       
+pxn0_pod08                98.9       1.1        0.0        100.0      0.0        0.0        1198026      163840       290          942       
+pxn0_pod09                94.9       5.1        0.0        100.0      0.0        0.0        1177665      163840       240          652       
+
+====================================================================================================
+PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~-1196 cycles for core-perspective)
+====================================================================================================
+DRAM Cache           Hits         Misses       Hit %      Hit Lat (cyc)   Miss Lat (cyc) 
+----------------------------------------------------------------------------------------------------
+pxn0_dram0           15754        3389         82.3       385.0           17053.4        
+
+==================================================================================================================================================================================================================
+L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]
+==================================================================================================================================================================================================================
+Bank                         Reads      Writes     Util %   uUtil %  Rejected   Avg Queue  Max Queue  Queue SD   Avg Rd Lat Min Rd Lat Max Rd Lat Rd Lat SD  Avg Wr Lat Avg IAT    uIAT      
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pxn0_pod0_l2sp0              2621440    18432      4.2      71.6     0          0.46       978        9.59       8.6        5          312        9.52       334.4      23.78      1.40      
+pxn0_pod0_l2sp1              2621440    18432      4.2      71.6     0          0.44       931        8.49       8.5        5          230        6.31       297.3      23.78      1.40      
+pxn0_pod0_l2sp2              2621440    18432      4.2      71.6     0          0.43       803        7.20       8.4        5          169        5.15       254.7      23.78      1.40      
+pxn0_pod0_l2sp3              2621440    18432      4.2      71.6     0          0.42       739        6.16       8.4        5          136        4.77       218.0      23.78      1.40      
+
+==============================================
+STREAM BW SWEEP COMPLETE
+Results in: build_stampede/drvr/stream_bw_results_64_bank4/
+==============================================
