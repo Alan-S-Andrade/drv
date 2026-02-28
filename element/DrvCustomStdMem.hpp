@@ -41,7 +41,7 @@ public:
   makeResponse() override { return this; }
 
   /* return wheter a response is needed */
-  bool needsResponse() override { return true; }
+  bool needsResponse() override { return !posted_; }
 
   /* string representation for debugging */
   std::string getString() override {
@@ -62,6 +62,7 @@ public:
     ser & extdata;
     ser & size;
     ser & pAddr;
+    ser & posted_;
   }
   ImplementSerializable(SST::Drv::AtomicReqData);
 
@@ -72,7 +73,8 @@ public:
   int64_t size;
   DrvAPI::DrvAPIMemAtomicType opcode;
   Interfaces::StandardMem::Addr pAddr;
-  
+  bool posted_ = false;
+
 };
 
 

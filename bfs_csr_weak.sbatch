@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH -J stream_bw_l2sp
+#SBATCH -J bfs_csr_weak
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
 #SBATCH -p pvc
-#SBATCH -N 1
+#SBATCH -N 4
 #SBATCH -n 1
 #SBATCH -c 96
-#SBATCH -t 10:00:00
+#SBATCH -t 15:00:00
 
 set -eo pipefail
 
@@ -43,14 +43,13 @@ apptainer exec --cleanenv \
       -DSST_ELEMENTS_PREFIX=/install \
       -DCMAKE_INSTALL_PREFIX=/work/.local
 
-    # Build only (rv64 builds all RISC-V binaries, Drv + pandocommand_loader for SST)
     echo "Building binary..."
     make -j'"${SLURM_CPUS_PER_TASK}"' rv64 Drv pandocommand_loader
     echo "Build complete"
   '
 
 # ------------------------------------------------------------------
-# STEP 2: RUN STREAM BW SWEEP
+# STEP 2: RUN BFS CSR WEAK SCALING SWEEP
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
@@ -63,37 +62,38 @@ apptainer exec --cleanenv \
 
     MODEL=/work/model/drvr.py
 
-    BINARY=/work/build_stampede/rv64/drvr/drvr_stream_bw_l2sp
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/stream_bw_results_64_bank1
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_3
 
     mkdir -p "$SWEEP_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
     # Format: CX CY THR
     CONFIGS=(
-      "1  1 16"
-      "2  1 16"
-      "4  1 16"
-      "8  1 16"
-      "8  2 16"
-      "8  4 16"
+      #"1  1 16"
+      #"2  1 16"
+      #"4  1 16"
+      #"8  1 16"
+      #"8  2 16"
+      #"8  4 16"
       "8  8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
       read -r CX CY THR <<< "$cfg"
       CORES=$((CX * CY))
-      RUN_NAME="stream_c${CORES}_t${THR}"
+      TOTAL_THREADS=$((CORES * THR))
+      RUN_NAME="bfs_csr_c${CORES}_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core)"
+      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core, N=$((TOTAL_THREADS * 1024)) vertices)"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
-      cp /work/build_stampede/drvr/drvr-run-stream_bw_l2sp/summarize.py "$RUN_DIR/" || echo "Warning: summarize.py not found in source dir"
+      cp /work/model/summarize.py "$RUN_DIR/"
 
       cd "$RUN_DIR"
 
@@ -108,6 +108,10 @@ apptainer exec --cleanenv \
         --pod-cores-y=${CY} \
         --core-threads=${THR} \
         --pod-l2sp-banks=1 \
+        --pod-l2sp-interleave=64 \
+        --dram-access-time=40ns \
+        --pxn-dram-banks=4 \
+        --pxn-dram-interleave=64 \
         "$BINARY" \
         | tee "$RUN_DIR/output.txt"
 
@@ -122,7 +126,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "STREAM BW SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/stream_bw_results_64_bank1/"
+    echo "BFS CSR WEAK SCALING SWEEP COMPLETE"
+    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_3/"
     echo "=============================================="
   '

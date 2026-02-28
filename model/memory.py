@@ -269,8 +269,9 @@ class DRAMBuilder(MemoryBuilder):
         dram.backend.addParams({
             "access_time" : self.access_time,
             "mem_size" : f'{self.size}B',
-            "max_requests_per_cycle" : 1,            
+            "max_requests_per_cycle" : 1,
         })
+        dram.memctrl.enableAllStatistics()
 
         dram.cmdhandler = \
             dram.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
@@ -379,7 +380,7 @@ class CachedDRAMBuilder(DRAMBuilder):
         self.cache_assoc = 8
         self.cache_line_size = 64
         self.clock = "1GHz"
-        self.mshr_num_entries = 16
+        self.mshr_num_entries = 256
         return
 
     def cache_name(self, name):

@@ -67,6 +67,40 @@ drvr_test_nostdlib(add add.S)
 # amoswap
 drvr_test_with_pandohammer(amoswap amoswap.c)
 
+# test_posted_atomic (posted + blocking atomic correctness test)
+drvr_test_with_pandohammer(test_posted_atomic test_posted_atomic.c)
+drvr_test_build_properties(test_posted_atomic
+  PROPERTIES
+  DRV_BUILD_CORE_THREADS 4
+)
+
+# atomic_bw_blocking (scatter-add benchmark, blocking atomics, L2SP)
+drvr_test_with_pandohammer(atomic_bw_blocking atomic_bw.cpp)
+drvr_test_build_properties(atomic_bw_blocking
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 4
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(atomic_bw_blocking
+  PROPERTIES
+  DRV_MODEL_OPTIONS --pod-l2sp-banks=1
+)
+
+# atomic_bw_posted (scatter-add benchmark, posted atomics, L2SP)
+drvr_test_with_pandohammer(atomic_bw_posted atomic_bw.cpp)
+drvr_test_compile_options(atomic_bw_posted -DUSE_POSTED)
+drvr_test_build_properties(atomic_bw_posted
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 4
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(atomic_bw_posted
+  PROPERTIES
+  DRV_MODEL_OPTIONS --pod-l2sp-banks=1
+)
+
 # cycle
 drvr_test_with_pandohammer(cycle cycle.c)
 drvr_test_compile_options(cycle -DREADS=5)
@@ -214,6 +248,23 @@ drvr_test_run_properties(bfs_multi_sw_l2sp
   DRV_MODEL_OPTIONS --dram-access-time=70ns
   DRV_MODEL_OPTION0 --pod-l2sp-banks=4
   DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+)
+
+# bfs_csr_weak (CSR graph BFS with weak scaling, L2SP frontiers)
+drvr_test_with_pandohammer(bfs_csr_weak bfs_csr_weak.cpp)
+drvr_test_build_properties(bfs_csr_weak
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(bfs_csr_weak
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=5
+  DRV_MODEL_OPTION3 --pxn-dram-interleave=64
 )
 
 # bfs_sw_multi_barrier (improved barrier, NO L2SP for data - for comparison)
