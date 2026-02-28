@@ -17,8 +17,7 @@ float c[num_elems] = {2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5};
 char done_msg[] = "all done\n";
 char not_done_msg[] = "not done\n";
 
-void update(uint64_t id)
-{
+void update(uint64_t id) {
     c[id] += a[id] * b[id];
     ph_print_float(c[id]);
     barrier.fetch_add(1, std::memory_order_relaxed);

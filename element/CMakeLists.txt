@@ -61,6 +61,10 @@ if (NOT DEFINED ARCH_RV64)
 
   add_sst_library(Drv ${DRV_SOURCES})
 
+  if (SST_ENABLE_RAMULATOR)
+    target_include_directories(Drv PRIVATE /root/sst-ramulator-src/src)
+  endif()
+
   target_link_libraries(Drv LINK_PUBLIC drvapi memHierarchy)
   target_include_directories(Drv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
   target_include_directories(Drv PUBLIC ${SST_ELEMENTS_PREFIX}/include)

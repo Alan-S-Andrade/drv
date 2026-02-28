@@ -22,6 +22,7 @@ class SystemBuilder(object):
     A base class for a system builder
     """
     def __init__(self):
+
         """
         Initialize the system builder
         """
@@ -67,6 +68,8 @@ class SystemBuilder(object):
         Make a system
         """
         system = System(name)
+
+        print("Initializing SystemBuilder")
 
         # build the interpxn network
         system.network = sst.Component(self.network_name(name), "merlin.hr_router")

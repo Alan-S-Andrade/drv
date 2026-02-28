@@ -120,8 +120,6 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
            shart.f(ird) = static_cast<R>(*ptr);
        } else {
            shart.x(ird) = static_cast<R>(*ptr);
-//           core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_RSP, "Req completion - PC=%08" PRIx64 "0x%016" PRIx64 "\n", static_cast<uint64_t>(shart.pc()), static_cast<uint64_t>(*ptr));
-//           std::cout << std::hex << "Req completion - pc: " << static_cast<uint64_t>(shart.pc()) << " val: " << static_cast<uint64_t>(*ptr) << std::dec << std::endl;
        }
        shart.pc() += 4;
        shart.stalledMemory() = false;
@@ -287,6 +285,10 @@ void RISCVSimulator::visitSD(RISCVHart &hart, RISCVInstruction &i) {
 
 void RISCVSimulator::visitFSW(RISCVHart &hart, RISCVInstruction &i) {
     visitStore<float>(hart, i);
+}
+
+void RISCVSimulator::visitFLD(RISCVHart &hart, RISCVInstruction &i) {
+    visitLoad<double, double>(hart, i);
 }
 
 void RISCVSimulator::visitAMOSWAPW(RISCVHart &hart, RISCVInstruction &i) {    

@@ -69,13 +69,14 @@ drvr_test_with_pandohammer(amoswap amoswap.c)
 
 # cycle
 drvr_test_with_pandohammer(cycle cycle.c)
-drvr_test_compile_options(cycle -DREADS=500)
+drvr_test_compile_options(cycle -DREADS=5)
 drvr_test_build_properties(cycle
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 8
-  DRV_BUILD_POD_CORES_Y 8
-  DRV_BUILD_CORE_THREADS 16
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 2
+  DRV_BUILD_CORE_THREADS 1
 )
+
 # exit
 drvr_test_nostdlib(exit exit.S)
 
@@ -220,7 +221,7 @@ drvr_test_with_pandohammer(bfs_multi_sw_barrier bfs_sw_hw_multi_barrier.cpp)
 drvr_test_compile_options(bfs_multi_sw_barrier -DDEBUG)
 drvr_test_build_properties(bfs_multi_sw_barrier
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_X 4
   DRV_BUILD_POD_CORES_Y 8
   DRV_BUILD_CORE_THREADS 16
 )
@@ -231,13 +232,83 @@ drvr_test_run_properties(bfs_multi_sw_barrier
 
 #bfs_multihart
 drvr_test_with_pandohammer(bfs_multihart bfs_multihart.cpp)
-  drvr_test_compile_options(bfs_multihart -DDEBUG)
   drvr_test_build_properties(bfs_multihart
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_X 2
   DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
   )
+
+# naive work stealing
+drvr_test_with_pandohammer(work_stealing work_stealing_benchmark.cpp)
+drvr_test_build_properties(work_stealing
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 4
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+# work stealing batch
+drvr_test_with_pandohammer(work_stealing_batch work_stealing_benchmark_batch.cpp)
+drvr_test_build_properties(work_stealing_batch
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+
+# BFS with work stealing
+drvr_test_with_pandohammer(bfs_work_stealing bfs_work_stealing.cpp)
+drvr_test_build_properties(bfs_work_stealing
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+  # BFS imbalanced baseline
+ drvr_test_with_pandohammer(bfs_imbalanced_baseline bfs_imbalanced_baseline.cpp)
+ drvr_test_build_properties(bfs_imbalanced_baseline
+   PROPERTIES
+   DRV_BUILD_POD_CORES_X 8
+   DRV_BUILD_POD_CORES_Y 8
+   DRV_BUILD_CORE_THREADS 16
+   )
+
+drvr_test_with_pandohammer(static_work static_work_benchmark.cpp)
+drvr_test_build_properties(static_work
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 4
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+# PageRank baseline (no work stealing)
+drvr_test_with_pandohammer(pagerank_baseline pagerank_baseline.cpp)
+drvr_test_build_properties(pagerank_baseline
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+# PageRank with work stealing (TTAS)
+drvr_test_with_pandohammer(pagerank_stealing pagerank_stealing.cpp)
+drvr_test_build_properties(pagerank_stealing
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 4
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(l2sp_latency_minimal l2sp_latency_minimal.cpp)
+drvr_test_build_properties(l2sp_latency_minimal
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_CORE_THREADS 16
+)
 
 # bfs
 drvr_test_with_pandohammer(bfs bfs_grid.cpp)

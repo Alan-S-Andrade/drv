@@ -38,6 +38,19 @@ RUN apt update -y \
         && apt remove -y git automake \
         && apt clean -y
 
+#ramulator
+RUN apt update -y \
+      && apt install -y git wget \
+      && git clone https://github.com/CMU-SAFARI/ramulator.git /root/sst-ramulator-src \
+      && cd /root/sst-ramulator-src \
+      && git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c \
+      && wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch \
+      && wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch \
+      && patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch \
+      && patch -p1 -i ramulator_sha_7d2e723_libPatch.patch \
+      && make CXX=g++ libramulator.so \
+      && apt clean -y
+
 # install sst-elements
 RUN apt update -y \
         && apt install -y \
@@ -52,6 +65,7 @@ RUN apt update -y \
         && /sst-elements-src/configure \
         --prefix=${DRV_ROOT} \
         --with-sst-core=${DRV_ROOT} \
+        --with-ramulator=/root/sst-ramulator-src \
         && make -j `nproc` install \
         && rm -rf /sst-elements-build \
         && apt remove -y git libltdl-dev \
@@ -71,18 +85,6 @@ RUN apt update -y \
         && rm -rf /downloads \
         && apt remove -y wget \
         && apt clean -y
-
-RUN mkdir ~/.ssh
-ARG ssh_prv_key
-ARG ssh_pub_key
-RUN echo "$ssh_prv_key" > /root/.ssh/id_ed25519 && \
-    echo "$ssh_pub_key" > /root/.ssh/id_ed25519.pub && \
-    chmod 600 /root/.ssh/id_ed25519 && \
-    chmod 600 /root/.ssh/id_ed25519.pub && \
-    ssh-keyscan github.com >> /root/.ssh/known_hosts
-
-RUN eval "$(ssh-agent -s)" && \
-    ssh-add ~/.ssh/id_ed25519
 
 RUN apt update -y \
         && apt install -y git automake gawk wget curl texinfo libgmp-dev flex bison \
@@ -134,4 +136,4 @@ WORKDIR /root/drv/
 RUN rm -rf /root/drv/build \
         && mkdir -p /root/drv/build \
         && cd /root/drv/build \
-	&& cmake .. -DSST_CORE_PREFIX=${DRV_ROOT} -DSST_ELEMENTS_PREFIX=${DRV_ROOT} -DGNU_RISCV_TOOLCHAIN_PREFIX=${DRV_ROOT}
+	&& cmake .. -DSST_CORE_PREFIX=${DRV_ROOT} -DSST_ELEMENTS_PREFIX=${DRV_ROOT} -DGNU_RISCV_TOOLCHAIN_PREFIX=${DRV_ROOT} -DSST_ENABLE_RAMULATOR=1

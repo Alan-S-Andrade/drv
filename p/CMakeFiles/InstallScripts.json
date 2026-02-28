@@ -1,0 +1,17 @@
+{
+	"InstallScripts" : 
+	[
+		"/users/alanuiuc/drv/p/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/interpreter/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/api/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/element/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/pandocommand/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/pandohammer/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/cmake-drvx-example/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/cmake-drvr-example/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/cmake/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/drvx/cmake_install.cmake",
+		"/users/alanuiuc/drv/p/drvr/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
