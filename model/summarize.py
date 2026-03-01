@@ -59,8 +59,11 @@ MEMCTRL_STATS = [
     "requests_received_GetS",
     "requests_received_GetX",
     "requests_received_Write",
+    "requests_received_PutM",
     "latency_GetS",
+    "latency_GetX",
     "latency_Write",
+    "latency_PutM",
 ]
 
 def is_dram_cache(name):
@@ -295,6 +298,69 @@ def main():
     if useful_dram_lat_count > 0:
         print(f"{'  Avg DRAM Load Latency (useful phase)':<45} {useful_avg_dram_lat:.1f} cycles")
 
+    # --- DRAM Bandwidth Utilization (after cache filtering) ---
+    # Count DRAM banks from MemController components
+    dram_mc_keys = [k for k in memctrl_stats if "dram" in k and "l2sp" not in k and "l1sp" not in k]
+    num_dram_banks = len(dram_mc_keys)
+    DRAM_LINE_BYTES = 64  # interleave / cache line size
+
+    if num_dram_banks > 0 and total_cache_misses > 0:
+        # Actual DRAM backend traffic = cache misses * line_size
+        actual_dram_bytes_total = total_cache_misses * DRAM_LINE_BYTES
+
+        # Total-phase DRAM BW
+        total_phase_sec = max_sim_cycles * 1e-9  # 1 GHz clock
+        actual_dram_bw_total = (actual_dram_bytes_total / total_phase_sec / 1e9) if total_phase_sec > 0 else 0
+
+        # Useful-phase estimate: useful core DRAM requests * miss_rate * line_size
+        miss_rate = (1 - cache_hit_rate / 100) if cache_hit_rate < 100 else 1.0
+        est_useful_cache_misses = useful_dram * miss_rate
+        actual_dram_bytes_useful = est_useful_cache_misses * DRAM_LINE_BYTES
+        useful_phase_sec = max_useful_phase_cycles * 1e-9
+        actual_dram_bw_useful = (actual_dram_bytes_useful / useful_phase_sec / 1e9) if useful_phase_sec > 0 else 0
+
+        # Peak BW from measured avg DRAM backend latency, capped by HBM spec
+        MSHRS_PER_BANK = 32
+        HBM_SPEC_PEAK_PER_BANK = 128.0  # GB/s (8ch x 128-bit x 1Gbps)
+
+        # Compute measured avg DRAM latency from MemController stats
+        dram_mc_lat_sum = 0
+        dram_mc_lat_count = 0
+        for k in dram_mc_keys:
+            d = memctrl_stats[k]
+            dram_mc_lat_sum += d["latency_GetS"]["sum"] + d["latency_GetX"]["sum"]
+            dram_mc_lat_count += d["latency_GetS"]["count"] + d["latency_GetX"]["count"]
+        measured_avg_lat_cyc = dram_mc_lat_sum / dram_mc_lat_count if dram_mc_lat_count > 0 else 40
+
+        # MSHR-limited peak: 32 outstanding x 64B / avg_latency (1 GHz => cycles = ns)
+        mshr_peak_per_bank = MSHRS_PER_BANK * DRAM_LINE_BYTES / measured_avg_lat_cyc
+        peak_bw_per_bank = min(HBM_SPEC_PEAK_PER_BANK, mshr_peak_per_bank)
+        peak_bw_gbs = num_dram_banks * peak_bw_per_bank
+        util_total = (actual_dram_bw_total / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+        util_useful = (actual_dram_bw_useful / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+
+        # PutM (dirty eviction) write traffic
+        total_dram_putm = sum(memctrl_stats[k]["requests_received_PutM"]["sum"] for k in dram_mc_keys)
+        dram_write_bytes = total_dram_putm * DRAM_LINE_BYTES
+
+        print(f"\n{'--- DRAM Bandwidth Utilization (after cache filtering) ---':<45}")
+        print(f"{'  DRAM Banks':<45} {num_dram_banks}")
+        print(f"{'  MSHRs per Bank':<45} {MSHRS_PER_BANK}")
+        print(f"{'  Measured Avg DRAM Latency (MemCtrl)':<45} {measured_avg_lat_cyc:.1f} cycles")
+        print(f"{'  Cache Hit Rate':<45} {cache_hit_rate:.1f}%")
+        print(f"{'  Total Cache Misses (demand DRAM reads)':<45} {total_cache_misses:,}")
+        print(f"{'  DRAM Read Traffic (total phase)':<45} {actual_dram_bytes_total / 1e6:.2f} MB")
+        print(f"{'  DRAM Write Traffic (PutM evictions)':<45} {dram_write_bytes / 1e6:.2f} MB ({total_dram_putm:,} evictions)")
+        print(f"{'  Actual DRAM Read BW (total phase)':<45} {actual_dram_bw_total:.2f} GB/s")
+        print(f"{'  Est. Useful-Phase Cache Misses':<45} {est_useful_cache_misses:,.0f}")
+        print(f"{'  Est. DRAM Traffic (useful phase)':<45} {actual_dram_bytes_useful / 1e6:.2f} MB")
+        print(f"{'  Est. DRAM BW (useful phase)':<45} {actual_dram_bw_useful:.2f} GB/s")
+        bottleneck = "HBM spec" if peak_bw_per_bank == HBM_SPEC_PEAK_PER_BANK else "MSHR"
+        peak_label = f"  Peak DRAM BW ({bottleneck}-limited, {num_dram_banks} banks)"
+        print(f"{peak_label:<45} {peak_bw_gbs:.1f} GB/s  (per-bank: {peak_bw_per_bank:.1f} GB/s)")
+        print(f"{'  DRAM Util % (total phase)':<45} {util_total:.2f}%")
+        print(f"{'  DRAM Util % (useful phase)':<45} {util_useful:.2f}%")
+
     # 4. Print Per-Core Statistics (Total and Useful Phase)
     print("\n" + "=" * 170)
     print("PER-CORE STATISTICS (Total | Useful Phase)")
@@ -372,24 +438,26 @@ def main():
             return
         num_banks = len(banks)
         useful_reqs_per_bank = useful_total_reqs / num_banks if num_banks > 0 else 0
-        print("\n" + "=" * 210)
+        print("\n" + "=" * 240)
         print(f"{title}")
-        print("=" * 210)
-        headers = ["Bank", "Reads", "Writes", "Util %", "uUtil %",
+        print("=" * 240)
+        headers = ["Bank", "Reads", "Writes", "Evict", "Util %", "uUtil %",
                    "Rejected",
-                   "Avg Queue", "Max Queue", "Queue SD",
+                   "Avg Queue", "uAvg Queue", "Max Queue", "Queue SD",
                    "Avg Rd Lat", "Min Rd Lat", "Max Rd Lat", "Rd Lat SD",
                    "Avg Wr Lat", "Avg IAT", "uIAT"]
-        print(f"{headers[0]:<28} {headers[1]:<10} {headers[2]:<10} {headers[3]:<8} {headers[4]:<8} "
-              f"{headers[5]:<10} "
-              f"{headers[6]:<10} {headers[7]:<10} {headers[8]:<10} "
-              f"{headers[9]:<10} {headers[10]:<10} {headers[11]:<10} {headers[12]:<10} "
-              f"{headers[13]:<10} {headers[14]:<10} {headers[15]:<10}")
-        print("-" * 210)
+        print(f"{headers[0]:<28} {headers[1]:<10} {headers[2]:<10} {headers[3]:<10} {headers[4]:<8} {headers[5]:<8} "
+              f"{headers[6]:<10} "
+              f"{headers[7]:<10} {headers[8]:<10} {headers[9]:<10} {headers[10]:<10} "
+              f"{headers[11]:<10} {headers[12]:<10} {headers[13]:<10} {headers[14]:<10} "
+              f"{headers[15]:<10} {headers[16]:<10} {headers[17]:<10}")
+        print("-" * 240)
         for bank in sorted(banks.keys()):
             d = banks[bank]
             reads = d["requests_received_GetS"]["sum"]
-            writes = d["requests_received_Write"]["sum"]
+            # Writes: GetX (ramulator/coherence) + Write (SimpleMemory/scratchpad)
+            writes = d["requests_received_GetX"]["sum"] + d["requests_received_Write"]["sum"]
+            evictions = d["requests_received_PutM"]["sum"]
             total_cyc = d["total_cycles"]["sum"] if d["total_cycles"]["sum"] > 0 else 1
             issue_cyc = d["cycles_with_issue"]["sum"]
             util = (issue_cyc / total_cyc) * 100
@@ -402,6 +470,7 @@ def main():
             # Queue depth stats
             oq = d["outstanding_requests"]
             avg_q = oq["sum"] / oq["count"] if oq["count"] > 0 else 0
+            u_avg_q = avg_q * (total_cyc / useful_phase_cycles) if useful_phase_cycles > 0 else 0
             max_q = oq["max"]
             q_sd = compute_stddev(oq["sumsq"], oq["sum"], oq["count"])
 
@@ -412,19 +481,21 @@ def main():
             max_rd = rl["max"] if rl["count"] > 0 else 0
             rd_sd = compute_stddev(rl["sumsq"], rl["sum"], rl["count"])
 
-            # Write latency stats
-            avg_wr = d["latency_Write"]["sum"] / d["latency_Write"]["count"] if d["latency_Write"]["count"] > 0 else 0
+            # Write latency: GetX (ramulator/coherence) or Write (SimpleMemory/scratchpad)
+            wr_lat_sum = d["latency_GetX"]["sum"] + d["latency_Write"]["sum"]
+            wr_lat_count = d["latency_GetX"]["count"] + d["latency_Write"]["count"]
+            avg_wr = wr_lat_sum / wr_lat_count if wr_lat_count > 0 else 0
 
-            # Average inter-arrival time (total cycles / total requests)
-            total_reqs = reads + writes
+            # Average inter-arrival time (total cycles / total demand requests)
+            total_reqs = reads + writes + evictions
             avg_iat = total_cyc / total_reqs if total_reqs > 0 else 0
             # Useful IAT: useful phase cycles / useful requests per bank
             u_iat = useful_phase_cycles / useful_reqs_per_bank if useful_reqs_per_bank > 0 else 0
 
             display = short_memctrl_name(bank)
-            print(f"{display:<28} {reads:<10} {writes:<10} {util:<8.1f} {u_util:<8.1f} "
+            print(f"{display:<28} {reads:<10} {writes:<10} {evictions:<10} {util:<8.1f} {u_util:<8.1f} "
                   f"{rejected:<10} "
-                  f"{avg_q:<10.2f} {max_q:<10} {q_sd:<10.2f} "
+                  f"{avg_q:<10.2f} {u_avg_q:<10.2f} {max_q:<10} {q_sd:<10.2f} "
                   f"{avg_rd:<10.1f} {min_rd:<10} {max_rd:<10} {rd_sd:<10.2f} "
                   f"{avg_wr:<10.1f} {avg_iat:<10.2f} {u_iat:<10.2f}")
 

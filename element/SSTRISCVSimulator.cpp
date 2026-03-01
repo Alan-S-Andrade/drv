@@ -205,28 +205,43 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
     if (noncacheable) req->setNoncacheable();
 
     req->tid = core_->getHartId(shart);
-    shart.stalledMemory() = true;
     int ird = i.rd();
-    RISCVCore::ICompletionHandler ch([&shart, ird, this, addr](StandardMem::Request *req) {
-        // handle the atomic response
-        auto *rsp = static_cast<StandardMem::CustomResp *>(req);
-        auto *data = static_cast<AtomicReqData*>(rsp->data);
-       core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
-                              ,"PC=%08" PRIx64 ": ATOMIC COMPLETE: 0x%016" PRIx64 " = 0x%016" PRIx64 "\n"
-                              ,static_cast<uint64_t>(shart.pc())
-                              ,addr
-                              ,static_cast<uint64_t>(*(T*)&data->rdata[0]));
-        shart.x(ird) = *(T*)&data->rdata[0];
+    bool posted = (ird == 0);
+
+    if (posted) {
+        data->posted_ = true;
+        // Fire-and-forget: do NOT stall, do NOT track outstanding requests
+        core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
+                               ,"PC=%08" PRIx64 ": POSTED ATOMIC: 0x%016" PRIx64 " = %" PRIx64 "\n"
+                               ,static_cast<uint64_t>(shart.pc())
+                               ,static_cast<uint64_t>(addr)
+                               ,static_cast<uint64_t>(*(T*)&data->wdata[0]));
+        core_->mem_->send(req);
         shart.pc() += 4;
-        shart.stalledMemory() = false;
-        delete req;
-    });
-    core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
-                           ,"PC=%08" PRIx64 ": ATOMIC ISSUED:     0x%016" PRIx64 " = %" PRIx64 "\n"
-                           ,static_cast<uint64_t>(shart.pc())
-                           ,static_cast<uint64_t>(addr)
-                           ,static_cast<uint64_t>(*(T*)&data->wdata[0]));
-    core_->issueMemoryRequest(req, req->tid, ch);
+    } else {
+        // Blocking path: stall hart and wait for response
+        shart.stalledMemory() = true;
+        RISCVCore::ICompletionHandler ch([&shart, ird, this, addr](StandardMem::Request *req) {
+            // handle the atomic response
+            auto *rsp = static_cast<StandardMem::CustomResp *>(req);
+            auto *data = static_cast<AtomicReqData*>(rsp->data);
+            core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
+                                  ,"PC=%08" PRIx64 ": ATOMIC COMPLETE: 0x%016" PRIx64 " = 0x%016" PRIx64 "\n"
+                                  ,static_cast<uint64_t>(shart.pc())
+                                  ,addr
+                                  ,static_cast<uint64_t>(*(T*)&data->rdata[0]));
+            shart.x(ird) = *(T*)&data->rdata[0];
+            shart.pc() += 4;
+            shart.stalledMemory() = false;
+            delete req;
+        });
+        core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MEMORY
+                               ,"PC=%08" PRIx64 ": ATOMIC ISSUED:     0x%016" PRIx64 " = %" PRIx64 "\n"
+                               ,static_cast<uint64_t>(shart.pc())
+                               ,static_cast<uint64_t>(addr)
+                               ,static_cast<uint64_t>(*(T*)&data->wdata[0]));
+        core_->issueMemoryRequest(req, req->tid, ch);
+    }
 }
 
 void RISCVSimulator::visitLB(RISCVHart &hart, RISCVInstruction &i) {

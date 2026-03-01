@@ -215,6 +215,8 @@ class DRAMBuilder(MemoryBuilder):
         self.interleave_step = 0
         self.network_bw = "1GB/s"
         self.clock = "1GHz"
+        self.dram_backend = "simple"
+        self.dram_backend_config = ""
         return
 
     def memctrl_name(self, name):
@@ -265,12 +267,20 @@ class DRAMBuilder(MemoryBuilder):
             "max_requests_per_cycle" : 1,
         })
 
-        dram.backend = dram.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
-        dram.backend.addParams({
-            "access_time" : self.access_time,
-            "mem_size" : f'{self.size}B',
-            "max_requests_per_cycle" : 1,            
-        })
+        if self.dram_backend == "ramulator":
+            dram.backend = dram.memctrl.setSubComponent("backend", "Drv.DrvRamulatorMemBackend")
+            dram.backend.addParams({
+                "configFile" : self.dram_backend_config,
+                "mem_size" : f'{self.size}B',
+            })
+        else:
+            dram.backend = dram.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
+            dram.backend.addParams({
+                "access_time" : self.access_time,
+                "mem_size" : f'{self.size}B',
+                "max_requests_per_cycle" : 1,
+            })
+        dram.memctrl.enableAllStatistics()
 
         dram.cmdhandler = \
             dram.memctrl.setSubComponent("customCmdHandler", "Drv.DrvCmdMemHandler")
@@ -379,7 +389,7 @@ class CachedDRAMBuilder(DRAMBuilder):
         self.cache_assoc = 8
         self.cache_line_size = 64
         self.clock = "1GHz"
-        self.mshr_num_entries = 16
+        self.mshr_num_entries = 256
         return
 
     def cache_name(self, name):

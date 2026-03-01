@@ -75,7 +75,8 @@ class PANDOHammer(object):
         else:
             dram = CachedDRAMBuilder()
 
-        dram.backend = "simple"
+        dram.dram_backend = arguments.dram_backend
+        dram.dram_backend_config = arguments.dram_backend_config
         dram.clock = "1GHz"
         dram.access_time = arguments.dram_access_time
         dram.network_bw = f"{bandwidth_bytes_per_second_per_pxn}B/s"

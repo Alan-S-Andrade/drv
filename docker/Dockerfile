@@ -38,20 +38,21 @@ RUN apt update -y \
         && apt remove -y git automake \
         && apt clean -y
 
-#ramulator
+# install ramulator v1 (DRAM timing backend for memHierarchy)
 RUN apt update -y \
-      && apt install -y git wget \
-      && git clone https://github.com/CMU-SAFARI/ramulator.git /root/sst-ramulator-src \
-      && cd /root/sst-ramulator-src \
-      && git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c \
-      && wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch \
-      && wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch \
-      && patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch \
-      && patch -p1 -i ramulator_sha_7d2e723_libPatch.patch \
-      && make CXX=g++ libramulator.so \
-      && apt clean -y
+        && apt install -y git wget \
+        && git clone https://github.com/CMU-SAFARI/ramulator.git /root/sst-ramulator-src \
+        && cd /root/sst-ramulator-src \
+        && git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c \
+        && wget -q https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch \
+        && wget -q https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch \
+        && patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch \
+        && patch -p1 -i ramulator_sha_7d2e723_libPatch.patch \
+        && make CXX=g++ libramulator.so \
+        && cp libramulator.so ${DRV_ROOT}/lib/ \
+        && apt clean -y
 
-# install sst-elements
+# install sst-elements (with ramulator support)
 RUN apt update -y \
         && apt install -y \
         git \
@@ -118,7 +119,7 @@ RUN mkdir -p cmake-src \
 	&& apt install -y openssl libssl-dev \
 	&& ./bootstrap --prefix=/usr/local --parallel=`nproc` \
 	&& make -j `nproc` \
-	&& make -j `nproc` install 
+	&& make -j `nproc` install
 
 ENV PATH "${PATH}":${DRV_ROOT}/bin
 ENV PYTHONPATH "/root/drv/tests:${PYTHONPATH}"
@@ -132,8 +133,13 @@ ENV OMPI_CXX clang++
 COPY  . /root/drv/
 WORKDIR /root/drv/
 
-# build drv
+# build drv (with ramulator support)
 RUN rm -rf /root/drv/build \
         && mkdir -p /root/drv/build \
         && cd /root/drv/build \
-	&& cmake .. -DSST_CORE_PREFIX=${DRV_ROOT} -DSST_ELEMENTS_PREFIX=${DRV_ROOT} -DGNU_RISCV_TOOLCHAIN_PREFIX=${DRV_ROOT} -DSST_ENABLE_RAMULATOR=1
+        && cmake .. \
+        -DSST_CORE_PREFIX=${DRV_ROOT} \
+        -DSST_ELEMENTS_PREFIX=${DRV_ROOT} \
+        -DGNU_RISCV_TOOLCHAIN_PREFIX=${DRV_ROOT} \
+        -DSST_ENABLE_RAMULATOR=1 \
+        && make -j `nproc` install

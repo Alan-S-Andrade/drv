@@ -68,52 +68,55 @@ DrvCmdMemHandler::ready(MemEventBase* ev) {
 MemEventBase*
 DrvCmdMemHandler::finish(MemEventBase *ev, uint32_t flags) {
   output.verbose(CALL_INFO, 1, 0,"%s\n", __PRETTY_FUNCTION__);
-  if(ev->queryFlag(MemEventBase::F_NORESPONSE)||
-     ((flags & MemEventBase::F_NORESPONSE)>0)){
-    // posted request
-    // We need to delete the CustomData structure
-    CustomMemEvent * cme = static_cast<CustomMemEvent*>(ev);
-    if (cme->getCustomData() != nullptr)
-      delete cme->getCustomData();
-    cme->setCustomData(nullptr); // Just in case someone attempts to access it...
-    return nullptr;
-  }
-  // get the custom data and make sure it's something we support
   CustomMemEvent * cme = static_cast<CustomMemEvent*>(ev);
   AtomicReqData *ard = dynamic_cast<AtomicReqData*>(cme->getCustomData());
-  if (!ard) {
-    output.fatal(CALL_INFO, -1, "Error: unknown custom request type\n");
+
+  bool posted = ev->queryFlag(MemEventBase::F_NORESPONSE)
+             || ((flags & MemEventBase::F_NORESPONSE) > 0);
+
+  if (ard) {
+    // ALWAYS perform the atomic read-modify-write
+    ard->rdata.resize(ard->getSize());
+    MemHierarchy::Addr localAddr = translateGlobalToLocal(ard->getRoutingAddress());
+    readData(localAddr, ard->getSize(), ard->rdata);
+    if (!ard->extdata.empty()) {
+        DrvAPI::atomic_modify
+            ( &ard->wdata[0]
+            , &ard->rdata[0]
+            , &ard->extdata[0]
+            , &ard->wdata[0]
+            , ard->opcode
+            , ard->getSize()
+            );
+    } else {
+        DrvAPI::atomic_modify
+            ( &ard->wdata[0]
+            , &ard->rdata[0]
+            , &ard->wdata[0]
+            , ard->opcode
+            , ard->getSize()
+            );
+    }
+    writeData(localAddr, &(ard->wdata));
+
+    if (posted) {
+      delete ard;
+      cme->setCustomData(nullptr);
+      return nullptr;
+    }
+    return ev->makeResponse();
   }
-  output.verbose(CALL_INFO, 1, 0, "Formatting response to atomic memory op\n");
-  // here's where we should update backing store
-  // and the response payload
-  ard->rdata.resize(ard->getSize());
-  // read value in memory
-  MemHierarchy::Addr localAddr = translateGlobalToLocal(ard->getRoutingAddress());
-  readData(localAddr, ard->getSize(), ard->rdata);
-  // do modify based on read value
-  if (!ard->extdata.empty()) {
-      DrvAPI::atomic_modify
-          ( &ard->wdata[0]
-          , &ard->rdata[0]
-          , &ard->extdata[0]
-          , &ard->wdata[0]
-          , ard->opcode
-          , ard->getSize()
-          );
-  } else {
-      DrvAPI::atomic_modify
-          ( &ard->wdata[0]
-          , &ard->rdata[0]
-          , &ard->wdata[0]
-          , ard->opcode
-          , ard->getSize()
-          );
+
+  // Non-atomic posted request (existing fallback)
+  if (posted) {
+    if (cme->getCustomData() != nullptr)
+      delete cme->getCustomData();
+    cme->setCustomData(nullptr);
+    return nullptr;
   }
-  // write-back
-  writeData(localAddr, &(ard->wdata));
-  MemEventBase *MEB = ev->makeResponse();
-  return MEB;
+
+  output.fatal(CALL_INFO, -1, "Error: unknown custom request type\n");
+  return nullptr;
 }
 
 

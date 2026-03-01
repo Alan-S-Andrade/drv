@@ -44,6 +44,7 @@ if (NOT DEFINED ARCH_RV64)
 
   if (SST_ENABLE_RAMULATOR)
     list(APPEND DRV_SOURCES ${DRV_RAMULATOR_SOURCES})
+    set(RAMULATOR_DIR "/root/sst-ramulator-src" CACHE PATH "Path to ramulator source")
   endif()
 
   # add the riscv simulation sources
@@ -61,14 +62,14 @@ if (NOT DEFINED ARCH_RV64)
 
   add_sst_library(Drv ${DRV_SOURCES})
 
-  if (SST_ENABLE_RAMULATOR)
-    target_include_directories(Drv PRIVATE /root/sst-ramulator-src/src)
-  endif()
-
   target_link_libraries(Drv LINK_PUBLIC drvapi memHierarchy)
   target_include_directories(Drv PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-  target_include_directories(Drv PUBLIC ${SST_ELEMENTS_PREFIX}/include)
+  include_directories(${SST_ELEMENTS_PREFIX}/include)
   target_compile_options(Drv PRIVATE ${CXX_STD})
+
+  if (SST_ENABLE_RAMULATOR)
+    target_include_directories(Drv PRIVATE ${RAMULATOR_DIR}/src)
+  endif()
 
   target_link_libraries(Drv LINK_PUBLIC riscvinterpreter)
   target_include_directories(Drv PUBLIC ${GNU_RISCV_TOOLCHAIN_PREFIX})
