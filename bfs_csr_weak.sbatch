@@ -12,14 +12,18 @@
 
 set -eo pipefail
 
-cd "$SLURM_SUBMIT_DIR"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "${SLURM_SUBMIT_DIR:-$SCRIPT_DIR}"
 mkdir -p logs
 
 module purge
 set +u
 module load tacc-apptainer/1.4.1
 
-SIF="$WORK/drv.sif"
+SIF="$SCRIPT_DIR/drv_latest.sif"
+RAMULATOR_SRC="$SCRIPT_DIR/../ramulator-build"
+RAMULATOR_LIB="$RAMULATOR_SRC/libramulator.so"
+RAMULATOR_CONFIGS="$RAMULATOR_SRC/configs"
 
 if [[ ! -f "$SIF" ]]; then
     echo "ERROR: Container image not found at $SIF"
@@ -31,17 +35,22 @@ fi
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --bind "$SLURM_SUBMIT_DIR:/work" \
+  --bind "$SCRIPT_DIR:/work" \
+  --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+  --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
   "$SIF" \
   bash -lc '
     set -e
     export RISCV_HOME=/install
     export PATH=/install/bin:$PATH
-    cd build_stampede
+    cd /work/build_stampede
     cmake .. \
       -DSST_CORE_PREFIX=/install \
       -DSST_ELEMENTS_PREFIX=/install \
-      -DCMAKE_INSTALL_PREFIX=/work/.local
+      -DGNU_RISCV_TOOLCHAIN_PREFIX=/install \
+      -DCMAKE_INSTALL_PREFIX=/work/.local \
+      -DSST_ENABLE_RAMULATOR=1 \
+      -DRAMULATOR_DIR=/tmp/ramulator
 
     echo "Building binary..."
     make -j'"${SLURM_CPUS_PER_TASK}"' rv64 Drv pandocommand_loader
@@ -53,7 +62,9 @@ apptainer exec --cleanenv \
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --bind "$SLURM_SUBMIT_DIR:/work" \
+  --bind "$SCRIPT_DIR:/work" \
+  --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+  --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
   "$SIF" \
   bash -lc '
     set -e
@@ -65,20 +76,20 @@ apptainer exec --cleanenv \
     BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_3
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_ramulator
 
     mkdir -p "$SWEEP_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
     # Format: CX CY THR
     CONFIGS=(
-      #"1  1 16"
+      "1  1 16"
       #"2  1 16"
       #"4  1 16"
       #"8  1 16"
       #"8  2 16"
       #"8  4 16"
-      "8  8 16"
+      #"8  8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
@@ -109,7 +120,6 @@ apptainer exec --cleanenv \
         --core-threads=${THR} \
         --pod-l2sp-banks=1 \
         --pod-l2sp-interleave=64 \
-        --dram-access-time=40ns \
         --pxn-dram-banks=4 \
         --pxn-dram-interleave=64 \
         "$BINARY" \
@@ -127,6 +137,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "BFS CSR WEAK SCALING SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_3/"
+    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_ramulator/"
     echo "=============================================="
   '

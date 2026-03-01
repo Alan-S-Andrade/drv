@@ -254,8 +254,8 @@ drvr_test_run_properties(bfs_multi_sw_l2sp
 drvr_test_with_pandohammer(bfs_csr_weak bfs_csr_weak.cpp)
 drvr_test_build_properties(bfs_csr_weak
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 8
-  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
 )
 drvr_test_run_properties(bfs_csr_weak
