@@ -16,6 +16,15 @@ static constexpr int64_t WORK_UNIT_ITERS = 10000; // Iterations per work unit
 static constexpr int MAX_HARTS = 1024;         // Maximum array size
 static constexpr int MAX_CORES = 64;           // Maximum cores
 static constexpr int g_total_work = 1536;      // Total work units to distribute
+static constexpr int WORK_CHUNK_SIZE = 32;     // Work units per queue item (range)
+static constexpr int STEAL_K = 4;              // Max items to steal per episode (tunable)
+
+// Pack a (begin, end) range into a single int64_t queue item
+static inline int64_t pack_range(int32_t begin, int32_t end) {
+    return ((int64_t)(uint32_t)begin << 32) | (int64_t)(uint32_t)end;
+}
+static inline int32_t range_begin(int64_t packed) { return (int32_t)(packed >> 32); }
+static inline int32_t range_end(int64_t packed) { return (int32_t)(packed & 0xFFFFFFFF); }
 
 // Runtime values (set by hart 0 during initialization)
 __l2sp__ volatile int g_total_harts = 0;
@@ -44,8 +53,14 @@ __l2sp__ volatile int64_t stat_steal_failures[MAX_HARTS];
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
 
-// Per-core sum variables to avoid contention on a single L2SP address
-__l2sp__ volatile int64_t g_core_sum[MAX_CORES];
+// Per-core sum variables — cache-line padded so each core hits its own L2SP line
+struct alignas(64) CoreLocalSum {
+    volatile int64_t value;
+};
+__l2sp__ CoreLocalSum g_core_sum[MAX_CORES];
+
+// Per-core steal token: only one hart per core may steal at a time
+__l2sp__ std::atomic<int> core_thief[MAX_CORES];
 
 static inline int get_thread_id() {
     int tid = (myCoreId() << 4) + myThreadId();
@@ -66,17 +81,9 @@ static inline void barrier() {
 
     if (old == total - 1) {
         // last hart: reset count for next round, then publish sense flip
-        std::printf("Hart %d: Last to arrive at barrier (count=%ld/%d), releasing all\n", 
-                   tid, old+1, total);
-        std::fflush(stdout);
         g_count.store(0, std::memory_order_relaxed);
         g_sense.store(local, std::memory_order_release);
     } else {
-        if (tid < 2) {
-            std::printf("Hart %d: Arrived at barrier (%ld/%d), waiting for sense=%ld\n", 
-                       tid, old+1, total, local);
-            std::fflush(stdout);
-        }
         long w = 1;
         long wmax = 64 * total;
         while (g_sense.load(std::memory_order_acquire) != local) {
@@ -97,6 +104,20 @@ static inline bool queue_push(WorkQueue* q, int64_t work) {
     q->items[t] = work;
     q->tail = t + 1;
     return true;
+}
+
+// Atomic push for refilling local queue (thief pushes stolen items for local harts)
+static inline bool queue_push_atomic(WorkQueue* q, int64_t work) {
+    while (true) {
+        int64_t t = atomic_load_i64(&q->tail);
+        if (t >= QUEUE_SIZE) return false;
+        int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, t + 1);
+        if (old_t == t) {
+            q->items[t] = work;
+            return true;
+        }
+        hartsleep(1);
+    }
 }
 
 // Pop work item (multiple harts per core may call this concurrently)
@@ -184,10 +205,51 @@ static inline int64_t queue_steal(WorkQueue* q) {
     return -1;  // Too much contention, give up on this victim
 }
 
-static inline void do_work(int64_t work_amount, int core_id) {
-    volatile int64_t *sum = &g_core_sum[core_id];
-    for (int64_t i = 0; i < work_amount * WORK_UNIT_ITERS; i++) {
-        *sum += i;
+// Steal up to k items from another core's queue (CAS on head).
+// Returns count stolen (0 if empty/contention). Sets *out_begin to first index.
+static inline int64_t queue_steal_k(WorkQueue* q, int64_t* out_begin, int64_t max_k) {
+    int64_t backoff = 1;
+    const int64_t max_backoff = 32;
+    const int max_retries = 8;
+    int retries = 0;
+
+    while (retries < max_retries) {
+        int64_t h = atomic_load_i64(&q->head);
+        int64_t t = q->tail;  // volatile read (approximate)
+        if (h >= t) return 0;
+
+        int64_t avail = t - h;
+        int64_t k = (avail < max_k) ? avail : max_k;
+
+        int64_t old_head = atomic_compare_and_swap_i64(&q->head, h, h + k);
+        if (old_head == h) {
+            *out_begin = h;
+            return k;
+        }
+        retries++;
+        hartsleep(backoff);
+        if (backoff < max_backoff) backoff <<= 1;
+    }
+    return 0;
+}
+
+// Fast xorshift PRNG for victim selection — mixes tid + counter to decorrelate thieves
+static inline uint32_t xorshift_victim(uint32_t seed) {
+    seed ^= seed << 13;
+    seed ^= seed >> 17;
+    seed ^= seed << 5;
+    return seed;
+}
+
+static constexpr int RECENTLY_TRIED_SIZE = 4; // small "recently failed" ring buffer
+
+// Process a range [begin, end) of work units; each unit does WORK_UNIT_ITERS iterations
+static inline void do_work_range(int32_t begin, int32_t end, int core_id) {
+    volatile int64_t *sum = &g_core_sum[core_id].value;
+    for (int32_t w = begin; w < end; w++) {
+        for (int64_t i = 0; i < WORK_UNIT_ITERS; i++) {
+            *sum += i;
+        }
     }
 }
 
@@ -205,12 +267,22 @@ static void work_steal_loop(int tid, int total_harts) {
     
     int my_core = tid / harts_per_core;
     WorkQueue* my_queue = &core_queues[my_core];
-    int steal_target_core = (my_core + 1) % total_cores;  // Start stealing from next core
+
+    // Xorshift RNG state — seeded per-hart so thieves diverge
+    uint32_t rng_state = (uint32_t)(tid + 1) * 2654435761u;
+
+    // Small ring buffer of recently-failed victims to avoid immediate retries
+    int recently_tried[RECENTLY_TRIED_SIZE];
+    for (int i = 0; i < RECENTLY_TRIED_SIZE; i++) recently_tried[i] = -1;
+    int rt_idx = 0;
     
     int64_t local_processed = 0;
     int64_t local_steal_attempts = 0;
     int64_t local_steal_success = 0;
     int64_t local_steal_failures = 0;
+    
+    // Local buffer for stolen items — avoids re-touching victim's cache lines
+    int64_t stolen_buf[STEAL_K];
     
     int consecutive_empty = 0;
     const int MAX_EMPTY_ROUNDS = total_cores * 8 + 16;  // More tolerance for high contention
@@ -225,54 +297,91 @@ static void work_steal_loop(int tid, int total_harts) {
     
     while (consecutive_empty < MAX_EMPTY_ROUNDS) {
         // Try to get work from own core's queue first
-        int64_t work = queue_pop(my_queue);
+        int64_t packed = queue_pop(my_queue);
         
-        if (work >= 0) {
-            // Process local work
-            do_work(work, my_core);
-            local_processed++;
+        if (packed >= 0) {
+            // Process local work range
+            int32_t rb = range_begin(packed);
+            int32_t re = range_end(packed);
+            do_work_range(rb, re, my_core);
+            local_processed += (re - rb);
             consecutive_empty = 0;
             backoff = 1;  // Reset backoff on success
             continue;
         }
         
-        // Local core queue empty - try to steal from other cores
-        // Round-robin through other cores
-        bool found_work = false;
-        for (int rounds = 0; rounds < total_cores - 1; rounds++) {
-            if (steal_target_core == my_core) {
-                steal_target_core = (steal_target_core + 1) % total_cores;
-            }
-            
-            local_steal_attempts++;
-            work = queue_steal(&core_queues[steal_target_core]);
-            
-            if (work >= 0) {
-                // Successful steal
-                local_steal_success++;
-                do_work(work, my_core);
-                local_processed++;
-                found_work = true;
-                consecutive_empty = 0;
-                backoff = 1;  // Reset backoff on success
+        // Try to become this core's thief (only one hart per core steals at a time)
+        if (core_thief[my_core].exchange(1, std::memory_order_acquire) == 0) {
+            // Won the steal token — steal from other cores (random victim)
+            bool found_work = false;
+            for (int rounds = 0; rounds < total_cores - 1; rounds++) {
+                // Pick a random victim, skip self and recently-failed cores
+                int victim;
+                int pick_tries = 0;
+                do {
+                    rng_state = xorshift_victim(rng_state);
+                    victim = (int)(rng_state % (uint32_t)total_cores);
+                    // Check recently-tried list
+                    bool in_recent = false;
+                    if (victim != my_core) {
+                        for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) {
+                            if (recently_tried[ri] == victim) { in_recent = true; break; }
+                        }
+                    }
+                    if (victim != my_core && !in_recent) break;
+                    pick_tries++;
+                } while (pick_tries < total_cores);
+                if (victim == my_core) continue;
                 
-                // Move to next target for fairness
-                steal_target_core = (steal_target_core + 1) % total_cores;
-                break;
-            } else {
-                local_steal_failures++;
-                // Brief backoff between steal attempts to reduce contention
-                hartsleep(backoff);
+                local_steal_attempts++;
+                int64_t steal_begin;
+                int64_t stolen = queue_steal_k(&core_queues[victim], &steal_begin, STEAL_K);
+                
+                if (stolen > 0) {
+                    // Copy stolen items to local buffer, then release victim's cache lines
+                    local_steal_success++;
+                    for (int64_t s = 0; s < stolen; s++) {
+                        stolen_buf[s] = core_queues[victim].items[steal_begin + s];
+                    }
+                    // Thief keeps first item; pushes rest into local queue for sibling harts
+                    for (int64_t s = 1; s < stolen; s++) {
+                        queue_push_atomic(my_queue, stolen_buf[s]);
+                    }
+                    // Process only the thief's own item
+                    {
+                        int32_t rb = range_begin(stolen_buf[0]);
+                        int32_t re = range_end(stolen_buf[0]);
+                        do_work_range(rb, re, my_core);
+                        local_processed += (re - rb);
+                    }
+                    found_work = true;
+                    consecutive_empty = 0;
+                    backoff = 1;  // Reset backoff on success
+                    // Clear recently-tried on success
+                    for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) recently_tried[ri] = -1;
+                    break;
+                } else {
+                    local_steal_failures++;
+                    // Record this victim as recently failed
+                    recently_tried[rt_idx] = victim;
+                    rt_idx = (rt_idx + 1) % RECENTLY_TRIED_SIZE;
+                    // Brief backoff between steal attempts to reduce contention
+                    hartsleep(backoff);
+                }
             }
             
-            // Try next victim core
-            steal_target_core = (steal_target_core + 1) % total_cores;
-        }
-        
-        if (!found_work) {
+            // Release steal token
+            core_thief[my_core].store(0, std::memory_order_release);
+            
+            if (!found_work) {
+                consecutive_empty++;
+                hartsleep(backoff);
+                if (backoff < max_backoff) backoff <<= 1;
+            }
+        } else {
+            // Another hart on this core is already stealing — back off harder, retry local
             consecutive_empty++;
-            // Exponential backoff before retry
-            hartsleep(backoff);
+            hartsleep(backoff * 4);
             if (backoff < max_backoff) backoff <<= 1;
         }
     }
@@ -306,17 +415,20 @@ static void distribute_work_imbalanced(int tid, int total_harts, int total_work)
             std::printf("  Core %2d: distributing %d items... ", c, my_work);
             std::fflush(stdout);
             
-            // Push work units to this core's queue
-            int pushed = 0;
-            for (int i = 0; i < my_work; i++) {
-                if (queue_push(&core_queues[c], 1)) {
-                    pushed++;
+            // Push work ranges to this core's queue
+            int pushed_units = 0;
+            int pushed_chunks = 0;
+            for (int w = 0; w < my_work; w += WORK_CHUNK_SIZE) {
+                int32_t end = (w + WORK_CHUNK_SIZE > my_work) ? my_work : w + WORK_CHUNK_SIZE;
+                if (queue_push(&core_queues[c], pack_range((int32_t)w, (int32_t)end))) {
+                    pushed_units += (end - w);
+                    pushed_chunks++;
                 } else {
-                    std::printf("PUSH FAILED at %d! ", i);
+                    std::printf("PUSH FAILED at chunk %d! ", pushed_chunks);
                     break;
                 }
             }
-            std::printf("pushed %d, tail=%ld\n", pushed, (long)core_queues[c].tail);
+            std::printf("pushed %d units in %d chunks, tail=%ld\n", pushed_units, pushed_chunks, (long)core_queues[c].tail);
         }
         std::printf("Distribution complete.\n");
     }
@@ -353,13 +465,14 @@ int main(int argc, char** argv) {
             stat_steal_failures[i] = 0;
         }
         
-        // Initialize all core queues and per-core sums
+        // Initialize all core queues, per-core sums, and steal tokens
         for (int i = 0; i < g_total_cores; i++) {
             queue_init(&core_queues[i]);
-            g_core_sum[i] = 0;
+            g_core_sum[i].value = 0;
+            core_thief[i].store(0, std::memory_order_relaxed);
         }
         
-        std::printf("Total work units: %d\n", g_total_work);
+        std::printf("Total work units: %d (chunk size: %d)\n", g_total_work, WORK_CHUNK_SIZE);
         std::printf("\n");
         
         // Signal initialization complete with memory fence
@@ -381,8 +494,8 @@ int main(int argc, char** argv) {
     if (tid == 0) {
         std::printf("\nInitial work distribution:\n");
         for (int c = 0; c < g_total_cores; c++) {
-            int64_t work_count = core_queues[c].tail - core_queues[c].head;
-            std::printf("  Core %2d: %ld items\n", c, (long)work_count);
+            int64_t chunk_count = core_queues[c].tail - core_queues[c].head;
+            std::printf("  Core %2d: %ld chunks\n", c, (long)chunk_count);
         }
         std::printf("\nStarting work stealing...\n");
     }

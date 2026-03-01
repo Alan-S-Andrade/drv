@@ -19,6 +19,8 @@
 static constexpr int QUEUE_SIZE = 8192;
 static constexpr int MAX_HARTS  = 1024;
 static constexpr int MAX_CORES  = 64;
+static constexpr int BFS_CHUNK_SIZE = 64;  // nodes per batch local pop
+static constexpr int STEAL_K = 64;         // nodes per batch steal (tunable independently)
 
 static constexpr int ROWS = 1000;
 static constexpr int COLS = 1000;
@@ -42,6 +44,9 @@ __l2sp__ int64_t g_local_sense[MAX_HARTS];
 
 // best-effort hint: 1 if queue likely non-empty, 0 if likely empty
 __l2sp__ volatile int32_t core_has_work[MAX_CORES];
+
+// Per-core steal token: only one hart per core may steal at a time
+__l2sp__ std::atomic<int> core_thief[MAX_CORES];
 
 // Global remaining-work counter for the current level
 __l2sp__ std::atomic<int64_t> g_level_remaining = 0;
@@ -126,6 +131,25 @@ static inline int64_t queue_pop_fifo(WorkQueue* q, int core_id) {
     return -1;
 }
 
+// Batch pop: reserve up to max_chunk items from head in one CAS.
+// Returns count of items claimed (0 if empty/contention). Sets *out_begin.
+static inline int64_t queue_pop_chunk(WorkQueue* q, int core_id, int64_t* out_begin, int64_t max_chunk) {
+    int64_t h = atomic_load_i64(&q->head);
+    int64_t t = atomic_load_i64(&q->tail);
+    if (h >= t) {
+        core_has_work[core_id] = 0;
+        return 0;
+    }
+    int64_t avail = t - h;
+    int64_t chunk = (avail < max_chunk) ? avail : max_chunk;
+    int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + chunk);
+    if (old_h == h) {
+        *out_begin = h;
+        return chunk;
+    }
+    return 0;
+}
+
 // -------------------- Graph Utilities --------------------
 static inline int64_t id_of(int r, int c) { return int64_t(r) * COLS + c; }
 static inline int row_of(int64_t id) { return int(id / COLS); }
@@ -145,6 +169,58 @@ static inline bool claim_node(int64_t v) {
     return old == 0;
 }
 
+// Process a single BFS node: check 4 neighbors, claim unvisited, push to next level
+static inline void process_single_node(int64_t u, int32_t level,
+                                       WorkQueue* my_next_queue, int my_core) {
+    const int ur = row_of(u);
+    const int uc = col_of(u);
+
+    if (ur > 0) {
+        const int64_t v = u - COLS;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_atomic(my_next_queue, my_core, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+    if (ur + 1 < ROWS) {
+        const int64_t v = u + COLS;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_atomic(my_next_queue, my_core, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+    if (uc > 0) {
+        const int64_t v = u - 1;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_atomic(my_next_queue, my_core, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+    if (uc + 1 < COLS) {
+        const int64_t v = u + 1;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_atomic(my_next_queue, my_core, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+}
+
+// -------------------- Victim Selection --------------------
+
+// Fast xorshift PRNG for victim selection — mixes tid + counter to decorrelate thieves
+static inline uint32_t xorshift_victim(uint32_t seed) {
+    seed ^= seed << 13;
+    seed ^= seed >> 17;
+    seed ^= seed << 5;
+    return seed;
+}
+
+static constexpr int RECENTLY_TRIED_SIZE = 4; // small "recently failed" ring buffer
+
 // -------------------- BFS Level Processing --------------------
 static void process_bfs_level(int tid, int32_t level) {
     const int harts_per_core = g_harts_per_core;
@@ -155,17 +231,19 @@ static void process_bfs_level(int tid, int32_t level) {
     WorkQueue* my_queue = &core_queues[my_core];
     WorkQueue* my_next_queue = &next_level_queues[my_core];
 
-    // Only hart-0 of each core is allowed to steal.
-    // Other harts drain the local queue and exit when it's empty.
-    bool can_steal = (my_local_id == 0);
-
     // Steal policy knobs
     const int STEAL_START = 4;      // wait for N local misses before starting steal episodes
     const int STEAL_VICTIMS = 2;    // probe this many victims per episode
     int64_t steal_backoff = 4;
     const int64_t steal_backoff_max = 512;
 
-    int steal_target_core = (my_core + 1) % total_cores;
+    // Xorshift RNG state — seeded per-hart so thieves diverge
+    uint32_t rng_state = (uint32_t)(tid + 1) * 2654435761u;
+
+    // Small ring buffer of recently-failed victims to avoid immediate retries
+    int recently_tried[RECENTLY_TRIED_SIZE];
+    for (int i = 0; i < RECENTLY_TRIED_SIZE; i++) recently_tried[i] = -1;
+    int rt_idx = 0;
 
     int64_t local_processed = 0;
     int64_t local_steal_attempts = 0;
@@ -173,15 +251,25 @@ static void process_bfs_level(int tid, int32_t level) {
 
     int empty_streak = 0;
 
+    // Local buffer for stolen items — avoid re-touching victim's cache lines
+    int64_t stolen_buf[STEAL_K];
+
     int64_t local_backoff = 4;
     const int64_t local_backoff_max = 128;
 
     while (g_level_remaining.load(std::memory_order_acquire) > 0) {
-        int64_t u = queue_pop_fifo(my_queue, my_core);
+        // Batch pop: grab up to BFS_CHUNK_SIZE nodes at once
+        int64_t begin_idx;
+        int64_t count = queue_pop_chunk(my_queue, my_core, &begin_idx, BFS_CHUNK_SIZE);
 
-        if (u >= 0) {
-            // We consumed exactly one work item from some queue; account it globally.
-            g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
+        if (count > 0) {
+            g_level_remaining.fetch_sub(count, std::memory_order_acq_rel);
+
+            for (int64_t i = 0; i < count; i++) {
+                int64_t u = my_queue->items[begin_idx + i];
+                local_processed++;
+                process_single_node(u, level, my_next_queue, my_core);
+            }
 
             empty_streak = 0;
             steal_backoff = 4;
@@ -190,13 +278,21 @@ static void process_bfs_level(int tid, int32_t level) {
             // Eagerly mark own queue empty so stealers skip us
             core_has_work[my_core] = 0;
 
-            // Non-stealing harts exit once local queue is drained
-            if (!can_steal) break;
+            // Try to become this core's thief (only one hart per core steals at a time)
+            if (core_thief[my_core].exchange(1, std::memory_order_acquire) != 0) {
+                // Another hart on this core is already stealing — back off harder, retry local
+                hartsleep(local_backoff * 4);
+                if (local_backoff < local_backoff_max) local_backoff <<= 1;
+                continue;
+            }
 
+            // Won the steal token
             empty_streak++;
 
             // short local backoff first
             if (empty_streak < STEAL_START) {
+                // Release token before backing off — don't hold it while sleeping
+                core_thief[my_core].store(0, std::memory_order_release);
                 hartsleep(local_backoff);
                 if (local_backoff < local_backoff_max) local_backoff <<= 1;
                 continue;
@@ -204,72 +300,65 @@ static void process_bfs_level(int tid, int32_t level) {
 
             bool found = false;
             for (int k = 0; k < STEAL_VICTIMS; k++) {
-                int victim = steal_target_core;
-                steal_target_core = (steal_target_core + 1) % total_cores;
-                if (victim == my_core) continue;
-
-                // Skip likely-empty victims
-                if (core_has_work[victim] == 0) {
-                    continue;
-                }
+                // Pick a random victim, skip self, empty hints, and recently-failed
+                int victim;
+                int pick_tries = 0;
+                do {
+                    rng_state = xorshift_victim(rng_state);
+                    victim = (int)(rng_state % (uint32_t)total_cores);
+                    bool in_recent = false;
+                    if (victim != my_core && core_has_work[victim] != 0) {
+                        for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) {
+                            if (recently_tried[ri] == victim) { in_recent = true; break; }
+                        }
+                        if (!in_recent) break;
+                    }
+                    pick_tries++;
+                } while (pick_tries < total_cores);
+                if (victim == my_core || core_has_work[victim] == 0) continue;
 
                 local_steal_attempts++;
-                u = queue_pop_fifo(&core_queues[victim], victim);
-                if (u >= 0) {
+                count = queue_pop_chunk(&core_queues[victim], victim, &begin_idx, STEAL_K);
+                if (count > 0) {
                     local_steal_success++;
                     found = true;
 
+                    // Don't subtract from g_level_remaining here — items are
+                    // pushed into local queue and subtracted when actually processed.
+
+                    // Copy stolen items to local buffer, then release victim's cache lines
+                    for (int64_t i = 0; i < count; i++) {
+                        stolen_buf[i] = core_queues[victim].items[begin_idx + i];
+                    }
+                    // Thief keeps first item; pushes rest into local queue for sibling harts
+                    for (int64_t i = 1; i < count; i++) {
+                        queue_push_atomic(my_queue, my_core, stolen_buf[i]);
+                    }
+                    // Process only the thief's own item
                     g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
+                    local_processed++;
+                    process_single_node(stolen_buf[0], level, my_next_queue, my_core);
 
                     empty_streak = 0;
                     steal_backoff = 4;
                     local_backoff = 4;
+                    // Clear recently-tried on success
+                    for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) recently_tried[ri] = -1;
                     break;
+                } else {
+                    // Record this victim as recently failed
+                    recently_tried[rt_idx] = victim;
+                    rt_idx = (rt_idx + 1) % RECENTLY_TRIED_SIZE;
                 }
             }
+
+            // Release steal token
+            core_thief[my_core].store(0, std::memory_order_release);
 
             if (!found) {
                 hartsleep(steal_backoff);
                 if (steal_backoff < steal_backoff_max) steal_backoff <<= 1;
                 continue;
-            }
-        }
-
-        // Process node u
-        local_processed++;
-        const int ur = row_of(u);
-        const int uc = col_of(u);
-
-        if (ur > 0) {
-            const int64_t v = u - COLS;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_atomic(my_next_queue, my_core, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
-        }
-        if (ur + 1 < ROWS) {
-            const int64_t v = u + COLS;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_atomic(my_next_queue, my_core, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
-        }
-        if (uc > 0) {
-            const int64_t v = u - 1;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_atomic(my_next_queue, my_core, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
-        }
-        if (uc + 1 < COLS) {
-            const int64_t v = u + 1;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_atomic(my_next_queue, my_core, v);
-                atomic_fetch_add_i64(&discovered, 1);
             }
         }
     }
@@ -383,6 +472,7 @@ static void bfs(int64_t source_id) {
             queue_init(&core_queues[c]);
             queue_init(&next_level_queues[c]);
             core_has_work[c] = 0;
+            core_thief[c].store(0, std::memory_order_relaxed);
         }
 
         visited[source_id] = 1;

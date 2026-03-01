@@ -24,9 +24,10 @@
 static constexpr int QUEUE_SIZE = 8192;
 static constexpr int MAX_HARTS  = 2048;   // increase if you run >2048
 static constexpr int MAX_CORES  = 128;    // increase if you run >128
+static constexpr int BFS_CHUNK_SIZE = 64; // nodes per batch pop
 
 static constexpr int ROWS = 1000;
-static constexpr int COLS = 200;
+static constexpr int COLS = 1000;
 static constexpr int64_t N = int64_t(ROWS) * int64_t(COLS);
 
 __l2sp__ volatile int g_total_harts = 0;
@@ -136,6 +137,30 @@ static inline int64_t queue_pop_mc(WorkQueue* q) {
     }
 }
 
+// Multi-consumer batch pop: grab up to max_chunk items in one CAS.
+// Returns count c>0 on success (items at out_begin..out_begin+c-1), 0 if empty.
+static inline int64_t queue_pop_chunk_mc(WorkQueue* q, int64_t* out_begin, int64_t max_chunk) {
+    int64_t backoff = 1;
+    const int64_t max_backoff = 32;
+
+    while (true) {
+        int64_t h = atomic_load_i64(&q->head);
+        int64_t t = atomic_load_i64(&q->tail);
+        if (h >= t) return 0;
+
+        int64_t avail = t - h;
+        int64_t chunk = (avail < max_chunk) ? avail : max_chunk;
+        int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + chunk);
+        if (old_h == h) {
+            *out_begin = h;
+            return chunk;
+        }
+
+        hartsleep(backoff);
+        if (backoff < max_backoff) backoff <<= 1;
+    }
+}
+
 // -------------------- Graph utils --------------------
 static inline int64_t id_of(int r, int c) { return int64_t(r) * COLS + c; }
 static inline int row_of(int64_t id) { return int(id / COLS); }
@@ -144,6 +169,45 @@ static inline int col_of(int64_t id) { return int(id % COLS); }
 static inline bool claim_node(int64_t v) {
     const int64_t old = atomic_swap_i64(&visited[v], 1);
     return old == 0;
+}
+
+// Process a single BFS node: check 4 neighbors, claim unvisited, push to next level
+static inline void process_single_node(int64_t u, int32_t level, WorkQueue* my_next) {
+    const int ur = row_of(u);
+    const int uc = col_of(u);
+
+    if (ur > 0) {
+        const int64_t v = u - COLS;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_mp(my_next, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+    if (ur + 1 < ROWS) {
+        const int64_t v = u + COLS;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_mp(my_next, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+    if (uc > 0) {
+        const int64_t v = u - 1;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_mp(my_next, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
+    if (uc + 1 < COLS) {
+        const int64_t v = u + 1;
+        if (claim_node(v)) {
+            dist_arr[v] = level + 1;
+            queue_push_mp(my_next, v);
+            atomic_fetch_add_i64(&discovered, 1);
+        }
+    }
 }
 
 // -------------------- Level processing (NO stealing) --------------------
@@ -155,45 +219,14 @@ static void process_bfs_level(int tid, int32_t level) {
     int64_t local_processed = 0;
 
     while (true) {
-        int64_t u = queue_pop_mc(my_q);
-        if (u < 0) break;
+        int64_t begin_idx;
+        int64_t count = queue_pop_chunk_mc(my_q, &begin_idx, BFS_CHUNK_SIZE);
+        if (count == 0) break;
 
-        local_processed++;
-
-        const int ur = row_of(u);
-        const int uc = col_of(u);
-
-        if (ur > 0) {
-            const int64_t v = u - COLS;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_mp(my_next, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
-        }
-        if (ur + 1 < ROWS) {
-            const int64_t v = u + COLS;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_mp(my_next, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
-        }
-        if (uc > 0) {
-            const int64_t v = u - 1;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_mp(my_next, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
-        }
-        if (uc + 1 < COLS) {
-            const int64_t v = u + 1;
-            if (claim_node(v)) {
-                dist_arr[v] = level + 1;
-                queue_push_mp(my_next, v);
-                atomic_fetch_add_i64(&discovered, 1);
-            }
+        for (int64_t i = 0; i < count; i++) {
+            int64_t u = my_q->items[begin_idx + i];
+            local_processed++;
+            process_single_node(u, level, my_next);
         }
     }
 

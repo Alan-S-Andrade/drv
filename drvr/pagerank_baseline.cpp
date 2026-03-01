@@ -22,8 +22,8 @@ static constexpr int GRID_ROWS       = 64;
 static constexpr int GRID_COLS       = 64;
 static constexpr int NUM_VERTICES    = GRID_ROWS * GRID_COLS;   // 4096
 static constexpr int MAX_EDGES       = NUM_VERTICES * 5;        // grid + random
-static constexpr int CHUNK_SIZE      = 16;                      // vertices per work unit
-static constexpr int NUM_CHUNKS      = NUM_VERTICES / CHUNK_SIZE; // 256
+static constexpr int CHUNK_SIZE      = 64;                      // vertices per work unit
+static constexpr int NUM_CHUNKS      = (NUM_VERTICES + CHUNK_SIZE - 1) / CHUNK_SIZE;
 static constexpr int PR_ITERATIONS   = 10;
 static constexpr int VERTEX_WORK_ITERS = 200; // synthetic per-vertex compute
 
@@ -35,6 +35,13 @@ static constexpr int MAX_CORES       = 64;
 static constexpr int64_t RANK_SCALE  = 1000000LL;
 static constexpr int64_t DAMPING_NUM = 85;   // d = 0.85
 static constexpr int64_t DAMPING_DEN = 100;
+
+// Pack a (begin, end) vertex range into a single int64_t queue item
+static inline int64_t pack_range(int32_t begin, int32_t end) {
+    return ((int64_t)(uint32_t)begin << 32) | (int64_t)(uint32_t)end;
+}
+static inline int32_t range_begin(int64_t packed) { return (int32_t)(packed >> 32); }
+static inline int32_t range_end(int64_t packed) { return (int32_t)(packed & 0xFFFFFFFF); }
 
 // ======================= Runtime Config =======================
 __l2sp__ volatile int g_total_harts    = 0;
@@ -210,10 +217,7 @@ static void build_grid_graph() {
 
 // ============= PageRank per-chunk kernel =============
 
-static inline void compute_pagerank_chunk(int chunk_id) {
-    int v_start = chunk_id * CHUNK_SIZE;
-    int v_end   = v_start + CHUNK_SIZE;
-    if (v_end > NUM_VERTICES) v_end = NUM_VERTICES;
+static inline void compute_pagerank_range(int v_start, int v_end) {
 
     // base_rank = (1 − d) / N   (in fixed-point)
     int64_t base_rank = (RANK_SCALE * (DAMPING_DEN - DAMPING_NUM))
@@ -264,7 +268,10 @@ static void distribute_chunks(int total_cores) {
         if (leftover > 0) { my_chunks++; leftover--; }
 
         for (int i = 0; i < my_chunks && chunk_id < NUM_CHUNKS; i++) {
-            queue_push(&core_queues[c], chunk_id);
+            int32_t v_begin = chunk_id * CHUNK_SIZE;
+            int32_t v_end = v_begin + CHUNK_SIZE;
+            if (v_end > NUM_VERTICES) v_end = NUM_VERTICES;
+            queue_push(&core_queues[c], pack_range(v_begin, v_end));
             chunk_id++;
         }
     }
@@ -280,9 +287,9 @@ static void baseline_process(int tid) {
     int64_t processed = 0;
 
     while (true) {
-        int64_t chunk = queue_pop_ttas(q);
-        if (chunk < 0) break;
-        compute_pagerank_chunk((int)chunk);
+        int64_t packed = queue_pop_ttas(q);
+        if (packed < 0) break;
+        compute_pagerank_range(range_begin(packed), range_end(packed));
         processed++;
     }
 

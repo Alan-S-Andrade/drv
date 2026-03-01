@@ -28,19 +28,27 @@ static constexpr int GRID_ROWS       = 64;
 static constexpr int GRID_COLS       = 64;
 static constexpr int NUM_VERTICES    = GRID_ROWS * GRID_COLS;   // 4096
 static constexpr int MAX_EDGES       = NUM_VERTICES * 5;        // grid + random
-static constexpr int CHUNK_SIZE      = 16;                      // vertices per work unit
-static constexpr int NUM_CHUNKS      = NUM_VERTICES / CHUNK_SIZE; // 256
+static constexpr int CHUNK_SIZE      = 64;                      // vertices per work unit
+static constexpr int NUM_CHUNKS      = (NUM_VERTICES + CHUNK_SIZE - 1) / CHUNK_SIZE;
 static constexpr int PR_ITERATIONS   = 10;
 static constexpr int VERTEX_WORK_ITERS = 200; // synthetic per-vertex compute
 
 static constexpr int PR_QUEUE_SIZE   = 512;
 static constexpr int MAX_HARTS       = 1024;
 static constexpr int MAX_CORES       = 64;
+static constexpr int STEAL_K         = 4;    // Max chunks to steal per episode (tunable)
 
 // Fixed-point PageRank (rank 1.0 == RANK_SCALE)
 static constexpr int64_t RANK_SCALE  = 1000000LL;
 static constexpr int64_t DAMPING_NUM = 85;   // d = 0.85
 static constexpr int64_t DAMPING_DEN = 100;
+
+// Pack a (begin, end) vertex range into a single int64_t queue item
+static inline int64_t pack_range(int32_t begin, int32_t end) {
+    return ((int64_t)(uint32_t)begin << 32) | (int64_t)(uint32_t)end;
+}
+static inline int32_t range_begin(int64_t packed) { return (int32_t)(packed >> 32); }
+static inline int32_t range_end(int64_t packed) { return (int32_t)(packed & 0xFFFFFFFF); }
 
 // ======================= Runtime Config =======================
 __l2sp__ volatile int g_total_harts    = 0;
@@ -68,6 +76,9 @@ struct PRWorkQueue {
 __l2sp__ PRWorkQueue core_queues[MAX_CORES];
 // Best-effort hint: 1 if queue likely non-empty, 0 otherwise
 __l2sp__ volatile int32_t core_has_work[MAX_CORES];
+
+// Per-core steal token: only one hart per core may steal at a time
+__l2sp__ std::atomic<int> core_thief[MAX_CORES];
 
 // ======================= Synchronization =======================
 __l2sp__ int64_t           g_local_sense[MAX_HARTS];
@@ -124,6 +135,21 @@ static inline bool queue_push(PRWorkQueue* q, int core_id, int64_t item) {
     return true;
 }
 
+// Atomic push for refilling local queue (thief pushes stolen items for local harts)
+static inline bool queue_push_atomic(PRWorkQueue* q, int core_id, int64_t item) {
+    while (true) {
+        int64_t t = atomic_load_i64(&q->tail);
+        if (t >= PR_QUEUE_SIZE) return false;
+        int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, t + 1);
+        if (old_t == t) {
+            q->items[t] = item;
+            core_has_work[core_id] = 1;
+            return true;
+        }
+        hartsleep(1);
+    }
+}
+
 // TTAS pop – local harts pop from tail (LIFO for locality).
 // Plain volatile reads filter hopeless CAS attempts.
 static inline int64_t queue_pop_ttas(PRWorkQueue* q) {
@@ -177,6 +203,30 @@ static inline int64_t queue_steal_ttas(PRWorkQueue* q) {
     int64_t old_head = atomic_compare_and_swap_i64(&q->head, h, h + 1);
     if (old_head == h) return work;  // success
     return -1;                       // contention → skip this victim
+}
+
+// TTAS steal-k: grab up to k items from head in one CAS (FIFO).
+// Returns count stolen (0 if empty/contention). Sets *out_begin to first index.
+static inline int64_t queue_steal_k_ttas(PRWorkQueue* q, int64_t* out_begin, int64_t max_k) {
+    // ---- TEST phase ----
+    int64_t h = q->head;   // volatile read, no bus traffic
+    int64_t t = q->tail;
+    if (h >= t) return 0;
+
+    // ---- TEST-AND-SET phase ----
+    h = atomic_load_i64(&q->head);  // coherent read
+    t = q->tail;
+    if (h >= t) return 0;
+
+    int64_t avail = t - h;
+    int64_t k = (avail < max_k) ? avail : max_k;
+
+    int64_t old_head = atomic_compare_and_swap_i64(&q->head, h, h + k);
+    if (old_head == h) {
+        *out_begin = h;
+        return k;
+    }
+    return 0;  // contention → skip this victim
 }
 
 // ============= Graph Construction =============
@@ -242,10 +292,7 @@ static void build_grid_graph() {
 
 // ============= PageRank per-chunk kernel =============
 
-static inline void compute_pagerank_chunk(int chunk_id) {
-    int v_start = chunk_id * CHUNK_SIZE;
-    int v_end   = v_start + CHUNK_SIZE;
-    if (v_end > NUM_VERTICES) v_end = NUM_VERTICES;
+static inline void compute_pagerank_range(int v_start, int v_end) {
 
     // base_rank = (1 − d) / N   (in fixed-point)
     int64_t base_rank = (RANK_SCALE * (DAMPING_DEN - DAMPING_NUM))
@@ -297,11 +344,26 @@ static void distribute_chunks(int total_cores) {
         if (leftover > 0) { my_chunks++; leftover--; }
 
         for (int i = 0; i < my_chunks && chunk_id < NUM_CHUNKS; i++) {
-            queue_push(&core_queues[c], c, chunk_id);
+            int32_t v_begin = chunk_id * CHUNK_SIZE;
+            int32_t v_end = v_begin + CHUNK_SIZE;
+            if (v_end > NUM_VERTICES) v_end = NUM_VERTICES;
+            queue_push(&core_queues[c], c, pack_range(v_begin, v_end));
             chunk_id++;
         }
     }
 }
+
+// ============= Victim Selection =============
+
+// Fast xorshift PRNG for victim selection — mixes tid + counter to decorrelate thieves
+static inline uint32_t xorshift_victim(uint32_t seed) {
+    seed ^= seed << 13;
+    seed ^= seed >> 17;
+    seed ^= seed << 5;
+    return seed;
+}
+
+static constexpr int RECENTLY_TRIED_SIZE = 4; // small "recently failed" ring buffer
 
 // ============= Work Stealing =============
 
@@ -312,15 +374,21 @@ static void work_stealing_process(int tid) {
     int my_core     = tid / hpc;
     int my_local_id = tid % hpc;   // hart index within core
     PRWorkQueue* my_q = &core_queues[my_core];
-    int steal_target = (my_core + 1) % total_cores;
+
+    // Xorshift RNG state — seeded per-hart so thieves diverge
+    uint32_t rng_state = (uint32_t)(tid + 1) * 2654435761u;
+
+    // Small ring buffer of recently-failed victims to avoid immediate retries
+    int recently_tried[RECENTLY_TRIED_SIZE];
+    for (int i = 0; i < RECENTLY_TRIED_SIZE; i++) recently_tried[i] = -1;
+    int rt_idx = 0;
 
     int64_t processed            = 0;
     int64_t local_steal_attempts = 0;
     int64_t local_steal_success  = 0;
 
-    // Only hart-0 of each core is allowed to steal.
-    // Other harts drain the local queue and exit.
-    bool can_steal = (my_local_id == 0);
+    // Local buffer for stolen items — avoid re-touching victim's cache lines
+    int64_t stolen_buf[STEAL_K];
 
     int consecutive_empty = 0;
     const int MAX_EMPTY   = total_cores * 2;      // was total_cores*4+16
@@ -329,9 +397,9 @@ static void work_stealing_process(int tid) {
 
     while (consecutive_empty < MAX_EMPTY) {
         // 1. Try own queue first
-        int64_t chunk = queue_pop_ttas(my_q);
-        if (chunk >= 0) {
-            compute_pagerank_chunk((int)chunk);
+        int64_t packed = queue_pop_ttas(my_q);
+        if (packed >= 0) {
+            compute_pagerank_range(range_begin(packed), range_end(packed));
             processed++;
             consecutive_empty = 0;
             backoff = 4;
@@ -341,37 +409,66 @@ static void work_stealing_process(int tid) {
         // Eagerly mark own queue empty so stealers skip us
         core_has_work[my_core] = 0;
 
-        // Non-stealing harts exit once local queue is drained
-        if (!can_steal) break;
+        // Try to become this core's thief (only one hart per core steals at a time)
+        if (core_thief[my_core].exchange(1, std::memory_order_acquire) != 0) {
+            // Another hart on this core is already stealing — back off harder, retry local
+            hartsleep(backoff * 4);
+            if (backoff < max_backoff) backoff <<= 1;
+            continue;
+        }
 
-        // 2. Local queue empty → steal (hart 0 of core only)
+        // Won the steal token — steal from other cores (random victim)
         bool found = false;
         for (int r = 0; r < total_cores - 1; r++) {
-            if (steal_target == my_core)
-                steal_target = (steal_target + 1) % total_cores;
-
-            // TTAS hint: skip queues known to be empty
-            if (core_has_work[steal_target] == 0) {
-                steal_target = (steal_target + 1) % total_cores;
-                continue;
-            }
+            // Pick a random victim, skip self, empty hints, and recently-failed
+            int victim;
+            int pick_tries = 0;
+            do {
+                rng_state = xorshift_victim(rng_state);
+                victim = (int)(rng_state % (uint32_t)total_cores);
+                bool in_recent = false;
+                if (victim != my_core && core_has_work[victim] != 0) {
+                    for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) {
+                        if (recently_tried[ri] == victim) { in_recent = true; break; }
+                    }
+                    if (!in_recent) break;
+                }
+                pick_tries++;
+            } while (pick_tries < total_cores);
+            if (victim == my_core || core_has_work[victim] == 0) continue;
 
             local_steal_attempts++;
-            chunk = queue_steal_ttas(&core_queues[steal_target]);
+            int64_t steal_begin;
+            int64_t stolen = queue_steal_k_ttas(&core_queues[victim], &steal_begin, STEAL_K);
 
-            if (chunk >= 0) {
+            if (stolen > 0) {
                 local_steal_success++;
-                compute_pagerank_chunk((int)chunk);
+                // Copy stolen items to local buffer, then release victim's cache lines
+                for (int64_t s = 0; s < stolen; s++) {
+                    stolen_buf[s] = core_queues[victim].items[steal_begin + s];
+                }
+                // Thief keeps first item; pushes rest into local queue for sibling harts
+                for (int64_t s = 1; s < stolen; s++) {
+                    queue_push_atomic(my_q, my_core, stolen_buf[s]);
+                }
+                // Process only the thief's own item
+                compute_pagerank_range(range_begin(stolen_buf[0]), range_end(stolen_buf[0]));
                 processed++;
                 found = true;
                 consecutive_empty = 0;
                 backoff = 4;
-                steal_target = (steal_target + 1) % total_cores;
+                // Clear recently-tried on success
+                for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) recently_tried[ri] = -1;
                 break;
+            } else {
+                // Record this victim as recently failed
+                recently_tried[rt_idx] = victim;
+                rt_idx = (rt_idx + 1) % RECENTLY_TRIED_SIZE;
             }
-
-            steal_target = (steal_target + 1) % total_cores;
         }
+
+        // Release steal token
+        core_thief[my_core].store(0, std::memory_order_release);
 
         if (!found) {
             consecutive_empty++;
@@ -417,6 +514,7 @@ int main(int argc, char** argv) {
         for (int c = 0; c < total_cores; c++) {
             queue_init(&core_queues[c]);
             core_has_work[c] = 0;
+            core_thief[c].store(0, std::memory_order_relaxed);
         }
 
         build_grid_graph();

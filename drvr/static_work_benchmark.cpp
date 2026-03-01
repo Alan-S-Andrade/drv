@@ -18,6 +18,14 @@ static constexpr int MAX_CORES = 64;            // Maximum cores
 static constexpr int MAX_HARTS_PER_CORE = 16;   // Maximum harts per core
 static constexpr int HART_QUEUE_SIZE = QUEUE_SIZE / MAX_HARTS_PER_CORE; // Per-hart queue size
 static constexpr int g_total_work = 1536;       // Total work units to distribute
+static constexpr int WORK_CHUNK_SIZE = 32;      // Work units per queue item (range)
+
+// Pack a (begin, end) range into a single int64_t queue item
+static inline int64_t pack_range(int32_t begin, int32_t end) {
+    return ((int64_t)(uint32_t)begin << 32) | (int64_t)(uint32_t)end;
+}
+static inline int32_t range_begin(int64_t packed) { return (int32_t)(packed >> 32); }
+static inline int32_t range_end(int64_t packed) { return (int32_t)(packed & 0xFFFFFFFF); }
 
 // Runtime values (set by hart 0 during initialization)
 __l2sp__ volatile int g_total_harts = 0;
@@ -43,6 +51,12 @@ __l2sp__ volatile int64_t stat_work_processed[MAX_HARTS];
 
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
+
+// Per-core accumulator — cache-line padded so each core reads/writes its own L2SP line
+struct alignas(64) CoreLocalSum {
+    volatile int64_t value;
+};
+__l2sp__ CoreLocalSum g_core_sum[MAX_CORES];
 
 static inline int get_thread_id() {
     int tid = (myCoreId() << 4) + myThreadId();
@@ -76,12 +90,14 @@ static inline void barrier() {
 }
 
 // -------------------- Synthetic Work Function --------------------
-static inline void do_work(int64_t work_amount) {
-    volatile int64_t sum = 0;
-    for (int64_t i = 0; i < work_amount * WORK_UNIT_ITERS; i++) {
-        sum += i;
+// Process a range [begin, end) of work units; each unit does WORK_UNIT_ITERS iterations
+static inline void do_work_range(int32_t begin, int32_t end, int core_id) {
+    volatile int64_t *sum = &g_core_sum[core_id].value;
+    for (int32_t w = begin; w < end; w++) {
+        for (int64_t i = 0; i < WORK_UNIT_ITERS; i++) {
+            *sum += i;
+        }
     }
-    sum = 5;
 }
 
 // -------------------- Static Work Processing --------------------
@@ -97,8 +113,10 @@ static void process_static_work(int tid) {
     
     // Each hart iterates over its own slice — no atomics needed
     for (int64_t i = 0; i < my_work->work_count; i++) {
-        do_work(my_work->work_items[i]);
-        local_processed++;
+        int32_t rb = range_begin(my_work->work_items[i]);
+        int32_t re = range_end(my_work->work_items[i]);
+        do_work_range(rb, re, my_core);
+        local_processed += (re - rb);
     }
     
     stat_work_processed[tid] = local_processed;
@@ -110,9 +128,13 @@ static void distribute_work_imbalanced(int tid, int total_work) {
         std::printf("Hart 0 distributing work to %d cores (%d harts/core)...\n",
                    g_total_cores, g_harts_per_core);
         
+        // Match work_stealing_benchmark distribution: odd cores get 2x weight
+        int odd_cores = g_total_cores / 2;
+        int even_cores = g_total_cores - odd_cores;
+        int base_work = total_work / (even_cores + 2 * odd_cores);
+
         for (int c = 0; c < g_total_cores; c++) {
-            int work_per_core = total_work / g_total_cores;
-            int core_work = (c % 2 == 0) ? work_per_core : work_per_core * 2;
+            int core_work = (c % 2 == 0) ? base_work : base_work * 2;
             
             // Divide core's work evenly among its harts
             int work_per_hart = core_work / g_harts_per_core;
@@ -121,17 +143,21 @@ static void distribute_work_imbalanced(int tid, int total_work) {
             int assigned_total = 0;
             for (int h = 0; h < g_harts_per_core; h++) {
                 int hart_work = work_per_hart + (h < remainder ? 1 : 0);
-                if (hart_work > HART_QUEUE_SIZE) hart_work = HART_QUEUE_SIZE;
-                
-                core_assignments[c].hart_slices[h].work_count = hart_work;
-                for (int i = 0; i < hart_work; i++) {
-                    core_assignments[c].hart_slices[h].work_items[i] = 1;  // Unit work
+
+                // Pack work into ranges of WORK_CHUNK_SIZE
+                int num_ranges = 0;
+                for (int w = 0; w < hart_work; w += WORK_CHUNK_SIZE) {
+                    int32_t end = (w + WORK_CHUNK_SIZE > hart_work) ? hart_work : w + WORK_CHUNK_SIZE;
+                    if (num_ranges >= HART_QUEUE_SIZE) break;
+                    core_assignments[c].hart_slices[h].work_items[num_ranges] = pack_range((int32_t)w, (int32_t)end);
+                    num_ranges++;
                 }
+                core_assignments[c].hart_slices[h].work_count = num_ranges;
                 assigned_total += hart_work;
             }
             
-            std::printf("  Core %2d: %d items (%d per hart, %d remainder)\n",
-                       c, assigned_total, work_per_hart, remainder);
+            std::printf("  Core %2d: %d work units (%d per hart, chunk size %d)\n",
+                       c, assigned_total, work_per_hart, WORK_CHUNK_SIZE);
         }
         std::printf("Distribution complete.\n");
     }
@@ -157,7 +183,7 @@ int main(int argc, char** argv) {
                    total_cores, harts_per_core, max_hw_harts);
         std::printf("Using: %d cores x %d harts = %d total harts\n",
                    g_total_cores, g_harts_per_core, g_total_harts);
-        std::printf("Total work units: %d\n", g_total_work);
+        std::printf("Total work units: %d (chunk size: %d)\n", g_total_work, WORK_CHUNK_SIZE);
         std::printf("\n");
         
         // Initialize arrays
@@ -166,6 +192,11 @@ int main(int argc, char** argv) {
             stat_work_processed[i] = 0;
         }
         
+        // Initialize per-core accumulators
+        for (int i = 0; i < g_total_cores; i++) {
+            g_core_sum[i].value = 0;
+        }
+
         // Initialize core assignments (per-hart slices)
         for (int i = 0; i < g_total_cores; i++) {
             for (int h = 0; h < MAX_HARTS_PER_CORE; h++) {
@@ -192,13 +223,13 @@ int main(int argc, char** argv) {
     
     // Print initial work distribution
     if (tid == 0) {
-        std::printf("\nInitial work distribution (per hart):\n");
+        std::printf("\nInitial work distribution (per hart, in chunks):\n");
         for (int c = 0; c < g_total_cores; c++) {
             int64_t core_total = 0;
             for (int h = 0; h < g_harts_per_core; h++) {
                 core_total += core_assignments[c].hart_slices[h].work_count;
             }
-            std::printf("  Core %2d: %ld total items (", c, (long)core_total);
+            std::printf("  Core %2d: %ld total chunks (", c, (long)core_total);
             for (int h = 0; h < g_harts_per_core; h++) {
                 if (h > 0) std::printf(", ");
                 std::printf("%ld", (long)core_assignments[c].hart_slices[h].work_count);
