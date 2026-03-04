@@ -7,3 +7,8 @@ deps/
 tests/__pycache__/
 *.csv
 __pycache__/
+build_stampede/
+logs/
+p/
+CMakeCache.txt
+CMakeFiles/

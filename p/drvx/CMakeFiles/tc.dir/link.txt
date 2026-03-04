@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -shared -Wl,-soname,libtc.so -o libtc.so CMakeFiles/tc.dir/tc.cpp.o  -Wl,-rpath,/users/alanuiuc/drv/p/api ../api/libdrvapi.so /usr/lib/libboost_coroutine.so.1.90.0 /usr/lib/libboost_context.so.1.90.0

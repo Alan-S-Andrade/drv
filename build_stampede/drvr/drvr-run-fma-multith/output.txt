@@ -1,3 +1,0 @@
-Parsing arguments
-Building system
-Running simualation
