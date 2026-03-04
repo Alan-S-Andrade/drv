@@ -8,20 +8,20 @@
 #SBATCH -N 4
 #SBATCH -n 1
 #SBATCH -c 96
-#SBATCH -t 15:00:00
+#SBATCH -t 16:00:00
 
 set -eo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "${SLURM_SUBMIT_DIR:-$SCRIPT_DIR}"
+SCRIPT_DIR="/work2/10238/vineeth_architect/stampede3/drv_copy/drv"
+cd "$SCRIPT_DIR"
 mkdir -p logs
 
 module purge
 set +u
 module load tacc-apptainer/1.4.1
 
-SIF="$SCRIPT_DIR/drv_latest.sif"
-RAMULATOR_SRC="$SCRIPT_DIR/../ramulator-build"
+SIF="/work2/10238/vineeth_architect/stampede3/drv_latest.sif"
+RAMULATOR_SRC="/work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build"
 RAMULATOR_LIB="$RAMULATOR_SRC/libramulator.so"
 RAMULATOR_CONFIGS="$RAMULATOR_SRC/configs"
 
@@ -60,6 +60,11 @@ apptainer exec --cleanenv \
 # ------------------------------------------------------------------
 # STEP 2: RUN BFS CSR WEAK SCALING SWEEP
 # ------------------------------------------------------------------
+
+# Graph parameters
+VTX_PER_THREAD=1024
+DEGREE=16
+
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
   --bind "$SCRIPT_DIR:/work" \
@@ -76,7 +81,10 @@ apptainer exec --cleanenv \
     BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_ramulator
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_ramulator_with_stat
+
+    VTX_PER_THREAD='"${VTX_PER_THREAD}"'
+    DEGREE='"${DEGREE}"'
 
     mkdir -p "$SWEEP_DIR"
 
@@ -84,27 +92,38 @@ apptainer exec --cleanenv \
     # Format: CX CY THR
     CONFIGS=(
       "1  1 16"
-      #"2  1 16"
-      #"4  1 16"
-      #"8  1 16"
-      #"8  2 16"
-      #"8  4 16"
-      #"8  8 16"
+      "2  1 16"
+      "4  1 16"
+      "8  1 16"
+      "8  2 16"
+      "8  4 16"
+      "8  8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
       read -r CX CY THR <<< "$cfg"
       CORES=$((CX * CY))
       TOTAL_THREADS=$((CORES * THR))
+      N=$((VTX_PER_THREAD * TOTAL_THREADS))
+
       RUN_NAME="bfs_csr_c${CORES}_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core, N=$((TOTAL_THREADS * 1024)) vertices)"
+      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE})"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
       cp /work/model/summarize.py "$RUN_DIR/"
+      cp /work/model/summarize_ramulator.py "$RUN_DIR/"
+
+      # Generate uniform-degree CSR graph into run dir
+      echo "Generating uniform graph: N=${N} degree=${DEGREE}..."
+      python3 /work/gen_uniform_csr.py \
+        -N ${N} \
+        -D ${DEGREE} \
+        --seed 42 \
+        -o "$RUN_DIR/uniform_graph.bin"
 
       cd "$RUN_DIR"
 
@@ -118,17 +137,23 @@ apptainer exec --cleanenv \
         --pod-cores-x=${CX} \
         --pod-cores-y=${CY} \
         --core-threads=${THR} \
-        --pod-l2sp-banks=1 \
+        --pod-l2sp-banks=4 \
         --pod-l2sp-interleave=64 \
-        --pxn-dram-banks=4 \
-        --pxn-dram-interleave=64 \
+        --pxn-dram-banks=1 \
+        --without-pxn-dram-cache \
         "$BINARY" \
+        --V ${VTX_PER_THREAD} \
+        --D ${DEGREE} \
         | tee "$RUN_DIR/output.txt"
 
       echo ""
       if [ -f "summarize.py" ]; then
           echo "--- Summary for ${RUN_NAME} ---"
           python3 summarize.py
+      fi
+      if [ -f "summarize_ramulator.py" ] && [ -f "ramulator_system_pxn0_dram0.stats" ]; then
+          echo "--- Ramulator Summary for ${RUN_NAME} ---"
+          python3 summarize_ramulator.py
       fi
       echo ""
 
@@ -137,6 +162,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "BFS CSR WEAK SCALING SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_ramulator/"
+    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_ramulator_with_stat/"
     echo "=============================================="
   '

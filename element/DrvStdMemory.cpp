@@ -237,6 +237,65 @@ DrvStdMemory::toNativePointer(DrvAPI::DrvAPIAddress paddr, void **ptr, size_t *s
 
 
 /**
+ * @brief static toNativePointer usable without a DrvStdMemory instance
+ */
+void
+DrvStdMemory::toNativePointerStatic(
+    DrvAPI::DrvAPIAddress addr,
+    const DrvAPI::DrvAPIAddressDecoder &decoder,
+    const DrvSysConfig &sys_config,
+    void **ptr, size_t *size)
+{
+    DrvAPI::DrvAPIAddressInfo decode = decoder.decode(addr);
+    DrvAPI::DrvAPISysConfig cfg = sys_config.config();
+
+    if (decode.is_dram()) {
+        uint32_t interleave = cfg.pxnDRAMInterleaveSize();
+        int pxn = decode.pxn();
+        std::vector<record_type> &dram_mcs = to_native_meta_data_.dram_mcs[pxn];
+        uint64_t dram_offset = decode.offset();
+        uint64_t bank, offset;
+        std::tie(bank, offset) = to_native_meta_data_.dram_interleave_decode.getBankOffset(dram_offset);
+        DrvAPI::DrvAPIAddress start, stop;
+        SST::MemHierarchy::MemController *mc;
+        std::tie(start, stop, mc) = dram_mcs[bank];
+        uint64_t laddr = mc->translateToLocal(addr);
+        auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>(mc->backing_);
+        uint8_t *bptr = &backing->m_buffer[laddr];
+        *ptr = bptr;
+        *size = interleave - offset;
+    } else if (decode.is_l2sp()) {
+        uint32_t interleave = cfg.podL2SPInterleaveSize();
+        int pxn = decode.pxn();
+        int pod = decode.pod();
+        std::vector<record_type> &l2sp_mcs = to_native_meta_data_.l2sp_mcs[pxn][pod];
+        uint64_t l2_offset = decode.offset();
+        uint64_t bank, offset;
+        std::tie(bank, offset) = to_native_meta_data_.l2sp_interleave_decode.getBankOffset(l2_offset);
+        DrvAPI::DrvAPIAddress start, stop;
+        SST::MemHierarchy::MemController *mc;
+        std::tie(start, stop, mc) = l2sp_mcs[bank];
+        uint64_t laddr = mc->translateToLocal(addr);
+        auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>(mc->backing_);
+        uint8_t *bptr = &backing->m_buffer[laddr];
+        *ptr = bptr;
+        *size = interleave - offset;
+    } else if (decode.is_l1sp()) {
+        int pxn = decode.pxn();
+        int pod = decode.pod();
+        int core = decode.core();
+        DrvAPI::DrvAPIAddress start, end;
+        SST::MemHierarchy::MemController *mc;
+        std::tie(start, end, mc) = to_native_meta_data_.l1sp_mcs[pxn][pod][core];
+        uint64_t laddr = mc->translateToLocal(addr);
+        auto *backing = dynamic_cast<SST::MemHierarchy::Backend::BackingMMAP*>(mc->backing_);
+        uint8_t *bptr = &backing->m_buffer[laddr];
+        *ptr = bptr;
+        *size = backing->m_size - laddr;
+    }
+}
+
+/**
  * @brief Send a memory request
  * 
  * @param core 

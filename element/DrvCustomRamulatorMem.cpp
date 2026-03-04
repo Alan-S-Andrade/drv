@@ -5,6 +5,7 @@
 #include "DrvCustomStdMem.hpp"
 #include "DrvCustomRamulatorMem.hpp"
 #include "Request.h" // ramulator
+#include "StatType.h" // ramulator stats
 
 using namespace SST;
 using namespace Drv;
@@ -51,4 +52,30 @@ bool DrvRamulatorMemBackend::issueCustomRequest(ReqId req_id, Interfaces::Standa
     }
     output_.fatal(CALL_INFO, -1, "Error: unknown custom request type\n");
     return false;
+}
+
+/**
+ * finish - dump ramulator internal stats to file
+ */
+void DrvRamulatorMemBackend::finish() {
+    // call parent finish which computes ramulator's final stats
+    ramulatorMemory::finish();
+
+    // derive stats filename from parent component name
+    // parent is e.g. "system_pxn0_dram0_memctrl", we want "ramulator_system_pxn0_dram0.stats"
+    std::string parent_name = getParentComponentName();
+    std::string base_name = parent_name;
+    // strip trailing "_memctrl" if present
+    const std::string suffix = "_memctrl";
+    if (base_name.size() >= suffix.size() &&
+        base_name.compare(base_name.size() - suffix.size(), suffix.size(), suffix) == 0) {
+        base_name = base_name.substr(0, base_name.size() - suffix.size());
+    }
+    std::string stats_file = "ramulator_" + base_name + ".stats";
+
+    // open output file and print all ramulator stats
+    Stats::statlist.output(stats_file);
+    Stats::statlist.printall();
+
+    output_.output(CALL_INFO, "Ramulator stats written to %s\n", stats_file.c_str());
 }

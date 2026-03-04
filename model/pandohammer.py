@@ -53,7 +53,7 @@ class PANDOHammer(object):
         pod.compute = compute
         pod.l2sp = l2sp
         pod.cores = pod_cores
-        pod.l2sp_size = 1024*1024*1024
+        pod.l2sp_size = arguments.pod_l2sp_size
         pod.l2sp_banks = arguments.pod_l2sp_banks
         pod.l2sp_interleave = arguments.pod_l2sp_interleave
         pod.network_bw = f"{bandwidth_bytes_per_second_per_pod}B/s"

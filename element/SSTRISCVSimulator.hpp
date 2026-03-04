@@ -121,6 +121,7 @@ private:
     static constexpr uint64_t MMIO_PRINT_CHAR = MMIO_BASE + 0x0010;
     static constexpr uint64_t MMIO_PRINT_TIME = MMIO_BASE + 0x0018;
     static constexpr uint64_t MMIO_STAT_PHASE = MMIO_BASE + 0x0020;
+    static constexpr uint64_t MMIO_BULK_LOAD  = MMIO_BASE + 0x0028;
 
     // CSRs
     static constexpr uint64_t CSR_MHARTID = 0xF14;
@@ -237,6 +238,8 @@ private:
     void sysEXIT(RISCVSimHart &shart, RISCVInstruction &i);
     void sysReadBuffer(RISCVSimHart &shart, SST::Interfaces::StandardMem::Addr paddr, size_t n, std::function<void(std::vector<uint8_t>&)> && cont);
     void sysWriteBuffer(RISCVSimHart &shart, SST::Interfaces::StandardMem::Addr paddr, std::vector<uint8_t> &data, std::function<void(void)> && cont);
+
+    void handleBulkLoad(RISCVSimHart &shart, uint64_t desc_addr);
 
     // TODO: implement these for stdio
     

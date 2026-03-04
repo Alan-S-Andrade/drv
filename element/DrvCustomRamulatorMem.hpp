@@ -43,6 +43,8 @@ public:
 
   bool issueCustomRequest(ReqId, Interfaces::StandardMem::CustomData *) override;
 
+  void finish() override;
+
 private:
     SST::Output output_;
 };

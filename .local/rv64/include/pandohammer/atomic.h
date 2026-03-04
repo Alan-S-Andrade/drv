@@ -80,4 +80,35 @@ static inline int64_t atomic_load_i64(volatile int64_t *ptr)
 {
     return *ptr;
 }
+
+// Posted (fire-and-forget) atomics — rd=x0 means discard return value
+static inline void atomic_fetch_add_i32_posted(volatile int32_t *ptr, int32_t val)
+{
+    asm volatile("amoadd.w x0, %1, 0(%0)" : : "r"(ptr), "r"(val) : "memory");
+}
+
+static inline void atomic_fetch_add_i64_posted(volatile int64_t *ptr, int64_t val)
+{
+    asm volatile("amoadd.d x0, %1, 0(%0)" : : "r"(ptr), "r"(val) : "memory");
+}
+
+static inline void atomic_swap_i32_posted(volatile int32_t *ptr, int32_t val)
+{
+    asm volatile("amoswap.w x0, %1, 0(%0)" : : "r"(ptr), "r"(val) : "memory");
+}
+
+static inline void atomic_swap_i64_posted(volatile int64_t *ptr, int64_t val)
+{
+    asm volatile("amoswap.d x0, %1, 0(%0)" : : "r"(ptr), "r"(val) : "memory");
+}
+
+static inline void atomic_or_i32_posted(volatile int32_t *ptr, int32_t val)
+{
+    asm volatile("amoor.w x0, %1, 0(%0)" : : "r"(ptr), "r"(val) : "memory");
+}
+
+static inline void atomic_or_i64_posted(volatile int64_t *ptr, int64_t val)
+{
+    asm volatile("amoor.d x0, %1, 0(%0)" : : "r"(ptr), "r"(val) : "memory");
+}
 #endif

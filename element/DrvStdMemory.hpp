@@ -5,6 +5,7 @@
 #include <DrvAPIAddress.hpp>
 #include <DrvAPIAddressMap.hpp>
 #include "DrvMemory.hpp"
+#include "DrvSysConfig.hpp"
 #include <sst/core/component.h>
 #include <sst/core/link.h>
 #include <sst/core/interfaces/stdMem.h>
@@ -161,6 +162,18 @@ public:
      * @brief translate a pgas pointer to a native pointer
      */
     void toNativePointer(DrvAPI::DrvAPIAddress addr, void **ptr, size_t *size);
+
+    /**
+     * @brief static version of toNativePointer usable without a DrvStdMemory instance
+     *
+     * Uses the already-static to_native_meta_data_ (initialized during setup).
+     * Caller provides the address decoder and sys config.
+     */
+    static void toNativePointerStatic(
+        DrvAPI::DrvAPIAddress addr,
+        const DrvAPI::DrvAPIAddressDecoder &decoder,
+        const DrvSysConfig &sys_config,
+        void **ptr, size_t *size);
 
 private:
     /**

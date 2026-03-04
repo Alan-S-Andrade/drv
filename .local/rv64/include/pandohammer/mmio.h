@@ -46,6 +46,19 @@ static inline void ph_stat_phase(long phase)
     *(volatile long*)0xFFFFFFFFFFFF0020 = phase;
 }
 
+struct ph_bulk_load_desc {
+    long filename_addr;
+    long dest_addr;
+    long size;
+    long result;
+};
+
+static inline long ph_bulk_load_file(struct ph_bulk_load_desc *desc)
+{
+    *(volatile long*)0xFFFFFFFFFFFF0028 = (long)desc;
+    return desc->result;
+}
+
 #ifdef __cplusplus
 }
 #endif
