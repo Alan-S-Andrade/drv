@@ -1,0 +1,771 @@
+// bfs_csr_weak_multi.cpp
+// Multi-pod CSR graph BFS with weak scaling.
+// Extends bfs_csr_weak.cpp to support multiple pods within a PXN.
+// Each pod owns a contiguous vertex partition. Frontier bitmaps in L2SP (per-pod).
+// Cross-pod frontier updates go through DRAM exchange buffers.
+//
+// Memory layout:
+//   DRAM  – CSR graph, dist[], remote frontier exchange buffers, inter-pod sync
+//   L2SP  – frontier bitmaps (2x), barrier, control variables (per-pod)
+
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <algorithm>
+
+#include <pandohammer/cpuinfo.h>
+#include <pandohammer/atomic.h>
+#include <pandohammer/hartsleep.h>
+#include <pandohammer/mmio.h>
+#include <pandohammer/staticdecl.h>
+
+// ---------- Configuration defaults ----------
+#ifndef DEFAULT_VTX_PER_THREAD
+#define DEFAULT_VTX_PER_THREAD 1024
+#endif
+
+#ifndef DEFAULT_DEGREE
+#define DEFAULT_DEGREE 16
+#endif
+
+static const int DO_FULL_VERIFY = 0;
+static const int MAX_PODS = 8;
+
+// ---------- Section attribute ----------
+#define __l2sp__ __attribute__((section(".l2sp")))
+
+// ---------- Blocking atomic OR (standard RISC-V amoor.w) ----------
+static inline int32_t atomic_or_i32(volatile int32_t *ptr, int32_t val)
+{
+    int32_t ret;
+    asm volatile("amoor.w %0, %2, 0(%1)"
+                 : "=r"(ret) : "r"(ptr), "r"(val) : "memory");
+    return ret;
+}
+
+// ---------- Helpers ----------
+static int parse_i(const char *s, int d)
+{
+    if (!s) return d;
+    char *e = nullptr;
+    long v = strtol(s, &e, 10);
+    return (e && *e == 0) ? (int)v : d;
+}
+
+static inline void wait(volatile int x)
+{
+    for (int i = 0; i < x; i++)
+        asm volatile("nop");
+}
+
+// ---------- Intra-pod Barrier (L2SP) ----------
+struct barrier_data {
+    int count;
+    int signal;
+    int num_threads;
+};
+
+__l2sp__ barrier_data g_barrier_data = {0, 0, 0};
+
+class barrier_ref {
+public:
+    barrier_ref(barrier_data *ptr) : ptr_(ptr) {}
+    barrier_data *ptr_;
+
+    int &count()       { return ptr_->count; }
+    int &signal()      { return ptr_->signal; }
+    int &num_threads() { return ptr_->num_threads; }
+
+    void sync() { sync([](){}); }
+
+    template <typename F>
+    void sync(F f) {
+        int signal_ = signal();
+        int count_  = atomic_fetch_add_i32(&count(), 1);
+        if (count_ == num_threads() - 1) {
+            count() = 0;
+            f();
+            signal() = !signal_;
+        } else {
+            static constexpr int backoff_limit = 1000;
+            int backoff_counter = 8;
+            while (signal() == signal_) {
+                wait(backoff_counter);
+                backoff_counter = std::min(backoff_counter * 2, backoff_limit);
+            }
+        }
+    }
+};
+
+// ---------- Inter-pod Barrier (DRAM) ----------
+// Pattern from bfs_sw_hw_multi2.cpp: fetch_add + phase
+static volatile int64_t g_inter_pod_count = 0;
+static volatile int64_t g_inter_pod_phase = 0;
+static int64_t g_pod_local_phase[MAX_PODS];
+
+static inline void inter_pod_barrier(int pod_id, int num_pods)
+{
+    int64_t my_phase = g_pod_local_phase[pod_id];
+
+    int64_t old = atomic_fetch_add_i64(&g_inter_pod_count, 1);
+    if (old == num_pods - 1) {
+        atomic_fetch_add_i64(&g_inter_pod_count, -num_pods);
+        atomic_fetch_add_i64(&g_inter_pod_phase, 1);
+    } else {
+        long w = 1, wmax = 8 * 1024;
+        while (atomic_load_i64(&g_inter_pod_phase) == my_phase) {
+            if (w < wmax) w <<= 1;
+            hartsleep(w);
+        }
+    }
+    g_pod_local_phase[pod_id] = my_phase + 1;
+}
+
+// ---------- DRAM globals for multi-pod coordination ----------
+static volatile int32_t g_pods_ready = 0;
+static volatile int32_t g_global_done = 0;
+static volatile int32_t g_global_any_work = 0;
+static volatile int32_t g_global_bfs_iters = 0;
+static volatile int32_t g_global_sim_exit = 0;
+
+// DRAM pointers set by pod 0 tid 0, read by all pods
+static volatile int32_t *g_remote_frontier = nullptr; // [num_pods * bm_words_local]
+static char    *g_dram_file_buffer = nullptr;
+static int32_t *g_dram_csr_offsets = nullptr;
+static int32_t *g_dram_csr_edges = nullptr;
+static int32_t *g_dram_dist = nullptr;
+static int32_t  g_dram_N = 0;
+static int32_t  g_dram_N_local = 0;
+static int32_t  g_dram_degree = 0;
+static int32_t  g_dram_source = 0;
+static int32_t  g_dram_total_threads_per_pod = 0;
+static int32_t  g_dram_bm_words_local = 0;
+static int32_t  g_dram_num_pods = 0;
+
+// ---------- L2SP globals (per-pod) ----------
+// NOTE: For non-pod-0, L2SP starts zeroed. Pod tid 0 copies from DRAM after sync.
+__l2sp__ int32_t g_N;                  // total vertices (global)
+__l2sp__ int32_t g_N_local;            // vertices owned by this pod
+__l2sp__ int32_t g_vtx_offset;         // first vertex owned by this pod
+__l2sp__ int32_t g_degree;
+__l2sp__ int32_t g_total_threads;      // threads per pod
+__l2sp__ int32_t g_bitmap_words;       // ceil(N_local/32)
+__l2sp__ int32_t g_pod_id;
+__l2sp__ int32_t g_num_pods;
+
+__l2sp__ volatile int g_bfs_done;
+__l2sp__ volatile int g_sim_exit;
+__l2sp__ volatile int32_t g_any_work;
+
+// Reduction accumulators (per-pod, then combined in DRAM)
+__l2sp__ volatile int64_t g_sum_dist;
+__l2sp__ volatile int32_t g_reached;
+__l2sp__ volatile int32_t g_max_dist;
+
+// DRAM array pointers cached in L2SP
+__l2sp__ int32_t *g_csr_offsets;
+__l2sp__ int32_t *g_csr_edges;
+__l2sp__ int32_t *g_dist;
+__l2sp__ int32_t  g_source;
+
+// L2SP bitmap pointers (dynamically allocated from L2SP heap)
+__l2sp__ volatile int32_t *g_frontier;
+__l2sp__ volatile int32_t *g_next_frontier;
+
+// Pointer to this pod's remote frontier exchange buffer in DRAM
+__l2sp__ volatile int32_t *g_my_remote_frontier;
+
+// Linker symbol: first free byte in L2SP after static data
+extern "C" char l2sp_end[];
+
+// ---------- Global reduction accumulators in DRAM ----------
+static volatile int64_t g_global_sum_dist = 0;
+static volatile int32_t g_global_reached = 0;
+static volatile int32_t g_global_max_dist = 0;
+
+// ---------- Main ----------
+extern "C" int main(int argc, char **argv)
+{
+    int vtx_per_thread = DEFAULT_VTX_PER_THREAD;
+    int degree         = DEFAULT_DEGREE;
+    int desired_threads = 1024;
+
+    for (int i = 1; i < argc; ++i) {
+        if (!strcmp(argv[i], "--V") && i + 1 < argc)
+            vtx_per_thread = parse_i(argv[++i], vtx_per_thread);
+        else if (!strcmp(argv[i], "--D") && i + 1 < argc)
+            degree = parse_i(argv[++i], degree);
+        else if (!strcmp(argv[i], "--T") && i + 1 < argc)
+            desired_threads = parse_i(argv[++i], desired_threads);
+        else if (!strcmp(argv[i], "--help")) {
+            std::printf("Usage: %s --V <vtx/thread> --D <degree> --T <threads>\n",
+                        argv[0]);
+            return 0;
+        }
+    }
+
+    // ---- Hardware topology ----
+    const int hart_in_core   = myThreadId();
+    const int core_in_pod    = myCoreId();
+    const int pod_in_pxn     = myPodId();
+    const int pxn_id         = myPXNId();
+    const int harts_per_core = myCoreThreads();
+    const int cores_per_pod  = numPodCores();
+    const int pods_per_pxn   = numPXNPods();
+    const int num_pods       = pods_per_pxn;
+
+    const int total_harts_hw =
+        numPXN() * pods_per_pxn * cores_per_pod * harts_per_core;
+
+    // Local thread ID within this pod
+    const int tid = core_in_pod * harts_per_core + hart_in_core;
+    const int threads_per_pod = cores_per_pod * harts_per_core;
+
+    int total_threads = desired_threads;
+    if (total_threads > threads_per_pod) total_threads = threads_per_pod;
+
+    // Park non-participating threads and non-pxn-0 threads
+    if (pxn_id != 0) {
+        while (g_global_sim_exit == 0) hartsleep(1000);
+        return 0;
+    }
+    if (tid >= total_threads) {
+        while (g_global_sim_exit == 0) hartsleep(1000);
+        return 0;
+    }
+
+    // Vertex partitioning
+    const int N_local = vtx_per_thread * total_threads;  // vertices per pod
+    const int N_total = N_local * num_pods;               // total vertices
+    const int bm_words_local = (N_local + 31) / 32;
+
+    barrier_ref barrier(&g_barrier_data);
+
+    // ================================================================
+    // Phase 0a: Pod 0, tid 0 — bulk-load graph, allocate DRAM arrays
+    // ================================================================
+    if (pod_in_pxn == 0 && tid == 0) {
+        const int64_t total_edges = (int64_t)N_total * degree;
+
+        // Compute expected file size
+        size_t file_size = 20
+            + (size_t)(N_total + 1) * sizeof(int32_t)
+            + (size_t)total_edges * sizeof(int32_t)
+            + (size_t)N_total * sizeof(int32_t);
+
+        g_dram_file_buffer = (char *)std::malloc(file_size);
+        if (!g_dram_file_buffer) {
+            std::printf("ERROR: malloc failed for file buffer (%lu bytes)\n",
+                        (unsigned long)file_size);
+            g_dram_N = 0;
+            g_pods_ready = -1;  // signal error
+            goto pod0_init_done;
+        }
+
+        // MMIO bulk load
+        char fname_buf[32];
+        {
+            const char *src = "uniform_graph.bin";
+            int fi = 0;
+            while (src[fi]) { fname_buf[fi] = src[fi]; fi++; }
+            fname_buf[fi] = '\0';
+        }
+
+        {
+            struct ph_bulk_load_desc desc;
+            desc.filename_addr = (long)fname_buf;
+            desc.dest_addr     = (long)g_dram_file_buffer;
+            desc.size          = (long)file_size;
+            desc.result        = 0;
+            ph_bulk_load_file(&desc);
+
+            if (desc.result <= 0) {
+                std::printf("ERROR: bulk load failed (result=%ld)\n", desc.result);
+                std::free(g_dram_file_buffer);
+                g_dram_file_buffer = nullptr;
+                g_dram_N = 0;
+                g_pods_ready = -1;
+                goto pod0_init_done;
+            }
+        }
+
+        // Parse header
+        {
+            int32_t *header = (int32_t *)g_dram_file_buffer;
+            int hdr_N      = header[0];
+            int hdr_E      = header[1];
+            int hdr_D      = header[2];
+            int hdr_source = header[4];
+
+            if (hdr_N != N_total || hdr_E != (int)(int64_t)N_total * degree || hdr_D != degree) {
+                std::printf("ERROR: graph header mismatch: file(N=%d E=%d D=%d) != expected(N=%d E=%lld D=%d)\n",
+                            hdr_N, hdr_E, hdr_D, N_total, (long long)((int64_t)N_total * degree), degree);
+                std::free(g_dram_file_buffer);
+                g_dram_file_buffer = nullptr;
+                g_dram_N = 0;
+                g_pods_ready = -1;
+                goto pod0_init_done;
+            }
+
+            g_dram_source = hdr_source;
+            g_dram_csr_offsets = (int32_t *)(g_dram_file_buffer + 20);
+            g_dram_csr_edges   = (int32_t *)(g_dram_file_buffer + 20 + (size_t)(N_total + 1) * sizeof(int32_t));
+        }
+
+        // Allocate dist[] in DRAM
+        g_dram_dist = (int32_t *)std::malloc((size_t)N_total * sizeof(int32_t));
+        if (!g_dram_dist) {
+            std::printf("ERROR: malloc failed for dist[]\n");
+            std::free(g_dram_file_buffer);
+            g_dram_file_buffer = nullptr;
+            g_dram_N = 0;
+            g_pods_ready = -1;
+            goto pod0_init_done;
+        }
+
+        // Allocate remote frontier exchange buffers in DRAM
+        // Layout: remote_frontier[pod][bm_words_local]
+        {
+            size_t rf_size = (size_t)num_pods * bm_words_local * sizeof(int32_t);
+            g_remote_frontier = (volatile int32_t *)std::malloc(rf_size);
+            if (!g_remote_frontier) {
+                std::printf("ERROR: malloc failed for remote frontier (%lu bytes)\n",
+                            (unsigned long)rf_size);
+                std::free(g_dram_dist);
+                std::free(g_dram_file_buffer);
+                g_dram_N = 0;
+                g_pods_ready = -1;
+                goto pod0_init_done;
+            }
+            // Zero the remote frontier buffers
+            std::memset((void *)g_remote_frontier, 0, rf_size);
+        }
+
+        // Set DRAM shared parameters
+        g_dram_N = N_total;
+        g_dram_N_local = N_local;
+        g_dram_degree = degree;
+        g_dram_total_threads_per_pod = total_threads;
+        g_dram_bm_words_local = bm_words_local;
+        g_dram_num_pods = num_pods;
+        g_global_done = 0;
+        g_global_any_work = 0;
+        g_global_bfs_iters = 0;
+        g_global_sim_exit = 0;
+        g_global_sum_dist = 0;
+        g_global_reached = 0;
+        g_global_max_dist = 0;
+
+        // Zero inter-pod barrier state
+        g_inter_pod_count = 0;
+        g_inter_pod_phase = 0;
+        for (int p = 0; p < MAX_PODS; p++)
+            g_pod_local_phase[p] = 0;
+
+        std::printf("Multi-pod CSR BFS: N=%d (%d per pod), %d pods, degree=%d, source=%d\n",
+                    N_total, N_local, num_pods, degree, g_dram_source);
+        std::printf("HW: total_harts=%d, pxn=%d pods/pxn=%d cores/pod=%d harts/core=%d\n",
+                    total_harts_hw, numPXN(), pods_per_pxn, cores_per_pod, harts_per_core);
+        std::printf("Threads/pod=%d, bitmap_words/pod=%d\n", total_threads, bm_words_local);
+
+        // Signal all pods that DRAM init is done
+        g_pods_ready = 1;
+    }
+
+pod0_init_done:
+
+    // All pod 0 threads wait for pod 0 tid 0 to finish init
+    if (pod_in_pxn == 0) {
+        while (g_pods_ready == 0) wait(100);
+    }
+
+    // Non-pod-0 threads: spin until pods_ready is set
+    if (pod_in_pxn != 0) {
+        while (g_pods_ready == 0) hartsleep(100);
+    }
+
+    // Check for init error
+    if (g_pods_ready < 0 || g_dram_N == 0) {
+        if (pod_in_pxn == 0 && tid == 0) g_global_sim_exit = 1;
+        while (g_global_sim_exit == 0) hartsleep(100);
+        return 1;
+    }
+
+    // ================================================================
+    // Phase 0b: Each pod tid 0 sets up L2SP from DRAM parameters
+    // ================================================================
+    // Thread 0 of each pod: set barrier count and copy DRAM params to L2SP
+    if (tid == 0) {
+        barrier.num_threads() = total_threads;
+
+        g_N             = g_dram_N;
+        g_N_local       = g_dram_N_local;
+        g_vtx_offset    = pod_in_pxn * g_dram_N_local;
+        g_degree        = g_dram_degree;
+        g_total_threads = g_dram_total_threads_per_pod;
+        g_bitmap_words  = g_dram_bm_words_local;
+        g_pod_id        = pod_in_pxn;
+        g_num_pods      = g_dram_num_pods;
+        g_bfs_done      = 0;
+        g_sim_exit      = 0;
+        g_any_work      = 0;
+        g_sum_dist      = 0;
+        g_reached       = 0;
+        g_max_dist      = 0;
+        g_source        = g_dram_source;
+
+        // Cache DRAM pointers in L2SP
+        g_csr_offsets = g_dram_csr_offsets;
+        g_csr_edges   = g_dram_csr_edges;
+        g_dist        = g_dram_dist;
+
+        // Pointer to this pod's remote frontier exchange buffer
+        g_my_remote_frontier = g_remote_frontier + (int64_t)pod_in_pxn * g_dram_bm_words_local;
+
+        // Allocate frontier bitmaps from L2SP heap
+        uintptr_t heap = ((uintptr_t)l2sp_end + 7) & ~(uintptr_t)7;
+        g_frontier      = (volatile int32_t *)heap;
+        heap += (size_t)bm_words_local * sizeof(int32_t);
+        heap = (heap + 7) & ~(uintptr_t)7;
+        g_next_frontier = (volatile int32_t *)heap;
+        heap += (size_t)bm_words_local * sizeof(int32_t);
+        heap = (heap + 7) & ~(uintptr_t)7;
+
+        uintptr_t l2sp_base = 0x20000000;
+        uintptr_t l2sp_cap  = podL2SPSize();
+        size_t l2sp_used    = heap - l2sp_base;
+
+        if (l2sp_used > l2sp_cap) {
+            std::printf("ERROR: Pod %d L2SP overflow: need %lu bytes, have %lu\n",
+                        pod_in_pxn, (unsigned long)l2sp_used, (unsigned long)l2sp_cap);
+            // Signal error
+            g_N_local = 0;
+        }
+    }
+
+    // Wait for tid 0 to set up L2SP
+    while (barrier.num_threads() == 0) wait(10);
+
+    barrier.sync();
+
+    if (g_N_local == 0) {
+        if (tid == 0) g_global_sim_exit = 1;
+        while (g_global_sim_exit == 0) hartsleep(100);
+        return 1;
+    }
+
+    // ================================================================
+    // Phase 1: Parallel initialization
+    // ================================================================
+    const int N_total_val  = g_N;
+    const int N_local_val  = g_N_local;
+    const int vtx_off      = g_vtx_offset;
+    const int bm_words     = g_bitmap_words;
+    const int source       = g_source;
+    const int my_pod       = g_pod_id;
+    const int npods        = g_num_pods;
+
+    // Cache pointers locally
+    int32_t *const local_offsets = g_csr_offsets;
+    int32_t *const local_edges   = g_csr_edges;
+    int32_t *const local_dist    = g_dist;
+    volatile int32_t *const local_frontier      = g_frontier;
+    volatile int32_t *const local_next_frontier = g_next_frontier;
+    volatile int32_t *const local_my_remote     = g_my_remote_frontier;
+
+    // Work distribution within pod
+    const int vtx_per_thr = (N_local_val + total_threads - 1) / total_threads;
+    const int v_lo_local = tid * vtx_per_thr;
+    const int v_hi_local = std::min(v_lo_local + vtx_per_thr, N_local_val);
+
+    // Bitmap word distribution within pod
+    const int words_per_thread = (bm_words + total_threads - 1) / total_threads;
+    const int w_lo = tid * words_per_thread;
+    const int w_hi = std::min(w_lo + words_per_thread, bm_words);
+
+    // Init dist[] for this pod's partition
+    for (int vl = v_lo_local; vl < v_hi_local; ++vl) {
+        local_dist[vtx_off + vl] = -1;
+    }
+
+    // Init frontier bitmaps
+    for (int w = w_lo; w < w_hi; ++w) {
+        local_frontier[w]      = 0;
+        local_next_frontier[w] = 0;
+    }
+
+    barrier.sync();
+
+    // Set BFS source (only the pod that owns the source vertex)
+    int source_pod = source / N_local_val;
+    barrier.sync([&]() {
+        if (my_pod == source_pod) {
+            int source_local = source - vtx_off;
+            local_dist[source] = 0;
+            local_frontier[source_local / 32] = 1 << (source_local % 32);
+        }
+    });
+
+    // Inter-pod barrier: ensure all pods have initialized
+    if (tid == 0) {
+        inter_pod_barrier(my_pod, npods);
+    }
+    barrier.sync();
+
+    if (my_pod == 0 && tid == 0)
+        std::printf("BFS from source %d (pod %d)\n", source, source_pod);
+
+    // ================================================================
+    // Phase 2: Main BFS loop (level-synchronous, multi-pod)
+    // ================================================================
+    uint64_t t_bfs_start = cycle();
+
+    while (true) {
+        int cur_level = g_global_bfs_iters;
+
+        // ---- Step 1: Expand frontier (parallel within pod) ----
+        ph_stat_phase(1);
+
+        for (int w = w_lo; w < w_hi; ++w) {
+            int32_t word = local_frontier[w];
+            if (word == 0) continue;
+
+            while (word != 0) {
+                int bit = __builtin_ctz(word);
+                word &= word - 1;
+
+                int vl = w * 32 + bit;  // local vertex index
+                if (vl >= N_local_val) break;
+
+                int v = vtx_off + vl;   // global vertex index
+                int edge_begin = local_offsets[v];
+                int edge_end   = local_offsets[v + 1];
+
+                for (int ei = edge_begin; ei < edge_end; ++ei) {
+                    int u = local_edges[ei];  // global neighbor
+
+                    // Atomic CAS on dist[] in DRAM (works cross-pod)
+                    if (atomic_compare_and_swap_i32(&local_dist[u], -1, cur_level + 1) == -1) {
+                        // Determine which pod owns u
+                        int target_pod = u / N_local_val;
+                        int u_local = u - target_pod * N_local_val;
+                        int wi = u_local / 32;
+                        int32_t mask = 1 << (u_local % 32);
+
+                        if (target_pod == my_pod) {
+                            // Local: atomic OR into L2SP next_frontier
+                            atomic_or_i32(&local_next_frontier[wi], mask);
+                        } else {
+                            // Remote: posted atomic OR into DRAM exchange buffer
+                            volatile int32_t *target_buf =
+                                g_remote_frontier + (int64_t)target_pod * bm_words + wi;
+                            atomic_or_i32_posted(target_buf, mask);
+                        }
+                    }
+                }
+            }
+        }
+
+        ph_stat_phase(0);
+
+        // ---- Step 2: Intra-pod barrier ----
+        barrier.sync();
+
+        // ---- Step 3: Inter-pod barrier (pod leader only) ----
+        if (tid == 0) {
+            inter_pod_barrier(my_pod, npods);
+        }
+        barrier.sync();
+
+        // ---- Step 4: Merge remote frontier into L2SP next_frontier ----
+        for (int w = w_lo; w < w_hi; ++w) {
+            int32_t remote_word = local_my_remote[w];
+            if (remote_word != 0) {
+                atomic_or_i32(&local_next_frontier[w], remote_word);
+                // Clear the exchange buffer for next iteration
+                local_my_remote[w] = 0;
+            }
+        }
+
+        // ---- Step 5: Intra-pod barrier ----
+        barrier.sync([&]() { g_any_work = 0; });
+
+        // ---- Step 6: Swap frontiers, check local work ----
+        int local_any = 0;
+        for (int w = w_lo; w < w_hi; ++w) {
+            int32_t val = local_next_frontier[w];
+            local_frontier[w] = val;
+            if (val) local_any = 1;
+            local_next_frontier[w] = 0;
+        }
+
+        if (local_any) {
+            atomic_or_i32(&g_any_work, 1);
+        }
+
+        barrier.sync();
+
+        // ---- Step 7: Pod leaders coordinate global done via DRAM ----
+        if (tid == 0) {
+            // Report this pod's work status to global
+            if (g_any_work) {
+                atomic_or_i32(&g_global_any_work, 1);
+            }
+
+            // Inter-pod barrier
+            inter_pod_barrier(my_pod, npods);
+
+            // Pod 0 checks global done and advances iteration
+            if (my_pod == 0) {
+                if (g_global_any_work) {
+                    g_global_bfs_iters++;
+                    g_global_any_work = 0;  // reset for next iteration
+                } else {
+                    g_global_done = 1;
+                }
+            }
+
+            // Inter-pod barrier to propagate decision
+            inter_pod_barrier(my_pod, npods);
+
+            // Copy global done to local L2SP
+            g_bfs_done = g_global_done;
+        }
+
+        // ---- Step 8: Intra-pod barrier to propagate done ----
+        barrier.sync();
+
+        if (g_bfs_done) break;
+    }
+
+    uint64_t t_bfs_end = cycle();
+
+    // ================================================================
+    // Phase 3: Parallel reduction for statistics
+    // ================================================================
+    ph_stat_phase(1);
+
+    int64_t local_sum  = 0;
+    int32_t local_cnt  = 0;
+    int32_t local_max  = 0;
+
+    // Each pod reduces its own partition
+    for (int vl = v_lo_local; vl < v_hi_local; ++vl) {
+        int d = local_dist[vtx_off + vl];
+        if (d >= 0) {
+            local_cnt++;
+            local_sum += d;
+            if (d > local_max) local_max = d;
+        }
+    }
+
+    // Reduce within pod (L2SP atomics)
+    atomic_fetch_add_i64(&g_sum_dist, local_sum);
+    atomic_fetch_add_i32(&g_reached, local_cnt);
+
+    int32_t old_max = g_max_dist;
+    while (local_max > old_max) {
+        int32_t prev = atomic_compare_and_swap_i32(&g_max_dist, old_max, local_max);
+        if (prev == old_max) break;
+        old_max = prev;
+    }
+
+    ph_stat_phase(0);
+    barrier.sync();
+
+    // Pod leader: reduce across pods via DRAM
+    if (tid == 0) {
+        atomic_fetch_add_i64(&g_global_sum_dist, g_sum_dist);
+        atomic_fetch_add_i32(&g_global_reached, (int32_t)g_reached);
+
+        int32_t pod_max = g_max_dist;
+        int32_t old_gmax = g_global_max_dist;
+        while (pod_max > old_gmax) {
+            int32_t prev = atomic_compare_and_swap_i32(&g_global_max_dist, old_gmax, pod_max);
+            if (prev == old_gmax) break;
+            old_gmax = prev;
+        }
+
+        inter_pod_barrier(my_pod, npods);
+    }
+    barrier.sync();
+
+    // ================================================================
+    // Phase 4: Print results and optional verification (pod 0, tid 0)
+    // ================================================================
+    if (my_pod == 0 && tid == 0) {
+        uint64_t bfs_cycles = t_bfs_end - t_bfs_start;
+
+        std::printf("BFS done in %d iterations (%llu cycles)\n",
+                    g_global_bfs_iters, (unsigned long long)bfs_cycles);
+        int pct = g_global_reached > 0 ? (int)(100LL * g_global_reached / N_total_val) : 0;
+        std::printf("Reached: %d/%d (%d%%)\n", (int)g_global_reached, N_total_val, pct);
+        long long avg_x10 = g_global_reached > 0 ? (10LL * g_global_sum_dist / g_global_reached) : 0;
+        std::printf("max_dist=%d  sum_dist=%lld  avg_dist=%lld.%lld\n",
+                    (int)g_global_max_dist, (long long)g_global_sum_dist,
+                    avg_x10 / 10, avg_x10 % 10);
+
+        // Basic sanity checks
+        bool ok = true;
+        if (local_dist[source] != 0) {
+            std::printf("FAIL: dist[%d]=%d (expected 0)\n", source, local_dist[source]);
+            ok = false;
+        }
+        if (g_global_reached < 1) {
+            std::printf("FAIL: reached=%d (expected >= 1)\n", (int)g_global_reached);
+            ok = false;
+        }
+
+        // Full verification: triangle inequality on every edge
+        if (DO_FULL_VERIFY) {
+            std::printf("Running full verification (triangle inequality)...\n");
+            int violations = 0;
+            for (int v = 0; v < N_total_val; ++v) {
+                int dv = local_dist[v];
+                if (dv < 0) continue;
+                int eb = local_offsets[v];
+                int ee = local_offsets[v + 1];
+                for (int ei = eb; ei < ee; ++ei) {
+                    int u  = local_edges[ei];
+                    int du = local_dist[u];
+                    if (du < 0) continue;
+                    if (du > dv + 1) {
+                        if (violations < 10)
+                            std::printf("  VIOLATION: dist[%d]=%d > dist[%d]+1=%d\n",
+                                        u, du, v, dv + 1);
+                        violations++;
+                    }
+                }
+            }
+            if (violations == 0)
+                std::printf("Verification: PASS (all edges satisfy triangle inequality)\n");
+            else
+                std::printf("Verification: FAIL (%d violations)\n", violations);
+            ok = ok && (violations == 0);
+        }
+
+        std::printf(ok ? "RESULT: PASS\n" : "RESULT: FAIL\n");
+
+        std::printf("BFS complete, signaling exit.\n");
+        std::fflush(stdout);
+
+        std::free((void *)g_remote_frontier);
+        std::free(g_dram_dist);
+        std::free(g_dram_file_buffer);
+
+        g_global_sim_exit = 1;
+    }
+
+    // All threads: propagate exit
+    if (tid == 0 && my_pod != 0) {
+        while (g_global_sim_exit == 0) hartsleep(100);
+        g_sim_exit = 1;
+    }
+    if (my_pod == 0 && tid == 0) {
+        g_sim_exit = 1;
+    }
+
+    while (g_sim_exit == 0) hartsleep(100);
+    return 0;
+}

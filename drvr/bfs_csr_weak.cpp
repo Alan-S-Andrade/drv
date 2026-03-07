@@ -342,28 +342,36 @@ extern "C" int main(int argc, char **argv)
     const int v_lo = tid * vtx_per_thr;
     const int v_hi = std::min(v_lo + vtx_per_thr, N);
 
+    // Cache DRAM/L2SP pointers in local vars (stack / L1SP) to avoid
+    // repeated loads from L2SP bank 1 after atomic memory clobbers.
+    int32_t *const local_offsets = g_csr_offsets;
+    int32_t *const local_edges   = g_csr_edges;
+    int32_t *const local_dist    = g_dist;
+    volatile int32_t *const local_frontier      = g_frontier;
+    volatile int32_t *const local_next_frontier = g_next_frontier;
+
     // ================================================================
     // Phase 1: Parallel BFS initialization
     // ================================================================
     // Init dist[] = -1
     for (int v = v_lo; v < v_hi; ++v)
-        g_dist[v] = -1;
+        local_dist[v] = -1;
 
     // Init frontier bitmaps = 0
     const int words_per_thread = (bm_words + total_threads - 1) / total_threads;
     const int w_lo = tid * words_per_thread;
     const int w_hi = std::min(w_lo + words_per_thread, bm_words);
     for (int w = w_lo; w < w_hi; ++w) {
-        g_frontier[w]      = 0;
-        g_next_frontier[w] = 0;
+        local_frontier[w]      = 0;
+        local_next_frontier[w] = 0;
     }
 
     barrier.sync();
 
     // Set BFS source
     barrier.sync([&]() {
-        g_dist[source] = 0;
-        g_frontier[source / 32] = 1 << (source % 32);
+        local_dist[source] = 0;
+        local_frontier[source / 32] = 1 << (source % 32);
     });
 
     if (tid == 0)
@@ -379,7 +387,7 @@ extern "C" int main(int argc, char **argv)
         ph_stat_phase(1);
 
         for (int w = w_lo; w < w_hi; ++w) {
-            int32_t word = g_frontier[w];
+            int32_t word = local_frontier[w];
             if (word == 0) continue;
 
             // Iterate set bits
@@ -391,18 +399,18 @@ extern "C" int main(int argc, char **argv)
                 if (v >= N) break;
 
                 int d = g_bfs_iters;
-                int edge_begin = g_csr_offsets[v];
-                int edge_end   = g_csr_offsets[v + 1];
+                int edge_begin = local_offsets[v];
+                int edge_end   = local_offsets[v + 1];
 
                 for (int ei = edge_begin; ei < edge_end; ++ei) {
-                    int u = g_csr_edges[ei];
+                    int u = local_edges[ei];
 
                     // Atomic CAS: claim unvisited vertex
-                    if (atomic_compare_and_swap_i32(&g_dist[u], -1, d + 1) == -1) {
+                    if (atomic_compare_and_swap_i32(&local_dist[u], -1, d + 1) == -1) {
                         // Set bit in next_frontier (blocking atomic OR in L2SP)
                         int wi = u / 32;
                         int32_t mask = 1 << (u % 32);
-                        atomic_or_i32(&g_next_frontier[wi], mask);
+                        atomic_or_i32(&local_next_frontier[wi], mask);
                     }
                 }
             }
@@ -416,10 +424,10 @@ extern "C" int main(int argc, char **argv)
 
         int local_any = 0;
         for (int w = w_lo; w < w_hi; ++w) {
-            int32_t val = g_next_frontier[w];
-            g_frontier[w] = val;
+            int32_t val = local_next_frontier[w];
+            local_frontier[w] = val;
             if (val) local_any = 1;
-            g_next_frontier[w] = 0;
+            local_next_frontier[w] = 0;
         }
 
         // If this thread found work, atomically set the global flag
@@ -450,7 +458,7 @@ extern "C" int main(int argc, char **argv)
     int32_t local_max  = 0;
 
     for (int v = v_lo; v < v_hi; ++v) {
-        int d = g_dist[v];
+        int d = local_dist[v];
         if (d >= 0) {
             local_cnt++;
             local_sum += d;
@@ -489,8 +497,8 @@ extern "C" int main(int argc, char **argv)
 
         // Basic sanity checks
         bool ok = true;
-        if (g_dist[source] != 0) {
-            std::printf("FAIL: dist[%d]=%d (expected 0)\n", source, g_dist[source]);
+        if (local_dist[source] != 0) {
+            std::printf("FAIL: dist[%d]=%d (expected 0)\n", source, local_dist[source]);
             ok = false;
         }
         if (g_reached < 1) {
@@ -503,13 +511,13 @@ extern "C" int main(int argc, char **argv)
             std::printf("Running full verification (triangle inequality)...\n");
             int violations = 0;
             for (int v = 0; v < N; ++v) {
-                int dv = g_dist[v];
+                int dv = local_dist[v];
                 if (dv < 0) continue;
-                int eb = g_csr_offsets[v];
-                int ee = g_csr_offsets[v + 1];
+                int eb = local_offsets[v];
+                int ee = local_offsets[v + 1];
                 for (int ei = eb; ei < ee; ++ei) {
-                    int u  = g_csr_edges[ei];
-                    int du = g_dist[u];
+                    int u  = local_edges[ei];
+                    int du = local_dist[u];
                     if (du < 0) continue; // unreachable neighbor is ok
                     if (du > dv + 1) {
                         if (violations < 10)

@@ -267,6 +267,24 @@ drvr_test_run_properties(bfs_csr_weak
   DRV_MODEL_OPTION3 --pxn-dram-interleave=64
 )
 
+# bfs_csr_weak_multi (Multi-pod CSR graph BFS with weak scaling)
+drvr_test_with_pandohammer(bfs_csr_weak_multi bfs_csr_weak_multi.cpp)
+drvr_test_build_properties(bfs_csr_weak_multi
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_BUILD_PXN_PODS 2
+)
+drvr_test_run_properties(bfs_csr_weak_multi
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=5
+  DRV_MODEL_OPTION3 --pxn-dram-interleave=64
+)
+
 # bfs_sw_multi_barrier (improved barrier, NO L2SP for data - for comparison)
 drvr_test_with_pandohammer(bfs_multi_sw_barrier bfs_sw_hw_multi_barrier.cpp)
 drvr_test_compile_options(bfs_multi_sw_barrier -DDEBUG)

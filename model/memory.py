@@ -264,7 +264,6 @@ class DRAMBuilder(MemoryBuilder):
             "addr_range_end" : addr_stop,
             "interleave_size" : f'{addr_interleave_size}B',
             "interleave_step" : f'{addr_interleave_step}B',
-            "max_requests_per_cycle" : 1,
         })
 
         if self.dram_backend == "ramulator":

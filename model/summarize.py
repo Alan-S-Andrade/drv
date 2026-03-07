@@ -320,8 +320,8 @@ def main():
         actual_dram_bw_useful = (actual_dram_bytes_useful / useful_phase_sec / 1e9) if useful_phase_sec > 0 else 0
 
         # Peak BW from measured avg DRAM backend latency, capped by HBM spec
-        MSHRS_PER_BANK = 32
-        HBM_SPEC_PEAK_PER_BANK = 128.0  # GB/s (8ch x 128-bit x 1Gbps)
+        MSHRS_PER_BANK = 256
+        HBM_SPEC_PEAK_PER_BANK = 1024.0  # GB/s (64ch x 128-bit x 1Gbps)
 
         # Compute measured avg DRAM latency from MemController stats
         dram_mc_lat_sum = 0
@@ -433,11 +433,10 @@ def main():
         variance = (sumsq / count) - (mean * mean)
         return math.sqrt(max(variance, 0.0))
 
-    def print_memctrl_table(title, banks, useful_phase_cycles=0, useful_total_reqs=0):
+    def print_memctrl_table(title, banks, useful_phase_cycles=0, useful_total_reqs=0, total_core_reqs=0):
         if not banks:
             return
         num_banks = len(banks)
-        useful_reqs_per_bank = useful_total_reqs / num_banks if num_banks > 0 else 0
         print("\n" + "=" * 240)
         print(f"{title}")
         print("=" * 240)
@@ -463,14 +462,18 @@ def main():
             util = (issue_cyc / total_cyc) * 100
             rejected = d["cycles_attempted_issue_but_rejected"]["sum"]
 
-            # Useful-phase utilization: core-side useful requests / useful_phase_cycles
-            # Distributed evenly across banks (assumes interleaved addressing)
-            u_util = (useful_reqs_per_bank / useful_phase_cycles * 100) if useful_phase_cycles > 0 else 0
+            # Useful-phase utilization: scale this bank's actual MC requests
+            # by the useful/total ratio of core-side requests.
+            # This correctly accounts for cache filtering (DRAM) and phase windowing.
+            mc_reqs = reads + writes + evictions
+            useful_frac = useful_total_reqs / total_core_reqs if total_core_reqs > 0 else 0
+            est_useful_mc_reqs = mc_reqs * useful_frac
+            u_util = (est_useful_mc_reqs / useful_phase_cycles * 100) if useful_phase_cycles > 0 else 0
 
             # Queue depth stats
             oq = d["outstanding_requests"]
             avg_q = oq["sum"] / oq["count"] if oq["count"] > 0 else 0
-            u_avg_q = avg_q * (total_cyc / useful_phase_cycles) if useful_phase_cycles > 0 else 0
+            u_avg_q = avg_q * useful_frac * (total_cyc / useful_phase_cycles) if useful_phase_cycles > 0 else 0
             max_q = oq["max"]
             q_sd = compute_stddev(oq["sumsq"], oq["sum"], oq["count"])
 
@@ -489,8 +492,8 @@ def main():
             # Average inter-arrival time (total cycles / total demand requests)
             total_reqs = reads + writes + evictions
             avg_iat = total_cyc / total_reqs if total_reqs > 0 else 0
-            # Useful IAT: useful phase cycles / useful requests per bank
-            u_iat = useful_phase_cycles / useful_reqs_per_bank if useful_reqs_per_bank > 0 else 0
+            # Useful IAT: useful phase cycles / estimated useful MC requests for this bank
+            u_iat = useful_phase_cycles / est_useful_mc_reqs if est_useful_mc_reqs > 0 else 0
 
             display = short_memctrl_name(bank)
             print(f"{display:<28} {reads:<10} {writes:<10} {evictions:<10} {util:<8.1f} {u_util:<8.1f} "
@@ -508,12 +511,16 @@ def main():
         useful_l1sp_reqs = total_useful_load_l1sp + total_useful_store_l1sp + total_useful_atomic_l1sp
         useful_dram_reqs = total_useful_load_dram + total_useful_store_dram + total_useful_atomic_dram
 
+        total_core_l2sp_reqs = total_load_l2sp + total_store_l2sp + total_atomic_l2sp
+        total_core_l1sp_reqs = total_load_l1sp + total_store_l1sp + total_atomic_l1sp
+        total_core_dram_reqs = total_load_dram + total_store_dram + total_atomic_dram
+
         print_memctrl_table("L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
-                            l2sp_mc, max_useful_phase_cycles, useful_l2sp_reqs)
+                            l2sp_mc, max_useful_phase_cycles, useful_l2sp_reqs, total_core_l2sp_reqs)
         print_memctrl_table("L1SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
-                            l1sp_mc, max_useful_phase_cycles, useful_l1sp_reqs)
+                            l1sp_mc, max_useful_phase_cycles, useful_l1sp_reqs, total_core_l1sp_reqs)
         print_memctrl_table("DRAM BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
-                            dram_mc, max_useful_phase_cycles, useful_dram_reqs)
+                            dram_mc, max_useful_phase_cycles, useful_dram_reqs, total_core_dram_reqs)
 
 if __name__ == "__main__":
     main()

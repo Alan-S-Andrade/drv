@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J bfs_csr_weak
+#SBATCH -J bfs_csr_weak_multi
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
@@ -8,7 +8,7 @@
 #SBATCH -N 4
 #SBATCH -n 1
 #SBATCH -c 96
-#SBATCH -t 18:00:00
+#SBATCH -t 28:00:00
 
 set -eo pipefail
 
@@ -58,7 +58,7 @@ apptainer exec --cleanenv \
   '
 
 # ------------------------------------------------------------------
-# STEP 2: RUN BFS CSR WEAK SCALING SWEEP
+# STEP 2: RUN BFS CSR WEAK SCALING MULTI-POD SWEEP
 # ------------------------------------------------------------------
 
 # Graph parameters
@@ -78,10 +78,10 @@ apptainer exec --cleanenv \
 
     MODEL=/work/model/drvr.py
 
-    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak_multi
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_ramulator_with_hbm_3_l2sp
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_multi_results
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
@@ -89,28 +89,24 @@ apptainer exec --cleanenv \
     mkdir -p "$SWEEP_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
-    # Format: CX CY THR
+    # Format: PODS CX CY THR
     CONFIGS=(
-      #"1  1 16"
-      #"2  1 16"
-      #"4  1 16"
-      #"8  1 16"
-      #"8  2 16"
-      #"8  4 16"
-      "8  8 16"
+      # Multi-pod weak scaling
+      "2 8 4 16"
+      "2 8 8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
-      read -r CX CY THR <<< "$cfg"
+      read -r PODS CX CY THR <<< "$cfg"
       CORES=$((CX * CY))
-      TOTAL_THREADS=$((CORES * THR))
-      N=$((VTX_PER_THREAD * TOTAL_THREADS))
+      THREADS_PER_POD=$((CORES * THR))
+      N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
 
-      RUN_NAME="bfs_csr_c${CORES}_t${THR}"
+      RUN_NAME="bfs_csr_p${PODS}_c${CORES}_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE})"
+      echo "RUN: ${RUN_NAME} (${PODS} pods, ${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE})"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
@@ -133,7 +129,7 @@ apptainer exec --cleanenv \
         -- \
         --with-command-processor="$CP" \
         --num-pxn=1 \
-        --pxn-pods=1 \
+        --pxn-pods=${PODS} \
         --pod-cores-x=${CX} \
         --pod-cores-y=${CY} \
         --core-threads=${THR} \
@@ -160,7 +156,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "BFS CSR WEAK SCALING SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_ramulator_with_hbm_3_l2sp/"
+    echo "BFS CSR WEAK SCALING MULTI-POD SWEEP COMPLETE"
+    echo "Results in: ${SWEEP_DIR}"
     echo "=============================================="
   '
