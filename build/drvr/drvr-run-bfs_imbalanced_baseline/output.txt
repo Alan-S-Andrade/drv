@@ -1,0 +1,1250 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+=== BFS Baseline (NO stealing; FIFO + global remaining) ===
+Graph: CSR grid 100 x 1000 = 100000 vertices, 397800 directed edges
+Graph storage: row_ptr/col_idx in DRAM (__dram__)
+Hardware: 1 cores x 16 harts = 16 total harts
+Source: node 0 (r=0, c=0)
+[L2SP] L2SP accesses tracked by SSTRISCVCore hw counters
+
+Level 0: total_work=1, discovered=1
+Level 1: total_work=2, discovered=3
+Level 2: total_work=3, discovered=6
+Level 3: total_work=4, discovered=10
+Level 4: total_work=5, discovered=15
+Level 5: total_work=6, discovered=21
+Level 6: total_work=7, discovered=28
+Level 7: total_work=8, discovered=36
+Level 8: total_work=9, discovered=45
+Level 9: total_work=10, discovered=55
+Level 10: total_work=11, discovered=66
+Level 11: total_work=12, discovered=78
+Level 12: total_work=13, discovered=91
+Level 13: total_work=14, discovered=105
+Level 14: total_work=15, discovered=120
+Level 15: total_work=16, discovered=136
+Level 16: total_work=17, discovered=153
+Level 17: total_work=18, discovered=171
+Level 18: total_work=19, discovered=190
+Level 19: total_work=20, discovered=210
+Level 20: total_work=21, discovered=231
+Level 21: total_work=22, discovered=253
+Level 22: total_work=23, discovered=276
+Level 23: total_work=24, discovered=300
+Level 24: total_work=25, discovered=325
+Level 25: total_work=26, discovered=351
+Level 26: total_work=27, discovered=378
+Level 27: total_work=28, discovered=406
+Level 28: total_work=29, discovered=435
+Level 29: total_work=30, discovered=465
+Level 30: total_work=31, discovered=496
+Level 31: total_work=32, discovered=528
+Level 32: total_work=33, discovered=561
+Level 33: total_work=34, discovered=595
+Level 34: total_work=35, discovered=630
+Level 35: total_work=36, discovered=666
+Level 36: total_work=37, discovered=703
+Level 37: total_work=38, discovered=741
+Level 38: total_work=39, discovered=780
+Level 39: total_work=40, discovered=820
+Level 40: total_work=41, discovered=861
+Level 41: total_work=42, discovered=903
+Level 42: total_work=43, discovered=946
+Level 43: total_work=44, discovered=990
+Level 44: total_work=45, discovered=1035
+Level 45: total_work=46, discovered=1081
+Level 46: total_work=47, discovered=1128
+Level 47: total_work=48, discovered=1176
+Level 48: total_work=49, discovered=1225
+Level 49: total_work=50, discovered=1275
+Level 50: total_work=51, discovered=1326
+Level 51: total_work=52, discovered=1378
+Level 52: total_work=53, discovered=1431
+Level 53: total_work=54, discovered=1485
+Level 54: total_work=55, discovered=1540
+Level 55: total_work=56, discovered=1596
+Level 56: total_work=57, discovered=1653
+Level 57: total_work=58, discovered=1711
+Level 58: total_work=59, discovered=1770
+Level 59: total_work=60, discovered=1830
+Level 60: total_work=61, discovered=1891
+Level 61: total_work=62, discovered=1953
+Level 62: total_work=63, discovered=2016
+Level 63: total_work=64, discovered=2080
+Level 64: total_work=65, discovered=2145
+Level 65: total_work=66, discovered=2211
+Level 66: total_work=67, discovered=2278
+Level 67: total_work=68, discovered=2346
+Level 68: total_work=69, discovered=2415
+Level 69: total_work=70, discovered=2485
+Level 70: total_work=71, discovered=2556
+Level 71: total_work=72, discovered=2628
+Level 72: total_work=73, discovered=2701
+Level 73: total_work=74, discovered=2775
+Level 74: total_work=75, discovered=2850
+Level 75: total_work=76, discovered=2926
+Level 76: total_work=77, discovered=3003
+Level 77: total_work=78, discovered=3081
+Level 78: total_work=79, discovered=3160
+Level 79: total_work=80, discovered=3240
+Level 80: total_work=81, discovered=3321
+Level 81: total_work=82, discovered=3403
+Level 82: total_work=83, discovered=3486
+Level 83: total_work=84, discovered=3570
+Level 84: total_work=85, discovered=3655
+Level 85: total_work=86, discovered=3741
+Level 86: total_work=87, discovered=3828
+Level 87: total_work=88, discovered=3916
+Level 88: total_work=89, discovered=4005
+Level 89: total_work=90, discovered=4095
+Level 90: total_work=91, discovered=4186
+Level 91: total_work=92, discovered=4278
+Level 92: total_work=93, discovered=4371
+Level 93: total_work=94, discovered=4465
+Level 94: total_work=95, discovered=4560
+Level 95: total_work=96, discovered=4656
+Level 96: total_work=97, discovered=4753
+Level 97: total_work=98, discovered=4851
+Level 98: total_work=99, discovered=4950
+Level 99: total_work=100, discovered=5050
+Level 100: total_work=100, discovered=5150
+Level 101: total_work=100, discovered=5250
+Level 102: total_work=100, discovered=5350
+Level 103: total_work=100, discovered=5450
+Level 104: total_work=100, discovered=5550
+Level 105: total_work=100, discovered=5650
+Level 106: total_work=100, discovered=5750
+Level 107: total_work=100, discovered=5850
+Level 108: total_work=100, discovered=5950
+Level 109: total_work=100, discovered=6050
+Level 110: total_work=100, discovered=6150
+Level 111: total_work=100, discovered=6250
+Level 112: total_work=100, discovered=6350
+Level 113: total_work=100, discovered=6450
+Level 114: total_work=100, discovered=6550
+Level 115: total_work=100, discovered=6650
+Level 116: total_work=100, discovered=6750
+Level 117: total_work=100, discovered=6850
+Level 118: total_work=100, discovered=6950
+Level 119: total_work=100, discovered=7050
+Level 120: total_work=100, discovered=7150
+Level 121: total_work=100, discovered=7250
+Level 122: total_work=100, discovered=7350
+Level 123: total_work=100, discovered=7450
+Level 124: total_work=100, discovered=7550
+Level 125: total_work=100, discovered=7650
+Level 126: total_work=100, discovered=7750
+Level 127: total_work=100, discovered=7850
+Level 128: total_work=100, discovered=7950
+Level 129: total_work=100, discovered=8050
+Level 130: total_work=100, discovered=8150
+Level 131: total_work=100, discovered=8250
+Level 132: total_work=100, discovered=8350
+Level 133: total_work=100, discovered=8450
+Level 134: total_work=100, discovered=8550
+Level 135: total_work=100, discovered=8650
+Level 136: total_work=100, discovered=8750
+Level 137: total_work=100, discovered=8850
+Level 138: total_work=100, discovered=8950
+Level 139: total_work=100, discovered=9050
+Level 140: total_work=100, discovered=9150
+Level 141: total_work=100, discovered=9250
+Level 142: total_work=100, discovered=9350
+Level 143: total_work=100, discovered=9450
+Level 144: total_work=100, discovered=9550
+Level 145: total_work=100, discovered=9650
+Level 146: total_work=100, discovered=9750
+Level 147: total_work=100, discovered=9850
+Level 148: total_work=100, discovered=9950
+Level 149: total_work=100, discovered=10050
+Level 150: total_work=100, discovered=10150
+Level 151: total_work=100, discovered=10250
+Level 152: total_work=100, discovered=10350
+Level 153: total_work=100, discovered=10450
+Level 154: total_work=100, discovered=10550
+Level 155: total_work=100, discovered=10650
+Level 156: total_work=100, discovered=10750
+Level 157: total_work=100, discovered=10850
+Level 158: total_work=100, discovered=10950
+Level 159: total_work=100, discovered=11050
+Level 160: total_work=100, discovered=11150
+Level 161: total_work=100, discovered=11250
+Level 162: total_work=100, discovered=11350
+Level 163: total_work=100, discovered=11450
+Level 164: total_work=100, discovered=11550
+Level 165: total_work=100, discovered=11650
+Level 166: total_work=100, discovered=11750
+Level 167: total_work=100, discovered=11850
+Level 168: total_work=100, discovered=11950
+Level 169: total_work=100, discovered=12050
+Level 170: total_work=100, discovered=12150
+Level 171: total_work=100, discovered=12250
+Level 172: total_work=100, discovered=12350
+Level 173: total_work=100, discovered=12450
+Level 174: total_work=100, discovered=12550
+Level 175: total_work=100, discovered=12650
+Level 176: total_work=100, discovered=12750
+Level 177: total_work=100, discovered=12850
+Level 178: total_work=100, discovered=12950
+Level 179: total_work=100, discovered=13050
+Level 180: total_work=100, discovered=13150
+Level 181: total_work=100, discovered=13250
+Level 182: total_work=100, discovered=13350
+Level 183: total_work=100, discovered=13450
+Level 184: total_work=100, discovered=13550
+Level 185: total_work=100, discovered=13650
+Level 186: total_work=100, discovered=13750
+Level 187: total_work=100, discovered=13850
+Level 188: total_work=100, discovered=13950
+Level 189: total_work=100, discovered=14050
+Level 190: total_work=100, discovered=14150
+Level 191: total_work=100, discovered=14250
+Level 192: total_work=100, discovered=14350
+Level 193: total_work=100, discovered=14450
+Level 194: total_work=100, discovered=14550
+Level 195: total_work=100, discovered=14650
+Level 196: total_work=100, discovered=14750
+Level 197: total_work=100, discovered=14850
+Level 198: total_work=100, discovered=14950
+Level 199: total_work=100, discovered=15050
+Level 200: total_work=100, discovered=15150
+Level 201: total_work=100, discovered=15250
+Level 202: total_work=100, discovered=15350
+Level 203: total_work=100, discovered=15450
+Level 204: total_work=100, discovered=15550
+Level 205: total_work=100, discovered=15650
+Level 206: total_work=100, discovered=15750
+Level 207: total_work=100, discovered=15850
+Level 208: total_work=100, discovered=15950
+Level 209: total_work=100, discovered=16050
+Level 210: total_work=100, discovered=16150
+Level 211: total_work=100, discovered=16250
+Level 212: total_work=100, discovered=16350
+Level 213: total_work=100, discovered=16450
+Level 214: total_work=100, discovered=16550
+Level 215: total_work=100, discovered=16650
+Level 216: total_work=100, discovered=16750
+Level 217: total_work=100, discovered=16850
+Level 218: total_work=100, discovered=16950
+Level 219: total_work=100, discovered=17050
+Level 220: total_work=100, discovered=17150
+Level 221: total_work=100, discovered=17250
+Level 222: total_work=100, discovered=17350
+Level 223: total_work=100, discovered=17450
+Level 224: total_work=100, discovered=17550
+Level 225: total_work=100, discovered=17650
+Level 226: total_work=100, discovered=17750
+Level 227: total_work=100, discovered=17850
+Level 228: total_work=100, discovered=17950
+Level 229: total_work=100, discovered=18050
+Level 230: total_work=100, discovered=18150
+Level 231: total_work=100, discovered=18250
+Level 232: total_work=100, discovered=18350
+Level 233: total_work=100, discovered=18450
+Level 234: total_work=100, discovered=18550
+Level 235: total_work=100, discovered=18650
+Level 236: total_work=100, discovered=18750
+Level 237: total_work=100, discovered=18850
+Level 238: total_work=100, discovered=18950
+Level 239: total_work=100, discovered=19050
+Level 240: total_work=100, discovered=19150
+Level 241: total_work=100, discovered=19250
+Level 242: total_work=100, discovered=19350
+Level 243: total_work=100, discovered=19450
+Level 244: total_work=100, discovered=19550
+Level 245: total_work=100, discovered=19650
+Level 246: total_work=100, discovered=19750
+Level 247: total_work=100, discovered=19850
+Level 248: total_work=100, discovered=19950
+Level 249: total_work=100, discovered=20050
+Level 250: total_work=100, discovered=20150
+Level 251: total_work=100, discovered=20250
+Level 252: total_work=100, discovered=20350
+Level 253: total_work=100, discovered=20450
+Level 254: total_work=100, discovered=20550
+Level 255: total_work=100, discovered=20650
+Level 256: total_work=100, discovered=20750
+Level 257: total_work=100, discovered=20850
+Level 258: total_work=100, discovered=20950
+Level 259: total_work=100, discovered=21050
+Level 260: total_work=100, discovered=21150
+Level 261: total_work=100, discovered=21250
+Level 262: total_work=100, discovered=21350
+Level 263: total_work=100, discovered=21450
+Level 264: total_work=100, discovered=21550
+Level 265: total_work=100, discovered=21650
+Level 266: total_work=100, discovered=21750
+Level 267: total_work=100, discovered=21850
+Level 268: total_work=100, discovered=21950
+Level 269: total_work=100, discovered=22050
+Level 270: total_work=100, discovered=22150
+Level 271: total_work=100, discovered=22250
+Level 272: total_work=100, discovered=22350
+Level 273: total_work=100, discovered=22450
+Level 274: total_work=100, discovered=22550
+Level 275: total_work=100, discovered=22650
+Level 276: total_work=100, discovered=22750
+Level 277: total_work=100, discovered=22850
+Level 278: total_work=100, discovered=22950
+Level 279: total_work=100, discovered=23050
+Level 280: total_work=100, discovered=23150
+Level 281: total_work=100, discovered=23250
+Level 282: total_work=100, discovered=23350
+Level 283: total_work=100, discovered=23450
+Level 284: total_work=100, discovered=23550
+Level 285: total_work=100, discovered=23650
+Level 286: total_work=100, discovered=23750
+Level 287: total_work=100, discovered=23850
+Level 288: total_work=100, discovered=23950
+Level 289: total_work=100, discovered=24050
+Level 290: total_work=100, discovered=24150
+Level 291: total_work=100, discovered=24250
+Level 292: total_work=100, discovered=24350
+Level 293: total_work=100, discovered=24450
+Level 294: total_work=100, discovered=24550
+Level 295: total_work=100, discovered=24650
+Level 296: total_work=100, discovered=24750
+Level 297: total_work=100, discovered=24850
+Level 298: total_work=100, discovered=24950
+Level 299: total_work=100, discovered=25050
+Level 300: total_work=100, discovered=25150
+Level 301: total_work=100, discovered=25250
+Level 302: total_work=100, discovered=25350
+Level 303: total_work=100, discovered=25450
+Level 304: total_work=100, discovered=25550
+Level 305: total_work=100, discovered=25650
+Level 306: total_work=100, discovered=25750
+Level 307: total_work=100, discovered=25850
+Level 308: total_work=100, discovered=25950
+Level 309: total_work=100, discovered=26050
+Level 310: total_work=100, discovered=26150
+Level 311: total_work=100, discovered=26250
+Level 312: total_work=100, discovered=26350
+Level 313: total_work=100, discovered=26450
+Level 314: total_work=100, discovered=26550
+Level 315: total_work=100, discovered=26650
+Level 316: total_work=100, discovered=26750
+Level 317: total_work=100, discovered=26850
+Level 318: total_work=100, discovered=26950
+Level 319: total_work=100, discovered=27050
+Level 320: total_work=100, discovered=27150
+Level 321: total_work=100, discovered=27250
+Level 322: total_work=100, discovered=27350
+Level 323: total_work=100, discovered=27450
+Level 324: total_work=100, discovered=27550
+Level 325: total_work=100, discovered=27650
+Level 326: total_work=100, discovered=27750
+Level 327: total_work=100, discovered=27850
+Level 328: total_work=100, discovered=27950
+Level 329: total_work=100, discovered=28050
+Level 330: total_work=100, discovered=28150
+Level 331: total_work=100, discovered=28250
+Level 332: total_work=100, discovered=28350
+Level 333: total_work=100, discovered=28450
+Level 334: total_work=100, discovered=28550
+Level 335: total_work=100, discovered=28650
+Level 336: total_work=100, discovered=28750
+Level 337: total_work=100, discovered=28850
+Level 338: total_work=100, discovered=28950
+Level 339: total_work=100, discovered=29050
+Level 340: total_work=100, discovered=29150
+Level 341: total_work=100, discovered=29250
+Level 342: total_work=100, discovered=29350
+Level 343: total_work=100, discovered=29450
+Level 344: total_work=100, discovered=29550
+Level 345: total_work=100, discovered=29650
+Level 346: total_work=100, discovered=29750
+Level 347: total_work=100, discovered=29850
+Level 348: total_work=100, discovered=29950
+Level 349: total_work=100, discovered=30050
+Level 350: total_work=100, discovered=30150
+Level 351: total_work=100, discovered=30250
+Level 352: total_work=100, discovered=30350
+Level 353: total_work=100, discovered=30450
+Level 354: total_work=100, discovered=30550
+Level 355: total_work=100, discovered=30650
+Level 356: total_work=100, discovered=30750
+Level 357: total_work=100, discovered=30850
+Level 358: total_work=100, discovered=30950
+Level 359: total_work=100, discovered=31050
+Level 360: total_work=100, discovered=31150
+Level 361: total_work=100, discovered=31250
+Level 362: total_work=100, discovered=31350
+Level 363: total_work=100, discovered=31450
+Level 364: total_work=100, discovered=31550
+Level 365: total_work=100, discovered=31650
+Level 366: total_work=100, discovered=31750
+Level 367: total_work=100, discovered=31850
+Level 368: total_work=100, discovered=31950
+Level 369: total_work=100, discovered=32050
+Level 370: total_work=100, discovered=32150
+Level 371: total_work=100, discovered=32250
+Level 372: total_work=100, discovered=32350
+Level 373: total_work=100, discovered=32450
+Level 374: total_work=100, discovered=32550
+Level 375: total_work=100, discovered=32650
+Level 376: total_work=100, discovered=32750
+Level 377: total_work=100, discovered=32850
+Level 378: total_work=100, discovered=32950
+Level 379: total_work=100, discovered=33050
+Level 380: total_work=100, discovered=33150
+Level 381: total_work=100, discovered=33250
+Level 382: total_work=100, discovered=33350
+Level 383: total_work=100, discovered=33450
+Level 384: total_work=100, discovered=33550
+Level 385: total_work=100, discovered=33650
+Level 386: total_work=100, discovered=33750
+Level 387: total_work=100, discovered=33850
+Level 388: total_work=100, discovered=33950
+Level 389: total_work=100, discovered=34050
+Level 390: total_work=100, discovered=34150
+Level 391: total_work=100, discovered=34250
+Level 392: total_work=100, discovered=34350
+Level 393: total_work=100, discovered=34450
+Level 394: total_work=100, discovered=34550
+Level 395: total_work=100, discovered=34650
+Level 396: total_work=100, discovered=34750
+Level 397: total_work=100, discovered=34850
+Level 398: total_work=100, discovered=34950
+Level 399: total_work=100, discovered=35050
+Level 400: total_work=100, discovered=35150
+Level 401: total_work=100, discovered=35250
+Level 402: total_work=100, discovered=35350
+Level 403: total_work=100, discovered=35450
+Level 404: total_work=100, discovered=35550
+Level 405: total_work=100, discovered=35650
+Level 406: total_work=100, discovered=35750
+Level 407: total_work=100, discovered=35850
+Level 408: total_work=100, discovered=35950
+Level 409: total_work=100, discovered=36050
+Level 410: total_work=100, discovered=36150
+Level 411: total_work=100, discovered=36250
+Level 412: total_work=100, discovered=36350
+Level 413: total_work=100, discovered=36450
+Level 414: total_work=100, discovered=36550
+Level 415: total_work=100, discovered=36650
+Level 416: total_work=100, discovered=36750
+Level 417: total_work=100, discovered=36850
+Level 418: total_work=100, discovered=36950
+Level 419: total_work=100, discovered=37050
+Level 420: total_work=100, discovered=37150
+Level 421: total_work=100, discovered=37250
+Level 422: total_work=100, discovered=37350
+Level 423: total_work=100, discovered=37450
+Level 424: total_work=100, discovered=37550
+Level 425: total_work=100, discovered=37650
+Level 426: total_work=100, discovered=37750
+Level 427: total_work=100, discovered=37850
+Level 428: total_work=100, discovered=37950
+Level 429: total_work=100, discovered=38050
+Level 430: total_work=100, discovered=38150
+Level 431: total_work=100, discovered=38250
+Level 432: total_work=100, discovered=38350
+Level 433: total_work=100, discovered=38450
+Level 434: total_work=100, discovered=38550
+Level 435: total_work=100, discovered=38650
+Level 436: total_work=100, discovered=38750
+Level 437: total_work=100, discovered=38850
+Level 438: total_work=100, discovered=38950
+Level 439: total_work=100, discovered=39050
+Level 440: total_work=100, discovered=39150
+Level 441: total_work=100, discovered=39250
+Level 442: total_work=100, discovered=39350
+Level 443: total_work=100, discovered=39450
+Level 444: total_work=100, discovered=39550
+Level 445: total_work=100, discovered=39650
+Level 446: total_work=100, discovered=39750
+Level 447: total_work=100, discovered=39850
+Level 448: total_work=100, discovered=39950
+Level 449: total_work=100, discovered=40050
+Level 450: total_work=100, discovered=40150
+Level 451: total_work=100, discovered=40250
+Level 452: total_work=100, discovered=40350
+Level 453: total_work=100, discovered=40450
+Level 454: total_work=100, discovered=40550
+Level 455: total_work=100, discovered=40650
+Level 456: total_work=100, discovered=40750
+Level 457: total_work=100, discovered=40850
+Level 458: total_work=100, discovered=40950
+Level 459: total_work=100, discovered=41050
+Level 460: total_work=100, discovered=41150
+Level 461: total_work=100, discovered=41250
+Level 462: total_work=100, discovered=41350
+Level 463: total_work=100, discovered=41450
+Level 464: total_work=100, discovered=41550
+Level 465: total_work=100, discovered=41650
+Level 466: total_work=100, discovered=41750
+Level 467: total_work=100, discovered=41850
+Level 468: total_work=100, discovered=41950
+Level 469: total_work=100, discovered=42050
+Level 470: total_work=100, discovered=42150
+Level 471: total_work=100, discovered=42250
+Level 472: total_work=100, discovered=42350
+Level 473: total_work=100, discovered=42450
+Level 474: total_work=100, discovered=42550
+Level 475: total_work=100, discovered=42650
+Level 476: total_work=100, discovered=42750
+Level 477: total_work=100, discovered=42850
+Level 478: total_work=100, discovered=42950
+Level 479: total_work=100, discovered=43050
+Level 480: total_work=100, discovered=43150
+Level 481: total_work=100, discovered=43250
+Level 482: total_work=100, discovered=43350
+Level 483: total_work=100, discovered=43450
+Level 484: total_work=100, discovered=43550
+Level 485: total_work=100, discovered=43650
+Level 486: total_work=100, discovered=43750
+Level 487: total_work=100, discovered=43850
+Level 488: total_work=100, discovered=43950
+Level 489: total_work=100, discovered=44050
+Level 490: total_work=100, discovered=44150
+Level 491: total_work=100, discovered=44250
+Level 492: total_work=100, discovered=44350
+Level 493: total_work=100, discovered=44450
+Level 494: total_work=100, discovered=44550
+Level 495: total_work=100, discovered=44650
+Level 496: total_work=100, discovered=44750
+Level 497: total_work=100, discovered=44850
+Level 498: total_work=100, discovered=44950
+Level 499: total_work=100, discovered=45050
+Level 500: total_work=100, discovered=45150
+Level 501: total_work=100, discovered=45250
+Level 502: total_work=100, discovered=45350
+Level 503: total_work=100, discovered=45450
+Level 504: total_work=100, discovered=45550
+Level 505: total_work=100, discovered=45650
+Level 506: total_work=100, discovered=45750
+Level 507: total_work=100, discovered=45850
+Level 508: total_work=100, discovered=45950
+Level 509: total_work=100, discovered=46050
+Level 510: total_work=100, discovered=46150
+Level 511: total_work=100, discovered=46250
+Level 512: total_work=100, discovered=46350
+Level 513: total_work=100, discovered=46450
+Level 514: total_work=100, discovered=46550
+Level 515: total_work=100, discovered=46650
+Level 516: total_work=100, discovered=46750
+Level 517: total_work=100, discovered=46850
+Level 518: total_work=100, discovered=46950
+Level 519: total_work=100, discovered=47050
+Level 520: total_work=100, discovered=47150
+Level 521: total_work=100, discovered=47250
+Level 522: total_work=100, discovered=47350
+Level 523: total_work=100, discovered=47450
+Level 524: total_work=100, discovered=47550
+Level 525: total_work=100, discovered=47650
+Level 526: total_work=100, discovered=47750
+Level 527: total_work=100, discovered=47850
+Level 528: total_work=100, discovered=47950
+Level 529: total_work=100, discovered=48050
+Level 530: total_work=100, discovered=48150
+Level 531: total_work=100, discovered=48250
+Level 532: total_work=100, discovered=48350
+Level 533: total_work=100, discovered=48450
+Level 534: total_work=100, discovered=48550
+Level 535: total_work=100, discovered=48650
+Level 536: total_work=100, discovered=48750
+Level 537: total_work=100, discovered=48850
+Level 538: total_work=100, discovered=48950
+Level 539: total_work=100, discovered=49050
+Level 540: total_work=100, discovered=49150
+Level 541: total_work=100, discovered=49250
+Level 542: total_work=100, discovered=49350
+Level 543: total_work=100, discovered=49450
+Level 544: total_work=100, discovered=49550
+Level 545: total_work=100, discovered=49650
+Level 546: total_work=100, discovered=49750
+Level 547: total_work=100, discovered=49850
+Level 548: total_work=100, discovered=49950
+Level 549: total_work=100, discovered=50050
+Level 550: total_work=100, discovered=50150
+Level 551: total_work=100, discovered=50250
+Level 552: total_work=100, discovered=50350
+Level 553: total_work=100, discovered=50450
+Level 554: total_work=100, discovered=50550
+Level 555: total_work=100, discovered=50650
+Level 556: total_work=100, discovered=50750
+Level 557: total_work=100, discovered=50850
+Level 558: total_work=100, discovered=50950
+Level 559: total_work=100, discovered=51050
+Level 560: total_work=100, discovered=51150
+Level 561: total_work=100, discovered=51250
+Level 562: total_work=100, discovered=51350
+Level 563: total_work=100, discovered=51450
+Level 564: total_work=100, discovered=51550
+Level 565: total_work=100, discovered=51650
+Level 566: total_work=100, discovered=51750
+Level 567: total_work=100, discovered=51850
+Level 568: total_work=100, discovered=51950
+Level 569: total_work=100, discovered=52050
+Level 570: total_work=100, discovered=52150
+Level 571: total_work=100, discovered=52250
+Level 572: total_work=100, discovered=52350
+Level 573: total_work=100, discovered=52450
+Level 574: total_work=100, discovered=52550
+Level 575: total_work=100, discovered=52650
+Level 576: total_work=100, discovered=52750
+Level 577: total_work=100, discovered=52850
+Level 578: total_work=100, discovered=52950
+Level 579: total_work=100, discovered=53050
+Level 580: total_work=100, discovered=53150
+Level 581: total_work=100, discovered=53250
+Level 582: total_work=100, discovered=53350
+Level 583: total_work=100, discovered=53450
+Level 584: total_work=100, discovered=53550
+Level 585: total_work=100, discovered=53650
+Level 586: total_work=100, discovered=53750
+Level 587: total_work=100, discovered=53850
+Level 588: total_work=100, discovered=53950
+Level 589: total_work=100, discovered=54050
+Level 590: total_work=100, discovered=54150
+Level 591: total_work=100, discovered=54250
+Level 592: total_work=100, discovered=54350
+Level 593: total_work=100, discovered=54450
+Level 594: total_work=100, discovered=54550
+Level 595: total_work=100, discovered=54650
+Level 596: total_work=100, discovered=54750
+Level 597: total_work=100, discovered=54850
+Level 598: total_work=100, discovered=54950
+Level 599: total_work=100, discovered=55050
+Level 600: total_work=100, discovered=55150
+Level 601: total_work=100, discovered=55250
+Level 602: total_work=100, discovered=55350
+Level 603: total_work=100, discovered=55450
+Level 604: total_work=100, discovered=55550
+Level 605: total_work=100, discovered=55650
+Level 606: total_work=100, discovered=55750
+Level 607: total_work=100, discovered=55850
+Level 608: total_work=100, discovered=55950
+Level 609: total_work=100, discovered=56050
+Level 610: total_work=100, discovered=56150
+Level 611: total_work=100, discovered=56250
+Level 612: total_work=100, discovered=56350
+Level 613: total_work=100, discovered=56450
+Level 614: total_work=100, discovered=56550
+Level 615: total_work=100, discovered=56650
+Level 616: total_work=100, discovered=56750
+Level 617: total_work=100, discovered=56850
+Level 618: total_work=100, discovered=56950
+Level 619: total_work=100, discovered=57050
+Level 620: total_work=100, discovered=57150
+Level 621: total_work=100, discovered=57250
+Level 622: total_work=100, discovered=57350
+Level 623: total_work=100, discovered=57450
+Level 624: total_work=100, discovered=57550
+Level 625: total_work=100, discovered=57650
+Level 626: total_work=100, discovered=57750
+Level 627: total_work=100, discovered=57850
+Level 628: total_work=100, discovered=57950
+Level 629: total_work=100, discovered=58050
+Level 630: total_work=100, discovered=58150
+Level 631: total_work=100, discovered=58250
+Level 632: total_work=100, discovered=58350
+Level 633: total_work=100, discovered=58450
+Level 634: total_work=100, discovered=58550
+Level 635: total_work=100, discovered=58650
+Level 636: total_work=100, discovered=58750
+Level 637: total_work=100, discovered=58850
+Level 638: total_work=100, discovered=58950
+Level 639: total_work=100, discovered=59050
+Level 640: total_work=100, discovered=59150
+Level 641: total_work=100, discovered=59250
+Level 642: total_work=100, discovered=59350
+Level 643: total_work=100, discovered=59450
+Level 644: total_work=100, discovered=59550
+Level 645: total_work=100, discovered=59650
+Level 646: total_work=100, discovered=59750
+Level 647: total_work=100, discovered=59850
+Level 648: total_work=100, discovered=59950
+Level 649: total_work=100, discovered=60050
+Level 650: total_work=100, discovered=60150
+Level 651: total_work=100, discovered=60250
+Level 652: total_work=100, discovered=60350
+Level 653: total_work=100, discovered=60450
+Level 654: total_work=100, discovered=60550
+Level 655: total_work=100, discovered=60650
+Level 656: total_work=100, discovered=60750
+Level 657: total_work=100, discovered=60850
+Level 658: total_work=100, discovered=60950
+Level 659: total_work=100, discovered=61050
+Level 660: total_work=100, discovered=61150
+Level 661: total_work=100, discovered=61250
+Level 662: total_work=100, discovered=61350
+Level 663: total_work=100, discovered=61450
+Level 664: total_work=100, discovered=61550
+Level 665: total_work=100, discovered=61650
+Level 666: total_work=100, discovered=61750
+Level 667: total_work=100, discovered=61850
+Level 668: total_work=100, discovered=61950
+Level 669: total_work=100, discovered=62050
+Level 670: total_work=100, discovered=62150
+Level 671: total_work=100, discovered=62250
+Level 672: total_work=100, discovered=62350
+Level 673: total_work=100, discovered=62450
+Level 674: total_work=100, discovered=62550
+Level 675: total_work=100, discovered=62650
+Level 676: total_work=100, discovered=62750
+Level 677: total_work=100, discovered=62850
+Level 678: total_work=100, discovered=62950
+Level 679: total_work=100, discovered=63050
+Level 680: total_work=100, discovered=63150
+Level 681: total_work=100, discovered=63250
+Level 682: total_work=100, discovered=63350
+Level 683: total_work=100, discovered=63450
+Level 684: total_work=100, discovered=63550
+Level 685: total_work=100, discovered=63650
+Level 686: total_work=100, discovered=63750
+Level 687: total_work=100, discovered=63850
+Level 688: total_work=100, discovered=63950
+Level 689: total_work=100, discovered=64050
+Level 690: total_work=100, discovered=64150
+Level 691: total_work=100, discovered=64250
+Level 692: total_work=100, discovered=64350
+Level 693: total_work=100, discovered=64450
+Level 694: total_work=100, discovered=64550
+Level 695: total_work=100, discovered=64650
+Level 696: total_work=100, discovered=64750
+Level 697: total_work=100, discovered=64850
+Level 698: total_work=100, discovered=64950
+Level 699: total_work=100, discovered=65050
+Level 700: total_work=100, discovered=65150
+Level 701: total_work=100, discovered=65250
+Level 702: total_work=100, discovered=65350
+Level 703: total_work=100, discovered=65450
+Level 704: total_work=100, discovered=65550
+Level 705: total_work=100, discovered=65650
+Level 706: total_work=100, discovered=65750
+Level 707: total_work=100, discovered=65850
+Level 708: total_work=100, discovered=65950
+Level 709: total_work=100, discovered=66050
+Level 710: total_work=100, discovered=66150
+Level 711: total_work=100, discovered=66250
+Level 712: total_work=100, discovered=66350
+Level 713: total_work=100, discovered=66450
+Level 714: total_work=100, discovered=66550
+Level 715: total_work=100, discovered=66650
+Level 716: total_work=100, discovered=66750
+Level 717: total_work=100, discovered=66850
+Level 718: total_work=100, discovered=66950
+Level 719: total_work=100, discovered=67050
+Level 720: total_work=100, discovered=67150
+Level 721: total_work=100, discovered=67250
+Level 722: total_work=100, discovered=67350
+Level 723: total_work=100, discovered=67450
+Level 724: total_work=100, discovered=67550
+Level 725: total_work=100, discovered=67650
+Level 726: total_work=100, discovered=67750
+Level 727: total_work=100, discovered=67850
+Level 728: total_work=100, discovered=67950
+Level 729: total_work=100, discovered=68050
+Level 730: total_work=100, discovered=68150
+Level 731: total_work=100, discovered=68250
+Level 732: total_work=100, discovered=68350
+Level 733: total_work=100, discovered=68450
+Level 734: total_work=100, discovered=68550
+Level 735: total_work=100, discovered=68650
+Level 736: total_work=100, discovered=68750
+Level 737: total_work=100, discovered=68850
+Level 738: total_work=100, discovered=68950
+Level 739: total_work=100, discovered=69050
+Level 740: total_work=100, discovered=69150
+Level 741: total_work=100, discovered=69250
+Level 742: total_work=100, discovered=69350
+Level 743: total_work=100, discovered=69450
+Level 744: total_work=100, discovered=69550
+Level 745: total_work=100, discovered=69650
+Level 746: total_work=100, discovered=69750
+Level 747: total_work=100, discovered=69850
+Level 748: total_work=100, discovered=69950
+Level 749: total_work=100, discovered=70050
+Level 750: total_work=100, discovered=70150
+Level 751: total_work=100, discovered=70250
+Level 752: total_work=100, discovered=70350
+Level 753: total_work=100, discovered=70450
+Level 754: total_work=100, discovered=70550
+Level 755: total_work=100, discovered=70650
+Level 756: total_work=100, discovered=70750
+Level 757: total_work=100, discovered=70850
+Level 758: total_work=100, discovered=70950
+Level 759: total_work=100, discovered=71050
+Level 760: total_work=100, discovered=71150
+Level 761: total_work=100, discovered=71250
+Level 762: total_work=100, discovered=71350
+Level 763: total_work=100, discovered=71450
+Level 764: total_work=100, discovered=71550
+Level 765: total_work=100, discovered=71650
+Level 766: total_work=100, discovered=71750
+Level 767: total_work=100, discovered=71850
+Level 768: total_work=100, discovered=71950
+Level 769: total_work=100, discovered=72050
+Level 770: total_work=100, discovered=72150
+Level 771: total_work=100, discovered=72250
+Level 772: total_work=100, discovered=72350
+Level 773: total_work=100, discovered=72450
+Level 774: total_work=100, discovered=72550
+Level 775: total_work=100, discovered=72650
+Level 776: total_work=100, discovered=72750
+Level 777: total_work=100, discovered=72850
+Level 778: total_work=100, discovered=72950
+Level 779: total_work=100, discovered=73050
+Level 780: total_work=100, discovered=73150
+Level 781: total_work=100, discovered=73250
+Level 782: total_work=100, discovered=73350
+Level 783: total_work=100, discovered=73450
+Level 784: total_work=100, discovered=73550
+Level 785: total_work=100, discovered=73650
+Level 786: total_work=100, discovered=73750
+Level 787: total_work=100, discovered=73850
+Level 788: total_work=100, discovered=73950
+Level 789: total_work=100, discovered=74050
+Level 790: total_work=100, discovered=74150
+Level 791: total_work=100, discovered=74250
+Level 792: total_work=100, discovered=74350
+Level 793: total_work=100, discovered=74450
+Level 794: total_work=100, discovered=74550
+Level 795: total_work=100, discovered=74650
+Level 796: total_work=100, discovered=74750
+Level 797: total_work=100, discovered=74850
+Level 798: total_work=100, discovered=74950
+Level 799: total_work=100, discovered=75050
+Level 800: total_work=100, discovered=75150
+Level 801: total_work=100, discovered=75250
+Level 802: total_work=100, discovered=75350
+Level 803: total_work=100, discovered=75450
+Level 804: total_work=100, discovered=75550
+Level 805: total_work=100, discovered=75650
+Level 806: total_work=100, discovered=75750
+Level 807: total_work=100, discovered=75850
+Level 808: total_work=100, discovered=75950
+Level 809: total_work=100, discovered=76050
+Level 810: total_work=100, discovered=76150
+Level 811: total_work=100, discovered=76250
+Level 812: total_work=100, discovered=76350
+Level 813: total_work=100, discovered=76450
+Level 814: total_work=100, discovered=76550
+Level 815: total_work=100, discovered=76650
+Level 816: total_work=100, discovered=76750
+Level 817: total_work=100, discovered=76850
+Level 818: total_work=100, discovered=76950
+Level 819: total_work=100, discovered=77050
+Level 820: total_work=100, discovered=77150
+Level 821: total_work=100, discovered=77250
+Level 822: total_work=100, discovered=77350
+Level 823: total_work=100, discovered=77450
+Level 824: total_work=100, discovered=77550
+Level 825: total_work=100, discovered=77650
+Level 826: total_work=100, discovered=77750
+Level 827: total_work=100, discovered=77850
+Level 828: total_work=100, discovered=77950
+Level 829: total_work=100, discovered=78050
+Level 830: total_work=100, discovered=78150
+Level 831: total_work=100, discovered=78250
+Level 832: total_work=100, discovered=78350
+Level 833: total_work=100, discovered=78450
+Level 834: total_work=100, discovered=78550
+Level 835: total_work=100, discovered=78650
+Level 836: total_work=100, discovered=78750
+Level 837: total_work=100, discovered=78850
+Level 838: total_work=100, discovered=78950
+Level 839: total_work=100, discovered=79050
+Level 840: total_work=100, discovered=79150
+Level 841: total_work=100, discovered=79250
+Level 842: total_work=100, discovered=79350
+Level 843: total_work=100, discovered=79450
+Level 844: total_work=100, discovered=79550
+Level 845: total_work=100, discovered=79650
+Level 846: total_work=100, discovered=79750
+Level 847: total_work=100, discovered=79850
+Level 848: total_work=100, discovered=79950
+Level 849: total_work=100, discovered=80050
+Level 850: total_work=100, discovered=80150
+Level 851: total_work=100, discovered=80250
+Level 852: total_work=100, discovered=80350
+Level 853: total_work=100, discovered=80450
+Level 854: total_work=100, discovered=80550
+Level 855: total_work=100, discovered=80650
+Level 856: total_work=100, discovered=80750
+Level 857: total_work=100, discovered=80850
+Level 858: total_work=100, discovered=80950
+Level 859: total_work=100, discovered=81050
+Level 860: total_work=100, discovered=81150
+Level 861: total_work=100, discovered=81250
+Level 862: total_work=100, discovered=81350
+Level 863: total_work=100, discovered=81450
+Level 864: total_work=100, discovered=81550
+Level 865: total_work=100, discovered=81650
+Level 866: total_work=100, discovered=81750
+Level 867: total_work=100, discovered=81850
+Level 868: total_work=100, discovered=81950
+Level 869: total_work=100, discovered=82050
+Level 870: total_work=100, discovered=82150
+Level 871: total_work=100, discovered=82250
+Level 872: total_work=100, discovered=82350
+Level 873: total_work=100, discovered=82450
+Level 874: total_work=100, discovered=82550
+Level 875: total_work=100, discovered=82650
+Level 876: total_work=100, discovered=82750
+Level 877: total_work=100, discovered=82850
+Level 878: total_work=100, discovered=82950
+Level 879: total_work=100, discovered=83050
+Level 880: total_work=100, discovered=83150
+Level 881: total_work=100, discovered=83250
+Level 882: total_work=100, discovered=83350
+Level 883: total_work=100, discovered=83450
+Level 884: total_work=100, discovered=83550
+Level 885: total_work=100, discovered=83650
+Level 886: total_work=100, discovered=83750
+Level 887: total_work=100, discovered=83850
+Level 888: total_work=100, discovered=83950
+Level 889: total_work=100, discovered=84050
+Level 890: total_work=100, discovered=84150
+Level 891: total_work=100, discovered=84250
+Level 892: total_work=100, discovered=84350
+Level 893: total_work=100, discovered=84450
+Level 894: total_work=100, discovered=84550
+Level 895: total_work=100, discovered=84650
+Level 896: total_work=100, discovered=84750
+Level 897: total_work=100, discovered=84850
+Level 898: total_work=100, discovered=84950
+Level 899: total_work=100, discovered=85050
+Level 900: total_work=100, discovered=85150
+Level 901: total_work=100, discovered=85250
+Level 902: total_work=100, discovered=85350
+Level 903: total_work=100, discovered=85450
+Level 904: total_work=100, discovered=85550
+Level 905: total_work=100, discovered=85650
+Level 906: total_work=100, discovered=85750
+Level 907: total_work=100, discovered=85850
+Level 908: total_work=100, discovered=85950
+Level 909: total_work=100, discovered=86050
+Level 910: total_work=100, discovered=86150
+Level 911: total_work=100, discovered=86250
+Level 912: total_work=100, discovered=86350
+Level 913: total_work=100, discovered=86450
+Level 914: total_work=100, discovered=86550
+Level 915: total_work=100, discovered=86650
+Level 916: total_work=100, discovered=86750
+Level 917: total_work=100, discovered=86850
+Level 918: total_work=100, discovered=86950
+Level 919: total_work=100, discovered=87050
+Level 920: total_work=100, discovered=87150
+Level 921: total_work=100, discovered=87250
+Level 922: total_work=100, discovered=87350
+Level 923: total_work=100, discovered=87450
+Level 924: total_work=100, discovered=87550
+Level 925: total_work=100, discovered=87650
+Level 926: total_work=100, discovered=87750
+Level 927: total_work=100, discovered=87850
+Level 928: total_work=100, discovered=87950
+Level 929: total_work=100, discovered=88050
+Level 930: total_work=100, discovered=88150
+Level 931: total_work=100, discovered=88250
+Level 932: total_work=100, discovered=88350
+Level 933: total_work=100, discovered=88450
+Level 934: total_work=100, discovered=88550
+Level 935: total_work=100, discovered=88650
+Level 936: total_work=100, discovered=88750
+Level 937: total_work=100, discovered=88850
+Level 938: total_work=100, discovered=88950
+Level 939: total_work=100, discovered=89050
+Level 940: total_work=100, discovered=89150
+Level 941: total_work=100, discovered=89250
+Level 942: total_work=100, discovered=89350
+Level 943: total_work=100, discovered=89450
+Level 944: total_work=100, discovered=89550
+Level 945: total_work=100, discovered=89650
+Level 946: total_work=100, discovered=89750
+Level 947: total_work=100, discovered=89850
+Level 948: total_work=100, discovered=89950
+Level 949: total_work=100, discovered=90050
+Level 950: total_work=100, discovered=90150
+Level 951: total_work=100, discovered=90250
+Level 952: total_work=100, discovered=90350
+Level 953: total_work=100, discovered=90450
+Level 954: total_work=100, discovered=90550
+Level 955: total_work=100, discovered=90650
+Level 956: total_work=100, discovered=90750
+Level 957: total_work=100, discovered=90850
+Level 958: total_work=100, discovered=90950
+Level 959: total_work=100, discovered=91050
+Level 960: total_work=100, discovered=91150
+Level 961: total_work=100, discovered=91250
+Level 962: total_work=100, discovered=91350
+Level 963: total_work=100, discovered=91450
+Level 964: total_work=100, discovered=91550
+Level 965: total_work=100, discovered=91650
+Level 966: total_work=100, discovered=91750
+Level 967: total_work=100, discovered=91850
+Level 968: total_work=100, discovered=91950
+Level 969: total_work=100, discovered=92050
+Level 970: total_work=100, discovered=92150
+Level 971: total_work=100, discovered=92250
+Level 972: total_work=100, discovered=92350
+Level 973: total_work=100, discovered=92450
+Level 974: total_work=100, discovered=92550
+Level 975: total_work=100, discovered=92650
+Level 976: total_work=100, discovered=92750
+Level 977: total_work=100, discovered=92850
+Level 978: total_work=100, discovered=92950
+Level 979: total_work=100, discovered=93050
+Level 980: total_work=100, discovered=93150
+Level 981: total_work=100, discovered=93250
+Level 982: total_work=100, discovered=93350
+Level 983: total_work=100, discovered=93450
+Level 984: total_work=100, discovered=93550
+Level 985: total_work=100, discovered=93650
+Level 986: total_work=100, discovered=93750
+Level 987: total_work=100, discovered=93850
+Level 988: total_work=100, discovered=93950
+Level 989: total_work=100, discovered=94050
+Level 990: total_work=100, discovered=94150
+Level 991: total_work=100, discovered=94250
+Level 992: total_work=100, discovered=94350
+Level 993: total_work=100, discovered=94450
+Level 994: total_work=100, discovered=94550
+Level 995: total_work=100, discovered=94650
+Level 996: total_work=100, discovered=94750
+Level 997: total_work=100, discovered=94850
+Level 998: total_work=100, discovered=94950
+Level 999: total_work=100, discovered=95050
+Level 1000: total_work=99, discovered=95149
+Level 1001: total_work=98, discovered=95247
+Level 1002: total_work=97, discovered=95344
+Level 1003: total_work=96, discovered=95440
+Level 1004: total_work=95, discovered=95535
+Level 1005: total_work=94, discovered=95629
+Level 1006: total_work=93, discovered=95722
+Level 1007: total_work=92, discovered=95814
+Level 1008: total_work=91, discovered=95905
+Level 1009: total_work=90, discovered=95995
+Level 1010: total_work=89, discovered=96084
+Level 1011: total_work=88, discovered=96172
+Level 1012: total_work=87, discovered=96259
+Level 1013: total_work=86, discovered=96345
+Level 1014: total_work=85, discovered=96430
+Level 1015: total_work=84, discovered=96514
+Level 1016: total_work=83, discovered=96597
+Level 1017: total_work=82, discovered=96679
+Level 1018: total_work=81, discovered=96760
+Level 1019: total_work=80, discovered=96840
+Level 1020: total_work=79, discovered=96919
+Level 1021: total_work=78, discovered=96997
+Level 1022: total_work=77, discovered=97074
+Level 1023: total_work=76, discovered=97150
+Level 1024: total_work=75, discovered=97225
+Level 1025: total_work=74, discovered=97299
+Level 1026: total_work=73, discovered=97372
+Level 1027: total_work=72, discovered=97444
+Level 1028: total_work=71, discovered=97515
+Level 1029: total_work=70, discovered=97585
+Level 1030: total_work=69, discovered=97654
+Level 1031: total_work=68, discovered=97722
+Level 1032: total_work=67, discovered=97789
+Level 1033: total_work=66, discovered=97855
+Level 1034: total_work=65, discovered=97920
+Level 1035: total_work=64, discovered=97984
+Level 1036: total_work=63, discovered=98047
+Level 1037: total_work=62, discovered=98109
+Level 1038: total_work=61, discovered=98170
+Level 1039: total_work=60, discovered=98230
+Level 1040: total_work=59, discovered=98289
+Level 1041: total_work=58, discovered=98347
+Level 1042: total_work=57, discovered=98404
+Level 1043: total_work=56, discovered=98460
+Level 1044: total_work=55, discovered=98515
+Level 1045: total_work=54, discovered=98569
+Level 1046: total_work=53, discovered=98622
+Level 1047: total_work=52, discovered=98674
+Level 1048: total_work=51, discovered=98725
+Level 1049: total_work=50, discovered=98775
+Level 1050: total_work=49, discovered=98824
+Level 1051: total_work=48, discovered=98872
+Level 1052: total_work=47, discovered=98919
+Level 1053: total_work=46, discovered=98965
+Level 1054: total_work=45, discovered=99010
+Level 1055: total_work=44, discovered=99054
+Level 1056: total_work=43, discovered=99097
+Level 1057: total_work=42, discovered=99139
+Level 1058: total_work=41, discovered=99180
+Level 1059: total_work=40, discovered=99220
+Level 1060: total_work=39, discovered=99259
+Level 1061: total_work=38, discovered=99297
+Level 1062: total_work=37, discovered=99334
+Level 1063: total_work=36, discovered=99370
+Level 1064: total_work=35, discovered=99405
+Level 1065: total_work=34, discovered=99439
+Level 1066: total_work=33, discovered=99472
+Level 1067: total_work=32, discovered=99504
+Level 1068: total_work=31, discovered=99535
+Level 1069: total_work=30, discovered=99565
+Level 1070: total_work=29, discovered=99594
+Level 1071: total_work=28, discovered=99622
+Level 1072: total_work=27, discovered=99649
+Level 1073: total_work=26, discovered=99675
+Level 1074: total_work=25, discovered=99700
+Level 1075: total_work=24, discovered=99724
+Level 1076: total_work=23, discovered=99747
+Level 1077: total_work=22, discovered=99769
+Level 1078: total_work=21, discovered=99790
+Level 1079: total_work=20, discovered=99810
+Level 1080: total_work=19, discovered=99829
+Level 1081: total_work=18, discovered=99847
+Level 1082: total_work=17, discovered=99864
+Level 1083: total_work=16, discovered=99880
+Level 1084: total_work=15, discovered=99895
+Level 1085: total_work=14, discovered=99909
+Level 1086: total_work=13, discovered=99922
+Level 1087: total_work=12, discovered=99934
+Level 1088: total_work=11, discovered=99945
+Level 1089: total_work=10, discovered=99955
+Level 1090: total_work=9, discovered=99964
+Level 1091: total_work=8, discovered=99972
+Level 1092: total_work=7, discovered=99979
+Level 1093: total_work=6, discovered=99985
+Level 1094: total_work=5, discovered=99990
+Level 1095: total_work=4, discovered=99994
+Level 1096: total_work=3, discovered=99997
+Level 1097: total_work=2, discovered=99999
+Level 1098: total_work=1, discovered=100000
+
+=== BFS Complete ===
+Levels traversed: 1099
+Nodes discovered: 100000 / 100000
+dist[(99,999)] = 1098 (expected 1098)
+
+Per-hart statistics:
+Hart | Processed | Empty polls
+-----|-----------|------------
+   0 |      7160 |       15287
+   1 |      6210 |       17221
+   2 |      6175 |       17281
+   3 |      6154 |       17350
+   4 |      6182 |       17258
+   5 |      6143 |       17364
+   6 |      6230 |       17095
+   7 |      6239 |       17092
+   8 |      6183 |       17273
+   9 |      6128 |       17365
+  10 |      6230 |       17071
+  11 |      6229 |       17076
+  12 |      6157 |       17371
+  13 |      6175 |       17331
+  14 |      6127 |       17439
+  15 |      6278 |       16995
+
+Summary:
+  Total nodes processed: 100000
+  Cycles elapsed:        203324546
+  Cycles per node:       2033
+  (L2SP load/store/atomic stats from SSTRISCVCore hw counters)
+Configuring 16 harts
+PXN 0 POD 0 CORE 0: instruction_distribution total=369171352
+  L2SP_mem         7164507 (1.9407%)
+  non_L2SP_mem     114068987 (30.8987%)
+  wait_sleep       0 (0%)
+  arithmetic       188808208 (51.1438%)
+  control          50030782 (13.5522%)
+  branch           9098868 (2.46467%)
+  other            0 (0%)
+  Memory access breakdown:
+    L1SP_mem        112520790 (30.4793%)
+    L2SP_data_mem   7164507 (1.9407%)
+    DRAM_mem        1512997 (0.409836%)
+    non_L2SP_other  35200 (0.00953487%)
+  Top arithmetic instructions:
+    1. ADDI = 139781531 (37.8636%)
+    2. ADDIW = 16844138 (4.56269%)
+    3. LUI = 10750329 (2.91202%)
+    4. ANDI = 4282704 (1.16009%)
+    5. SLLI = 3963438 (1.0736%)
+    6. AND = 3814375 (1.03323%)
+    7. SLTIU = 3803998 (1.03042%)
+    8. ADD = 3379559 (0.915445%)
+    9. SUB = 1194643 (0.323601%)
+    10. SLTI = 391453 (0.106036%)
+  Top recurring arithmetic basic blocks:
+    1. [0x4000405c, 0x40004078] visits=7625009 avg_len=8 avg_arith=5 arith_share=62.5%
+       0x4000405c: ADDI
+       0x40004060: SD
+       0x40004064: ADDI
+       0x40004068: ADDI
+       0x4000406c: ADDI
+       0x40004070: LD
+       0x40004074: ADDI
+       0x40004078: JALR
+    2. [0x4000407c, 0x400040bc] visits=3807553 avg_len=17 avg_arith=10 arith_share=58.8235%
+       0x4000407c: ADDI
+       0x40004080: SD
+       0x40004084: ADDI
+       0x40004088: ADDI
+       0x4000408c: ADDI
+       0x40004090: SW
+       0x40004094: ADDI
+       0x40004098: SW
+       0x4000409c: LW
+       0x400040a0: LW
+       0x400040a4: AND
+       0x400040a8: ADDIW
+       0x400040ac: ADDIW
+       0x400040b0: ADDI
+       0x400040b4: LD
+       0x400040b8: ADDI
+       0x400040bc: JALR
+    3. [0x4000023c, 0x40000250] visits=3618883 avg_len=6 avg_arith=2 arith_share=33.3333%
+       0x4000023c: ADDI
+       0x40000240: SD
+       0x40000244: ADDI
+       0x40000248: SD
+       0x4000024c: LD
+       0x40000250: CSRRW
+    4. [0x40000254, 0x40000260] visits=3618883 avg_len=4 avg_arith=2 arith_share=50%
+       0x40000254: ADDI
+       0x40000258: LD
+       0x4000025c: ADDI
+       0x40000260: JALR
+    5. [0x40001608, 0x40001620] visits=2348325 avg_len=7 avg_arith=4 arith_share=57.1429%
+       0x40001608: ADDI
+       0x4000160c: SW
+       0x40001610: LW
+       0x40001614: LUI
+       0x40001618: ADDI
+       0x4000161c: ADDI
+       0x40001620: JAL
+    6. [0x40001650, 0x40001660] visits=2348325 avg_len=5 avg_arith=4 arith_share=80%
+       0x40001650: ADDIW
+       0x40001654: ADDIW
+       0x40001658: SLTIU
+       0x4000165c: ANDI
+       0x40001660: BNE
+    7. [0x40001638, 0x40001644] visits=2348325 avg_len=4 avg_arith=3 arith_share=75%
+       0x40001638: ADDI
+       0x4000163c: LUI
+       0x40001640: ADDI
+       0x40001644: FENCE
+    8. [0x40001624, 0x4000162c] visits=2348325 avg_len=3 avg_arith=1 arith_share=33.3333%
+       0x40001624: ADDI
+       0x40001628: SW
+       0x4000162c: JAL
+    9. [0x40001630, 0x40001634] visits=2348325 avg_len=2 avg_arith=1 arith_share=50%
+       0x40001630: ADDI
+       0x40001634: JAL
+    10. [0x40001600, 0x40001604] visits=2348310 avg_len=2 avg_arith=1 arith_share=50%
+       0x40001600: ADDI
+       0x40001604: JAL
+  L2SP_mem_adjusted 132949217 (36.0129%) [L2SP accesses + non-memory sync/basic-block overhead]
+  L2SP_data_mem      7164507 (1.9407%)
+  L2SP_sync_overhead 125784710 (34.0722%) [non-memory instructions attributed to L2SP sync/basic-block overhead]
+  Adjusted distribution (counting L2SP_data + L2SP_sync_overhead):
+    L2SP_data_mem    7164507 (1.9407%)
+    L2SP_sync_overhead 125784710 (34.0722%)
+    L1SP_mem         112520790 (30.4793%)
+    DRAM_mem         1512997 (0.409836%)
+    non_L2SP_other   35200 (0.00953487%)
+    wait_sleep       0 (0%)
+    arithmetic       86390476 (23.4012%)
+    control          26663804 (7.22261%)
+    branch           9098868 (2.46467%)
+    other            0 (0%)
+Simulation is complete, simulated time: 378.52 ms

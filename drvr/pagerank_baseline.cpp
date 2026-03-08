@@ -1,6 +1,6 @@
 // PageRank Baseline — no work stealing
 //
-// Graph: deterministic 2D grid (GRID_ROWS x GRID_COLS) + random long-range edges
+// Graph: deterministic 2D grid (GRID_ROWS x GRID_COLS) in CSR
 // Work unit: a chunk of CHUNK_SIZE consecutive vertices
 // Distribution: odd-numbered cores get 2x chunks (imbalanced)
 // Each core's harts only process their own queue — no stealing.
@@ -21,7 +21,8 @@
 static constexpr int GRID_ROWS       = 64;
 static constexpr int GRID_COLS       = 64;
 static constexpr int NUM_VERTICES    = GRID_ROWS * GRID_COLS;   // 4096
-static constexpr int MAX_EDGES       = NUM_VERTICES * 5;        // grid + random
+static constexpr int MAX_EDGES       = (4 * GRID_ROWS * GRID_COLS)
+                                     - (2 * GRID_ROWS) - (2 * GRID_COLS);
 static constexpr int CHUNK_SIZE      = 64;                      // vertices per work unit
 static constexpr int NUM_CHUNKS      = (NUM_VERTICES + CHUNK_SIZE - 1) / CHUNK_SIZE;
 static constexpr int PR_ITERATIONS   = 10;
@@ -49,11 +50,11 @@ __l2sp__ volatile int g_harts_per_core = 0;
 __l2sp__ volatile int g_total_cores    = 0;
 __l2sp__ std::atomic<int> g_initialized = 0;
 
-// ======================= Graph (CSR) =======================
-__l2sp__ int32_t g_row_ptr[NUM_VERTICES + 1];
-__l2sp__ int32_t g_col_idx[MAX_EDGES];
-__l2sp__ int32_t g_degree[NUM_VERTICES];
-__l2sp__ int32_t g_num_edges = 0;
+// ======================= Graph (CSR in DRAM) =======================
+__dram__ int32_t g_row_ptr[NUM_VERTICES + 1];
+__dram__ int32_t g_col_idx[MAX_EDGES];
+__dram__ int32_t g_degree[NUM_VERTICES];
+__dram__ int32_t g_num_edges = 0;
 
 // ======================= PageRank Data =======================
 __l2sp__ volatile int64_t g_rank_old[NUM_VERTICES];
@@ -156,15 +157,6 @@ static inline int64_t queue_pop_ttas(PRWorkQueue* q) {
 
 // ============= Graph Construction =============
 
-static inline uint32_t simple_hash(uint32_t x) {
-    x ^= x >> 16;
-    x *= 0x45d9f3bU;
-    x ^= x >> 16;
-    x *= 0x45d9f3bU;
-    x ^= x >> 16;
-    return x;
-}
-
 static void build_grid_graph() {
     // Pass 1 – count degree per vertex
     for (int v = 0; v < NUM_VERTICES; v++) g_degree[v] = 0;
@@ -177,7 +169,6 @@ static void build_grid_graph() {
             if (r < GRID_ROWS - 1)  deg++;
             if (c > 0)              deg++;
             if (c < GRID_COLS - 1)  deg++;
-            deg++;  // one random long-range edge
             g_degree[v] = deg;
         }
     }
@@ -187,31 +178,30 @@ static void build_grid_graph() {
     for (int v = 0; v < NUM_VERTICES; v++)
         g_row_ptr[v + 1] = g_row_ptr[v] + g_degree[v];
 
-    // Pass 2 – fill col_idx (use g_rank_new as temp insertion-offset array)
-    for (int v = 0; v < NUM_VERTICES; v++)
-        g_rank_new[v] = g_row_ptr[v];
+    // Pass 2 – fill col_idx (use degree as temp insertion-offset array)
+    for (int v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = g_row_ptr[v];
+    }
 
     for (int r = 0; r < GRID_ROWS; r++) {
         for (int c = 0; c < GRID_COLS; c++) {
             int v   = r * GRID_COLS + c;
-            int pos = (int)g_rank_new[v];
+            int pos = g_degree[v];
 
             if (r > 0)              g_col_idx[pos++] = (r - 1) * GRID_COLS + c;
             if (r < GRID_ROWS - 1)  g_col_idx[pos++] = (r + 1) * GRID_COLS + c;
             if (c > 0)              g_col_idx[pos++] = r * GRID_COLS + (c - 1);
             if (c < GRID_COLS - 1)  g_col_idx[pos++] = r * GRID_COLS + (c + 1);
-
-            // Random long-range edge
-            uint32_t tgt = simple_hash((uint32_t)v) % NUM_VERTICES;
-            if ((int)tgt == v) tgt = (tgt + 1) % NUM_VERTICES;
-            g_col_idx[pos++] = (int32_t)tgt;
-
-            g_rank_new[v] = pos;
+            g_degree[v] = pos;
         }
     }
 
     g_num_edges = g_row_ptr[NUM_VERTICES];
-    std::printf("Graph: %d vertices, %d edges (grid %dx%d + random)\n",
+    // Restore degree[] to out-degree counts.
+    for (int v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = g_row_ptr[v + 1] - g_row_ptr[v];
+    }
+    std::printf("Graph: %d vertices, %d directed edges (grid %dx%d CSR in DRAM)\n",
                NUM_VERTICES, (int)g_num_edges, GRID_ROWS, GRID_COLS);
 }
 
@@ -313,7 +303,7 @@ int main(int argc, char** argv) {
         std::printf("=== PageRank Baseline (no stealing) ===\n");
         std::printf("Hardware: %d cores x %d harts = %d total harts\n",
                    total_cores, harts_per_core, max_hw_harts);
-        std::printf("Graph: %d vertices (%dx%d grid), %d chunks of %d\n",
+        std::printf("Graph: %d vertices (%dx%d grid CSR in DRAM), %d chunks of %d\n",
                    NUM_VERTICES, GRID_ROWS, GRID_COLS, NUM_CHUNKS, CHUNK_SIZE);
         std::printf("PageRank iterations: %d, vertex work iters: %d\n",
                    PR_ITERATIONS, VERTEX_WORK_ITERS);

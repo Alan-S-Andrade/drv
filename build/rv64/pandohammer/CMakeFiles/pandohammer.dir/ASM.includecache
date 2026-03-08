@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/proj/alanfaascache-PG0/late_feb/new/prev_commit/drv/pandohammer/crt.S
+newlib.h
+/proj/alanfaascache-PG0/late_feb/new/prev_commit/drv/pandohammer/newlib.h
+pandohammer/register.h
+/proj/alanfaascache-PG0/late_feb/new/prev_commit/drv/pandohammer/pandohammer/register.h
+
+/proj/alanfaascache-PG0/late_feb/new/prev_commit/drv/pandohammer/pandohammer/register.h
+

@@ -46,10 +46,26 @@ __l2sp__ volatile int64_t stat_steal_failures[MAX_HARTS];
 
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
+// Remaining work units (decremented only when a hart actually processes work).
+__l2sp__ std::atomic<int64_t> g_work_remaining = 0;
 
 static inline int get_thread_id() {
     int tid = (myCoreId() << 4) + myThreadId();
     return tid;
+}
+
+static inline void spin_pause(int64_t iters) {
+    for (int64_t i = 0; i < iters; i++) {
+        asm volatile("" ::: "memory");
+    }
+}
+
+static inline void wait_no_sleep_if_work(int64_t backoff) {
+    if (g_work_remaining.load(std::memory_order_acquire) > 0) {
+        spin_pause(backoff);
+    } else {
+        hartsleep(backoff);
+    }
 }
 
 static inline void barrier() {
@@ -99,7 +115,7 @@ static inline int64_t queue_pop(WorkQueue* q) {
         int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, new_t);
         if (old_t != t) {
             retries++;
-            hartsleep(backoff);
+            wait_no_sleep_if_work(backoff);
             if (backoff < max_backoff) backoff <<= 1;
             continue;
         }
@@ -145,7 +161,7 @@ static int64_t queue_steal_batch(WorkQueue* q, int64_t* batch, int batch_size) {
             break;
         }
         retries++;
-        hartsleep(backoff);
+        wait_no_sleep_if_work(backoff);
         if (backoff < max_backoff) backoff <<= 1;
     }
     return stolen;
@@ -172,7 +188,7 @@ static inline int64_t queue_steal(WorkQueue* q) {
         }
         // CAS failed - retry with backoff
         retries++;
-        hartsleep(backoff);
+        wait_no_sleep_if_work(backoff);
         if (backoff < max_backoff) backoff <<= 1;
     }
     return -1;  // Too much contention, give up on this victim
@@ -197,17 +213,16 @@ static void work_steal_loop(int tid, int total_harts) {
     int64_t local_steal_attempts = 0;
     int64_t local_steal_success = 0;
     int64_t local_steal_failures = 0;
-    int consecutive_empty = 0;
-    const int MAX_EMPTY_ROUNDS = total_cores * 8 + 16;
     int64_t backoff = 1;
     const int64_t max_backoff = 64;
-    while (consecutive_empty < MAX_EMPTY_ROUNDS) {
+    while (true) {
+        if (g_work_remaining.load(std::memory_order_acquire) <= 0) break;
         // Try to get work from own core's queue first
         int64_t work = queue_pop(my_queue);
         if (work >= 0) {
             do_work(work);
-            local_processed++;
-            consecutive_empty = 0;
+            local_processed += work;
+            g_work_remaining.fetch_sub(work, std::memory_order_acq_rel);
             backoff = 1;
             continue;
         }
@@ -224,9 +239,9 @@ static void work_steal_loop(int tid, int total_harts) {
                 // Successful steal
                 local_steal_success++;
                 do_work(work);
-                local_processed++;
+                local_processed += work;
+                g_work_remaining.fetch_sub(work, std::memory_order_acq_rel);
                 found_work = true;
-                consecutive_empty = 0;
                 backoff = 1;
                 // Move to next target for fairness
                 steal_target_core = (steal_target_core + 1) % total_cores;
@@ -234,15 +249,15 @@ static void work_steal_loop(int tid, int total_harts) {
             } else {
                 local_steal_failures++;
                 // Brief backoff between steal attempts to reduce contention
-                hartsleep(backoff);
+                wait_no_sleep_if_work(backoff);
             }
             // Try next victim core
             steal_target_core = (steal_target_core + 1) % total_cores;
         }
         if (!found_work) {
-            consecutive_empty++;
+            if (g_work_remaining.load(std::memory_order_acquire) <= 0) break;
             // Exponential backoff before retry
-            hartsleep(backoff);
+            wait_no_sleep_if_work(backoff);
             if (backoff < max_backoff) backoff <<= 1;
         }
     }
@@ -258,13 +273,16 @@ static void distribute_work_imbalanced(int tid, int total_harts, int total_work)
         int odd_cores = g_total_cores / 2;
         int even_cores = g_total_cores - odd_cores;
         int base_work = total_work / (even_cores + 2 * odd_cores);
+        int64_t total_pushed_units = 0;
         for (int c = 0; c < g_total_cores; c++) {
             int my_work = (c % 2 == 0) ? base_work : base_work * 2;
             if (my_work > QUEUE_SIZE) my_work = QUEUE_SIZE;
             for (int i = 0; i < my_work; i++) {
                 queue_push(&core_queues[c], 1);
             }
+            total_pushed_units += my_work;
         }
+        g_work_remaining.store(total_pushed_units, std::memory_order_release);
     }
 }
 

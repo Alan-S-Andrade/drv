@@ -777,5 +777,116 @@ void RISCVSimulator::visitECALL(RISCVHart &hart, RISCVInstruction &i) {
     hart.pc() += 4;
 }
 
+void RISCVSimulator::handleBulkLoad(RISCVSimHart &shart, uint64_t desc_addr) {
+    struct BulkLoadDesc {
+    };
+
+    // Read descriptor from simulated memory via native pointer
+    void *desc_native = nullptr;
+    size_t desc_chunk = 0;
+    DrvStdMemory::toNativePointerStatic(
+        desc_addr, core_->address_decoder_, core_->sys_config_,
+        &desc_native, &desc_chunk);
+
+    BulkLoadDesc desc;
+    std::memcpy(&desc, desc_native, sizeof(desc));
+
+    // Read filename string from simulated memory (may span interleave chunks)
+    uint64_t fname_abs = core_->address_decoder_.to_absolute(desc.filename_addr);
+    char filename[256];
+    size_t fname_pos = 0;
+    bool found_null = false;
+    while (fname_pos < 255 && !found_null) {
+        void *fname_native = nullptr;
+        size_t fname_chunk = 0;
+        DrvStdMemory::toNativePointerStatic(
+            fname_abs + fname_pos, core_->address_decoder_, core_->sys_config_,
+            &fname_native, &fname_chunk);
+        size_t to_read = std::min(fname_chunk, (size_t)255 - fname_pos);
+        for (size_t j = 0; j < to_read; ++j) {
+            char c = ((const char*)fname_native)[j];
+            filename[fname_pos++] = c;
+            if (c == '\0') { found_null = true; break; }
+        }
+    }
+    filename[fname_pos] = '\0';
+
+    // Open file on host
+    core_->output_.verbose(CALL_INFO, 0, 0,
+        "BULK_LOAD: filename='%s' dest=0x%lx size=%ld\n",
+        filename, (unsigned long)desc.dest_addr, (long)desc.size);
+    int fd = ::open(filename, O_RDONLY);
+    if (fd < 0) {
+        core_->output_.verbose(CALL_INFO, 0, 0,
+            "BULK_LOAD: open('%s') failed: %s\n", filename, strerror(errno));
+        desc.result = -1;
+        std::memcpy(desc_native, &desc, sizeof(desc));
+        return;
+    }
+
+    // Read file into host buffer
+    std::vector<uint8_t> file_data(desc.size);
+    ssize_t total = 0;
+    while (total < desc.size) {
+        ssize_t n = ::read(fd, file_data.data() + total, desc.size - total);
+        if (n <= 0) break;
+        total += n;
+    }
+    ::close(fd);
+
+    // Debug: print first 20 bytes of file data (header)
+    core_->output_.verbose(CALL_INFO, 0, 0,
+        "BULK_LOAD: read %ld bytes from file. Header bytes: "
+        "%02x %02x %02x %02x %02x %02x %02x %02x "
+        "%02x %02x %02x %02x %02x %02x %02x %02x "
+        "%02x %02x %02x %02x\n",
+        (long)total,
+        file_data[0], file_data[1], file_data[2], file_data[3],
+        file_data[4], file_data[5], file_data[6], file_data[7],
+        file_data[8], file_data[9], file_data[10], file_data[11],
+        file_data[12], file_data[13], file_data[14], file_data[15],
+        file_data[16], file_data[17], file_data[18], file_data[19]);
+
+    // Memcpy to simulated memory backing store in chunks
+    uint64_t dest_abs = core_->address_decoder_.to_absolute(desc.dest_addr);
+    core_->output_.verbose(CALL_INFO, 0, 0,
+        "BULK_LOAD: dest_local=0x%lx dest_abs=0x%lx\n",
+        (unsigned long)desc.dest_addr, (unsigned long)dest_abs);
+    size_t offset = 0;
+    size_t num_chunks = 0;
+    while (offset < (size_t)total) {
+        void *chunk_ptr = nullptr;
+        size_t chunk_size = 0;
+        DrvStdMemory::toNativePointerStatic(
+            dest_abs + offset, core_->address_decoder_, core_->sys_config_,
+            &chunk_ptr, &chunk_size);
+        size_t to_copy = std::min(chunk_size, (size_t)total - offset);
+        std::memcpy(chunk_ptr, file_data.data() + offset, to_copy);
+        offset += to_copy;
+        num_chunks++;
+    }
+
+    core_->output_.verbose(CALL_INFO, 0, 0,
+        "BULK_LOAD: wrote %lu chunks (%lu bytes) to backing store\n",
+        (unsigned long)num_chunks, (unsigned long)offset);
+
+    // Write result back to descriptor (L1SP / noncacheable — immediately visible)
+    desc.result = total;
+    std::memcpy(desc_native, &desc, sizeof(desc));
+
+    // Cache coherency fix: the R-core's L1 cache may have stale lines
+    // for addresses near the buffer start (populated during malloc).
+    // Write the first page through the memory hierarchy so the cache
+    // gets the correct data.  This adds minimal Ramulator traffic.
+    size_t coherent_bytes = std::min((size_t)4096, (size_t)total);
+    std::vector<uint8_t> coherent_data(file_data.begin(),
+                                       file_data.begin() + coherent_bytes);
+    std::function<void(void)> coherent_done([&shart](void) {
+        shart.stalledMemory() = false;
+    });
+    shart.stalledMemory() = true;
+    sysWriteBuffer(shart, dest_abs, coherent_data, std::move(coherent_done));
+}
+
 }
 }

@@ -1,6 +1,6 @@
 // PageRank with Work Stealing (TTAS)
 //
-// Graph: deterministic 2D grid (GRID_ROWS x GRID_COLS) + random long-range edges
+// Graph: deterministic 2D grid (GRID_ROWS x GRID_COLS) in CSR
 // Work unit: a chunk of CHUNK_SIZE consecutive vertices
 // Distribution: odd-numbered cores get 2x chunks (imbalanced)
 // Idle cores steal from overloaded cores to achieve load balance.
@@ -24,10 +24,11 @@
 #include <pandohammer/staticdecl.h>
 
 // ======================= Configuration =======================
-static constexpr int GRID_ROWS       = 64;
-static constexpr int GRID_COLS       = 64;
+static constexpr int GRID_ROWS       = 1000;
+static constexpr int GRID_COLS       = 100;
 static constexpr int NUM_VERTICES    = GRID_ROWS * GRID_COLS;   // 4096
-static constexpr int MAX_EDGES       = NUM_VERTICES * 5;        // grid + random
+static constexpr int MAX_EDGES       = (4 * GRID_ROWS * GRID_COLS)
+                                     - (2 * GRID_ROWS) - (2 * GRID_COLS);
 static constexpr int CHUNK_SIZE      = 64;                      // vertices per work unit
 static constexpr int NUM_CHUNKS      = (NUM_VERTICES + CHUNK_SIZE - 1) / CHUNK_SIZE;
 static constexpr int PR_ITERATIONS   = 10;
@@ -37,6 +38,8 @@ static constexpr int PR_QUEUE_SIZE   = 512;
 static constexpr int MAX_HARTS       = 1024;
 static constexpr int MAX_CORES       = 64;
 static constexpr int STEAL_K         = 4;    // Max chunks to steal per episode (tunable)
+static constexpr int WQ_TRACE_STRIDE = 64;   // sample every N loop turns in work_stealing_process (hart 0)
+static constexpr int MAX_WQ_TRACE_SAMPLES = 32768;
 
 // Fixed-point PageRank (rank 1.0 == RANK_SCALE)
 static constexpr int64_t RANK_SCALE  = 1000000LL;
@@ -56,11 +59,11 @@ __l2sp__ volatile int g_harts_per_core = 0;
 __l2sp__ volatile int g_total_cores    = 0;
 __l2sp__ std::atomic<int> g_initialized = 0;
 
-// ======================= Graph (CSR) =======================
-__l2sp__ int32_t g_row_ptr[NUM_VERTICES + 1];
-__l2sp__ int32_t g_col_idx[MAX_EDGES];
-__l2sp__ int32_t g_degree[NUM_VERTICES];
-__l2sp__ int32_t g_num_edges = 0;
+// ======================= Graph (CSR in DRAM) =======================
+__dram__ int32_t g_row_ptr[NUM_VERTICES + 1];
+__dram__ int32_t g_col_idx[MAX_EDGES];
+__dram__ int32_t g_degree[NUM_VERTICES];
+__dram__ int32_t g_num_edges = 0;
 
 // ======================= PageRank Data =======================
 __l2sp__ volatile int64_t g_rank_old[NUM_VERTICES];
@@ -89,11 +92,113 @@ __l2sp__ std::atomic<int64_t> g_sense = 0;
 __l2sp__ volatile int64_t stat_chunks_processed[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_attempts[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_success[MAX_HARTS];
+__l2sp__ volatile int32_t g_current_iter = -1;
+__l2sp__ volatile uint64_t g_core_l1sp_bytes = 0;
+
+enum WQTracePhase : int32_t {
+    WQ_PHASE_INIT = 0,
+    WQ_PHASE_ITER_BEGIN = 1,
+    WQ_PHASE_ITER_DURING = 2,
+    WQ_PHASE_ITER_END = 3,
+    WQ_PHASE_FINAL = 4
+};
+
+struct WQTraceSample {
+    int32_t iter;
+    int32_t phase;
+};
+
+__dram__ WQTraceSample g_wq_trace_samples[MAX_WQ_TRACE_SAMPLES];
+__dram__ int32_t g_wq_trace_depths[MAX_WQ_TRACE_SAMPLES][MAX_CORES];
+__l2sp__ volatile int32_t g_wq_trace_count = 0;
+__l2sp__ volatile int32_t g_wq_trace_dropped = 0;
 
 // ======================== Utility ========================
 
 static inline int get_thread_id() {
     return (myCoreId() << 4) + myThreadId();
+}
+
+static inline const char* wq_phase_name(int32_t phase) {
+    switch (phase) {
+    case WQ_PHASE_INIT: return "init";
+    case WQ_PHASE_ITER_BEGIN: return "iter_begin";
+    case WQ_PHASE_ITER_DURING: return "iter_during";
+    case WQ_PHASE_ITER_END: return "iter_end";
+    case WQ_PHASE_FINAL: return "final";
+    default: return "unknown";
+    }
+}
+
+static void record_wq_trace(int32_t phase, int32_t iter) {
+    int32_t idx = g_wq_trace_count;
+    if (idx >= MAX_WQ_TRACE_SAMPLES) {
+        g_wq_trace_dropped++;
+        return;
+    }
+    g_wq_trace_count = idx + 1;
+
+    g_wq_trace_samples[idx] = {iter, phase};
+    for (int c = 0; c < g_total_cores; c++) {
+        int64_t depth = core_queues[c].tail - core_queues[c].head;
+        if (depth < 0) depth = 0;
+        g_wq_trace_depths[idx][c] = (int32_t)depth;
+    }
+}
+
+static void dump_wq_trace() {
+    const uint64_t core_l1sp_bytes = g_core_l1sp_bytes;
+    const uint64_t global_l1sp_bytes = core_l1sp_bytes * (uint64_t)g_total_cores;
+
+    auto emit = [&](FILE* out) {
+        std::fprintf(out, "WQTRACE_DUMP_BEGIN,bench=pagerank_work_stealing,cores=%d,samples=%d,dropped=%d\n",
+                     g_total_cores, (int)g_wq_trace_count, (int)g_wq_trace_dropped);
+        for (int32_t i = 0; i < g_wq_trace_count; i++) {
+            const WQTraceSample& s = g_wq_trace_samples[i];
+            std::fprintf(out, "WQTRACE,bench=pagerank_work_stealing,cores=%d,sample=%d,phase=%s,level=-1,iter=%d,queue=core,depths=",
+                         g_total_cores, (int)i, wq_phase_name(s.phase), (int)s.iter);
+            for (int c = 0; c < g_total_cores; c++) {
+                if (c > 0) std::fprintf(out, "|");
+                std::fprintf(out, "%d", (int)g_wq_trace_depths[i][c]);
+            }
+            std::fprintf(out, "\n");
+        }
+        std::fprintf(out, "WQTRACE_DUMP_END,bench=pagerank_work_stealing\n");
+
+        std::fprintf(out,
+                     "L1SPTRACE_DUMP_BEGIN,bench=pagerank_work_stealing,cores=%d,harts=%d,samples=%d\n",
+                     g_total_cores, g_total_harts, (int)g_wq_trace_count);
+        std::fprintf(out,
+                     "L1SPTRACE_CONFIG,bench=pagerank_work_stealing,core_bytes=%lu,global_bytes=%lu\n",
+                     (unsigned long)core_l1sp_bytes, (unsigned long)global_l1sp_bytes);
+        for (int32_t i = 0; i < g_wq_trace_count; i++) {
+            const WQTraceSample& s = g_wq_trace_samples[i];
+            std::fprintf(out,
+                         "L1SPTRACE_GLOBAL,bench=pagerank_work_stealing,sample=%d,phase=%s,level=-1,iter=%d,bytes=%lu\n",
+                         (int)i, wq_phase_name(s.phase), (int)s.iter,
+                         (unsigned long)global_l1sp_bytes);
+        }
+        for (int h = 0; h < g_total_harts; h++) {
+            std::fprintf(out,
+                         "L1SPTRACE_HART,bench=pagerank_work_stealing,hart=%d,core=%d,thread=%d,bytes=%lu\n",
+                         h, h / g_harts_per_core, h % g_harts_per_core,
+                         (unsigned long)core_l1sp_bytes);
+        }
+        std::fprintf(out, "L1SPTRACE_DUMP_END,bench=pagerank_work_stealing\n");
+    };
+
+    emit(stdout);
+
+    char path[64];
+    std::snprintf(path, sizeof(path), "run_%dcores.log", g_total_cores);
+    FILE* fp = std::fopen(path, "w");
+    if (fp != nullptr) {
+        emit(fp);
+        std::fclose(fp);
+        std::printf("WQTRACE_FILE_WRITTEN,bench=pagerank_work_stealing,path=%s\n", path);
+    } else {
+        std::printf("WQTRACE_FILE_ERROR,bench=pagerank_work_stealing,path=%s\n", path);
+    }
 }
 
 static inline void barrier() {
@@ -231,15 +336,6 @@ static inline int64_t queue_steal_k_ttas(PRWorkQueue* q, int64_t* out_begin, int
 
 // ============= Graph Construction =============
 
-static inline uint32_t simple_hash(uint32_t x) {
-    x ^= x >> 16;
-    x *= 0x45d9f3bU;
-    x ^= x >> 16;
-    x *= 0x45d9f3bU;
-    x ^= x >> 16;
-    return x;
-}
-
 static void build_grid_graph() {
     // Pass 1 – count degree per vertex
     for (int v = 0; v < NUM_VERTICES; v++) g_degree[v] = 0;
@@ -252,7 +348,6 @@ static void build_grid_graph() {
             if (r < GRID_ROWS - 1)  deg++;
             if (c > 0)              deg++;
             if (c < GRID_COLS - 1)  deg++;
-            deg++;  // one random long-range edge
             g_degree[v] = deg;
         }
     }
@@ -262,31 +357,30 @@ static void build_grid_graph() {
     for (int v = 0; v < NUM_VERTICES; v++)
         g_row_ptr[v + 1] = g_row_ptr[v] + g_degree[v];
 
-    // Pass 2 – fill col_idx (use g_rank_new as temp insertion-offset array)
-    for (int v = 0; v < NUM_VERTICES; v++)
-        g_rank_new[v] = g_row_ptr[v];
+    // Pass 2 – fill col_idx (use degree as temp insertion-offset array)
+    for (int v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = g_row_ptr[v];
+    }
 
     for (int r = 0; r < GRID_ROWS; r++) {
         for (int c = 0; c < GRID_COLS; c++) {
             int v   = r * GRID_COLS + c;
-            int pos = (int)g_rank_new[v];
+            int pos = g_degree[v];
 
             if (r > 0)              g_col_idx[pos++] = (r - 1) * GRID_COLS + c;
             if (r < GRID_ROWS - 1)  g_col_idx[pos++] = (r + 1) * GRID_COLS + c;
             if (c > 0)              g_col_idx[pos++] = r * GRID_COLS + (c - 1);
             if (c < GRID_COLS - 1)  g_col_idx[pos++] = r * GRID_COLS + (c + 1);
-
-            // Random long-range edge
-            uint32_t tgt = simple_hash((uint32_t)v) % NUM_VERTICES;
-            if ((int)tgt == v) tgt = (tgt + 1) % NUM_VERTICES;
-            g_col_idx[pos++] = (int32_t)tgt;
-
-            g_rank_new[v] = pos;
+            g_degree[v] = pos;
         }
     }
 
     g_num_edges = g_row_ptr[NUM_VERTICES];
-    std::printf("Graph: %d vertices, %d edges (grid %dx%d + random)\n",
+    // Restore degree[] to out-degree counts.
+    for (int v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = g_row_ptr[v + 1] - g_row_ptr[v];
+    }
+    std::printf("Graph: %d vertices, %d directed edges (grid %dx%d CSR in DRAM)\n",
                NUM_VERTICES, (int)g_num_edges, GRID_ROWS, GRID_COLS);
 }
 
@@ -394,8 +488,14 @@ static void work_stealing_process(int tid) {
     const int MAX_EMPTY   = total_cores * 2;      // was total_cores*4+16
     int64_t backoff       = 4;                     // start higher
     const int64_t max_backoff = 512;               // was 64
+    int64_t loop_turn = 0;
 
     while (consecutive_empty < MAX_EMPTY) {
+        loop_turn++;
+        if (tid == 0 && (loop_turn % WQ_TRACE_STRIDE) == 0) {
+            record_wq_trace(WQ_PHASE_ITER_DURING, g_current_iter);
+        }
+
         // 1. Try own queue first
         int64_t packed = queue_pop_ttas(my_q);
         if (packed >= 0) {
@@ -492,6 +592,9 @@ int main(int argc, char** argv) {
 
     // ---------- Initialisation (hart 0) ----------
     if (tid == 0) {
+        g_wq_trace_count = 0;
+        g_wq_trace_dropped = 0;
+        g_current_iter = -1;
         g_total_cores    = total_cores;
         g_harts_per_core = harts_per_core;
         g_total_harts    = max_hw_harts;
@@ -499,10 +602,14 @@ int main(int argc, char** argv) {
         std::printf("=== PageRank Work Stealing (TTAS) ===\n");
         std::printf("Hardware: %d cores x %d harts = %d total harts\n",
                    total_cores, harts_per_core, max_hw_harts);
-        std::printf("Graph: %d vertices (%dx%d grid), %d chunks of %d\n",
+        std::printf("Graph: %d vertices (%dx%d grid CSR in DRAM), %d chunks of %d\n",
                    NUM_VERTICES, GRID_ROWS, GRID_COLS, NUM_CHUNKS, CHUNK_SIZE);
         std::printf("PageRank iterations: %d, vertex work iters: %d\n",
                    PR_ITERATIONS, VERTEX_WORK_ITERS);
+        g_core_l1sp_bytes = coreL1SPSize();
+        std::printf("L1SP: per-core=%lu bytes, global=%lu bytes\n",
+                   (unsigned long)g_core_l1sp_bytes,
+                   (unsigned long)(g_core_l1sp_bytes * (uint64_t)g_total_cores));
         std::printf("\n");
 
         for (int i = 0; i < max_hw_harts; i++) {
@@ -527,6 +634,7 @@ int main(int argc, char** argv) {
 
         std::atomic_thread_fence(std::memory_order_release);
         g_initialized.store(1, std::memory_order_release);
+        record_wq_trace(WQ_PHASE_INIT, -1);
     } else {
         while (g_initialized.load(std::memory_order_acquire) == 0)
             hartsleep(10);
@@ -553,11 +661,18 @@ int main(int argc, char** argv) {
     barrier();
 
     for (int iter = 0; iter < PR_ITERATIONS; iter++) {
-        if (tid == 0) distribute_chunks(g_total_cores);
+        if (tid == 0) {
+            g_current_iter = iter;
+            distribute_chunks(g_total_cores);
+            record_wq_trace(WQ_PHASE_ITER_BEGIN, iter);
+        }
         barrier();
 
         work_stealing_process(tid);
         barrier();
+        if (tid == 0) {
+            record_wq_trace(WQ_PHASE_ITER_END, iter);
+        }
 
         if (tid == 0) {
             for (int v = 0; v < NUM_VERTICES; v++) {
@@ -569,6 +684,7 @@ int main(int argc, char** argv) {
     }
 
     if (tid == 0) {
+        record_wq_trace(WQ_PHASE_FINAL, PR_ITERATIONS);
         asm volatile("rdcycle %0" : "=r"(end_cycles));
         uint64_t elapsed = end_cycles - start_cycles;
 
@@ -621,6 +737,7 @@ int main(int argc, char** argv) {
             std::printf("  rank[%d] = %ld\n", v, (long)g_rank_old[v]);
 
         std::printf("\nCores: %d, Harts: %d\n", g_total_cores, g_total_harts);
+        dump_wq_trace();
     }
 
     barrier();

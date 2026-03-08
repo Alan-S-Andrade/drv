@@ -15,9 +15,11 @@ static constexpr int QUEUE_SIZE = 4096;        // Max work items per core
 static constexpr int64_t WORK_UNIT_ITERS = 10000; // Iterations per work unit
 static constexpr int MAX_HARTS = 1024;         // Maximum array size
 static constexpr int MAX_CORES = 64;           // Maximum cores
-static constexpr int g_total_work = 1536;      // Total work units to distribute
+static constexpr int g_total_work = 1524;      // Total work units to distribute
 static constexpr int WORK_CHUNK_SIZE = 32;     // Work units per queue item (range)
 static constexpr int STEAL_K = 4;              // Max items to steal per episode (tunable)
+static constexpr int MAX_WQ_TRACE_SAMPLES = 512;  // Per-core queue-depth trace samples
+static constexpr int WQ_TRACE_SAMPLE_PERIOD = 32; // Sample every N loop iterations (core leader only)
 
 // Pack a (begin, end) range into a single int64_t queue item
 static inline int64_t pack_range(int32_t begin, int32_t end) {
@@ -43,15 +45,25 @@ struct WorkQueue {
     volatile int64_t items[QUEUE_SIZE];     // Work items
 };
 
+struct WorkQueueTraceSample {
+    uint64_t cycle;
+    int64_t depth;
+    int64_t head;
+    int64_t tail;
+};
+
 __l2sp__ WorkQueue core_queues[MAX_CORES];     // Static array for core queues
 __l2sp__ int64_t g_local_sense[MAX_HARTS];     // Static array for per-hart sense
 __l2sp__ volatile int64_t stat_work_processed[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_attempts[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_success[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_failures[MAX_HARTS];
+__l2sp__ volatile uint64_t g_core_l1sp_bytes = 0;
 
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
+// Remaining work units (decremented only when a hart actually processes units).
+__l2sp__ std::atomic<int64_t> g_work_remaining = 0;
 
 // Per-core sum variables — cache-line padded so each core hits its own L2SP line
 struct alignas(64) CoreLocalSum {
@@ -61,10 +73,48 @@ __l2sp__ CoreLocalSum g_core_sum[MAX_CORES];
 
 // Per-core steal token: only one hart per core may steal at a time
 __l2sp__ std::atomic<int> core_thief[MAX_CORES];
+__l2sp__ WorkQueueTraceSample g_wq_trace[MAX_CORES][MAX_WQ_TRACE_SAMPLES];
+__l2sp__ volatile int32_t g_wq_trace_count[MAX_CORES];
+
+static inline uint64_t rdcycle_u64() {
+    uint64_t c;
+    asm volatile("rdcycle %0" : "=r"(c));
+    return c;
+}
+
+// One writer per core (the core leader) records queue depth over time.
+static inline void record_workqueue_depth_sample(int core_id, WorkQueue* q) {
+    int32_t idx = g_wq_trace_count[core_id];
+    if (idx < 0 || idx >= MAX_WQ_TRACE_SAMPLES) return;
+    int64_t h = atomic_load_i64(&q->head);
+    int64_t t = atomic_load_i64(&q->tail);
+    int64_t d = t - h;
+    if (d < 0) d = 0;
+    if (d > QUEUE_SIZE) d = QUEUE_SIZE;
+    g_wq_trace[core_id][idx].cycle = rdcycle_u64();
+    g_wq_trace[core_id][idx].depth = d;
+    g_wq_trace[core_id][idx].head = h;
+    g_wq_trace[core_id][idx].tail = t;
+    g_wq_trace_count[core_id] = idx + 1;
+}
 
 static inline int get_thread_id() {
     int tid = (myCoreId() << 4) + myThreadId();
     return tid;
+}
+
+static inline void spin_pause(int64_t iters) {
+    for (int64_t i = 0; i < iters; i++) {
+        asm volatile("" ::: "memory");
+    }
+}
+
+static inline void wait_no_sleep_if_work(int64_t backoff) {
+    if (g_work_remaining.load(std::memory_order_acquire) > 0) {
+        spin_pause(backoff);
+    } else {
+        hartsleep(backoff);
+    }
 }
 
 static inline void barrier() {
@@ -116,7 +166,7 @@ static inline bool queue_push_atomic(WorkQueue* q, int64_t work) {
             q->items[t] = work;
             return true;
         }
-        hartsleep(1);
+        wait_no_sleep_if_work(1);
     }
 }
 
@@ -141,7 +191,7 @@ static inline int64_t queue_pop(WorkQueue* q) {
         if (old_t != t) {
             // Another hart modified tail, retry with backoff to reduce contention
             retries++;
-            hartsleep(backoff);
+            wait_no_sleep_if_work(backoff);
             if (backoff < max_backoff) backoff <<= 1;
             continue;
         }
@@ -199,7 +249,7 @@ static inline int64_t queue_steal(WorkQueue* q) {
         }
         // CAS failed - retry with backoff
         retries++;
-        hartsleep(backoff);
+        wait_no_sleep_if_work(backoff);
         if (backoff < max_backoff) backoff <<= 1;
     }
     return -1;  // Too much contention, give up on this victim
@@ -227,7 +277,7 @@ static inline int64_t queue_steal_k(WorkQueue* q, int64_t* out_begin, int64_t ma
             return k;
         }
         retries++;
-        hartsleep(backoff);
+        wait_no_sleep_if_work(backoff);
         if (backoff < max_backoff) backoff <<= 1;
     }
     return 0;
@@ -260,12 +310,12 @@ static void work_steal_loop(int tid, int total_harts) {
     int total_cores = g_total_cores;
     
     if (tid == 0) {
-        std::printf("Hart 0 entering work_steal_loop, total_cores=%d, harts_per_core=%d\n", 
-                   total_cores, harts_per_core);
+        std::printf("Hart 0 entering work_steal_loop, total_cores=%d, harts_per_core=%d\n", total_cores, harts_per_core);
         std::fflush(stdout);
     }
     
     int my_core = tid / harts_per_core;
+    const bool is_core_leader = ((tid % harts_per_core) == 0);
     WorkQueue* my_queue = &core_queues[my_core];
 
     // Xorshift RNG state — seeded per-hart so thieves diverge
@@ -284,18 +334,21 @@ static void work_steal_loop(int tid, int total_harts) {
     // Local buffer for stolen items — avoids re-touching victim's cache lines
     int64_t stolen_buf[STEAL_K];
     
-    int consecutive_empty = 0;
-    const int MAX_EMPTY_ROUNDS = total_cores * 8 + 16;  // More tolerance for high contention
-    
     if (tid == 0) {
-        std::printf("Hart 0: my_core=%d, MAX_EMPTY_ROUNDS=%d\n", my_core, MAX_EMPTY_ROUNDS);
+        std::printf("Hart 0: my_core=%d\n", my_core);
         std::fflush(stdout);
     }
     
     int64_t backoff = 1;
     const int64_t max_backoff = 64;
+    int loop_iters = 0;
     
-    while (consecutive_empty < MAX_EMPTY_ROUNDS) {
+    while (true) {
+        if (g_work_remaining.load(std::memory_order_acquire) <= 0) break;
+        if (is_core_leader && ((loop_iters % WQ_TRACE_SAMPLE_PERIOD) == 0)) {
+            record_workqueue_depth_sample(my_core, my_queue);
+        }
+
         // Try to get work from own core's queue first
         int64_t packed = queue_pop(my_queue);
         
@@ -304,8 +357,9 @@ static void work_steal_loop(int tid, int total_harts) {
             int32_t rb = range_begin(packed);
             int32_t re = range_end(packed);
             do_work_range(rb, re, my_core);
-            local_processed += (re - rb);
-            consecutive_empty = 0;
+            int64_t processed_units = (re - rb);
+            local_processed += processed_units;
+            g_work_remaining.fetch_sub(processed_units, std::memory_order_acq_rel);
             backoff = 1;  // Reset backoff on success
             continue;
         }
@@ -352,10 +406,11 @@ static void work_steal_loop(int tid, int total_harts) {
                         int32_t rb = range_begin(stolen_buf[0]);
                         int32_t re = range_end(stolen_buf[0]);
                         do_work_range(rb, re, my_core);
-                        local_processed += (re - rb);
+                        int64_t processed_units = (re - rb);
+                        local_processed += processed_units;
+                        g_work_remaining.fetch_sub(processed_units, std::memory_order_acq_rel);
                     }
                     found_work = true;
-                    consecutive_empty = 0;
                     backoff = 1;  // Reset backoff on success
                     // Clear recently-tried on success
                     for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) recently_tried[ri] = -1;
@@ -366,7 +421,7 @@ static void work_steal_loop(int tid, int total_harts) {
                     recently_tried[rt_idx] = victim;
                     rt_idx = (rt_idx + 1) % RECENTLY_TRIED_SIZE;
                     // Brief backoff between steal attempts to reduce contention
-                    hartsleep(backoff);
+                    wait_no_sleep_if_work(backoff);
                 }
             }
             
@@ -374,16 +429,21 @@ static void work_steal_loop(int tid, int total_harts) {
             core_thief[my_core].store(0, std::memory_order_release);
             
             if (!found_work) {
-                consecutive_empty++;
-                hartsleep(backoff);
+                if (g_work_remaining.load(std::memory_order_acquire) <= 0) break;
+                wait_no_sleep_if_work(backoff);
                 if (backoff < max_backoff) backoff <<= 1;
             }
         } else {
             // Another hart on this core is already stealing — back off harder, retry local
-            consecutive_empty++;
-            hartsleep(backoff * 4);
+            if (g_work_remaining.load(std::memory_order_acquire) <= 0) break;
+            wait_no_sleep_if_work(backoff * 4);
             if (backoff < max_backoff) backoff <<= 1;
         }
+        loop_iters++;
+    }
+
+    if (is_core_leader) {
+        record_workqueue_depth_sample(my_core, my_queue);
     }
     
     // Record statistics
@@ -406,6 +466,7 @@ static void distribute_work_imbalanced(int tid, int total_harts, int total_work)
         // Odd cores get 2x work, so total = even_cores * base + odd_cores * 2 * base
         // total = base * (even_cores + 2 * odd_cores)
         int base_work = total_work / (even_cores + 2 * odd_cores);
+        int64_t total_pushed_units = 0;
         
         for (int c = 0; c < g_total_cores; c++) {
             int my_work = (c % 2 == 0) ? base_work : base_work * 2;
@@ -429,9 +490,72 @@ static void distribute_work_imbalanced(int tid, int total_harts, int total_work)
                 }
             }
             std::printf("pushed %d units in %d chunks, tail=%ld\n", pushed_units, pushed_chunks, (long)core_queues[c].tail);
+            total_pushed_units += pushed_units;
         }
+        g_work_remaining.store(total_pushed_units, std::memory_order_release);
         std::printf("Distribution complete.\n");
     }
+}
+
+static void dump_wqtrace(FILE* out, int total_cores) {
+    int32_t max_samples = 0;
+    for (int c = 0; c < total_cores; c++) {
+        if (g_wq_trace_count[c] > max_samples) max_samples = g_wq_trace_count[c];
+    }
+    const uint64_t core_l1sp_bytes = g_core_l1sp_bytes;
+    const uint64_t global_l1sp_bytes = core_l1sp_bytes * (uint64_t)total_cores;
+
+    std::fprintf(out, "WQTRACE_DUMP_BEGIN,bench=work_stealing_benchmark,cores=%d,samples=%d,dropped=0\n",
+                 total_cores, (int)max_samples);
+
+    for (int32_t i = 0; i < max_samples; i++) {
+        std::fprintf(out, "WQTRACE,bench=work_stealing_benchmark,cores=%d,sample=%d,phase=runtime,level=-1,iter=-1,queue=core,depths=",
+                     total_cores, (int)i);
+        for (int c = 0; c < total_cores; c++) {
+            int32_t n = g_wq_trace_count[c];
+            int64_t d = 0;
+            if (n > 0) {
+                int32_t idx = (i < n) ? i : (n - 1);
+                d = g_wq_trace[c][idx].depth;
+            }
+            if (c > 0) std::fprintf(out, "|");
+            std::fprintf(out, "%ld", (long)d);
+        }
+        std::fprintf(out, "\n");
+    }
+
+    std::fprintf(out, "WQTRACE_DUMP_END,bench=work_stealing_benchmark\n");
+
+    std::fprintf(out,
+                 "L1SPTRACE_DUMP_BEGIN,bench=work_stealing_benchmark,cores=%d,harts=%d,samples=%d\n",
+                 total_cores, g_total_harts, (int)max_samples);
+    std::fprintf(out,
+                 "L1SPTRACE_CONFIG,bench=work_stealing_benchmark,core_bytes=%lu,global_bytes=%lu\n",
+                 (unsigned long)core_l1sp_bytes, (unsigned long)global_l1sp_bytes);
+    for (int32_t i = 0; i < max_samples; i++) {
+        uint64_t cycle = 0;
+        bool have_cycle = false;
+        for (int c = 0; c < total_cores; c++) {
+            int32_t n = g_wq_trace_count[c];
+            if (n > 0) {
+                int32_t idx = (i < n) ? i : (n - 1);
+                cycle = g_wq_trace[c][idx].cycle;
+                have_cycle = true;
+                break;
+            }
+        }
+        if (!have_cycle) cycle = 0;
+        std::fprintf(out,
+                     "L1SPTRACE_GLOBAL,bench=work_stealing_benchmark,sample=%d,phase=runtime,level=-1,iter=-1,cycle=%lu,bytes=%lu\n",
+                     (int)i, (unsigned long)cycle, (unsigned long)global_l1sp_bytes);
+    }
+    for (int h = 0; h < g_total_harts; h++) {
+        std::fprintf(out,
+                     "L1SPTRACE_HART,bench=work_stealing_benchmark,hart=%d,core=%d,thread=%d,bytes=%lu\n",
+                     h, h / g_harts_per_core, h % g_harts_per_core,
+                     (unsigned long)core_l1sp_bytes);
+    }
+    std::fprintf(out, "L1SPTRACE_DUMP_END,bench=work_stealing_benchmark\n");
 }
 
 int main(int argc, char** argv) {
@@ -455,6 +579,10 @@ int main(int argc, char** argv) {
                    total_cores, harts_per_core, max_hw_harts);
         std::printf("Using: %d cores x %d harts = %d total harts\n",
                    g_total_cores, g_harts_per_core, g_total_harts);
+        g_core_l1sp_bytes = coreL1SPSize();
+        std::printf("L1SP: per-core=%lu bytes, global=%lu bytes\n",
+                   (unsigned long)g_core_l1sp_bytes,
+                   (unsigned long)(g_core_l1sp_bytes * (uint64_t)g_total_cores));
         
         // Initialize arrays
         for (int i = 0; i < g_total_harts; i++) {
@@ -470,6 +598,7 @@ int main(int argc, char** argv) {
             queue_init(&core_queues[i]);
             g_core_sum[i].value = 0;
             core_thief[i].store(0, std::memory_order_relaxed);
+            g_wq_trace_count[i] = 0;
         }
         
         std::printf("Total work units: %d (chunk size: %d)\n", g_total_work, WORK_CHUNK_SIZE);
@@ -490,6 +619,10 @@ int main(int argc, char** argv) {
     distribute_work_imbalanced(tid, g_total_harts, g_total_work);
     
     barrier();
+
+    if (hart_in_core == 0) {
+        record_workqueue_depth_sample(core_id, &core_queues[core_id]);
+    }
     
     if (tid == 0) {
         std::printf("\nInitial work distribution:\n");
@@ -501,6 +634,10 @@ int main(int argc, char** argv) {
     }
     
     barrier();
+
+    if (hart_in_core == 0) {
+        record_workqueue_depth_sample(core_id, &core_queues[core_id]);
+    }
     
     if (tid == 0) {
         std::printf("Past barrier 3, about to start work...\n");
@@ -584,7 +721,57 @@ int main(int argc, char** argv) {
         std::printf("  Cycles elapsed:       %lu\n", (unsigned long)elapsed);
         if (total_processed > 0) {
             std::printf("  Cycles per work unit: %lu\n", (unsigned long)(elapsed / total_processed));
-        }    
+        }
+
+        std::printf("\nWorkqueue depth summary (sampled):\n");
+        std::printf("Core | Samples | MinDepth | MaxDepth | AvgDepth | Capacity\n");
+        std::printf("-----|---------|----------|----------|----------|---------\n");
+        for (int c = 0; c < g_total_cores; c++) {
+            int32_t n = g_wq_trace_count[c];
+            int64_t min_d = QUEUE_SIZE;
+            int64_t max_d = 0;
+            int64_t sum_d = 0;
+            if (n <= 0) {
+                min_d = 0;
+            }
+            for (int32_t i = 0; i < n; i++) {
+                int64_t d = g_wq_trace[c][i].depth;
+                if (d < min_d) min_d = d;
+                if (d > max_d) max_d = d;
+                sum_d += d;
+            }
+            long avg_d = (n > 0) ? (long)(sum_d / n) : 0;
+            std::printf("%4d | %7d | %8ld | %8ld | %8ld | %8d\n",
+                        c, (int)n, (long)min_d, (long)max_d, avg_d, QUEUE_SIZE);
+        }
+
+        // Legacy machine-parseable trace block.
+        std::printf("\nWORKQUEUE_TRACE_BEGIN\n");
+        std::printf("core,sample,cycle,depth,capacity,head,tail\n");
+        for (int c = 0; c < g_total_cores; c++) {
+            int32_t n = g_wq_trace_count[c];
+            for (int32_t i = 0; i < n; i++) {
+                const WorkQueueTraceSample& s = g_wq_trace[c][i];
+                std::printf("%d,%d,%lu,%ld,%d,%ld,%ld\n",
+                            c, i, (unsigned long)s.cycle, (long)s.depth,
+                            QUEUE_SIZE, (long)s.head, (long)s.tail);
+            }
+        }
+        std::printf("WORKQUEUE_TRACE_END\n");
+
+        // Unified WQTRACE dump (stdout + file), same format as BFS/PageRank work-stealing.
+        dump_wqtrace(stdout, g_total_cores);
+
+        char path[64];
+        std::snprintf(path, sizeof(path), "run_%dcores.log", g_total_cores);
+        FILE* fp = std::fopen(path, "w");
+        if (fp != nullptr) {
+            dump_wqtrace(fp, g_total_cores);
+            std::fclose(fp);
+            std::printf("WQTRACE_FILE_WRITTEN,bench=work_stealing_benchmark,path=%s\n", path);
+        } else {
+            std::printf("WQTRACE_FILE_ERROR,bench=work_stealing_benchmark,path=%s\n", path);
+        }
     }
 
     barrier();

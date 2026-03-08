@@ -1,14 +1,3 @@
-// Level-synchronous BFS baseline (NO work stealing), per-core queues, imbalanced redistribution
-// - Each level: frontier nodes reside in per-core queues (imbalanced: odd cores get 2x nodes vs even cores)
-// - Each hart pops ONLY from its core queue (no stealing)
-// - Neighbors claimed via visited[v] = amoswap.d(&visited[v], 1)
-// - Next level collected into next_level_queues[core] via atomic tail reservation
-//
-// Goals:
-//  - Remove all work-stealing congestion/atomics
-//  - Avoid deadlocks: publish runtime config before any barrier
-//  - Use dense tid indexing (no "core<<4" assumption)
-
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
@@ -22,88 +11,101 @@
 #include <pandohammer/staticdecl.h>
 
 static constexpr int QUEUE_SIZE = 8192;
-static constexpr int MAX_HARTS  = 2048;   // increase if you run >2048
-static constexpr int MAX_CORES  = 128;    // increase if you run >128
-static constexpr int BFS_CHUNK_SIZE = 64; // nodes per batch pop
+static constexpr int MAX_HARTS  = 1024;
+static constexpr int MAX_CORES  = 64;
 
-static constexpr int ROWS = 1000;
+static constexpr int ROWS = 100;
 static constexpr int COLS = 1000;
-static constexpr int64_t N = int64_t(ROWS) * int64_t(COLS);
+static constexpr int32_t NUM_VERTICES = ROWS * COLS;
+static constexpr int32_t MAX_EDGES = (4 * ROWS * COLS) - (2 * ROWS) - (2 * COLS);
 
+// If set, any hart not on core 0 will park forever (prevents multi-core barrier effects).
+
+static inline uint64_t rdcycle_u64() {
+    uint64_t c;
+    asm volatile("rdcycle %0" : "=r"(c));
+    return c;
+}
+
+// -------------------- Runtime Config --------------------
 __l2sp__ volatile int g_total_harts = 0;
-__l2sp__ volatile int g_harts_per_core = 0;
+__l2sp__ volatile int g_harts_per_core = 16;
 __l2sp__ volatile int g_total_cores = 0;
-__l2sp__ std::atomic<int> g_cfg_ready = 0;
+__l2sp__ std::atomic<int> g_initialized = 0;
 
+
+// -------------------- Work Queues --------------------
 struct WorkQueue {
-    volatile int64_t head;              // consumer reservation (CAS on head)
-    volatile int64_t tail;              // producer reservation (CAS on tail for concurrent pushes)
-    volatile int64_t items[QUEUE_SIZE];
+    volatile int64_t head;              // pop reservation (CAS)
+    volatile int64_t tail;              // push reservation (CAS for concurrent pushes)
+    struct WorkItem {
+        int64_t id;
+    };
+    WorkItem items[QUEUE_SIZE];
 };
 
 __l2sp__ WorkQueue core_queues[MAX_CORES];
 __l2sp__ WorkQueue next_level_queues[MAX_CORES];
 
-__l2sp__ volatile int64_t visited[N];
-__l2sp__ int32_t dist_arr[N];
-
-__l2sp__ volatile int64_t nodes_processed[MAX_HARTS];
-__l2sp__ volatile int64_t discovered = 0;
-
-// -------------------- Barrier --------------------
 __l2sp__ int64_t g_local_sense[MAX_HARTS];
+
+// best-effort hint: 1 if queue likely non-empty, 0 if likely empty
+__l2sp__ volatile int32_t core_has_work[MAX_CORES];
+
+// Global remaining-work counter for the current level
+__l2sp__ std::atomic<int64_t> g_level_remaining = 0;
+
+// -------------------- Synchronization --------------------
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
 
-// Broadcast slot for per-level total_work (written by tid0, read by all)
-__l2sp__ volatile int64_t g_total_work_bcast = 0;
-
-static inline int core_id() { return myCoreId(); }
-static inline int lane_id() { return myThreadId(); }
-
-// Dense tid in [0, g_total_harts)
 static inline int get_thread_id() {
-    return core_id() * (int)g_harts_per_core + lane_id();
+    return (myCoreId() << 4) + myThreadId();
 }
 
 static inline void barrier() {
-    const int total = g_total_harts;
-    const int tid = get_thread_id();
+    int tid = get_thread_id();
+    int total = g_total_harts;
 
-    int64_t local = g_local_sense[tid] ^ 1;
+    int64_t local = g_local_sense[tid];
+    local ^= 1;
     g_local_sense[tid] = local;
 
     int64_t old = g_count.fetch_add(1, std::memory_order_acq_rel);
+
     if (old == total - 1) {
         g_count.store(0, std::memory_order_relaxed);
         g_sense.store(local, std::memory_order_release);
     } else {
         long w = 1;
         long wmax = 64 * total;
-        while (g_sense.load(std::memory_order_acquire) != local) {
+        while (true) {
+            if (g_sense.load(std::memory_order_acquire) == local) break;
             if (w < wmax) w <<= 1;
             hartsleep(w);
         }
     }
 }
 
-// -------------------- Queue ops --------------------
+// -------------------- Queue Operations --------------------
 static inline void queue_init(WorkQueue* q) {
     q->head = 0;
     q->tail = 0;
 }
 
-// Single-thread push (used only by tid0 during redistribution)
-static inline bool queue_push_st(WorkQueue* q, int64_t work) {
+// Single-thread push (tid==0 redistribution)
+static inline bool queue_push(WorkQueue* q, int core_id, WorkQueue::WorkItem work) {
     int64_t t = q->tail;
     if (t >= QUEUE_SIZE) return false;
+
     q->items[t] = work;
     q->tail = t + 1;
+    core_has_work[core_id] = 1;
     return true;
 }
 
-// Multi-producer push (all harts in same core push into next_level_queues[my_core])
-static inline bool queue_push_mp(WorkQueue* q, int64_t work) {
+// Multi-producer push (BFS expansion into next_level_queues[my_core])
+static inline bool queue_push_atomic(WorkQueue* q, int core_id, WorkQueue::WorkItem work) {
     while (true) {
         int64_t t = atomic_load_i64(&q->tail);
         if (t >= QUEUE_SIZE) return false;
@@ -111,164 +113,166 @@ static inline bool queue_push_mp(WorkQueue* q, int64_t work) {
         int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, t + 1);
         if (old_t == t) {
             q->items[t] = work;
+            core_has_work[core_id] = 1;
             return true;
         }
         hartsleep(1);
     }
 }
 
-// Multi-consumer pop (harts in same core) via CAS on head; FIFO order.
-static inline int64_t queue_pop_mc(WorkQueue* q) {
-    int64_t backoff = 1;
-    const int64_t max_backoff = 32;
+// Linearizable pop: reserve index by CAS on head (FIFO)
+static inline WorkQueue::WorkItem queue_pop_fifo(WorkQueue* q, int core_id) {
+    int64_t h = atomic_load_i64(&q->head);
+    int64_t t = atomic_load_i64(&q->tail);
 
-    while (true) {
-        int64_t h = atomic_load_i64(&q->head);
-        int64_t t = atomic_load_i64(&q->tail);
-        if (h >= t) return -1;
-
-        int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + 1);
-        if (old_h == h) {
-            return q->items[h];
-        }
-
-        hartsleep(backoff);
-        if (backoff < max_backoff) backoff <<= 1;
+    if (h >= t) {
+        core_has_work[core_id] = 0;
+        return {-1};
     }
+
+    int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + 1);
+    if (old_h == h) {
+        return q->items[h];
+    }
+    return {-1};
 }
 
-// Multi-consumer batch pop: grab up to max_chunk items in one CAS.
-// Returns count c>0 on success (items at out_begin..out_begin+c-1), 0 if empty.
-static inline int64_t queue_pop_chunk_mc(WorkQueue* q, int64_t* out_begin, int64_t max_chunk) {
-    int64_t backoff = 1;
-    const int64_t max_backoff = 32;
-
-    while (true) {
-        int64_t h = atomic_load_i64(&q->head);
-        int64_t t = atomic_load_i64(&q->tail);
-        if (h >= t) return 0;
-
-        int64_t avail = t - h;
-        int64_t chunk = (avail < max_chunk) ? avail : max_chunk;
-        int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + chunk);
-        if (old_h == h) {
-            *out_begin = h;
-            return chunk;
-        }
-
-        hartsleep(backoff);
-        if (backoff < max_backoff) backoff <<= 1;
-    }
-}
-
-// -------------------- Graph utils --------------------
+// -------------------- Graph Utilities --------------------
 static inline int64_t id_of(int r, int c) { return int64_t(r) * COLS + c; }
 static inline int row_of(int64_t id) { return int(id / COLS); }
 static inline int col_of(int64_t id) { return int(id % COLS); }
+
+// -------------------- BFS Shared State --------------------
+// Explicit graph in CSR format, placed in DRAM.
+__dram__ int32_t g_row_ptr[NUM_VERTICES + 1];
+__dram__ int32_t g_col_idx[MAX_EDGES];
+
+__l2sp__ volatile int64_t visited[NUM_VERTICES];
+__l2sp__ int32_t dist_arr[NUM_VERTICES];
+
+__l2sp__ volatile int64_t stat_nodes_processed[MAX_HARTS];
+__l2sp__ volatile int64_t discovered = 0;
+__l2sp__ volatile int64_t stat_empty_polls[MAX_HARTS];
 
 static inline bool claim_node(int64_t v) {
     const int64_t old = atomic_swap_i64(&visited[v], 1);
     return old == 0;
 }
 
-// Process a single BFS node: check 4 neighbors, claim unvisited, push to next level
-static inline void process_single_node(int64_t u, int32_t level, WorkQueue* my_next) {
-    const int ur = row_of(u);
-    const int uc = col_of(u);
+static void build_grid_csr_graph() {
+    int32_t edge_cursor = 0;
+    for (int32_t r = 0; r < ROWS; r++) {
+        for (int32_t c = 0; c < COLS; c++) {
+            const int32_t u = r * COLS + c;
+            g_row_ptr[u] = edge_cursor;
 
-    if (ur > 0) {
-        const int64_t v = u - COLS;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
+            if (r > 0) {
+                g_col_idx[edge_cursor++] = u - COLS;
+            }
+            if (r + 1 < ROWS) {
+                g_col_idx[edge_cursor++] = u + COLS;
+            }
+            if (c > 0) {
+                g_col_idx[edge_cursor++] = u - 1;
+            }
+            if (c + 1 < COLS) {
+                g_col_idx[edge_cursor++] = u + 1;
+            }
         }
     }
-    if (ur + 1 < ROWS) {
-        const int64_t v = u + COLS;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
-    }
-    if (uc > 0) {
-        const int64_t v = u - 1;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
-    }
-    if (uc + 1 < COLS) {
-        const int64_t v = u + 1;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
+    g_row_ptr[NUM_VERTICES] = edge_cursor;
+
+    if (edge_cursor != MAX_EDGES) {
+        std::printf("ERROR: CSR edge count mismatch: built=%d expected=%d\n",
+                    edge_cursor, MAX_EDGES);
+        std::abort();
     }
 }
 
-// -------------------- Level processing (NO stealing) --------------------
-static void process_bfs_level(int tid, int32_t level) {
-    const int my_core = tid / g_harts_per_core;
-    WorkQueue* my_q = &core_queues[my_core];
-    WorkQueue* my_next = &next_level_queues[my_core];
+// -------------------- BFS Level Processing (NO stealing) --------------------
+static void process_bfs_level_no_steal(int tid, int32_t level) {
+    const int harts_per_core = g_harts_per_core;
+    const int my_core = tid / harts_per_core;
+
+    WorkQueue* my_queue = &core_queues[my_core];
+    WorkQueue* my_next_queue = &next_level_queues[my_core];
 
     int64_t local_processed = 0;
+    int64_t local_empty = 0;
+
+    int64_t local_backoff = 4;
+    const int64_t local_backoff_max = 256;
 
     while (true) {
-        int64_t begin_idx;
-        int64_t count = queue_pop_chunk_mc(my_q, &begin_idx, BFS_CHUNK_SIZE);
-        if (count == 0) break;
+        if (g_level_remaining.load(std::memory_order_acquire) <= 0) break;
 
-        for (int64_t i = 0; i < count; i++) {
-            int64_t u = my_q->items[begin_idx + i];
-            local_processed++;
-            process_single_node(u, level, my_next);
+        const WorkQueue::WorkItem item = queue_pop_fifo(my_queue, my_core);
+        const int64_t u = item.id;
+
+        if (u < 0) {
+            local_empty++;
+            hartsleep(local_backoff);
+            if (local_backoff < local_backoff_max) local_backoff <<= 1;
+            continue;
+        }
+
+        g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
+
+        local_backoff = 4;
+
+        local_processed++;
+        const int32_t next_level = level + 1;
+
+        const int32_t row_start = g_row_ptr[u];
+        const int32_t row_end = g_row_ptr[u + 1];
+        for (int32_t ei = row_start; ei < row_end; ei++) {
+            const int64_t v = g_col_idx[ei];
+            if (claim_node(v)) {
+                dist_arr[v] = next_level;
+                queue_push_atomic(my_next_queue, my_core, {v});
+                atomic_fetch_add_i64(&discovered, 1);
+            }
         }
     }
 
-    nodes_processed[tid] += local_processed;
+    stat_nodes_processed[tid] += local_processed;
+    stat_empty_polls[tid] += local_empty;
 }
 
 // -------------------- Redistribution (imbalanced) --------------------
-// Moves all nodes from next_level_queues[*] into core_queues[*] using weights: even=1, odd=2
 static void distribute_frontier_imbalanced(int tid) {
     if (tid != 0) return;
 
-    const int total_cores = g_total_cores;
+    int total_cores = g_total_cores;
 
     int64_t total_nodes = 0;
     for (int c = 0; c < total_cores; c++) {
-        total_nodes += (next_level_queues[c].tail - next_level_queues[c].head);
+        int64_t count = next_level_queues[c].tail - next_level_queues[c].head;
+        total_nodes += count;
     }
 
-    // Reset destination
-    for (int c = 0; c < total_cores; c++) queue_init(&core_queues[c]);
-
     if (total_nodes == 0) {
-        // nothing to distribute
-        for (int c = 0; c < total_cores; c++) queue_init(&next_level_queues[c]);
+        for (int c = 0; c < total_cores; c++) {
+            queue_init(&core_queues[c]);
+            core_has_work[c] = 0;
+        }
         return;
     }
 
     int weights[MAX_CORES];
     int64_t quotas[MAX_CORES];
-    int sum_w = 0;
+    int sum_weights = 0;
     for (int c = 0; c < total_cores; c++) {
-        weights[c] = (c & 1) ? 2 : 1;
-        sum_w += weights[c];
+        weights[c] = (c % 2 == 0) ? 1 : 2;
+        sum_weights += weights[c];
     }
 
     int64_t assigned = 0;
     for (int c = 0; c < total_cores; c++) {
-        quotas[c] = (total_nodes * (int64_t)weights[c]) / (int64_t)sum_w;
+        quotas[c] = (total_nodes * weights[c]) / sum_weights;
         assigned += quotas[c];
     }
 
-    // remainder
     int64_t rem = total_nodes - assigned;
     int idx = 0;
     while (rem > 0) {
@@ -277,140 +281,178 @@ static void distribute_frontier_imbalanced(int tid) {
         idx++;
     }
 
-    int target = 0;
-    while (target < total_cores && quotas[target] == 0) target++;
+    for (int c = 0; c < total_cores; c++) {
+        queue_init(&core_queues[c]);
+        core_has_work[c] = 0;
+    }
+
+    int target_core = 0;
+    while (target_core < total_cores && quotas[target_core] == 0) target_core++;
 
     for (int src_core = 0; src_core < total_cores; src_core++) {
         WorkQueue* src = &next_level_queues[src_core];
-        const int64_t h = src->head;
-        const int64_t t = src->tail;
+
+        int64_t h = src->head;
+        int64_t t = src->tail;
 
         for (int64_t i = h; i < t; i++) {
-            const int64_t node = src->items[i];
+            WorkQueue::WorkItem node = src->items[i];
 
-            if (target >= total_cores) {
-                queue_push_st(&core_queues[total_cores - 1], node);
+            if (target_core >= total_cores) {
+                queue_push(&core_queues[total_cores - 1], total_cores - 1, node);
                 continue;
             }
 
-            queue_push_st(&core_queues[target], node);
-            quotas[target]--;
-            while (target < total_cores && quotas[target] == 0) target++;
+            queue_push(&core_queues[target_core], target_core, node);
+            quotas[target_core]--;
+
+            while (target_core < total_cores && quotas[target_core] == 0) target_core++;
         }
 
         queue_init(src);
     }
 }
 
+// -------------------- Work Count --------------------
 static int64_t count_total_work() {
     int64_t total = 0;
     for (int c = 0; c < g_total_cores; c++) {
-        total += (core_queues[c].tail - core_queues[c].head);
+        int64_t count = core_queues[c].tail - core_queues[c].head;
+        total += count;
     }
     return total;
 }
 
-// -------------------- BFS driver --------------------
+// -------------------- BFS Driver --------------------
 static void bfs(int64_t source_id) {
     const int tid = get_thread_id();
 
     if (tid == 0) {
-        for (int64_t i = 0; i < N; i++) {
+        // initialize graph state
+        for (int64_t i = 0; i < NUM_VERTICES; i++) {
             visited[i] = 0;
             dist_arr[i] = -1;
         }
 
         for (int i = 0; i < g_total_harts; i++) {
             g_local_sense[i] = 0;
-            nodes_processed[i] = 0;
+            stat_nodes_processed[i] = 0;
+            stat_empty_polls[i] = 0;
         }
 
         for (int c = 0; c < g_total_cores; c++) {
             queue_init(&core_queues[c]);
             queue_init(&next_level_queues[c]);
+            core_has_work[c] = 0;
         }
+
+        build_grid_csr_graph();
 
         visited[source_id] = 1;
         dist_arr[source_id] = 0;
         discovered = 1;
 
-        queue_push_st(&core_queues[0], source_id);
+        queue_push(&core_queues[0], 0, {source_id});
 
-        std::printf("=== BFS Baseline (NO stealing; imbalanced redistribution) ===\n");
-        std::printf("Graph: %d x %d = %ld nodes\n", ROWS, COLS, (long)N);
+        std::printf("=== BFS Baseline (NO stealing; FIFO + global remaining) ===\n");
+        std::printf("Graph: CSR grid %d x %d = %d vertices, %d directed edges\n",
+                    ROWS, COLS, NUM_VERTICES, MAX_EDGES);
+        std::printf("Graph storage: row_ptr/col_idx in DRAM (__dram__)\n");
         std::printf("Hardware: %d cores x %d harts = %d total harts\n",
                     g_total_cores, g_harts_per_core, g_total_harts);
         std::printf("Source: node %ld (r=%d, c=%d)\n",
                     (long)source_id, row_of(source_id), col_of(source_id));
-        std::printf("\n");
+        std::printf("[L2SP] L2SP accesses tracked by SSTRISCVCore hw counters\n\n");
+
+        g_initialized.store(1, std::memory_order_release);
+    } else {
+        while (g_initialized.load(std::memory_order_acquire) == 0) {
+            hartsleep(10);
+        }
     }
 
     barrier();
 
     uint64_t start_cycles = 0;
-    if (tid == 0) asm volatile("rdcycle %0" : "=r"(start_cycles));
+    if (tid == 0) start_cycles = rdcycle_u64();
 
     int32_t level = 0;
 
     while (true) {
+        int64_t total_work = count_total_work();
+
         if (tid == 0) {
-            g_total_work_bcast = count_total_work();
-            std::printf("Level %d: frontier=%ld discovered=%ld\n",
-                        level, (long)g_total_work_bcast, (long)discovered);
+            g_level_remaining.store(total_work, std::memory_order_release);
         }
+
         barrier();
 
-        const int64_t total_work = g_total_work_bcast;
         if (total_work == 0) break;
 
+        if (tid == 0) {
+            std::printf("Level %d: total_work=%ld, discovered=%ld\n",
+                        level, (long)total_work, (long)discovered);
+        }
+
         barrier();
-        process_bfs_level(tid, level);
+        // Track only BFS work; exclude barrier spin/wait traffic from stats.
+        ph_stat_phase(1);
+        process_bfs_level_no_steal(tid, level);
+        ph_stat_phase(0);
         barrier();
         distribute_frontier_imbalanced(tid);
         barrier();
-
         level++;
     }
 
     uint64_t end_cycles = 0;
-    if (tid == 0) asm volatile("rdcycle %0" : "=r"(end_cycles));
+    if (tid == 0) end_cycles = rdcycle_u64();
 
     barrier();
 
     if (tid == 0) {
         std::printf("\n=== BFS Complete ===\n");
         std::printf("Levels traversed: %d\n", level);
-        std::printf("Nodes discovered: %ld / %ld\n", (long)discovered, (long)N);
+        std::printf("Nodes discovered: %ld / %d\n", (long)discovered, NUM_VERTICES);
 
         const int64_t far = id_of(ROWS - 1, COLS - 1);
         std::printf("dist[(%d,%d)] = %d (expected %d)\n",
                     ROWS - 1, COLS - 1, dist_arr[far], (ROWS - 1) + (COLS - 1));
 
         int64_t total_processed = 0;
-        for (int h = 0; h < g_total_harts; h++) total_processed += nodes_processed[h];
 
-        std::printf("Total nodes processed: %ld\n", (long)total_processed);
+        std::printf("\nPer-hart statistics:\n");
+        std::printf("Hart | Processed | Empty polls\n");
+        std::printf("-----|-----------|------------\n");
+        for (int h = 0; h < g_total_harts; h++) {
+            int64_t processed = stat_nodes_processed[h];
+            int64_t empties   = stat_empty_polls[h];
+            std::printf("%4d | %9ld | %11ld\n",
+                        h, (long)processed, (long)empties);
+            total_processed += processed;
+        }
 
-        const uint64_t elapsed = end_cycles - start_cycles;
-        std::printf("Cycles elapsed:        %lu\n", (unsigned long)elapsed);
+        uint64_t elapsed = end_cycles - start_cycles;
+
+        std::printf("\nSummary:\n");
+        std::printf("  Total nodes processed: %ld\n", (long)total_processed);
+        std::printf("  Cycles elapsed:        %lu\n", (unsigned long)elapsed);
         if (total_processed > 0) {
-            std::printf("Cycles per node:       %lu\n",
+            std::printf("  Cycles per node:       %lu\n",
                         (unsigned long)(elapsed / (uint64_t)total_processed));
         }
+        std::printf("  (L2SP load/store/atomic stats from SSTRISCVCore hw counters)\n");
     }
 }
 
 int main(int argc, char** argv) {
-    // Publish runtime config BEFORE any barrier, and wait on a flag (prevents deadlock)
-    const int core = core_id();
-    const int lane = lane_id();
+    const int tid = get_thread_id();
 
-    if (core == 0 && lane == 0) {
+    if (tid == 0) {
         g_total_cores = numPodCores();
         g_harts_per_core = myCoreThreads();
         g_total_harts = g_total_cores * g_harts_per_core;
 
-        // Optional safety checks (can remove if you want)
         if (g_total_cores > MAX_CORES) {
             std::printf("ERROR: g_total_cores=%d > MAX_CORES=%d\n", g_total_cores, MAX_CORES);
             std::abort();
@@ -420,13 +462,14 @@ int main(int argc, char** argv) {
             std::abort();
         }
 
-        g_cfg_ready.store(1, std::memory_order_release);
-    } else {
-        while (g_cfg_ready.load(std::memory_order_acquire) == 0) {
-            hartsleep(10);
-        }
+        // If you truly want forced 1-core behavior (only affects program-level loops):
+        // g_total_cores = 1;
+        // g_total_harts = g_harts_per_core;
     }
 
+    barrier();
     bfs(id_of(0, 0));
+    barrier();
+
     return 0;
 }

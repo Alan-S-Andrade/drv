@@ -17,8 +17,14 @@ static constexpr int MAX_HARTS = 1024;          // Maximum array size
 static constexpr int MAX_CORES = 64;            // Maximum cores
 static constexpr int MAX_HARTS_PER_CORE = 16;   // Maximum harts per core
 static constexpr int HART_QUEUE_SIZE = QUEUE_SIZE / MAX_HARTS_PER_CORE; // Per-hart queue size
-static constexpr int g_total_work = 1536;       // Total work units to distribute
-static constexpr int WORK_CHUNK_SIZE = 32;      // Work units per queue item (range)
+
+// Match no-steal BFS/Pagerank pattern: explicit CSR graph in DRAM.
+static constexpr int ROWS = 100;
+static constexpr int COLS = 1000;
+static constexpr int32_t NUM_VERTICES = ROWS * COLS;
+static constexpr int32_t MAX_EDGES = (4 * ROWS * COLS) - (2 * ROWS) - (2 * COLS);
+static constexpr int32_t CHUNK_SIZE = 32; // vertices per queue item
+static constexpr int32_t NUM_CHUNKS = (NUM_VERTICES + CHUNK_SIZE - 1) / CHUNK_SIZE;
 
 // Pack a (begin, end) range into a single int64_t queue item
 static inline int64_t pack_range(int32_t begin, int32_t end) {
@@ -32,6 +38,12 @@ __l2sp__ volatile int g_total_harts = 0;
 __l2sp__ volatile int g_harts_per_core = 0;
 __l2sp__ volatile int g_total_cores = 0;
 __l2sp__ std::atomic<int> g_initialized = 0;    // Flag to signal initialization complete
+
+// -------------------- Graph (CSR in DRAM) --------------------
+__dram__ int32_t g_row_ptr[NUM_VERTICES + 1];
+__dram__ int32_t g_col_idx[MAX_EDGES];
+__dram__ int32_t g_degree[NUM_VERTICES];
+__dram__ int32_t g_num_edges = 0;
 
 // -------------------- Work Assignment --------------------
 // Each hart gets its own work slice — no sharing between harts
@@ -59,7 +71,7 @@ struct alignas(64) CoreLocalSum {
 __l2sp__ CoreLocalSum g_core_sum[MAX_CORES];
 
 static inline int get_thread_id() {
-    int tid = (myCoreId() << 4) + myThreadId();
+    int tid = myCoreId() * myCoreThreads() + myThreadId();
     return tid;
 }
 
@@ -89,14 +101,65 @@ static inline void barrier() {
     }
 }
 
-// -------------------- Synthetic Work Function --------------------
-// Process a range [begin, end) of work units; each unit does WORK_UNIT_ITERS iterations
-static inline void do_work_range(int32_t begin, int32_t end, int core_id) {
-    volatile int64_t *sum = &g_core_sum[core_id].value;
-    for (int32_t w = begin; w < end; w++) {
-        for (int64_t i = 0; i < WORK_UNIT_ITERS; i++) {
-            *sum += i;
+static void build_grid_csr_graph() {
+    for (int32_t v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = 0;
+    }
+
+    for (int32_t r = 0; r < ROWS; r++) {
+        for (int32_t c = 0; c < COLS; c++) {
+            int32_t v = r * COLS + c;
+            int32_t deg = 0;
+            if (r > 0) deg++;
+            if (r + 1 < ROWS) deg++;
+            if (c > 0) deg++;
+            if (c + 1 < COLS) deg++;
+            g_degree[v] = deg;
         }
+    }
+
+    g_row_ptr[0] = 0;
+    for (int32_t v = 0; v < NUM_VERTICES; v++) {
+        g_row_ptr[v + 1] = g_row_ptr[v] + g_degree[v];
+    }
+
+    for (int32_t v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = g_row_ptr[v];
+    }
+
+    for (int32_t r = 0; r < ROWS; r++) {
+        for (int32_t c = 0; c < COLS; c++) {
+            int32_t v = r * COLS + c;
+            int32_t pos = g_degree[v];
+            if (r > 0) g_col_idx[pos++] = (r - 1) * COLS + c;
+            if (r + 1 < ROWS) g_col_idx[pos++] = (r + 1) * COLS + c;
+            if (c > 0) g_col_idx[pos++] = r * COLS + (c - 1);
+            if (c + 1 < COLS) g_col_idx[pos++] = r * COLS + (c + 1);
+            g_degree[v] = pos;
+        }
+    }
+
+    g_num_edges = g_row_ptr[NUM_VERTICES];
+    for (int32_t v = 0; v < NUM_VERTICES; v++) {
+        g_degree[v] = g_row_ptr[v + 1] - g_row_ptr[v];
+    }
+}
+
+// -------------------- Synthetic Work Function --------------------
+// Process a range [v_begin, v_end) of graph vertices from CSR.
+static inline void do_work_range(int32_t v_begin, int32_t v_end, int core_id) {
+    volatile int64_t *sum = &g_core_sum[core_id].value;
+    for (int32_t v = v_begin; v < v_end; v++) {
+        int32_t start = g_row_ptr[v];
+        int32_t end = g_row_ptr[v + 1];
+        int64_t local = 0;
+        for (int32_t e = start; e < end; e++) {
+            local += (int64_t)g_col_idx[e];
+        }
+        for (int64_t i = 0; i < WORK_UNIT_ITERS; i++) {
+            local += i;
+        }
+        *sum += (local & 0xFF);
     }
 }
 
@@ -122,7 +185,7 @@ static void process_static_work(int tid) {
     stat_work_processed[tid] = local_processed;
 }
 
-static void distribute_work_imbalanced(int tid, int total_work) {
+static void distribute_work_imbalanced(int tid) {
     // Only hart 0 distributes work to cores and harts
     if (tid == 0) {
         std::printf("Hart 0 distributing work to %d cores (%d harts/core)...\n",
@@ -131,33 +194,37 @@ static void distribute_work_imbalanced(int tid, int total_work) {
         // Match work_stealing_benchmark distribution: odd cores get 2x weight
         int odd_cores = g_total_cores / 2;
         int even_cores = g_total_cores - odd_cores;
-        int base_work = total_work / (even_cores + 2 * odd_cores);
+        int base_chunks = NUM_CHUNKS / (even_cores + 2 * odd_cores);
+        int leftover = NUM_CHUNKS - base_chunks * (even_cores + 2 * odd_cores);
+
+        int32_t next_chunk = 0;
 
         for (int c = 0; c < g_total_cores; c++) {
-            int core_work = (c % 2 == 0) ? base_work : base_work * 2;
+            int core_chunks = (c % 2 == 0) ? base_chunks : base_chunks * 2;
+            if (leftover > 0) { core_chunks++; leftover--; }
             
-            // Divide core's work evenly among its harts
-            int work_per_hart = core_work / g_harts_per_core;
-            int remainder = core_work % g_harts_per_core;
+            // Divide this core's chunks evenly among harts
+            int chunks_per_hart = core_chunks / g_harts_per_core;
+            int remainder = core_chunks % g_harts_per_core;
             
-            int assigned_total = 0;
+            int assigned_chunks = 0;
             for (int h = 0; h < g_harts_per_core; h++) {
-                int hart_work = work_per_hart + (h < remainder ? 1 : 0);
-
-                // Pack work into ranges of WORK_CHUNK_SIZE
+                int hart_chunks = chunks_per_hart + (h < remainder ? 1 : 0);
                 int num_ranges = 0;
-                for (int w = 0; w < hart_work; w += WORK_CHUNK_SIZE) {
-                    int32_t end = (w + WORK_CHUNK_SIZE > hart_work) ? hart_work : w + WORK_CHUNK_SIZE;
+                for (int k = 0; k < hart_chunks && next_chunk < NUM_CHUNKS; k++, next_chunk++) {
+                    int32_t begin = next_chunk * CHUNK_SIZE;
+                    int32_t end = begin + CHUNK_SIZE;
+                    if (end > NUM_VERTICES) end = NUM_VERTICES;
                     if (num_ranges >= HART_QUEUE_SIZE) break;
-                    core_assignments[c].hart_slices[h].work_items[num_ranges] = pack_range((int32_t)w, (int32_t)end);
+                    core_assignments[c].hart_slices[h].work_items[num_ranges] = pack_range(begin, end);
                     num_ranges++;
                 }
                 core_assignments[c].hart_slices[h].work_count = num_ranges;
-                assigned_total += hart_work;
+                assigned_chunks += num_ranges;
             }
             
-            std::printf("  Core %2d: %d work units (%d per hart, chunk size %d)\n",
-                       c, assigned_total, work_per_hart, WORK_CHUNK_SIZE);
+            std::printf("  Core %2d: %d chunk ranges (base=%d)\n",
+                        c, assigned_chunks, base_chunks);
         }
         std::printf("Distribution complete.\n");
     }
@@ -183,7 +250,9 @@ int main(int argc, char** argv) {
                    total_cores, harts_per_core, max_hw_harts);
         std::printf("Using: %d cores x %d harts = %d total harts\n",
                    g_total_cores, g_harts_per_core, g_total_harts);
-        std::printf("Total work units: %d (chunk size: %d)\n", g_total_work, WORK_CHUNK_SIZE);
+        std::printf("Graph: %d x %d = %d vertices, %d directed edges (CSR in DRAM)\n",
+                    ROWS, COLS, NUM_VERTICES, MAX_EDGES);
+        std::printf("Total chunk ranges: %d (chunk size: %d vertices)\n", NUM_CHUNKS, CHUNK_SIZE);
         std::printf("\n");
         
         // Initialize arrays
@@ -203,6 +272,8 @@ int main(int argc, char** argv) {
                 core_assignments[i].hart_slices[h].work_count = 0;
             }
         }
+
+        build_grid_csr_graph();
         
         // Signal initialization complete with memory fence
         std::atomic_thread_fence(std::memory_order_release);
@@ -217,7 +288,7 @@ int main(int argc, char** argv) {
     barrier();
     
     // Phase 1: Distribute work (imbalanced) to cores
-    distribute_work_imbalanced(tid, g_total_work);
+    distribute_work_imbalanced(tid);
     
     barrier();
     
@@ -306,6 +377,7 @@ int main(int argc, char** argv) {
             int64_t ratio_pct = (max_processed * 100) / min_processed;
             std::printf("    Imbalance ratio:    %ld%% (max/min)\n", (long)ratio_pct);
         }
+        std::printf("  Graph edges:          %d\n", (int)g_num_edges);
         uint64_t elapsed = end_cycles - start_cycles;
         std::printf("  Cycles elapsed:       %lu\n", (unsigned long)elapsed);
         if (total_processed > 0) {

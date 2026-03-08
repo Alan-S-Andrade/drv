@@ -22,9 +22,10 @@ static constexpr int MAX_CORES  = 64;
 static constexpr int BFS_CHUNK_SIZE = 64;  // nodes per batch local pop
 static constexpr int STEAL_K = 64;         // nodes per batch steal (tunable independently)
 
-static constexpr int ROWS = 1000;
-static constexpr int COLS = 1000;
-static constexpr int64_t N = int64_t(ROWS) * int64_t(COLS);
+static constexpr int ROWS = 100;
+static constexpr int COLS = 100;
+static constexpr int32_t NUM_VERTICES = ROWS * COLS;
+static constexpr int32_t MAX_EDGES = (4 * ROWS * COLS) - (2 * ROWS) - (2 * COLS);
 
 __l2sp__ volatile int g_total_harts = 0;
 __l2sp__ volatile int g_harts_per_core = 0;
@@ -58,6 +59,20 @@ __l2sp__ std::atomic<int64_t> g_sense = 0;
 static inline int get_thread_id() {
     // Assumes <= 16 harts/core as in your environment; if not, change this encoding.
     return (myCoreId() << 4) + myThreadId();
+}
+
+static inline void spin_pause(int64_t iters) {
+    for (int64_t i = 0; i < iters; i++) {
+        asm volatile("" ::: "memory");
+    }
+}
+
+static inline void wait_no_sleep_if_level_work(int64_t backoff) {
+    if (g_level_remaining.load(std::memory_order_acquire) > 0) {
+        spin_pause(backoff);
+    } else {
+        hartsleep(backoff);
+    }
 }
 
 static inline void barrier() {
@@ -110,7 +125,7 @@ static inline bool queue_push_atomic(WorkQueue* q, int core_id, int64_t work) {
             core_has_work[core_id] = 1;
             return true;
         }
-        hartsleep(1);
+        wait_no_sleep_if_level_work(1);
     }
 }
 
@@ -156,51 +171,161 @@ static inline int row_of(int64_t id) { return int(id / COLS); }
 static inline int col_of(int64_t id) { return int(id % COLS); }
 
 // -------------------- BFS Shared State --------------------
-__l2sp__ volatile int64_t visited[N];
-__l2sp__ int32_t dist_arr[N];
+__dram__ int32_t g_row_ptr[NUM_VERTICES + 1];
+__dram__ int32_t g_col_idx[MAX_EDGES];
+
+__l2sp__ volatile int64_t visited[NUM_VERTICES];
+__l2sp__ int32_t dist_arr[NUM_VERTICES];
 
 __l2sp__ volatile int64_t stat_nodes_processed[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_attempts[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_success[MAX_HARTS];
 __l2sp__ volatile int64_t discovered = 0;
+__l2sp__ volatile uint64_t g_core_l1sp_bytes = 0;
+static constexpr int MAX_WQ_TRACE_SAMPLES = 32768;
+
+enum WQTracePhase : int32_t {
+    WQ_PHASE_INIT = 0,
+    WQ_PHASE_LEVEL_BEGIN = 1,
+    WQ_PHASE_POST_PROCESS = 2,
+    WQ_PHASE_POST_REDISTRIBUTE = 3,
+    WQ_PHASE_FINAL = 4
+};
+
+struct WQTraceSample {
+    int32_t level;
+    int32_t phase;
+};
+
+__dram__ WQTraceSample g_wq_trace_samples[MAX_WQ_TRACE_SAMPLES];
+__dram__ int32_t g_wq_trace_depths[MAX_WQ_TRACE_SAMPLES][MAX_CORES];
+__l2sp__ volatile int32_t g_wq_trace_count = 0;
+__l2sp__ volatile int32_t g_wq_trace_dropped = 0;
 
 static inline bool claim_node(int64_t v) {
     const int64_t old = atomic_swap_i64(&visited[v], 1);
     return old == 0;
 }
 
-// Process a single BFS node: check 4 neighbors, claim unvisited, push to next level
+static inline const char* wq_phase_name(int32_t phase) {
+    switch (phase) {
+    case WQ_PHASE_INIT: return "init";
+    case WQ_PHASE_LEVEL_BEGIN: return "level_begin";
+    case WQ_PHASE_POST_PROCESS: return "post_process";
+    case WQ_PHASE_POST_REDISTRIBUTE: return "post_redistribute";
+    case WQ_PHASE_FINAL: return "final";
+    default: return "unknown";
+    }
+}
+
+static void record_wq_trace(int32_t phase, int32_t level) {
+    int32_t idx = g_wq_trace_count;
+    if (idx >= MAX_WQ_TRACE_SAMPLES) {
+        g_wq_trace_dropped++;
+        return;
+    }
+    g_wq_trace_count = idx + 1;
+
+    g_wq_trace_samples[idx] = {level, phase};
+    for (int c = 0; c < g_total_cores; c++) {
+        int64_t depth = core_queues[c].tail - core_queues[c].head;
+        if (depth < 0) depth = 0;
+        g_wq_trace_depths[idx][c] = (int32_t)depth;
+    }
+}
+
+static void dump_wq_trace() {
+    const uint64_t core_l1sp_bytes = g_core_l1sp_bytes;
+    const uint64_t global_l1sp_bytes = core_l1sp_bytes * (uint64_t)g_total_cores;
+
+    auto emit = [&](FILE* out) {
+        std::fprintf(out, "WQTRACE_DUMP_BEGIN,bench=bfs_work_stealing,cores=%d,samples=%d,dropped=%d\n",
+                     g_total_cores, (int)g_wq_trace_count, (int)g_wq_trace_dropped);
+        for (int32_t i = 0; i < g_wq_trace_count; i++) {
+            const WQTraceSample& s = g_wq_trace_samples[i];
+            std::fprintf(out, "WQTRACE,bench=bfs_work_stealing,cores=%d,sample=%d,phase=%s,level=%d,iter=-1,queue=core,depths=",
+                         g_total_cores, (int)i, wq_phase_name(s.phase), (int)s.level);
+            for (int c = 0; c < g_total_cores; c++) {
+                if (c > 0) std::fprintf(out, "|");
+                std::fprintf(out, "%d", (int)g_wq_trace_depths[i][c]);
+            }
+            std::fprintf(out, "\n");
+        }
+        std::fprintf(out, "WQTRACE_DUMP_END,bench=bfs_work_stealing\n");
+
+        std::fprintf(out,
+                     "L1SPTRACE_DUMP_BEGIN,bench=bfs_work_stealing,cores=%d,harts=%d,samples=%d\n",
+                     g_total_cores, g_total_harts, (int)g_wq_trace_count);
+        std::fprintf(out,
+                     "L1SPTRACE_CONFIG,bench=bfs_work_stealing,core_bytes=%lu,global_bytes=%lu\n",
+                     (unsigned long)core_l1sp_bytes, (unsigned long)global_l1sp_bytes);
+        for (int32_t i = 0; i < g_wq_trace_count; i++) {
+            const WQTraceSample& s = g_wq_trace_samples[i];
+            std::fprintf(out,
+                         "L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=%d,phase=%s,level=%d,iter=-1,bytes=%lu\n",
+                         (int)i, wq_phase_name(s.phase), (int)s.level,
+                         (unsigned long)global_l1sp_bytes);
+        }
+        for (int h = 0; h < g_total_harts; h++) {
+            std::fprintf(out,
+                         "L1SPTRACE_HART,bench=bfs_work_stealing,hart=%d,core=%d,thread=%d,bytes=%lu\n",
+                         h, h / g_harts_per_core, h % g_harts_per_core,
+                         (unsigned long)core_l1sp_bytes);
+        }
+        std::fprintf(out, "L1SPTRACE_DUMP_END,bench=bfs_work_stealing\n");
+    };
+
+    emit(stdout);
+
+    char path[64];
+    std::snprintf(path, sizeof(path), "run_%dcores.log", g_total_cores);
+    FILE* fp = std::fopen(path, "w");
+    if (fp != nullptr) {
+        emit(fp);
+        std::fclose(fp);
+        std::printf("WQTRACE_FILE_WRITTEN,bench=bfs_work_stealing,path=%s\n", path);
+    } else {
+        std::printf("WQTRACE_FILE_ERROR,bench=bfs_work_stealing,path=%s\n", path);
+    }
+}
+
+static void build_grid_csr_graph() {
+    int32_t edge_cursor = 0;
+    for (int32_t r = 0; r < ROWS; r++) {
+        for (int32_t c = 0; c < COLS; c++) {
+            const int32_t u = r * COLS + c;
+            g_row_ptr[u] = edge_cursor;
+
+            if (r > 0) {
+                g_col_idx[edge_cursor++] = u - COLS;
+            }
+            if (r + 1 < ROWS) {
+                g_col_idx[edge_cursor++] = u + COLS;
+            }
+            if (c > 0) {
+                g_col_idx[edge_cursor++] = u - 1;
+            }
+            if (c + 1 < COLS) {
+                g_col_idx[edge_cursor++] = u + 1;
+            }
+        }
+    }
+    g_row_ptr[NUM_VERTICES] = edge_cursor;
+
+    if (edge_cursor != MAX_EDGES) {
+        std::printf("ERROR: CSR edge count mismatch: built=%d expected=%d\n",
+                    edge_cursor, MAX_EDGES);
+        std::abort();
+    }
+}
+
+// Process a single BFS node from CSR, claim unvisited, push to next level
 static inline void process_single_node(int64_t u, int32_t level,
                                        WorkQueue* my_next_queue, int my_core) {
-    const int ur = row_of(u);
-    const int uc = col_of(u);
-
-    if (ur > 0) {
-        const int64_t v = u - COLS;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
-    }
-    if (ur + 1 < ROWS) {
-        const int64_t v = u + COLS;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
-    }
-    if (uc > 0) {
-        const int64_t v = u - 1;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
-    }
-    if (uc + 1 < COLS) {
-        const int64_t v = u + 1;
+    const int32_t row_start = g_row_ptr[u];
+    const int32_t row_end = g_row_ptr[u + 1];
+    for (int32_t ei = row_start; ei < row_end; ei++) {
+        const int64_t v = g_col_idx[ei];
         if (claim_node(v)) {
             dist_arr[v] = level + 1;
             queue_push_atomic(my_next_queue, my_core, v);
@@ -281,7 +406,7 @@ static void process_bfs_level(int tid, int32_t level) {
             // Try to become this core's thief (only one hart per core steals at a time)
             if (core_thief[my_core].exchange(1, std::memory_order_acquire) != 0) {
                 // Another hart on this core is already stealing — back off harder, retry local
-                hartsleep(local_backoff * 4);
+                wait_no_sleep_if_level_work(local_backoff * 4);
                 if (local_backoff < local_backoff_max) local_backoff <<= 1;
                 continue;
             }
@@ -293,7 +418,7 @@ static void process_bfs_level(int tid, int32_t level) {
             if (empty_streak < STEAL_START) {
                 // Release token before backing off — don't hold it while sleeping
                 core_thief[my_core].store(0, std::memory_order_release);
-                hartsleep(local_backoff);
+                wait_no_sleep_if_level_work(local_backoff);
                 if (local_backoff < local_backoff_max) local_backoff <<= 1;
                 continue;
             }
@@ -356,7 +481,7 @@ static void process_bfs_level(int tid, int32_t level) {
             core_thief[my_core].store(0, std::memory_order_release);
 
             if (!found) {
-                hartsleep(steal_backoff);
+                wait_no_sleep_if_level_work(steal_backoff);
                 if (steal_backoff < steal_backoff_max) steal_backoff <<= 1;
                 continue;
             }
@@ -456,7 +581,9 @@ static void bfs(int64_t source_id) {
     const int tid = get_thread_id();
 
     if (tid == 0) {
-        for (int64_t i = 0; i < N; i++) {
+        g_wq_trace_count = 0;
+        g_wq_trace_dropped = 0;
+        for (int64_t i = 0; i < NUM_VERTICES; i++) {
             visited[i] = 0;
             dist_arr[i] = -1;
         }
@@ -475,6 +602,8 @@ static void bfs(int64_t source_id) {
             core_thief[c].store(0, std::memory_order_relaxed);
         }
 
+        build_grid_csr_graph();
+
         visited[source_id] = 1;
         dist_arr[source_id] = 0;
         discovered = 1;
@@ -482,12 +611,19 @@ static void bfs(int64_t source_id) {
         queue_push(&core_queues[0], 0, source_id);
 
         std::printf("=== BFS with Work Stealing (FIFO + global remaining) ===\n");
-        std::printf("Graph: %d x %d = %ld nodes\n", ROWS, COLS, (long)N);
+        std::printf("Graph: CSR grid %d x %d = %d vertices, %d directed edges\n",
+                    ROWS, COLS, NUM_VERTICES, MAX_EDGES);
+        std::printf("Graph storage: row_ptr/col_idx in DRAM (__dram__)\n");
         std::printf("Hardware: %d cores x %d harts = %d total harts\n",
                     g_total_cores, g_harts_per_core, g_total_harts);
         std::printf("Source: node %ld (r=%d, c=%d)\n",
                     (long)source_id, row_of(source_id), col_of(source_id));
+        g_core_l1sp_bytes = coreL1SPSize();
+        std::printf("L1SP: per-core=%lu bytes, global=%lu bytes\n",
+                    (unsigned long)g_core_l1sp_bytes,
+                    (unsigned long)(g_core_l1sp_bytes * (uint64_t)g_total_cores));
         std::printf("\n");
+        record_wq_trace(WQ_PHASE_INIT, 0);
 
         g_initialized.store(1, std::memory_order_release);
     } else {
@@ -527,13 +663,20 @@ static void bfs(int64_t source_id) {
                 std::printf("C%d:%ld ", c, (long)count);
             }
             std::printf("\n");
+            record_wq_trace(WQ_PHASE_LEVEL_BEGIN, level);
         }
 
         barrier();
         process_bfs_level(tid, level);
         barrier();
+        if (tid == 0) {
+            record_wq_trace(WQ_PHASE_POST_PROCESS, level);
+        }
         distribute_frontier_imbalanced(tid);
         barrier();
+        if (tid == 0) {
+            record_wq_trace(WQ_PHASE_POST_REDISTRIBUTE, level);
+        }
         level++;
     }
 
@@ -545,9 +688,10 @@ static void bfs(int64_t source_id) {
     barrier();
 
     if (tid == 0) {
+        record_wq_trace(WQ_PHASE_FINAL, level);
         std::printf("\n=== BFS Complete ===\n");
         std::printf("Levels traversed: %d\n", level);
-        std::printf("Nodes discovered: %ld / %ld\n", (long)discovered, (long)N);
+        std::printf("Nodes discovered: %ld / %d\n", (long)discovered, NUM_VERTICES);
 
         const int64_t far = id_of(ROWS - 1, COLS - 1);
         std::printf("dist[(%d,%d)] = %d (expected %d)\n",
@@ -589,6 +733,7 @@ static void bfs(int64_t source_id) {
             std::printf("Cycles per node:       %lu\n",
                         (unsigned long)(elapsed / total_processed));
         }
+        dump_wq_trace();
     }
 }
 

@@ -1,0 +1,27 @@
+drvr/CMakeFiles/drvr_write.dir/write.c.obj: \
+ /proj/alanfaascache-PG0/late_feb/new/prev_commit/drv/drvr/write.c \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/unistd.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/unistd.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/_ansi.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/newlib.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/_newlib_version.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/config.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/ieeefp.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/features.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/cdefs.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_default_types.h \
+ /users/alanuiuc/local/riscv/lib/gcc/riscv64-unknown-elfpandodrvsim/12.2.0/include/stddef.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/types.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_types.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_types.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_stdint.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/endian.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/_endian.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/select.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_sigset.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_timeval.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/timespec.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_timespec.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/_pthreadtypes.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/sys/sched.h \
+ /users/alanuiuc/local/riscv/riscv64-unknown-elfpandodrvsim/include/machine/types.h

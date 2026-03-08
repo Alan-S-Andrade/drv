@@ -1,0 +1,10 @@
+WQTRACE_DUMP_BEGIN,bench=work_stealing_benchmark,cores=16,samples=8,dropped=0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=0,phase=runtime,level=-1,iter=-1,queue=core,depths=1|1|1|1|1|1|1|1|1|1|1|1|1|1|1|1
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=1,phase=runtime,level=-1,iter=-1,queue=core,depths=1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=2,phase=runtime,level=-1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=3,phase=runtime,level=-1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=4,phase=runtime,level=-1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=5,phase=runtime,level=-1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=6,phase=runtime,level=-1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=work_stealing_benchmark,cores=16,sample=7,phase=runtime,level=-1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE_DUMP_END,bench=work_stealing_benchmark
