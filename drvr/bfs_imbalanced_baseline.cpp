@@ -1,13 +1,9 @@
-// Level-synchronous BFS baseline (NO work stealing), per-core queues, imbalanced redistribution
-// - Each level: frontier nodes reside in per-core queues (imbalanced: odd cores get 2x nodes vs even cores)
-// - Each hart pops ONLY from its core queue (no stealing)
-// - Neighbors claimed via visited[v] = amoswap.d(&visited[v], 1)
-// - Next level collected into next_level_queues[core] via atomic tail reservation
-//
-// Goals:
-//  - Remove all work-stealing congestion/atomics
-//  - Avoid deadlocks: publish runtime config before any barrier
-//  - Use dense tid indexing (no "core<<4" assumption)
+// Level-synchronous BFS baseline on CSR graph with NO work stealing.
+// Matches bfs_work_stealing for:
+// - graph input format
+// - source selection (highest-degree vertex)
+// - first-frontier skew toward core 0
+// and differs only by prohibiting inter-core stealing.
 
 #include <cstdint>
 #include <cstdio>
@@ -21,14 +17,11 @@
 #include <pandohammer/address.h>
 #include <pandohammer/staticdecl.h>
 
-static constexpr int QUEUE_SIZE = 8192;
-static constexpr int MAX_HARTS  = 2048;   // increase if you run >2048
-static constexpr int MAX_CORES  = 128;    // increase if you run >128
-static constexpr int BFS_CHUNK_SIZE = 64; // nodes per batch pop
-
-static constexpr int ROWS = 1000;
-static constexpr int COLS = 1000;
-static constexpr int64_t N = int64_t(ROWS) * int64_t(COLS);
+static constexpr int QUEUE_SIZE = 512;
+static constexpr int MAX_HARTS  = 2048;
+static constexpr int MAX_CORES  = 128;
+static constexpr int BFS_CHUNK_SIZE = 64;
+static constexpr int INITIAL_SKEW_WEIGHT = 32;
 
 __l2sp__ volatile int g_total_harts = 0;
 __l2sp__ volatile int g_harts_per_core = 0;
@@ -36,34 +29,35 @@ __l2sp__ volatile int g_total_cores = 0;
 __l2sp__ std::atomic<int> g_cfg_ready = 0;
 
 struct WorkQueue {
-    volatile int64_t head;              // consumer reservation (CAS on head)
-    volatile int64_t tail;              // producer reservation (CAS on tail for concurrent pushes)
+    volatile int64_t head;
+    volatile int64_t tail;
     volatile int64_t items[QUEUE_SIZE];
 };
 
 __l2sp__ WorkQueue core_queues[MAX_CORES];
 __l2sp__ WorkQueue next_level_queues[MAX_CORES];
 
-__l2sp__ volatile int64_t visited[N];
-__l2sp__ int32_t dist_arr[N];
+__l2sp__ int64_t g_local_sense[MAX_HARTS];
+__l2sp__ std::atomic<int64_t> g_count = 0;
+__l2sp__ std::atomic<int64_t> g_sense = 0;
+__l2sp__ volatile int64_t g_total_work_bcast = 0;
+
+__l2sp__ int32_t *g_row_ptr    = nullptr;
+__l2sp__ int32_t *g_col_idx    = nullptr;
+__l2sp__ volatile int64_t *visited = nullptr;
+__l2sp__ int32_t *dist_arr     = nullptr;
+__l2sp__ char    *g_file_buffer = nullptr;
+__l2sp__ int32_t  g_num_vertices = 0;
+__l2sp__ int32_t  g_num_edges    = 0;
+__l2sp__ int32_t  g_bfs_source   = 0;
+__l2sp__ int32_t  g_dist_in_l2sp = 0;
+__l2sp__ int32_t  g_visited_in_l2sp = 0;
 
 __l2sp__ volatile int64_t nodes_processed[MAX_HARTS];
 __l2sp__ volatile int64_t discovered = 0;
 
-// -------------------- Barrier --------------------
-__l2sp__ int64_t g_local_sense[MAX_HARTS];
-__l2sp__ std::atomic<int64_t> g_count = 0;
-__l2sp__ std::atomic<int64_t> g_sense = 0;
-
-// Broadcast slot for per-level total_work (written by tid0, read by all)
-__l2sp__ volatile int64_t g_total_work_bcast = 0;
-
-static inline int core_id() { return myCoreId(); }
-static inline int lane_id() { return myThreadId(); }
-
-// Dense tid in [0, g_total_harts)
 static inline int get_thread_id() {
-    return core_id() * (int)g_harts_per_core + lane_id();
+    return myCoreId() * (int)g_harts_per_core + myThreadId();
 }
 
 static inline void barrier() {
@@ -87,13 +81,11 @@ static inline void barrier() {
     }
 }
 
-// -------------------- Queue ops --------------------
 static inline void queue_init(WorkQueue* q) {
     q->head = 0;
     q->tail = 0;
 }
 
-// Single-thread push (used only by tid0 during redistribution)
 static inline bool queue_push_st(WorkQueue* q, int64_t work) {
     int64_t t = q->tail;
     if (t >= QUEUE_SIZE) return false;
@@ -102,12 +94,10 @@ static inline bool queue_push_st(WorkQueue* q, int64_t work) {
     return true;
 }
 
-// Multi-producer push (all harts in same core push into next_level_queues[my_core])
 static inline bool queue_push_mp(WorkQueue* q, int64_t work) {
     while (true) {
         int64_t t = atomic_load_i64(&q->tail);
         if (t >= QUEUE_SIZE) return false;
-
         int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, t + 1);
         if (old_t == t) {
             q->items[t] = work;
@@ -117,28 +107,6 @@ static inline bool queue_push_mp(WorkQueue* q, int64_t work) {
     }
 }
 
-// Multi-consumer pop (harts in same core) via CAS on head; FIFO order.
-static inline int64_t queue_pop_mc(WorkQueue* q) {
-    int64_t backoff = 1;
-    const int64_t max_backoff = 32;
-
-    while (true) {
-        int64_t h = atomic_load_i64(&q->head);
-        int64_t t = atomic_load_i64(&q->tail);
-        if (h >= t) return -1;
-
-        int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + 1);
-        if (old_h == h) {
-            return q->items[h];
-        }
-
-        hartsleep(backoff);
-        if (backoff < max_backoff) backoff <<= 1;
-    }
-}
-
-// Multi-consumer batch pop: grab up to max_chunk items in one CAS.
-// Returns count c>0 on success (items at out_begin..out_begin+c-1), 0 if empty.
 static inline int64_t queue_pop_chunk_mc(WorkQueue* q, int64_t* out_begin, int64_t max_chunk) {
     int64_t backoff = 1;
     const int64_t max_backoff = 32;
@@ -161,47 +129,143 @@ static inline int64_t queue_pop_chunk_mc(WorkQueue* q, int64_t* out_begin, int64
     }
 }
 
-// -------------------- Graph utils --------------------
-static inline int64_t id_of(int r, int c) { return int64_t(r) * COLS + c; }
-static inline int row_of(int64_t id) { return int(id / COLS); }
-static inline int col_of(int64_t id) { return int(id % COLS); }
-
 static inline bool claim_node(int64_t v) {
-    const int64_t old = atomic_swap_i64(&visited[v], 1);
+    const int64_t old = atomic_swap_i64((volatile int64_t *)&visited[v], 1);
     return old == 0;
 }
 
-// Process a single BFS node: check 4 neighbors, claim unvisited, push to next level
-static inline void process_single_node(int64_t u, int32_t level, WorkQueue* my_next) {
-    const int ur = row_of(u);
-    const int uc = col_of(u);
+extern "C" char l2sp_end[];
 
-    if (ur > 0) {
-        const int64_t v = u - COLS;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
+static inline uintptr_t align_up_uintptr(uintptr_t value, size_t align) {
+    const uintptr_t mask = (uintptr_t)align - 1;
+    return (value + mask) & ~mask;
+}
+
+static void* try_alloc_l2sp(uintptr_t* heap, size_t bytes, size_t align, uintptr_t l2sp_limit) {
+    uintptr_t ptr = align_up_uintptr(*heap, align);
+    if (ptr + bytes > l2sp_limit) return nullptr;
+    *heap = ptr + bytes;
+    return (void*)ptr;
+}
+
+static bool load_graph_from_file() {
+    char fname[32];
+    const char *src = "rmat_s16.bin";
+    int fi = 0;
+    while (src[fi]) { fname[fi] = src[fi]; fi++; }
+    fname[fi] = '\0';
+
+    int32_t header[5];
+    struct ph_bulk_load_desc header_desc;
+    header_desc.filename_addr = (long)fname;
+    header_desc.dest_addr     = (long)header;
+    header_desc.size          = (long)sizeof(header);
+    header_desc.result        = 0;
+    ph_bulk_load_file(&header_desc);
+
+    if (header_desc.result <= 0) {
+        std::printf("ERROR: bulk load of %s header failed (result=%ld)\n",
+                    src, header_desc.result);
+        return false;
+    }
+
+    int hdr_N      = header[0];
+    int hdr_E      = header[1];
+    int hdr_D      = header[2];
+
+    if (hdr_N <= 0 || hdr_E < 0) {
+        std::printf("ERROR: invalid CSR header in %s: N=%d E=%d D=%d\n",
+                    src, hdr_N, hdr_E, hdr_D);
+        return false;
+    }
+
+    const size_t file_size = 20
+        + (size_t)(hdr_N + 1) * sizeof(int32_t)
+        + (size_t)hdr_E * sizeof(int32_t)
+        + (size_t)hdr_N * sizeof(int32_t);
+
+    char *buf = (char *)std::malloc(file_size);
+    if (!buf) {
+        std::printf("ERROR: malloc failed for file buffer (%lu bytes)\n",
+                    (unsigned long)file_size);
+        return false;
+    }
+
+    struct ph_bulk_load_desc desc;
+    desc.filename_addr = (long)fname;
+    desc.dest_addr     = (long)buf;
+    desc.size          = (long)file_size;
+    desc.result        = 0;
+    ph_bulk_load_file(&desc);
+
+    if (desc.result <= 0) {
+        std::printf("ERROR: bulk load of %s failed (result=%ld)\n", src, desc.result);
+        std::free(buf);
+        return false;
+    }
+
+    g_file_buffer  = buf;
+    g_num_vertices = hdr_N;
+    g_num_edges    = hdr_E;
+    g_row_ptr = (int32_t *)(buf + 20);
+    g_col_idx = (int32_t *)(buf + 20 + (size_t)(hdr_N + 1) * sizeof(int32_t));
+
+    int32_t max_deg = -1;
+    int32_t max_deg_vertex = 0;
+    for (int32_t v = 0; v < hdr_N; v++) {
+        const int32_t deg = g_row_ptr[v + 1] - g_row_ptr[v];
+        if (deg > max_deg) {
+            max_deg = deg;
+            max_deg_vertex = v;
         }
     }
-    if (ur + 1 < ROWS) {
-        const int64_t v = u + COLS;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
+    g_bfs_source = max_deg_vertex;
+
+    const size_t visited_bytes = (size_t)hdr_N * sizeof(int64_t);
+    const size_t dist_bytes = (size_t)hdr_N * sizeof(int32_t);
+    uintptr_t l2sp_heap = align_up_uintptr((uintptr_t)l2sp_end, 8);
+    const uintptr_t l2sp_base = 0x20000000;
+    const uintptr_t l2sp_limit = l2sp_base + podL2SPSize();
+
+    g_visited_in_l2sp = 0;
+    g_dist_in_l2sp = 0;
+
+    visited = (volatile int64_t *)try_alloc_l2sp(&l2sp_heap, visited_bytes, alignof(int64_t), l2sp_limit);
+    if (visited != nullptr) {
+        g_visited_in_l2sp = 1;
+    } else {
+        visited = (volatile int64_t *)std::malloc(visited_bytes);
     }
-    if (uc > 0) {
-        const int64_t v = u - 1;
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
+
+    dist_arr = (int32_t *)try_alloc_l2sp(&l2sp_heap, dist_bytes, alignof(int32_t), l2sp_limit);
+    if (dist_arr != nullptr) {
+        g_dist_in_l2sp = 1;
+    } else {
+        dist_arr = (int32_t *)std::malloc(dist_bytes);
     }
-    if (uc + 1 < COLS) {
-        const int64_t v = u + 1;
+    if (!visited || !dist_arr) {
+        std::printf("ERROR: malloc failed for visited/dist_arr\n");
+        std::free(buf);
+        if (!g_visited_in_l2sp) std::free((void *)visited);
+        if (!g_dist_in_l2sp) std::free(dist_arr);
+        g_file_buffer = nullptr;
+        visited  = nullptr;
+        dist_arr = nullptr;
+        g_visited_in_l2sp = 0;
+        g_dist_in_l2sp = 0;
+        return false;
+    }
+
+    std::printf("Graph loaded: N=%d E=%d D=%d source=%d max_deg=%d (%lu bytes)\n",
+                hdr_N, hdr_E, hdr_D, g_bfs_source, max_deg, (unsigned long)file_size);
+    return true;
+}
+
+static inline void process_single_node(int64_t u, int32_t level, WorkQueue* my_next) {
+    const int32_t row_start = g_row_ptr[u];
+    const int32_t row_end = g_row_ptr[u + 1];
+    for (int32_t ei = row_start; ei < row_end; ei++) {
+        const int64_t v = g_col_idx[ei];
         if (claim_node(v)) {
             dist_arr[v] = level + 1;
             queue_push_mp(my_next, v);
@@ -210,14 +274,12 @@ static inline void process_single_node(int64_t u, int32_t level, WorkQueue* my_n
     }
 }
 
-// -------------------- Level processing (NO stealing) --------------------
 static void process_bfs_level(int tid, int32_t level) {
     const int my_core = tid / g_harts_per_core;
     WorkQueue* my_q = &core_queues[my_core];
     WorkQueue* my_next = &next_level_queues[my_core];
 
     int64_t local_processed = 0;
-
     while (true) {
         int64_t begin_idx;
         int64_t count = queue_pop_chunk_mc(my_q, &begin_idx, BFS_CHUNK_SIZE);
@@ -233,23 +295,20 @@ static void process_bfs_level(int tid, int32_t level) {
     nodes_processed[tid] += local_processed;
 }
 
-// -------------------- Redistribution (imbalanced) --------------------
-// Moves all nodes from next_level_queues[*] into core_queues[*] using weights: even=1, odd=2
-static void distribute_frontier_imbalanced(int tid) {
+static void distribute_frontier_imbalanced(int tid, bool skew_initial_frontier) {
     if (tid != 0) return;
 
     const int total_cores = g_total_cores;
-
     int64_t total_nodes = 0;
     for (int c = 0; c < total_cores; c++) {
         total_nodes += (next_level_queues[c].tail - next_level_queues[c].head);
     }
 
-    // Reset destination
-    for (int c = 0; c < total_cores; c++) queue_init(&core_queues[c]);
+    for (int c = 0; c < total_cores; c++) {
+        queue_init(&core_queues[c]);
+    }
 
     if (total_nodes == 0) {
-        // nothing to distribute
         for (int c = 0; c < total_cores; c++) queue_init(&next_level_queues[c]);
         return;
     }
@@ -259,6 +318,9 @@ static void distribute_frontier_imbalanced(int tid) {
     int sum_w = 0;
     for (int c = 0; c < total_cores; c++) {
         weights[c] = (c & 1) ? 2 : 1;
+        if (skew_initial_frontier && c == 0) {
+            weights[c] = INITIAL_SKEW_WEIGHT;
+        }
         sum_w += weights[c];
     }
 
@@ -268,7 +330,6 @@ static void distribute_frontier_imbalanced(int tid) {
         assigned += quotas[c];
     }
 
-    // remainder
     int64_t rem = total_nodes - assigned;
     int idx = 0;
     while (rem > 0) {
@@ -287,12 +348,10 @@ static void distribute_frontier_imbalanced(int tid) {
 
         for (int64_t i = h; i < t; i++) {
             const int64_t node = src->items[i];
-
             if (target >= total_cores) {
                 queue_push_st(&core_queues[total_cores - 1], node);
                 continue;
             }
-
             queue_push_st(&core_queues[target], node);
             quotas[target]--;
             while (target < total_cores && quotas[target] == 0) target++;
@@ -310,21 +369,25 @@ static int64_t count_total_work() {
     return total;
 }
 
-// -------------------- BFS driver --------------------
-static void bfs(int64_t source_id) {
+static void bfs() {
     const int tid = get_thread_id();
 
     if (tid == 0) {
-        for (int64_t i = 0; i < N; i++) {
+        if (!load_graph_from_file()) {
+            std::abort();
+        }
+
+        const int32_t num_verts = g_num_vertices;
+        const int64_t source_id = g_bfs_source;
+
+        for (int64_t i = 0; i < num_verts; i++) {
             visited[i] = 0;
             dist_arr[i] = -1;
         }
-
         for (int i = 0; i < g_total_harts; i++) {
             g_local_sense[i] = 0;
             nodes_processed[i] = 0;
         }
-
         for (int c = 0; c < g_total_cores; c++) {
             queue_init(&core_queues[c]);
             queue_init(&next_level_queues[c]);
@@ -333,15 +396,17 @@ static void bfs(int64_t source_id) {
         visited[source_id] = 1;
         dist_arr[source_id] = 0;
         discovered = 1;
-
         queue_push_st(&core_queues[0], source_id);
 
-        std::printf("=== BFS Baseline (NO stealing; imbalanced redistribution) ===\n");
-        std::printf("Graph: %d x %d = %ld nodes\n", ROWS, COLS, (long)N);
+        std::printf("=== BFS Baseline (NO stealing; CSR graph; skewed initial frontier) ===\n");
+        std::printf("Graph: N=%d E=%d (bulk-loaded from uniform_graph.bin)\n",
+                    g_num_vertices, g_num_edges);
         std::printf("Hardware: %d cores x %d harts = %d total harts\n",
                     g_total_cores, g_harts_per_core, g_total_harts);
-        std::printf("Source: node %ld (r=%d, c=%d)\n",
-                    (long)source_id, row_of(source_id), col_of(source_id));
+        std::printf("Source: node %ld (highest-degree vertex)\n", (long)source_id);
+        std::printf("Hot state: visited in %s, dist_arr in %s\n",
+                    g_visited_in_l2sp ? "L2SP" : "DRAM",
+                    g_dist_in_l2sp ? "L2SP" : "DRAM");
         std::printf("\n");
     }
 
@@ -351,7 +416,6 @@ static void bfs(int64_t source_id) {
     if (tid == 0) asm volatile("rdcycle %0" : "=r"(start_cycles));
 
     int32_t level = 0;
-
     while (true) {
         if (tid == 0) {
             g_total_work_bcast = count_total_work();
@@ -366,9 +430,8 @@ static void bfs(int64_t source_id) {
         barrier();
         process_bfs_level(tid, level);
         barrier();
-        distribute_frontier_imbalanced(tid);
+        distribute_frontier_imbalanced(tid, level == 0);
         barrier();
-
         level++;
     }
 
@@ -380,15 +443,12 @@ static void bfs(int64_t source_id) {
     if (tid == 0) {
         std::printf("\n=== BFS Complete ===\n");
         std::printf("Levels traversed: %d\n", level);
-        std::printf("Nodes discovered: %ld / %ld\n", (long)discovered, (long)N);
-
-        const int64_t far = id_of(ROWS - 1, COLS - 1);
-        std::printf("dist[(%d,%d)] = %d (expected %d)\n",
-                    ROWS - 1, COLS - 1, dist_arr[far], (ROWS - 1) + (COLS - 1));
+        std::printf("Nodes discovered: %ld / %d\n", (long)discovered, g_num_vertices);
+        std::printf("dist[source=%d] = %d (expected 0)\n",
+                    g_bfs_source, dist_arr[g_bfs_source]);
 
         int64_t total_processed = 0;
         for (int h = 0; h < g_total_harts; h++) total_processed += nodes_processed[h];
-
         std::printf("Total nodes processed: %ld\n", (long)total_processed);
 
         const uint64_t elapsed = end_cycles - start_cycles;
@@ -397,20 +457,26 @@ static void bfs(int64_t source_id) {
             std::printf("Cycles per node:       %lu\n",
                         (unsigned long)(elapsed / (uint64_t)total_processed));
         }
+
+        std::free(g_file_buffer);
+        if (!g_visited_in_l2sp) std::free((void *)visited);
+        if (!g_dist_in_l2sp) std::free(dist_arr);
+        g_file_buffer = nullptr;
+        g_row_ptr = nullptr;
+        g_col_idx = nullptr;
+        visited = nullptr;
+        dist_arr = nullptr;
+        g_visited_in_l2sp = 0;
+        g_dist_in_l2sp = 0;
     }
 }
 
 int main(int argc, char** argv) {
-    // Publish runtime config BEFORE any barrier, and wait on a flag (prevents deadlock)
-    const int core = core_id();
-    const int lane = lane_id();
-
-    if (core == 0 && lane == 0) {
+    if (myCoreId() == 0 && myThreadId() == 0) {
         g_total_cores = numPodCores();
         g_harts_per_core = myCoreThreads();
         g_total_harts = g_total_cores * g_harts_per_core;
 
-        // Optional safety checks (can remove if you want)
         if (g_total_cores > MAX_CORES) {
             std::printf("ERROR: g_total_cores=%d > MAX_CORES=%d\n", g_total_cores, MAX_CORES);
             std::abort();
@@ -427,6 +493,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    bfs(id_of(0, 0));
+    bfs();
     return 0;
 }

@@ -331,8 +331,8 @@ drvr_test_build_properties(work_stealing_batch
 drvr_test_with_pandohammer(bfs_work_stealing bfs_work_stealing.cpp)
 drvr_test_build_properties(bfs_work_stealing
   PROPERTIES
-  DRV_BUILD_POD_CORES_X 8
-  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
   )
 
