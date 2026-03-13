@@ -122,6 +122,8 @@ private:
     static constexpr uint64_t MMIO_PRINT_TIME = MMIO_BASE + 0x0018;
     static constexpr uint64_t MMIO_STAT_PHASE = MMIO_BASE + 0x0020;
     static constexpr uint64_t MMIO_BULK_LOAD  = MMIO_BASE + 0x0028;
+    static constexpr uint64_t MMIO_PGAS_SIT  = MMIO_BASE + 0x0030;
+    static constexpr uint64_t MMIO_PGAS_PTT  = MMIO_BASE + 0x0038;
 
     // CSRs
     static constexpr uint64_t CSR_MHARTID = 0xF14;

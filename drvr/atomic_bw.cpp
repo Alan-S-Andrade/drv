@@ -10,6 +10,7 @@
 //   atomic_bw_blocking  (blocking, hart stalls on every add)
 //   atomic_bw_posted    (posted, hart fires and moves on)
 
+#include <algorithm>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
@@ -32,18 +33,44 @@
 // Counters live in L2SP
 __l2sp__ volatile int64_t g_counters[N_COUNTERS];
 
-// Barrier: all harts in this pod atomically increment, hart 0 spins until all arrive
-__l2sp__ volatile int64_t g_barrier = 0;
+// Two-phase barrier (all harts must wait)
+struct barrier_data {
+    int count;
+    int signal;
+    int num_threads;
+};
 
-static void barrier_wait(int total_harts) {
-    atomic_fetch_add_i64((volatile int64_t *)&g_barrier, 1);
-    if (myThreadId() == 0 && myCoreId() == 0) {
-        while (atomic_load_i64((volatile int64_t *)&g_barrier) < total_harts) {
-            // spin
+__l2sp__ barrier_data g_barrier_data = {0, 0, 0};
+
+class barrier_ref {
+public:
+    barrier_ref(barrier_data *ptr) : ptr_(ptr) {}
+    barrier_data *ptr_;
+
+    int &count()       { return ptr_->count; }
+    int &signal()      { return ptr_->signal; }
+    int &num_threads() { return ptr_->num_threads; }
+
+    void sync() { sync([](){}); }
+
+    template <typename F>
+    void sync(F f) {
+        int signal_ = signal();
+        int count_  = atomic_fetch_add_i32(&count(), 1);
+        if (count_ == num_threads() - 1) {
+            count() = 0;
+            f();
+            signal() = !signal_;
+        } else {
+            int backoff = 8;
+            while (signal() == signal_) {
+                for (int i = 0; i < backoff; i++)
+                    asm volatile("nop");
+                backoff = std::min(backoff * 2, 1000);
+            }
         }
     }
-    // Simple: only hart 0 proceeds to check, others just wait for it via exit
-}
+};
 
 static int parse_i(const char* s, int d) {
     if (!s) return d;
@@ -72,6 +99,12 @@ extern "C" int main(int argc, char** argv) {
     // Only run on pod 0, pxn 0
     if (myPXNId() != 0 || myPodId() != 0) return 0;
 
+    // Initialize barrier
+    barrier_ref barrier(&g_barrier_data);
+    if (tid == 0) {
+        barrier.num_threads() = total;
+    }
+
     // Hart 0 zeroes the counter array
     if (tid == 0) {
         for (int i = 0; i < n_counters; i++)
@@ -84,6 +117,9 @@ extern "C" int main(int argc, char** argv) {
                     total, n_counters, iters);
 #endif
     }
+
+    // Sync all harts before starting timed phase
+    barrier.sync();
 
     // === Timed scatter-add phase ===
     ph_stat_phase(1);
@@ -106,7 +142,7 @@ extern "C" int main(int argc, char** argv) {
     ph_stat_phase(0);
 
     // Barrier so all harts finish before verification
-    barrier_wait(total);
+    barrier.sync();
 
     if (tid == 0) {
         // Fence: blocking atomic add 0 to ensure all posted ops landed
@@ -130,6 +166,9 @@ extern "C" int main(int argc, char** argv) {
         std::printf("  sink=%lld\n", (long long)sink);
 #endif
     }
+
+    // Final barrier: keep non-zero harts alive until hart 0 finishes verification
+    barrier.sync();
 
     return 0;
 }

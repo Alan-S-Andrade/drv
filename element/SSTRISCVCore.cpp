@@ -143,6 +143,7 @@ void RISCVCore::configureStatistics(Params &params) {
         stats.useful_store_dram = registerStatistic<uint64_t>("useful_store_dram", subid);
         stats.useful_atomic_dram = registerStatistic<uint64_t>("useful_atomic_dram", subid);
     }
+    pgas_translations_ = registerStatistic<uint64_t>("pgas_translations");
     l2sp_interarrival_ = registerStatistic<uint64_t>("l2sp_interarrival");
     busy_cycles_ = registerStatistic<uint64_t>("busy_cycles");
     stall_cycles_ = registerStatistic<uint64_t>("stall_cycles");

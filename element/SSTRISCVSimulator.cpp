@@ -47,7 +47,7 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
         } else {
             ss << ": " << shart.sx(i.rs2());
         }
-        //std::cout << ss.str() << std::endl;
+        std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_HEX:
         ss << "PXN: " << std::setw(3) << core_->getPXNId() << " ";
@@ -61,7 +61,7 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
             ss << ": 0x" << std::hex << std::setfill('0') << std::setw(sizeof(T)*2);
             ss << shart.x(i.rs2());
         }
-        //std::cout << ss.str() << std::endl;
+        std::cout << ss.str() << std::endl;
         break;
     case MMIO_PRINT_TIME:
         ss << "PXN: " << std::setw(3) << core_->getPXNId() << " ";
@@ -84,6 +84,39 @@ void RISCVSimulator::visitStoreMMIO(RISCVHart &hart, RISCVInstruction &i) {
         handleBulkLoad(shart, desc_abs);
         break;
     }
+    case MMIO_PGAS_SIT: {
+        uint64_t desc_local = shart.x(i.rs2());
+        uint64_t desc_abs = core_->address_decoder_.to_absolute(desc_local);
+        void *ptr = nullptr; size_t chunk = 0;
+        DrvStdMemory::toNativePointerStatic(
+            desc_abs, core_->address_decoder_, core_->sys_config_,
+            &ptr, &chunk);
+        struct { int64_t index, vsid, vsid_bits, vgid_hi, vgid_lo; } desc;
+        std::memcpy(&desc, ptr, sizeof(desc));
+        DrvAPI::SITEntry entry{true, (uint64_t)desc.vsid,
+            (int)desc.vsid_bits, (int)desc.vgid_hi, (int)desc.vgid_lo};
+        core_->pgas_translator_.writeSIT((int)desc.index, entry);
+        core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MMIO,
+            "PGAS_SIT: index=%ld vsid=%ld vsid_bits=%ld vgid_hi=%ld vgid_lo=%ld\n",
+            desc.index, desc.vsid, desc.vsid_bits, desc.vgid_hi, desc.vgid_lo);
+        break;
+    }
+    case MMIO_PGAS_PTT: {
+        uint64_t desc_local = shart.x(i.rs2());
+        uint64_t desc_abs = core_->address_decoder_.to_absolute(desc_local);
+        void *ptr = nullptr; size_t chunk = 0;
+        DrvStdMemory::toNativePointerStatic(
+            desc_abs, core_->address_decoder_, core_->sys_config_,
+            &ptr, &chunk);
+        struct { int64_t sit_index, vgid, target_pxn, offset_base; } desc;
+        std::memcpy(&desc, ptr, sizeof(desc));
+        DrvAPI::PTTEntry entry{true, desc.target_pxn, (uint64_t)desc.offset_base};
+        core_->pgas_translator_.writePTT((int)desc.sit_index, (int)desc.vgid, entry);
+        core_->output_.verbose(CALL_INFO, 0, RISCVCore::DEBUG_MMIO,
+            "PGAS_PTT: sit_index=%ld vgid=%ld target_pxn=%ld offset_base=0x%lx\n",
+            desc.sit_index, desc.vgid, desc.target_pxn, desc.offset_base);
+        break;
+    }
     default:
         core_->output_.fatal(CALL_INFO, -1, "Unknown MMIO address: 0x%lx\n", addr);
     }
@@ -98,11 +131,18 @@ void RISCVSimulator::visitLoad(RISCVHart &hart, RISCVInstruction &i) {
    StandardMem::Addr addr = shart.x(i.rs1()) + i.SIimm();
     //std::cout << std::hex << "addr: " << addr << " load rs1: " << shart.x(i.rs1()) << " siimm: " << i.SIimm() << std::dec << std::endl;
 
+   // PGAS translation: check before normal path
+   uint64_t paddr;
+   if (core_->pgas_translator_.translate(addr, core_->address_decoder_, paddr)) {
+       addr = paddr;
+       core_->pgas_translations_->addData(1);
+   } else {
+       addr = core_->address_decoder_.to_absolute(addr);
+   }
    DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
    core_->addLoadStat(decode, shart); // add to statistics
 
    // create the read request
-   addr = core_->address_decoder_.to_absolute(addr);
    //   std::cout << std::hex << "addr: " << addr << std::dec << std::endl;
    StandardMem::Read *rd = new StandardMem::Read(addr, sizeof(T));
 
@@ -156,11 +196,18 @@ void RISCVSimulator::visitStore(RISCVHart &hart, RISCVInstruction &i) {
         return;
     }
 
+    // PGAS translation: check before normal path
+    uint64_t spaddr;
+    if (core_->pgas_translator_.translate(addr, core_->address_decoder_, spaddr)) {
+        addr = spaddr;
+        core_->pgas_translations_->addData(1);
+    } else {
+        addr = core_->address_decoder_.to_absolute(addr);
+    }
     DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
     core_->addStoreStat(decode, shart); // add to statistics
 
     // create the write request
-    addr = core_->address_decoder_.to_absolute(addr);
     std::vector<uint8_t> data(sizeof(T));
     T *ptr = (T*)&data[0];
     *ptr = FLOAT_REGISTERS
@@ -193,12 +240,19 @@ void RISCVSimulator::visitAMO(RISCVHart &hart, RISCVInstruction &i, DrvAPI::DrvA
     RISCVSimHart &shart = static_cast<RISCVSimHart &>(hart);
     StandardMem::Addr addr = shart.x(i.rs1());
 
+    // PGAS translation: check before normal path
+    uint64_t apaddr;
+    if (core_->pgas_translator_.translate(addr, core_->address_decoder_, apaddr)) {
+        addr = apaddr;
+        core_->pgas_translations_->addData(1);
+    } else {
+        addr = core_->address_decoder_.to_absolute(addr);
+    }
     DrvAPI::DrvAPIAddressInfo decode = core_->decodeAddress(addr);
     core_->addAtomicStat(decode, shart); // add to statistics
     bool noncacheable = !decode.is_dram();
 
     AtomicReqData *data = new AtomicReqData();
-    addr = core_->address_decoder_.to_absolute(addr);
     data->pAddr = addr;
     data->size = sizeof(T);
     data->wdata.resize(sizeof(T));

@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH -J atomic_bw_blocking
+#SBATCH -J bfs_pgas_scatter
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p spr
-#SBATCH -N 1
+#SBATCH -p pvc
+#SBATCH -N 4
 #SBATCH -n 1
-#SBATCH -c 112
-#SBATCH -t 14:00:00
+#SBATCH -c 96
+#SBATCH -t 48:00:00
 
 set -eo pipefail
 
@@ -35,9 +35,6 @@ fi
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --env OMPI_MCA_mtl=^psm2 \
-  --env OMPI_MCA_pml=ob1 \
-  --env OMPI_MCA_btl=self,tcp \
   --bind "$SCRIPT_DIR:/work" \
   --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
   --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
@@ -61,13 +58,35 @@ apptainer exec --cleanenv \
   '
 
 # ------------------------------------------------------------------
-# STEP 2: RUN ATOMIC BW BLOCKING SWEEP
+# STEP 2: GENERATE RMAT GRAPH (once, shared across all runs)
+# ------------------------------------------------------------------
+SCALE=14
+EF=16
+
+apptainer exec --cleanenv \
+  --env XALT_EXECUTABLE_TRACKING=no \
+  --bind "$SCRIPT_DIR:/work" \
+  "$SIF" \
+  bash -lc '
+    set -e
+    SCALE='"${SCALE}"'
+    EF='"${EF}"'
+    N=$((1 << SCALE))
+    GRAPH_DIR="/work/build_stampede/drvr/bfs_pgas_scatter_results"
+    mkdir -p "$GRAPH_DIR"
+    echo "Generating RMAT graph: scale=${SCALE} ef=${EF} N=${N}..."
+    python3 /work/gen_rmat_csr.py \
+      --scale ${SCALE} \
+      --ef ${EF} \
+      --seed 42 \
+      -o "$GRAPH_DIR/graph.bin"
+  '
+
+# ------------------------------------------------------------------
+# STEP 3: SWEEP VGID COUNTS
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --env OMPI_MCA_mtl=^psm2 \
-  --env OMPI_MCA_pml=ob1 \
-  --env OMPI_MCA_btl=self,tcp \
   --bind "$SCRIPT_DIR:/work" \
   --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
   --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
@@ -78,39 +97,41 @@ apptainer exec --cleanenv \
     export PATH=/install/bin:$PATH
 
     MODEL=/work/model/drvr.py
-
-    BINARY=/work/build_stampede/rv64/drvr/drvr_atomic_bw_blocking
-
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_pgas_scatter
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/atomic_bw_blocking_results
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_pgas_scatter_results
 
-    mkdir -p "$SWEEP_DIR"
+    SCALE='"${SCALE}"'
+    EF='"${EF}"'
+    N=$((1 << SCALE))
 
-    # ---- SWEEP CONFIGURATIONS ----
-    # Format: CX CY THR
-    CONFIGS=(
-      "1  1 16"
-      "2  1 16"
-      "4  1 16"
-      "8  1 16"
-      "8  2 16"
-      "8  4 16"
-      "8  8 16"
-    )
+    # Hardware config
+    CX=8
+    CY=4
+    THR=16
+    # Single SST DRAM bank — ramulator internally models 64 HBM channels.
+    # RoBaRaCoCh mapping: channel bits are lowest, so consecutive 32B blocks
+    # rotate across channels. VGID scatter spreads hub dist[] entries across
+    # different channel regions.
+    DRAM_BANKS=1
 
-    for cfg in "${CONFIGS[@]}"; do
-      read -r CX CY THR <<< "$cfg"
-      CORES=$((CX * CY))
-      RUN_NAME="atomic_blocking_c${CORES}_t${THR}"
+    # VGID sweep: 1 (baseline) through increasing scatter
+    VGID_COUNTS=(1 4 16)
+
+    for NVGIDS in "${VGID_COUNTS[@]}"; do
+      RUN_NAME="scatter_vgid${NVGIDS}_s${SCALE}_c$((CX*CY))_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core)"
+      echo "RUN: ${RUN_NAME} (${NVGIDS} VGIDs, scale=${SCALE}, ${CX}x${CY} cores, ${THR} thr/core, 1 SST bank / 64 HBM channels)"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
       cp /work/model/summarize.py "$RUN_DIR/"
-      cp /work/model/summarize_ramulator.py "$RUN_DIR/"
+      cp /work/model/summarize_ramulator.py "$RUN_DIR/" 2>/dev/null || true
+
+      # Link the shared graph file
+      ln -sf "$SWEEP_DIR/graph.bin" "$RUN_DIR/graph.bin"
 
       cd "$RUN_DIR"
 
@@ -124,8 +145,13 @@ apptainer exec --cleanenv \
         --pod-cores-x=${CX} \
         --pod-cores-y=${CY} \
         --core-threads=${THR} \
-        --pod-l2sp-banks=1 \
+        --pod-l2sp-banks=4 \
+        --pod-l2sp-interleave=64 \
+        --pxn-dram-banks=${DRAM_BANKS} \
         "$BINARY" \
+        --scale ${SCALE} \
+        --ef ${EF} \
+        --vgids ${NVGIDS} \
         | tee "$RUN_DIR/output.txt"
 
       echo ""
@@ -143,7 +169,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "ATOMIC BW BLOCKING SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/atomic_bw_blocking_results/"
+    echo "PGAS SCATTER SWEEP COMPLETE"
+    echo "Results in: ${SWEEP_DIR}"
     echo "=============================================="
   '

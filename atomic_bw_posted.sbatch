@@ -4,22 +4,26 @@
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p pvc
+#SBATCH -p spr
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 96
-#SBATCH -t 10:00:00
+#SBATCH -c 112
+#SBATCH -t 14:00:00
 
 set -eo pipefail
 
-cd "$SLURM_SUBMIT_DIR"
+SCRIPT_DIR="/work2/10238/vineeth_architect/stampede3/drv_copy/drv"
+cd "$SCRIPT_DIR"
 mkdir -p logs
 
 module purge
 set +u
 module load tacc-apptainer/1.4.1
 
-SIF="$WORK/drv.sif"
+SIF="/work2/10238/vineeth_architect/stampede3/drv_latest.sif"
+RAMULATOR_SRC="/work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build"
+RAMULATOR_LIB="$RAMULATOR_SRC/libramulator.so"
+RAMULATOR_CONFIGS="$RAMULATOR_SRC/configs"
 
 if [[ ! -f "$SIF" ]]; then
     echo "ERROR: Container image not found at $SIF"
@@ -31,17 +35,25 @@ fi
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --bind "$SLURM_SUBMIT_DIR:/work" \
+  --env OMPI_MCA_mtl=^psm2 \
+  --env OMPI_MCA_pml=ob1 \
+  --env OMPI_MCA_btl=self,tcp \
+  --bind "$SCRIPT_DIR:/work" \
+  --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+  --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
   "$SIF" \
   bash -lc '
     set -e
     export RISCV_HOME=/install
     export PATH=/install/bin:$PATH
-    cd build_stampede
+    cd /work/build_stampede
     cmake .. \
       -DSST_CORE_PREFIX=/install \
       -DSST_ELEMENTS_PREFIX=/install \
-      -DCMAKE_INSTALL_PREFIX=/work/.local
+      -DGNU_RISCV_TOOLCHAIN_PREFIX=/install \
+      -DCMAKE_INSTALL_PREFIX=/work/.local \
+      -DSST_ENABLE_RAMULATOR=1 \
+      -DRAMULATOR_DIR=/tmp/ramulator
 
     echo "Building binary..."
     make -j'"${SLURM_CPUS_PER_TASK}"' rv64 Drv pandocommand_loader
@@ -53,7 +65,12 @@ apptainer exec --cleanenv \
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --bind "$SLURM_SUBMIT_DIR:/work" \
+  --env OMPI_MCA_mtl=^psm2 \
+  --env OMPI_MCA_pml=ob1 \
+  --env OMPI_MCA_btl=self,tcp \
+  --bind "$SCRIPT_DIR:/work" \
+  --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+  --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
   "$SIF" \
   bash -lc '
     set -e
@@ -93,6 +110,7 @@ apptainer exec --cleanenv \
 
       mkdir -p "$RUN_DIR"
       cp /work/model/summarize.py "$RUN_DIR/"
+      cp /work/model/summarize_ramulator.py "$RUN_DIR/"
 
       cd "$RUN_DIR"
 
@@ -114,6 +132,10 @@ apptainer exec --cleanenv \
       if [ -f "summarize.py" ]; then
           echo "--- Summary for ${RUN_NAME} ---"
           python3 summarize.py
+      fi
+      if [ -f "summarize_ramulator.py" ] && [ -f "ramulator_system_pxn0_dram0.stats" ]; then
+          echo "--- Ramulator Summary for ${RUN_NAME} ---"
+          python3 summarize_ramulator.py
       fi
       echo ""
 

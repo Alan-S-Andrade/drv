@@ -519,6 +519,45 @@ if (FALSE)
     )
 endif()
 
+# pgas_test
+drvr_test_with_pandohammer(pgas_test pgas_test.cpp)
+
+# bfs_pgas (Multi-PXN BFS using PGAS virtual address translation)
+drvr_test_with_pandohammer(bfs_pgas bfs_pgas.cpp)
+drvr_test_build_properties(bfs_pgas
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_BUILD_PXN_PODS 1
+  DRV_BUILD_NUM_PXN 2
+)
+drvr_test_run_properties(bfs_pgas
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=1
+)
+
+# bfs_pgas_scatter (Single-PXN BFS with PGAS DRAM bank scatter)
+drvr_test_with_pandohammer(bfs_pgas_scatter bfs_pgas_scatter.cpp)
+drvr_test_build_properties(bfs_pgas_scatter
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_BUILD_PXN_PODS 1
+  DRV_BUILD_NUM_PXN 1
+)
+drvr_test_run_properties(bfs_pgas_scatter
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=1
+)
+
 # run all tests
 if (NOT DEFINED ARCH_RV64)
   add_custom_target(

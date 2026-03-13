@@ -38,6 +38,7 @@ if (NOT DEFINED ARCH_RV64)
     DrvAPISection.hpp
     DrvAPIBits.hpp
     DrvAPIDMA.hpp
+    DrvAPIPGASTranslation.hpp
     )
 
 

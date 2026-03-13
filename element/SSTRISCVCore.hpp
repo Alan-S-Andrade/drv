@@ -20,6 +20,7 @@
 #include "DrvSysConfig.hpp"
 #include "DrvAPIAddress.hpp"
 #include "DrvAPIAddressMap.hpp"
+#include "DrvAPIPGASTranslation.hpp"
 #include "DrvStats.hpp"
 namespace SST {
 namespace Drv {
@@ -152,6 +153,7 @@ public:
             {"useful_load_request_count", "Load requests completed during stat_phase=1", "count", 1},
             {"useful_dram_load_latency_total", "DRAM load-to-ready latency during stat_phase=1", "cycles", 1},
             {"useful_dram_load_request_count", "DRAM load requests during stat_phase=1", "count", 1},
+            {"pgas_translations", "PGAS virtual-to-physical translations", "count", 1},
             {"l2sp_interarrival", "Cycles between consecutive L2SP accesses per hart", "cycles", 1},
         };
 
@@ -622,6 +624,9 @@ public:
     SST::Link *loopback_; //!< loopback link
     bool core_on_ = true; //!< core on
     Cycle_t unregister_cycle_; //!< cycle clock was unregistered
+    // PGAS translation
+    DrvAPI::PGASTranslator pgas_translator_;
+    Statistic<uint64_t> *pgas_translations_;
     // L2SP access timestamps (for post-processing interarrival across cores/pod)
     Statistic<uint64_t> *l2sp_interarrival_;
     std::vector<uint64_t> l2sp_access_timestamps_;

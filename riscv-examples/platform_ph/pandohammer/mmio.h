@@ -46,6 +46,31 @@ static inline void ph_stat_phase(long phase)
     *(volatile long*)0xFFFFFFFFFFFF0020 = phase;
 }
 
+struct ph_pgas_sit_desc {
+    long index;       /* SIT slot (0..3) */
+    long vsid;        /* Segment ID value to match */
+    long vsid_bits;   /* Number of bits for VSID field */
+    long vgid_hi;     /* High bit of VGID in address */
+    long vgid_lo;     /* Low bit of VGID in address */
+};
+
+struct ph_pgas_ptt_desc {
+    long sit_index;    /* Which SIT slot */
+    long vgid;         /* Virtual Group ID */
+    long target_pxn;   /* Physical target PXN */
+    long offset_base;  /* Base DRAM offset added before encoding (0 = no shift) */
+};
+
+static inline void ph_pgas_sit_write(struct ph_pgas_sit_desc *d)
+{
+    *(volatile long*)0xFFFFFFFFFFFF0030 = (long)d;
+}
+
+static inline void ph_pgas_ptt_write(struct ph_pgas_ptt_desc *d)
+{
+    *(volatile long*)0xFFFFFFFFFFFF0038 = (long)d;
+}
+
 #ifdef __cplusplus
 }
 #endif

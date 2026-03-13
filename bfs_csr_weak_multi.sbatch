@@ -8,7 +8,7 @@
 #SBATCH -N 4
 #SBATCH -n 1
 #SBATCH -c 96
-#SBATCH -t 28:00:00
+#SBATCH -t 48:00:00
 
 set -eo pipefail
 
@@ -92,8 +92,8 @@ apptainer exec --cleanenv \
     # Format: PODS CX CY THR
     CONFIGS=(
       # Multi-pod weak scaling
-      "2 8 4 16"
-      "2 8 8 16"
+      #"2 8 4 16"
+      "4 8 8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do

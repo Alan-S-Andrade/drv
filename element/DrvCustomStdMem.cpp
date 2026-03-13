@@ -37,7 +37,9 @@ CustomCmdMemHandler::MemEventInfo
 DrvCmdMemHandler::receive(MemEventBase* ev) {
   output.verbose(CALL_INFO, 1, 0,"%s\n", __PRETTY_FUNCTION__);
   MemHierarchy::Addr localAddr = translateGlobalToLocal(ev->getRoutingAddress());
-  localAddr &= ~(lineSize_ - 1);
+  if (lineSize_ > 1) {
+    localAddr &= ~(lineSize_ - 1);
+  }
   CustomCmdMemHandler::MemEventInfo MEI(localAddr,shootdowns_);
   return MEI;
 }

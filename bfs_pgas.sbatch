@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH -J atomic_bw_blocking
+#SBATCH -J bfs_pgas
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p spr
-#SBATCH -N 1
+#SBATCH -p pvc
+#SBATCH -N 4
 #SBATCH -n 1
-#SBATCH -c 112
-#SBATCH -t 14:00:00
+#SBATCH -c 96
+#SBATCH -t 18:00:00
 
 set -eo pipefail
 
@@ -35,9 +35,6 @@ fi
 # ------------------------------------------------------------------
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --env OMPI_MCA_mtl=^psm2 \
-  --env OMPI_MCA_pml=ob1 \
-  --env OMPI_MCA_btl=self,tcp \
   --bind "$SCRIPT_DIR:/work" \
   --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
   --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
@@ -61,13 +58,15 @@ apptainer exec --cleanenv \
   '
 
 # ------------------------------------------------------------------
-# STEP 2: RUN ATOMIC BW BLOCKING SWEEP
+# STEP 2: RUN BFS PGAS SWEEP
 # ------------------------------------------------------------------
+
+# Graph parameters
+VTX_PER_THREAD=1024
+DEGREE=16
+
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
-  --env OMPI_MCA_mtl=^psm2 \
-  --env OMPI_MCA_pml=ob1 \
-  --env OMPI_MCA_btl=self,tcp \
   --bind "$SCRIPT_DIR:/work" \
   --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
   --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
@@ -79,38 +78,51 @@ apptainer exec --cleanenv \
 
     MODEL=/work/model/drvr.py
 
-    BINARY=/work/build_stampede/rv64/drvr/drvr_atomic_bw_blocking
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_pgas
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/atomic_bw_blocking_results
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_pgas_results
+
+    VTX_PER_THREAD='"${VTX_PER_THREAD}"'
+    DEGREE='"${DEGREE}"'
 
     mkdir -p "$SWEEP_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
-    # Format: CX CY THR
+    # Format: NUM_PXN CX CY THR
     CONFIGS=(
-      "1  1 16"
-      "2  1 16"
-      "4  1 16"
-      "8  1 16"
-      "8  2 16"
-      "8  4 16"
-      "8  8 16"
+      "2 1 1 16"
+      #"2 2 1 16"
+      #"2 4 1 16"
+      #"2 8 1 16"
+      #"2 8 2 16"
+      #"2 8 4 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
-      read -r CX CY THR <<< "$cfg"
+      read -r NPXN CX CY THR <<< "$cfg"
       CORES=$((CX * CY))
-      RUN_NAME="atomic_blocking_c${CORES}_t${THR}"
+      THREADS_PER_PXN=$((CORES * THR))
+      N=$((VTX_PER_THREAD * THREADS_PER_PXN * NPXN))
+
+      RUN_NAME="bfs_pgas_pxn${NPXN}_c${CORES}_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core)"
+      echo "RUN: ${RUN_NAME} (${NPXN} PXNs, ${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE})"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
       cp /work/model/summarize.py "$RUN_DIR/"
       cp /work/model/summarize_ramulator.py "$RUN_DIR/"
+
+      # Generate uniform-degree CSR graph
+      echo "Generating uniform graph: N=${N} degree=${DEGREE}..."
+      python3 /work/gen_uniform_csr.py \
+        -N ${N} \
+        -D ${DEGREE} \
+        --seed 42 \
+        -o "$RUN_DIR/uniform_graph.bin"
 
       cd "$RUN_DIR"
 
@@ -119,13 +131,17 @@ apptainer exec --cleanenv \
         "$MODEL" \
         -- \
         --with-command-processor="$CP" \
-        --num-pxn=1 \
+        --num-pxn=${NPXN} \
         --pxn-pods=1 \
         --pod-cores-x=${CX} \
         --pod-cores-y=${CY} \
         --core-threads=${THR} \
-        --pod-l2sp-banks=1 \
+        --pod-l2sp-banks=4 \
+        --pod-l2sp-interleave=64 \
+        --pxn-dram-banks=1 \
         "$BINARY" \
+        --V ${VTX_PER_THREAD} \
+        --D ${DEGREE} \
         | tee "$RUN_DIR/output.txt"
 
       echo ""
@@ -143,7 +159,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "ATOMIC BW BLOCKING SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/atomic_bw_blocking_results/"
+    echo "BFS PGAS SWEEP COMPLETE"
+    echo "Results in: ${SWEEP_DIR}"
     echo "=============================================="
   '

@@ -91,13 +91,13 @@ apptainer exec --cleanenv \
     # ---- SWEEP CONFIGURATIONS ----
     # Format: CX CY THR
     CONFIGS=(
-      #"1  1 16"
-      #"2  1 16"
-      #"4  1 16"
-      #"8  1 16"
-      #"8  2 16"
-      #"8  4 16"
-      "8  8 16"
+      "1  1 16"
+      "2  1 16"
+      "4  1 16"
+      "8  1 16"
+      "8  2 16"
+      "8  4 16"
+      #"8  8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do

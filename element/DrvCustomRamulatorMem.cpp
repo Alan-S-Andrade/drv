@@ -76,6 +76,7 @@ void DrvRamulatorMemBackend::finish() {
     // open output file and print all ramulator stats
     Stats::statlist.output(stats_file);
     Stats::statlist.printall();
+    Stats::statlist.finish();
 
     output_.output(CALL_INFO, "Ramulator stats written to %s\n", stats_file.c_str());
 }

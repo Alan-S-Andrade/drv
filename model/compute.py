@@ -148,7 +148,7 @@ class XCoreBuilder(CoreBuilder):
             start, *_ = rbldr(system_builder.pxn.id,system_builder.pxn.pod.id,self.id)
             size = 0x1000
         else:
-            start = 0
+            start = system_builder.pxn.id * 0x1000
             size = 0
 
         core.memory \
