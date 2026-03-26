@@ -387,8 +387,10 @@ class CachedDRAMBuilder(DRAMBuilder):
         self.cache_size = 64*1024
         self.cache_assoc = 8
         self.cache_line_size = 64
+        self.cache_banks = 0
         self.clock = "1GHz"
         self.mshr_num_entries = 256
+        self.dram_backend_config_sliced = ""
         return
 
     def cache_name(self, name):
@@ -425,6 +427,7 @@ class CachedDRAMBuilder(DRAMBuilder):
             "cache_size" : f'{self.cache_size}B',
             "associativity" : self.cache_assoc,
             "cache_line_size" : self.cache_line_size,
+            "banks" : self.cache_banks,
             "mshr_num_entries" : self.mshr_num_entries,
             "replacement_policy" : "lru",
             "access_latency_cycles" : 1,

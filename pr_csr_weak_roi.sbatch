@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH -J bfs_csr_weak
+#SBATCH -J pr_csr_weak_roi
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p pvc
-#SBATCH -N 4
+#SBATCH -p spr
+#SBATCH -N 8
 #SBATCH -n 1
-#SBATCH -c 96
+#SBATCH -c 112
 #SBATCH -t 48:00:00
 
 set -eo pipefail
@@ -58,20 +58,22 @@ apptainer exec --cleanenv \
   '
 
 # ------------------------------------------------------------------
-# STEP 2: RUN BFS CSR WEAK SCALING SWEEP
+# STEP 2: RUN PAGERANK CSR WEAK SCALING SWEEP (ROI-ONLY)
 # ------------------------------------------------------------------
 
 # Graph parameters
 VTX_PER_THREAD=1024
 DEGREE=16
+PR_ITERS=20
 
 # Graph type: "uniform" or "rmat"
-GRAPH_TYPE="rmat"
+GRAPH_TYPE="uniform"
 # Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
 EF=16
 
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
+  --env OMPI_MCA_mtl=^psm2 \
   --bind "$SCRIPT_DIR:/work" \
   --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
   --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
@@ -83,41 +85,43 @@ apptainer exec --cleanenv \
 
     MODEL=/work/model/drvr.py
 
-    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak
+    BINARY_SINGLE=/work/build_stampede/rv64/drvr/drvr_pr_csr_weak_roi
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_results_ramulator_with_hbm_3_l2sp
+    SWEEP_DIR=/work/build_stampede/drvr/pr_csr_weak_roi_results_ramulator_with_hbm_3_l2sp
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
+    PR_ITERS='"${PR_ITERS}"'
     GRAPH_TYPE='"${GRAPH_TYPE}"'
     EF='"${EF}"'
 
     mkdir -p "$SWEEP_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
-    # Format: CX CY THR
+    # Format: PODS CX CY THR
     CONFIGS=(
-      "1  1 16"
-      #"2  1 16"
-      #"4  1 16"
-      #"8  1 16"
-      #"8  2 16"
-      #"8  4 16"
-      #"8  8 16"
+      "2 1  1 16"
+      #"1 2  1 16"
+      #"1 4  1 16"
+      #"1 8  1 16"
+      #"1 8  2 16"
+      #"1 8  4 16"
+      #"1 8  8 16"
+      "4 8  8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
-      read -r CX CY THR <<< "$cfg"
+      read -r PODS CX CY THR <<< "$cfg"
       CORES=$((CX * CY))
-      TOTAL_THREADS=$((CORES * THR))
-      N=$((VTX_PER_THREAD * TOTAL_THREADS))
+      THREADS_PER_POD=$((CORES * THR))
+      N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
 
-      RUN_NAME="bfs_csr_c${CORES}_t${THR}"
+      RUN_NAME="pr_csr_roi_p${PODS}_c${CORES}_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE})"
+      echo "RUN: ${RUN_NAME} (${PODS} pods, ${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE}, iters=${PR_ITERS})"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
@@ -129,11 +133,11 @@ apptainer exec --cleanenv \
         SCALE=$(python3 -c "import math; print(int(math.log2($N)))")
         # Upper-bound degree for buffer allocation: 2*EF+4
         RUN_DEGREE=$((2 * EF + 4))
-        echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${TOTAL_THREADS}..."
+        echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${THREADS_PER_POD}..."
         python3 /work/gen_rmat_csr.py \
           --scale ${SCALE} \
           --ef ${EF} \
-          --cusp ${TOTAL_THREADS} \
+          --cusp ${THREADS_PER_POD} \
           --seed 42 \
           -o "$RUN_DIR/uniform_graph.bin"
       else
@@ -146,7 +150,15 @@ apptainer exec --cleanenv \
           -o "$RUN_DIR/uniform_graph.bin"
       fi
 
+      # Generate pre-initialized PageRank state
+      echo "Generating PageRank init state..."
+      python3 /work/gen_pr_init_state.py \
+        --graph "$RUN_DIR/uniform_graph.bin" \
+        -o "$RUN_DIR"
+
       cd "$RUN_DIR"
+
+      BINARY="$BINARY_SINGLE"
 
       PYTHONPATH=/work/py::/work/model \
         /install/bin/sst -n 1 \
@@ -154,7 +166,7 @@ apptainer exec --cleanenv \
         -- \
         --with-command-processor="$CP" \
         --num-pxn=1 \
-        --pxn-pods=1 \
+        --pxn-pods=${PODS} \
         --pod-cores-x=${CX} \
         --pod-cores-y=${CY} \
         --core-threads=${THR} \
@@ -164,6 +176,7 @@ apptainer exec --cleanenv \
         "$BINARY" \
         --V ${VTX_PER_THREAD} \
         --D ${RUN_DEGREE} \
+        --I ${PR_ITERS} \
         | tee "$RUN_DIR/output.txt"
 
       echo ""
@@ -181,7 +194,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "BFS CSR WEAK SCALING SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_results_ramulator_with_hbm_3_l2sp/"
+    echo "PAGERANK CSR WEAK SCALING ROI-ONLY SWEEP COMPLETE"
+    echo "Results in: build_stampede/drvr/pr_csr_weak_roi_results_ramulator_with_hbm_3_l2sp/"
     echo "=============================================="
   '

@@ -36,7 +36,12 @@ def parser(core_l1sp_size=128*1024):
     p.add_argument("--pxn-dram-interleave", type=int, default=0, help="interleave size of dram addresses (defaults to no  interleaving)")
 
     p.add_argument("--without-pxn-dram-cache", action="store_true", help="disable dram cache")
-    
+    p.add_argument("--pxn-dram-cache-banks", type=int, default=0, help="number of banks in dram cache (0 = no bank conflict modeling)")
+    p.add_argument("--pxn-dram-cache-slices", type=int, default=1,
+                        help="number of DRAM cache slices (each is an independent Cache+MemController instance with interleaved addresses)")
+    p.add_argument("--dram-backend-config-sliced", type=str, default="/work/ramulator-configs/HBM-pando-32ch.cfg",
+                        help="ramulator config file path for each slice (should have channels/num_slices)")
+
     p.add_argument("--with-command-processor", type=str, default="",
                         help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")
     p.add_argument("--cp-verbose", type=int, default=0, help="verbosity of command processor")

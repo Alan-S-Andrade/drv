@@ -1,6 +1,8 @@
 import csv
 import sys
 import math
+import os
+import struct
 import collections
 
 # Core statistics we care about
@@ -66,6 +68,16 @@ MEMCTRL_STATS = [
     "latency_PutM",
 ]
 
+def read_graph_edges(graph_path):
+    """Read number of edges from binary CSR graph header (5 x int32: N, E, avg_deg, 0, source)."""
+    with open(graph_path, "rb") as f:
+        header = f.read(20)
+    if len(header) < 20:
+        return None
+    N, E, _, _, _ = struct.unpack("<5i", header)
+    return E
+
+
 def is_dram_cache(name):
     """Check if component is a DRAM cache (victim_cache or dram*_cache)"""
     return "victim_cache" in name or ("dram" in name and "_cache" in name)
@@ -87,6 +99,24 @@ def short_memctrl_name(full_name):
     return full_name.replace("system_", "").replace("_memctrl", "")
 
 def main():
+    # Parse optional --edges / --graph arguments
+    num_edges = None
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--edges" and i + 1 < len(args):
+            num_edges = int(args[i + 1])
+            i += 2
+        elif args[i] == "--graph" and i + 1 < len(args):
+            num_edges = read_graph_edges(args[i + 1])
+            i += 2
+        else:
+            i += 1
+
+    # Auto-detect graph file for edge count
+    if num_edges is None and os.path.exists("uniform_graph.bin"):
+        num_edges = read_graph_edges("uniform_graph.bin")
+
     core_stats = collections.defaultdict(lambda: collections.defaultdict(int))
     cache_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "count": 0}))
     memctrl_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "sumsq": 0, "count": 0, "min": 0, "max": 0}))
@@ -312,9 +342,10 @@ def main():
         total_phase_sec = max_sim_cycles * 1e-9  # 1 GHz clock
         actual_dram_bw_total = (actual_dram_bytes_total / total_phase_sec / 1e9) if total_phase_sec > 0 else 0
 
-        # Useful-phase estimate: useful core DRAM requests * miss_rate * line_size
-        miss_rate = (1 - cache_hit_rate / 100) if cache_hit_rate < 100 else 1.0
-        est_useful_cache_misses = useful_dram * miss_rate
+        # Useful-phase estimate: scale actual cache misses by useful/total
+        # core DRAM request ratio (preserves cache filtering correctly)
+        useful_frac = useful_dram / total_dram_all if total_dram_all > 0 else 0
+        est_useful_cache_misses = total_cache_misses * useful_frac
         actual_dram_bytes_useful = est_useful_cache_misses * DRAM_LINE_BYTES
         useful_phase_sec = max_useful_phase_cycles * 1e-9
         actual_dram_bw_useful = (actual_dram_bytes_useful / useful_phase_sec / 1e9) if useful_phase_sec > 0 else 0
@@ -360,6 +391,68 @@ def main():
         print(f"{peak_label:<45} {peak_bw_gbs:.1f} GB/s  (per-bank: {peak_bw_per_bank:.1f} GB/s)")
         print(f"{'  DRAM Util % (total phase)':<45} {util_total:.2f}%")
         print(f"{'  DRAM Util % (useful phase)':<45} {util_useful:.2f}%")
+
+        # --- Non-Atomic DRAM Bandwidth ---
+        # PutM (dirty eviction) write traffic already computed above
+        non_atomic_bytes_total = actual_dram_bytes_total + dram_write_bytes
+        non_atomic_bw_total = (non_atomic_bytes_total / total_phase_sec / 1e9) if total_phase_sec > 0 else 0
+        non_atomic_bytes_useful = actual_dram_bytes_useful + dram_write_bytes * useful_frac
+        non_atomic_bw_useful = (non_atomic_bytes_useful / useful_phase_sec / 1e9) if useful_phase_sec > 0 else 0
+        non_atomic_util_total = (non_atomic_bw_total / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+        non_atomic_util_useful = (non_atomic_bw_useful / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+
+        print(f"\n{'--- Non-Atomic DRAM Bandwidth ---':<45}")
+        print(f"{'  Non-Atomic Traffic (total phase)':<45} {non_atomic_bytes_total / 1e6:.2f} MB")
+        print(f"{'  Non-Atomic BW (total phase)':<45} {non_atomic_bw_total:.2f} GB/s")
+        print(f"{'  Non-Atomic Traffic (useful phase)':<45} {non_atomic_bytes_useful / 1e6:.2f} MB")
+        print(f"{'  Non-Atomic BW (useful phase)':<45} {non_atomic_bw_useful:.2f} GB/s")
+        print(f"{'  Non-Atomic Util % (total phase)':<45} {non_atomic_util_total:.2f}%")
+        print(f"{'  Non-Atomic Util % (useful phase)':<45} {non_atomic_util_useful:.2f}%")
+
+        # --- DRAM Bytes per Edge ---
+        # Atomic DRAM ops go through CustomReq path to ramulator (each = 64B read)
+        # but are NOT counted in cache miss stats. Include them for accurate totals.
+        atomic_dram_bytes = total_atomic_dram * DRAM_LINE_BYTES
+        total_dram_traffic = actual_dram_bytes_total + dram_write_bytes + atomic_dram_bytes
+
+        print(f"{'  Atomic DRAM Ops':<45} {total_atomic_dram:,}  ({atomic_dram_bytes / 1e6:.2f} MB)")
+        print(f"{'  Total DRAM Traffic (reads+writes+atomics)':<45} {total_dram_traffic / 1e6:.2f} MB")
+
+        if num_edges is not None and num_edges > 0:
+            total_bytes_per_edge = total_dram_traffic / num_edges
+            read_bytes_per_edge = actual_dram_bytes_total / num_edges
+            write_bytes_per_edge = dram_write_bytes / num_edges
+            atomic_bytes_per_edge = atomic_dram_bytes / num_edges
+            useful_atomic_bytes = total_useful_atomic_dram * DRAM_LINE_BYTES
+            useful_total_bytes = actual_dram_bytes_useful + useful_atomic_bytes
+            useful_bytes_per_edge = useful_total_bytes / num_edges
+            print(f"\n{'  --- DRAM Bytes per Edge ---':<45}")
+            print(f"{'  Graph Edges:':<45} {num_edges:,}")
+            print(f"{'  Total DRAM Bytes / Edge:':<45} {total_bytes_per_edge:.2f} B")
+            print(f"{'    Cache Miss (read) / Edge:':<45} {read_bytes_per_edge:.2f} B")
+            print(f"{'    Write (PutM eviction) / Edge:':<45} {write_bytes_per_edge:.2f} B")
+            print(f"{'    Atomic / Edge:':<45} {atomic_bytes_per_edge:.2f} B")
+            non_atomic_bytes_per_edge = read_bytes_per_edge + write_bytes_per_edge
+            print(f"{'  Non-Atomic DRAM Bytes / Edge:':<45} {non_atomic_bytes_per_edge:.2f} B")
+            useful_non_atomic_bytes = actual_dram_bytes_useful + dram_write_bytes * useful_frac
+            useful_non_atomic_per_edge = useful_non_atomic_bytes / num_edges
+            print(f"{'  Est. Useful Non-Atomic Bytes / Edge:':<45} {useful_non_atomic_per_edge:.2f} B")
+            non_atomic_bw_per_edge_total = non_atomic_bw_total * 1e9 / num_edges
+            non_atomic_bw_per_edge_useful = non_atomic_bw_useful * 1e9 / num_edges
+            print(f"{'  Non-Atomic BW / Edge (total phase):':<45} {non_atomic_bw_per_edge_total:.2f} B/s")
+            print(f"{'  Non-Atomic BW / Edge (useful phase):':<45} {non_atomic_bw_per_edge_useful:.2f} B/s")
+            teps = num_edges / useful_phase_sec if useful_phase_sec > 0 else 0
+            mteps = teps / 1e6
+            gteps = teps / 1e9
+            print(f"\n{'  --- Traversal Rate (TEPS) ---':<45}")
+            print(f"{'  TEPS (useful phase):':<45} {mteps:.2f} MTEPS  ({gteps:.4f} GTEPS)")
+            if non_atomic_bw_useful > 0:
+                mteps_per_gbps = mteps / non_atomic_bw_useful
+                print(f"{'  MTEPS / Non-Atomic BW (useful):':<45} {mteps_per_gbps:.2f} MTEPS/GB/s")
+        elif num_edges is not None:
+            print(f"\n{'  Graph Edges:':<45} {num_edges} (zero — skipping bytes/edge)")
+        else:
+            print(f"\n{'  DRAM Bytes/Edge:':<45} N/A (no --edges/--graph and no uniform_graph.bin found)")
 
     # 4. Print Per-Core Statistics (Total and Useful Phase)
     print("\n" + "=" * 170)

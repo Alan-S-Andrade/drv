@@ -77,6 +77,8 @@ def main():
     parser.add_argument("-o", "--output", required=True, help="Output binary file path")
     parser.add_argument("--source", type=int, default=-1,
                         help="BFS source vertex (-1 = max degree vertex)")
+    parser.add_argument("--cusp", type=int, default=0,
+                        help="CUSP reorder: round-robin by degree across P partitions (0=disabled)")
     args = parser.parse_args()
 
     scale = args.scale
@@ -89,9 +91,56 @@ def main():
 
     offsets, edges, degrees = edges_to_csr(N, edge_list)
 
+    # ---- CUSP reordering ----
+    P = args.cusp
+    if P > 0:
+        assert N % P == 0, f"N={N} must be divisible by P={P}"
+        N_local = N // P
+
+        # Sort vertices by degree descending
+        ranked = sorted(range(N), key=lambda v: -degrees[v])
+
+        # Build permutation: rank r -> partition (r % P), position (r // P)
+        new_id = [0] * N
+        for r, old_v in enumerate(ranked):
+            new_id[old_v] = (r % P) * N_local + (r // P)
+
+        # Build inverse
+        old_id = [0] * N
+        for old_v in range(N):
+            old_id[new_id[old_v]] = old_v
+
+        # Rebuild CSR with remapped vertex IDs
+        new_offsets = [0] * (N + 1)
+        new_degrees = [0] * N
+        new_edges = []
+
+        for nv in range(N):
+            ov = old_id[nv]
+            # Get old edges and remap through new_id
+            ob = offsets[ov]
+            oe = offsets[ov + 1]
+            remapped = [new_id[edges[ei]] for ei in range(ob, oe)]
+            new_degrees[nv] = len(remapped)
+            new_edges.extend(remapped)
+            new_offsets[nv + 1] = new_offsets[nv] + len(remapped)
+
+        offsets = new_offsets
+        edges = new_edges
+        degrees = new_degrees
+        E = len(edges)
+
+        # Print per-partition degree totals for balance verification
+        print(f"  CUSP reorder: P={P}, N_local={N_local}")
+        for p in range(P):
+            part_deg = sum(degrees[p * N_local:(p + 1) * N_local])
+            print(f"    Partition {p}: total_degree={part_deg}")
+
     # Pick source: max-degree vertex by default
     if args.source >= 0:
         source = args.source
+        if P > 0:
+            source = new_id[source]
     else:
         source = max(range(N), key=lambda v: degrees[v])
 

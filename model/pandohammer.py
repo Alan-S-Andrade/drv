@@ -81,6 +81,11 @@ class PANDOHammer(object):
         dram.access_time = arguments.dram_access_time
         dram.network_bw = f"{bandwidth_bytes_per_second_per_pxn}B/s"
 
+        dram.cache_banks = arguments.pxn_dram_cache_banks
+        dram.dram_backend_config_sliced = arguments.dram_backend_config_sliced
+
+        dram_cache_slices = arguments.pxn_dram_cache_slices
+
         # pxn
         pxn = PXNBuilder()
         pxn.pod = pod
@@ -91,6 +96,7 @@ class PANDOHammer(object):
         pxn.dram_size = arguments.pxn_dram_size
         pxn.dram_banks = arguments.pxn_dram_banks
         pxn.dram_interleave = arguments.pxn_dram_interleave
+        pxn.dram_cache_slices = dram_cache_slices
         pxn.network_bw = f"{bandwidth_bytes_per_second_per_pxn}B/s"
         pxn.xbar_bw = f"{bandwidth_bytes_per_second_per_pxn}B/s"
         pxn.link_bw = f"{bandwidth_bytes_per_second_per_pxn}B/s"

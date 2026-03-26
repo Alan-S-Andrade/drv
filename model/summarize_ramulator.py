@@ -16,6 +16,7 @@ Usage:
 import sys
 import re
 import os
+import struct
 
 
 def parse_stats(filepath):
@@ -83,21 +84,42 @@ def fmt_bytes(b):
     return f"{b:.0f} B"
 
 
+def read_graph_edges(graph_path):
+    """Read number of edges from binary CSR graph header (5 x int32: N, E, avg_deg, 0, source)."""
+    with open(graph_path, "rb") as f:
+        header = f.read(20)
+    if len(header) < 20:
+        return None
+    N, E, _, _, _ = struct.unpack("<5i", header)
+    return E
+
+
 def main():
     # Parse arguments
     stats_file = None
     clock_hz = 1e9  # default 1 GHz (SST drives ramulator at this clock)
+    num_edges = None
     args = sys.argv[1:]
     i = 0
     while i < len(args):
         if args[i] == "--clock" and i + 1 < len(args):
             clock_hz = parse_clock(args[i + 1])
             i += 2
+        elif args[i] == "--edges" and i + 1 < len(args):
+            num_edges = int(args[i + 1])
+            i += 2
+        elif args[i] == "--graph" and i + 1 < len(args):
+            num_edges = read_graph_edges(args[i + 1])
+            i += 2
         elif not args[i].startswith("-"):
             stats_file = args[i]
             i += 1
         else:
             i += 1
+
+    # Auto-detect graph file for edge count
+    if num_edges is None and os.path.exists("uniform_graph.bin"):
+        num_edges = read_graph_edges("uniform_graph.bin")
 
     # Auto-detect stats file
     if stats_file is None:
@@ -337,6 +359,22 @@ def main():
     print(f"  {'  Read Queue:':<35} {global_read_queue_avg:.3f} reqs")
     print(f"  {'  Write Queue:':<35} {global_write_queue_avg:.3f} reqs")
     print(f"  {'Avg Read Latency:':<35} {weighted_avg_lat:.2f} DRAM cycles")
+
+    # --- DRAM Bytes per Edge ---
+    if num_edges is not None and num_edges > 0:
+        total_bytes_per_edge = total_bytes / num_edges
+        read_bytes_per_edge = total_read_bytes / num_edges
+        write_bytes_per_edge = total_write_bytes / num_edges
+        print(f"\n  {'--- DRAM Bytes per Edge ---'}")
+        print(f"  {'Graph Edges:':<35} {num_edges:,}")
+        print(f"  {'Total DRAM Bytes / Edge:':<35} {total_bytes_per_edge:.2f} B")
+        print(f"  {'Read DRAM Bytes / Edge:':<35} {read_bytes_per_edge:.2f} B")
+        print(f"  {'Write DRAM Bytes / Edge:':<35} {write_bytes_per_edge:.2f} B")
+    elif num_edges is not None:
+        print(f"\n  {'Graph Edges:':<35} {num_edges} (zero — skipping bytes/edge)")
+    else:
+        print(f"\n  {'DRAM Bytes/Edge:':<35} N/A (no --edges/--graph and no uniform_graph.bin found)")
+
     print(f"{'=' * W}")
 
 

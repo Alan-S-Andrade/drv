@@ -65,6 +65,11 @@ apptainer exec --cleanenv \
 VTX_PER_THREAD=1024
 DEGREE=16
 
+# Graph type: "uniform" or "rmat"
+GRAPH_TYPE="uniform"
+# Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
+EF=16
+
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
   --bind "$SCRIPT_DIR:/work" \
@@ -85,6 +90,8 @@ apptainer exec --cleanenv \
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
+    GRAPH_TYPE='"${GRAPH_TYPE}"'
+    EF='"${EF}"'
 
     mkdir -p "$SWEEP_DIR"
 
@@ -113,13 +120,27 @@ apptainer exec --cleanenv \
       cp /work/model/summarize.py "$RUN_DIR/"
       cp /work/model/summarize_ramulator.py "$RUN_DIR/"
 
-      # Generate uniform-degree CSR graph into run dir
-      echo "Generating uniform graph: N=${N} degree=${DEGREE}..."
-      python3 /work/gen_uniform_csr.py \
-        -N ${N} \
-        -D ${DEGREE} \
-        --seed 42 \
-        -o "$RUN_DIR/uniform_graph.bin"
+      # Generate graph into run dir
+      if [ "$GRAPH_TYPE" = "rmat" ]; then
+        SCALE=$(python3 -c "import math; print(int(math.log2($N)))")
+        # Upper-bound degree for buffer allocation: 2*EF+4
+        RUN_DEGREE=$((2 * EF + 4))
+        echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${PODS}..."
+        python3 /work/gen_rmat_csr.py \
+          --scale ${SCALE} \
+          --ef ${EF} \
+          --cusp ${PODS} \
+          --seed 42 \
+          -o "$RUN_DIR/uniform_graph.bin"
+      else
+        RUN_DEGREE=${DEGREE}
+        echo "Generating uniform graph: N=${N} degree=${DEGREE}..."
+        python3 /work/gen_uniform_csr.py \
+          -N ${N} \
+          -D ${DEGREE} \
+          --seed 42 \
+          -o "$RUN_DIR/uniform_graph.bin"
+      fi
 
       cd "$RUN_DIR"
 
@@ -138,7 +159,7 @@ apptainer exec --cleanenv \
         --pxn-dram-banks=1 \
         "$BINARY" \
         --V ${VTX_PER_THREAD} \
-        --D ${DEGREE} \
+        --D ${RUN_DEGREE} \
         | tee "$RUN_DIR/output.txt"
 
       echo ""

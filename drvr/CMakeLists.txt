@@ -267,6 +267,57 @@ drvr_test_run_properties(bfs_csr_weak
   DRV_MODEL_OPTION3 --pxn-dram-interleave=64
 )
 
+# bfs_csr_weak_roi (ROI-only: skip init, bulk-load pre-initialized state)
+drvr_test_with_pandohammer(bfs_csr_weak_roi bfs_csr_weak_roi.cpp)
+drvr_test_build_properties(bfs_csr_weak_roi
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(bfs_csr_weak_roi
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=5
+  DRV_MODEL_OPTION3 --pxn-dram-interleave=64
+)
+
+# sssp_csr_weak_roi (ROI-only SSSP)
+drvr_test_with_pandohammer(sssp_csr_weak_roi sssp_csr_weak_roi.cpp)
+drvr_test_build_properties(sssp_csr_weak_roi
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(sssp_csr_weak_roi
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=5
+  DRV_MODEL_OPTION3 --pxn-dram-interleave=64
+)
+
+# pr_csr_weak_roi (ROI-only PageRank)
+drvr_test_with_pandohammer(pr_csr_weak_roi pr_csr_weak_roi.cpp)
+drvr_test_build_properties(pr_csr_weak_roi
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+drvr_test_run_properties(pr_csr_weak_roi
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=5
+  DRV_MODEL_OPTION3 --pxn-dram-interleave=64
+)
+
 # bfs_csr_weak_multi (Multi-pod CSR graph BFS with weak scaling)
 drvr_test_with_pandohammer(bfs_csr_weak_multi bfs_csr_weak_multi.cpp)
 drvr_test_build_properties(bfs_csr_weak_multi
@@ -277,6 +328,24 @@ drvr_test_build_properties(bfs_csr_weak_multi
   DRV_BUILD_PXN_PODS 2
 )
 drvr_test_run_properties(bfs_csr_weak_multi
+  PROPERTIES
+  DRV_MODEL_OPTIONS --dram-access-time=40ns
+  DRV_MODEL_OPTION0 --pod-l2sp-banks=1
+  DRV_MODEL_OPTION1 --pod-l2sp-interleave=64
+  DRV_MODEL_OPTION2 --pxn-dram-banks=5
+  DRV_MODEL_OPTION3 --pxn-dram-interleave=64
+)
+
+# bfs_csr_weak_multi_roi (ROI-only multi-pod: skip dist init, bulk-load)
+drvr_test_with_pandohammer(bfs_csr_weak_multi_roi bfs_csr_weak_multi_roi.cpp)
+drvr_test_build_properties(bfs_csr_weak_multi_roi
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_BUILD_PXN_PODS 2
+)
+drvr_test_run_properties(bfs_csr_weak_multi_roi
   PROPERTIES
   DRV_MODEL_OPTIONS --dram-access-time=40ns
   DRV_MODEL_OPTION0 --pod-l2sp-banks=1
