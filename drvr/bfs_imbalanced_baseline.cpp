@@ -1,9 +1,11 @@
-// Level-synchronous BFS baseline on CSR graph with NO work stealing.
-// Matches bfs_work_stealing for:
-// - graph input format
-// - source selection (highest-degree vertex)
-// - first-frontier skew toward core 0
-// and differs only by prohibiting inter-core stealing.
+// Level-synchronous BFS with power-law imbalanced vertex-ownership distribution.
+// Vertex v is always owned by core floor(v * total_cores / N).
+// RMAT graphs concentrate hub vertices in low vertex IDs → core 0 overloaded.
+// NO work stealing. This is the baseline for measuring work-stealing speedup.
+//
+// Memory layout matches bfs_ws_utilization:
+//   L2SP: work queues, frontier buffers, visited[], dist_arr[], barriers
+//   DRAM: CSR graph (row_ptr, col_idx), overflow for visited/dist/frontiers
 
 #include <cstdint>
 #include <cstdio>
@@ -17,31 +19,53 @@
 #include <pandohammer/address.h>
 #include <pandohammer/staticdecl.h>
 
-static constexpr int QUEUE_SIZE = 512;
-static constexpr int MAX_HARTS  = 2048;
-static constexpr int MAX_CORES  = 128;
-static constexpr int BFS_CHUNK_SIZE = 64;
-static constexpr int INITIAL_SKEW_WEIGHT = 32;
+static constexpr int MAX_HARTS  = 1024;
+static constexpr int MAX_CORES  = 64;
+static constexpr int BFS_CHUNK_SIZE = 8;  // match ws_utilization
 
 __l2sp__ volatile int g_total_harts = 0;
 __l2sp__ volatile int g_harts_per_core = 0;
 __l2sp__ volatile int g_total_cores = 0;
-__l2sp__ std::atomic<int> g_cfg_ready = 0;
+__l2sp__ std::atomic<int> g_initialized = 0;
 
+// =====================================================================
+// Per-core work queues (index into frontier storage)
+// =====================================================================
 struct WorkQueue {
     volatile int64_t head;
     volatile int64_t tail;
-    volatile int64_t items[QUEUE_SIZE];
+    int64_t start_idx;
 };
 
 __l2sp__ WorkQueue core_queues[MAX_CORES];
-__l2sp__ WorkQueue next_level_queues[MAX_CORES];
 
+// =====================================================================
+// Frontier double-buffer (L2SP + DRAM overflow)
+// =====================================================================
+struct FrontierBuffer {
+    volatile int64_t tail;
+    int64_t capacity;
+    int64_t l2sp_capacity;
+    int64_t* l2sp_items;
+    int64_t* dram_items;
+};
+
+__l2sp__ FrontierBuffer g_next_frontier;
+__l2sp__ int64_t *g_current_frontier_storage = nullptr;
+__l2sp__ int64_t *g_current_frontier_dram_storage = nullptr;
+
+// =====================================================================
+// Barrier
+// =====================================================================
 __l2sp__ int64_t g_local_sense[MAX_HARTS];
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
-__l2sp__ volatile int64_t g_total_work_bcast = 0;
 
+__l2sp__ volatile int32_t core_has_work[MAX_CORES];
+
+// =====================================================================
+// Graph + BFS state
+// =====================================================================
 __l2sp__ int32_t *g_row_ptr    = nullptr;
 __l2sp__ int32_t *g_col_idx    = nullptr;
 __l2sp__ volatile int64_t *visited = nullptr;
@@ -50,21 +74,31 @@ __l2sp__ char    *g_file_buffer = nullptr;
 __l2sp__ int32_t  g_num_vertices = 0;
 __l2sp__ int32_t  g_num_edges    = 0;
 __l2sp__ int32_t  g_bfs_source   = 0;
-__l2sp__ int32_t  g_dist_in_l2sp = 0;
 __l2sp__ int32_t  g_visited_in_l2sp = 0;
+__l2sp__ int32_t  g_dist_in_l2sp = 0;
+__l2sp__ int32_t  g_frontiers_in_l2sp = 0;
 
-__l2sp__ volatile int64_t nodes_processed[MAX_HARTS];
+// =====================================================================
+// Statistics
+// =====================================================================
+__l2sp__ volatile int64_t stat_nodes_per_core[MAX_CORES];
+__l2sp__ volatile int64_t stat_edges_per_core[MAX_CORES];
+__l2sp__ volatile int64_t stat_nodes_processed[MAX_HARTS];
 __l2sp__ volatile int64_t discovered = 0;
 
+// =====================================================================
+// Utilities
+// =====================================================================
 static inline int get_thread_id() {
-    return myCoreId() * (int)g_harts_per_core + myThreadId();
+    return myCoreId() * myCoreThreads() + myThreadId();
 }
 
 static inline void barrier() {
-    const int total = g_total_harts;
-    const int tid = get_thread_id();
+    int tid = get_thread_id();
+    int total = g_total_harts;
 
-    int64_t local = g_local_sense[tid] ^ 1;
+    int64_t local = g_local_sense[tid];
+    local ^= 1;
     g_local_sense[tid] = local;
 
     int64_t old = g_count.fetch_add(1, std::memory_order_acq_rel);
@@ -84,49 +118,72 @@ static inline void barrier() {
 static inline void queue_init(WorkQueue* q) {
     q->head = 0;
     q->tail = 0;
+    q->start_idx = 0;
 }
 
-static inline bool queue_push_st(WorkQueue* q, int64_t work) {
-    int64_t t = q->tail;
-    if (t >= QUEUE_SIZE) return false;
-    q->items[t] = work;
-    q->tail = t + 1;
+static inline void queue_assign_slice(WorkQueue* q, int64_t start_idx, int64_t count) {
+    q->start_idx = start_idx;
+    q->head = 0;
+    q->tail = count;
+}
+
+// =====================================================================
+// Frontier accessors (L2SP → DRAM)
+// =====================================================================
+static inline int64_t* frontier_current_ptr(int64_t idx) {
+    return (idx < g_next_frontier.l2sp_capacity)
+        ? (g_current_frontier_storage + idx)
+        : (g_current_frontier_dram_storage + (idx - g_next_frontier.l2sp_capacity));
+}
+
+static inline int64_t frontier_current_get(int64_t idx) {
+    return *frontier_current_ptr(idx);
+}
+
+static inline void frontier_current_set(int64_t idx, int64_t value) {
+    *frontier_current_ptr(idx) = value;
+}
+
+static inline int64_t* frontier_next_item_ptr(int64_t idx) {
+    return (idx < g_next_frontier.l2sp_capacity)
+        ? (g_next_frontier.l2sp_items + idx)
+        : (g_next_frontier.dram_items + (idx - g_next_frontier.l2sp_capacity));
+}
+
+static inline int64_t frontier_next_item_get(int64_t idx) {
+    return *frontier_next_item_ptr(idx);
+}
+
+static inline void frontier_next_item_set(int64_t idx, int64_t value) {
+    *frontier_next_item_ptr(idx) = value;
+}
+
+// =====================================================================
+// Queue / frontier operations
+// =====================================================================
+static inline int64_t queue_pop_chunk(WorkQueue* q, int core_id,
+                                      int64_t* out_begin, int64_t max_chunk) {
+    int64_t h = atomic_load_i64(&q->head);
+    int64_t t = atomic_load_i64(&q->tail);
+    if (h >= t) {
+        core_has_work[core_id] = 0;
+        return 0;
+    }
+    int64_t avail = t - h;
+    int64_t chunk = (avail < max_chunk) ? avail : max_chunk;
+    int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + chunk);
+    if (old_h == h) {
+        *out_begin = h;
+        return chunk;
+    }
+    return 0;
+}
+
+static inline bool next_frontier_push_atomic(int64_t work) {
+    int64_t idx = atomic_fetch_add_i64(&g_next_frontier.tail, 1);
+    if (idx >= g_next_frontier.capacity) return false;
+    frontier_next_item_set(idx, work);
     return true;
-}
-
-static inline bool queue_push_mp(WorkQueue* q, int64_t work) {
-    while (true) {
-        int64_t t = atomic_load_i64(&q->tail);
-        if (t >= QUEUE_SIZE) return false;
-        int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, t + 1);
-        if (old_t == t) {
-            q->items[t] = work;
-            return true;
-        }
-        hartsleep(1);
-    }
-}
-
-static inline int64_t queue_pop_chunk_mc(WorkQueue* q, int64_t* out_begin, int64_t max_chunk) {
-    int64_t backoff = 1;
-    const int64_t max_backoff = 32;
-
-    while (true) {
-        int64_t h = atomic_load_i64(&q->head);
-        int64_t t = atomic_load_i64(&q->tail);
-        if (h >= t) return 0;
-
-        int64_t avail = t - h;
-        int64_t chunk = (avail < max_chunk) ? avail : max_chunk;
-        int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + chunk);
-        if (old_h == h) {
-            *out_begin = h;
-            return chunk;
-        }
-
-        hartsleep(backoff);
-        if (backoff < max_backoff) backoff <<= 1;
-    }
 }
 
 static inline bool claim_node(int64_t v) {
@@ -134,23 +191,30 @@ static inline bool claim_node(int64_t v) {
     return old == 0;
 }
 
+// =====================================================================
+// L2SP allocator
+// =====================================================================
 extern "C" char l2sp_end[];
 
-static inline uintptr_t align_up_uintptr(uintptr_t value, size_t align) {
-    const uintptr_t mask = (uintptr_t)align - 1;
-    return (value + mask) & ~mask;
+static inline uintptr_t align_up_uintptr(uintptr_t value, uintptr_t align) {
+    return (value + align - 1) & ~(align - 1);
 }
 
-static void* try_alloc_l2sp(uintptr_t* heap, size_t bytes, size_t align, uintptr_t l2sp_limit) {
-    uintptr_t ptr = align_up_uintptr(*heap, align);
-    if (ptr + bytes > l2sp_limit) return nullptr;
-    *heap = ptr + bytes;
-    return (void*)ptr;
+static void* try_alloc_l2sp(uintptr_t* heap, size_t bytes, size_t align,
+                            uintptr_t l2sp_limit) {
+    const uintptr_t start = align_up_uintptr(*heap, (uintptr_t)align);
+    const uintptr_t end = start + (uintptr_t)bytes;
+    if (end > l2sp_limit) return nullptr;
+    *heap = end;
+    return (void*)start;
 }
 
+// =====================================================================
+// Graph loading
+// =====================================================================
 static bool load_graph_from_file() {
     char fname[32];
-    const char *src = "rmat_s16.bin";
+    const char *src = "rmat_r16.bin";
     int fi = 0;
     while (src[fi]) { fname[fi] = src[fi]; fi++; }
     fname[fi] = '\0';
@@ -172,10 +236,10 @@ static bool load_graph_from_file() {
     int hdr_N      = header[0];
     int hdr_E      = header[1];
     int hdr_D      = header[2];
+    int hdr_source = header[4];
 
     if (hdr_N <= 0 || hdr_E < 0) {
-        std::printf("ERROR: invalid CSR header in %s: N=%d E=%d D=%d\n",
-                    src, hdr_N, hdr_E, hdr_D);
+        std::printf("ERROR: invalid CSR header: N=%d E=%d\n", hdr_N, hdr_E);
         return false;
     }
 
@@ -186,8 +250,7 @@ static bool load_graph_from_file() {
 
     char *buf = (char *)std::malloc(file_size);
     if (!buf) {
-        std::printf("ERROR: malloc failed for file buffer (%lu bytes)\n",
-                    (unsigned long)file_size);
+        std::printf("ERROR: malloc failed (%lu bytes)\n", (unsigned long)file_size);
         return false;
     }
 
@@ -199,7 +262,7 @@ static bool load_graph_from_file() {
     ph_bulk_load_file(&desc);
 
     if (desc.result <= 0) {
-        std::printf("ERROR: bulk load of %s failed (result=%ld)\n", src, desc.result);
+        std::printf("ERROR: bulk load failed (result=%ld)\n", desc.result);
         std::free(buf);
         return false;
     }
@@ -207,9 +270,11 @@ static bool load_graph_from_file() {
     g_file_buffer  = buf;
     g_num_vertices = hdr_N;
     g_num_edges    = hdr_E;
+    g_bfs_source   = hdr_source;
     g_row_ptr = (int32_t *)(buf + 20);
     g_col_idx = (int32_t *)(buf + 20 + (size_t)(hdr_N + 1) * sizeof(int32_t));
 
+    // Use highest-degree vertex as BFS source (maximizes imbalance)
     int32_t max_deg = -1;
     int32_t max_deg_vertex = 0;
     for (int32_t v = 0; v < hdr_N; v++) {
@@ -221,154 +286,186 @@ static bool load_graph_from_file() {
     }
     g_bfs_source = max_deg_vertex;
 
-    const size_t visited_bytes = (size_t)hdr_N * sizeof(int64_t);
-    const size_t dist_bytes = (size_t)hdr_N * sizeof(int32_t);
+    // Allocate visited, dist, frontiers: L2SP first, DRAM overflow
     uintptr_t l2sp_heap = align_up_uintptr((uintptr_t)l2sp_end, 8);
     const uintptr_t l2sp_base = 0x20000000;
     const uintptr_t l2sp_limit = l2sp_base + podL2SPSize();
 
     g_visited_in_l2sp = 0;
     g_dist_in_l2sp = 0;
+    g_frontiers_in_l2sp = 0;
 
-    visited = (volatile int64_t *)try_alloc_l2sp(&l2sp_heap, visited_bytes, alignof(int64_t), l2sp_limit);
-    if (visited != nullptr) {
-        g_visited_in_l2sp = 1;
-    } else {
-        visited = (volatile int64_t *)std::malloc(visited_bytes);
-    }
+    const size_t visited_bytes = (size_t)hdr_N * sizeof(int64_t);
+    const size_t dist_bytes    = (size_t)hdr_N * sizeof(int32_t);
 
-    dist_arr = (int32_t *)try_alloc_l2sp(&l2sp_heap, dist_bytes, alignof(int32_t), l2sp_limit);
-    if (dist_arr != nullptr) {
-        g_dist_in_l2sp = 1;
-    } else {
-        dist_arr = (int32_t *)std::malloc(dist_bytes);
-    }
+    visited = (volatile int64_t *)try_alloc_l2sp(
+        &l2sp_heap, visited_bytes, alignof(int64_t), l2sp_limit);
+    if (visited) { g_visited_in_l2sp = 1; }
+    else         { visited = (volatile int64_t *)std::malloc(visited_bytes); }
+
+    dist_arr = (int32_t *)try_alloc_l2sp(
+        &l2sp_heap, dist_bytes, alignof(int32_t), l2sp_limit);
+    if (dist_arr) { g_dist_in_l2sp = 1; }
+    else          { dist_arr = (int32_t *)std::malloc(dist_bytes); }
+
     if (!visited || !dist_arr) {
-        std::printf("ERROR: malloc failed for visited/dist_arr\n");
+        std::printf("ERROR: allocation failed for visited/dist_arr\n");
         std::free(buf);
         if (!g_visited_in_l2sp) std::free((void *)visited);
         if (!g_dist_in_l2sp) std::free(dist_arr);
-        g_file_buffer = nullptr;
-        visited  = nullptr;
-        dist_arr = nullptr;
-        g_visited_in_l2sp = 0;
-        g_dist_in_l2sp = 0;
         return false;
     }
 
-    std::printf("Graph loaded: N=%d E=%d D=%d source=%d max_deg=%d (%lu bytes)\n",
-                hdr_N, hdr_E, hdr_D, g_bfs_source, max_deg, (unsigned long)file_size);
+    // Frontier buffers
+    const uintptr_t frontier_heap = align_up_uintptr(l2sp_heap, alignof(int64_t));
+    const uintptr_t frontier_avail =
+        (frontier_heap < l2sp_limit) ? (l2sp_limit - frontier_heap) : 0;
+    // Each vertex needs 2 × int64_t (current + next)
+    const int64_t l2sp_verts =
+        (int64_t)((frontier_avail / (2 * sizeof(int64_t))) > (uintptr_t)hdr_N
+            ? hdr_N : (frontier_avail / (2 * sizeof(int64_t))));
+    const int64_t dram_verts = hdr_N - l2sp_verts;
+
+    g_next_frontier.l2sp_capacity = l2sp_verts;
+    g_current_frontier_storage = nullptr;
+    g_current_frontier_dram_storage = nullptr;
+    g_next_frontier.l2sp_items = nullptr;
+    g_next_frontier.dram_items = nullptr;
+
+    if (l2sp_verts > 0) {
+        const size_t bytes = (size_t)l2sp_verts * sizeof(int64_t);
+        g_current_frontier_storage =
+            (int64_t *)try_alloc_l2sp(&l2sp_heap, bytes, alignof(int64_t), l2sp_limit);
+        g_next_frontier.l2sp_items =
+            (int64_t *)try_alloc_l2sp(&l2sp_heap, bytes, alignof(int64_t), l2sp_limit);
+        g_frontiers_in_l2sp = 1;
+    }
+    if (dram_verts > 0) {
+        const size_t bytes = (size_t)dram_verts * sizeof(int64_t);
+        g_current_frontier_dram_storage = (int64_t *)std::malloc(bytes);
+        g_next_frontier.dram_items = (int64_t *)std::malloc(bytes);
+    }
+    g_next_frontier.tail = 0;
+    g_next_frontier.capacity = hdr_N;
+
+    const bool missing_l2sp =
+        l2sp_verts > 0 && (!g_current_frontier_storage || !g_next_frontier.l2sp_items);
+    const bool missing_dram =
+        dram_verts > 0 && (!g_current_frontier_dram_storage || !g_next_frontier.dram_items);
+    if (missing_l2sp || missing_dram) {
+        std::printf("ERROR: frontier buffer allocation failed\n");
+        std::free(buf);
+        if (!g_visited_in_l2sp) std::free((void *)visited);
+        if (!g_dist_in_l2sp) std::free(dist_arr);
+        std::free(g_current_frontier_dram_storage);
+        std::free(g_next_frontier.dram_items);
+        return false;
+    }
+
+    std::printf("Graph loaded: N=%d E=%d D=%d source=%d max_deg=%d\n",
+                hdr_N, hdr_E, hdr_D, g_bfs_source, max_deg);
     return true;
 }
 
-static inline void process_single_node(int64_t u, int32_t level, WorkQueue* my_next) {
-    const int32_t row_start = g_row_ptr[u];
-    const int32_t row_end = g_row_ptr[u + 1];
-    for (int32_t ei = row_start; ei < row_end; ei++) {
-        const int64_t v = g_col_idx[ei];
-        if (claim_node(v)) {
-            dist_arr[v] = level + 1;
-            queue_push_mp(my_next, v);
-            atomic_fetch_add_i64(&discovered, 1);
-        }
-    }
-}
-
+// =====================================================================
+// BFS level processing (NO work stealing — local queue only)
+// =====================================================================
 static void process_bfs_level(int tid, int32_t level) {
     const int my_core = tid / g_harts_per_core;
-    WorkQueue* my_q = &core_queues[my_core];
-    WorkQueue* my_next = &next_level_queues[my_core];
+    WorkQueue* my_queue = &core_queues[my_core];
 
-    int64_t local_processed = 0;
-    while (true) {
+    int64_t local_nodes = 0;
+    int64_t local_edges = 0;
+
+    for (;;) {
         int64_t begin_idx;
-        int64_t count = queue_pop_chunk_mc(my_q, &begin_idx, BFS_CHUNK_SIZE);
-        if (count == 0) break;
+        int64_t count = queue_pop_chunk(my_queue, my_core, &begin_idx, BFS_CHUNK_SIZE);
 
-        for (int64_t i = 0; i < count; i++) {
-            int64_t u = my_q->items[begin_idx + i];
-            local_processed++;
-            process_single_node(u, level, my_next);
+        if (count > 0) {
+            for (int64_t i = 0; i < count; i++) {
+                int64_t u = frontier_current_get(my_queue->start_idx + begin_idx + i);
+                const int32_t rs = g_row_ptr[u];
+                const int32_t re = g_row_ptr[u + 1];
+                local_edges += (re - rs);
+                for (int32_t ei = rs; ei < re; ei++) {
+                    const int64_t v = g_col_idx[ei];
+                    if (claim_node(v)) {
+                        dist_arr[v] = level + 1;
+                        next_frontier_push_atomic(v);
+                        atomic_fetch_add_i64(&discovered, 1);
+                    }
+                }
+                local_nodes++;
+            }
+            continue;
         }
+
+        // Verify truly empty (not CAS contention)
+        int64_t h = atomic_load_i64(&my_queue->head);
+        int64_t t = atomic_load_i64(&my_queue->tail);
+        if (h < t) continue;
+        break;
     }
 
-    nodes_processed[tid] += local_processed;
+    atomic_fetch_add_i64(&stat_nodes_per_core[my_core], local_nodes);
+    atomic_fetch_add_i64(&stat_edges_per_core[my_core], local_edges);
+    stat_nodes_processed[tid] += local_nodes;
 }
 
-static void distribute_frontier_imbalanced(int tid, bool skew_initial_frontier) {
+// =====================================================================
+// ALL-TO-CORE-0 frontier distribution (extreme power-law imbalance)
+//
+// ALL frontier vertices are assigned to core 0.
+// This models the worst-case power-law partitioning where a naive
+// vertex-ownership scheme assigns essentially all hub-connected work
+// to a single core. Other cores sit idle.
+// =====================================================================
+static void advance_to_next_level_imbalanced(int tid) {
     if (tid != 0) return;
 
     const int total_cores = g_total_cores;
-    int64_t total_nodes = 0;
-    for (int c = 0; c < total_cores; c++) {
-        total_nodes += (next_level_queues[c].tail - next_level_queues[c].head);
-    }
-
-    for (int c = 0; c < total_cores; c++) {
-        queue_init(&core_queues[c]);
-    }
+    const int64_t total_nodes = g_next_frontier.tail;
 
     if (total_nodes == 0) {
-        for (int c = 0; c < total_cores; c++) queue_init(&next_level_queues[c]);
+        for (int c = 0; c < total_cores; c++) {
+            queue_init(&core_queues[c]);
+            core_has_work[c] = 0;
+        }
+        g_next_frontier.tail = 0;
         return;
     }
 
-    int weights[MAX_CORES];
-    int64_t quotas[MAX_CORES];
-    int sum_w = 0;
-    for (int c = 0; c < total_cores; c++) {
-        weights[c] = (c & 1) ? 2 : 1;
-        if (skew_initial_frontier && c == 0) {
-            weights[c] = INITIAL_SKEW_WEIGHT;
-        }
-        sum_w += weights[c];
+    // Copy ALL nodes into current frontier starting at offset 0
+    for (int64_t i = 0; i < total_nodes; i++) {
+        frontier_current_set(i, frontier_next_item_get(i));
     }
 
-    int64_t assigned = 0;
-    for (int c = 0; c < total_cores; c++) {
-        quotas[c] = (total_nodes * (int64_t)weights[c]) / (int64_t)sum_w;
-        assigned += quotas[c];
+    // ALL work goes to core 0
+    queue_assign_slice(&core_queues[0], 0, total_nodes);
+    core_has_work[0] = 1;
+    for (int c = 1; c < total_cores; c++) {
+        queue_assign_slice(&core_queues[c], total_nodes, 0);
+        core_has_work[c] = 0;
     }
 
-    int64_t rem = total_nodes - assigned;
-    int idx = 0;
-    while (rem > 0) {
-        quotas[idx % total_cores]++;
-        rem--;
-        idx++;
-    }
-
-    int target = 0;
-    while (target < total_cores && quotas[target] == 0) target++;
-
-    for (int src_core = 0; src_core < total_cores; src_core++) {
-        WorkQueue* src = &next_level_queues[src_core];
-        const int64_t h = src->head;
-        const int64_t t = src->tail;
-
-        for (int64_t i = h; i < t; i++) {
-            const int64_t node = src->items[i];
-            if (target >= total_cores) {
-                queue_push_st(&core_queues[total_cores - 1], node);
-                continue;
-            }
-            queue_push_st(&core_queues[target], node);
-            quotas[target]--;
-            while (target < total_cores && quotas[target] == 0) target++;
-        }
-
-        queue_init(src);
-    }
+    g_next_frontier.tail = 0;
 }
 
+// =====================================================================
+// Count total frontier work
+// =====================================================================
 static int64_t count_total_work() {
     int64_t total = 0;
     for (int c = 0; c < g_total_cores; c++) {
-        total += (core_queues[c].tail - core_queues[c].head);
+        int64_t d = core_queues[c].tail - core_queues[c].head;
+        if (d > 0) total += d;
     }
     return total;
 }
 
+// =====================================================================
+// BFS driver
+// =====================================================================
 static void bfs() {
     const int tid = get_thread_id();
 
@@ -386,113 +483,163 @@ static void bfs() {
         }
         for (int i = 0; i < g_total_harts; i++) {
             g_local_sense[i] = 0;
-            nodes_processed[i] = 0;
+            stat_nodes_processed[i] = 0;
         }
         for (int c = 0; c < g_total_cores; c++) {
             queue_init(&core_queues[c]);
-            queue_init(&next_level_queues[c]);
+            core_has_work[c] = 0;
+            stat_nodes_per_core[c] = 0;
+            stat_edges_per_core[c] = 0;
         }
+        g_next_frontier.tail = 0;
 
         visited[source_id] = 1;
         dist_arr[source_id] = 0;
         discovered = 1;
-        queue_push_st(&core_queues[0], source_id);
 
-        std::printf("=== BFS Baseline (NO stealing; CSR graph; skewed initial frontier) ===\n");
-        std::printf("Graph: N=%d E=%d (bulk-loaded from uniform_graph.bin)\n",
+        // Source goes to core 0 (vertex-ownership assigns it there)
+        queue_assign_slice(&core_queues[0], 0, 1);
+        frontier_current_set(0, source_id);
+        core_has_work[0] = 1;
+        for (int c = 1; c < g_total_cores; c++) {
+            queue_assign_slice(&core_queues[c], 1, 0);
+        }
+
+        std::printf("=== BFS Imbalanced Baseline (NO stealing; all-to-core-0) ===\n");
+        std::printf("Graph: N=%d E=%d (RMAT CSR)\n",
                     g_num_vertices, g_num_edges);
+        std::printf("Distribution: ALL frontier to core 0 [extreme imbalance]\n");
         std::printf("Hardware: %d cores x %d harts = %d total harts\n",
                     g_total_cores, g_harts_per_core, g_total_harts);
         std::printf("Source: node %ld (highest-degree vertex)\n", (long)source_id);
-        std::printf("Hot state: visited in %s, dist_arr in %s\n",
+        std::printf("Hot state: visited in %s, dist_arr in %s, frontiers in %s\n",
                     g_visited_in_l2sp ? "L2SP" : "DRAM",
-                    g_dist_in_l2sp ? "L2SP" : "DRAM");
+                    g_dist_in_l2sp ? "L2SP" : "DRAM",
+                    g_frontiers_in_l2sp ? "L2SP+DRAM" : "DRAM");
         std::printf("\n");
+
+        g_initialized.store(1, std::memory_order_release);
+    } else {
+        while (g_initialized.load(std::memory_order_acquire) == 0) {
+            hartsleep(10);
+        }
     }
 
     barrier();
 
     uint64_t start_cycles = 0;
-    if (tid == 0) asm volatile("rdcycle %0" : "=r"(start_cycles));
+    if (tid == 0) {
+        asm volatile("rdcycle %0" : "=r"(start_cycles));
+    }
 
     int32_t level = 0;
+
     while (true) {
-        if (tid == 0) {
-            g_total_work_bcast = count_total_work();
-            std::printf("Level %d: frontier=%ld discovered=%ld\n",
-                        level, (long)g_total_work_bcast, (long)discovered);
-        }
+        int64_t total_work = count_total_work();
+
         barrier();
 
-        const int64_t total_work = g_total_work_bcast;
         if (total_work == 0) break;
 
+        if (tid == 0) {
+            std::printf("Level %d: frontier=%ld, discovered=%ld\n",
+                        level, (long)total_work, (long)discovered);
+            std::printf("  Per-core queues: ");
+            for (int c = 0; c < g_total_cores; c++) {
+                int64_t d = core_queues[c].tail - core_queues[c].head;
+                if (d < 0) d = 0;
+                std::printf("C%d:%ld ", c, (long)d);
+            }
+            std::printf("\n");
+        }
+
         barrier();
+
         process_bfs_level(tid, level);
+
         barrier();
-        distribute_frontier_imbalanced(tid, level == 0);
+
+        advance_to_next_level_imbalanced(tid);
+
         barrier();
         level++;
     }
 
     uint64_t end_cycles = 0;
-    if (tid == 0) asm volatile("rdcycle %0" : "=r"(end_cycles));
+    if (tid == 0) {
+        asm volatile("rdcycle %0" : "=r"(end_cycles));
+    }
 
     barrier();
 
     if (tid == 0) {
+        const uint64_t elapsed = end_cycles - start_cycles;
+
         std::printf("\n=== BFS Complete ===\n");
         std::printf("Levels traversed: %d\n", level);
         std::printf("Nodes discovered: %ld / %d\n", (long)discovered, g_num_vertices);
-        std::printf("dist[source=%d] = %d (expected 0)\n",
-                    g_bfs_source, dist_arr[g_bfs_source]);
-
-        int64_t total_processed = 0;
-        for (int h = 0; h < g_total_harts; h++) total_processed += nodes_processed[h];
-        std::printf("Total nodes processed: %ld\n", (long)total_processed);
-
-        const uint64_t elapsed = end_cycles - start_cycles;
-        std::printf("Cycles elapsed:        %lu\n", (unsigned long)elapsed);
-        if (total_processed > 0) {
-            std::printf("Cycles per node:       %lu\n",
-                        (unsigned long)(elapsed / (uint64_t)total_processed));
+        std::printf("Cycles elapsed:   %lu\n", (unsigned long)elapsed);
+        if (discovered > 0) {
+            std::printf("Cycles per node:  %lu\n",
+                        (unsigned long)(elapsed / (uint64_t)discovered));
         }
 
+        // Per-core work balance report
+        std::printf("\n========== WORK BALANCE (per-core) ==========\n");
+        std::printf("Core | Nodes Processed | Edges Traversed\n");
+        std::printf("-----|-----------------|----------------\n");
+
+        int64_t total_nodes_done = 0;
+        int64_t total_edges_done = 0;
+        int64_t min_edges = INT64_MAX;
+        int64_t max_edges = 0;
+
+        for (int c = 0; c < g_total_cores; c++) {
+            int64_t nodes = stat_nodes_per_core[c];
+            int64_t edges = stat_edges_per_core[c];
+            std::printf("  %2d | %15ld | %15ld\n", c, (long)nodes, (long)edges);
+            total_nodes_done += nodes;
+            total_edges_done += edges;
+            if (edges < min_edges) min_edges = edges;
+            if (edges > max_edges) max_edges = edges;
+        }
+
+        int64_t avg_edges = (g_total_cores > 0) ? (total_edges_done / g_total_cores) : 0;
+        int64_t imbalance_pct = (max_edges > 0)
+            ? ((max_edges - min_edges) * 100 / max_edges) : 0;
+
+        std::printf("\nSummary:\n");
+        std::printf("  Total nodes: %ld  Total edges: %ld\n",
+                    (long)total_nodes_done, (long)total_edges_done);
+        std::printf("  Avg edges/core: %ld\n", (long)avg_edges);
+        std::printf("  Min/Max edges:  %ld / %ld\n", (long)min_edges, (long)max_edges);
+        std::printf("  Imbalance (max-min)/max: %ld%%\n", (long)imbalance_pct);
+        std::printf("=============================================\n");
+
+        // Cleanup
         std::free(g_file_buffer);
         if (!g_visited_in_l2sp) std::free((void *)visited);
         if (!g_dist_in_l2sp) std::free(dist_arr);
+        std::free(g_current_frontier_dram_storage);
+        std::free(g_next_frontier.dram_items);
         g_file_buffer = nullptr;
-        g_row_ptr = nullptr;
-        g_col_idx = nullptr;
-        visited = nullptr;
-        dist_arr = nullptr;
-        g_visited_in_l2sp = 0;
-        g_dist_in_l2sp = 0;
+        g_row_ptr     = nullptr;
+        g_col_idx     = nullptr;
     }
 }
 
 int main(int argc, char** argv) {
-    if (myCoreId() == 0 && myThreadId() == 0) {
+    const int tid = get_thread_id();
+
+    if (tid == 0) {
         g_total_cores = numPodCores();
         g_harts_per_core = myCoreThreads();
         g_total_harts = g_total_cores * g_harts_per_core;
-
-        if (g_total_cores > MAX_CORES) {
-            std::printf("ERROR: g_total_cores=%d > MAX_CORES=%d\n", g_total_cores, MAX_CORES);
-            std::abort();
-        }
-        if (g_total_harts > MAX_HARTS) {
-            std::printf("ERROR: g_total_harts=%d > MAX_HARTS=%d\n", g_total_harts, MAX_HARTS);
-            std::abort();
-        }
-
-        g_cfg_ready.store(1, std::memory_order_release);
-    } else {
-        while (g_cfg_ready.load(std::memory_order_acquire) == 0) {
-            hartsleep(10);
-        }
     }
 
+    barrier();
     bfs();
+    barrier();
+
     return 0;
 }

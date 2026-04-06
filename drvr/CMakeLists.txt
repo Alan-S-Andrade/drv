@@ -317,6 +317,15 @@ drvr_test_build_properties(work_stealing
   DRV_BUILD_CORE_THREADS 16
   )
 
+# work queue depth trace
+drvr_test_with_pandohammer(work_queue_depth_trace work_queue_depth_trace.cpp)
+drvr_test_build_properties(work_queue_depth_trace
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 4
+  DRV_BUILD_CORE_THREADS 16
+  )
+
 # work stealing batch
 drvr_test_with_pandohammer(work_stealing_batch work_stealing_benchmark_batch.cpp)
 drvr_test_build_properties(work_stealing_batch
@@ -330,6 +339,39 @@ drvr_test_build_properties(work_stealing_batch
 # BFS with work stealing
 drvr_test_with_pandohammer(bfs_work_stealing bfs_work_stealing.cpp)
 drvr_test_build_properties(bfs_work_stealing
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_nosteal_baseline bfs_work_stealing_nosteal_baseline.cpp)
+drvr_test_build_properties(bfs_nosteal_baseline
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_work_stealing_adaptive bfs_work_stealing_adaptive.cpp)
+drvr_test_build_properties(bfs_work_stealing_adaptive
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_work_stealing_l1sp_cache bfs_work_stealing_l1sp_cache.cpp)
+drvr_test_build_properties(bfs_work_stealing_l1sp_cache
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_l1sp_cache_baseline bfs_work_stealing_l1sp_cache.cpp)
+drvr_test_compile_options(bfs_l1sp_cache_baseline -DNO_STEAL_BASELINE)
+drvr_test_build_properties(bfs_l1sp_cache_baseline
   PROPERTIES
   DRV_BUILD_POD_CORES_X 2
   DRV_BUILD_POD_CORES_Y 1
@@ -499,6 +541,13 @@ drvr_set_build_target_properties(drvr_wait-with-sleep
   DRV_BUILD_CORE_THREADS 2
   )
 
+drvr_test_compile_options(wait-with-sleep -DUSE_SLEEP=1)
+drvr_set_build_target_properties(drvr_wait-with-sleep
+  PROPERTIES
+  DRV_BUILD_POD_CORES 8
+  DRV_BUILD_CORE_THREADS 8
+  )
+
 drvr_test_with_pandohammer(wait-without-sleep wait.c)
 
 # spmm; broken; not sure why
@@ -509,6 +558,24 @@ if (FALSE)
     spmm.graph.mtx
     )
 endif()
+
+# PageRank on RMAT graph (imbalanced baseline, for roofline comparison with BFS)
+drvr_test_with_pandohammer(pagerank_rmat pagerank_rmat.cpp)
+drvr_test_build_properties(pagerank_rmat
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+
+# BFS with perfect work stealing — L1SP/L2SP utilization showcase
+drvr_test_with_pandohammer(bfs_ws_utilization bfs_ws_utilization.cpp)
+drvr_test_build_properties(bfs_ws_utilization
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
 
 # open; currently broken (fix would be in RISCVSimulator)
 if (FALSE)
