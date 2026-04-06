@@ -8,7 +8,7 @@
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 96
-#SBATCH -t 48:00:00
+#SBATCH -t 23:00:00
 
 set -eo pipefail
 
@@ -58,17 +58,6 @@ apptainer exec --cleanenv \
   '
 
 # ------------------------------------------------------------------
-# STEP 1b: Use pre-built libmemHierarchy.so with coherence ALU tagging
-# ------------------------------------------------------------------
-MEMH_LIB="/work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so"
-
-if [[ ! -f "$MEMH_LIB" ]]; then
-    echo "ERROR: libmemHierarchy.so not found at $MEMH_LIB"
-    echo "Run rebuild_memhierarchy.sh first if needed."
-    exit 1
-fi
-
-# ------------------------------------------------------------------
 # STEP 2: RUN BFS CSR WEAK SCALING SWEEP (ROI-ONLY)
 # ------------------------------------------------------------------
 
@@ -77,7 +66,7 @@ VTX_PER_THREAD=1024
 DEGREE=16
 
 # Graph type: "uniform" or "rmat"
-GRAPH_TYPE="rmat"
+GRAPH_TYPE="uniform"
 # Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
 EF=16
 
@@ -87,7 +76,6 @@ apptainer exec --cleanenv \
   --bind "$SCRIPT_DIR:/work" \
   --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
   --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
-  --bind "$MEMH_LIB:/install/lib/sst-elements-library/libmemHierarchy.so" \
   "$SIF" \
   bash -lc '
     set -e
@@ -100,7 +88,7 @@ apptainer exec --cleanenv \
     BINARY_MULTI=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak_multi_roi
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_roi_results_rmat_plain
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_roi_results_ramulator_with_hbm_3_l2sp_slices_big
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
@@ -112,15 +100,15 @@ apptainer exec --cleanenv \
     # ---- SWEEP CONFIGURATIONS ----
     # Format: PODS CX CY THR
     CONFIGS=(
-      "1 1  1 16"
-      "1 2  1 16"
-      "1 4  1 16"
-      "1 8  1 16"
-      "1 8  2 16"
-      "1 8  4 16"
-      "1 8  8 16"
+      "2 1  1 16"
+      #"1 2  1 16"
+      #"1 4  1 16"
+      #"1 8  1 16"
+      #"1 8  2 16"
+      #"1 8  4 16"
+      #"1 8  8 16"
       # Multi-pod weak scaling
-      #"2 8  8 16"
+      "#2 8  8 16"
       #"4 8  8 16"
     )
 
@@ -194,7 +182,6 @@ apptainer exec --cleanenv \
         --pxn-dram-cache-size=4194304 \
         --pxn-dram-cache-slices=4 \
         --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
-        --pxn-dram-cache-alu=0 \
         "$BINARY" \
         --V ${VTX_PER_THREAD} \
         --D ${RUN_DEGREE} \
@@ -216,6 +203,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "BFS CSR WEAK SCALING ROI-ONLY SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_roi_results_rmat_plain/"
+    echo "Results in: build_stampede/drvr/bfs_csr_weak_roi_results_ramulator_with_hbm_3_l2sp_slices_big/"
     echo "=============================================="
   '

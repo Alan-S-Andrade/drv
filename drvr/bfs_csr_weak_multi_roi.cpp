@@ -576,8 +576,8 @@ pod0_init_done:
             int32_t remote_word = local_my_remote[w];
             if (remote_word != 0) {
                 atomic_or_i32(&local_next_frontier[w], remote_word);
-                // Clear the exchange buffer for next iteration
-                local_my_remote[w] = 0;
+                // Clear via posted atomic so MemController backing store stays in sync
+                atomic_swap_i32_posted(&local_my_remote[w], 0);
             }
         }
 
@@ -613,7 +613,7 @@ pod0_init_done:
             if (my_pod == 0) {
                 if (g_global_any_work) {
                     g_global_bfs_iters++;
-                    g_global_any_work = 0;  // reset for next iteration
+                    atomic_swap_i32_posted(&g_global_any_work, 0);
                 } else {
                     g_global_done = 1;
                 }

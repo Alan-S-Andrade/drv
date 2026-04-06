@@ -271,6 +271,7 @@ class DRAMBuilder(MemoryBuilder):
             dram.backend.addParams({
                 "configFile" : self.dram_backend_config,
                 "mem_size" : f'{self.size}B',
+                "alu_latency" : self.alu_latency,
             })
         else:
             dram.backend = dram.memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")
@@ -391,6 +392,7 @@ class CachedDRAMBuilder(DRAMBuilder):
         self.clock = "1GHz"
         self.mshr_num_entries = 256
         self.dram_backend_config_sliced = ""
+        self.alu_latency = 0
         return
 
     def cache_name(self, name):

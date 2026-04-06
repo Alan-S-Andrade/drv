@@ -396,12 +396,21 @@ drvr_test_build_properties(work_stealing_batch
   )
 
 
-# BFS with work stealing
+# BFS with work stealing (grid)
 drvr_test_with_pandohammer(bfs_work_stealing bfs_work_stealing.cpp)
 drvr_test_build_properties(bfs_work_stealing
   PROPERTIES
   DRV_BUILD_POD_CORES_X 8
   DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+# BFS CSR with work stealing (ROI-only, bulk-loaded graph)
+drvr_test_with_pandohammer(bfs_csr_work_stealing bfs_csr_work_stealing.cpp)
+drvr_test_build_properties(bfs_csr_work_stealing
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
   DRV_BUILD_CORE_THREADS 16
   )
 

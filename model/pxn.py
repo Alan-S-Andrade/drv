@@ -195,13 +195,7 @@ class PXNBuilder(object):
                     else self.dram.dram_backend_config
                 slice_mem_size = self.dram.size // num_slices
 
-                # Assign slices to ports in reverse order to diagnose
-                # whether the "last slice" latency issue follows port order
-                # or address mapping. Remove this reversal after diagnosis.
-                port_order = list(reversed(range(num_slices)))
-
-                for port_idx in range(num_slices):
-                    slice_id = port_order[port_idx]
+                for slice_id in range(num_slices):
                     slice_name = self.dram_slice_name(name, dram_bank_id, slice_id)
                     mc_name = slice_name + "_memctrl"
                     cache_name = slice_name + "_cache"
@@ -221,6 +215,7 @@ class PXNBuilder(object):
                         backend.addParams({
                             "configFile" : slice_backend_config,
                             "mem_size" : f'{slice_mem_size}B',
+                            "alu_latency" : self.dram.alu_latency,
                         })
                     else:
                         backend = memctrl.setSubComponent("backend", "Drv.DrvSimpleMemBackend")

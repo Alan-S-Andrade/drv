@@ -20,6 +20,10 @@ DrvRamulatorMemBackend::DrvRamulatorMemBackend(ComponentId_t id, Params &params)
     int verbose_level = params.find<int>("verbose_level", 0);
     output_ = SST::Output("[@f:@l:@p]: ", verbose_level, 0, SST::Output::STDOUT);
     output_.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
+    alu_latency_ = params.find<int>("alu_latency", 0);
+    if (alu_latency_ > 0) {
+        output_.output(CALL_INFO, "Near-cache ALU enabled: atomic latency = %d cycles\n", alu_latency_);
+    }
 }
 
 /**
@@ -30,14 +34,22 @@ DrvRamulatorMemBackend::~DrvRamulatorMemBackend() {
 }
 
 /**
- * handle custom requests for drv componenets
+ * handle custom requests for drv components
  */
 bool DrvRamulatorMemBackend::issueCustomRequest(ReqId req_id, Interfaces::StandardMem::CustomData *data) {
     output_.verbose(CALL_INFO, 1, 0, "%s\n", __PRETTY_FUNCTION__);
     AtomicReqData *atomic_data = dynamic_cast<AtomicReqData*>(data);
     if (atomic_data) {
         output_.verbose(CALL_INFO, 1, 0, "Received atomic request\n");
-        // just model the atomic as a read for now
+
+        if (alu_latency_ > 0 && atomic_data->shootdown_occurred_) {
+            // Near-cache ALU mode: shootdown already fetched the data,
+            // so skip Ramulator timing and complete with fixed ALU latency
+            alu_queue_.push_back({alu_latency_, req_id});
+            return true;
+        }
+
+        // Default: model the atomic as a read through Ramulator
         Addr addr = atomic_data->pAddr;
         ramulator::Request request
             (addr
@@ -55,6 +67,28 @@ bool DrvRamulatorMemBackend::issueCustomRequest(ReqId req_id, Interfaces::Standa
 }
 
 /**
+ * clock handler - tick Ramulator and drain ALU queue
+ */
+bool DrvRamulatorMemBackend::clock(Cycle_t cycle) {
+    // Tick Ramulator (processes normal reads/writes and pending DRAM requests)
+    ramulatorMemory::clock(cycle);
+
+    // Drain ALU queue: decrement counters, complete when ready
+    auto it = alu_queue_.begin();
+    while (it != alu_queue_.end()) {
+        it->first--;
+        if (it->first <= 0) {
+            handleMemResponse(it->second);
+            it = alu_queue_.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
+    return false;
+}
+
+/**
  * finish - dump ramulator internal stats to file
  */
 void DrvRamulatorMemBackend::finish() {
@@ -62,10 +96,8 @@ void DrvRamulatorMemBackend::finish() {
     ramulatorMemory::finish();
 
     // derive stats filename from parent component name
-    // parent is e.g. "system_pxn0_dram0_memctrl", we want "ramulator_system_pxn0_dram0.stats"
     std::string parent_name = getParentComponentName();
     std::string base_name = parent_name;
-    // strip trailing "_memctrl" if present
     const std::string suffix = "_memctrl";
     if (base_name.size() >= suffix.size() &&
         base_name.compare(base_name.size() - suffix.size(), suffix.size(), suffix) == 0) {
@@ -73,7 +105,6 @@ void DrvRamulatorMemBackend::finish() {
     }
     std::string stats_file = "ramulator_" + base_name + ".stats";
 
-    // open output file and print all ramulator stats
     Stats::statlist.output(stats_file);
     Stats::statlist.printall();
     Stats::statlist.finish();

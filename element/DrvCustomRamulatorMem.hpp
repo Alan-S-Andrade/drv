@@ -15,6 +15,8 @@
 #include "DrvAPIReadModifyWrite.hpp"
 #include "DrvAPIThreadState.hpp"
 #include "DrvCustomStdMem.hpp"
+#include <deque>
+#include <utility>
 
 namespace SST {
 namespace Drv {
@@ -22,8 +24,10 @@ namespace Drv {
 /**
  * @brief our specialized ramulator memory backend
  *
- * this is all just to handle atomic memory operations... *sigh*
- * there HAS to be a better way to do this...
+ * Supports an optional near-cache ALU mode: when alu_latency > 0,
+ * custom requests (atomics) complete with a fixed cycle latency
+ * instead of going through Ramulator's HBM timing model.
+ * This models a hardware ALU co-located with the DRAM cache.
  */
 class DrvRamulatorMemBackend : public SST::MemHierarchy::ramulatorMemory {
 public:
@@ -32,7 +36,8 @@ public:
                                 "Custom ramulator memory backend for drv element", SST::Drv::DrvRamulatorMemBackend)
   /* parameters */
   SST_ELI_DOCUMENT_PARAMS(
-                          {"verbose_level", "Sets the verbosity of the backend output", "0"}
+                          {"verbose_level", "Sets the verbosity of the backend output", "0"},
+                          {"alu_latency", "Fixed cycle latency for atomic ALU (0=disabled, use Ramulator timing)", "0"}
                           )
 
   /* constructor */
@@ -43,10 +48,14 @@ public:
 
   bool issueCustomRequest(ReqId, Interfaces::StandardMem::CustomData *) override;
 
+  bool clock(Cycle_t cycle) override;
+
   void finish() override;
 
 private:
     SST::Output output_;
+    int alu_latency_;
+    std::deque<std::pair<int, ReqId>> alu_queue_;
 };
 
 }

@@ -161,6 +161,8 @@ void RISCVCore::configureStatistics(Params &params) {
     useful_load_request_count_ = registerStatistic<uint64_t>("useful_load_request_count");
     useful_dram_load_latency_total_ = registerStatistic<uint64_t>("useful_dram_load_latency_total");
     useful_dram_load_request_count_ = registerStatistic<uint64_t>("useful_dram_load_request_count");
+    outstanding_requests_sum_ = registerStatistic<uint64_t>("outstanding_requests_sum");
+    useful_outstanding_requests_sum_ = registerStatistic<uint64_t>("useful_outstanding_requests_sum");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -593,6 +595,14 @@ bool RISCVCore::tick(Cycle_t cycle) {
         }
         //addStallCycleStat(1);
         output_.verbose(CALL_INFO, 0, DEBUG_IDLE, "No harts ready to execute\n");
+    }
+
+    // Accumulate outstanding requests every cycle for average calculation
+    if (outstanding_requests_ > 0) {
+        outstanding_requests_sum_->addData(outstanding_requests_);
+        if (anyHartInStatPhase()) {
+            useful_outstanding_requests_sum_->addData(outstanding_requests_);
+        }
     }
 
     if (shouldExit())

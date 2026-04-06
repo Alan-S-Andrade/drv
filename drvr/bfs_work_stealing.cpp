@@ -1,8 +1,11 @@
-// Level-synchronous BFS with per-core work stealing (FIFO pop + throttled stealing)
-// FIX: level termination uses a global remaining-work counter, not per-hart empty rounds.
+// Level-synchronous BFS with per-core work stealing (using shared work_stealing.h library)
+//
 // - Each level: frontier nodes distributed to per-core queues (imbalanced: odd cores get 2x)
-// - Harts pop from local queue; if empty, steal from other cores
+// - Harts pop from local queue; if empty, one thief per core steals from others
 // - Neighbors claimed via visited[v] = amoswap.d(&visited[v], 1)
+// - Level termination uses a global remaining-work counter, not per-hart empty rounds
+// - Circular queue indexing eliminates head/tail reset races
+// - TTAS single-shot pop/steal reduces cache-line contention
 
 #include <cstdint>
 #include <cstdio>
@@ -16,11 +19,14 @@
 #include <pandohammer/address.h>
 #include <pandohammer/staticdecl.h>
 
-static constexpr int QUEUE_SIZE = 8192;
+#include "work_stealing.h"
+
+static constexpr int QCAP = 8192;           // Queue capacity (power of 2)
 static constexpr int MAX_HARTS  = 1024;
 static constexpr int MAX_CORES  = 64;
-static constexpr int BFS_CHUNK_SIZE = 64;  // nodes per batch local pop
-static constexpr int STEAL_K = 64;         // nodes per batch steal (tunable independently)
+static constexpr int BFS_CHUNK_SIZE = 64;   // Nodes per batch local pop
+static constexpr int STEAL_K = 64;          // Nodes per batch steal
+static constexpr int RECENT_SIZE = 4;       // Recently-failed ring buffer
 
 static constexpr int ROWS = 1000;
 static constexpr int COLS = 1000;
@@ -31,18 +37,14 @@ __l2sp__ volatile int g_harts_per_core = 0;
 __l2sp__ volatile int g_total_cores = 0;
 __l2sp__ std::atomic<int> g_initialized = 0;
 
-struct WorkQueue {
-    volatile int64_t head;              // pop/steal reservation (CAS)
-    volatile int64_t tail;              // push reservation (CAS for concurrent pushes)
-    volatile int64_t items[QUEUE_SIZE];
-};
+// Per-core queues: current level and next level
+__l2sp__ ws::WorkQueue<QCAP> core_queues[MAX_CORES];
+__l2sp__ ws::WorkQueue<QCAP> next_level_queues[MAX_CORES];
 
-__l2sp__ WorkQueue core_queues[MAX_CORES];
-__l2sp__ WorkQueue next_level_queues[MAX_CORES];
+// Barrier state
+__l2sp__ ws::BarrierState<MAX_HARTS> g_barrier;
 
-__l2sp__ int64_t g_local_sense[MAX_HARTS];
-
-// best-effort hint: 1 if queue likely non-empty, 0 if likely empty
+// Best-effort hint: 1 if queue likely non-empty, 0 if likely empty
 __l2sp__ volatile int32_t core_has_work[MAX_CORES];
 
 // Per-core steal token: only one hart per core may steal at a time
@@ -50,105 +52,6 @@ __l2sp__ std::atomic<int> core_thief[MAX_CORES];
 
 // Global remaining-work counter for the current level
 __l2sp__ std::atomic<int64_t> g_level_remaining = 0;
-
-// -------------------- Barrier --------------------
-__l2sp__ std::atomic<int64_t> g_count = 0;
-__l2sp__ std::atomic<int64_t> g_sense = 0;
-
-static inline int get_thread_id() {
-    // Assumes <= 16 harts/core as in your environment; if not, change this encoding.
-    return (myCoreId() << 4) + myThreadId();
-}
-
-static inline void barrier() {
-    int tid = get_thread_id();
-    int total = g_total_harts;
-
-    int64_t local = g_local_sense[tid];
-    local ^= 1;
-    g_local_sense[tid] = local;
-
-    int64_t old = g_count.fetch_add(1, std::memory_order_acq_rel);
-    if (old == total - 1) {
-        g_count.store(0, std::memory_order_relaxed);
-        g_sense.store(local, std::memory_order_release);
-    } else {
-        long w = 1;
-        long wmax = 64 * total;
-        while (g_sense.load(std::memory_order_acquire) != local) {
-            if (w < wmax) w <<= 1;
-            hartsleep(w);
-        }
-    }
-}
-
-// -------------------- Queue Operations --------------------
-static inline void queue_init(WorkQueue* q) {
-    q->head = 0;
-    q->tail = 0;
-}
-
-// Single-thread push (tid==0 redistribution)
-static inline bool queue_push(WorkQueue* q, int core_id, int64_t work) {
-    int64_t t = q->tail;
-    if (t >= QUEUE_SIZE) return false;
-    q->items[t] = work;
-    q->tail = t + 1;
-    core_has_work[core_id] = 1;
-    return true;
-}
-
-// Multi-producer push (BFS expansion into next_level_queues[my_core])
-static inline bool queue_push_atomic(WorkQueue* q, int core_id, int64_t work) {
-    while (true) {
-        int64_t t = atomic_load_i64(&q->tail);
-        if (t >= QUEUE_SIZE) return false;
-
-        int64_t old_t = atomic_compare_and_swap_i64(&q->tail, t, t + 1);
-        if (old_t == t) {
-            q->items[t] = work;
-            core_has_work[core_id] = 1;
-            return true;
-        }
-        hartsleep(1);
-    }
-}
-
-// Linearizable pop/steal: reserve index by CAS on head (FIFO)
-static inline int64_t queue_pop_fifo(WorkQueue* q, int core_id) {
-    int64_t h = atomic_load_i64(&q->head);
-    int64_t t = atomic_load_i64(&q->tail);
-
-    if (h >= t) {
-        core_has_work[core_id] = 0; // best-effort empty hint
-        return -1;
-    }
-
-    int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + 1);
-    if (old_h == h) {
-        return q->items[h];
-    }
-    return -1;
-}
-
-// Batch pop: reserve up to max_chunk items from head in one CAS.
-// Returns count of items claimed (0 if empty/contention). Sets *out_begin.
-static inline int64_t queue_pop_chunk(WorkQueue* q, int core_id, int64_t* out_begin, int64_t max_chunk) {
-    int64_t h = atomic_load_i64(&q->head);
-    int64_t t = atomic_load_i64(&q->tail);
-    if (h >= t) {
-        core_has_work[core_id] = 0;
-        return 0;
-    }
-    int64_t avail = t - h;
-    int64_t chunk = (avail < max_chunk) ? avail : max_chunk;
-    int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + chunk);
-    if (old_h == h) {
-        *out_begin = h;
-        return chunk;
-    }
-    return 0;
-}
 
 // -------------------- Graph Utilities --------------------
 static inline int64_t id_of(int r, int c) { return int64_t(r) * COLS + c; }
@@ -164,6 +67,14 @@ __l2sp__ volatile int64_t stat_steal_attempts[MAX_HARTS];
 __l2sp__ volatile int64_t stat_steal_success[MAX_HARTS];
 __l2sp__ volatile int64_t discovered = 0;
 
+static inline int get_thread_id() {
+    return (myCoreId() << 4) + myThreadId();
+}
+
+static inline void barrier() {
+    ws::barrier(&g_barrier, get_thread_id(), g_total_harts);
+}
+
 static inline bool claim_node(int64_t v) {
     const int64_t old = atomic_swap_i64(&visited[v], 1);
     return old == 0;
@@ -171,7 +82,7 @@ static inline bool claim_node(int64_t v) {
 
 // Process a single BFS node: check 4 neighbors, claim unvisited, push to next level
 static inline void process_single_node(int64_t u, int32_t level,
-                                       WorkQueue* my_next_queue, int my_core) {
+                                       ws::WorkQueue<QCAP>* my_next_queue, int my_core) {
     const int ur = row_of(u);
     const int uc = col_of(u);
 
@@ -179,7 +90,7 @@ static inline void process_single_node(int64_t u, int32_t level,
         const int64_t v = u - COLS;
         if (claim_node(v)) {
             dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
+            ws::queue_push_atomic(my_next_queue, v);
             atomic_fetch_add_i64(&discovered, 1);
         }
     }
@@ -187,7 +98,7 @@ static inline void process_single_node(int64_t u, int32_t level,
         const int64_t v = u + COLS;
         if (claim_node(v)) {
             dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
+            ws::queue_push_atomic(my_next_queue, v);
             atomic_fetch_add_i64(&discovered, 1);
         }
     }
@@ -195,7 +106,7 @@ static inline void process_single_node(int64_t u, int32_t level,
         const int64_t v = u - 1;
         if (claim_node(v)) {
             dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
+            ws::queue_push_atomic(my_next_queue, v);
             atomic_fetch_add_i64(&discovered, 1);
         }
     }
@@ -203,46 +114,30 @@ static inline void process_single_node(int64_t u, int32_t level,
         const int64_t v = u + 1;
         if (claim_node(v)) {
             dist_arr[v] = level + 1;
-            queue_push_atomic(my_next_queue, my_core, v);
+            ws::queue_push_atomic(my_next_queue, v);
             atomic_fetch_add_i64(&discovered, 1);
         }
     }
 }
-
-// -------------------- Victim Selection --------------------
-
-// Fast xorshift PRNG for victim selection — mixes tid + counter to decorrelate thieves
-static inline uint32_t xorshift_victim(uint32_t seed) {
-    seed ^= seed << 13;
-    seed ^= seed >> 17;
-    seed ^= seed << 5;
-    return seed;
-}
-
-static constexpr int RECENTLY_TRIED_SIZE = 4; // small "recently failed" ring buffer
 
 // -------------------- BFS Level Processing --------------------
 static void process_bfs_level(int tid, int32_t level) {
     const int harts_per_core = g_harts_per_core;
     const int total_cores = g_total_cores;
     const int my_core = tid / harts_per_core;
-    const int my_local_id = tid % harts_per_core;  // hart index within core
 
-    WorkQueue* my_queue = &core_queues[my_core];
-    WorkQueue* my_next_queue = &next_level_queues[my_core];
+    ws::WorkQueue<QCAP>* my_queue = &core_queues[my_core];
+    ws::WorkQueue<QCAP>* my_next_queue = &next_level_queues[my_core];
 
     // Steal policy knobs
-    const int STEAL_START = 4;      // wait for N local misses before starting steal episodes
-    const int STEAL_VICTIMS = 2;    // probe this many victims per episode
+    const int STEAL_START = 4;      // Wait for N local misses before starting steal episodes
+    const int STEAL_VICTIMS = 2;    // Probe this many victims per episode
     int64_t steal_backoff = 4;
     const int64_t steal_backoff_max = 512;
 
-    // Xorshift RNG state — seeded per-hart so thieves diverge
-    uint32_t rng_state = (uint32_t)(tid + 1) * 2654435761u;
-
-    // Small ring buffer of recently-failed victims to avoid immediate retries
-    int recently_tried[RECENTLY_TRIED_SIZE];
-    for (int i = 0; i < RECENTLY_TRIED_SIZE; i++) recently_tried[i] = -1;
+    uint32_t rng = ws::xorshift_seed(tid);
+    int recently_tried[RECENT_SIZE];
+    ws::clear_recent(recently_tried, RECENT_SIZE);
     int rt_idx = 0;
 
     int64_t local_processed = 0;
@@ -251,7 +146,7 @@ static void process_bfs_level(int tid, int32_t level) {
 
     int empty_streak = 0;
 
-    // Local buffer for stolen items — avoid re-touching victim's cache lines
+    int64_t chunk_buf[BFS_CHUNK_SIZE];
     int64_t stolen_buf[STEAL_K];
 
     int64_t local_backoff = 4;
@@ -259,16 +154,14 @@ static void process_bfs_level(int tid, int32_t level) {
 
     while (g_level_remaining.load(std::memory_order_acquire) > 0) {
         // Batch pop: grab up to BFS_CHUNK_SIZE nodes at once
-        int64_t begin_idx;
-        int64_t count = queue_pop_chunk(my_queue, my_core, &begin_idx, BFS_CHUNK_SIZE);
+        int64_t count = ws::queue_pop_chunk(my_queue, chunk_buf, BFS_CHUNK_SIZE);
 
         if (count > 0) {
             g_level_remaining.fetch_sub(count, std::memory_order_acq_rel);
 
             for (int64_t i = 0; i < count; i++) {
-                int64_t u = my_queue->items[begin_idx + i];
                 local_processed++;
-                process_single_node(u, level, my_next_queue, my_core);
+                process_single_node(chunk_buf[i], level, my_next_queue, my_core);
             }
 
             empty_streak = 0;
@@ -280,7 +173,7 @@ static void process_bfs_level(int tid, int32_t level) {
 
             // Try to become this core's thief (only one hart per core steals at a time)
             if (core_thief[my_core].exchange(1, std::memory_order_acquire) != 0) {
-                // Another hart on this core is already stealing — back off harder, retry local
+                // Another hart on this core is already stealing — back off harder
                 hartsleep(local_backoff * 4);
                 if (local_backoff < local_backoff_max) local_backoff <<= 1;
                 continue;
@@ -289,9 +182,8 @@ static void process_bfs_level(int tid, int32_t level) {
             // Won the steal token
             empty_streak++;
 
-            // short local backoff first
+            // Short local backoff first — don't steal immediately
             if (empty_streak < STEAL_START) {
-                // Release token before backing off — don't hold it while sleeping
                 core_thief[my_core].store(0, std::memory_order_release);
                 hartsleep(local_backoff);
                 if (local_backoff < local_backoff_max) local_backoff <<= 1;
@@ -300,41 +192,23 @@ static void process_bfs_level(int tid, int32_t level) {
 
             bool found = false;
             for (int k = 0; k < STEAL_VICTIMS; k++) {
-                // Pick a random victim, skip self, empty hints, and recently-failed
-                int victim;
-                int pick_tries = 0;
-                do {
-                    rng_state = xorshift_victim(rng_state);
-                    victim = (int)(rng_state % (uint32_t)total_cores);
-                    bool in_recent = false;
-                    if (victim != my_core && core_has_work[victim] != 0) {
-                        for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) {
-                            if (recently_tried[ri] == victim) { in_recent = true; break; }
-                        }
-                        if (!in_recent) break;
-                    }
-                    pick_tries++;
-                } while (pick_tries < total_cores);
-                if (victim == my_core || core_has_work[victim] == 0) continue;
+                int victim = ws::pick_victim<RECENT_SIZE>(
+                    &rng, my_core, total_cores, core_has_work, recently_tried);
+                if (victim < 0) break;
 
                 local_steal_attempts++;
-                count = queue_pop_chunk(&core_queues[victim], victim, &begin_idx, STEAL_K);
+                count = ws::queue_pop_chunk(&core_queues[victim], stolen_buf, STEAL_K);
                 if (count > 0) {
                     local_steal_success++;
                     found = true;
 
-                    // Don't subtract from g_level_remaining here — items are
-                    // pushed into local queue and subtracted when actually processed.
-
-                    // Copy stolen items to local buffer, then release victim's cache lines
-                    for (int64_t i = 0; i < count; i++) {
-                        stolen_buf[i] = core_queues[victim].items[begin_idx + i];
-                    }
                     // Thief keeps first item; pushes rest into local queue for sibling harts
                     for (int64_t i = 1; i < count; i++) {
-                        queue_push_atomic(my_queue, my_core, stolen_buf[i]);
+                        ws::queue_push_atomic(my_queue, stolen_buf[i]);
+                        core_has_work[my_core] = 1;
                     }
-                    // Process only the thief's own item
+
+                    // Process thief's own item — subtract 1 from remaining
                     g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
                     local_processed++;
                     process_single_node(stolen_buf[0], level, my_next_queue, my_core);
@@ -342,13 +216,10 @@ static void process_bfs_level(int tid, int32_t level) {
                     empty_streak = 0;
                     steal_backoff = 4;
                     local_backoff = 4;
-                    // Clear recently-tried on success
-                    for (int ri = 0; ri < RECENTLY_TRIED_SIZE; ri++) recently_tried[ri] = -1;
+                    ws::clear_recent(recently_tried, RECENT_SIZE);
                     break;
                 } else {
-                    // Record this victim as recently failed
-                    recently_tried[rt_idx] = victim;
-                    rt_idx = (rt_idx + 1) % RECENTLY_TRIED_SIZE;
+                    ws::record_recent(recently_tried, &rt_idx, RECENT_SIZE, victim);
                 }
             }
 
@@ -376,13 +247,12 @@ static void distribute_frontier_imbalanced(int tid) {
 
     int64_t total_nodes = 0;
     for (int c = 0; c < total_cores; c++) {
-        int64_t count = next_level_queues[c].tail - next_level_queues[c].head;
-        total_nodes += count;
+        total_nodes += ws::queue_size(&next_level_queues[c]);
     }
 
     if (total_nodes == 0) {
         for (int c = 0; c < total_cores; c++) {
-            queue_init(&core_queues[c]);
+            ws::queue_init(&core_queues[c]);
             core_has_work[c] = 0;
         }
         return;
@@ -411,7 +281,7 @@ static void distribute_frontier_imbalanced(int tid) {
     }
 
     for (int c = 0; c < total_cores; c++) {
-        queue_init(&core_queues[c]);
+        ws::queue_init(&core_queues[c]);
         core_has_work[c] = 0;
     }
 
@@ -419,25 +289,27 @@ static void distribute_frontier_imbalanced(int tid) {
     while (target_core < total_cores && quotas[target_core] == 0) target_core++;
 
     for (int src_core = 0; src_core < total_cores; src_core++) {
-        WorkQueue* src = &next_level_queues[src_core];
+        ws::WorkQueue<QCAP>* src = &next_level_queues[src_core];
         int64_t h = src->head;
         int64_t t = src->tail;
 
         for (int64_t i = h; i < t; i++) {
-            int64_t node = src->items[i];
+            int64_t node = ws::queue_item_at(src, i);
 
             if (target_core >= total_cores) {
-                queue_push(&core_queues[total_cores - 1], total_cores - 1, node);
+                ws::queue_push(&core_queues[total_cores - 1], node);
+                core_has_work[total_cores - 1] = 1;
                 continue;
             }
 
-            queue_push(&core_queues[target_core], target_core, node);
+            ws::queue_push(&core_queues[target_core], node);
+            core_has_work[target_core] = 1;
             quotas[target_core]--;
 
             while (target_core < total_cores && quotas[target_core] == 0) target_core++;
         }
 
-        queue_init(src);
+        ws::queue_init(src);
     }
 }
 
@@ -445,8 +317,7 @@ static void distribute_frontier_imbalanced(int tid) {
 static int64_t count_total_work() {
     int64_t total = 0;
     for (int c = 0; c < g_total_cores; c++) {
-        int64_t count = core_queues[c].tail - core_queues[c].head;
-        total += count;
+        total += ws::queue_size(&core_queues[c]);
     }
     return total;
 }
@@ -462,15 +333,14 @@ static void bfs(int64_t source_id) {
         }
 
         for (int i = 0; i < g_total_harts; i++) {
-            g_local_sense[i] = 0;
             stat_nodes_processed[i] = 0;
             stat_steal_attempts[i] = 0;
             stat_steal_success[i] = 0;
         }
 
         for (int c = 0; c < g_total_cores; c++) {
-            queue_init(&core_queues[c]);
-            queue_init(&next_level_queues[c]);
+            ws::queue_init(&core_queues[c]);
+            ws::queue_init(&next_level_queues[c]);
             core_has_work[c] = 0;
             core_thief[c].store(0, std::memory_order_relaxed);
         }
@@ -479,7 +349,8 @@ static void bfs(int64_t source_id) {
         dist_arr[source_id] = 0;
         discovered = 1;
 
-        queue_push(&core_queues[0], 0, source_id);
+        ws::queue_push(&core_queues[0], source_id);
+        core_has_work[0] = 1;
 
         std::printf("=== BFS with Work Stealing (FIFO + global remaining) ===\n");
         std::printf("Graph: %d x %d = %ld nodes\n", ROWS, COLS, (long)N);
@@ -506,10 +377,8 @@ static void bfs(int64_t source_id) {
     int32_t level = 0;
 
     while (true) {
-        // Compute work for this level after previous redistribution
         int64_t total_work = count_total_work();
 
-        // Publish remaining-work counter (one writer is enough; we gate with barrier)
         if (tid == 0) {
             g_level_remaining.store(total_work, std::memory_order_release);
         }
@@ -523,8 +392,7 @@ static void bfs(int64_t source_id) {
                         level, (long)total_work, (long)discovered);
             std::printf("  Distribution: ");
             for (int c = 0; c < g_total_cores; c++) {
-                int64_t count = core_queues[c].tail - core_queues[c].head;
-                std::printf("C%d:%ld ", c, (long)count);
+                std::printf("C%d:%ld ", c, (long)ws::queue_size(&core_queues[c]));
             }
             std::printf("\n");
         }
@@ -599,6 +467,7 @@ int main(int argc, char** argv) {
         g_total_cores = numPodCores();
         g_harts_per_core = myCoreThreads();
         g_total_harts = g_total_cores * g_harts_per_core;
+        ws::barrier_init(&g_barrier, g_total_harts);
     }
 
     barrier();

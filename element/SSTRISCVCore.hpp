@@ -153,6 +153,8 @@ public:
             {"useful_load_request_count", "Load requests completed during stat_phase=1", "count", 1},
             {"useful_dram_load_latency_total", "DRAM load-to-ready latency during stat_phase=1", "cycles", 1},
             {"useful_dram_load_request_count", "DRAM load requests during stat_phase=1", "count", 1},
+            {"outstanding_requests_sum", "Sum of outstanding requests each cycle (for avg)", "count", 1},
+            {"useful_outstanding_requests_sum", "Sum of outstanding requests each cycle during stat_phase=1", "count", 1},
             {"pgas_translations", "PGAS virtual-to-physical translations", "count", 1},
             {"l2sp_interarrival", "Cycles between consecutive L2SP accesses per hart", "cycles", 1},
         };
@@ -437,6 +439,8 @@ public:
     Statistic<uint64_t> *useful_load_request_count_;
     Statistic<uint64_t> *useful_dram_load_latency_total_;
     Statistic<uint64_t> *useful_dram_load_request_count_;
+    Statistic<uint64_t> *outstanding_requests_sum_;
+    Statistic<uint64_t> *useful_outstanding_requests_sum_;
     /**
      * return true if any hart on this core has stat_phase_ == 1
      */

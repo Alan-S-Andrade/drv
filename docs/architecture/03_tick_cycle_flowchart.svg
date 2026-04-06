@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1050" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="aDown" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+      <polygon points="0 0, 8 0, 4 6" fill="#58a6ff"/>
+    </marker>
+    <marker id="aRight" markerWidth="6" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 0, 6 4, 0 8" fill="#58a6ff"/>
+    </marker>
+    <marker id="aLeft" markerWidth="6" markerHeight="8" refX="0" refY="4" orient="auto">
+      <polygon points="6 0, 0 4, 6 8" fill="#d29922"/>
+    </marker>
+    <marker id="aDownG" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+      <polygon points="0 0, 8 0, 4 6" fill="#3fb950"/>
+    </marker>
+    <marker id="aDownR" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+      <polygon points="0 0, 8 0, 4 6" fill="#f85149"/>
+    </marker>
+    <marker id="aDownO" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+      <polygon points="0 0, 8 0, 4 6" fill="#f0883e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="1050" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#e6edf3" font-size="22" font-weight="bold">RISCVCore::tick() -- Per-Cycle Flowchart</text>
+  <text x="450" y="58" text-anchor="middle" fill="#8b949e" font-size="12">One tick = one clock cycle at 1GHz</text>
+
+  <!-- START -->
+  <ellipse cx="450" cy="95" rx="70" ry="22" fill="#21262d" stroke="#58a6ff" stroke-width="2"/>
+  <text x="450" y="100" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="bold">tick(cycle)</text>
+
+  <!-- Arrow to selectNextHart -->
+  <line x1="450" y1="117" x2="450" y2="145" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#aDown)"/>
+
+  <!-- selectNextHart -->
+  <rect x="310" y="148" width="280" height="45" rx="8" fill="#21262d" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="450" y="168" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">selectNextHart()</text>
+  <text x="450" y="184" text-anchor="middle" fill="#8b949e" font-size="10">Round-robin from last_hart_+1</text>
+
+  <!-- Arrow to decision -->
+  <line x1="450" y1="193" x2="450" y2="220" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#aDown)"/>
+
+  <!-- Decision: hart found? -->
+  <polygon points="450,225 560,268 450,311 340,268" fill="#1c2128" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="450" y="264" text-anchor="middle" fill="#e6edf3" font-size="11" font-weight="bold">Hart</text>
+  <text x="450" y="278" text-anchor="middle" fill="#e6edf3" font-size="11" font-weight="bold">found?</text>
+
+  <!-- ========== YES PATH (left) ========== -->
+  <text x="330" y="263" fill="#3fb950" font-size="12" font-weight="bold">YES</text>
+  <line x1="340" y1="268" x2="220" y2="268" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="220" y1="268" x2="220" y2="300" stroke="#3fb950" stroke-width="1.5" marker-end="url(#aDownG)"/>
+
+  <!-- Fetch -->
+  <rect x="100" y="303" width="240" height="50" rx="8" fill="#21262d" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="220" y="324" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">FETCH</text>
+  <text x="220" y="342" text-anchor="middle" fill="#8b949e" font-size="10">icache_->read(hart.pc())</text>
+
+  <line x1="220" y1="353" x2="220" y2="375" stroke="#3fb950" stroke-width="1.5" marker-end="url(#aDownG)"/>
+
+  <!-- ICache miss? side note -->
+  <rect x="350" y="310" width="170" height="35" rx="6" fill="#0d1117" stroke="#484f58" stroke-width="0.8"/>
+  <text x="435" y="325" text-anchor="middle" fill="#8b949e" font-size="9">icache miss?</text>
+  <text x="435" y="338" text-anchor="middle" fill="#8b949e" font-size="9">icache_miss_++ (no stall)</text>
+  <line x1="340" y1="328" x2="350" y2="328" stroke="#484f58" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Decode -->
+  <rect x="100" y="378" width="240" height="50" rx="8" fill="#21262d" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="220" y="399" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="bold">DECODE</text>
+  <text x="220" y="417" text-anchor="middle" fill="#8b949e" font-size="10">decoder_.decode(inst)</text>
+
+  <line x1="220" y1="428" x2="220" y2="450" stroke="#3fb950" stroke-width="1.5" marker-end="url(#aDownG)"/>
+
+  <!-- Profile + stats -->
+  <rect x="100" y="453" width="240" height="40" rx="8" fill="#21262d" stroke="#3fb950" stroke-width="1"/>
+  <text x="220" y="478" text-anchor="middle" fill="#8b949e" font-size="10">profileInstruction() + instruction_count++</text>
+
+  <line x1="220" y1="493" x2="220" y2="515" stroke="#3fb950" stroke-width="1.5" marker-end="url(#aDownG)"/>
+
+  <!-- Execute -->
+  <rect x="100" y="518" width="240" height="55" rx="8" fill="#21262d" stroke="#3fb950" stroke-width="2"/>
+  <text x="220" y="541" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="bold">EXECUTE</text>
+  <text x="220" y="560" text-anchor="middle" fill="#8b949e" font-size="10">sim_->visit(hart, instr)</text>
+
+  <!-- Branch from execute -->
+  <line x1="220" y1="573" x2="220" y2="600" stroke="#3fb950" stroke-width="1.5" marker-end="url(#aDownG)"/>
+
+  <!-- Decision: memory op? -->
+  <polygon points="220,605 310,640 220,675 130,640" fill="#1c2128" stroke="#3fb950" stroke-width="1.2"/>
+  <text x="220" y="637" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">Memory</text>
+  <text x="220" y="650" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">op?</text>
+
+  <!-- Memory op: YES -->
+  <text x="315" y="633" fill="#d29922" font-size="11" font-weight="bold">YES</text>
+  <line x1="310" y1="640" x2="400" y2="640" stroke="#d29922" stroke-width="1.5"/>
+  <line x1="400" y1="640" x2="400" y2="665" stroke="#d29922" stroke-width="1.5" marker-end="url(#aDownO)"/>
+
+  <!-- Stall hart box -->
+  <rect x="340" y="668" width="195" height="75" rx="8" fill="#21262d" stroke="#d29922" stroke-width="1.5"/>
+  <text x="437" y="688" text-anchor="middle" fill="#d29922" font-size="11" font-weight="bold">Stall Hart</text>
+  <text x="437" y="704" text-anchor="middle" fill="#8b949e" font-size="9">stalledMemory = true</text>
+  <text x="437" y="718" text-anchor="middle" fill="#8b949e" font-size="9">outstanding_requests_++</text>
+  <text x="437" y="732" text-anchor="middle" fill="#8b949e" font-size="9">Send to MemHierarchy</text>
+
+  <!-- Async response note -->
+  <rect x="560" y="680" width="200" height="55" rx="6" fill="#0d1117" stroke="#f0883e" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="660" y="700" text-anchor="middle" fill="#f0883e" font-size="10" font-weight="bold">Async Response (later)</text>
+  <text x="660" y="715" text-anchor="middle" fill="#8b949e" font-size="9">handleMemEvent()</text>
+  <text x="660" y="728" text-anchor="middle" fill="#8b949e" font-size="9">unstall hart + assertCoreOn()</text>
+  <line x1="535" y1="706" x2="560" y2="706" stroke="#f0883e" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Memory op: NO (ALU/branch) -->
+  <text x="125" y="670" fill="#3fb950" font-size="11" font-weight="bold">NO</text>
+  <line x1="130" y1="640" x2="75" y2="640" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="75" y1="640" x2="75" y2="665" stroke="#3fb950" stroke-width="1.5" marker-end="url(#aDownG)"/>
+
+  <!-- Complete in 1 cycle -->
+  <rect x="20" y="668" width="145" height="60" rx="8" fill="#21262d" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="92" y="690" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">Complete</text>
+  <text x="92" y="706" text-anchor="middle" fill="#8b949e" font-size="9">PC += 4 (or branch)</text>
+  <text x="92" y="720" text-anchor="middle" fill="#8b949e" font-size="9">Result -> register</text>
+
+  <!-- Both paths merge to busy_cycle -->
+  <line x1="92" y1="728" x2="92" y2="760" stroke="#3fb950" stroke-width="1"/>
+  <line x1="437" y1="743" x2="437" y2="760" stroke="#d29922" stroke-width="1"/>
+  <line x1="92" y1="760" x2="437" y2="760" stroke="#58a6ff" stroke-width="1"/>
+  <line x1="265" y1="760" x2="265" y2="780" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#aDown)"/>
+
+  <!-- busy_cycle -->
+  <rect x="170" y="783" width="190" height="35" rx="6" fill="#1a7f37" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="265" y="805" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">busy_cycles_++</text>
+
+  <!-- ========== NO PATH (right side) ========== -->
+  <text x="565" y="248" fill="#f85149" font-size="12" font-weight="bold">NO</text>
+  <line x1="560" y1="268" x2="700" y2="268" stroke="#f85149" stroke-width="1.5"/>
+  <line x1="700" y1="268" x2="700" y2="305" stroke="#f85149" stroke-width="1.5" marker-end="url(#aDownR)"/>
+
+  <!-- No hart decision -->
+  <polygon points="700,310 790,348 700,386 610,348" fill="#1c2128" stroke="#f85149" stroke-width="1.2"/>
+  <text x="700" y="342" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">Pending</text>
+  <text x="700" y="356" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">requests?</text>
+
+  <!-- Pending: YES -->
+  <text x="602" y="343" fill="#d29922" font-size="11" font-weight="bold">YES</text>
+  <line x1="610" y1="348" x2="560" y2="348" stroke="#d29922" stroke-width="1.5"/>
+  <line x1="560" y1="348" x2="560" y2="410" stroke="#d29922" stroke-width="1.5" marker-end="url(#aDownO)"/>
+
+  <rect x="475" y="413" width="170" height="50" rx="6" fill="#9e6a03" stroke="#d29922" stroke-width="1.5"/>
+  <text x="560" y="434" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">memory_wait</text>
+  <text x="560" y="452" text-anchor="middle" fill="#ffd33d" font-size="10">_cycles_++</text>
+
+  <!-- Pending: NO -->
+  <text x="795" y="343" fill="#8b5cf6" font-size="11" font-weight="bold">NO</text>
+  <line x1="790" y1="348" x2="840" y2="348" stroke="#8b5cf6" stroke-width="1.5"/>
+  <line x1="840" y1="348" x2="840" y2="410" stroke="#8b5cf6" stroke-width="1.5"/>
+
+  <rect x="755" y="413" width="170" height="50" rx="6" fill="#6e40aa" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="840" y="434" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">active_idle</text>
+  <text x="840" y="452" text-anchor="middle" fill="#d2a8ff" font-size="10">_cycles_++</text>
+
+  <!-- From active_idle: unregister? -->
+  <line x1="840" y1="463" x2="840" y2="490" stroke="#8b5cf6" stroke-width="1.5"/>
+
+  <rect x="740" y="493" width="200" height="50" rx="6" fill="#21262d" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="840" y="514" text-anchor="middle" fill="#8b5cf6" font-size="11" font-weight="bold">Unregister Clock</text>
+  <text x="840" y="530" text-anchor="middle" fill="#8b949e" font-size="9">Save power, stall_cycles accumulate</text>
+
+  <!-- Re-register note -->
+  <rect x="740" y="555" width="200" height="45" rx="6" fill="#0d1117" stroke="#484f58" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <text x="840" y="572" text-anchor="middle" fill="#8b949e" font-size="9">Re-registered when memory</text>
+  <text x="840" y="586" text-anchor="middle" fill="#8b949e" font-size="9">response or wake event arrives</text>
+  <line x1="840" y1="543" x2="840" y2="555" stroke="#484f58" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- ========== EXIT CHECK ========== -->
+  <!-- Merge paths to exit check -->
+  <line x1="265" y1="818" x2="265" y2="870" stroke="#58a6ff" stroke-width="1"/>
+  <line x1="560" y1="463" x2="560" y2="870" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="265" y1="870" x2="560" y2="870" stroke="#58a6ff" stroke-width="1"/>
+  <line x1="412" y1="870" x2="412" y2="895" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#aDown)"/>
+
+  <!-- Exit check -->
+  <polygon points="412,900 502,930 412,960 322,930" fill="#1c2128" stroke="#58a6ff" stroke-width="1.2"/>
+  <text x="412" y="927" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">All harts</text>
+  <text x="412" y="940" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="bold">exited?</text>
+
+  <!-- Exit: YES -->
+  <text x="510" y="925" fill="#f85149" font-size="11" font-weight="bold">YES</text>
+  <line x1="502" y1="930" x2="600" y2="930" stroke="#f85149" stroke-width="1.5"/>
+  <rect x="600" y="912" width="210" height="36" rx="8" fill="#da3633" stroke="#f85149" stroke-width="1.5"/>
+  <text x="705" y="935" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">primaryComponentOKToEndSim()</text>
+
+  <!-- Exit: NO -->
+  <text x="310" y="954" fill="#3fb950" font-size="11" font-weight="bold">NO</text>
+  <line x1="412" y1="960" x2="412" y2="985" stroke="#3fb950" stroke-width="1.5"/>
+
+  <!-- End -->
+  <ellipse cx="412" cy="1010" rx="100" ry="22" fill="#21262d" stroke="#58a6ff" stroke-width="2"/>
+  <text x="412" y="1015" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="bold">return (next tick)</text>
+</svg>

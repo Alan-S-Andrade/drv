@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 950" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="l1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#238636"/>
+      <stop offset="100%" style="stop-color:#1a7f37"/>
+    </linearGradient>
+    <linearGradient id="l2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0a8967"/>
+      <stop offset="100%" style="stop-color:#06694e"/>
+    </linearGradient>
+    <linearGradient id="dramGrd" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e07c24"/>
+      <stop offset="100%" style="stop-color:#c56a15"/>
+    </linearGradient>
+    <linearGradient id="netGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1f6feb"/>
+      <stop offset="100%" style="stop-color:#1158c7"/>
+    </linearGradient>
+    <marker id="mDown" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+      <polygon points="0 0, 8 0, 4 6" fill="#58a6ff"/>
+    </marker>
+    <marker id="mUp" markerWidth="8" markerHeight="6" refX="4" refY="0" orient="auto">
+      <polygon points="0 6, 8 6, 4 0" fill="#3fb950"/>
+    </marker>
+    <marker id="mRight" markerWidth="6" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 0, 6 4, 0 8" fill="#58a6ff"/>
+    </marker>
+    <filter id="sh">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="950" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="550" y="38" text-anchor="middle" fill="#e6edf3" font-size="22" font-weight="bold">Memory Hierarchy &amp; Network Interconnect</text>
+  <text x="550" y="58" text-anchor="middle" fill="#8b949e" font-size="12">Scratchpad-based (no coherence at L1/L2) + Optional DRAM cache (MESI)</text>
+
+  <!-- ========== CORE LEVEL ========== -->
+  <text x="50" y="90" fill="#e6edf3" font-size="14" font-weight="bold">COMPUTE TILE (per core)</text>
+
+  <!-- Core box -->
+  <rect x="60" y="100" width="180" height="110" rx="8" fill="#21262d" stroke="#f97583" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="150" y="125" text-anchor="middle" fill="#f97583" font-size="13" font-weight="bold">RISCVCore</text>
+  <text x="150" y="145" text-anchor="middle" fill="#8b949e" font-size="10">16 harts, RV64IMAF</text>
+  <text x="150" y="162" text-anchor="middle" fill="#8b949e" font-size="10">StandardMem interface</text>
+  <text x="150" y="179" text-anchor="middle" fill="#8b949e" font-size="10">MemNIC (group 0)</text>
+  <text x="150" y="196" text-anchor="middle" fill="#484f58" font-size="9">24 GB/s per core</text>
+
+  <!-- L1SP -->
+  <rect x="300" y="100" width="180" height="110" rx="8" fill="url(#l1Grad)" stroke="#3fb950" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="390" y="125" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">L1 Scratchpad</text>
+  <text x="390" y="145" text-anchor="middle" fill="#d2f4d3" font-size="10">256 KB (private/core)</text>
+  <text x="390" y="162" text-anchor="middle" fill="#d2f4d3" font-size="10">Access: ~1ns</text>
+  <text x="390" y="179" text-anchor="middle" fill="#d2f4d3" font-size="10">DrvSimpleMemBackend</text>
+  <text x="390" y="196" text-anchor="middle" fill="#d2f4d3" font-size="10">MemNIC (group 2)</text>
+
+  <!-- Tile Router -->
+  <rect x="540" y="115" width="170" height="80" rx="8" fill="url(#netGrad)" stroke="#58a6ff" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="625" y="140" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">Tile Router</text>
+  <text x="625" y="158" text-anchor="middle" fill="#bbd5fc" font-size="10">merlin.hr_router</text>
+  <text x="625" y="176" text-anchor="middle" fill="#bbd5fc" font-size="10">3 ports | 8B flit</text>
+
+  <!-- Connections within tile -->
+  <line x1="240" y1="155" x2="300" y2="155" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="270" y="148" text-anchor="middle" fill="#484f58" font-size="8">port 0</text>
+
+  <line x1="480" y1="155" x2="540" y2="155" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="510" y="148" text-anchor="middle" fill="#484f58" font-size="8">port 1</text>
+
+  <!-- Bridge up -->
+  <rect x="760" y="125" width="120" height="55" rx="6" fill="#21262d" stroke="#58a6ff" stroke-width="1"/>
+  <text x="820" y="148" text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="bold">Bridge</text>
+  <text x="820" y="165" text-anchor="middle" fill="#8b949e" font-size="9">MemNetBridge</text>
+
+  <line x1="710" y1="155" x2="760" y2="155" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="735" y="148" text-anchor="middle" fill="#484f58" font-size="8">port 2</text>
+
+  <!-- Address ranges note -->
+  <rect x="60" y="220" width="650" height="42" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="0.8"/>
+  <text x="70" y="238" fill="#8b949e" font-size="10" font-weight="bold">Address Encoding:</text>
+  <text x="70" y="254" fill="#8b949e" font-size="9">Relative: [63]=0, [30]=DRAM, [29]=L2SP, [28:0]=offset  |  Absolute: [63]=1, [62]=DRAM, [61]=L2SP, [60:X]=PXN, [X:Y]=POD, [Y:Z]=CORE, offset</text>
+
+  <!-- ========== POD LEVEL ========== -->
+  <text x="50" y="290" fill="#e6edf3" font-size="14" font-weight="bold">POD LEVEL</text>
+
+  <!-- Pod Router -->
+  <rect x="300" y="300" width="500" height="80" rx="10" fill="url(#netGrad)" stroke="#58a6ff" stroke-width="2" filter="url(#sh)"/>
+  <text x="550" y="328" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">POD Router (merlin.hr_router)</text>
+  <text x="550" y="348" text-anchor="middle" fill="#bbd5fc" font-size="11">N core ports + M L2SP bank ports + 1 uplink</text>
+  <text x="550" y="365" text-anchor="middle" fill="#bbd5fc" font-size="10">Aggregated BW: cores * 24 GB/s   |   1ns links</text>
+
+  <!-- Core connections to pod router -->
+  <line x1="820" y1="180" x2="820" y2="240" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="820" y1="240" x2="380" y2="240" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="380" y1="240" x2="380" y2="300" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#mDown)"/>
+  <text x="390" y="292" fill="#8b949e" font-size="8">core ports</text>
+
+  <!-- Multiple core indicators -->
+  <rect x="60" y="307" width="80" height="24" rx="4" fill="#21262d" stroke="#f97583" stroke-width="0.8"/>
+  <text x="100" y="323" text-anchor="middle" fill="#f97583" font-size="9">Core 0</text>
+  <rect x="150" y="307" width="80" height="24" rx="4" fill="#21262d" stroke="#f97583" stroke-width="0.8"/>
+  <text x="190" y="323" text-anchor="middle" fill="#f97583" font-size="9">Core 1</text>
+  <text x="248" y="323" fill="#484f58" font-size="9">...</text>
+  <line x1="100" y1="331" x2="340" y2="340" stroke="#484f58" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="190" y1="331" x2="400" y2="340" stroke="#484f58" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- L2SP Banks -->
+  <rect x="60" y="410" width="240" height="100" rx="8" fill="url(#l2Grad)" stroke="#3fb950" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="180" y="435" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">L2 Scratchpad (Shared)</text>
+  <text x="180" y="455" text-anchor="middle" fill="#d2f4d3" font-size="10">1 MB per POD (default)</text>
+  <text x="180" y="472" text-anchor="middle" fill="#d2f4d3" font-size="10">Access: ~4ns</text>
+  <text x="180" y="489" text-anchor="middle" fill="#d2f4d3" font-size="10">Banked + interleaved</text>
+  <text x="180" y="502" text-anchor="middle" fill="#d2f4d3" font-size="9">DrvSimpleMemBackend | DrvCmdMemHandler</text>
+
+  <!-- L2SP bank detail -->
+  <rect x="320" y="420" width="80" height="30" rx="4" fill="#21262d" stroke="#3fb950" stroke-width="0.8"/>
+  <text x="360" y="440" text-anchor="middle" fill="#3fb950" font-size="9">Bank 0</text>
+  <rect x="410" y="420" width="80" height="30" rx="4" fill="#21262d" stroke="#3fb950" stroke-width="0.8"/>
+  <text x="450" y="440" text-anchor="middle" fill="#3fb950" font-size="9">Bank 1</text>
+  <rect x="500" y="420" width="80" height="30" rx="4" fill="#21262d" stroke="#3fb950" stroke-width="0.8"/>
+  <text x="540" y="440" text-anchor="middle" fill="#3fb950" font-size="9">Bank N</text>
+  <text x="360" y="465" fill="#8b949e" font-size="9">Each bank: MemController + Backend + MemNIC (group 2)</text>
+
+  <!-- L2SP to pod router -->
+  <line x1="360" y1="420" x2="360" y2="380" stroke="#3fb950" stroke-width="1.5" marker-end="url(#mUp)"/>
+  <line x1="450" y1="420" x2="450" y2="380" stroke="#3fb950" stroke-width="1.5" marker-end="url(#mUp)"/>
+  <line x1="540" y1="420" x2="540" y2="380" stroke="#3fb950" stroke-width="1.5" marker-end="url(#mUp)"/>
+
+  <!-- L2SP annotations -->
+  <rect x="620" y="410" width="250" height="100" rx="6" fill="#0d1117" stroke="#3fb950" stroke-width="0.8"/>
+  <text x="635" y="432" fill="#3fb950" font-size="10" font-weight="bold">L2SP Properties:</text>
+  <text x="635" y="449" fill="#8b949e" font-size="9">Noncacheable (bypass DRAM cache)</text>
+  <text x="635" y="464" fill="#8b949e" font-size="9">Explicit placement: __l2sp__ section</text>
+  <text x="635" y="479" fill="#8b949e" font-size="9">Used for: barriers, shared state, frontiers</text>
+  <text x="635" y="494" fill="#8b949e" font-size="9">Supports atomics via DrvCmdMemHandler</text>
+
+  <!-- POD Bridge -->
+  <rect x="870" y="316" width="120" height="48" rx="6" fill="#21262d" stroke="#58a6ff" stroke-width="1"/>
+  <text x="930" y="338" text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="bold">Bridge</text>
+  <text x="930" y="354" text-anchor="middle" fill="#8b949e" font-size="9">to PXN router</text>
+  <line x1="800" y1="340" x2="870" y2="340" stroke="#58a6ff" stroke-width="1.5"/>
+
+  <!-- ========== PXN LEVEL ========== -->
+  <text x="50" y="548" fill="#e6edf3" font-size="14" font-weight="bold">PXN LEVEL</text>
+
+  <!-- PXN Router -->
+  <rect x="200" y="555" width="700" height="80" rx="10" fill="url(#netGrad)" stroke="#1f6feb" stroke-width="2" filter="url(#sh)"/>
+  <text x="550" y="582" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">PXN Router (merlin.hr_router)</text>
+  <text x="550" y="600" text-anchor="middle" fill="#bbd5fc" font-size="11">P pod ports + D DRAM ports + 1 system uplink + [optional host core]</text>
+  <text x="550" y="618" text-anchor="middle" fill="#bbd5fc" font-size="10">Aggregated BW: pods * core_bw * cores_per_pod</text>
+
+  <!-- Pod connections -->
+  <line x1="930" y1="364" x2="930" y2="520" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="930" y1="520" x2="350" y2="520" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="350" y1="520" x2="350" y2="555" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#mDown)"/>
+
+  <!-- Multiple pods -->
+  <rect x="60" y="565" width="65" height="22" rx="4" fill="#21262d" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="92" y="580" text-anchor="middle" fill="#c4b5fd" font-size="9">Pod 0</text>
+  <rect x="130" y="565" width="55" height="22" rx="4" fill="#21262d" stroke="#8b5cf6" stroke-width="0.8"/>
+  <text x="157" y="580" text-anchor="middle" fill="#c4b5fd" font-size="9">Pod 1</text>
+
+  <!-- ========== DRAM ========== -->
+  <rect x="60" y="665" width="980" height="195" rx="10" fill="#1c2128" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="550" y="692" text-anchor="middle" fill="#f0883e" font-size="14" font-weight="bold">DRAM Subsystem (2 GB default per PXN)</text>
+
+  <!-- DRAM to PXN router -->
+  <line x1="550" y1="635" x2="550" y2="665" stroke="#f0883e" stroke-width="1.5" marker-end="url(#aDownO)"/>
+
+  <!-- NoCacheDRAM path -->
+  <rect x="80" y="708" width="280" height="135" rx="8" fill="#21262d" stroke="#f0883e" stroke-width="1"/>
+  <text x="220" y="730" text-anchor="middle" fill="#f0883e" font-size="12" font-weight="bold">NoCacheDRAM (simple path)</text>
+
+  <rect x="100" y="742" width="110" height="35" rx="5" fill="#0d1117" stroke="#f0883e" stroke-width="0.8"/>
+  <text x="155" y="764" text-anchor="middle" fill="#8b949e" font-size="9">MemController</text>
+
+  <rect x="230" y="742" width="110" height="35" rx="5" fill="url(#dramGrd)" stroke="#f0883e" stroke-width="0.8"/>
+  <text x="285" y="764" text-anchor="middle" fill="#fff" font-size="9">DrvSimple</text>
+  <text x="285" y="774" text-anchor="middle" fill="#fff" font-size="8">MemBackend</text>
+
+  <line x1="210" y1="760" x2="230" y2="760" stroke="#f0883e" stroke-width="1"/>
+  <text x="220" y="800" text-anchor="middle" fill="#8b949e" font-size="9">Fixed latency: ~70ns</text>
+  <text x="220" y="815" text-anchor="middle" fill="#8b949e" font-size="9">--without-pxn-dram-cache</text>
+  <text x="220" y="830" text-anchor="middle" fill="#8b949e" font-size="9">--dram-access-time 70ns</text>
+
+  <!-- CachedDRAM path -->
+  <rect x="400" y="708" width="620" height="135" rx="8" fill="#21262d" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="710" y="730" text-anchor="middle" fill="#f0883e" font-size="12" font-weight="bold">CachedDRAM (with MESI cache -- default)</text>
+
+  <!-- Cache -->
+  <rect x="420" y="745" width="110" height="50" rx="5" fill="#0d1117" stroke="#d29922" stroke-width="1"/>
+  <text x="475" y="765" text-anchor="middle" fill="#d29922" font-size="10" font-weight="bold">L3 Cache</text>
+  <text x="475" y="782" text-anchor="middle" fill="#8b949e" font-size="8">64KB, 8-way, MESI</text>
+
+  <!-- MemLink -->
+  <line x1="530" y1="770" x2="555" y2="770" stroke="#f0883e" stroke-width="1"/>
+
+  <!-- MemController -->
+  <rect x="555" y="745" width="110" height="50" rx="5" fill="#0d1117" stroke="#f0883e" stroke-width="1"/>
+  <text x="610" y="763" text-anchor="middle" fill="#f0883e" font-size="9" font-weight="bold">Coherent</text>
+  <text x="610" y="778" text-anchor="middle" fill="#f0883e" font-size="9" font-weight="bold">MemController</text>
+
+  <!-- Backend -->
+  <line x1="665" y1="770" x2="695" y2="770" stroke="#f0883e" stroke-width="1"/>
+  <rect x="695" y="745" width="130" height="50" rx="5" fill="url(#dramGrd)" stroke="#f0883e" stroke-width="1"/>
+  <text x="760" y="765" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Ramulator</text>
+  <text x="760" y="782" text-anchor="middle" fill="#ffddb0" font-size="9">HBM cycle-accurate</text>
+
+  <!-- Slicing note -->
+  <rect x="850" y="745" width="155" height="50" rx="5" fill="#0d1117" stroke="#484f58" stroke-width="0.8"/>
+  <text x="927" y="762" text-anchor="middle" fill="#8b949e" font-size="9" font-weight="bold">Multi-Slice Support</text>
+  <text x="927" y="777" text-anchor="middle" fill="#8b949e" font-size="8">N independent slices</text>
+  <text x="927" y="790" text-anchor="middle" fill="#8b949e" font-size="8">64B interleaved</text>
+
+  <text x="710" y="818" text-anchor="middle" fill="#8b949e" font-size="9">Backends: ramulator (HBM) | simple (fixed 70ns) | dramsim3</text>
+  <text x="710" y="833" text-anchor="middle" fill="#8b949e" font-size="9">--pxn-dram-banks N  --pxn-dram-cache-slices N  --dram-backend-config *.cfg</text>
+
+  <!-- ========== SYSTEM LEVEL ========== -->
+  <!-- System Router -->
+  <rect x="920" y="565" width="110" height="50" rx="6" fill="#21262d" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="975" y="585" text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="bold">System</text>
+  <text x="975" y="600" text-anchor="middle" fill="#58a6ff" font-size="10" font-weight="bold">Router</text>
+
+  <!-- Arrow to other PXNs -->
+  <line x1="1030" y1="590" x2="1070" y2="590" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#mRight)"/>
+  <text x="1085" y="585" fill="#58a6ff" font-size="9">To PXN 1..N</text>
+  <text x="1085" y="598" fill="#8b949e" font-size="8">~1 GB/s</text>
+
+  <!-- ========== LATENCY SUMMARY ========== -->
+  <rect x="60" y="880" width="980" height="55" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="80" y="902" fill="#e6edf3" font-size="12" font-weight="bold">Latency Summary (approximate):</text>
+  <rect x="80" y="910" width="80" height="18" rx="3" fill="url(#l1Grad)"/>
+  <text x="120" y="923" text-anchor="middle" fill="#fff" font-size="9">L1SP ~1ns</text>
+  <rect x="170" y="910" width="80" height="18" rx="3" fill="url(#l2Grad)"/>
+  <text x="210" y="923" text-anchor="middle" fill="#fff" font-size="9">L2SP ~4ns</text>
+  <rect x="260" y="910" width="110" height="18" rx="3" fill="url(#dramGrd)"/>
+  <text x="315" y="923" text-anchor="middle" fill="#fff" font-size="9">DRAM ~70ns+</text>
+  <rect x="380" y="910" width="130" height="18" rx="3" fill="#da3633"/>
+  <text x="445" y="923" text-anchor="middle" fill="#fff" font-size="9">Remote PXN: network</text>
+  <text x="550" y="923" fill="#8b949e" font-size="9">|  All scratchpad accesses are noncacheable (bypass DRAM cache)</text>
+</svg>

@@ -82,7 +82,9 @@ class PANDOHammer(object):
         dram.network_bw = f"{bandwidth_bytes_per_second_per_pxn}B/s"
 
         dram.cache_banks = arguments.pxn_dram_cache_banks
+        dram.cache_size = arguments.pxn_dram_cache_size
         dram.dram_backend_config_sliced = arguments.dram_backend_config_sliced
+        dram.alu_latency = arguments.pxn_dram_cache_alu
 
         dram_cache_slices = arguments.pxn_dram_cache_slices
 

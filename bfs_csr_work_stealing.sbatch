@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH -J bfs_csr_weak_roi
+#SBATCH -J bfs_csr_ws
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p pvc
+#SBATCH -p spr
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 96
+#SBATCH -c 112
 #SBATCH -t 48:00:00
 
 set -eo pipefail
@@ -69,7 +69,7 @@ if [[ ! -f "$MEMH_LIB" ]]; then
 fi
 
 # ------------------------------------------------------------------
-# STEP 2: RUN BFS CSR WEAK SCALING SWEEP (ROI-ONLY)
+# STEP 2: RUN BFS CSR WORK-STEALING SWEEP
 # ------------------------------------------------------------------
 
 # Graph parameters
@@ -95,12 +95,9 @@ apptainer exec --cleanenv \
     export PATH=/install/bin:$PATH
 
     MODEL=/work/model/drvr.py
-
-    BINARY_SINGLE=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak_roi
-    BINARY_MULTI=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak_multi_roi
-
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_work_stealing
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_roi_results_rmat_plain
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_ws_results
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
@@ -119,9 +116,6 @@ apptainer exec --cleanenv \
       "1 8  2 16"
       "1 8  4 16"
       "1 8  8 16"
-      # Multi-pod weak scaling
-      #"2 8  8 16"
-      #"4 8  8 16"
     )
 
     for cfg in "${CONFIGS[@]}"; do
@@ -130,7 +124,7 @@ apptainer exec --cleanenv \
       THREADS_PER_POD=$((CORES * THR))
       N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
 
-      RUN_NAME="bfs_csr_roi_p${PODS}_c${CORES}_t${THR}"
+      RUN_NAME="bfs_csr_ws_p${PODS}_c${CORES}_t${THR}"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
@@ -144,7 +138,6 @@ apptainer exec --cleanenv \
       # Generate graph into run dir
       if [ "$GRAPH_TYPE" = "rmat" ]; then
         SCALE=$(python3 -c "import math; print(int(math.log2($N)))")
-        # Upper-bound degree for buffer allocation: 2*EF+4
         RUN_DEGREE=$((2 * EF + 4))
         echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${THREADS_PER_POD}..."
         python3 /work/gen_rmat_csr.py \
@@ -170,13 +163,6 @@ apptainer exec --cleanenv \
         -o "$RUN_DIR"
 
       cd "$RUN_DIR"
-
-      # Select single-pod or multi-pod ROI binary
-      if [ "$PODS" -eq 1 ]; then
-        BINARY="$BINARY_SINGLE"
-      else
-        BINARY="$BINARY_MULTI"
-      fi
 
       PYTHONPATH=/work/py::/work/model \
         /install/bin/sst -n 1 \
@@ -215,7 +201,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "BFS CSR WEAK SCALING ROI-ONLY SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_roi_results_rmat_plain/"
+    echo "BFS CSR WORK-STEALING SWEEP COMPLETE"
+    echo "Results in: build_stampede/drvr/bfs_csr_ws_results/"
     echo "=============================================="
   '

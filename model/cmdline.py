@@ -37,10 +37,13 @@ def parser(core_l1sp_size=128*1024):
 
     p.add_argument("--without-pxn-dram-cache", action="store_true", help="disable dram cache")
     p.add_argument("--pxn-dram-cache-banks", type=int, default=0, help="number of banks in dram cache (0 = no bank conflict modeling)")
+    p.add_argument("--pxn-dram-cache-size", type=int, default=64*1024, help="size of DRAM cache in bytes (default 64KB)")
     p.add_argument("--pxn-dram-cache-slices", type=int, default=1,
                         help="number of DRAM cache slices (each is an independent Cache+MemController instance with interleaved addresses)")
     p.add_argument("--dram-backend-config-sliced", type=str, default="/work/ramulator-configs/HBM-pando-32ch.cfg",
                         help="ramulator config file path for each slice (should have channels/num_slices)")
+    p.add_argument("--pxn-dram-cache-alu", type=int, default=0,
+                        help="near-cache ALU latency in cycles for atomics (0=disabled, uses Ramulator timing; >0=fixed cycle ALU)")
 
     p.add_argument("--with-command-processor", type=str, default="",
                         help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")

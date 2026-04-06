@@ -125,6 +125,7 @@ def main():
     if stats_file is None:
         candidates = [
             "ramulator_system_pxn0_dram0.stats",
+            "ramulator_system_pxn0_dram0_s0.stats",
         ]
         for c in candidates:
             if os.path.exists(c):

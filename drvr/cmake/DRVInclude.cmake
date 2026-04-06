@@ -419,6 +419,8 @@ macro (drvr_rv64_build)
       -DCMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}
       -DCMAKE_C_COMPILER=${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-gcc
       -DCMAKE_CXX_COMPILER=${GNU_RISCV_TOOLCHAIN_PREFIX}/bin/riscv64-unknown-elfpandodrvsim-g++
+      -DCMAKE_C_FLAGS="-march=rv64imaf -mabi=lp64f"
+      -DCMAKE_CXX_FLAGS="-march=rv64imaf -mabi=lp64f"
       -DCMAKE_SYSTEM_NAME=Generic
       -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/rv64
       -DSST_CORE_PREFIX=${SST_CORE_PREFIX}

@@ -74,6 +74,7 @@ public:
   DrvAPI::DrvAPIMemAtomicType opcode;
   Interfaces::StandardMem::Addr pAddr;
   bool posted_ = false;
+  bool shootdown_occurred_ = false;  // Set by CoherentMemController when FetchInv was sent
 
 };
 
