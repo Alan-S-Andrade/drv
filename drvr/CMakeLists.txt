@@ -414,6 +414,25 @@ drvr_test_build_properties(bfs_csr_work_stealing
   DRV_BUILD_CORE_THREADS 16
   )
 
+# BFS CSR with shared queue (ROI-only, bulk-loaded graph)
+drvr_test_with_pandohammer(bfs_csr_shared_queue bfs_csr_shared_queue.cpp)
+drvr_test_build_properties(bfs_csr_shared_queue
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+# BFS CSR with shared queue + inter-pod DRAM work stealing (multi-pod)
+drvr_test_with_pandohammer(bfs_csr_shared_queue_multi bfs_csr_shared_queue_multi.cpp)
+drvr_test_build_properties(bfs_csr_shared_queue_multi
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  DRV_BUILD_PXN_PODS 2
+  )
+
   # BFS imbalanced baseline
  drvr_test_with_pandohammer(bfs_imbalanced_baseline bfs_imbalanced_baseline.cpp)
  drvr_test_build_properties(bfs_imbalanced_baseline

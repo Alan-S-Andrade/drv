@@ -20,8 +20,16 @@ import struct
 
 
 def parse_stats(filepath):
-    """Parse ramulator stats file into dict of {stat_name: value}."""
+    """Parse ramulator stats file into dict of {stat_name: value}.
+
+    When multiple ramulator instances share a global Stats::statlist (common
+    with sliced DRAM caches), the same key appears once per instance.  We
+    **sum** all occurrences so the result represents the full system, and
+    return *num_instances* (the max repeat count of any key) so callers can
+    recover per-instance values where needed (e.g. dram_cycles).
+    """
     stats = {}
+    key_counts = {}
     with open(filepath, "r") as f:
         for line in f:
             line = line.strip()
@@ -40,12 +48,21 @@ def parse_stats(filepath):
                 key = key[len("ramulator."):]
             try:
                 if "." in val_str:
-                    stats[key] = float(val_str)
+                    val = float(val_str)
                 else:
-                    stats[key] = int(val_str)
+                    val = int(val_str)
+                if key in stats:
+                    stats[key] += val
+                    key_counts[key] = key_counts.get(key, 1) + 1
+                else:
+                    stats[key] = val
+                    key_counts[key] = 1
             except ValueError:
                 stats[key] = val_str
-    return stats
+
+    # Detect number of ramulator instances from a reliable counter
+    num_instances = key_counts.get("incoming_requests", 1)
+    return stats, num_instances
 
 
 def detect_num_channels(stats):
@@ -135,20 +152,26 @@ def main():
             print("Error: No ramulator stats file found. Provide path as argument.")
             sys.exit(1)
 
-    stats = parse_stats(stats_file)
+    stats, num_instances = parse_stats(stats_file)
     num_channels = detect_num_channels(stats)
 
     if num_channels == 0:
         print("Error: No channel data found in stats file.")
         sys.exit(1)
 
-    # System-level stats
-    dram_cycles = stats.get("dram_cycles", 0)
+    # Total channels across all instances
+    total_channels = num_channels * num_instances
+
+    # System-level stats (already summed across instances by parse_stats)
     total_requests = stats.get("incoming_requests", 0)
     read_requests = stats.get("read_requests", 0)
     write_requests = stats.get("write_requests", 0)
     max_bw_bps = stats.get("maximum_bandwidth", 0)
     active_cycles = stats.get("ramulator_active_cycles", 0)
+
+    # dram_cycles is the same for every instance (same sim duration), so
+    # the summed value = num_instances * actual.  Recover the real value.
+    dram_cycles = stats.get("dram_cycles", 0) // num_instances
 
     # Simulation time
     sim_time_sec = dram_cycles / clock_hz if dram_cycles > 0 else 0
@@ -177,7 +200,8 @@ def main():
     for ch in range(num_channels):
         ch_read_bytes.append(stats.get(f"read_transaction_bytes_{ch}", 0))
         ch_write_bytes.append(stats.get(f"write_transaction_bytes_{ch}", 0))
-        ch_read_lat_avg.append(stats.get(f"read_latency_avg_{ch}", 0))
+        # Latency averages: summed across instances → divide by num_instances
+        ch_read_lat_avg.append(stats.get(f"read_latency_avg_{ch}", 0) / num_instances)
         ch_read_lat_sum.append(stats.get(f"read_latency_sum_{ch}", 0))
         ch_queue_avg.append(stats.get(f"req_queue_length_avg_{ch}", 0))
         ch_read_queue_avg.append(stats.get(f"read_req_queue_length_avg_{ch}", 0))
@@ -231,7 +255,7 @@ def main():
     read_bw_util_pct = (achieved_read_bw / max_bw_bps * 100) if max_bw_bps > 0 else 0
 
     # Active utilization (fraction of cycles any channel was active)
-    active_util_pct = (active_cycles / (dram_cycles * num_channels) * 100) if dram_cycles > 0 else 0
+    active_util_pct = (active_cycles / (dram_cycles * total_channels) * 100) if dram_cycles > 0 else 0
 
     # Weighted average read latency (across channels)
     total_lat_sum = sum(ch_read_lat_sum)
@@ -246,8 +270,10 @@ def main():
     print("=" * W)
 
     print(f"\n{'Stats file:':<40} {stats_file}")
+    if num_instances > 1:
+        print(f"{'Ramulator instances (slices):':<40} {num_instances}")
     print(f"{'DRAM clock:':<40} {clock_hz / 1e9:.3f} GHz")
-    print(f"{'Channels:':<40} {num_channels}")
+    print(f"{'Channels (per instance):':<40} {num_channels}  (total: {total_channels})")
     print(f"{'DRAM cycles:':<40} {dram_cycles:,}")
     print(f"{'Simulation time:':<40} {sim_time_sec * 1e3:.3f} ms")
     print(f"{'Total requests:':<40} {total_requests:,}  (read: {read_requests:,}  write: {write_requests:,})")
@@ -262,11 +288,12 @@ def main():
     print(f"{'  Total traffic:':<40} {fmt_bytes(total_bytes):<15} BW: {achieved_total_bw / 1e9:.4f} GB/s")
     print(f"\n{'  BW utilization (total/peak):':<40} {bw_util_pct:.4f}%")
     print(f"{'  Read BW utilization:':<40} {read_bw_util_pct:.4f}%")
-    print(f"{'  Active cycle utilization:':<40} {active_util_pct:.2f}%  ({active_cycles:,} / {dram_cycles * num_channels:,})")
+    print(f"{'  Active cycle utilization:':<40} {active_util_pct:.2f}%  ({active_cycles:,} / {dram_cycles * total_channels:,})")
 
     # --- Per-channel bandwidth ---
     print(f"\n{'-' * W}")
-    print("PER-CHANNEL BANDWIDTH")
+    ch_label = f"PER-CHANNEL BANDWIDTH (summed across {num_instances} instances)" if num_instances > 1 else "PER-CHANNEL BANDWIDTH"
+    print(ch_label)
     print(f"{'-' * W}")
     hdr = f"{'Ch':<5} {'Read Bytes':<15} {'Write Bytes':<15} {'Total Bytes':<15} {'Read BW':<12} {'Write BW':<12} {'Total BW':<12}"
     print(hdr)

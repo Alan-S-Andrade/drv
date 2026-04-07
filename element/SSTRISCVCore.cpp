@@ -163,6 +163,8 @@ void RISCVCore::configureStatistics(Params &params) {
     useful_dram_load_request_count_ = registerStatistic<uint64_t>("useful_dram_load_request_count");
     outstanding_requests_sum_ = registerStatistic<uint64_t>("outstanding_requests_sum");
     useful_outstanding_requests_sum_ = registerStatistic<uint64_t>("useful_outstanding_requests_sum");
+    dram_outstanding_requests_sum_ = registerStatistic<uint64_t>("dram_outstanding_requests_sum");
+    useful_dram_outstanding_requests_sum_ = registerStatistic<uint64_t>("useful_dram_outstanding_requests_sum");
 }
 
 void RISCVCore::configureLinks(Params &params) {
@@ -496,6 +498,7 @@ void RISCVCore::handleMemEvent(RISCVCore::Request *req) {
             // Track DRAM latency separately
             auto dram_it = request_is_dram_.find(tid);
             if (dram_it != request_is_dram_.end() && dram_it->second) {
+                dram_outstanding_requests_--;
                 dram_load_latency_total_->addData(latency);
                 dram_load_request_count_->addData(1);
                 if (in_phase) {
@@ -604,6 +607,12 @@ bool RISCVCore::tick(Cycle_t cycle) {
             useful_outstanding_requests_sum_->addData(outstanding_requests_);
         }
     }
+    if (dram_outstanding_requests_ > 0) {
+        dram_outstanding_requests_sum_->addData(dram_outstanding_requests_);
+        if (anyHartInStatPhase()) {
+            useful_dram_outstanding_requests_sum_->addData(dram_outstanding_requests_);
+        }
+    }
 
     if (shouldExit())
         primaryComponentOKToEndSim();
@@ -620,6 +629,7 @@ void RISCVCore::issueMemoryRequest(Request *req, int tid, ICompletionHandler &ha
     // TODO: check if tid is valid
     //std::cout << "issueMemoryRequest" << std::endl;
     outstanding_requests_++;
+    if (is_dram) dram_outstanding_requests_++;
     request_issue_cycle_[tid] = getCycleCount();  // Record issue time for latency tracking
     request_is_dram_[tid] = is_dram;              // Track if this is a DRAM request
     rsp_handlers_[tid] = handler;

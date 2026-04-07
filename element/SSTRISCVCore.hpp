@@ -155,6 +155,8 @@ public:
             {"useful_dram_load_request_count", "DRAM load requests during stat_phase=1", "count", 1},
             {"outstanding_requests_sum", "Sum of outstanding requests each cycle (for avg)", "count", 1},
             {"useful_outstanding_requests_sum", "Sum of outstanding requests each cycle during stat_phase=1", "count", 1},
+            {"dram_outstanding_requests_sum", "Sum of outstanding DRAM requests each cycle (for avg)", "count", 1},
+            {"useful_dram_outstanding_requests_sum", "Sum of outstanding DRAM requests each cycle during stat_phase=1", "count", 1},
             {"pgas_translations", "PGAS virtual-to-physical translations", "count", 1},
             {"l2sp_interarrival", "Cycles between consecutive L2SP accesses per hart", "cycles", 1},
         };
@@ -423,6 +425,7 @@ public:
     DrvAPI::DrvAPIAddress l1spBase() const;
     
     int64_t outstanding_requests_ = 0; //!< Counter for in-flight memory requests
+    int64_t dram_outstanding_requests_ = 0; //!< Counter for in-flight DRAM requests
     Statistic<uint64_t> *memory_wait_cycles_; //!< Cycles ticking but waiting on memory
     Statistic<uint64_t> *active_idle_cycles_; //!< Cycles ticking with absolutely no work
     std::map<int, Cycle_t> request_issue_cycle_; //!< Track when each request was issued (by tid)
@@ -441,6 +444,8 @@ public:
     Statistic<uint64_t> *useful_dram_load_request_count_;
     Statistic<uint64_t> *outstanding_requests_sum_;
     Statistic<uint64_t> *useful_outstanding_requests_sum_;
+    Statistic<uint64_t> *dram_outstanding_requests_sum_;
+    Statistic<uint64_t> *useful_dram_outstanding_requests_sum_;
     /**
      * return true if any hart on this core has stat_phase_ == 1
      */

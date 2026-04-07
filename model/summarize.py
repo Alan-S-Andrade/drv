@@ -42,6 +42,8 @@ CORE_STATS = [
     "useful_dram_load_request_count",
     "outstanding_requests_sum",
     "useful_outstanding_requests_sum",
+    "dram_outstanding_requests_sum",
+    "useful_dram_outstanding_requests_sum",
 ]
 
 # DRAM cache statistics
@@ -330,17 +332,37 @@ def main():
     if useful_dram_lat_count > 0:
         print(f"{'  Avg DRAM Load Latency (useful phase)':<45} {useful_avg_dram_lat:.1f} cycles")
 
-    # Average outstanding requests (useful phase) — per core, then averaged
+    # Average outstanding requests (all memory types)
+    num_cores = len(core_stats)
     total_useful_oreq_sum = sum(d["useful_outstanding_requests_sum"] for d in core_stats.values())
     total_useful_cycles = total_useful_busy + total_useful_memwait + total_useful_idle
     avg_useful_outstanding = total_useful_oreq_sum / total_useful_cycles if total_useful_cycles > 0 else 0
-    print(f"{'  Avg Outstanding Reqs (useful phase)':<45} {avg_useful_outstanding:.2f}")
+    sys_useful_outstanding = avg_useful_outstanding * num_cores
 
-    # Average outstanding requests (total)
     total_oreq_sum = sum(d["outstanding_requests_sum"] for d in core_stats.values())
     total_all_cycles = sum(d["busy_cycles"] + d["memory_wait_cycles"] + d["active_idle_cycles"] for d in core_stats.values())
     avg_outstanding = total_oreq_sum / total_all_cycles if total_all_cycles > 0 else 0
-    print(f"{'  Avg Outstanding Reqs (total phase)':<45} {avg_outstanding:.2f}")
+    sys_outstanding = avg_outstanding * num_cores
+
+    print(f"{'  Avg Outstanding Reqs / core (useful)':<45} {avg_useful_outstanding:.2f}")
+    print(f"{'  Avg Outstanding Reqs system (useful)':<45} {sys_useful_outstanding:.1f}  ({num_cores} cores)")
+    print(f"{'  Avg Outstanding Reqs / core (total)':<45} {avg_outstanding:.2f}")
+    print(f"{'  Avg Outstanding Reqs system (total)':<45} {sys_outstanding:.1f}  ({num_cores} cores)")
+
+    # Average DRAM outstanding requests
+    total_useful_dram_oreq = sum(d.get("useful_dram_outstanding_requests_sum", 0) for d in core_stats.values())
+    avg_useful_dram_outstanding = total_useful_dram_oreq / total_useful_cycles if total_useful_cycles > 0 else 0
+    sys_useful_dram_outstanding = avg_useful_dram_outstanding * num_cores
+
+    total_dram_oreq = sum(d.get("dram_outstanding_requests_sum", 0) for d in core_stats.values())
+    avg_dram_outstanding = total_dram_oreq / total_all_cycles if total_all_cycles > 0 else 0
+    sys_dram_outstanding = avg_dram_outstanding * num_cores
+
+    if total_useful_dram_oreq > 0 or total_dram_oreq > 0:
+        print(f"{'  Avg DRAM Outstanding / core (useful)':<45} {avg_useful_dram_outstanding:.2f}")
+        print(f"{'  Avg DRAM Outstanding system (useful)':<45} {sys_useful_dram_outstanding:.1f}  ({num_cores} cores)")
+        print(f"{'  Avg DRAM Outstanding / core (total)':<45} {avg_dram_outstanding:.2f}")
+        print(f"{'  Avg DRAM Outstanding system (total)':<45} {sys_dram_outstanding:.1f}  ({num_cores} cores)")
 
     # --- DRAM Bandwidth Utilization (after cache filtering) ---
     # Count DRAM banks from MemController components
