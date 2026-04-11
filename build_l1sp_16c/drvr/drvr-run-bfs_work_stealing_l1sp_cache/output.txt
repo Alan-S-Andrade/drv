@@ -1,0 +1,1831 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=65536 E=1818338 D=27 source=20734 max_deg=9767 (7797664 bytes)
+=== BFS with L1SP Work Cache + Adaptive Work Stealing ===
+Graph: N=65536 E=1818338 (RMAT CSR from rmat.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP+DRAM buffers with static balanced repartition (capacity=65536 vertices, l2sp_vertices=7821)
+Hardware: 16 cores x 16 harts = 256 total harts
+Source: node 20734 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=4194304 bytes
+L1SP stack slot: per-hart=16384 bytes
+Stealing: proactive low-watermark + adaptive batch/probe sizing (batch=64..256, probes=2..8)
+L1 work cache: per-core shared cache in lower L1SP with 5120-byte guard
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 C1:0 C2:0 C3:0 C4:0 C5:0 C6:0 C7:0 C8:0 C9:0 C10:0 C11:0 C12:0 C13:0 C14:0 C15:0 
+Level 1: total_work=9767, discovered=9768
+  Distribution: C0:611 C1:611 C2:611 C3:611 C4:611 C5:611 C6:611 C7:610 C8:610 C9:610 C10:610 C11:610 C12:610 C13:610 C14:610 C15:610 
+Level 2: total_work=35252, discovered=45020
+  Distribution: C0:2204 C1:2204 C2:2204 C3:2204 C4:2203 C5:2203 C6:2203 C7:2203 C8:2203 C9:2203 C10:2203 C11:2203 C12:2203 C13:2203 C14:2203 C15:2203 
+Level 3: total_work=1528, discovered=46548
+  Distribution: C0:96 C1:96 C2:96 C3:96 C4:96 C5:96 C6:96 C7:96 C8:95 C9:95 C10:95 C11:95 C12:95 C13:95 C14:95 C15:95 
+Level 4: total_work=3, discovered=46551
+  Distribution: C0:1 C1:1 C2:1 C3:0 C4:0 C5:0 C6:0 C7:0 C8:0 C9:0 C10:0 C11:0 C12:0 C13:0 C14:0 C15:0 
+
+=== BFS Complete ===
+Levels traversed: 5
+Nodes discovered: 46551 / 65536
+dist[source=20734] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Processed | L1 | Spill | Refill | Stolen | Steal Attempts | Steals OK | Idle Cycles
+-----|-----------|----|-------|--------|--------|----------------|-----------|------------
+   0 |       129 | 64 |     0 |     65 |      0 |              0 |         0 |    5041572
+   1 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   37902289
+   2 |       129 | 64 |     0 |     65 |      0 |              0 |         0 |   33733090
+   3 |        92 | 64 |     0 |     28 |      0 |              0 |         0 |   38905924
+   4 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   33501861
+   5 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   31514914
+   6 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   38602875
+   7 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   29042404
+   8 |       128 |  0 |     0 |    128 |      0 |              1 |         0 |   38349724
+   9 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   38485822
+  10 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   38757828
+  11 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   34335446
+  12 |        64 |  0 |     0 |     64 |      0 |              1 |         0 |   39875919
+  13 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   30462754
+  14 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   30658420
+  15 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   31796011
+  16 |       193 | 129 |     0 |     64 |      0 |              0 |         0 |   32533484
+  17 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   32463638
+  18 |       163 | 35 |     0 |    128 |      0 |              0 |         0 |   36405045
+  19 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   33211584
+  20 |       162 | 64 |     0 |     64 |     34 |              1 |         1 |   36822032
+  21 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   32419784
+  22 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39207369
+  23 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39002493
+  24 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   33820501
+  25 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   33036989
+  26 |        92 |  0 |     0 |     92 |      0 |              0 |         0 |   39761333
+  27 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   40003298
+  28 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   35792090
+  29 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   34295636
+  30 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   31305813
+  31 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39375293
+  32 |       257 | 129 |     0 |    128 |      0 |              0 |         0 |   33596790
+  33 |       192 | 192 |     0 |      0 |      0 |              0 |         0 |   34034313
+  34 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   34010506
+  35 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   39759308
+  36 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   33091363
+  37 |       163 | 99 |     0 |     64 |      0 |              0 |         0 |   33124775
+  38 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   35267793
+  39 |       224 | 64 |     0 |    160 |      0 |              0 |         0 |   33401646
+  40 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39788501
+  41 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   29872557
+  42 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40646353
+  43 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39496741
+  44 |       162 |  0 |     0 |    128 |     34 |              1 |         1 |   34127042
+  45 |       192 |  0 |     0 |    128 |     64 |              2 |         1 |   30102781
+  46 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   30005440
+  47 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40781352
+  48 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   29152193
+  49 |       156 |  0 |     0 |    156 |      0 |              0 |         0 |   40320314
+  50 |       128 |  0 |     0 |    128 |      0 |              1 |         0 |   39807335
+  51 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   33557611
+  52 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   34123324
+  53 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   34560572
+  54 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   34355693
+  55 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   33212943
+  56 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   33410875
+  57 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39673669
+  58 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   34711663
+  59 |       192 | 64 |     0 |     64 |     64 |              1 |         1 |   33399698
+  60 |       191 |  0 |     0 |    163 |     28 |              1 |         1 |   36823270
+  61 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   40160582
+  62 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40399752
+  63 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   39216350
+  64 |       192 | 192 |     0 |      0 |      0 |              0 |         0 |   32413855
+  65 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   34972877
+  66 |       320 | 192 |     0 |    128 |      0 |              2 |         0 |   33793961
+  67 |       219 |  0 |     0 |    219 |      0 |              0 |         0 |   33781414
+  68 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   40654157
+  69 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   32256392
+  70 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35908358
+  71 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40637353
+  72 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   41442714
+  73 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   35746922
+  74 |       259 | 64 |     0 |     96 |     99 |              2 |         2 |   35487738
+  75 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   33528710
+  76 |        35 | 35 |     0 |      0 |      0 |              0 |         0 |   34975437
+  77 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   32466525
+  78 |       192 | 192 |     0 |      0 |      0 |              0 |         0 |   40451709
+  79 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   41092799
+  80 |       283 | 192 |     0 |     91 |      0 |              0 |         0 |   33390865
+  81 |       192 | 128 |     0 |     64 |      0 |              2 |         0 |   40709691
+  82 |       224 | 64 |     0 |    160 |      0 |              0 |         0 |   31310834
+  83 |       128 | 64 |     0 |      0 |     64 |              1 |         1 |   38831338
+  84 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   32974212
+  85 |       256 | 256 |     0 |      0 |      0 |              0 |         0 |   35799796
+  86 |       128 |  0 |     0 |    128 |      0 |              1 |         0 |   34505606
+  87 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   34116696
+  88 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   32565165
+  89 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   34253652
+  90 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   40195804
+  91 |       163 | 64 |     0 |     99 |      0 |              0 |         0 |   37017059
+  92 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   40645357
+  93 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   40357710
+  94 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   29873758
+  95 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   39698526
+  96 |       288 | 160 |     0 |    128 |      0 |              0 |         0 |   29035842
+  97 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   32539188
+  98 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   40096325
+  99 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   32401282
+ 100 |        98 | 64 |     0 |      0 |     34 |              1 |         1 |   37367186
+ 101 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   30933360
+ 102 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   33858009
+ 103 |       219 | 64 |     0 |    155 |      0 |              0 |         0 |   35046957
+ 104 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   40417830
+ 105 |       192 |  0 |     0 |    128 |     64 |              1 |         1 |   33555005
+ 106 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40484480
+ 107 |       227 | 99 |     0 |    128 |      0 |              0 |         0 |   37276013
+ 108 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   30674323
+ 109 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35332351
+ 110 |        64 | 64 |     0 |      0 |      0 |              2 |         0 |   40947754
+ 111 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40360346
+ 112 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   29312939
+ 113 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   34977786
+ 114 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   32626595
+ 115 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   40744984
+ 116 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   35556635
+ 117 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   41042358
+ 118 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   34770766
+ 119 |       155 | 64 |     0 |     91 |      0 |              0 |         0 |   40244794
+ 120 |       223 |  0 |     0 |    192 |     31 |              1 |         1 |   35159768
+ 121 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   41349829
+ 122 |       162 |  0 |     0 |     98 |     64 |              1 |         1 |   36358240
+ 123 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   34527174
+ 124 |       256 | 256 |     0 |      0 |      0 |              0 |         0 |   33921595
+ 125 |        96 |  0 |     0 |     96 |      0 |              0 |         0 |   33122920
+ 126 |       226 | 128 |     0 |     64 |     34 |              1 |         1 |   36645928
+ 127 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   41051691
+ 128 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   31851004
+ 129 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   40597977
+ 130 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   30402257
+ 131 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   35066343
+ 132 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   32974011
+ 133 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   40802483
+ 134 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   40343928
+ 135 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   34361001
+ 136 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   31630924
+ 137 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   40084529
+ 138 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   40253790
+ 139 |       223 | 31 |     0 |    192 |      0 |              0 |         0 |   34365390
+ 140 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   32463244
+ 141 |       128 |  0 |     0 |     64 |     64 |              1 |         1 |   38994898
+ 142 |       283 | 128 |     0 |    155 |      0 |              0 |         0 |   33909749
+ 143 |        98 | 98 |     0 |      0 |      0 |              0 |         0 |   38101804
+ 144 |       159 | 64 |     0 |     95 |      0 |              0 |         0 |   32591472
+ 145 |       128 |  0 |     0 |    128 |      0 |              0 |         0 |   40211416
+ 146 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39915412
+ 147 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   32414000
+ 148 |       256 | 128 |     0 |     64 |     64 |              1 |         1 |   32404228
+ 149 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   40824950
+ 150 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   34278921
+ 151 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   40271322
+ 152 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   31588665
+ 153 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   35865036
+ 154 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35411299
+ 155 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   40259430
+ 156 |       384 | 192 |     0 |    192 |      0 |              0 |         0 |   31665418
+ 157 |       160 | 64 |     0 |     64 |     32 |              1 |         1 |   40491880
+ 158 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   34384127
+ 159 |        91 | 64 |     0 |     27 |      0 |              1 |         0 |   39819281
+ 160 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   31164043
+ 161 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   36837911
+ 162 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   41588730
+ 163 |       192 |  0 |     0 |    192 |      0 |              0 |         0 |   35255978
+ 164 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   30462582
+ 165 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   41128004
+ 166 |       320 | 256 |     0 |     64 |      0 |              0 |         0 |   34613272
+ 167 |       384 | 128 |     0 |    256 |      0 |              0 |         0 |   34870575
+ 168 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   40902220
+ 169 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40931099
+ 170 |       290 | 192 |     0 |     64 |     34 |              1 |         1 |   34311800
+ 171 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   41115798
+ 172 |       219 | 128 |     0 |     91 |      0 |              0 |         0 |   34808459
+ 173 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   30660326
+ 174 |       162 | 98 |     0 |      0 |     64 |              1 |         1 |   37539021
+ 175 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   32760121
+ 176 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   33360848
+ 177 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40084277
+ 178 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   32050781
+ 179 |       192 | 192 |     0 |      0 |      0 |              0 |         0 |   40833900
+ 180 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   35241546
+ 181 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   40650986
+ 182 |       223 | 64 |     0 |    159 |      0 |              0 |         0 |   40012651
+ 183 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40598015
+ 184 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   31258343
+ 185 |       256 | 64 |     0 |    128 |     64 |              1 |         1 |   38735417
+ 186 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   34016587
+ 187 |       320 | 256 |     0 |     64 |      0 |              0 |         0 |   34348537
+ 188 |       219 | 128 |     0 |     91 |      0 |              0 |         0 |   32119922
+ 189 |       128 |  0 |     0 |    128 |      0 |              1 |         0 |   31698054
+ 190 |       192 | 192 |     0 |      0 |      0 |              0 |         0 |   29480123
+ 191 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   40301470
+ 192 |       223 | 64 |     0 |    159 |      0 |              0 |         0 |   33362020
+ 193 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40300523
+ 194 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   36270572
+ 195 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35376398
+ 196 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40079823
+ 197 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   34368684
+ 198 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   39996062
+ 199 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   36663445
+ 200 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   31105902
+ 201 |       283 | 128 |     0 |    155 |      0 |              0 |         0 |   40457139
+ 202 |        96 | 64 |     0 |      0 |     32 |              1 |         1 |   40522629
+ 203 |       320 | 64 |     0 |    256 |      0 |              0 |         0 |   40799772
+ 204 |       320 | 256 |     0 |     64 |      0 |              0 |         0 |   32226772
+ 205 |       128 |  0 |     0 |     64 |     64 |              1 |         1 |   38511595
+ 206 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   34870246
+ 207 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   37208066
+ 208 |       223 | 64 |     0 |    159 |      0 |              0 |         0 |   33414580
+ 209 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40473149
+ 210 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   33166170
+ 211 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   40469220
+ 212 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   33074568
+ 213 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   40824406
+ 214 |       283 | 192 |     0 |     91 |      0 |              0 |         0 |   33007831
+ 215 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   35615486
+ 216 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   34729933
+ 217 |       352 | 128 |     0 |    192 |     32 |              1 |         1 |   35254962
+ 218 |       226 | 98 |     0 |    128 |      0 |              0 |         0 |   36902987
+ 219 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35069856
+ 220 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   39968308
+ 221 |       192 | 128 |     0 |      0 |     64 |              1 |         1 |   38556523
+ 222 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   40619245
+ 223 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   33978967
+ 224 |       287 | 128 |     0 |    159 |      0 |              0 |         0 |   38549182
+ 225 |       128 | 128 |     0 |      0 |      0 |              0 |         0 |   33851410
+ 226 |       256 | 64 |     0 |    192 |      0 |              0 |         0 |   34041484
+ 227 |       320 | 256 |     0 |     64 |      0 |              0 |         0 |   33299163
+ 228 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40695365
+ 229 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   40586158
+ 230 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   40291028
+ 231 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40191568
+ 232 |       219 | 128 |     0 |     91 |      0 |              0 |         0 |   34396224
+ 233 |       256 | 128 |     0 |    128 |      0 |              0 |         0 |   33684321
+ 234 |       256 | 128 |     0 |     64 |     64 |              1 |         1 |   34274401
+ 235 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   39778666
+ 236 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35870963
+ 237 |       384 | 256 |     0 |    128 |      0 |              1 |         0 |   35387197
+ 238 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40651616
+ 239 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   33679443
+ 240 |       320 | 192 |     0 |    128 |      0 |              0 |         0 |   34135575
+ 241 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40101234
+ 242 |         0 |  0 |     0 |      0 |      0 |              0 |         0 |   40560969
+ 243 |       192 | 64 |     0 |    128 |      0 |              0 |         0 |   35278615
+ 244 |       283 | 155 |     0 |    128 |      0 |              0 |         0 |   40459508
+ 245 |       256 | 192 |     0 |     64 |      0 |              0 |         0 |   40394366
+ 246 |       192 | 192 |     0 |      0 |      0 |              0 |         0 |   35596721
+ 247 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   40613404
+ 248 |       351 | 159 |     0 |    128 |     64 |              1 |         1 |   33011216
+ 249 |       384 | 192 |     0 |    192 |      0 |              0 |         0 |   35396012
+ 250 |       192 | 128 |     0 |     64 |      0 |              0 |         0 |   35953410
+ 251 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   40769896
+ 252 |        64 |  0 |     0 |     64 |      0 |              0 |         0 |   40112739
+ 253 |       128 | 64 |     0 |     64 |      0 |              0 |         0 |   35091935
+ 254 |       320 | 128 |     0 |    192 |      0 |              0 |         0 |   34849893
+ 255 |        64 | 64 |     0 |      0 |      0 |              0 |         0 |   34949762
+
+Per-core L1 cache statistics:
+Core | Refill OK | Refill Items | Refill Cycles | Spill Items | Spill Cycles | Avg Occ | Max Occ | Batch | Probes
+-----|-----------|--------------|---------------|-------------|--------------|---------|---------|-------|-------
+   0 |        39 |         2334 |      13948913 |           0 |       135109 |       0 |       0 |    64 |      2
+   1 |        44 |         2688 |      14792422 |           0 |       696087 |       0 |      64 |    64 |      2
+   2 |        43 |         2692 |      14142102 |           0 |       706826 |       0 |       0 |   128 |      2
+   3 |        46 |         2879 |      14925156 |           0 |       612203 |       0 |       0 |    64 |      2
+   4 |        46 |         2910 |      14986138 |           0 |       653238 |       0 |      64 |   128 |      2
+   5 |        46 |         2910 |      15302214 |           0 |       680346 |       0 |      64 |   128 |      2
+   6 |        46 |         2910 |      15213978 |           0 |       607725 |       0 |      64 |   128 |      2
+   7 |        46 |         2909 |      14885414 |           0 |       561664 |       0 |      64 |    64 |      2
+   8 |        46 |         2908 |      15124036 |           0 |       659441 |       0 |      64 |   128 |      2
+   9 |        45 |         2874 |      15311895 |           0 |       636430 |       0 |      64 |    64 |      2
+  10 |        46 |         2877 |      14719411 |           0 |       641380 |       0 |       0 |    64 |      2
+  11 |        45 |         2874 |      15017251 |           0 |       658462 |       0 |      64 |   128 |      2
+  12 |        45 |         2874 |      15171506 |           0 |       659593 |       0 |      64 |    64 |      2
+  13 |        46 |         2908 |      15239794 |           0 |       671746 |       0 |      64 |    64 |      2
+  14 |        45 |         2874 |      15387259 |           0 |       799227 |       0 |      64 |   128 |      2
+  15 |        45 |         2874 |      15365431 |           0 |       639586 |       0 |      64 |   128 |      2
+
+Summary:
+  Total nodes processed: 46551
+  Total steal attempts:  39
+Successful steals:     25 (64%)
+  Total steal items:     1256
+  Avg items/steal:       50
+  Total edges traversed: 1818320
+  L1 items processed:    21997
+  Spill items processed: 0
+  Refill items processed:23298
+  Stolen items processed:1256
+  L1 refill success:     719
+  L1 refill items:       45295
+  L1 refill cycles:      239532920
+  L1 spill items:        0
+  L1 spill cycles:       10019063
+  Idle wait cycles:      9222104451
+Cycles elapsed:        72855742
+Cycles per node:       1565
+Cycles per edge:       40
+WORKSRC: from_l1=21997 from_spill=0 from_refill=23298 from_steal=1256
+L1CACHE: refill_ok=719 refill_items=45295 spill_items=0 refill_cycles=239532920 spill_cycles=10019063
+WQTRACE_DUMP_BEGIN,bench=bfs_work_stealing_l1sp_cache,cores=16,samples=17,dropped=0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=0,phase=init,level=0,iter=-1,queue=core,depths=1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=1,phase=level_begin,level=0,iter=-1,queue=core,depths=1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=2,phase=post_process,level=0,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=3,phase=post_redistribute,level=0,iter=-1,queue=core,depths=611|611|611|611|611|611|611|610|610|610|610|610|610|610|610|610
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=4,phase=level_begin,level=1,iter=-1,queue=core,depths=611|611|611|611|611|611|611|610|610|610|610|610|610|610|610|610
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=5,phase=post_process,level=1,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=6,phase=post_redistribute,level=1,iter=-1,queue=core,depths=2204|2204|2204|2204|2203|2203|2203|2203|2203|2203|2203|2203|2203|2203|2203|2203
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=7,phase=level_begin,level=2,iter=-1,queue=core,depths=2204|2204|2204|2204|2203|2203|2203|2203|2203|2203|2203|2203|2203|2203|2203|2203
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=8,phase=post_process,level=2,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=9,phase=post_redistribute,level=2,iter=-1,queue=core,depths=96|96|96|96|96|96|96|96|95|95|95|95|95|95|95|95
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=10,phase=level_begin,level=3,iter=-1,queue=core,depths=96|96|96|96|96|96|96|96|95|95|95|95|95|95|95|95
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=11,phase=post_process,level=3,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=12,phase=post_redistribute,level=3,iter=-1,queue=core,depths=1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=13,phase=level_begin,level=4,iter=-1,queue=core,depths=1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=14,phase=post_process,level=4,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=15,phase=post_redistribute,level=4,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=bfs_work_stealing_l1sp_cache,cores=16,sample=16,phase=final,level=5,iter=-1,queue=core,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE_DUMP_END,bench=bfs_work_stealing_l1sp_cache
+L1SPTRACE_DUMP_BEGIN,bench=bfs_work_stealing_l1sp_cache,cores=16,harts=256,samples=17
+L1SPTRACE_CONFIG,bench=bfs_work_stealing_l1sp_cache,core_bytes=262144,global_bytes=4194304
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=0,phase=init,level=0,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=0,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=1,phase=level_begin,level=0,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=1,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=2,phase=post_process,level=0,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=2,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=3,phase=post_redistribute,level=0,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=3,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=4,phase=level_begin,level=1,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=4,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=5,phase=post_process,level=1,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=5,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=6,phase=post_redistribute,level=1,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=6,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=7,phase=level_begin,level=2,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=7,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=8,phase=post_process,level=2,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=8,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=9,phase=post_redistribute,level=2,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=9,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=10,phase=level_begin,level=3,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=10,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=11,phase=post_process,level=3,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=11,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=12,phase=post_redistribute,level=3,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=12,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=13,phase=level_begin,level=4,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=13,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=14,phase=post_process,level=4,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=14,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=15,phase=post_redistribute,level=4,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=15,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing_l1sp_cache,sample=16,phase=final,level=5,iter=-1,bytes=2097152
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing_l1sp_cache,sample=16,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=0,core=0,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=1,core=0,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=2,core=0,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=3,core=0,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=4,core=0,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=5,core=0,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=6,core=0,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=7,core=0,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=8,core=0,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=9,core=0,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=10,core=0,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=11,core=0,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=12,core=0,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=13,core=0,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=14,core=0,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=15,core=0,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=16,core=1,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=17,core=1,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=18,core=1,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=19,core=1,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=20,core=1,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=21,core=1,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=22,core=1,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=23,core=1,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=24,core=1,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=25,core=1,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=26,core=1,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=27,core=1,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=28,core=1,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=29,core=1,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=30,core=1,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=31,core=1,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=32,core=2,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=33,core=2,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=34,core=2,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=35,core=2,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=36,core=2,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=37,core=2,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=38,core=2,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=39,core=2,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=40,core=2,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=41,core=2,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=42,core=2,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=43,core=2,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=44,core=2,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=45,core=2,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=46,core=2,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=47,core=2,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=48,core=3,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=49,core=3,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=50,core=3,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=51,core=3,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=52,core=3,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=53,core=3,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=54,core=3,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=55,core=3,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=56,core=3,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=57,core=3,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=58,core=3,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=59,core=3,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=60,core=3,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=61,core=3,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=62,core=3,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=63,core=3,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=64,core=4,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=65,core=4,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=66,core=4,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=67,core=4,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=68,core=4,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=69,core=4,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=70,core=4,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=71,core=4,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=72,core=4,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=73,core=4,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=74,core=4,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=75,core=4,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=76,core=4,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=77,core=4,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=78,core=4,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=79,core=4,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=80,core=5,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=81,core=5,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=82,core=5,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=83,core=5,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=84,core=5,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=85,core=5,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=86,core=5,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=87,core=5,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=88,core=5,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=89,core=5,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=90,core=5,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=91,core=5,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=92,core=5,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=93,core=5,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=94,core=5,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=95,core=5,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=96,core=6,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=97,core=6,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=98,core=6,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=99,core=6,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=100,core=6,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=101,core=6,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=102,core=6,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=103,core=6,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=104,core=6,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=105,core=6,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=106,core=6,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=107,core=6,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=108,core=6,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=109,core=6,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=110,core=6,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=111,core=6,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=112,core=7,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=113,core=7,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=114,core=7,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=115,core=7,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=116,core=7,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=117,core=7,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=118,core=7,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=119,core=7,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=120,core=7,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=121,core=7,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=122,core=7,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=123,core=7,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=124,core=7,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=125,core=7,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=126,core=7,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=127,core=7,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=128,core=8,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=129,core=8,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=130,core=8,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=131,core=8,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=132,core=8,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=133,core=8,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=134,core=8,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=135,core=8,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=136,core=8,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=137,core=8,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=138,core=8,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=139,core=8,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=140,core=8,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=141,core=8,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=142,core=8,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=143,core=8,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=144,core=9,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=145,core=9,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=146,core=9,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=147,core=9,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=148,core=9,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=149,core=9,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=150,core=9,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=151,core=9,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=152,core=9,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=153,core=9,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=154,core=9,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=155,core=9,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=156,core=9,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=157,core=9,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=158,core=9,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=159,core=9,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=160,core=10,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=161,core=10,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=162,core=10,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=163,core=10,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=164,core=10,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=165,core=10,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=166,core=10,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=167,core=10,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=168,core=10,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=169,core=10,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=170,core=10,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=171,core=10,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=172,core=10,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=173,core=10,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=174,core=10,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=175,core=10,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=176,core=11,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=177,core=11,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=178,core=11,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=179,core=11,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=180,core=11,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=181,core=11,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=182,core=11,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=183,core=11,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=184,core=11,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=185,core=11,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=186,core=11,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=187,core=11,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=188,core=11,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=189,core=11,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=190,core=11,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=191,core=11,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=192,core=12,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=193,core=12,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=194,core=12,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=195,core=12,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=196,core=12,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=197,core=12,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=198,core=12,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=199,core=12,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=200,core=12,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=201,core=12,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=202,core=12,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=203,core=12,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=204,core=12,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=205,core=12,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=206,core=12,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=207,core=12,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=208,core=13,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=209,core=13,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=210,core=13,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=211,core=13,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=212,core=13,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=213,core=13,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=214,core=13,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=215,core=13,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=216,core=13,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=217,core=13,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=218,core=13,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=219,core=13,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=220,core=13,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=221,core=13,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=222,core=13,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=223,core=13,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=224,core=14,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=225,core=14,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=226,core=14,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=227,core=14,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=228,core=14,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=229,core=14,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=230,core=14,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=231,core=14,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=232,core=14,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=233,core=14,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=234,core=14,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=235,core=14,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=236,core=14,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=237,core=14,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=238,core=14,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=239,core=14,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=240,core=15,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=241,core=15,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=242,core=15,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=243,core=15,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=244,core=15,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=245,core=15,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=246,core=15,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=247,core=15,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=248,core=15,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=249,core=15,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=250,core=15,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=251,core=15,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=252,core=15,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=253,core=15,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=254,core=15,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing_l1sp_cache,hart=255,core=15,thread=15,bytes=0
+L1SPTRACE_DUMP_END,bench=bfs_work_stealing_l1sp_cache
+WQSNAP_DUMP_BEGIN,bench=bfs_work_stealing_l1sp_cache,cores=16,snaps=52,capacity=4096
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=0,level=1,event=steal,actor_core=1,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=1,level=1,event=steal,actor_core=6,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=2,level=1,event=steal,actor_core=4,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=3,level=1,event=steal,actor_core=7,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=4,level=1,event=steal,actor_core=2,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=5,level=1,event=steal,actor_core=10,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=6,level=2,event=pop,actor_core=12,depths=1180|1116|988|732|731|731|731|731|731|731|731|731|731|731|667|731
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=7,level=2,event=pop,actor_core=13,depths=1180|1116|988|732|731|731|731|731|731|731|731|731|731|731|667|731
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=8,level=2,event=pop,actor_core=15,depths=1180|1116|988|732|667|667|667|667|667|667|667|667|667|667|667|667
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=9,level=2,event=pop,actor_core=12,depths=1180|1116|924|668|667|667|667|667|667|667|667|667|667|667|667|667
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=10,level=2,event=pop,actor_core=12,depths=1180|988|796|604|539|539|539|539|539|539|539|539|539|539|539|539
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=11,level=2,event=pop,actor_core=15,depths=1180|924|732|476|411|411|411|411|411|411|411|411|411|411|411|411
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=12,level=2,event=pop,actor_core=10,depths=1116|860|668|412|347|347|347|347|411|347|347|347|411|347|347|347
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=13,level=2,event=pop,actor_core=9,depths=1116|860|604|412|347|347|347|347|347|347|347|347|347|347|347|347
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=14,level=2,event=pop,actor_core=14,depths=1116|796|540|348|283|283|283|283|283|283|283|283|283|283|283|283
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=15,level=2,event=pop,actor_core=10,depths=1116|796|540|284|219|219|219|219|219|219|219|219|219|219|219|219
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=16,level=2,event=pop,actor_core=13,depths=1116|796|476|220|219|219|219|219|219|219|219|219|219|219|155|219
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=17,level=2,event=pop,actor_core=10,depths=1116|668|348|92|91|91|91|91|91|91|27|27|91|27|27|91
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=18,level=2,event=pop,actor_core=13,depths=1052|604|284|92|27|91|27|27|91|27|27|27|91|27|27|27
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=19,level=2,event=pop,actor_core=14,depths=668|412|92|92|27|27|27|27|27|27|27|27|27|27|27|27
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=20,level=2,event=pop,actor_core=15,depths=604|348|92|28|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=21,level=2,event=pop,actor_core=14,depths=604|348|28|28|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=22,level=2,event=pop,actor_core=11,depths=540|348|28|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=23,level=2,event=pop,actor_core=8,depths=540|284|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=24,level=2,event=pop,actor_core=15,depths=540|284|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=25,level=2,event=pop,actor_core=14,depths=476|284|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=26,level=2,event=pop,actor_core=13,depths=476|284|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=27,level=2,event=pop,actor_core=11,depths=476|284|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=28,level=2,event=pop,actor_core=11,depths=412|220|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=29,level=2,event=pop,actor_core=12,depths=412|156|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=30,level=2,event=pop,actor_core=8,depths=348|156|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=31,level=2,event=pop,actor_core=9,depths=348|92|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=32,level=2,event=steal,actor_core=3,depths=284|28|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=33,level=2,event=pop,actor_core=7,depths=92|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=34,level=2,event=steal,actor_core=6,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=35,level=2,event=steal,actor_core=10,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=36,level=2,event=steal,actor_core=14,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=37,level=2,event=steal,actor_core=15,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=38,level=2,event=steal,actor_core=9,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=39,level=2,event=steal,actor_core=11,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=40,level=2,event=steal,actor_core=2,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=41,level=2,event=steal,actor_core=8,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=42,level=2,event=steal,actor_core=5,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=43,level=2,event=steal,actor_core=13,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=44,level=2,event=steal,actor_core=7,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=45,level=2,event=steal,actor_core=12,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=46,level=2,event=steal,actor_core=4,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=47,level=2,event=steal,actor_core=3,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=48,level=3,event=steal,actor_core=7,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=49,level=3,event=steal,actor_core=9,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=50,level=3,event=steal,actor_core=12,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP,bench=bfs_work_stealing_l1sp_cache,cores=16,idx=51,level=3,event=steal,actor_core=13,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQSNAP_DUMP_END,bench=bfs_work_stealing_l1sp_cache
+L1SPSNAP_DUMP_BEGIN,bench=bfs_work_stealing_l1sp_cache,cores=16,harts_per_core=16,harts=256,snaps=52
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=0,level=1,core=1,thread=4,hart=20,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=6,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=1,level=1,core=6,thread=4,hart=100,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=2,level=1,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=3,level=1,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=4,level=1,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=5,level=1,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=6,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=7,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=8,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=9,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=10,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=15,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=11,level=2,core=15,thread=0,hart=240,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=12,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=13,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=14,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=10,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=15,level=2,core=10,thread=0,hart=160,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=13,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=16,level=2,core=13,thread=3,hart=211,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=10,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=17,level=2,core=10,thread=7,hart=167,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=18,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=14,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=19,level=2,core=14,thread=0,hart=224,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=15,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=20,level=2,core=15,thread=4,hart=244,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=14,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=21,level=2,core=14,thread=3,hart=227,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=11,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=22,level=2,core=11,thread=2,hart=178,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=23,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=24,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=14,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=25,level=2,core=14,thread=6,hart=230,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=13,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=26,level=2,core=13,thread=6,hart=214,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=27,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=28,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=29,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=30,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=31,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=32,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=33,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=34,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=35,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=36,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=37,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=9,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=38,level=2,core=9,thread=4,hart=148,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=39,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=40,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=41,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=5,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=15,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing_l1sp_cache,idx=42,level=2,core=5,thread=3,hart=83,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=43,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=44,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=45,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=46,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=47,level=2,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=48,level=3,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=49,level=3,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=50,level=3,core=15,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=4,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=5,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=6,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=7,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=8,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=9,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=10,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=11,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=12,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=13,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=14,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing_l1sp_cache,idx=51,level=3,core=15,bytes=0
+L1SPSNAP_DUMP_END,bench=bfs_work_stealing_l1sp_cache
+WQTRACE_FILE_WRITTEN,bench=bfs_work_stealing_l1sp_cache,path=run_l1sp_cache_16cores.log
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003c20 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 00 01 00 e2 be 1b 00 1b 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003c20 dest_abs=0x8000000000003c20
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x42793e50 size=7797664
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 7797664 bytes from file. Header bytes: 00 00 01 00 e2 be 1b 00 1b 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x42793e50 dest_abs=0xc000000002793e50
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (7797664 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 189.512 ms

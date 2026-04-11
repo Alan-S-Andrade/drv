@@ -1,0 +1,50 @@
+{
+	"abstract" : true,
+	"artifacts" : 
+	[
+		{
+			"path" : "/users/alanandr/local/sstelements/lib/sst-elements-library/libmemHierarchy.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library"
+		],
+		"files" : 
+		[
+			"element/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 3,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "memHierarchy::@022b2c724e583c16fbb6",
+	"imported" : true,
+	"local" : true,
+	"name" : "memHierarchy",
+	"nameOnDisk" : "libmemHierarchy.so",
+	"paths" : 
+	{
+		"build" : "element",
+		"source" : "element"
+	},
+	"sources" : [],
+	"type" : "SHARED_LIBRARY"
+}

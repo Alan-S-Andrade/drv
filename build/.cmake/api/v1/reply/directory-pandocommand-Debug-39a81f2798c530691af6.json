@@ -1,0 +1,93 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"pandocommand/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 38,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 61,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"pandocommand/libpandocommand.so"
+			],
+			"targetId" : "pandocommand::@50fbfb4c7ddcf4d7cb66",
+			"targetIndex" : 124,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include/pandocommand",
+			"paths" : 
+			[
+				"pandocommand/control.hpp",
+				"pandocommand/debug.hpp",
+				"pandocommand/executable.hpp",
+				"pandocommand/loader.hpp",
+				"pandocommand/place.hpp"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"cxxModuleBmiTarget" : 
+			{
+				"id" : "pandocommand::@50fbfb4c7ddcf4d7cb66",
+				"index" : 124
+			},
+			"destination" : "lib",
+			"type" : "cxxModuleBmi"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"pandocommand/libpandocommand_loader.so"
+			],
+			"targetId" : "pandocommand_loader::@50fbfb4c7ddcf4d7cb66",
+			"targetIndex" : 125,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "pandocommand",
+		"source" : "pandocommand"
+	}
+}

@@ -1,0 +1,14 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+ERROR: bulk load header failed (result=-1)
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cb8 size=20
+SSTRISCVCore[handleBulkLoad:856]: BULK_LOAD: open('rmat_r16.bin') failed: No such file or directory
+EMERGENCY SHUTDOWN (0,0)!
+# Simulated time:                  128.682 ms
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+EMERGENCY SHUTDOWN Complete (0,0)!
+Simulation is complete, simulated time: 0 s

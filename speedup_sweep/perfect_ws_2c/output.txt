@@ -1,0 +1,19 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003ce0 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 80 00 00 20 79 0d 00 1a 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003ce0 dest_abs=0x8000000000003ce0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x40803720 size=3794072
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 3794072 bytes from file. Header bytes: 00 80 00 00 20 79 0d 00 1a 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x40803720 dest_abs=0xc000000000803720
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (3794072 bytes) to backing store
+EMERGENCY SHUTDOWN (0,0)!
+# Simulated time:                  455.315 us
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+EMERGENCY SHUTDOWN Complete (0,0)!
+Simulation is complete, simulated time: 0 s

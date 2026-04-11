@@ -1,0 +1,219 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=1024 E=21090 source=377 max_deg=463 (92576 bytes)
+=== BFS with L1SP Graph Prefetch + Work Stealing ===
+Graph: N=1024 E=21090 (RMAT CSR from rmat.bin)
+Hot state: visited in L2SP, dist_arr in L2SP
+Hardware: 8 cores x 16 harts = 128 total harts
+Source: node 377 (highest-degree)
+L1SP: per-core=262144 bytes, global=2097152 bytes
+L1SP stack slot: per-hart=16384 bytes
+Prefetch: per-hart self-prefetch of col_idx into L1SP
+Stealing: adaptive batch/probe sizing
+
+Self-prefetch buffer: hart0=2992 edges, other harts=3008 edges
+Level 0: total_work=1, discovered=1
+Level 1: total_work=463, discovered=464
+Level 2: total_work=423, discovered=887
+Level 3: total_work=5, discovered=892
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 892 / 1024
+dist[source=377] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Processed | PF Hits | PF Miss | Steal OK/Attempts | Idle Cycles
+-----|-----------|---------|---------|-------------------|------------
+   0 |       113 |    3690 |       0 |      0/     0     |     486118
+   1 |         0 |       0 |       0 |      0/     0     |    6547653
+   2 |         0 |       0 |       0 |      0/     0     |    6504017
+   3 |         0 |       0 |       0 |      0/     0     |    6651392
+   4 |         0 |       0 |       0 |      0/     0     |    6481829
+   5 |         0 |       0 |       0 |      0/     0     |    6659837
+   6 |         0 |       0 |       0 |      0/     0     |    6649918
+   7 |         0 |       0 |       0 |      0/     0     |    6214567
+   8 |         0 |       0 |       0 |      0/     0     |    6500917
+   9 |         0 |       0 |       0 |      0/     0     |    6549756
+  10 |         0 |       0 |       0 |      0/     0     |    6458981
+  11 |         0 |       0 |       0 |      0/     0     |    6506793
+  12 |         0 |       0 |       0 |      0/     0     |    6631978
+  13 |         0 |       0 |       0 |      0/     0     |    6406552
+  14 |         0 |       0 |       0 |      0/     0     |    6764289
+  15 |         0 |       0 |       0 |      0/     0     |    6805346
+  16 |         0 |       0 |       0 |      0/     0     |    6514761
+  17 |         0 |       0 |       0 |      0/     0     |    6538528
+  18 |         0 |       0 |       0 |      0/     0     |    6469357
+  19 |        53 |     487 |       0 |      0/     0     |    5558403
+  20 |         0 |       0 |       0 |      0/     0     |    6461291
+  21 |         0 |       0 |       0 |      0/     0     |    6458415
+  22 |         0 |       0 |       0 |      0/     1     |    6362277
+  23 |         0 |       0 |       0 |      0/     0     |    6639780
+  24 |         1 |       2 |       0 |      0/     0     |    6729492
+  25 |         0 |       0 |       0 |      0/     0     |    6531652
+  26 |         0 |       0 |       0 |      0/     0     |    6516225
+  27 |        58 |    2151 |       0 |      0/     0     |    3787806
+  28 |         0 |       0 |       0 |      0/     0     |    6566660
+  29 |         0 |       0 |       0 |      0/     0     |    6712299
+  30 |         0 |       0 |       0 |      0/     0     |    6662799
+  31 |         0 |       0 |       0 |      0/     0     |    6659457
+  32 |         0 |       0 |       0 |      0/     0     |    6519032
+  33 |         0 |       0 |       0 |      0/     0     |    6550938
+  34 |         0 |       0 |       0 |      0/     0     |    6547373
+  35 |         0 |       0 |       0 |      0/     0     |    6591006
+  36 |         0 |       0 |       0 |      0/     0     |    6528510
+  37 |         0 |       0 |       0 |      0/     0     |    6787652
+  38 |        53 |     337 |       0 |      0/     0     |    6062772
+  39 |         0 |       0 |       0 |      0/     0     |    6465974
+  40 |         0 |       0 |       0 |      0/     0     |    6664308
+  41 |         0 |       0 |       0 |      0/     0     |    6399380
+  42 |        59 |    2447 |       0 |      0/     0     |    3218418
+  43 |         0 |       0 |       0 |      0/     0     |    6565688
+  44 |         0 |       0 |       0 |      0/     0     |    6367983
+  45 |         0 |       0 |       0 |      0/     0     |    6710786
+  46 |         0 |       0 |       0 |      0/     0     |    6510342
+  47 |         0 |       0 |       0 |      0/     0     |    6664636
+  48 |         0 |       0 |       0 |      0/     0     |    6814864
+  49 |        58 |    2198 |       0 |      0/     0     |    3539577
+  50 |         0 |       0 |       0 |      0/     0     |    6562096
+  51 |         0 |       0 |       0 |      0/     0     |    6569097
+  52 |         0 |       0 |       0 |      0/     0     |    6517348
+  53 |         0 |       0 |       0 |      0/     0     |    6517604
+  54 |         0 |       0 |       0 |      0/     0     |    6762490
+  55 |        53 |     370 |       0 |      0/     0     |    5772430
+  56 |         0 |       0 |       0 |      0/     0     |    6524046
+  57 |         0 |       0 |       0 |      0/     0     |    6316621
+  58 |         0 |       0 |       0 |      0/     0     |    6317348
+  59 |         0 |       0 |       0 |      0/     0     |    6478617
+  60 |         1 |       1 |       0 |      0/     0     |    6662054
+  61 |         0 |       0 |       0 |      0/     0     |    6655833
+  62 |         0 |       0 |       0 |      0/     0     |    6788575
+  63 |         0 |       0 |       0 |      0/     0     |    6764084
+  64 |         0 |       0 |       0 |      0/     0     |    6715555
+  65 |         0 |       0 |       0 |      0/     0     |    6520705
+  66 |         0 |       0 |       0 |      0/     0     |    6759545
+  67 |         0 |       0 |       0 |      0/     0     |    6588117
+  68 |         0 |       0 |       0 |      0/     0     |    6592805
+  69 |         0 |       0 |       0 |      0/     0     |    6421729
+  70 |        53 |     215 |       0 |      0/     0     |    6022786
+  71 |         0 |       0 |       0 |      0/     0     |    6472955
+  72 |        59 |    2044 |       0 |      0/     0     |    3688205
+  73 |         0 |       0 |       0 |      0/     0     |    6593648
+  74 |         0 |       0 |       0 |      0/     0     |    6636834
+  75 |         0 |       0 |       0 |      0/     0     |    6663218
+  76 |         0 |       0 |       0 |      0/     0     |    6614429
+  77 |         0 |       0 |       0 |      0/     0     |    6396388
+  78 |         0 |       0 |       0 |      0/     0     |    6563259
+  79 |         0 |       0 |       0 |      0/     0     |    6526479
+  80 |         0 |       0 |       0 |      0/     0     |    6761647
+  81 |         0 |       0 |       0 |      0/     0     |    6504000
+  82 |         0 |       0 |       0 |      0/     0     |    6612092
+  83 |         0 |       0 |       0 |      0/     0     |    6613943
+  84 |         0 |       0 |       0 |      0/     0     |    6516617
+  85 |         0 |       0 |       0 |      0/     0     |    6545859
+  86 |         0 |       0 |       0 |      0/     0     |    6446198
+  87 |        58 |    2045 |       0 |      0/     0     |    3749638
+  88 |         0 |       0 |       0 |      0/     0     |    6552392
+  89 |        53 |     188 |       0 |      0/     0     |    6267684
+  90 |         0 |       0 |       0 |      0/     0     |    6494182
+  91 |         0 |       0 |       0 |      0/     0     |    6561631
+  92 |         0 |       0 |       0 |      0/     0     |    6513288
+  93 |         0 |       0 |       0 |      0/     0     |    6531813
+  94 |         0 |       0 |       0 |      0/     0     |    6434572
+  95 |         0 |       0 |       0 |      0/     0     |    6667876
+  96 |        58 |    1556 |       0 |      0/     0     |    4415096
+  97 |         0 |       0 |       0 |      0/     0     |    6589376
+  98 |         0 |       0 |       0 |      0/     0     |    6629786
+  99 |         0 |       0 |       0 |      0/     0     |    6564684
+ 100 |        53 |     146 |       0 |      0/     0     |    6146563
+ 101 |         0 |       0 |       0 |      0/     0     |    6595265
+ 102 |         0 |       0 |       0 |      0/     0     |    6592689
+ 103 |         0 |       0 |       0 |      0/     0     |    6447219
+ 104 |         0 |       0 |       0 |      0/     0     |    6571743
+ 105 |         0 |       0 |       0 |      0/     0     |    6546093
+ 106 |         0 |       0 |       0 |      0/     0     |    6593597
+ 107 |         0 |       0 |       0 |      0/     0     |    6766352
+ 108 |         0 |       0 |       0 |      0/     0     |    6374272
+ 109 |         0 |       0 |       0 |      0/     0     |    6609495
+ 110 |         0 |       0 |       0 |      0/     0     |    6494100
+ 111 |         0 |       0 |       0 |      0/     0     |    6444503
+ 112 |         0 |       0 |       0 |      0/     0     |    6785988
+ 113 |         0 |       0 |       0 |      0/     0     |    6444053
+ 114 |         0 |       0 |       0 |      0/     0     |    6512348
+ 115 |         0 |       0 |       0 |      0/     0     |    6659975
+ 116 |         0 |       0 |       0 |      0/     0     |    6509229
+ 117 |         0 |       0 |       0 |      0/     0     |    6589643
+ 118 |         0 |       0 |       0 |      0/     0     |    6539923
+ 119 |         0 |       0 |       0 |      0/     0     |    6640396
+ 120 |         0 |       0 |       0 |      0/     0     |    6581694
+ 121 |         0 |       0 |       0 |      0/     0     |    6458321
+ 122 |         0 |       0 |       0 |      0/     0     |    6704884
+ 123 |        52 |      83 |       0 |      0/     0     |    6257670
+ 124 |         0 |       0 |       0 |      0/     0     |    6465078
+ 125 |        57 |    3130 |       0 |      0/     0     |    2462149
+ 126 |         0 |       0 |       0 |      0/     0     |    6556449
+ 127 |         0 |       0 |       0 |      0/     0     |    6539257
+
+Per-core prefetch statistics:
+Core | PF Nodes | PF Edges | PF Cycles | Edge Overflow
+-----|----------|----------|-----------|-------------
+   0 |        0 |        0 |         0 |            0
+   1 |        0 |        0 |         0 |            0
+   2 |        0 |        0 |         0 |            0
+   3 |        0 |        0 |         0 |            0
+   4 |        0 |        0 |         0 |            0
+   5 |        0 |        0 |         0 |            0
+   6 |        0 |        0 |         0 |            0
+   7 |        0 |        0 |         0 |            0
+
+Summary:
+  Total nodes processed:  892
+  Total edges traversed:  21090
+  Total steal attempts:   1
+  Successful steals:      0 (0%)
+  Total steal items:      0
+  Idle wait cycles:       809344606
+
+Prefetch Summary:
+  Nodes prefetched:       0
+  Edges prefetched:       0
+  Prefetch cycles:        0
+  L1SP hits:              21090
+  DRAM fallback:          0
+  Hit rate:               100%
+  Edge overflows:         0
+
+========== L1SP UTILIZATION ==========
+L1SP per-core:        262144 bytes
+L1SP global:          2097152 bytes (8 cores)
+L1SP layout per hart (16384 bytes/hart):
+  Hart 0: tokens=16B, prefetch buf=11968 B (2992 edges), stack=4096 B
+  Hart N: prefetch buf=12032 B (3008 edges), stack=4096 B
+  Total prefetch L1SP per core: 192448 / 262144 bytes (73%)
+======================================
+
+Cycles elapsed:        7852632
+Cycles per node:       8803
+Cycles per edge:       372
+
+PREFETCH_STATS: nodes=0 edges=0 hits=21090 misses=0 hitrate=100 cycles=0 overflow=0
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cc8 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003cc8 dest_abs=0x8000000000003cc8
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x40803380 size=92576
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 92576 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x40803380 dest_abs=0xc000000000803380
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (92576 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 11.8706 ms

@@ -1,0 +1,95 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=1024 E=21090 source=377 (max_deg=463)
+
+=========================================================
+  BFS with Perfect Work Stealing — L1SP/L2SP Utilization
+=========================================================
+Graph: N=1024 E=21090 (RMAT power-law, highest imbalance)
+Source: vertex 377 (highest-degree hub)
+Hardware: 4 cores x 16 harts = 64 total harts
+
+Memory Layout:
+  L1SP: per-hart stack (16384 B each) + data overflow (11248 B/core, 4 cores)
+  L2SP: shared work queue, frontier buffers, visited[], barriers
+  DRAM: CSR graph (row_ptr, col_idx), overflow arrays
+  Allocation: L2SP → L1SP (distributed) → DRAM
+=========================================================
+
+Level 0: frontier=1, discovered=1
+Level 1: frontier=463, discovered=464
+Level 2: frontier=423, discovered=887
+Level 3: frontier=5, discovered=892
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 892 / 1024
+Cycles elapsed:   1460476
+Cycles per node:  1637
+
+========== L2SP UTILIZATION ==========
+L2SP total:           1048576 bytes
+L2SP used (total):    58944 bytes (5.6%)
+  Static globals:     30272 bytes
+    - WorkQueues:     96 bytes (4 cores)
+    - Barrier state:  528 bytes
+    - core_has_work:  16 bytes
+    - Per-core stats: 160 bytes
+  Dynamic allocs:
+    - visited[]:      8192 bytes (1024/1024 vertices in L2SP)
+    - dist_arr[]:     4096 bytes (1024/1024 vertices in L2SP)
+    - Frontier bufs:  16384 bytes (1024/1024 vertices in L2SP)
+L2SP free:            989632 bytes
+
+L1SP data tier:       0 bytes across 4 cores (11248 bytes/core usable)
+    (no L1SP overflow needed — all data fits in L2SP)
+======================================
+
+========== L1SP UTILIZATION ==========
+L1SP per-core:        262144 bytes
+L1SP global:          1048576 bytes (4 cores)
+L1SP contents per core:
+  [0x000] Thief token: 8 bytes (work-stealing coordination)
+  [0x010-0x2c00] Data region: 11248 bytes usable, 0 used
+  [stack] Per-hart stacks: 16 harts x 16384 bytes = 262144 bytes
+  Stack guard: 5120 bytes (protects data from stack growth)
+
+Per-hart peak stack usage:
+  Core 0: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+  Core 1: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+  Core 2: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+  Core 3: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+======================================
+
+========== WORK BALANCE (per-core) ==========
+Core | Nodes Processed | Edges Traversed | Stolen Nodes | Steal OK/Attempts
+-----|-----------------|-----------------|--------------|------------------
+   0 |             205 |            4646 |            0 | 0/0
+   1 |             256 |            5191 |            0 | 0/0
+   2 |             216 |            5480 |            0 | 0/0
+   3 |             215 |            5773 |            0 | 0/0
+
+Summary:
+  Total nodes processed: 892
+  Total edges traversed: 21090
+  Total stolen nodes:    0
+  Average per core:      223 nodes
+  Min/Max per core:      205 / 256
+  Imbalance (max-min)/max: 19%
+=============================================
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003ce0 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003ce0 dest_abs=0x8000000000003ce0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x40803720 size=92576
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 92576 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x40803720 dest_abs=0xc000000000803720
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (92576 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 3.14384 ms

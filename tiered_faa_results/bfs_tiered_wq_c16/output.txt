@@ -1,0 +1,370 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=4096 E=97008 D=23 source=0 max_deg=1341 (420824 bytes)
+=== BFS with Tiered Work Queues (L1SP + L2SP) ===
+Graph: N=4096 E=97008 (RMAT CSR from rmat.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP buffers with balanced repartition (capacity=4096 vertices, l2sp_vertices=4096)
+Hardware: 16 cores x 16 harts = 256 total harts
+  Fetcher harts: 16 (hart 0 per core)
+  Compute harts: 240 (harts 1..15 per core)
+Source: node 0 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=4194304 bytes
+Tiered queue: L1SP (fetcher batch=128, low_wm=32, high_wm=1024) -> L2SP -> steal
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 C1:0 C2:0 C3:0 C4:0 C5:0 C6:0 C7:0 C8:0 C9:0 C10:0 C11:0 C12:0 C13:0 C14:0 C15:0 
+Level 1: total_work=1341, discovered=1342
+  Distribution: C0:84 C1:84 C2:84 C3:84 C4:84 C5:84 C6:84 C7:84 C8:84 C9:84 C10:84 C11:84 C12:84 C13:83 C14:83 C15:83 
+Level 2: total_work=1965, discovered=3307
+  Distribution: C0:123 C1:123 C2:123 C3:123 C4:123 C5:123 C6:123 C7:123 C8:123 C9:123 C10:123 C11:123 C12:123 C13:122 C14:122 C15:122 
+Level 3: total_work=41, discovered=3348
+  Distribution: C0:3 C1:3 C2:3 C3:3 C4:3 C5:3 C6:3 C7:3 C8:3 C9:2 C10:2 C11:2 C12:2 C13:2 C14:2 C15:2 
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 3348 / 4096
+dist[source=0] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Role     | Processed | L1 Pops | L2 Pops | Stolen | Steal Att | Steal OK | Idle Cyc
+-----|----------|-----------|---------|---------|--------|-----------|----------|----------
+   0 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+   1 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8833420
+   2 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8838343
+   3 | compute  |        65 |      65 |       0 |      0 |         0 |        0 |  1803555
+   4 | compute  |         9 |       9 |       0 |      0 |         0 |        0 |  8824504
+   5 | compute  |        59 |      59 |       0 |      0 |         0 |        0 |  8047485
+   6 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8838443
+   7 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8834977
+   8 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8809714
+   9 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8795739
+  10 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8823783
+  11 | compute  |        64 |      64 |       0 |      0 |         0 |        0 |  7724725
+  12 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8836546
+  13 | compute  |        20 |      20 |       0 |      0 |         0 |        0 |  7273885
+  14 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8834679
+  15 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8862367
+  16 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  17 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8885091
+  18 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828734
+  19 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829846
+  20 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  8694202
+  21 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8841344
+  22 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8856334
+  23 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8868846
+  24 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  7947628
+  25 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8831583
+  26 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6306983
+  27 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8171492
+  28 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828116
+  29 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8854251
+  30 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8815754
+  31 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8847633
+  32 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  33 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  4232894
+  34 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7240981
+  35 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8837648
+  36 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8809146
+  37 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8855488
+  38 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8835797
+  39 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8862721
+  40 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8849665
+  41 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8811944
+  42 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8857519
+  43 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8848261
+  44 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8821395
+  45 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8274995
+  46 | compute  |         3 |       0 |       3 |      0 |         0 |        0 |  8843037
+  47 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8862975
+  48 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  49 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8841630
+  50 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8857035
+  51 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7673831
+  52 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828909
+  53 | compute  |       123 |       0 |     123 |      0 |         0 |        0 |  5751385
+  54 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8842464
+  55 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8844639
+  56 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8843595
+  57 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8322398
+  58 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8827440
+  59 | compute  |         3 |       0 |       3 |      0 |         0 |        0 |  8852113
+  60 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8804254
+  61 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8843062
+  62 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829614
+  63 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829867
+  64 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  65 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8840630
+  66 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5937572
+  67 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8841630
+  68 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7439074
+  69 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8827218
+  70 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8851632
+  71 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8857377
+  72 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8840540
+  73 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8850002
+  74 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8852052
+  75 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8343376
+  76 | compute  |         3 |       0 |       3 |      0 |         0 |        0 |  8849225
+  77 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8840546
+  78 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8826339
+  79 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8346420
+  80 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  81 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8871476
+  82 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8234779
+  83 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7687327
+  84 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8851460
+  85 | compute  |         3 |       0 |       3 |      0 |         0 |        0 |  8826151
+  86 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8801952
+  87 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8800795
+  88 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6077057
+  89 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8389001
+  90 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8826956
+  91 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8842109
+  92 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8818039
+  93 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8867669
+  94 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8810156
+  95 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8790131
+  96 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  97 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8826213
+  98 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8870700
+  99 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8416579
+ 100 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8907307
+ 101 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8840508
+ 102 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8798414
+ 103 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8839677
+ 104 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5937812
+ 105 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7236504
+ 106 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8884663
+ 107 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8841196
+ 108 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8429482
+ 109 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8866259
+ 110 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8855948
+ 111 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8823217
+ 112 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 113 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8432866
+ 114 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8854741
+ 115 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8836720
+ 116 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8856125
+ 117 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828569
+ 118 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8785354
+ 119 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8810307
+ 120 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8782806
+ 121 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7260374
+ 122 | compute  |        67 |       0 |      67 |      0 |         0 |        0 |  6294607
+ 123 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8839248
+ 124 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8838239
+ 125 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8811811
+ 126 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8496490
+ 127 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8812991
+ 128 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 129 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8830650
+ 130 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8816862
+ 131 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7867652
+ 132 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8830001
+ 133 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8816280
+ 134 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6407110
+ 135 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8834009
+ 136 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8472647
+ 137 | compute  |         3 |       0 |       3 |      0 |         0 |        0 |  8833335
+ 138 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8812258
+ 139 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8813422
+ 140 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8498230
+ 141 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8847208
+ 142 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8842377
+ 143 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8815307
+ 144 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 145 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8827232
+ 146 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8823789
+ 147 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8814609
+ 148 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8825044
+ 149 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5733812
+ 150 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8517234
+ 151 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8804666
+ 152 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8810999
+ 153 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8809903
+ 154 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8823715
+ 155 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8835622
+ 156 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8834827
+ 157 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  6613183
+ 158 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8505030
+ 159 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8837326
+ 160 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 161 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8881749
+ 162 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8826402
+ 163 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8498650
+ 164 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8826603
+ 165 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8814452
+ 166 | compute  |        79 |       0 |      79 |      0 |         0 |        0 |  6892603
+ 167 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8843509
+ 168 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8814141
+ 169 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829987
+ 170 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6936000
+ 171 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8842468
+ 172 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829057
+ 173 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8847338
+ 174 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8841414
+ 175 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8846067
+ 176 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 177 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8857077
+ 178 | compute  |       123 |       0 |     123 |      0 |         0 |        0 |  6247610
+ 179 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8885138
+ 180 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8843931
+ 181 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8861507
+ 182 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  7291486
+ 183 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8818840
+ 184 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8831539
+ 185 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8843940
+ 186 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8882501
+ 187 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829327
+ 188 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8569724
+ 189 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8872577
+ 190 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8872034
+ 191 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8854879
+ 192 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 193 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8600250
+ 194 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6326306
+ 195 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8865476
+ 196 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8870767
+ 197 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8831055
+ 198 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8833186
+ 199 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829391
+ 200 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8834289
+ 201 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8855365
+ 202 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8830877
+ 203 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8832284
+ 204 | compute  |        59 |       0 |      59 |      0 |         0 |        0 |  8695605
+ 205 | compute  |        20 |       0 |      20 |      0 |         0 |        0 |  8696261
+ 206 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8833683
+ 207 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8809604
+ 208 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 209 | compute  |        58 |       0 |      58 |      0 |         0 |        0 |  8634081
+ 210 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8830852
+ 211 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828906
+ 212 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5403753
+ 213 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8608495
+ 214 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8832511
+ 215 | compute  |        19 |       0 |      19 |      0 |         0 |        0 |  8720458
+ 216 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8845027
+ 217 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8864025
+ 218 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8818371
+ 219 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8855746
+ 220 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8829109
+ 221 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8799175
+ 222 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8842015
+ 223 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828137
+ 224 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 225 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8841855
+ 226 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8855443
+ 227 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8816979
+ 228 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828010
+ 229 | compute  |       122 |       0 |     122 |      0 |         0 |        0 |  5222683
+ 230 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8827854
+ 231 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8855250
+ 232 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8824415
+ 233 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8786717
+ 234 | compute  |        19 |       0 |      19 |      0 |         0 |        0 |  7752774
+ 235 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8857377
+ 236 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8845212
+ 237 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8594784
+ 238 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8887904
+ 239 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8814748
+ 240 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 241 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828984
+ 242 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828062
+ 243 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8823404
+ 244 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8838594
+ 245 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8664438
+ 246 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8807308
+ 247 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8802053
+ 248 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6159857
+ 249 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8817856
+ 250 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8828404
+ 251 | compute  |        58 |       0 |      58 |      0 |         0 |        0 |  8696747
+ 252 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8832554
+ 253 | compute  |         2 |       0 |       2 |      0 |         0 |        0 |  8844569
+ 254 | compute  |        19 |       0 |      19 |      0 |         0 |        0 |  8692265
+ 255 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8830045
+
+Per-core fetcher statistics:
+Core | Fetch Ops | Items Fetched | Idle Cycles
+-----|-----------|---------------|------------
+   0 |         6 |           217 |    4399066
+   1 |         0 |             0 |    4415856
+   2 |         0 |             0 |    4401287
+   3 |         0 |             0 |    4434373
+   4 |         0 |             0 |    4377860
+   5 |         0 |             0 |    4371511
+   6 |         0 |             0 |    4391303
+   7 |         0 |             0 |    4406116
+   8 |         0 |             0 |    4387989
+   9 |         0 |             0 |    4384829
+  10 |         0 |             0 |    4428028
+  11 |         0 |             0 |    4401119
+  12 |         0 |             0 |    4346772
+  13 |         0 |             0 |    4375198
+  14 |         0 |             0 |    4388533
+  15 |         0 |             0 |    4365475
+
+Summary:
+  Total nodes processed: 3348
+  Total edges traversed: 97006
+  From L1SP queue:       217
+  From L2SP queue:       3131
+  From stealing:         0
+  L1 hit rate:           6%
+  Steal attempts:        0
+  Steal success:         0
+  Fetcher ops total:     6
+  Fetcher items total:   217
+  Compute idle cycles:   2040260216
+  Fetcher idle cycles:   70275315
+Cycles elapsed:        13574304
+Cycles per node:       4054
+Cycles per edge:       139
+TIERED_STATS: l1_pops=217 l2_pops=3131 stolen=0 fetch_ops=6 fetch_items=217
+WQTRACE_DUMP_BEGIN,bench=run_tiered_wq,cores=16,samples=14,dropped=0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=0,phase=init,level=0,depths=1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=1,phase=level_begin,level=0,depths=1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=2,phase=post_process,level=0,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=3,phase=post_redistribute,level=0,depths=84|84|84|84|84|84|84|84|84|84|84|84|84|83|83|83
+WQTRACE,bench=run_tiered_wq,cores=16,sample=4,phase=level_begin,level=1,depths=84|84|84|84|84|84|84|84|84|84|84|84|84|83|83|83
+WQTRACE,bench=run_tiered_wq,cores=16,sample=5,phase=post_process,level=1,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=6,phase=post_redistribute,level=1,depths=123|123|123|123|123|123|123|123|123|123|123|123|123|122|122|122
+WQTRACE,bench=run_tiered_wq,cores=16,sample=7,phase=level_begin,level=2,depths=123|123|123|123|123|123|123|123|123|123|123|123|123|122|122|122
+WQTRACE,bench=run_tiered_wq,cores=16,sample=8,phase=post_process,level=2,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=9,phase=post_redistribute,level=2,depths=3|3|3|3|3|3|3|3|3|2|2|2|2|2|2|2
+WQTRACE,bench=run_tiered_wq,cores=16,sample=10,phase=level_begin,level=3,depths=3|3|3|3|3|3|3|3|3|2|2|2|2|2|2|2
+WQTRACE,bench=run_tiered_wq,cores=16,sample=11,phase=post_process,level=3,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=12,phase=post_redistribute,level=3,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq,cores=16,sample=13,phase=final,level=4,depths=0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+WQTRACE_DUMP_END,bench=run_tiered_wq
+WQTRACE_FILE_WRITTEN,bench=run_tiered_wq,path=run_tiered_wq_16cores.log
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cb8 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003cb8 dest_abs=0x8000000000003cb8
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x41043590 size=420824
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 420824 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x41043590 dest_abs=0xc000000001043590
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (420824 bytes) to backing store
+Simulation is complete, simulated time: 37.8786 ms

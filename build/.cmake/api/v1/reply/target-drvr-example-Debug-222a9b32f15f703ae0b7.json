@@ -1,0 +1,72 @@
+{
+	"abstract" : true,
+	"artifacts" : 
+	[
+		{
+			"path" : "rv64/cmake-drvr-example/drvr-example"
+		}
+	],
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"drvr_add_executable",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"cmake/DRVInclude.cmake",
+			"cmake-drvr-example/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 370,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 371,
+				"parent" : 1
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "drvr-example::@4d5b82b65fb1b1eadf10",
+	"imported" : true,
+	"local" : true,
+	"name" : "drvr-example",
+	"nameOnDisk" : "drvr-example",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "rv64::@6890427a1f51a3e7e1df"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "cmake-drvr-example",
+		"source" : "cmake-drvr-example"
+	},
+	"sources" : [],
+	"type" : "EXECUTABLE"
+}

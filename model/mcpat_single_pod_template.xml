@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component id="root" name="root">
+  <!--
+    McPAT pod-level template for the DRV single-pod design.
+
+    Mapping used here:
+    - One pod is modeled as one McPAT "system".
+    - Each DRV core is one McPAT core.
+    - Per-core L1SP is modeled as a private SRAM-like L1 data store.
+    - Pod L2SP banks are modeled as banked shared L2 SRAMs.
+    - The pod NoC is modeled as an on-chip interconnect.
+    - PXN DRAM ports are modeled as memory controllers attached to the pod.
+
+    Values derived from this repo's defaults:
+    - Core clock: 1 GHz from model/compute.py system params.
+    - Core L1SP size: 256 KiB default in model/memory.py (128 KiB in model/hammerblade.py mesh flow).
+    - Pod L2SP size: 1 MiB default in model/pod.py.
+    - Pod L2SP banks: 1 default in model/pod.py.
+    - Pod router: single-router pod NoC in model/pod.py.
+
+    Filled here with the current drvr simulator defaults from:
+    - model/cmdline.py
+    - model/pandohammer.py
+    - model/pod.py
+    - model/memory.py
+
+    Important:
+    - The simulator defines system structure, not full McPAT core microarchitecture.
+    - For core widths/buffers/BTB/icache and dynamic stats, this file uses a minimal
+      1-wide in-order placeholder model with zeroed activity counters.
+    - Update those if you want a calibrated power result rather than a structural stub.
+  -->
+  <component id="system" name="system">
+    <param name="number_of_cores" value="64"/>
+    <param name="number_of_L2s" value="1"/>
+    <param name="number_of_L3s" value="0"/>
+    <param name="number_of_NoCs" value="1"/>
+    <param name="number_of_memories" value="1"/>
+    <param name="homogeneous_cores" value="1"/>
+    <param name="homogeneous_L2s" value="1"/>
+    <param name="homogeneous_NoCs" value="1"/>
+    <param name="core_tech_node" value="22"/>
+    <param name="target_core_clockrate" value="1000"/>
+    <param name="temperature" value="360"/>
+    <param name="machine_bits" value="64"/>
+    <param name="virtual_address_width" value="48"/>
+    <param name="physical_address_width" value="64"/>
+    <param name="virtual_memory_page_size" value="4096"/>
+
+    <stat name="total_cycles" value="0"/>
+    <stat name="busy_cycles" value="0"/>
+    <stat name="idle_cycles" value="0"/>
+
+    <component id="system.noc0" name="noc0">
+      <param name="clockrate" value="1000"/>
+      <param name="type" value="0"/>
+      <param name="horizontal_nodes" value="1"/>
+      <param name="vertical_nodes" value="1"/>
+      <param name="has_global_link" value="0"/>
+      <param name="link_throughput" value="24"/>
+      <param name="link_latency" value="1"/>
+      <param name="input_ports" value="3"/>
+      <param name="output_ports" value="3"/>
+      <param name="virtual_channel_per_port" value="1"/>
+      <param name="input_buffer_entries_per_vc" value="128"/>
+      <param name="flit_bits" value="64"/>
+      <param name="chip_coverage" value="1"/>
+
+      <stat name="total_accesses" value="0"/>
+      <stat name="duty_cycle" value="0"/>
+    </component>
+
+    <component id="system.core0" name="core0">
+      <param name="clock_rate" value="1000"/>
+      <param name="x86" value="0"/>
+      <param name="fetch_width" value="1"/>
+      <param name="decode_width" value="1"/>
+      <param name="issue_width" value="1"/>
+      <param name="peak_issue_width" value="1"/>
+      <param name="commit_width" value="1"/>
+      <param name="fp_issue_width" value="1"/>
+      <param name="prediction_width" value="1"/>
+      <param name="pipelines_per_core" value="1,1"/>
+      <param name="pipeline_depth" value="5,5"/>
+      <param name="ALU_per_core" value="1"/>
+      <param name="MUL_per_core" value="1"/>
+      <param name="FPU_per_core" value="1"/>
+      <param name="instruction_buffer_size" value="8"/>
+      <param name="decoded_stream_buffer_size" value="0"/>
+      <param name="instruction_window_size" value="8"/>
+      <param name="fp_instruction_window_size" value="8"/>
+      <param name="ROB_size" value="16"/>
+      <param name="archi_Regs_IRF_size" value="32"/>
+      <param name="archi_Regs_FRF_size" value="32"/>
+      <param name="phy_Regs_IRF_size" value="64"/>
+      <param name="phy_Regs_FRF_size" value="64"/>
+      <param name="rename_scheme" value="0"/>
+      <param name="register_windows_size" value="0"/>
+      <param name="LSU_order" value="inorder"/>
+      <param name="load_buffer_size" value="8"/>
+      <param name="store_buffer_size" value="8"/>
+      <param name="memory_ports" value="1"/>
+      <param name="RAS_size" value="8"/>
+      <param name="number_hardware_threads" value="16"/>
+
+      <stat name="total_instructions" value="0"/>
+      <stat name="int_instructions" value="0"/>
+      <stat name="fp_instructions" value="0"/>
+      <stat name="branch_instructions" value="0"/>
+      <stat name="branch_mispredictions" value="0"/>
+      <stat name="load_instructions" value="0"/>
+      <stat name="store_instructions" value="0"/>
+      <stat name="committed_instructions" value="0"/>
+      <stat name="committed_int_instructions" value="0"/>
+      <stat name="committed_fp_instructions" value="0"/>
+      <stat name="pipeline_duty_cycle" value="0"/>
+      <stat name="total_cycles" value="0"/>
+      <stat name="busy_cycles" value="0"/>
+      <stat name="idle_cycles" value="0"/>
+
+      <component id="system.core0.icache" name="icache">
+        <param name="icache_config" value="16384,64,1,1,1,1,1"/>
+        <param name="buffer_sizes" value="4,4,4,4"/>
+        <param name="clockrate" value="1000"/>
+
+        <stat name="read_accesses" value="0"/>
+        <stat name="read_misses" value="0"/>
+        <stat name="conflicts" value="0"/>
+      </component>
+
+      <component id="system.core0.dcache" name="dcache">
+        <!--
+          Private per-core L1SP modeled as an L1 SRAM-backed data store.
+          Use direct-mapped or low-assoc here to reflect scratch behavior.
+        -->
+        <param name="dcache_config" value="262144,16,1,1,1,1,1"/>
+        <param name="buffer_sizes" value="4,4,4,4"/>
+        <param name="clockrate" value="1000"/>
+
+        <stat name="read_accesses" value="0"/>
+        <stat name="write_accesses" value="0"/>
+        <stat name="read_misses" value="0"/>
+        <stat name="write_misses" value="0"/>
+        <stat name="conflicts" value="0"/>
+      </component>
+
+      <component id="system.core0.BTB" name="BTB">
+        <param name="BTB_config" value="512,4,2,1,1"/>
+        <param name="clockrate" value="1000"/>
+        <stat name="read_accesses" value="0"/>
+        <stat name="write_accesses" value="0"/>
+      </component>
+    </component>
+
+    <component id="system.L20" name="L20">
+      <!--
+        Shared pod L2SP bank 0 modeled as a banked shared SRAM.
+        Duplicate this block or rely on homogeneous_L2s with number_of_L2s > 1.
+      -->
+      <param name="L2_config" value="1048576,16,1,1,1,1,1"/>
+      <param name="clockrate" value="1000"/>
+      <param name="buffer_sizes" value="8,8,8,8"/>
+
+      <stat name="read_accesses" value="0"/>
+      <stat name="write_accesses" value="0"/>
+      <stat name="read_misses" value="0"/>
+      <stat name="write_misses" value="0"/>
+      <stat name="conflicts" value="0"/>
+      <stat name="duty_cycle" value="0"/>
+    </component>
+
+    <component id="system.mc0" name="mc0">
+      <param name="mc_clock" value="1000"/>
+      <param name="memory_channels_per_mc" value="1"/>
+      <param name="peak_transfer_rate" value="1000"/>
+      <param name="block_size" value="64"/>
+      <param name="number_ranks" value="1"/>
+      <param name="withPHY" value="1"/>
+
+      <stat name="memory_accesses" value="0"/>
+      <stat name="memory_reads" value="0"/>
+      <stat name="memory_writes" value="0"/>
+    </component>
+  </component>
+</component>

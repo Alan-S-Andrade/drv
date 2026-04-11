@@ -1,0 +1,491 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"drvr/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 607,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "drvr-run-addressmap::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-add::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-amoswap::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-test_posted_atomic::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-atomic_bw_blocking::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-atomic_bw_posted::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-cycle::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-exit::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fence::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fib::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-float_lsu::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fma::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fma-multith::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fread::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fscanf::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fstat::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-gups::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-lsu::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-malloc::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-leiden_single::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-attn_fixed::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-dense_gemm::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multi_sw::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-stream_bw_l2sp::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-shared_read_l2sp::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multi_sw_l2sp::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_csr_weak::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_csr_weak_multi::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multi_sw_barrier::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multihart::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-work_stealing::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-work_queue_depth_trace::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-work_stealing_batch::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_work_stealing::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_nosteal_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_work_stealing_adaptive::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_work_stealing_l1sp_cache::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_l1sp_cache_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_l1sp_prefetch::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_l1sp_filter::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_imbalanced_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-static_work::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-pagerank_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-pagerank_stealing::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-l2sp_latency_minimal::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs-multith::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-tc::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-tc_larger::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-list_traverse::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-ptr_chase::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-gemm_int_rand::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-gemm_int_deter::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-multihart::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-ph_hello::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-poke::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-printf::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-print_int::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-puts::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-read::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-shift::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-simple::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-snprintf::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-vread::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-write::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-wait-with-sleep::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-wait-without-sleep::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-pagerank_rmat::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_ws_utilization::@c40f4ed94274d31ce79d"
+		}
+	],
+	"id" : "drvr-run-all::@c40f4ed94274d31ce79d",
+	"name" : "drvr-run-all",
+	"orderDependencies" : 
+	[
+		{
+			"id" : "drvr-run-addressmap::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-add::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-amoswap::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-test_posted_atomic::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-atomic_bw_blocking::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-atomic_bw_posted::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-cycle::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-exit::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fence::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fib::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-float_lsu::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fma::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fma-multith::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fread::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fscanf::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-fstat::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-gups::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-lsu::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-malloc::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-leiden_single::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-attn_fixed::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-dense_gemm::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multi_sw::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-stream_bw_l2sp::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-shared_read_l2sp::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multi_sw_l2sp::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_csr_weak::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_csr_weak_multi::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multi_sw_barrier::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_multihart::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-work_stealing::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-work_queue_depth_trace::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-work_stealing_batch::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_work_stealing::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_nosteal_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_work_stealing_adaptive::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_work_stealing_l1sp_cache::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_l1sp_cache_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_l1sp_prefetch::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_l1sp_filter::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_imbalanced_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-static_work::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-pagerank_baseline::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-pagerank_stealing::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-l2sp_latency_minimal::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs-multith::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-tc::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-tc_larger::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-list_traverse::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-ptr_chase::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-gemm_int_rand::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-gemm_int_deter::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-multihart::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-ph_hello::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-poke::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-printf::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-print_int::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-puts::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-read::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-shift::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-simple::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-snprintf::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-vread::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-write::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-wait-with-sleep::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-wait-without-sleep::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-pagerank_rmat::@c40f4ed94274d31ce79d"
+		},
+		{
+			"id" : "drvr-run-bfs_ws_utilization::@c40f4ed94274d31ce79d"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "drvr",
+		"source" : "drvr"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/drvr/CMakeFiles/drvr-run-all",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/drvr/CMakeFiles/drvr-run-all.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

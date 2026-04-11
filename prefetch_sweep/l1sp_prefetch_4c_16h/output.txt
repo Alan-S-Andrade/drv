@@ -1,0 +1,146 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=1024 E=21090 source=377 max_deg=463 (92576 bytes)
+=== BFS with L1SP Graph Prefetch + Work Stealing ===
+Graph: N=1024 E=21090 (RMAT CSR from rmat.bin)
+Hot state: visited in L2SP, dist_arr in L2SP
+Hardware: 4 cores x 16 harts = 64 total harts
+Source: node 377 (highest-degree)
+L1SP: per-core=262144 bytes, global=1048576 bytes
+L1SP stack slot: per-hart=16384 bytes
+Prefetch: per-hart self-prefetch of col_idx into L1SP
+Stealing: adaptive batch/probe sizing
+
+Self-prefetch buffer: hart0=2992 edges, other harts=3008 edges
+Level 0: total_work=1, discovered=1
+Level 1: total_work=463, discovered=464
+Level 2: total_work=423, discovered=887
+Level 3: total_work=5, discovered=892
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 892 / 1024
+dist[source=377] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Processed | PF Hits | PF Miss | Steal OK/Attempts | Idle Cycles
+-----|-----------|---------|---------|-------------------|------------
+   0 |       131 |    4061 |       0 |      0/     0     |          0
+   1 |         0 |       0 |       0 |      0/     0     |    6499364
+   2 |         0 |       0 |       0 |      0/     0     |    6554053
+   3 |         0 |       0 |       0 |      0/     0     |    6457877
+   4 |         0 |       0 |       0 |      0/     0     |    6473806
+   5 |         0 |       0 |       0 |      0/     0     |    6506835
+   6 |         0 |       0 |       0 |      0/     0     |    6506884
+   7 |         0 |       0 |       0 |      0/     0     |    6453557
+   8 |        42 |     363 |       0 |      0/     0     |    6021220
+   9 |         0 |       0 |       0 |      0/     0     |    6492139
+  10 |         0 |       0 |       0 |      0/     0     |    6502239
+  11 |         0 |       0 |       0 |      0/     0     |    6564859
+  12 |         0 |       0 |       0 |      0/     0     |    6507290
+  13 |         0 |       0 |       0 |      0/     0     |    6529359
+  14 |        52 |    1940 |       0 |      0/     0     |    3817658
+  15 |         0 |       0 |       0 |      0/     0     |    6510173
+  16 |         0 |       0 |       0 |      0/     0     |    6492374
+  17 |        64 |     411 |       0 |      0/     0     |    5823151
+  18 |         0 |       0 |       0 |      0/     0     |    6556011
+  19 |         0 |       0 |       0 |      0/     0     |    6436668
+  20 |         0 |       0 |       0 |      0/     0     |    6481529
+  21 |         0 |       0 |       0 |      0/     0     |    6375904
+  22 |         1 |       1 |       0 |      0/     0     |    6414622
+  23 |        64 |    2800 |       0 |      0/     0     |    2828444
+  24 |        42 |     242 |       0 |      0/     0     |    6151033
+  25 |         0 |       0 |       0 |      0/     0     |    6562266
+  26 |         0 |       0 |       0 |      0/     0     |    6539731
+  27 |         0 |       0 |       0 |      0/     0     |    6481867
+  28 |         0 |       0 |       0 |      0/     0     |    6540373
+  29 |        52 |    1844 |       0 |      0/     0     |    4047936
+  30 |         0 |       0 |       0 |      0/     0     |    6583578
+  31 |         0 |       0 |       0 |      0/     0     |    6590537
+  32 |         0 |       0 |       0 |      0/     0     |    6619419
+  33 |         0 |       0 |       0 |      0/     0     |    6517131
+  34 |         0 |       0 |       0 |      0/     0     |    6482563
+  35 |         0 |       0 |       0 |      0/     0     |    6387213
+  36 |         0 |       0 |       0 |      0/     0     |    6518017
+  37 |         0 |       0 |       0 |      0/     0     |    6465430
+  38 |         0 |       0 |       0 |      0/     0     |    6513039
+  39 |         0 |       0 |       0 |      0/     0     |    6510204
+  40 |         0 |       0 |       0 |      0/     0     |    6525158
+  41 |        52 |    1918 |       0 |      0/     0     |    3924785
+  42 |        65 |     295 |       0 |      0/     0     |    5956608
+  43 |         0 |       0 |       0 |      0/     0     |    6567262
+  44 |         0 |       0 |       0 |      0/     0     |    6479060
+  45 |         0 |       0 |       0 |      0/     0     |    6517116
+  46 |        64 |    2170 |       0 |      0/     0     |    3498154
+  47 |        42 |     154 |       0 |      0/     0     |    6311956
+  48 |         0 |       0 |       0 |      0/     0     |    6586252
+  49 |         0 |       0 |       0 |      0/     0     |    6568627
+  50 |        64 |    1986 |       0 |      0/     0     |    3790975
+  51 |         1 |       1 |       0 |      0/     0     |    6514828
+  52 |         0 |       0 |       0 |      0/     0     |    6514941
+  53 |         0 |       0 |       0 |      0/     0     |    6564605
+  54 |         0 |       0 |       0 |      0/     0     |    6494807
+  55 |         0 |       0 |       0 |      0/     0     |    6557891
+  56 |         0 |       0 |       0 |      0/     0     |    6473948
+  57 |         0 |       0 |       0 |      0/     0     |    6516099
+  58 |        51 |    2700 |       0 |      0/     0     |    2926990
+  59 |         0 |       0 |       0 |      0/     0     |    6566904
+  60 |        41 |      57 |       0 |      0/     0     |    6263443
+  61 |         0 |       0 |       0 |      0/     0     |    6526092
+  62 |        64 |     147 |       0 |      0/     0     |    6064593
+  63 |         0 |       0 |       0 |      0/     0     |    6511019
+
+Per-core prefetch statistics:
+Core | PF Nodes | PF Edges | PF Cycles | Edge Overflow
+-----|----------|----------|-----------|-------------
+   0 |        0 |        0 |         0 |            0
+   1 |        0 |        0 |         0 |            0
+   2 |        0 |        0 |         0 |            0
+   3 |        0 |        0 |         0 |            0
+
+Summary:
+  Total nodes processed:  892
+  Total edges traversed:  21090
+  Total steal attempts:   0
+  Total steal items:      0
+  Idle wait cycles:       386538466
+
+Prefetch Summary:
+  Nodes prefetched:       0
+  Edges prefetched:       0
+  Prefetch cycles:        0
+  L1SP hits:              21090
+  DRAM fallback:          0
+  Hit rate:               100%
+  Edge overflows:         0
+
+========== L1SP UTILIZATION ==========
+L1SP per-core:        262144 bytes
+L1SP global:          1048576 bytes (4 cores)
+L1SP layout per hart (16384 bytes/hart):
+  Hart 0: tokens=16B, prefetch buf=11968 B (2992 edges), stack=4096 B
+  Hart N: prefetch buf=12032 B (3008 edges), stack=4096 B
+  Total prefetch L1SP per core: 192448 / 262144 bytes (73%)
+======================================
+
+Cycles elapsed:        7764433
+Cycles per node:       8704
+Cycles per edge:       368
+
+PREFETCH_STATS: nodes=0 edges=0 hits=21090 misses=0 hitrate=100 cycles=0 overflow=0
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cc8 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003cc8 dest_abs=0x8000000000003cc8
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x40803380 size=92576
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 92576 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x40803380 dest_abs=0xc000000000803380
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (92576 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 10.6353 ms

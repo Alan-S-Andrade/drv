@@ -1,0 +1,119 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=4096 E=97008 D=23 source=0 max_deg=1341 (420824 bytes)
+=== BFS Tiered WQ + FAA (L1SP + L2SP) ===
+Graph: N=4096 E=97008 (RMAT CSR from rmat_r16.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP buffers with balanced repartition (capacity=4096 vertices, l2sp_vertices=4096)
+Hardware: 2 cores x 16 harts = 32 total harts
+  Fetcher harts: 2 (hart 0 per core)
+  Compute harts: 30 (harts 1..15 per core)
+Source: node 0 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=524288 bytes
+Queue ops: FAA (fetch-and-add) on L1SP and L2SP heads
+Tiered queue: L1SP (fetcher batch=128, low_wm=32, high_wm=1024) -> L2SP -> steal
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 C1:0 
+Level 1: total_work=1341, discovered=1342
+  Distribution: C0:671 C1:670 
+Level 2: total_work=1965, discovered=3307
+  Distribution: C0:983 C1:982 
+Level 3: total_work=41, discovered=3348
+  Distribution: C0:21 C1:20 
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 3348 / 4096
+dist[source=0] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Role     | Processed | L1 Pops | L2 Pops | Stolen | Steal Att | Steal OK | Idle Cyc
+-----|----------|-----------|---------|---------|--------|-----------|----------|----------
+   0 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+   1 | compute  |       152 |      65 |      87 |      0 |         0 |        0 |   552411
+   2 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  7915068
+   3 | compute  |       128 |      64 |      64 |      0 |         0 |        0 |  5028957
+   4 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5462331
+   5 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5025919
+   6 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  4520104
+   7 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5219265
+   8 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8227546
+   9 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  4340253
+  10 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8014090
+  11 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8171045
+  12 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5834240
+  13 | compute  |       149 |     149 |       0 |      0 |         0 |        0 |  3882903
+  14 | compute  |        95 |       0 |      95 |      0 |         0 |        0 |  6734294
+  15 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6280809
+  16 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  17 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5905534
+  18 | compute  |       148 |       0 |     148 |      0 |         0 |        0 |  4789313
+  19 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5021051
+  20 | compute  |        86 |      64 |      22 |      0 |         0 |        0 |  8276959
+  21 | compute  |        94 |       0 |      94 |      0 |         0 |        0 |  8185796
+  22 | compute  |       128 |      64 |      64 |      0 |         0 |        0 |  5557477
+  23 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5904636
+  24 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6270829
+  25 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6458477
+  26 | compute  |        64 |       0 |      64 |      0 |         1 |        0 |  8244443
+  27 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5022819
+  28 | compute  |        64 |      64 |       0 |      0 |         0 |        0 |  8288766
+  29 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8245435
+  30 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  4842460
+  31 | compute  |       128 |      64 |      64 |      0 |         0 |        0 |  6331499
+
+Per-core fetcher statistics:
+Core | Fetch Ops | Items Fetched | Idle Cycles
+-----|-----------|---------------|------------
+   0 |         4 |           278 |    7583224
+   1 |         2 |           256 |    7502249
+
+Summary:
+  Total nodes processed: 3348
+  Total edges traversed: 97006
+  From L1SP queue:       534
+  From L2SP queue:       2814
+  From stealing:         0
+  L1 hit rate:           15%
+  Steal attempts:        1
+  Steal success:         0
+  Fetcher ops total:     6
+  Fetcher items total:   534
+  Compute idle cycles:   182554729
+  Fetcher idle cycles:   15085473
+Cycles elapsed:        13287014
+Cycles per node:       3968
+Cycles per edge:       136
+TIERED_FAA_STATS: l1_pops=534 l2_pops=2814 stolen=0 fetch_ops=6 fetch_items=534
+WQTRACE_DUMP_BEGIN,bench=run_tiered_wq_faa,cores=2,samples=14,dropped=0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=0,phase=init,level=0,depths=1|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=1,phase=level_begin,level=0,depths=1|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=2,phase=post_process,level=0,depths=0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=3,phase=post_redistribute,level=0,depths=671|670
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=4,phase=level_begin,level=1,depths=671|670
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=5,phase=post_process,level=1,depths=0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=6,phase=post_redistribute,level=1,depths=983|982
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=7,phase=level_begin,level=2,depths=983|982
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=8,phase=post_process,level=2,depths=0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=9,phase=post_redistribute,level=2,depths=21|20
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=10,phase=level_begin,level=3,depths=21|20
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=11,phase=post_process,level=3,depths=0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=12,phase=post_redistribute,level=3,depths=0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=2,sample=13,phase=final,level=4,depths=0|0
+WQTRACE_DUMP_END,bench=run_tiered_wq_faa
+WQTRACE_FILE_WRITTEN,bench=run_tiered_wq_faa,path=run_tiered_wq_faa_2cores.log
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cb8 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003cb8 dest_abs=0x8000000000003cb8
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x410435b0 size=420824
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 420824 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x410435b0 dest_abs=0xc0000000010435b0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (420824 bytes) to backing store
+Simulation is complete, simulated time: 30.4634 ms

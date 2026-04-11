@@ -1,0 +1,15 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+=== Work Queue Depth Trace ===
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 141.928 ms

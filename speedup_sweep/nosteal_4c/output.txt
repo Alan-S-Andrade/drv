@@ -1,0 +1,849 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=32768 E=882976 D=26 source=23875 max_deg=6065 (3794072 bytes)
+=== BFS Matched Baseline (No Stealing) ===
+Graph: N=32768 E=882976 (RMAT CSR from rmat.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP+DRAM buffers with static balanced repartition (capacity=32768 vertices, l2sp_vertices=31438)
+Hardware: 4 cores x 16 harts = 64 total harts
+Source: node 23875 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=1048576 bytes
+L1SP stack slot: per-hart=16384 bytes
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 C1:0 C2:0 C3:0 
+Level 1: total_work=6065, discovered=6066
+  Distribution: C0:1517 C1:1516 C2:1516 C3:1516 
+Level 2: total_work=17471, discovered=23537
+  Distribution: C0:4368 C1:4368 C2:4368 C3:4367 
+Level 3: total_work=687, discovered=24224
+  Distribution: C0:172 C1:172 C2:172 C3:171 
+Level 4: total_work=3, discovered=24227
+  Distribution: C0:1 C1:1 C2:1 C3:0 
+
+=== BFS Complete ===
+Levels traversed: 5
+Nodes discovered: 24227 / 32768
+dist[source=23875] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Processed
+-----|----------
+   0 |       320
+   1 |       448
+   2 |       320
+   3 |       365
+   4 |       320
+   5 |       465
+   6 |       320
+   7 |       449
+   8 |       448
+   9 |       320
+  10 |       320
+  11 |       384
+  12 |       320
+  13 |       320
+  14 |       448
+  15 |       492
+  16 |       384
+  17 |       448
+  18 |       448
+  19 |       384
+  20 |       384
+  21 |       320
+  22 |       320
+  23 |       364
+  24 |       364
+  25 |       384
+  26 |       337
+  27 |       448
+  28 |       320
+  29 |       448
+  30 |       320
+  31 |       384
+  32 |       320
+  33 |       385
+  34 |       384
+  35 |       320
+  36 |       320
+  37 |       384
+  38 |       448
+  39 |       448
+  40 |       448
+  41 |       384
+  42 |       320
+  43 |       320
+  44 |       428
+  45 |       448
+  46 |       364
+  47 |       336
+  48 |       384
+  49 |       379
+  50 |       320
+  51 |       384
+  52 |       363
+  53 |       384
+  54 |       448
+  55 |       384
+  56 |       384
+  57 |       448
+  58 |       320
+  59 |       384
+  60 |       320
+  61 |       320
+  62 |       384
+  63 |       448
+
+Summary:
+  Total nodes processed: 24227
+Cycles elapsed:        54050691
+Cycles per node:       2231
+WQTRACE_DUMP_BEGIN,bench=bfs_work_stealing,cores=4,samples=17,dropped=0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=0,phase=init,level=0,iter=-1,queue=core,depths=1|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=1,phase=level_begin,level=0,iter=-1,queue=core,depths=1|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=2,phase=post_process,level=0,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=3,phase=post_redistribute,level=0,iter=-1,queue=core,depths=1517|1516|1516|1516
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=4,phase=level_begin,level=1,iter=-1,queue=core,depths=1517|1516|1516|1516
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=5,phase=post_process,level=1,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=6,phase=post_redistribute,level=1,iter=-1,queue=core,depths=4368|4368|4368|4367
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=7,phase=level_begin,level=2,iter=-1,queue=core,depths=4368|4368|4368|4367
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=8,phase=post_process,level=2,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=9,phase=post_redistribute,level=2,iter=-1,queue=core,depths=172|172|172|171
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=10,phase=level_begin,level=3,iter=-1,queue=core,depths=172|172|172|171
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=11,phase=post_process,level=3,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=12,phase=post_redistribute,level=3,iter=-1,queue=core,depths=1|1|1|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=13,phase=level_begin,level=4,iter=-1,queue=core,depths=1|1|1|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=14,phase=post_process,level=4,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=15,phase=post_redistribute,level=4,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE,bench=bfs_work_stealing,cores=4,sample=16,phase=final,level=5,iter=-1,queue=core,depths=0|0|0|0
+WQTRACE_DUMP_END,bench=bfs_work_stealing
+L1SPTRACE_DUMP_BEGIN,bench=bfs_work_stealing,cores=4,harts=64,samples=17
+L1SPTRACE_CONFIG,bench=bfs_work_stealing,core_bytes=262144,global_bytes=1048576
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=0,phase=init,level=0,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=0,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=1,phase=level_begin,level=0,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=1,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=2,phase=post_process,level=0,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=2,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=3,phase=post_redistribute,level=0,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=3,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=4,phase=level_begin,level=1,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=4,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=5,phase=post_process,level=1,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=5,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=6,phase=post_redistribute,level=1,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=6,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=7,phase=level_begin,level=2,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=7,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=8,phase=post_process,level=2,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=8,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=9,phase=post_redistribute,level=2,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=9,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=10,phase=level_begin,level=3,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=10,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=11,phase=post_process,level=3,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=11,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=12,phase=post_redistribute,level=3,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=12,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=13,phase=level_begin,level=4,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=13,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=14,phase=post_process,level=4,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=14,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=15,phase=post_redistribute,level=4,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=15,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_GLOBAL,bench=bfs_work_stealing,sample=16,phase=final,level=5,iter=-1,bytes=524288
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=0,hart=0,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=1,hart=1,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=2,hart=2,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=3,hart=3,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=4,hart=4,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=5,hart=5,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=6,hart=6,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=7,hart=7,bytes=16384
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=8,hart=8,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=9,hart=9,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=10,hart=10,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=11,hart=11,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=12,hart=12,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=13,hart=13,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=14,hart=14,bytes=0
+L1SPTRACE_CORE_HART,bench=bfs_work_stealing,sample=16,core=0,thread=15,hart=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=0,core=0,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=1,core=0,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=2,core=0,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=3,core=0,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=4,core=0,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=5,core=0,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=6,core=0,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=7,core=0,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=8,core=0,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=9,core=0,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=10,core=0,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=11,core=0,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=12,core=0,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=13,core=0,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=14,core=0,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=15,core=0,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=16,core=1,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=17,core=1,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=18,core=1,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=19,core=1,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=20,core=1,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=21,core=1,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=22,core=1,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=23,core=1,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=24,core=1,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=25,core=1,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=26,core=1,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=27,core=1,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=28,core=1,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=29,core=1,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=30,core=1,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=31,core=1,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=32,core=2,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=33,core=2,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=34,core=2,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=35,core=2,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=36,core=2,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=37,core=2,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=38,core=2,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=39,core=2,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=40,core=2,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=41,core=2,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=42,core=2,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=43,core=2,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=44,core=2,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=45,core=2,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=46,core=2,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=47,core=2,thread=15,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=48,core=3,thread=0,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=49,core=3,thread=1,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=50,core=3,thread=2,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=51,core=3,thread=3,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=52,core=3,thread=4,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=53,core=3,thread=5,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=54,core=3,thread=6,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=55,core=3,thread=7,bytes=16384
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=56,core=3,thread=8,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=57,core=3,thread=9,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=58,core=3,thread=10,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=59,core=3,thread=11,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=60,core=3,thread=12,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=61,core=3,thread=13,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=62,core=3,thread=14,bytes=0
+L1SPTRACE_HART,bench=bfs_work_stealing,hart=63,core=3,thread=15,bytes=0
+L1SPTRACE_DUMP_END,bench=bfs_work_stealing
+WQSNAP_DUMP_BEGIN,bench=bfs_work_stealing,cores=4,snaps=64,capacity=4096
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=0,level=2,event=pop,actor_core=3,depths=3344|2576|1424|271
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=1,level=2,event=pop,actor_core=3,depths=3344|2576|1424|207
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=2,level=2,event=pop,actor_core=3,depths=3344|2576|1424|207
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=3,level=2,event=pop,actor_core=3,depths=3344|2576|1424|207
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=4,level=2,event=pop,actor_core=3,depths=3344|2576|1424|143
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=5,level=2,event=pop,actor_core=3,depths=3344|2576|1360|143
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=6,level=2,event=pop,actor_core=3,depths=3344|2576|1360|143
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=7,level=2,event=pop,actor_core=3,depths=3344|2576|1360|143
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=8,level=2,event=pop,actor_core=3,depths=3344|2576|1360|143
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=9,level=2,event=pop,actor_core=3,depths=3344|2576|1360|79
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=10,level=2,event=pop,actor_core=3,depths=3344|2576|1360|79
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=11,level=2,event=pop,actor_core=3,depths=3344|2576|1360|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=12,level=2,event=pop,actor_core=3,depths=3344|2512|1360|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=13,level=2,event=pop,actor_core=3,depths=3344|2512|1360|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=14,level=2,event=pop,actor_core=3,depths=3344|2512|1360|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=15,level=2,event=pop,actor_core=3,depths=3344|2512|1360|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=16,level=2,event=pop,actor_core=2,depths=3344|2256|272|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=17,level=2,event=pop,actor_core=2,depths=3344|2256|208|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=18,level=2,event=pop,actor_core=2,depths=3344|2192|144|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=19,level=2,event=pop,actor_core=2,depths=3344|2192|80|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=20,level=2,event=pop,actor_core=2,depths=3344|2192|16|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=21,level=2,event=pop,actor_core=2,depths=3344|2128|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=22,level=2,event=pop,actor_core=2,depths=3344|2128|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=23,level=2,event=pop,actor_core=2,depths=3344|2128|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=24,level=2,event=pop,actor_core=2,depths=3344|2128|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=25,level=2,event=pop,actor_core=2,depths=3344|2064|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=26,level=2,event=pop,actor_core=2,depths=3344|2064|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=27,level=2,event=pop,actor_core=2,depths=3280|2064|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=28,level=2,event=pop,actor_core=2,depths=3280|2064|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=29,level=2,event=pop,actor_core=2,depths=3216|2000|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=30,level=2,event=pop,actor_core=2,depths=3216|1936|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=31,level=2,event=pop,actor_core=2,depths=3216|1936|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=32,level=2,event=pop,actor_core=1,depths=2320|272|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=33,level=2,event=pop,actor_core=1,depths=2320|272|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=34,level=2,event=pop,actor_core=1,depths=2320|144|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=35,level=2,event=pop,actor_core=1,depths=2320|80|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=36,level=2,event=pop,actor_core=1,depths=2320|16|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=37,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=38,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=39,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=40,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=41,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=42,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=43,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=44,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=45,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=46,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=47,level=2,event=pop,actor_core=1,depths=2320|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=48,level=2,event=pop,actor_core=0,depths=272|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=49,level=2,event=pop,actor_core=0,depths=208|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=50,level=2,event=pop,actor_core=0,depths=144|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=51,level=2,event=pop,actor_core=0,depths=80|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=52,level=2,event=pop,actor_core=0,depths=16|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=53,level=2,event=pop,actor_core=0,depths=16|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=54,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=55,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=56,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=57,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=58,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=59,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=60,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=61,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=62,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP,bench=bfs_work_stealing,cores=4,idx=63,level=2,event=pop,actor_core=0,depths=0|0|0|0
+WQSNAP_DUMP_END,bench=bfs_work_stealing
+L1SPSNAP_DUMP_BEGIN,bench=bfs_work_stealing,cores=4,harts_per_core=16,harts=64,snaps=64
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=0,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=0,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=0,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=0,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=1,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=1,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=1,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=1,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=1,level=2,core=3,thread=6,hart=54,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=2,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=2,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=2,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=2,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=2,level=2,core=3,thread=1,hart=49,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=3,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=3,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=3,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=3,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=4,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=4,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=4,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=4,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=5,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=5,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=5,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=5,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=6,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=6,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=6,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=6,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=6,level=2,core=3,thread=7,hart=55,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=7,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=7,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=7,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=7,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=8,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=8,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=8,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=8,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=9,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=9,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=9,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=9,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=9,level=2,core=3,thread=3,hart=51,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=10,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=10,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=10,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=10,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=10,level=2,core=3,thread=2,hart=50,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=11,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=11,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=11,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=11,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=12,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=12,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=12,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=12,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=13,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=13,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=13,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=13,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=13,level=2,core=3,thread=0,hart=48,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=14,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=14,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=14,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=14,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=14,level=2,core=3,thread=4,hart=52,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=15,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=15,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=15,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=15,level=2,core=3,bytes=16384
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=15,level=2,core=3,thread=5,hart=53,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=16,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=16,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=16,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=16,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=16,level=2,core=2,thread=7,hart=39,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=17,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=17,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=17,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=17,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=18,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=18,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=18,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=18,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=19,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=19,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=19,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=19,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=19,level=2,core=2,thread=6,hart=38,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=20,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=20,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=20,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=20,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=21,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=21,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=21,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=21,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=22,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=22,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=22,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=22,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=22,level=2,core=2,thread=1,hart=33,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=23,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=23,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=23,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=23,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=23,level=2,core=2,thread=2,hart=34,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=24,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=24,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=24,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=24,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=25,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=25,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=25,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=25,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=25,level=2,core=2,thread=3,hart=35,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=26,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=26,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=26,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=26,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=26,level=2,core=2,thread=0,hart=32,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=27,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=27,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=27,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=27,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=28,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=28,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=28,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=28,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=29,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=29,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=29,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=29,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=29,level=2,core=2,thread=4,hart=36,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=30,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=30,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=30,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=30,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=31,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=31,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=31,level=2,core=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=31,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=31,level=2,core=2,thread=5,hart=37,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=32,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=32,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=32,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=32,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=32,level=2,core=1,thread=1,hart=17,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=33,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=33,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=33,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=33,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=33,level=2,core=1,thread=2,hart=18,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=34,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=34,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=34,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=34,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=35,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=35,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=35,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=35,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=35,level=2,core=1,thread=3,hart=19,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=36,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=36,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=36,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=36,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=37,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=37,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=37,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=37,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=37,level=2,core=1,thread=6,hart=22,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=38,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=38,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=38,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=38,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=38,level=2,core=1,thread=4,hart=20,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=39,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=39,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=39,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=39,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=39,level=2,core=1,thread=5,hart=21,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=40,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=40,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=40,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=40,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=41,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=41,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=41,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=41,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=42,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=42,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=42,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=42,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=42,level=2,core=1,thread=7,hart=23,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=43,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=43,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=43,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=43,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=44,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=44,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=44,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=44,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=45,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=45,level=2,core=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=45,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=45,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=45,level=2,core=1,thread=0,hart=16,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=46,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=46,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=46,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=46,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=47,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=47,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=47,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=47,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=48,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=48,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=48,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=48,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=48,level=2,core=0,thread=1,hart=1,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=49,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=49,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=49,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=49,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=50,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=50,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=50,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=50,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=51,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=51,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=51,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=51,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=51,level=2,core=0,thread=7,hart=7,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=52,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=52,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=52,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=52,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=52,level=2,core=0,thread=5,hart=5,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=53,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=53,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=53,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=53,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=54,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=54,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=54,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=54,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=55,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=55,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=55,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=55,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=56,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=56,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=56,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=56,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=56,level=2,core=0,thread=2,hart=2,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=57,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=57,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=57,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=57,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=57,level=2,core=0,thread=3,hart=3,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=58,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=58,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=58,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=58,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=59,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=59,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=59,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=59,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=59,level=2,core=0,thread=0,hart=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=60,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=60,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=60,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=60,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=60,level=2,core=0,thread=4,hart=4,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=61,level=2,core=0,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=61,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=61,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=61,level=2,core=3,bytes=0
+L1SPSNAP_HART,bench=bfs_work_stealing,idx=61,level=2,core=0,thread=6,hart=6,bytes=16384
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=62,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=62,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=62,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=62,level=2,core=3,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=63,level=2,core=0,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=63,level=2,core=1,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=63,level=2,core=2,bytes=0
+L1SPSNAP_CORE,bench=bfs_work_stealing,idx=63,level=2,core=3,bytes=0
+L1SPSNAP_DUMP_END,bench=bfs_work_stealing
+WQTRACE_FILE_WRITTEN,bench=bfs_work_stealing,path=run_4cores.log
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003d20 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 80 00 00 20 79 0d 00 1a 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003d20 dest_abs=0x8000000000003d20
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x425934a0 size=3794072
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 3794072 bytes from file. Header bytes: 00 80 00 00 20 79 0d 00 1a 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x425934a0 dest_abs=0xc0000000025934a0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (3794072 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 116.598 ms

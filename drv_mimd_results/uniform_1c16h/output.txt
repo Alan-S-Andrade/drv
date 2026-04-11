@@ -1,0 +1,25 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=65536 E=2097152 D=32 source=0 max_deg=32 (8912920 bytes)
+=== BFS with Work Stealing (FIFO + global remaining) ===
+Graph: N=65536 E=2097152 (RMAT CSR from rmat.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP+DRAM buffers preserving producer-core ownership (capacity=65536 vertices, l2sp_vertices=10958)
+Hardware: 1 cores x 16 harts = 16 total harts
+Source: node 0 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=262144 bytes
+L1SP stack slot: per-hart=16384 bytes
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 
+Level 1: total_work=32, discovered=33
+  Distribution: C0:32 
+Level 2: total_work=1013, discovered=1046
+  Distribution: C0:1013 
+Level 3: total_work=25080, discovered=26126
+  Distribution: C0:25080 
+Level 4: total_work=39410, discovered=65536
+  Distribution: C0:39410 

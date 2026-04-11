@@ -1,0 +1,338 @@
+[
+{
+  "directory": "/users/alanandr/drv/build/interpreter",
+  "command": "/usr/bin/c++ -Driscvinterpreter_EXPORTS -I/users/alanandr/drv/interpreter -g -fPIC -std=c++17 -o CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o -c /users/alanandr/drv/interpreter/interpreter.cpp",
+  "file": "/users/alanandr/drv/interpreter/interpreter.cpp",
+  "output": "interpreter/CMakeFiles/riscvinterpreter.dir/interpreter.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o -c /users/alanandr/drv/api/DrvAPIAddressToNative.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIAddressToNative.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIAddressToNative.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o -c /users/alanandr/drv/api/DrvAPIAddressMap.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIAddressMap.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIAddressMap.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o -c /users/alanandr/drv/api/DrvAPIAllocator.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIAllocator.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIAllocator.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o -c /users/alanandr/drv/api/DrvAPINativeToAddress.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPINativeToAddress.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPINativeToAddress.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o -c /users/alanandr/drv/api/DrvAPISysConfig.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPISysConfig.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPISysConfig.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o -c /users/alanandr/drv/api/DrvAPIThread.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIThread.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIThread.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o -c /users/alanandr/drv/api/DrvAPIThreadState.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIThreadState.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIThreadState.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPISection.cpp.o -c /users/alanandr/drv/api/DrvAPISection.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPISection.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPISection.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o -c /users/alanandr/drv/api/DrvAPIMemory.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIMemory.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIMemory.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/api",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvapi_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o -c /users/alanandr/drv/api/DrvAPIDMA.cpp",
+  "file": "/users/alanandr/drv/api/DrvAPIDMA.cpp",
+  "output": "api/CMakeFiles/drvapi.dir/DrvAPIDMA.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvCustomStdMem.cpp.o -c /users/alanandr/drv/element/DrvCustomStdMem.cpp",
+  "file": "/users/alanandr/drv/element/DrvCustomStdMem.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvCustomStdMem.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvMemory.cpp.o -c /users/alanandr/drv/element/DrvMemory.cpp",
+  "file": "/users/alanandr/drv/element/DrvMemory.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvMemory.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvSelfLinkMemory.cpp.o -c /users/alanandr/drv/element/DrvSelfLinkMemory.cpp",
+  "file": "/users/alanandr/drv/element/DrvSelfLinkMemory.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvSelfLinkMemory.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvStdMemory.cpp.o -c /users/alanandr/drv/element/DrvStdMemory.cpp",
+  "file": "/users/alanandr/drv/element/DrvStdMemory.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvStdMemory.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvSimpleMemory.cpp.o -c /users/alanandr/drv/element/DrvSimpleMemory.cpp",
+  "file": "/users/alanandr/drv/element/DrvSimpleMemory.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvSimpleMemory.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvSystem.cpp.o -c /users/alanandr/drv/element/DrvSystem.cpp",
+  "file": "/users/alanandr/drv/element/DrvSystem.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvSystem.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvThread.cpp.o -c /users/alanandr/drv/element/DrvThread.cpp",
+  "file": "/users/alanandr/drv/element/DrvThread.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvThread.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvCore.cpp.o -c /users/alanandr/drv/element/DrvCore.cpp",
+  "file": "/users/alanandr/drv/element/DrvCore.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvCore.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/SSTRISCVCore.cpp.o -c /users/alanandr/drv/element/SSTRISCVCore.cpp",
+  "file": "/users/alanandr/drv/element/SSTRISCVCore.cpp",
+  "output": "element/CMakeFiles/Drv.dir/SSTRISCVCore.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o -c /users/alanandr/drv/element/SSTRISCVSimulator.cpp",
+  "file": "/users/alanandr/drv/element/SSTRISCVSimulator.cpp",
+  "output": "element/CMakeFiles/Drv.dir/SSTRISCVSimulator.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/element",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -DDrv_EXPORTS -I/users/alanandr/drv/element -I/users/alanandr/local/sstelements/include -I/users/alanandr/local/riscv -I/users/alanandr/drv/api -I/users/alanandr/drv/interpreter -isystem /users/alanandr/local/sstcore/include -g -fPIC -std=c++17 -o CMakeFiles/Drv.dir/DrvNativeSimulationTranslator.cpp.o -c /users/alanandr/drv/element/DrvNativeSimulationTranslator.cpp",
+  "file": "/users/alanandr/drv/element/DrvNativeSimulationTranslator.cpp",
+  "output": "element/CMakeFiles/Drv.dir/DrvNativeSimulationTranslator.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/pandocommand",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dpandocommand_EXPORTS -I/users/alanandr/drv -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/pandocommand.dir/control.cpp.o -c /users/alanandr/drv/pandocommand/control.cpp",
+  "file": "/users/alanandr/drv/pandocommand/control.cpp",
+  "output": "pandocommand/CMakeFiles/pandocommand.dir/control.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/pandocommand",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dpandocommand_EXPORTS -I/users/alanandr/drv -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/pandocommand.dir/loader.cpp.o -c /users/alanandr/drv/pandocommand/loader.cpp",
+  "file": "/users/alanandr/drv/pandocommand/loader.cpp",
+  "output": "pandocommand/CMakeFiles/pandocommand.dir/loader.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/pandocommand",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dpandocommand_loader_EXPORTS -I/users/alanandr/drv/api -I/users/alanandr/drv -g -fPIC -std=c++17 -o CMakeFiles/pandocommand_loader.dir/default.cpp.o -c /users/alanandr/drv/pandocommand/default.cpp",
+  "file": "/users/alanandr/drv/pandocommand/default.cpp",
+  "output": "pandocommand/CMakeFiles/pandocommand_loader.dir/default.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/cmake-drvx-example",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddrvx_example_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/drvx-example.dir/main.cpp.o -c /users/alanandr/drv/cmake-drvx-example/main.cpp",
+  "file": "/users/alanandr/drv/cmake-drvx-example/main.cpp",
+  "output": "cmake-drvx-example/CMakeFiles/drvx-example.dir/main.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/cmake-drvr-example",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dcommand_processor_EXPORTS -I/users/alanandr/drv/api -I/users/alanandr/drv -g -fPIC -std=c++17 -o CMakeFiles/command_processor.dir/command_processor.cpp.o -c /users/alanandr/drv/cmake-drvr-example/command_processor.cpp",
+  "file": "/users/alanandr/drv/cmake-drvr-example/command_processor.cpp",
+  "output": "cmake-drvr-example/CMakeFiles/command_processor.dir/command_processor.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dsimple_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/simple.dir/simple.cpp.o -c /users/alanandr/drv/drvx/simple.cpp",
+  "file": "/users/alanandr/drv/drvx/simple.cpp",
+  "output": "drvx/CMakeFiles/simple.dir/simple.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dleiden_single_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/leiden_single.dir/leiden_single.cpp.o -c /users/alanandr/drv/drvx/leiden_single.cpp",
+  "file": "/users/alanandr/drv/drvx/leiden_single.cpp",
+  "output": "drvx/CMakeFiles/leiden_single.dir/leiden_single.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dtc_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/tc.dir/tc.cpp.o -c /users/alanandr/drv/drvx/tc.cpp",
+  "file": "/users/alanandr/drv/drvx/tc.cpp",
+  "output": "drvx/CMakeFiles/tc.dir/tc.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dallocator_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/allocator.dir/allocator.cpp.o -c /users/alanandr/drv/drvx/allocator.cpp",
+  "file": "/users/alanandr/drv/drvx/allocator.cpp",
+  "output": "drvx/CMakeFiles/allocator.dir/allocator.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Datomic_read_back_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/atomic_read_back.dir/atomic_read_back.cpp.o -c /users/alanandr/drv/drvx/atomic_read_back.cpp",
+  "file": "/users/alanandr/drv/drvx/atomic_read_back.cpp",
+  "output": "drvx/CMakeFiles/atomic_read_back.dir/atomic_read_back.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Damoadd_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/amoadd.dir/amoadd.cpp.o -c /users/alanandr/drv/drvx/amoadd.cpp",
+  "file": "/users/alanandr/drv/drvx/amoadd.cpp",
+  "output": "drvx/CMakeFiles/amoadd.dir/amoadd.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dargv_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/argv.dir/argv.cpp.o -c /users/alanandr/drv/drvx/argv.cpp",
+  "file": "/users/alanandr/drv/drvx/argv.cpp",
+  "output": "drvx/CMakeFiles/argv.dir/argv.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dcas_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/cas.dir/cas.cpp.o -c /users/alanandr/drv/drvx/cas.cpp",
+  "file": "/users/alanandr/drv/drvx/cas.cpp",
+  "output": "drvx/CMakeFiles/cas.dir/cas.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dcomm_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/comm.dir/comm.cpp.o -c /users/alanandr/drv/drvx/comm.cpp",
+  "file": "/users/alanandr/drv/drvx/comm.cpp",
+  "output": "drvx/CMakeFiles/comm.dir/comm.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dfence_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/fence.dir/fence.cpp.o -c /users/alanandr/drv/drvx/fence.cpp",
+  "file": "/users/alanandr/drv/drvx/fence.cpp",
+  "output": "drvx/CMakeFiles/fence.dir/fence.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dglobals_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/globals.dir/globals.cpp.o -c /users/alanandr/drv/drvx/globals.cpp",
+  "file": "/users/alanandr/drv/drvx/globals.cpp",
+  "output": "drvx/CMakeFiles/globals.dir/globals.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dinfo_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/info.dir/info.cpp.o -c /users/alanandr/drv/drvx/info.cpp",
+  "file": "/users/alanandr/drv/drvx/info.cpp",
+  "output": "drvx/CMakeFiles/info.dir/info.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dlock_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/lock.dir/lock.cpp.o -c /users/alanandr/drv/drvx/lock.cpp",
+  "file": "/users/alanandr/drv/drvx/lock.cpp",
+  "output": "drvx/CMakeFiles/lock.dir/lock.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dmem_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/mem.dir/mem.cpp.o -c /users/alanandr/drv/drvx/mem.cpp",
+  "file": "/users/alanandr/drv/drvx/mem.cpp",
+  "output": "drvx/CMakeFiles/mem.dir/mem.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dmulticore_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/multicore.dir/multicore.cpp.o -c /users/alanandr/drv/drvx/multicore.cpp",
+  "file": "/users/alanandr/drv/drvx/multicore.cpp",
+  "output": "drvx/CMakeFiles/multicore.dir/multicore.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dmulticoreamoadd_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/multicoreamoadd.dir/multicoreamoadd.cpp.o -c /users/alanandr/drv/drvx/multicoreamoadd.cpp",
+  "file": "/users/alanandr/drv/drvx/multicoreamoadd.cpp",
+  "output": "drvx/CMakeFiles/multicoreamoadd.dir/multicoreamoadd.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Daddrmap_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/addrmap.dir/addrmap.cpp.o -c /users/alanandr/drv/drvx/addrmap.cpp",
+  "file": "/users/alanandr/drv/drvx/addrmap.cpp",
+  "output": "drvx/CMakeFiles/addrmap.dir/addrmap.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dnop_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/nop.dir/nop.cpp.o -c /users/alanandr/drv/drvx/nop.cpp",
+  "file": "/users/alanandr/drv/drvx/nop.cpp",
+  "output": "drvx/CMakeFiles/nop.dir/nop.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dpointer_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/pointer.dir/pointer.cpp.o -c /users/alanandr/drv/drvx/pointer.cpp",
+  "file": "/users/alanandr/drv/drvx/pointer.cpp",
+  "output": "drvx/CMakeFiles/pointer.dir/pointer.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dsuper_simple_task_runtime_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o -c /users/alanandr/drv/drvx/runtime.cpp",
+  "file": "/users/alanandr/drv/drvx/runtime.cpp",
+  "output": "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dsuper_simple_task_runtime_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o -c /users/alanandr/drv/drvx/runtime_main.cpp",
+  "file": "/users/alanandr/drv/drvx/runtime_main.cpp",
+  "output": "drvx/CMakeFiles/super_simple_task_runtime.dir/runtime_main.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dto_address_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/to_address.dir/to_address.cpp.o -c /users/alanandr/drv/drvx/to_address.cpp",
+  "file": "/users/alanandr/drv/drvx/to_address.cpp",
+  "output": "drvx/CMakeFiles/to_address.dir/to_address.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dto_native_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/to_native.dir/to_native.cpp.o -c /users/alanandr/drv/drvx/to_native.cpp",
+  "file": "/users/alanandr/drv/drvx/to_native.cpp",
+  "output": "drvx/CMakeFiles/to_native.dir/to_native.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dgups_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/gups.dir/gups.cpp.o -c /users/alanandr/drv/drvx/gups.cpp",
+  "file": "/users/alanandr/drv/drvx/gups.cpp",
+  "output": "drvx/CMakeFiles/gups.dir/gups.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dgups_multi_node_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/gups_multi_node.dir/gups_multi_node.cpp.o -c /users/alanandr/drv/drvx/gups_multi_node.cpp",
+  "file": "/users/alanandr/drv/drvx/gups_multi_node.cpp",
+  "output": "drvx/CMakeFiles/gups_multi_node.dir/gups_multi_node.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dstream_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/stream.dir/stream.cpp.o -c /users/alanandr/drv/drvx/stream.cpp",
+  "file": "/users/alanandr/drv/drvx/stream.cpp",
+  "output": "drvx/CMakeFiles/stream.dir/stream.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dstride_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/stride.dir/stride.cpp.o -c /users/alanandr/drv/drvx/stride.cpp",
+  "file": "/users/alanandr/drv/drvx/stride.cpp",
+  "output": "drvx/CMakeFiles/stride.dir/stride.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Dflushinv_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/flushinv.dir/flushinv.cpp.o -c /users/alanandr/drv/drvx/flushinv.cpp",
+  "file": "/users/alanandr/drv/drvx/flushinv.cpp",
+  "output": "drvx/CMakeFiles/flushinv.dir/flushinv.cpp.o"
+},
+{
+  "directory": "/users/alanandr/drv/build/drvx",
+  "command": "/usr/bin/c++ -DBOOST_CONTEXT_DYN_LINK -DBOOST_CONTEXT_NO_LIB -DBOOST_COROUTINE_DYN_LINK -DBOOST_COROUTINE_NO_LIB -Ddma_EXPORTS -I/users/alanandr/drv/api -g -fPIC -std=c++17 -o CMakeFiles/dma.dir/dma.cpp.o -c /users/alanandr/drv/drvx/dma.cpp",
+  "file": "/users/alanandr/drv/drvx/dma.cpp",
+  "output": "drvx/CMakeFiles/dma.dir/dma.cpp.o"
+}
+]

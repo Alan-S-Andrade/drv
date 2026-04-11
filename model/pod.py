@@ -35,7 +35,7 @@ class PodBuilder(object):
         """
         self.compute = ComputeBuilder()
         self.l2sp_size = 1024*1024
-        self.l2sp_banks = 1
+        self.l2sp_banks = 8
         self._l2sp_interleave = self.l2sp_size//self.l2sp_banks
         self.l2sp = L2SPBuilder()
         self.xbar_bw = "1GB/s"

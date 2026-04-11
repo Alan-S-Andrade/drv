@@ -1,0 +1,4 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation

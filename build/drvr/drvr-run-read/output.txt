@@ -1,0 +1,10 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+st_size = 4096
+read 19 bytes
+buf = "hello, from a file
+"Configuring 1 harts
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 68.543 us

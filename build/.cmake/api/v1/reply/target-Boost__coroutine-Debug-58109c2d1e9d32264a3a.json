@@ -1,0 +1,141 @@
+{
+	"abstract" : true,
+	"artifacts" : 
+	[
+		{
+			"path" : "/usr/local/lib/libboost_coroutine.so.1.89.0"
+		}
+	],
+	"backtrace" : 8,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include",
+			"find_package",
+			"boost_find_component",
+			"set_property"
+		],
+		"files" : 
+		[
+			"/usr/local/lib/cmake/boost_coroutine-1.89.0/libboost_coroutine-variant-shared.cmake",
+			"/usr/local/lib/cmake/boost_coroutine-1.89.0/boost_coroutine-config.cmake",
+			"/usr/local/lib/cmake/Boost-1.89.0/BoostConfig.cmake",
+			"api/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 3,
+				"line" : 2,
+				"parent" : 0
+			},
+			{
+				"file" : 2,
+				"parent" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 2,
+				"line" : 262,
+				"parent" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 141,
+				"parent" : 3
+			},
+			{
+				"file" : 1,
+				"parent" : 4
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 53,
+				"parent" : 5
+			},
+			{
+				"file" : 0,
+				"parent" : 6
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 58,
+				"parent" : 7
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 103,
+				"parent" : 5
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 103,
+				"parent" : 5
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 103,
+				"parent" : 5
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "Boost::coroutine::@10fae538ba4e8521554e",
+	"imported" : true,
+	"interfaceCompileDependencies" : 
+	[
+		{
+			"backtrace" : 9,
+			"id" : "Boost::context::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 10,
+			"id" : "Boost::exception::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "Boost::headers::@6890427a1f51a3e7e1df"
+		}
+	],
+	"interfaceLinkLibraries" : 
+	[
+		{
+			"backtrace" : 9,
+			"id" : "Boost::context::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 10,
+			"id" : "Boost::exception::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 11,
+			"id" : "Boost::headers::@6890427a1f51a3e7e1df"
+		}
+	],
+	"local" : true,
+	"name" : "Boost::coroutine",
+	"nameOnDisk" : "libboost_coroutine.so.1.89.0",
+	"paths" : 
+	{
+		"build" : "api",
+		"source" : "api"
+	},
+	"sources" : [],
+	"type" : "SHARED_LIBRARY"
+}

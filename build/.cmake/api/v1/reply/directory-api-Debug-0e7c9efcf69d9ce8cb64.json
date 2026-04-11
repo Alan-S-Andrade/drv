@@ -1,0 +1,81 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"api/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 77,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"api/libdrvapi.so"
+			],
+			"targetId" : "drvapi::@10fae538ba4e8521554e",
+			"targetIndex" : 10,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				"api/DrvAPIAddress.hpp",
+				"api/DrvAPIAddressMap.hpp",
+				"api/DrvAPIAddressToNative.hpp",
+				"api/DrvAPIAllocator.hpp",
+				"api/DrvAPICoreXY.hpp",
+				"api/DrvAPIGlobal.hpp",
+				"api/DrvAPI.hpp",
+				"api/DrvAPIInfo.hpp",
+				"api/DrvAPIMain.hpp",
+				"api/DrvAPIMemory.hpp",
+				"api/DrvAPINativeToAddress.hpp",
+				"api/DrvAPIOp.hpp",
+				"api/DrvAPIPointer.hpp",
+				"api/DrvAPIReadModifyWrite.hpp",
+				"api/DrvAPIThreadState.hpp",
+				"api/DrvAPISysConfig.hpp",
+				"api/DrvAPISystem.hpp",
+				"api/DrvAPIThread.hpp",
+				"api/DrvAPIVar.hpp",
+				"api/DrvAPISection.hpp",
+				"api/DrvAPIBits.hpp",
+				"api/DrvAPIDMA.hpp"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "api",
+		"source" : "api"
+	}
+}

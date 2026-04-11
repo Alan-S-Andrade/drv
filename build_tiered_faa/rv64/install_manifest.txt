@@ -1,0 +1,13 @@
+/users/alanandr/drv/.local/rv64/lib/crt.S
+/users/alanandr/drv/.local/rv64/lib/lock.c
+/users/alanandr/drv/.local/rv64/include/pandohammer/address.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/atomic.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/cpuinfo.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/mmio.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/staticdecl.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/stringify.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/hartsleep.h
+/users/alanandr/drv/.local/rv64/include/pandohammer/register.h
+/users/alanandr/drv/.local/rv64/lib/bsg_link.ld
+/users/alanandr/drv/.local/rv64/cmake/FindDRV.cmake
+/users/alanandr/drv/.local/rv64/cmake/DRVInclude.cmake

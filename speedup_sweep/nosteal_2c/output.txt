@@ -1,0 +1,11 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Configuring 16 harts
+Configuring 16 harts
+EMERGENCY SHUTDOWN (0,0)!
+# Simulated time:                  2.14306 ms
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+EMERGENCY SHUTDOWN Complete (0,0)!
+Simulation is complete, simulated time: 0 s

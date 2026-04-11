@@ -1,0 +1,157 @@
+{
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"drv_add_run_target",
+			"drvr_add_run_target_with_command_processor",
+			"drvr_add_run_target",
+			"add_dependencies",
+			"drvr_add_executable"
+		],
+		"files" : 
+		[
+			"cmake/DRVInclude.cmake",
+			"cmake-drvr-example/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 32,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 287,
+				"parent" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 272,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 194,
+				"parent" : 3
+			},
+			{
+				"command" : 5,
+				"file" : 1,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 371,
+				"parent" : 5
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 233,
+				"parent" : 3
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 6,
+			"id" : "rv64::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "pandocommand_loader::@50fbfb4c7ddcf4d7cb66"
+		}
+	],
+	"id" : "run-drvr-example::@4d5b82b65fb1b1eadf10",
+	"name" : "run-drvr-example",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 4,
+			"id" : "SST::SST::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "drvr-example::@4d5b82b65fb1b1eadf10"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "drvr-example::@4d5b82b65fb1b1eadf10"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		},
+		{
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "pandocommand_loader::@50fbfb4c7ddcf4d7cb66"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "pandocommand_loader::@50fbfb4c7ddcf4d7cb66"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "cmake-drvr-example",
+		"source" : "cmake-drvr-example"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 4,
+			"isGenerated" : true,
+			"path" : "build/cmake-drvr-example/CMakeFiles/run-drvr-example",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/cmake-drvr-example/CMakeFiles/run-drvr-example.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

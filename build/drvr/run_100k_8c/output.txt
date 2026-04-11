@@ -1,0 +1,23 @@
+nohup: ignoring input
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=131072 E=3727538 source=86946 (max_deg=15729)
+
+=========================================================
+  BFS with Perfect Work Stealing — L1SP/L2SP Utilization
+=========================================================
+Graph: N=131072 E=3727538 (RMAT power-law, highest imbalance)
+Source: vertex 86946 (highest-degree hub)
+Hardware: 8 cores x 16 harts = 128 total harts
+
+Memory Layout:
+  L1SP: per-hart stack (16384 B each)
+  L2SP: shared work queue, frontier buffers, visited[], barriers
+  DRAM: CSR graph (row_ptr, col_idx), overflow arrays
+=========================================================
+
+[node0.alanandr-294453.os-class-pg0.apt.emulab.net:994944] tcp_peer_recv_connect_ack: invalid header type: 141
+[node0.alanandr-294453.os-class-pg0.apt.emulab.net:994944] tcp_peer_recv_connect_ack: invalid header type: 48
+[node0.alanandr-294453.os-class-pg0.apt.emulab.net:994944] tcp_peer_recv_connect_ack: invalid header type: 0

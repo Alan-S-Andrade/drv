@@ -1,0 +1,5 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+ERROR: bulk load of rmat_r16.bin header failed (result=-1)

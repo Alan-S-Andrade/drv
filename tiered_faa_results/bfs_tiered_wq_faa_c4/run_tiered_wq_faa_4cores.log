@@ -1,0 +1,16 @@
+WQTRACE_DUMP_BEGIN,bench=run_tiered_wq_faa,cores=4,samples=14,dropped=0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=0,phase=init,level=0,depths=1|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=1,phase=level_begin,level=0,depths=1|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=2,phase=post_process,level=0,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=3,phase=post_redistribute,level=0,depths=336|335|335|335
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=4,phase=level_begin,level=1,depths=336|335|335|335
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=5,phase=post_process,level=1,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=6,phase=post_redistribute,level=1,depths=492|491|491|491
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=7,phase=level_begin,level=2,depths=492|491|491|491
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=8,phase=post_process,level=2,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=9,phase=post_redistribute,level=2,depths=11|10|10|10
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=10,phase=level_begin,level=3,depths=11|10|10|10
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=11,phase=post_process,level=3,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=12,phase=post_redistribute,level=3,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=13,phase=final,level=4,depths=0|0|0|0
+WQTRACE_DUMP_END,bench=run_tiered_wq_faa

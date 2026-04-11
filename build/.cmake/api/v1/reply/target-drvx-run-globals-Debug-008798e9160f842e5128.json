@@ -1,0 +1,139 @@
+{
+	"backtrace" : 5,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"drv_add_run_target",
+			"drvx_add_run_target_with_command_processor",
+			"drvx_add_run_target",
+			"drvx_test",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"cmake/DRVInclude.cmake",
+			"drvx/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 71,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 5,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 262,
+				"parent" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 248,
+				"parent" : 3
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 194,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 233,
+				"parent" : 4
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "globals::@9956701f5024ed31d806"
+		}
+	],
+	"id" : "drvx-run-globals::@9956701f5024ed31d806",
+	"name" : "drvx-run-globals",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "SST::SST::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		},
+		{
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "globals::@9956701f5024ed31d806"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "globals::@9956701f5024ed31d806"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "drvx",
+		"source" : "drvx"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 5,
+			"isGenerated" : true,
+			"path" : "build/drvx/CMakeFiles/drvx-run-globals",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/drvx/CMakeFiles/drvx-run-globals.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

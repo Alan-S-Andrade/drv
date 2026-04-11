@@ -1,0 +1,227 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=4096 E=97008 D=23 source=0 max_deg=1341 (420824 bytes)
+=== BFS Tiered WQ + FAA (L1SP + L2SP) ===
+Graph: N=4096 E=97008 (RMAT CSR from rmat_r16.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP buffers with balanced repartition (capacity=4096 vertices, l2sp_vertices=4096)
+Hardware: 8 cores x 16 harts = 128 total harts
+  Fetcher harts: 8 (hart 0 per core)
+  Compute harts: 120 (harts 1..15 per core)
+Source: node 0 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=2097152 bytes
+Queue ops: FAA (fetch-and-add) on L1SP and L2SP heads
+Tiered queue: L1SP (fetcher batch=128, low_wm=32, high_wm=1024) -> L2SP -> steal
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 C1:0 C2:0 C3:0 C4:0 C5:0 C6:0 C7:0 
+Level 1: total_work=1341, discovered=1342
+  Distribution: C0:168 C1:168 C2:168 C3:168 C4:168 C5:167 C6:167 C7:167 
+Level 2: total_work=1965, discovered=3307
+  Distribution: C0:246 C1:246 C2:246 C3:246 C4:246 C5:245 C6:245 C7:245 
+Level 3: total_work=41, discovered=3348
+  Distribution: C0:6 C1:5 C2:5 C3:5 C4:5 C5:5 C6:5 C7:5 
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 3348 / 4096
+dist[source=0] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Role     | Processed | L1 Pops | L2 Pops | Stolen | Steal Att | Steal OK | Idle Cyc
+-----|----------|-----------|---------|---------|--------|-----------|----------|----------
+   0 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+   1 | compute  |        55 |       1 |      54 |      0 |         0 |        0 |  4587794
+   2 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8191047
+   3 | compute  |        40 |       0 |      40 |      0 |         0 |        0 |  8601594
+   4 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8993398
+   5 | compute  |       128 |     128 |       0 |      0 |         0 |        0 |  4763377
+   6 | compute  |        70 |      70 |       0 |      0 |         0 |        0 |  5262008
+   7 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9010405
+   8 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9022960
+   9 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9020934
+  10 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9009490
+  11 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9041042
+  12 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9025944
+  13 | compute  |        69 |      69 |       0 |      0 |         0 |        0 |  7760087
+  14 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9008943
+  15 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9023784
+  16 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  17 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9090764
+  18 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9064861
+  19 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9051023
+  20 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5111013
+  21 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8455322
+  22 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9050074
+  23 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8617222
+  24 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  4586604
+  25 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9067218
+  26 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9078776
+  27 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9064702
+  28 | compute  |        54 |       0 |      54 |      0 |         0 |        0 |  8632650
+  29 | compute  |        40 |       0 |      40 |      0 |         0 |        0 |  7628991
+  30 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9079310
+  31 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9067997
+  32 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  33 | compute  |       109 |       0 |     109 |      0 |         0 |        0 |  7134931
+  34 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9057318
+  35 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8555261
+  36 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9047857
+  37 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9089881
+  38 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9030832
+  39 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9014056
+  40 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9058520
+  41 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6107883
+  42 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5239662
+  43 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9086168
+  44 | compute  |        54 |       0 |      54 |      0 |         0 |        0 |  8662689
+  45 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9046838
+  46 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8500265
+  47 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9057062
+  48 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  49 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9070336
+  50 | compute  |        40 |       0 |      40 |      0 |         0 |        0 |  7261959
+  51 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9067590
+  52 | compute  |         5 |       0 |       5 |      0 |         0 |        0 |  9080180
+  53 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9042611
+  54 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9041992
+  55 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9041811
+  56 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8633699
+  57 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5198770
+  58 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9043438
+  59 | compute  |       118 |       0 |     118 |      0 |         0 |        0 |  5909382
+  60 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9048762
+  61 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8704657
+  62 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9028260
+  63 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8591880
+  64 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  65 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9083022
+  66 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9042553
+  67 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9100826
+  68 | compute  |         5 |       0 |       5 |      0 |         0 |        0 |  9024685
+  69 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9070868
+  70 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9101233
+  71 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8716933
+  72 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6581949
+  73 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8974989
+  74 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8991505
+  75 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5283948
+  76 | compute  |        54 |       0 |      54 |      0 |         0 |        0 |  8757584
+  77 | compute  |       104 |       0 |     104 |      0 |         0 |        0 |  6291582
+  78 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8665856
+  79 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9072017
+  80 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  81 | compute  |       117 |       0 |     117 |      0 |         0 |        0 |  7010801
+  82 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9089625
+  83 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9087871
+  84 | compute  |         5 |       0 |       5 |      0 |         0 |        0 |  9045681
+  85 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9090324
+  86 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5325714
+  87 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9089100
+  88 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8790586
+  89 | compute  |       103 |       0 |     103 |      0 |         0 |        0 |  7233694
+  90 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9063648
+  91 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9062069
+  92 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9074581
+  93 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8803242
+  94 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9061984
+  95 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9063393
+  96 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  97 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9105404
+  98 | compute  |        69 |       0 |      69 |      0 |         0 |        0 |  8814946
+  99 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9026257
+ 100 | compute  |        53 |       0 |      53 |      0 |         0 |        0 |  8891195
+ 101 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6106767
+ 102 | compute  |        39 |       0 |      39 |      0 |         0 |        0 |  8561767
+ 103 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9077248
+ 104 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9106898
+ 105 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8808713
+ 106 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9055368
+ 107 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9068972
+ 108 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5828202
+ 109 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9080203
+ 110 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9053209
+ 111 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8997443
+ 112 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+ 113 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9050533
+ 114 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9063480
+ 115 | compute  |        39 |       0 |      39 |      0 |         0 |        0 |  8620901
+ 116 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9079746
+ 117 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8931201
+ 118 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9122282
+ 119 | compute  |        69 |       0 |      69 |      0 |         0 |        0 |  5630888
+ 120 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5693995
+ 121 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9083579
+ 122 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9057213
+ 123 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8916870
+ 124 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9067886
+ 125 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8917903
+ 126 | compute  |        53 |       0 |      53 |      0 |         0 |        0 |  8988445
+ 127 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  9081136
+
+Per-core fetcher statistics:
+Core | Fetch Ops | Items Fetched | Idle Cycles
+-----|-----------|---------------|------------
+   0 |         5 |           268 |    5837917
+   1 |         0 |             0 |    6173551
+   2 |         0 |             0 |    6035814
+   3 |         0 |             0 |    6098253
+   4 |         0 |             0 |    6056357
+   5 |         0 |             0 |    6164294
+   6 |         0 |             0 |    6137845
+   7 |         0 |             0 |    6165481
+
+Summary:
+  Total nodes processed: 3348
+  Total edges traversed: 97006
+  From L1SP queue:       268
+  From L2SP queue:       3080
+  From stealing:         0
+  L1 hit rate:           8%
+  Steal attempts:        0
+  Steal success:         0
+  Fetcher ops total:     5
+  Fetcher items total:   268
+  Compute idle cycles:   1006964397
+  Fetcher idle cycles:   48669512
+Cycles elapsed:        13646017
+Cycles per node:       4075
+Cycles per edge:       140
+TIERED_FAA_STATS: l1_pops=268 l2_pops=3080 stolen=0 fetch_ops=5 fetch_items=268
+WQTRACE_DUMP_BEGIN,bench=run_tiered_wq_faa,cores=8,samples=14,dropped=0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=0,phase=init,level=0,depths=1|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=1,phase=level_begin,level=0,depths=1|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=2,phase=post_process,level=0,depths=0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=3,phase=post_redistribute,level=0,depths=168|168|168|168|168|167|167|167
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=4,phase=level_begin,level=1,depths=168|168|168|168|168|167|167|167
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=5,phase=post_process,level=1,depths=0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=6,phase=post_redistribute,level=1,depths=246|246|246|246|246|245|245|245
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=7,phase=level_begin,level=2,depths=246|246|246|246|246|245|245|245
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=8,phase=post_process,level=2,depths=0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=9,phase=post_redistribute,level=2,depths=6|5|5|5|5|5|5|5
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=10,phase=level_begin,level=3,depths=6|5|5|5|5|5|5|5
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=11,phase=post_process,level=3,depths=0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=12,phase=post_redistribute,level=3,depths=0|0|0|0|0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=8,sample=13,phase=final,level=4,depths=0|0|0|0|0|0|0|0
+WQTRACE_DUMP_END,bench=run_tiered_wq_faa
+WQTRACE_FILE_WRITTEN,bench=run_tiered_wq_faa,path=run_tiered_wq_faa_8cores.log
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cb8 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003cb8 dest_abs=0x8000000000003cb8
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x410435b0 size=420824
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 420824 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x410435b0 dest_abs=0xc0000000010435b0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (420824 bytes) to backing store
+Simulation is complete, simulated time: 33.368 ms

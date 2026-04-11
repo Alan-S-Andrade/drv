@@ -1,0 +1,245 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"drvx/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 175,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "drvx-run-simple::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-leiden_single::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-tc::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-allocator::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-atomic_read_back::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-amoadd::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-argv::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-cas::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-comm::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-fence::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-globals::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-info::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-lock::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-mem::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-multicore::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-multicoreamoadd::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-addrmap::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-nop::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-pointer::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-super_simple_task_runtime::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-to_address::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-to_native::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-gups::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-gups_multi_node::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-stream::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-stride::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-flushinv::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-dma::@9956701f5024ed31d806"
+		}
+	],
+	"id" : "drvx-run-all::@9956701f5024ed31d806",
+	"name" : "drvx-run-all",
+	"orderDependencies" : 
+	[
+		{
+			"id" : "drvx-run-simple::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-leiden_single::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-tc::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-allocator::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-atomic_read_back::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-amoadd::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-argv::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-cas::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-comm::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-fence::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-globals::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-info::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-lock::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-mem::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-multicore::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-multicoreamoadd::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-addrmap::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-nop::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-pointer::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-super_simple_task_runtime::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-to_address::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-to_native::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-gups::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-gups_multi_node::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-stream::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-stride::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-flushinv::@9956701f5024ed31d806"
+		},
+		{
+			"id" : "drvx-run-dma::@9956701f5024ed31d806"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "drvx",
+		"source" : "drvx"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/drvx/CMakeFiles/drvx-run-all",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/drvx/CMakeFiles/drvx-run-all.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

@@ -1,0 +1,86 @@
+{
+	"abstract" : true,
+	"artifacts" : 
+	[
+		{
+			"path" : "rv64/drvr/drvr_bfs_multi_sw_l2sp"
+		}
+	],
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"drvr_add_executable",
+			"drvr_test",
+			"drvr_test_with_pandohammer",
+			"add_dependencies"
+		],
+		"files" : 
+		[
+			"cmake/DRVInclude.cmake",
+			"drvr/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 238,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 21,
+				"parent" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 5,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 370,
+				"parent" : 3
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 371,
+				"parent" : 3
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"id" : "drvr_bfs_multi_sw_l2sp::@c40f4ed94274d31ce79d",
+	"imported" : true,
+	"local" : true,
+	"name" : "drvr_bfs_multi_sw_l2sp",
+	"nameOnDisk" : "drvr_bfs_multi_sw_l2sp",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "rv64::@6890427a1f51a3e7e1df"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "drvr",
+		"source" : "drvr"
+	},
+	"sources" : [],
+	"type" : "EXECUTABLE"
+}

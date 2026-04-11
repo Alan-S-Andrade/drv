@@ -1,0 +1,155 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=4096 E=97008 D=23 source=0 max_deg=1341 (420824 bytes)
+=== BFS Tiered WQ + FAA (L1SP + L2SP) ===
+Graph: N=4096 E=97008 (RMAT CSR from rmat_r16.bin)
+Graph storage: row_ptr/col_idx in DRAM (malloc)
+Hot state: visited in L2SP, dist_arr in L2SP
+Frontiers: dynamic L2SP buffers with balanced repartition (capacity=4096 vertices, l2sp_vertices=4096)
+Hardware: 4 cores x 16 harts = 64 total harts
+  Fetcher harts: 4 (hart 0 per core)
+  Compute harts: 60 (harts 1..15 per core)
+Source: node 0 (highest-degree vertex)
+L1SP: per-core=262144 bytes, global=1048576 bytes
+Queue ops: FAA (fetch-and-add) on L1SP and L2SP heads
+Tiered queue: L1SP (fetcher batch=128, low_wm=32, high_wm=1024) -> L2SP -> steal
+
+Level 0: total_work=1, discovered=1
+  Distribution: C0:1 C1:0 C2:0 C3:0 
+Level 1: total_work=1341, discovered=1342
+  Distribution: C0:336 C1:335 C2:335 C3:335 
+Level 2: total_work=1965, discovered=3307
+  Distribution: C0:492 C1:491 C2:491 C3:491 
+Level 3: total_work=41, discovered=3348
+  Distribution: C0:11 C1:10 C2:10 C3:10 
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 3348 / 4096
+dist[source=0] = 0 (expected 0)
+
+Per-hart statistics:
+Hart | Role     | Processed | L1 Pops | L2 Pops | Stolen | Steal Att | Steal OK | Idle Cyc
+-----|----------|-----------|---------|---------|--------|-----------|----------|----------
+   0 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+   1 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8750346
+   2 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6165107
+   3 | compute  |        44 |       0 |      44 |      0 |         0 |        0 |  8417143
+   4 | compute  |        16 |       0 |      16 |      0 |         0 |        0 |  7655188
+   5 | compute  |       128 |      64 |      64 |      0 |         0 |        0 |  4387224
+   6 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8753182
+   7 | compute  |         1 |       1 |       0 |      0 |         0 |        0 |  5114136
+   8 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8832822
+   9 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8792096
+  10 | compute  |       128 |      64 |      64 |      0 |         0 |        0 |  4966722
+  11 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8173704
+  12 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8158793
+  13 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  4994314
+  14 | compute  |        64 |      64 |       0 |      0 |         0 |        0 |  5533602
+  15 | compute  |        75 |      75 |       0 |      0 |         0 |        0 |  7607597
+  16 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  17 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8424487
+  18 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8249450
+  19 | compute  |        43 |       0 |      43 |      0 |         0 |        0 |  8508297
+  20 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5024770
+  21 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5975150
+  22 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8826485
+  23 | compute  |        79 |       0 |      79 |      0 |         0 |        0 |  7044107
+  24 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6686657
+  25 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8316552
+  26 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8802760
+  27 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5127645
+  28 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8801362
+  29 | compute  |        74 |       0 |      74 |      0 |         0 |        0 |  8358868
+  30 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8286408
+  31 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6005183
+  32 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  33 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8838417
+  34 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8456992
+  35 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5917155
+  36 | compute  |       117 |      64 |      53 |      0 |         0 |        0 |  6016859
+  37 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5348993
+  38 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8848539
+  39 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8607738
+  40 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8444456
+  41 | compute  |        79 |       0 |      79 |      0 |         0 |        0 |  7440622
+  42 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6435527
+  43 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8819761
+  44 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8834378
+  45 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8836219
+  46 | compute  |        64 |      64 |       0 |      0 |         0 |        0 |  5174726
+  47 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8486425
+  48 | fetcher  |         0 |       0 |       0 |      0 |         0 |        0 |        0
+  49 | compute  |        43 |       0 |      43 |      0 |         0 |        0 |  8644441
+  50 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  6194531
+  51 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8844053
+  52 | compute  |       128 |       0 |     128 |      0 |         0 |        0 |  5399291
+  53 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8640511
+  54 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8816420
+  55 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8614589
+  56 | compute  |         0 |       0 |       0 |      0 |         0 |        0 |  8911185
+  57 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8643951
+  58 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5878888
+  59 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  8587044
+  60 | compute  |        79 |       0 |      79 |      0 |         0 |        0 |  8589867
+  61 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  5866104
+  62 | compute  |        64 |       0 |      64 |      0 |         0 |        0 |  6578008
+  63 | compute  |        10 |       0 |      10 |      0 |         0 |        0 |  8778036
+
+Per-core fetcher statistics:
+Core | Fetch Ops | Items Fetched | Idle Cycles
+-----|-----------|---------------|------------
+   0 |         4 |           268 |    6924963
+   1 |         0 |             0 |    7058857
+   2 |         1 |           128 |    6914737
+   3 |         0 |             0 |    6987687
+
+Summary:
+  Total nodes processed: 3348
+  Total edges traversed: 97006
+  From L1SP queue:       396
+  From L2SP queue:       2952
+  From stealing:         0
+  L1 hit rate:           11%
+  Steal attempts:        0
+  Steal success:         0
+  Fetcher ops total:     5
+  Fetcher items total:   396
+  Compute idle cycles:   450233883
+  Fetcher idle cycles:   27886244
+Cycles elapsed:        13385656
+Cycles per node:       3998
+Cycles per edge:       137
+TIERED_FAA_STATS: l1_pops=396 l2_pops=2952 stolen=0 fetch_ops=5 fetch_items=396
+WQTRACE_DUMP_BEGIN,bench=run_tiered_wq_faa,cores=4,samples=14,dropped=0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=0,phase=init,level=0,depths=1|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=1,phase=level_begin,level=0,depths=1|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=2,phase=post_process,level=0,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=3,phase=post_redistribute,level=0,depths=336|335|335|335
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=4,phase=level_begin,level=1,depths=336|335|335|335
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=5,phase=post_process,level=1,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=6,phase=post_redistribute,level=1,depths=492|491|491|491
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=7,phase=level_begin,level=2,depths=492|491|491|491
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=8,phase=post_process,level=2,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=9,phase=post_redistribute,level=2,depths=11|10|10|10
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=10,phase=level_begin,level=3,depths=11|10|10|10
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=11,phase=post_process,level=3,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=12,phase=post_redistribute,level=3,depths=0|0|0|0
+WQTRACE,bench=run_tiered_wq_faa,cores=4,sample=13,phase=final,level=4,depths=0|0|0|0
+WQTRACE_DUMP_END,bench=run_tiered_wq_faa
+WQTRACE_FILE_WRITTEN,bench=run_tiered_wq_faa,path=run_tiered_wq_faa_4cores.log
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003cb8 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003cb8 dest_abs=0x8000000000003cb8
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x410435b0 size=420824
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 420824 bytes from file. Header bytes: 00 10 00 00 f0 7a 01 00 17 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x410435b0 dest_abs=0xc0000000010435b0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (420824 bytes) to backing store
+Simulation is complete, simulated time: 31.38 ms

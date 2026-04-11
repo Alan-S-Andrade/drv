@@ -1,0 +1,97 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=32768 E=882976 source=23875 (max_deg=6065)
+
+=========================================================
+  BFS with Perfect Work Stealing — L1SP/L2SP Utilization
+=========================================================
+Graph: N=32768 E=882976 (RMAT power-law, highest imbalance)
+Source: vertex 23875 (highest-degree hub)
+Hardware: 4 cores x 16 harts = 64 total harts
+
+Memory Layout:
+  L1SP: per-hart stack (16384 B each)
+  L2SP: shared work queue, frontier buffers, visited[], barriers
+  DRAM: CSR graph (row_ptr, col_idx), overflow arrays
+=========================================================
+
+Level 0: frontier=1, discovered=1
+  Per-core queues: C0:1 C1:0 C2:0 C3:0 
+Level 1: frontier=6065, discovered=6066
+  Per-core queues: C0:1472 C1:1545 C2:1485 C3:1563 
+Level 2: frontier=17471, discovered=23537
+  Per-core queues: C0:4268 C1:4343 C2:4417 C3:4443 
+Level 3: frontier=687, discovered=24224
+  Per-core queues: C0:177 C1:171 C2:172 C3:167 
+Level 4: frontier=3, discovered=24227
+  Per-core queues: C0:1 C1:1 C2:1 C3:0 
+
+=== BFS Complete ===
+Levels traversed: 5
+Nodes discovered: 24227 / 32768
+Cycles elapsed:   43855385
+Cycles per node:  1810
+
+========== L2SP UTILIZATION ==========
+L2SP total:           1048576 bytes
+L2SP used (total):    947184 bytes (90.3%)
+  Static globals:     29680 bytes
+    - WorkQueues:     96 bytes (4 cores)
+    - Barrier state:  528 bytes
+    - core_has_work:  16 bytes
+    - Per-core stats: 160 bytes
+  Dynamic allocs:
+    - visited[]:      262144 bytes (32768/32768 vertices in L2SP)
+    - dist_arr[]:     131072 bytes (32768/32768 vertices in L2SP)
+    - Frontier bufs:  524288 bytes (32768/32768 vertices in L2SP)
+L2SP free:            101392 bytes
+======================================
+
+========== L1SP UTILIZATION ==========
+L1SP per-core:        262144 bytes
+L1SP global:          1048576 bytes (4 cores)
+L1SP contents per core:
+  [0x000] Thief token: 8 bytes (work-stealing coordination)
+  [stack] Per-hart stacks: 16 harts x 16384 bytes = 262144 bytes
+  (Nothing else in L1SP — all graph/queue data lives in L2SP)
+
+Per-hart peak stack usage:
+  Core 0: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+  Core 1: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+  Core 2: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+  Core 3: h0=16384 h1=16384 h2=16384 h3=16384 h4=16384 h5=16384 h6=16384 h7=16384  (core total peak: 131072 / 262144 bytes, 50%)
+======================================
+
+========== WORK BALANCE (per-core) ==========
+Core | Nodes Processed | Edges Traversed | Stolen Nodes | Steal OK/Attempts
+-----|-----------------|-----------------|--------------|------------------
+   0 |            5927 |          224477 |           16 | 2/18
+   1 |            6068 |          220466 |            8 | 1/4
+   2 |            6083 |          219971 |            8 | 1/1
+   3 |            6149 |          218044 |            0 | 0/4
+
+Summary:
+  Total nodes processed: 24227
+  Total edges traversed: 882958
+  Total stolen nodes:    32
+  Average per core:      6056 nodes
+  Min/Max per core:      5927 / 6149
+  Imbalance (max-min)/max: 3%
+  >>> PERFECT BALANCE ACHIEVED <<<
+=============================================
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_32k.bin' dest=0x8000000000003d38 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 80 00 00 20 79 0d 00 1a 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003d38 dest_abs=0x8000000000003d38
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_32k.bin' dest=0x40803410 size=3794072
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 3794072 bytes from file. Header bytes: 00 80 00 00 20 79 0d 00 1a 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x40803410 dest_abs=0xc000000000803410
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (3794072 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 62.2277 ms

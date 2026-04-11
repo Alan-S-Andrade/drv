@@ -1,0 +1,87 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"element/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 85,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		}
+	],
+	"id" : "install-drv-element::@022b2c724e583c16fbb6",
+	"name" : "install-drv-element",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 1,
+			"id" : "SST::SSTRegister::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Drv::@022b2c724e583c16fbb6"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "element",
+		"source" : "element"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/element/CMakeFiles/install-drv-element",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/element/CMakeFiles/install-drv-element.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

@@ -1,0 +1,261 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "cmake-drvr-example/libcommand_processor.so"
+		}
+	],
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"drvx_add_executable",
+			"target_link_libraries",
+			"drvx_target_link_libraries",
+			"set_property",
+			"find_package",
+			"boost_find_component"
+		],
+		"files" : 
+		[
+			"cmake/DRVInclude.cmake",
+			"cmake-drvr-example/CMakeLists.txt",
+			"api/CMakeLists.txt",
+			"/usr/local/lib/cmake/boost_coroutine-1.89.0/boost_coroutine-config.cmake",
+			"/usr/local/lib/cmake/Boost-1.89.0/BoostConfig.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 113,
+				"parent" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 6,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 121,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 114,
+				"parent" : 1
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 57,
+				"parent" : 6
+			},
+			{
+				"command" : 5,
+				"file" : 2,
+				"line" : 2,
+				"parent" : 6
+			},
+			{
+				"file" : 4,
+				"parent" : 8
+			},
+			{
+				"command" : 6,
+				"file" : 4,
+				"line" : 262,
+				"parent" : 9
+			},
+			{
+				"command" : 5,
+				"file" : 4,
+				"line" : 141,
+				"parent" : 10
+			},
+			{
+				"file" : 3,
+				"parent" : 11
+			},
+			{
+				"command" : 4,
+				"file" : 3,
+				"line" : 103,
+				"parent" : 12
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 10
+	},
+	"compileDependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "drvapi::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "pandocommand::@50fbfb4c7ddcf4d7cb66"
+		}
+	],
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -fPIC"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-std=c++17"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 5,
+					"define" : "BOOST_CONTEXT_DYN_LINK"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "BOOST_CONTEXT_NO_LIB"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "BOOST_COROUTINE_DYN_LINK"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "BOOST_COROUTINE_NO_LIB"
+				},
+				{
+					"define" : "command_processor_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 5,
+					"path" : "/users/alanandr/drv/api"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/users/alanandr/drv"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "drvapi::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "pandocommand::@50fbfb4c7ddcf4d7cb66"
+		}
+	],
+	"id" : "command_processor::@4d5b82b65fb1b1eadf10",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-shared",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/users/alanandr/drv/build/pandocommand:/users/alanandr/drv/build/api:/usr/local/lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "../pandocommand/libpandocommand.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "../api/libdrvapi.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/usr/local/lib/libboost_coroutine.so.1.89.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 13,
+				"fragment" : "/usr/local/lib/libboost_context.so.1.89.0",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"linkLibraries" : 
+	[
+		{
+			"backtrace" : 5,
+			"id" : "drvapi::@10fae538ba4e8521554e"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "pandocommand::@50fbfb4c7ddcf4d7cb66"
+		}
+	],
+	"name" : "command_processor",
+	"nameOnDisk" : "libcommand_processor.so",
+	"paths" : 
+	{
+		"build" : "cmake-drvr-example",
+		"source" : "cmake-drvr-example"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "cmake-drvr-example/command_processor.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

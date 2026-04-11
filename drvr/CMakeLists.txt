@@ -345,6 +345,15 @@ drvr_test_build_properties(bfs_work_stealing
   DRV_BUILD_CORE_THREADS 16
   )
 
+# BFS with work stealing — FAA variant (fetch-and-add queues instead of CAS)
+drvr_test_with_pandohammer(bfs_work_stealing_faa bfs_work_stealing_faa.cpp)
+drvr_test_build_properties(bfs_work_stealing_faa
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 8
+  DRV_BUILD_POD_CORES_Y 8
+  DRV_BUILD_CORE_THREADS 16
+  )
+
 drvr_test_with_pandohammer(bfs_nosteal_baseline bfs_work_stealing_nosteal_baseline.cpp)
 drvr_test_build_properties(bfs_nosteal_baseline
   PROPERTIES
@@ -372,6 +381,38 @@ drvr_test_build_properties(bfs_work_stealing_l1sp_cache
 drvr_test_with_pandohammer(bfs_l1sp_cache_baseline bfs_work_stealing_l1sp_cache.cpp)
 drvr_test_compile_options(bfs_l1sp_cache_baseline -DNO_STEAL_BASELINE)
 drvr_test_build_properties(bfs_l1sp_cache_baseline
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_l1sp_prefetch bfs_work_stealing_l1sp_prefetch.cpp)
+drvr_test_build_properties(bfs_l1sp_prefetch
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_l1sp_filter bfs_l1sp_visited_filter.cpp)
+drvr_test_build_properties(bfs_l1sp_filter
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_tiered_wq bfs_tiered_work_queue.cpp)
+drvr_test_build_properties(bfs_tiered_wq
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
+drvr_test_with_pandohammer(bfs_tiered_wq_faa bfs_tiered_wq_faa.cpp)
+drvr_test_build_properties(bfs_tiered_wq_faa
   PROPERTIES
   DRV_BUILD_POD_CORES_X 2
   DRV_BUILD_POD_CORES_Y 1

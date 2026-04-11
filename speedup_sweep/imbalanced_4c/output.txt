@@ -1,0 +1,55 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Graph loaded: N=1024 E=21090 D=20 source=377 max_deg=463
+=== BFS Imbalanced Baseline (NO stealing; all-to-core-0) ===
+Graph: N=1024 E=21090 (RMAT CSR)
+Distribution: ALL frontier to core 0 [extreme imbalance]
+Hardware: 4 cores x 16 harts = 64 total harts
+Source: node 377 (highest-degree vertex)
+Hot state: visited in L2SP, dist_arr in L2SP, frontiers in L2SP+DRAM
+
+Level 0: frontier=1, discovered=1
+  Per-core queues: C0:1 C1:0 C2:0 C3:0 
+Level 1: frontier=463, discovered=464
+  Per-core queues: C0:463 C1:0 C2:0 C3:0 
+Level 2: frontier=423, discovered=887
+  Per-core queues: C0:423 C1:0 C2:0 C3:0 
+Level 3: frontier=5, discovered=892
+  Per-core queues: C0:5 C1:0 C2:0 C3:0 
+
+=== BFS Complete ===
+Levels traversed: 4
+Nodes discovered: 892 / 1024
+Cycles elapsed:   2229196
+Cycles per node:  2499
+
+========== WORK BALANCE (per-core) ==========
+Core | Nodes Processed | Edges Traversed
+-----|-----------------|----------------
+   0 |             892 |           21090
+   1 |               0 |               0
+   2 |               0 |               0
+   3 |               0 |               0
+
+Summary:
+  Total nodes: 892  Total edges: 21090
+  Avg edges/core: 5272
+  Min/Max edges:  0 / 21090
+  Imbalance (max-min)/max: 100%
+=============================================
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x8000000000003d28 size=20
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 20 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x8000000000003d28 dest_abs=0x8000000000003d28
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (20 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:851]: BULK_LOAD: filename='rmat_r16.bin' dest=0x40802bb0 size=92576
+SSTRISCVCore[handleBulkLoad:874]: BULK_LOAD: read 92576 bytes from file. Header bytes: 00 04 00 00 62 52 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:888]: BULK_LOAD: dest_local=0x40802bb0 dest_abs=0xc000000000802bb0
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: wrote 1 chunks (92576 bytes) to backing store
+[/users/alanandr/drv/element/DrvCustomRamulatorMem.cpp:80:finish]: Ramulator stats written to ramulator_system_pxn0_dram0.stats
+Simulation is complete, simulated time: 3.76857 ms
