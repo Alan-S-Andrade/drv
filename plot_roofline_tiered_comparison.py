@@ -135,10 +135,7 @@ def main():
             }
 
     # ─── Build roofline ───
-    fig, axes = plt.subplots(1, 2, figsize=(18, 8))
-
-    # === Left panel: Roofline model ===
-    ax = axes[0]
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
     oi_range = np.logspace(-3, 2, 500)
 
     # Draw rooflines for key configs
@@ -171,25 +168,29 @@ def main():
     ax.loglog(oi_range, roof_tiered, '--', color='#f28e2b', linewidth=2.5,
               label=f'16c Tiered (eff BW {tiered_eff_bw:.0f} GB/s)', alpha=0.85)
 
-    # Plot measured data points at 16 cores
+    # Plot measured data points at all core counts
     datasets = [
         (measured_baseline, 'o', '#4e79a7', 'Baseline (work stealing)'),
         (measured_tiered,   'D', '#f28e2b', 'Tiered WQ (dedicated fetcher)'),
     ]
 
+    all_gops = []
     for data, marker, color, lbl in datasets:
-        if '16c' not in data:
-            continue
-        v = data['16c']
-        achieved_gops = total_ops / v['cycles']
-        suffix = '' if data_source == 'measured' else ' (est.)'
-        ax.scatter([oi_dram], [achieved_gops], s=140, marker=marker, color=color,
-                   edgecolors='black', linewidth=0.8, zorder=5,
-                   label=f'{lbl} — 16c{suffix}')
-        ax.annotate(f"{v['cycles']/1e6:.0f}M cyc",
-                    (oi_dram, achieved_gops),
-                    textcoords='offset points', xytext=(10, -8), fontsize=8,
-                    color=color, fontweight='bold')
+        first = True
+        for key in ['1c', '2c', '4c', '8c', '16c']:
+            if key not in data:
+                continue
+            v = data[key]
+            achieved_gops = total_ops / v['cycles']
+            all_gops.append(achieved_gops)
+            label = lbl if first else None
+            first = False
+            ax.scatter([oi_dram], [achieved_gops], s=120, marker=marker, color=color,
+                       edgecolors='black', linewidth=0.8, zorder=5, label=label)
+            ax.annotate(f"{v['cores']}c: {v['cycles']/1e6:.0f}M cyc",
+                        (oi_dram, achieved_gops),
+                        textcoords='offset points', xytext=(12, 0), fontsize=8,
+                        color=color, fontweight='bold')
 
     # OI reference lines
     ax.axvline(x=oi_dram, color='orange', linestyle=':', linewidth=1.5, alpha=0.7,
@@ -205,69 +206,11 @@ def main():
     ax.set_xlim(1e-3, 100)
     ax.set_ylim(1e-3, 100)
     ax.legend(fontsize=7, loc='upper left', ncol=1)
-    ax.grid(True, which='both', alpha=0.2)
-
-    ax.text(0.005, 0.003, 'Memory\nBound', fontsize=14, color='gray', alpha=0.4,
-            fontweight='bold', ha='center')
-    ax.text(30, 0.5, 'Compute\nBound', fontsize=14, color='gray', alpha=0.4,
-            fontweight='bold', ha='center')
-
-    # === Right panel: Core scaling comparison ===
-    ax2 = axes[1]
-
-    core_counts = []
-    baseline_gops = []
-    tiered_gops = []
-
-    for key in ['1c', '2c', '4c', '8c', '16c']:
-        if key in measured_baseline:
-            ncores = measured_baseline[key]['cores']
-            core_counts.append(ncores)
-            baseline_gops.append(total_ops / measured_baseline[key]['cycles'])
-            if key in measured_tiered:
-                tiered_gops.append(total_ops / measured_tiered[key]['cycles'])
-            else:
-                tiered_gops.append(None)
-
-    # Filter None values for tiered
-    tiered_cores = [c for c, g in zip(core_counts, tiered_gops) if g is not None]
-    tiered_vals = [g for g in tiered_gops if g is not None]
-
-    ax2.semilogx(core_counts, baseline_gops, 'o-', color='#4e79a7', linewidth=2,
-                 markersize=8, label='Baseline (work stealing)')
-    if tiered_vals:
-        ax2.semilogx(tiered_cores, tiered_vals, 'D-.', color='#f28e2b', linewidth=2,
-                     markersize=8, label='Tiered WQ (dedicated fetcher)')
-
-    # Add ideal scaling line
-    if baseline_gops:
-        base_perf = baseline_gops[0]
-        ideal_x = core_counts
-        ideal_y = [base_perf * c / core_counts[0] for c in core_counts]
-        ax2.semilogx(ideal_x, ideal_y, ':', color='gray', linewidth=1.5,
-                     alpha=0.5, label='Ideal linear scaling')
-
-    ax2.set_xlabel('Number of Cores', fontsize=12)
-    ax2.set_ylabel('Throughput (GOPs)', fontsize=12)
-    ax2.set_title(f'Core Scaling: BFS Throughput ({data_source} data)\n'
-                  'RMAT 65K (scale=16, ef=16, cusp=16), 16 harts/core',
-                  fontsize=12, fontweight='bold')
-    ax2.set_xticks(core_counts)
-    ax2.set_xticklabels([str(c) for c in core_counts])
-    ax2.legend(fontsize=9, loc='upper left')
-    ax2.grid(True, alpha=0.3)
-
-    # Add speedup annotations on the 16-core points
-    if '16c' in measured_baseline and '16c' in measured_tiered:
-        baseline_16c = measured_baseline['16c']['cycles']
-        tiered_16c = measured_tiered['16c']['cycles']
-        speedup = baseline_16c / tiered_16c
-        gops = total_ops / tiered_16c
-        ax2.annotate(f'{speedup:.2f}x vs base',
-                     (16, gops),
-                     textcoords='offset points', xytext=(15, -15),
-                     fontsize=8, color='#f28e2b', fontweight='bold',
-                     arrowprops=dict(arrowstyle='->', color='#f28e2b', lw=0.8))
+    ax.grid(True, which='both', alpha=0.25)
+    ax.text(0.95, 0.05, 'Memory\nBound', transform=ax.transAxes, fontsize=10,
+            ha='right', va='bottom', color='gray', alpha=0.5, style='italic')
+    ax.text(0.05, 0.95, 'Compute\nBound', transform=ax.transAxes, fontsize=10,
+            ha='left', va='top', color='gray', alpha=0.5, style='italic')
 
     plt.tight_layout()
     out = '/users/alanandr/drv/bfs_roofline_tiered_comparison.png'

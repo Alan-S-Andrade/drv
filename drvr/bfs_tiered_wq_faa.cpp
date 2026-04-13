@@ -24,7 +24,7 @@ static constexpr const char* BENCH_LOG_PREFIX = "run_tiered_wq_faa";
 
 static constexpr int MAX_HARTS  = 1024;
 static constexpr int MAX_CORES  = 64;
-static constexpr int MAX_HARTS_PER_CORE = 16;
+static constexpr int MAX_HARTS_PER_CORE = 32;
 static constexpr int BFS_CHUNK_SIZE = 64;   // nodes per batch pop
 static constexpr int STEAL_K = 64;          // nodes per batch steal
 static constexpr int STEAL_VICTIMS = 2;     // victims probed per steal episode
@@ -165,12 +165,17 @@ static inline int64_t l1_queue_pop_chunk(int64_t* out, int64_t max_chunk) {
 
     // Validate: some or all slots may be past tail
     if (old_h >= t) {
-        // Entire reservation is invalid — no items left
+        // Entire reservation is invalid — roll back
+        atomic_fetch_add_i64(&hdr->head, -chunk);
         return 0;
     }
     // Clamp to actual available items
     int64_t actual = t - old_h;
     if (actual > chunk) actual = chunk;
+    // Roll back unused portion of the reservation
+    if (actual < chunk) {
+        atomic_fetch_add_i64(&hdr->head, -(chunk - actual));
+    }
 
     int64_t cap = hdr->capacity;
     for (int64_t i = 0; i < actual; i++) {
@@ -226,12 +231,54 @@ __l2sp__ volatile int64_t stat_fetcher_items[MAX_CORES];
 __l2sp__ volatile int64_t stat_fetcher_stall_cycles[MAX_CORES];
 __l2sp__ volatile int64_t stat_fetcher_idle_cycles[MAX_CORES];
 
+// ────────────────────── Queue Depth Sampling ──────────────────────
+static constexpr int QDEPTH_MAX_LEVELS = 64;
+static constexpr int QDEPTH_SAMPLE_INTERVAL = 32;  // sample every N loop iterations
+
+struct QDepthStats {
+    int64_t l1_sum;
+    int64_t l2_sum;
+    int64_t l1_min;
+    int64_t l1_max;
+    int64_t l2_min;
+    int64_t l2_max;
+    int64_t samples;
+    int64_t idle_samples;  // samples where both L1+L2 were 0
+};
+
+// Per-core, per-level depth stats (written by fetcher hart only)
+__l2sp__ QDepthStats qdepth[MAX_CORES][QDEPTH_MAX_LEVELS];
+
+static inline void qdepth_reset(int core, int level) {
+    if (level >= QDEPTH_MAX_LEVELS) return;
+    QDepthStats* s = &qdepth[core][level];
+    s->l1_sum = 0; s->l2_sum = 0;
+    s->l1_min = INT64_MAX; s->l1_max = 0;
+    s->l2_min = INT64_MAX; s->l2_max = 0;
+    s->samples = 0; s->idle_samples = 0;
+}
+
+static inline void qdepth_sample(int core, int level, int64_t l1d, int64_t l2d) {
+    if (level >= QDEPTH_MAX_LEVELS) return;
+    QDepthStats* s = &qdepth[core][level];
+    s->l1_sum += l1d;
+    s->l2_sum += l2d;
+    if (l1d < s->l1_min) s->l1_min = l1d;
+    if (l1d > s->l1_max) s->l1_max = l1d;
+    if (l2d < s->l2_min) s->l2_min = l2d;
+    if (l2d > s->l2_max) s->l2_max = l2d;
+    s->samples++;
+    if (l1d == 0 && l2d == 0) s->idle_samples++;
+}
+
 // ────────────────────── Barrier ──────────────────────
 __l2sp__ std::atomic<int64_t> g_count = 0;
 __l2sp__ std::atomic<int64_t> g_sense = 0;
 
 static inline int get_thread_id() {
-    return (myCoreId() << 4) + myThreadId();
+    // Use shift of 6 to support up to 64 harts/core without needing
+    // g_harts_per_core (which isn't set at first call in main())
+    return (myCoreId() << 6) + myThreadId();
 }
 
 static inline void spin_pause(int64_t iters) {
@@ -359,12 +406,18 @@ static inline int64_t queue_pop_chunk_faa(WorkQueue* q, int core_id, int64_t* ou
 
     // Validate: some or all slots may be past tail
     if (old_h >= t) {
+        // Entire reservation is invalid — roll back
+        atomic_fetch_add_i64(&q->head, -chunk);
         core_has_work[core_id] = 0;
         return 0;
     }
     // Clamp to actual available items
     int64_t actual = t - old_h;
     if (actual > chunk) actual = chunk;
+    // Roll back unused portion of the reservation
+    if (actual < chunk) {
+        atomic_fetch_add_i64(&q->head, -(chunk - actual));
+    }
     *out_begin = old_h;
     return actual;
 }
@@ -951,6 +1004,130 @@ static void compute_hart_bfs_level(int tid, int32_t level) {
     stat_idle_wait_cycles[tid] += local_idle_cycles;
 }
 
+// ────────────────────── Compute Hart with Queue Depth Sampling ──────────────────────
+// Same as compute_hart_bfs_level but hart 1 per core samples L1/L2SP depth
+static void compute_hart_bfs_level_sampled(int tid, int32_t level,
+                                            int my_core, WorkQueue* my_queue) {
+    const int harts_per_core = g_harts_per_core;
+    const int total_cores = g_total_cores;
+
+    int64_t local_processed = 0;
+    int64_t local_l1_pops = 0;
+    int64_t local_l2_pops = 0;
+    int64_t local_stolen_items = 0;
+    int64_t local_steal_attempts = 0;
+    int64_t local_steal_success = 0;
+    int64_t local_idle_cycles = 0;
+
+    int64_t local_buf[BFS_CHUNK_SIZE];
+    int64_t stolen_buf[STEAL_K];
+
+    int empty_streak = 0;
+    int64_t backoff = 4;
+    const int64_t backoff_max = 128;
+    int64_t sample_counter = 0;
+
+    uint32_t rng_state = (uint32_t)(tid + 1) * 2654435761u;
+
+    while (g_level_remaining.load(std::memory_order_acquire) > 0) {
+        // Periodic queue depth sampling
+        if ((sample_counter++ % QDEPTH_SAMPLE_INTERVAL) == 0) {
+            int64_t l1d = l1_queue_depth();
+            int64_t l2d = queue_depth(my_queue);
+            qdepth_sample(my_core, level, l1d, l2d);
+        }
+
+        // Tier 1: Pop from L1SP queue (fast path, FAA-based)
+        int64_t count = l1_queue_pop_chunk(local_buf, BFS_CHUNK_SIZE);
+        if (count > 0) {
+            for (int64_t i = 0; i < count; i++) {
+                local_processed++;
+                local_l1_pops++;
+                process_single_node(local_buf[i], level);
+                g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
+            }
+            empty_streak = 0;
+            backoff = 4;
+            continue;
+        }
+
+        // Tier 2: Pop directly from L2SP queue (FAA-based fallback)
+        {
+            int64_t begin_idx = 0;
+            count = queue_pop_chunk_faa(my_queue, my_core, &begin_idx, BFS_CHUNK_SIZE);
+            if (count > 0) {
+                for (int64_t i = 0; i < count; i++) {
+                    int64_t u = frontier_current_get(my_queue->start_idx + begin_idx + i);
+                    local_processed++;
+                    local_l2_pops++;
+                    process_single_node(u, level);
+                    g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
+                }
+                empty_streak = 0;
+                backoff = 4;
+                continue;
+            }
+        }
+
+        // Both tiers empty — wait and retry
+        empty_streak++;
+
+        if (empty_streak >= 4 && total_cores > 1 && thief_token_try_acquire()) {
+            bool found = false;
+            for (int k = 0; k < STEAL_VICTIMS; k++) {
+                rng_state = xorshift_victim(rng_state);
+                int victim = (int)(rng_state % (uint32_t)total_cores);
+                if (victim == my_core || core_has_work[victim] == 0) continue;
+
+                local_steal_attempts++;
+                int64_t begin_idx = 0;
+                count = queue_pop_chunk_faa(&core_queues[victim], victim, &begin_idx, STEAL_K);
+                if (count > 0) {
+                    local_steal_success++;
+                    found = true;
+                    for (int64_t i = 0; i < count; i++) {
+                        stolen_buf[i] = frontier_current_get(core_queues[victim].start_idx + begin_idx + i);
+                    }
+                    for (int64_t i = 0; i < count; i++) {
+                        local_processed++;
+                        local_stolen_items++;
+                        process_single_node(stolen_buf[i], level);
+                        g_level_remaining.fetch_sub(1, std::memory_order_acq_rel);
+                    }
+                    empty_streak = 0;
+                    backoff = 4;
+                    break;
+                }
+            }
+            thief_token_release();
+
+            if (!found) {
+                uint64_t ws = 0, we = 0;
+                asm volatile("rdcycle %0" : "=r"(ws));
+                wait_check_local(backoff, my_core);
+                asm volatile("rdcycle %0" : "=r"(we));
+                local_idle_cycles += (int64_t)(we - ws);
+                if (backoff < backoff_max) backoff <<= 1;
+            }
+        } else {
+            uint64_t ws = 0, we = 0;
+            asm volatile("rdcycle %0" : "=r"(ws));
+            wait_check_local(backoff, my_core);
+            asm volatile("rdcycle %0" : "=r"(we));
+            local_idle_cycles += (int64_t)(we - ws);
+            if (backoff < backoff_max) backoff <<= 1;
+        }
+    }
+
+    stat_nodes_processed[tid] += local_processed;
+    stat_l1_pops[tid] += local_l1_pops;
+    stat_l2_pops[tid] += local_l2_pops;
+    stat_stolen_items[tid] += local_stolen_items;
+    stat_steal_attempts[tid] += local_steal_attempts;
+    stat_steal_success[tid] += local_steal_success;
+    stat_idle_wait_cycles[tid] += local_idle_cycles;
+}
+
 // ────────────────────── BFS Level Dispatch ──────────────────────
 static void process_bfs_level(int tid, int32_t level) {
     const int my_local_id = tid % g_harts_per_core;
@@ -958,8 +1135,14 @@ static void process_bfs_level(int tid, int32_t level) {
     if (my_local_id == 0) {
         // Hart 0: dedicated fetcher
         fetcher_loop(tid, level);
+    } else if (my_local_id == 1) {
+        // Hart 1 on each core: compute + queue depth sampling
+        const int my_core = tid / g_harts_per_core;
+        WorkQueue* my_queue = &core_queues[my_core];
+        qdepth_reset(my_core, level);
+        compute_hart_bfs_level_sampled(tid, level, my_core, my_queue);
     } else {
-        // Harts 1..N-1: compute harts
+        // Harts 2..N-1: compute harts
         compute_hart_bfs_level(tid, level);
     }
 }
@@ -1003,7 +1186,7 @@ static int64_t count_total_work() {
     int64_t total = 0;
     for (int c = 0; c < g_total_cores; c++) {
         int64_t count = core_queues[c].tail - core_queues[c].head;
-        total += count;
+        if (count > 0) total += count;  // FAA may push head past tail
     }
     return total;
 }
@@ -1133,7 +1316,7 @@ static void bfs() {
 
         barrier();
 
-        if (total_work == 0) break;
+        if (total_work <= 0) break;
 
         if (tid == 0) {
             std::printf("Level %d: total_work=%ld, discovered=%ld\n",
@@ -1275,6 +1458,47 @@ static void bfs() {
                     (long)total_l1, (long)total_l2, (long)total_stolen,
                     (long)grand_fetch_ops, (long)grand_fetch_items);
 
+        // Queue depth report
+        std::printf("\n=== Queue Depth per Level per Core ===\n");
+        std::printf("Core | Level | L1avg | L1min | L1max | L2avg | L2min | L2max | Samples | Idle(%%) \n");
+        std::printf("-----|-------|-------|-------|-------|-------|-------|-------|---------|--------\n");
+        for (int c = 0; c < g_total_cores; c++) {
+            for (int lv = 0; lv < level && lv < QDEPTH_MAX_LEVELS; lv++) {
+                QDepthStats* s = &qdepth[c][lv];
+                if (s->samples == 0) continue;
+                int64_t l1avg = s->l1_sum / s->samples;
+                int64_t l2avg = s->l2_sum / s->samples;
+                int64_t idle_pct = 100 * s->idle_samples / s->samples;
+                std::printf("%4d | %5d | %5ld | %5ld | %5ld | %5ld | %5ld | %5ld | %7ld | %5ld%%\n",
+                            c, lv, (long)l1avg,
+                            (long)(s->l1_min == INT64_MAX ? 0 : s->l1_min), (long)s->l1_max,
+                            (long)l2avg,
+                            (long)(s->l2_min == INT64_MAX ? 0 : s->l2_min), (long)s->l2_max,
+                            (long)s->samples, (long)idle_pct);
+            }
+        }
+
+        // Aggregate idle summary
+        std::printf("\nQDEPTH_SUMMARY:");
+        for (int lv = 0; lv < level && lv < QDEPTH_MAX_LEVELS; lv++) {
+            int64_t total_samples = 0, total_idle_samples = 0;
+            int64_t total_l1_sum = 0, total_l2_sum = 0;
+            for (int c = 0; c < g_total_cores; c++) {
+                QDepthStats* s = &qdepth[c][lv];
+                total_samples += s->samples;
+                total_idle_samples += s->idle_samples;
+                total_l1_sum += s->l1_sum;
+                total_l2_sum += s->l2_sum;
+            }
+            if (total_samples > 0) {
+                std::printf(" lv%d:L1avg=%ld,L2avg=%ld,idle=%ld%%",
+                            lv, (long)(total_l1_sum / total_samples),
+                            (long)(total_l2_sum / total_samples),
+                            (long)(100 * total_idle_samples / total_samples));
+            }
+        }
+        std::printf("\n");
+
         dump_traces();
 
         // Release dynamically-allocated memory
@@ -1305,13 +1529,14 @@ static void bfs() {
 }
 
 int main(int argc, char** argv) {
-    const int tid = get_thread_id();
+    // Every hart sets globals before the first barrier to avoid a race
+    // where other harts read g_total_harts=0 inside barrier().
+    // All harts query the same hardware values, so writes are idempotent.
+    g_total_cores = numPodCores();
+    g_harts_per_core = myCoreThreads();
+    g_total_harts = g_total_cores * g_harts_per_core;
 
-    if (tid == 0) {
-        g_total_cores = numPodCores();
-        g_harts_per_core = myCoreThreads();
-        g_total_harts = g_total_cores * g_harts_per_core;
-    }
+    const int tid = get_thread_id();
 
     barrier();
     bfs();

@@ -618,6 +618,15 @@ drvr_test_build_properties(bfs_ws_utilization
   DRV_BUILD_CORE_THREADS 16
 )
 
+# BFS shared L2SP queue + FAA (fetch-and-add replaces CAS)
+drvr_test_with_pandohammer(bfs_shared_queue_faa bfs_shared_queue_faa.cpp)
+drvr_test_build_properties(bfs_shared_queue_faa
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 2
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+)
+
 # open; currently broken (fix would be in RISCVSimulator)
 if (FALSE)
   drvr_test_with_pandohammer(open open.c)

@@ -2008,6 +2008,19 @@ drvr-run-bfs_ws_utilization/fast:
 .PHONY : drvr-run-bfs_ws_utilization/fast
 
 #=============================================================================
+# Target rules for targets named drvr-run-bfs_shared_queue_faa
+
+# Build rule for target.
+drvr-run-bfs_shared_queue_faa: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr-run-bfs_shared_queue_faa
+.PHONY : drvr-run-bfs_shared_queue_faa
+
+# fast build rule for target.
+drvr-run-bfs_shared_queue_faa/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/build
+.PHONY : drvr-run-bfs_shared_queue_faa/fast
+
+#=============================================================================
 # Target rules for targets named drvr-run-all
 
 # Build rule for target.
@@ -2052,6 +2065,7 @@ help:
 	@echo "... drvr-run-bfs_multi_sw_l2sp"
 	@echo "... drvr-run-bfs_multihart"
 	@echo "... drvr-run-bfs_nosteal_baseline"
+	@echo "... drvr-run-bfs_shared_queue_faa"
 	@echo "... drvr-run-bfs_tiered_wq"
 	@echo "... drvr-run-bfs_tiered_wq_faa"
 	@echo "... drvr-run-bfs_work_stealing"

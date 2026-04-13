@@ -1123,6 +1123,19 @@ drvr_bfs_ws_utilization/fast:
 	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_ws_utilization.dir/build.make drvr/CMakeFiles/drvr_bfs_ws_utilization.dir/build
 .PHONY : drvr_bfs_ws_utilization/fast
 
+#=============================================================================
+# Target rules for targets named drvr_bfs_shared_queue_faa
+
+# Build rule for target.
+drvr_bfs_shared_queue_faa: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr_bfs_shared_queue_faa
+.PHONY : drvr_bfs_shared_queue_faa
+
+# fast build rule for target.
+drvr_bfs_shared_queue_faa/fast:
+	$(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build
+.PHONY : drvr_bfs_shared_queue_faa/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1155,6 +1168,7 @@ help:
 	@echo "... drvr_bfs_multi_sw_l2sp"
 	@echo "... drvr_bfs_multihart"
 	@echo "... drvr_bfs_nosteal_baseline"
+	@echo "... drvr_bfs_shared_queue_faa"
 	@echo "... drvr_bfs_tiered_wq"
 	@echo "... drvr_bfs_tiered_wq_faa"
 	@echo "... drvr_bfs_work_stealing"

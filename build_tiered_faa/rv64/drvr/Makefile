@@ -1169,6 +1169,20 @@ drvr_bfs_ws_utilization/fast:
 	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_ws_utilization.dir/build.make drvr/CMakeFiles/drvr_bfs_ws_utilization.dir/build
 .PHONY : drvr_bfs_ws_utilization/fast
 
+# Convenience name for target.
+drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/rule:
+	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/rule
+.PHONY : drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/rule
+
+# Convenience name for target.
+drvr_bfs_shared_queue_faa: drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/rule
+.PHONY : drvr_bfs_shared_queue_faa
+
+# fast build rule for target.
+drvr_bfs_shared_queue_faa/fast:
+	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build
+.PHONY : drvr_bfs_shared_queue_faa/fast
+
 add.obj: add.S.obj
 .PHONY : add.obj
 
@@ -1443,6 +1457,30 @@ bfs_multihart.s: bfs_multihart.cpp.s
 bfs_multihart.cpp.s:
 	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_multihart.dir/build.make drvr/CMakeFiles/drvr_bfs_multihart.dir/bfs_multihart.cpp.s
 .PHONY : bfs_multihart.cpp.s
+
+bfs_shared_queue_faa.obj: bfs_shared_queue_faa.cpp.obj
+.PHONY : bfs_shared_queue_faa.obj
+
+# target to build an object file
+bfs_shared_queue_faa.cpp.obj:
+	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/bfs_shared_queue_faa.cpp.obj
+.PHONY : bfs_shared_queue_faa.cpp.obj
+
+bfs_shared_queue_faa.i: bfs_shared_queue_faa.cpp.i
+.PHONY : bfs_shared_queue_faa.i
+
+# target to preprocess a source file
+bfs_shared_queue_faa.cpp.i:
+	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/bfs_shared_queue_faa.cpp.i
+.PHONY : bfs_shared_queue_faa.cpp.i
+
+bfs_shared_queue_faa.s: bfs_shared_queue_faa.cpp.s
+.PHONY : bfs_shared_queue_faa.s
+
+# target to generate assembly for a file
+bfs_shared_queue_faa.cpp.s:
+	cd /users/alanandr/drv/build_tiered_faa/rv64 && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr_bfs_shared_queue_faa.dir/bfs_shared_queue_faa.cpp.s
+.PHONY : bfs_shared_queue_faa.cpp.s
 
 bfs_sw_hw_multi_barrier.obj: bfs_sw_hw_multi_barrier.cpp.obj
 .PHONY : bfs_sw_hw_multi_barrier.obj
@@ -2937,6 +2975,7 @@ help:
 	@echo "... drvr_bfs_multi_sw_l2sp"
 	@echo "... drvr_bfs_multihart"
 	@echo "... drvr_bfs_nosteal_baseline"
+	@echo "... drvr_bfs_shared_queue_faa"
 	@echo "... drvr_bfs_tiered_wq"
 	@echo "... drvr_bfs_tiered_wq_faa"
 	@echo "... drvr_bfs_work_stealing"
@@ -3024,6 +3063,9 @@ help:
 	@echo "... bfs_multihart.obj"
 	@echo "... bfs_multihart.i"
 	@echo "... bfs_multihart.s"
+	@echo "... bfs_shared_queue_faa.obj"
+	@echo "... bfs_shared_queue_faa.i"
+	@echo "... bfs_shared_queue_faa.s"
 	@echo "... bfs_sw_hw_multi_barrier.obj"
 	@echo "... bfs_sw_hw_multi_barrier.i"
 	@echo "... bfs_sw_hw_multi_barrier.s"

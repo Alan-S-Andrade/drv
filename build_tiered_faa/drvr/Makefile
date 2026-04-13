@@ -1170,6 +1170,20 @@ drvr-run-bfs_ws_utilization/fast:
 .PHONY : drvr-run-bfs_ws_utilization/fast
 
 # Convenience name for target.
+drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/rule:
+	cd /users/alanandr/drv/build_tiered_faa && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/rule
+.PHONY : drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/rule
+
+# Convenience name for target.
+drvr-run-bfs_shared_queue_faa: drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/rule
+.PHONY : drvr-run-bfs_shared_queue_faa
+
+# fast build rule for target.
+drvr-run-bfs_shared_queue_faa/fast:
+	cd /users/alanandr/drv/build_tiered_faa && $(MAKE) $(MAKESILENT) -f drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/build.make drvr/CMakeFiles/drvr-run-bfs_shared_queue_faa.dir/build
+.PHONY : drvr-run-bfs_shared_queue_faa/fast
+
+# Convenience name for target.
 drvr/CMakeFiles/drvr-run-all.dir/rule:
 	cd /users/alanandr/drv/build_tiered_faa && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 drvr/CMakeFiles/drvr-run-all.dir/rule
 .PHONY : drvr/CMakeFiles/drvr-run-all.dir/rule
@@ -1215,6 +1229,7 @@ help:
 	@echo "... drvr-run-bfs_multi_sw_l2sp"
 	@echo "... drvr-run-bfs_multihart"
 	@echo "... drvr-run-bfs_nosteal_baseline"
+	@echo "... drvr-run-bfs_shared_queue_faa"
 	@echo "... drvr-run-bfs_tiered_wq"
 	@echo "... drvr-run-bfs_tiered_wq_faa"
 	@echo "... drvr-run-bfs_work_stealing"
