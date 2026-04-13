@@ -52,6 +52,7 @@ static constexpr int MAX_PODS  = 8;
 static constexpr int BFS_CHUNK_SIZE = 8;      // Vertices per CAS pop batch
 static constexpr int LOCAL_BUF_SIZE = 32;     // Per-hart discovery buffer
 static constexpr int STEAL_CHUNK_SIZE = 16;   // Vertices per DRAM steal batch
+static constexpr int REFILL_SIZE = 128;       // Vertices refilled from DRAM pool into shared queue
 
 // L1SP data region layout
 static constexpr uintptr_t L1SP_DATA_START = 16;
@@ -200,6 +201,7 @@ __l2sp__ ws::BarrierState<MAX_HARTS> g_barrier;
 
 // Shared queue (indexes into current frontier buffer)
 __l2sp__ SharedQueue shared_queue;
+__l2sp__ volatile int32_t sq_refill_lock;   // 0=unlocked, 1=refilling, 2=pool_exhausted
 
 // Graph parameters (local)
 __l2sp__ int32_t g_N;           // total vertices (global)
@@ -306,25 +308,28 @@ static inline void frontier_set(int buf, int64_t idx, int64_t val) {
     *frontier_ptr(buf, idx) = val;
 }
 
-// ---------- Shared Queue CAS Pop (L2SP, intra-pod) ----------
+// ---------- Shared Queue Fetch-Add Pop (L2SP, intra-pod) ----------
+// Safe with refill-when-empty: refill only happens when all harts have
+// stopped popping (queue empty), so no concurrent fetch-add can overshoot
+// past a refilled region.
 static inline int64_t sq_pop_chunk(int64_t *out_buf, int64_t max_chunk) {
-    // TTAS: volatile pre-check
+    // TTAS: volatile pre-check to avoid unnecessary atomics
     int64_t h = shared_queue.head;
     int64_t t = shared_queue.tail;
     if (h >= t) return 0;
 
-    // Atomic check + CAS
-    h = atomic_load_i64(&shared_queue.head);
+    // Fetch-and-add: always succeeds, no retries
+    int64_t old_h = atomic_fetch_add_i64(&shared_queue.head, max_chunk);
     t = atomic_load_i64(&shared_queue.tail);
-    if (h >= t) return 0;
 
-    int64_t avail = t - h;
-    int64_t k = (avail < max_chunk) ? avail : max_chunk;
-    int64_t old_h = atomic_compare_and_swap_i64(&shared_queue.head, h, h + k);
-    if (old_h != h) return 0;
+    if (old_h >= t) return 0;  // overshot, no work left
+
+    // Clamp chunk to available work
+    int64_t k = max_chunk;
+    if (old_h + k > t) k = t - old_h;
 
     for (int64_t i = 0; i < k; i++) {
-        out_buf[i] = frontier_get(cur_buf, h + i);
+        out_buf[i] = frontier_get(cur_buf, old_h + i);
     }
     return k;
 }
@@ -421,7 +426,13 @@ static void process_bfs_level(int tid, int32_t level)
     int64_t disc_buf[LOCAL_BUF_SIZE];
     int disc_count = 0;
 
-    // Phase 1: Drain local shared queue
+    // Phase 1+2: Drain shared queue, refill from own DRAM pool when empty.
+    // Refill only happens when all harts have stopped popping (queue empty),
+    // so fetch-add is safe — no concurrent pops during tail extension.
+    // sq_refill_lock: 0=unlocked, 1=refilling, 2=pool_exhausted
+    {
+    DRAMWorkPool *own_pool = &g_work_pool[my_pod];
+
     while (true) {
         int64_t count = sq_pop_chunk(chunk_buf, BFS_CHUNK_SIZE);
 
@@ -433,32 +444,43 @@ static void process_bfs_level(int tid, int32_t level)
                               disc_buf, &disc_count, &local_edges);
             }
         } else {
-            // Flush pending before checking termination
+            // Flush pending discoveries
             if (disc_count > 0) {
                 flush_discoveries(disc_buf, disc_count, next_buf);
                 disc_count = 0;
             }
-            // Confirm queue is truly empty
+
+            // Queue empty — try refilling from own DRAM pool
+            if (sq_refill_lock != 2) {
+                if (atomic_compare_and_swap_i32(&sq_refill_lock, 0, 1) == 0) {
+                    // Won lock: bulk-copy from DRAM pool into shared queue
+                    int64_t refill_buf[REFILL_SIZE];
+                    int64_t got = dram_pool_steal(own_pool, refill_buf, REFILL_SIZE);
+                    if (got > 0) {
+                        int64_t old_tail = atomic_load_i64(&shared_queue.tail);
+                        for (int64_t i = 0; i < got; i++) {
+                            frontier_set(cur_buf, old_tail + i, refill_buf[i]);
+                        }
+                        atomic_fetch_add_i64(&shared_queue.tail, got);
+                        sq_refill_lock = 0;  // unlock, more may remain
+                    } else {
+                        sq_refill_lock = 2;  // pool exhausted, stop trying
+                    }
+                    continue;  // retry pop
+                } else {
+                    // Another hart is refilling — wait and retry
+                    hartsleep(1);
+                    continue;
+                }
+            }
+
+            // Both shared queue and own DRAM pool exhausted
             int64_t h = atomic_load_i64(&shared_queue.head);
             int64_t t = atomic_load_i64(&shared_queue.tail);
-            if (h >= t) break;
-            hartsleep(1);
+            if (h < t) continue;  // race: refill just completed
+            break;
         }
     }
-
-    // Phase 2: Drain own pod's DRAM work pool (spilled excess)
-    {
-        DRAMWorkPool *own_pool = &g_work_pool[my_pod];
-        while (true) {
-            int64_t count = dram_pool_steal(own_pool, chunk_buf, STEAL_CHUNK_SIZE);
-            if (count <= 0) break;
-            for (int64_t i = 0; i < count; i++) {
-                int32_t u = (int32_t)chunk_buf[i];
-                local_processed++;
-                expand_vertex(u, level, next_buf, my_pod, N_local,
-                              disc_buf, &disc_count, &local_edges);
-            }
-        }
     }
 
     // Phase 3: Try stealing from other pods' DRAM work pools
@@ -518,7 +540,7 @@ done_stealing:
 // ---------- Frontier Memory Allocation (L2SP -> L1SP -> DRAM) ----------
 static bool alloc_frontier_storage(uintptr_t *l2sp_heap, uintptr_t l2sp_limit,
                                    uintptr_t *l1sp_heap_off, uintptr_t l1sp_data_end,
-                                   int32_t N)
+                                   int32_t N, int spill_pct)
 {
     frontier_l2sp_cap = 0;
     frontier_l1sp_cap = 0;
@@ -589,8 +611,8 @@ static bool alloc_frontier_storage(uintptr_t *l2sp_heap, uintptr_t l2sp_limit,
         }
     }
 
-    // Spill threshold: 75% of local frontier capacity
-    frontier_spill_threshold = (frontier_total_cap * 3) / 4;
+    // Spill threshold: spill_pct% of local frontier capacity
+    frontier_spill_threshold = (frontier_total_cap * spill_pct) / 100;
 
     return true;
 }
@@ -600,17 +622,22 @@ extern "C" int main(int argc, char **argv)
 {
     int vtx_per_thread = DEFAULT_VTX_PER_THREAD;
     int degree         = DEFAULT_DEGREE;
+    int spill_pct      = 75;  // Spill threshold as % of frontier capacity (0-100)
 
     for (int i = 1; i < argc; ++i) {
         if (!strcmp(argv[i], "--V") && i + 1 < argc)
             vtx_per_thread = parse_i(argv[++i], vtx_per_thread);
         else if (!strcmp(argv[i], "--D") && i + 1 < argc)
             degree = parse_i(argv[++i], degree);
+        else if (!strcmp(argv[i], "--spill-pct") && i + 1 < argc)
+            spill_pct = parse_i(argv[++i], spill_pct);
         else if (!strcmp(argv[i], "--help")) {
-            std::printf("Usage: %s --V <vtx/thread> --D <degree>\n", argv[0]);
+            std::printf("Usage: %s --V <vtx/thread> --D <degree> --spill-pct <0-100>\n", argv[0]);
             return 0;
         }
     }
+    if (spill_pct < 0) spill_pct = 0;
+    if (spill_pct > 100) spill_pct = 100;
 
     // ---- Hardware topology ----
     const int hart_in_core   = myThreadId();
@@ -718,8 +745,8 @@ extern "C" int main(int argc, char **argv)
 
         // Allocate DRAM work pools (one per pod)
         {
-            // Each pool can hold up to N_local / 4 entries (25% of partition)
-            int64_t pool_cap = N_local / 4;
+            // Pool capacity matches spill threshold: holds everything that gets spilled
+            int64_t pool_cap = (int64_t)N_local * (100 - spill_pct) / 100;
             if (pool_cap < 1024) pool_cap = 1024;
 
             for (int p = 0; p < num_pods; p++) {
@@ -841,7 +868,7 @@ pod0_init_done:
         uintptr_t l1sp_data_end = L1SP_DATA_START + (uintptr_t)g_l1sp_data_bytes_per_core;
 
         if (!alloc_frontier_storage(&l2sp_heap, l2sp_limit,
-                                    &l1sp_heap_off, l1sp_data_end, g_dram_N_local)) {
+                                    &l1sp_heap_off, l1sp_data_end, g_dram_N_local, spill_pct)) {
             std::printf("ERROR: Pod %d frontier alloc failed\n", pod_in_pxn);
             g_N_local = 0;
         } else {
@@ -859,8 +886,8 @@ pod0_init_done:
                                 g_total_cores);
                 }
                 std::printf("  DRAM: %ld entries\n", (long)dram_entries);
-                std::printf("  Spill threshold: %ld entries\n\n",
-                            (long)frontier_spill_threshold);
+                std::printf("  Spill threshold: %ld entries (%d%%)\n\n",
+                            (long)frontier_spill_threshold, spill_pct);
             }
 
             // Set up initial frontier: source vertex (only owning pod)
@@ -946,6 +973,7 @@ pod0_init_done:
 
             shared_queue.head = 0;
             shared_queue.tail = local_count;
+            sq_refill_lock = 0;
             frontier_tail[cur_buf ^ 1] = 0;
         }
         barrier();

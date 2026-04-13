@@ -1,17 +1,17 @@
 // bfs_csr_shared_queue.cpp
-// Level-synchronous CSR BFS with L1SP queues, L2SP overflow, and work stealing.
+// Level-synchronous CSR BFS with shared-queue load balancing (ROI-only).
 //
-// Architecture:
-//   1. At level start, hart 0 distributes frontier round-robin into per-core
-//      L1SP queues (bounded). Excess goes to shared L2SP queue.
-//   2. Harts pop from their core's L1SP queue (CAS, 16-way contention).
-//   3. When L1SP empty, one hart refills from shared L2SP queue (fetch-add).
-//   4. When L2SP also empty, steal from the fullest L1SP queue of another core.
-//   5. Discoveries go to a separate next-frontier buffer (level-synchronous).
+// Per-vertex frontier with shared queue (contrast with bitmap + work-stealing):
+//   - Frontier stored as explicit vertex list, tiered L2SP -> L1SP -> DRAM
+//   - ALL harts CAS-pop vertex indices from ONE shared queue
+//   - Whoever finishes first grabs more work — natural load balancing
+//   - No per-core queues, no steal logic, no victim selection
+//   - Discovery via CAS on dist[] (no separate visited array)
+//   - Next frontier built via atomic tail + batched local buffer flush
 //
 // Memory layout:
-//   L1SP: per-core local queue items (fast pop, absolute addressing)
-//   L2SP: per-core queue control (head/tail/lock), shared queue, frontier, stats
+//   L2SP: shared queue head/tail, frontier storage (hot entries), barrier, stats
+//   L1SP: frontier overflow (distributed across cores, absolute addressing)
 //   DRAM: CSR graph (row_ptr, col_idx), dist[], frontier overflow
 //
 // Graph bulk-loaded from file via MMIO (same as bfs_csr_work_stealing.cpp).
@@ -40,41 +40,21 @@
 #define DEFAULT_DEGREE 16
 #endif
 
-static constexpr int MAX_HARTS = 2048;
+static constexpr int MAX_HARTS = 1024;
 static constexpr int MAX_CORES = 64;
-static constexpr int BFS_CHUNK_SIZE = 8;      // Vertices per local queue pop
+static constexpr int BFS_CHUNK_SIZE = 8;      // Vertices per CAS pop batch
 static constexpr int LOCAL_BUF_SIZE = 32;     // Per-hart discovery buffer (flushed in batch)
 
-// Per-core local queue in L1SP
-static constexpr int CORE_Q_CAP = 256;        // Power-of-2 circular buffer capacity
-static constexpr int CORE_Q_MASK = CORE_Q_CAP - 1;
-static constexpr int REFILL_SIZE = 128;       // Vertices taken from shared queue per refill
-static constexpr int STEAL_SIZE = 64;         // Vertices stolen from another core's L1SP queue
-
-// L1SP layout: [0..16) padding, [16..16+CORE_Q_CAP*8) queue items, rest for frontier
-static constexpr uintptr_t L1SP_ALIGN_PAD = 16;
-static constexpr uintptr_t CORE_Q_L1SP_OFFSET = L1SP_ALIGN_PAD;
-static constexpr uintptr_t L1SP_DATA_START = CORE_Q_L1SP_OFFSET + CORE_Q_CAP * sizeof(int64_t);
+// L1SP data region layout
+static constexpr uintptr_t L1SP_DATA_START = 16;     // After alignment padding
 static constexpr uintptr_t L1SP_STACK_GUARD = 5120;  // 5KB guard for stack growth
 
-// ---------- Per-Core Queue Control (in L2SP) ----------
-// Padded to 64 bytes to avoid false sharing between cores.
-// Items array lives in L1SP (via absolute addressing).
-struct alignas(64) CoreQueueCtrl {
-    volatile int64_t head;        // next to pop (monotonically increasing, CAS-advanced)
-    volatile int64_t read_head;   // advanced after items are fully read (safe-to-overwrite boundary)
-    volatile int64_t tail;        // end of valid entries (monotonically increasing)
-    volatile int32_t refill_lock; // 0=unlocked, 1=refilling
-    int32_t _pad0;
-    int64_t _pad1[2];             // pad to 64 bytes total
-};
-
 // ---------- Shared Queue ----------
-// Global work pool in L2SP. Cores steal chunks via fetch-add.
-// Head and tail on separate cache lines to avoid false sharing.
+// Simple head/tail into double-buffered frontier storage.
+// All harts CAS-pop from head. No separate item array needed.
 struct SharedQueue {
-    alignas(64) volatile int64_t head;
-    alignas(64) volatile int64_t tail;
+    volatile int64_t head;
+    volatile int64_t tail;
 };
 
 // ---------- Helpers ----------
@@ -132,9 +112,6 @@ __l2sp__ ws::BarrierState<MAX_HARTS> g_barrier;
 // Shared queue (indexes into current frontier buffer)
 __l2sp__ SharedQueue shared_queue;
 
-// Per-core local queue control (items in L1SP)
-__l2sp__ CoreQueueCtrl core_q[MAX_CORES];
-
 // Graph parameters
 __l2sp__ int32_t g_N;
 __l2sp__ int32_t g_degree;
@@ -148,10 +125,6 @@ __l2sp__ int32_t *g_dist;
 
 // Control
 __l2sp__ volatile int g_sim_exit;
-__l2sp__ volatile int32_t g_frontier_error;   // set to 1 on frontier overflow
-
-// Quiescence: tracks harts actively processing work (for safe termination)
-__l2sp__ volatile int64_t g_active_harts;
 
 // Reduction accumulators
 __l2sp__ volatile int64_t g_sum_dist;
@@ -162,14 +135,11 @@ __l2sp__ volatile int32_t g_max_dist;
 __l2sp__ volatile int64_t stat_nodes_processed[MAX_HARTS];
 __l2sp__ volatile int64_t stat_edges_per_core[MAX_CORES];
 __l2sp__ volatile int64_t stat_nodes_per_core[MAX_CORES];
-__l2sp__ volatile int64_t stat_steals_per_core[MAX_CORES];
 
 // ---------- Double-buffered frontier (L2SP -> L1SP -> DRAM) ----------
 // Two buffers: cur_buf and cur_buf^1.  Swapped each level (no data copy).
 __l2sp__ volatile int cur_buf;                  // 0 or 1
-// Each tail on its own cache line to avoid false sharing under atomic fetch-add
-struct alignas(64) FrontierTail { volatile int64_t val; };
-__l2sp__ FrontierTail frontier_tail[2];
+__l2sp__ volatile int64_t frontier_tail[2];    // next-push index per buffer
 
 // L2SP tier
 __l2sp__ int64_t *frontier_l2sp[2];
@@ -239,255 +209,45 @@ static inline void frontier_set(int buf, int64_t idx, int64_t val) {
     *frontier_ptr(buf, idx) = val;
 }
 
-// ---------- Per-Core Local Queue Operations ----------
-// Items stored in L1SP circular buffer, control (head/tail/lock) in L2SP.
-// Only 16 harts per core contend on each core's queue — CAS nearly always succeeds.
-
-// Get pointer to core's queue items in L1SP (via absolute addressing)
-static inline volatile int64_t* core_q_items(int core_id) {
-    return (volatile int64_t*)(g_l1sp_abs_base[core_id] + CORE_Q_L1SP_OFFSET);
-}
-
-// Batch pop from core's local queue. Returns count (0 if empty or contention).
-static inline int64_t core_q_pop_chunk(int my_core, int64_t *out_buf, int64_t max_k) {
-    CoreQueueCtrl* q = &core_q[my_core];
-
-    // TTAS: volatile pre-check
-    int64_t h = q->head;
-    int64_t t = q->tail;
+// ---------- Shared Queue Fetch-Add Pop ----------
+// All harts pop batches from the shared queue (indexes into current frontier).
+// Uses fetch-and-add instead of CAS to eliminate retry-induced contention.
+static inline int64_t sq_pop_chunk(int64_t *out_buf, int64_t max_chunk) {
+    // TTAS: volatile pre-check to avoid unnecessary atomics
+    int64_t h = shared_queue.head;
+    int64_t t = shared_queue.tail;
     if (h >= t) return 0;
 
-    // CAS phase (16-way contention on L2SP — nearly always succeeds)
-    h = atomic_load_i64(&q->head);
-    t = q->tail;
-    if (h >= t) return 0;
+    // Fetch-and-add: always succeeds, no retries
+    int64_t old_h = atomic_fetch_add_i64(&shared_queue.head, max_chunk);
+    t = atomic_load_i64(&shared_queue.tail);
 
-    int64_t avail = t - h;
-    int64_t k = (avail < max_k) ? avail : max_k;
+    if (old_h >= t) return 0;  // overshot, no work left
 
-    int64_t old_h = atomic_compare_and_swap_i64(&q->head, h, h + k);
-    if (old_h != h) return 0;  // contention, caller retries
+    // Clamp chunk to available work
+    int64_t k = max_chunk;
+    if (old_h + k > t) k = t - old_h;
 
-    // Fence: ensure L1SP item reads see writes that preceded the tail update
-    asm volatile("fence r,r" ::: "memory");
-
-    // Read items from L1SP circular buffer
-    volatile int64_t* items = core_q_items(my_core);
+    // Read vertex IDs from current frontier buffer
     for (int64_t i = 0; i < k; i++) {
-        out_buf[i] = items[(old_h + i) & CORE_Q_MASK];
-    }
-
-    // Advance read_head to signal these slots are safe to overwrite.
-    // This prevents a concurrent refiller from overwriting slots we just read.
-    // Use CAS loop since multiple harts may advance read_head concurrently.
-    int64_t rh = q->read_head;
-    while (rh < old_h + k) {
-        int64_t new_rh = old_h + k;
-        int64_t prev = atomic_compare_and_swap_i64(&q->read_head, rh, new_rh);
-        if (prev == rh) break;
-        rh = prev;
+        out_buf[i] = frontier_get(cur_buf, old_h + i);
     }
     return k;
-}
-
-// Try to refill core's local queue from the shared L2SP queue.
-// Returns: 1 = refilled (or already has work), 0 = busy (another hart refilling),
-//         -1 = globally empty (no more work in shared queue)
-static inline int core_q_try_refill(int my_core) {
-    CoreQueueCtrl* q = &core_q[my_core];
-
-    // Try to acquire refill lock
-    if (atomic_compare_and_swap_i32(&q->refill_lock, 0, 1) != 0)
-        return 0;  // another hart is refilling
-
-    // Double-check: queue might have been refilled between our pop and lock
-    if (q->tail > atomic_load_i64(&q->head)) {
-        q->refill_lock = 0;
-        return 1;  // already has work
-    }
-
-    // Compute available buffer space using read_head (not head), so we don't
-    // overwrite slots that a cross-core thief may still be reading from.
-    volatile int64_t* items = core_q_items(my_core);
-    int64_t base = q->tail;
-    int64_t safe_head = atomic_load_i64(&q->read_head);
-    int64_t space = CORE_Q_CAP - (base - safe_head);
-    int64_t refill_amt = (space < REFILL_SIZE) ? space : (int64_t)REFILL_SIZE;
-    if (refill_amt <= 0) {
-        q->refill_lock = 0;
-        return 0;  // no space, retry later
-    }
-
-    // Claim items from the shared L2SP queue via fetch-add
-    int64_t old_h = atomic_fetch_add_i64(&shared_queue.head, refill_amt);
-    int64_t t = atomic_load_i64(&shared_queue.tail);
-
-    if (old_h >= t) {
-        q->refill_lock = 0;
-        return -1;  // globally empty
-    }
-
-    int64_t actual = refill_amt;
-    if (old_h + actual > t) actual = t - old_h;
-
-    // Copy vertex IDs from frontier storage to local L1SP queue
-    for (int64_t i = 0; i < actual; i++) {
-        items[(base + i) & CORE_Q_MASK] = frontier_get(cur_buf, old_h + i);
-    }
-
-    // Fence: ensure L1SP item writes are globally visible before tail update
-    asm volatile("fence w,w" ::: "memory");
-
-    // Publish: update tail makes items visible to other harts
-    q->tail = base + actual;
-    q->refill_lock = 0;
-    return 1;
 }
 
 // ---------- Next Frontier Batch Push ----------
 // Flush local discovery buffer to next frontier in one atomic tail bump.
 static inline void flush_discoveries(int64_t *buf, int count, int next_buf) {
     if (count <= 0) return;
-    int64_t base = atomic_fetch_add_i64(&frontier_tail[next_buf].val, (int64_t)count);
+    int64_t base = atomic_fetch_add_i64(&frontier_tail[next_buf], (int64_t)count);
     if (base + count > frontier_total_cap) {
         std::printf("ERROR: frontier overflow at index %ld (cap=%ld)\n",
                     (long)(base + count), (long)frontier_total_cap);
-        g_frontier_error = 1;
         return;
     }
     for (int i = 0; i < count; i++) {
         frontier_set(next_buf, base + i, buf[i]);
     }
-}
-
-// ---------- Distribute Frontier into L1SP Queues ----------
-// Hart 0 calls this at level start. Distributes frontier entries round-robin
-// into per-core L1SP queues (up to CORE_Q_CAP each). Overflow stays in the
-// frontier buffer, accessible via the shared L2SP queue.
-static void distribute_frontier() {
-    int64_t fsize = frontier_tail[cur_buf].val;
-    int nc = g_total_cores;
-
-    // Distribute frontier to L1SP queues. Use ceiling division so small
-    // frontiers still land in fast L1SP rather than falling through to L2SP.
-    int64_t per_core = (fsize + nc - 1) / nc;  // ceiling division
-    if (per_core > CORE_Q_CAP) per_core = CORE_Q_CAP;
-
-    int64_t distributed = 0;
-    for (int c = 0; c < nc; c++) {
-        int64_t remaining = fsize - distributed;
-        int64_t count = (per_core < remaining) ? per_core : remaining;
-        if (count < 0) count = 0;
-
-        if (count > 0) {
-            volatile int64_t* items = core_q_items(c);
-            for (int64_t i = 0; i < count; i++) {
-                items[i] = frontier_get(cur_buf, distributed + i);
-            }
-        }
-        asm volatile("fence w,w" ::: "memory");
-        core_q[c].head = 0;
-        core_q[c].read_head = 0;
-        core_q[c].tail = count;
-        core_q[c].refill_lock = 0;
-        distributed += count;
-    }
-
-    // Remaining frontier entries accessible via shared L2SP queue
-    shared_queue.head = distributed;
-    shared_queue.tail = fsize;
-}
-
-// ---------- Work Stealing from Another Core's L1SP Queue ----------
-// Scans all cores, finds the one with the most items, steals a fixed chunk.
-// Returns: 1 = stole work, 0 = contention (retry), -1 = nothing to steal.
-static inline int steal_from_fullest(int my_core) {
-    CoreQueueCtrl* myq = &core_q[my_core];
-
-    // Check shared queue BEFORE acquiring lock — prefer L2SP refill over stealing
-    if (atomic_load_i64(&shared_queue.head) < atomic_load_i64(&shared_queue.tail))
-        return 0;  // let normal refill path handle it
-
-    // Acquire our refill lock (only one hart per core attempts steal)
-    if (atomic_compare_and_swap_i32(&myq->refill_lock, 0, 1) != 0)
-        return 0;
-
-    // Double-check: queue might have work now
-    if (myq->tail > atomic_load_i64(&myq->head)) {
-        myq->refill_lock = 0;
-        return 1;
-    }
-
-    // Scan all cores to find the fullest queue
-    int best_core = -1;
-    int64_t best_avail = 0;
-    for (int c = 0; c < g_total_cores; c++) {
-        if (c == my_core) continue;
-        int64_t avail = core_q[c].tail - atomic_load_i64(&core_q[c].head);
-        if (avail > best_avail) {
-            best_avail = avail;
-            best_core = c;
-        }
-    }
-
-    if (best_core < 0 || best_avail < 2) {
-        myq->refill_lock = 0;
-        return -1;  // nothing worth stealing
-    }
-
-    // Compute how many items we can receive (check our buffer capacity first)
-    volatile int64_t* my_items = core_q_items(my_core);
-    int64_t base = myq->tail;
-    int64_t my_head = atomic_load_i64(&myq->head);
-    int64_t my_space = CORE_Q_CAP - (base - my_head);
-    if (my_space <= 0) {
-        myq->refill_lock = 0;
-        return 0;
-    }
-
-    int64_t to_steal = (best_avail < STEAL_SIZE) ? best_avail : (int64_t)STEAL_SIZE;
-    if (to_steal > my_space) to_steal = my_space;
-
-    // CAS on victim's head to claim exactly what we can receive
-    CoreQueueCtrl* victim = &core_q[best_core];
-    int64_t h = atomic_load_i64(&victim->head);
-    int64_t t = victim->tail;
-    int64_t actual_avail = t - h;
-    if (actual_avail < 2) {
-        myq->refill_lock = 0;
-        return -1;
-    }
-    if (to_steal > actual_avail) to_steal = actual_avail;
-
-    int64_t old_h = atomic_compare_and_swap_i64(&victim->head, h, h + to_steal);
-    if (old_h != h) {
-        myq->refill_lock = 0;
-        return 0;  // contention, caller retries
-    }
-
-    // Read items from victim's L1SP circular buffer
-    asm volatile("fence r,r" ::: "memory");
-    volatile int64_t* victim_items = core_q_items(best_core);
-
-    for (int64_t i = 0; i < to_steal; i++) {
-        my_items[(base + i) & CORE_Q_MASK] = victim_items[(old_h + i) & CORE_Q_MASK];
-    }
-
-    // Signal victim that these slots are safe to overwrite
-    int64_t rh = victim->read_head;
-    while (rh < old_h + to_steal) {
-        int64_t prev = atomic_compare_and_swap_i64(&victim->read_head, rh, old_h + to_steal);
-        if (prev == rh) break;
-        rh = prev;
-    }
-
-    // Publish stolen items
-    asm volatile("fence w,w" ::: "memory");
-    myq->tail = base + to_steal;
-    myq->refill_lock = 0;
-
-    atomic_fetch_add_i64(&stat_steals_per_core[my_core], 1);
-    return 1;
 }
 
 // ---------- BFS Level Processing ----------
@@ -508,19 +268,8 @@ static void process_bfs_level(int tid, int32_t level)
     int64_t disc_buf[LOCAL_BUF_SIZE];
     int disc_count = 0;
 
-    // Stateful quiescence: stay "active" while popping, refilling, or stealing.
-    // Only drop active status when truly idle and about to check termination.
-    bool is_active = false;
-
     while (true) {
-        // Become active if not already (covers pop, refill, and steal attempts)
-        if (!is_active) {
-            atomic_fetch_add_i64(&g_active_harts, 1);
-            is_active = true;
-        }
-
-        // Pop from core's local L1SP queue
-        int64_t count = core_q_pop_chunk(my_core, chunk_buf, BFS_CHUNK_SIZE);
+        int64_t count = sq_pop_chunk(chunk_buf, BFS_CHUNK_SIZE);
 
         if (count > 0) {
             for (int64_t i = 0; i < count; i++) {
@@ -542,58 +291,18 @@ static void process_bfs_level(int tid, int32_t level)
                     }
                 }
             }
-            // Stay active — loop back to pop immediately
         } else {
-            // Local queue empty — try to refill from shared L2SP queue
-            int refill = core_q_try_refill(my_core);
-            if (refill == 1) {
-                continue;  // refilled, stay active, go pop
-            } else if (refill == 0) {
-                hartsleep(1);  // another hart is refilling, stay active, retry
-                continue;
-            }
-
-            // refill == -1: shared queue empty — try stealing from fullest core
-            int steal = steal_from_fullest(my_core);
-            if (steal == 1) {
-                continue;  // stole work, stay active, go pop
-            } else if (steal == 0) {
-                hartsleep(1);  // contention, stay active, retry
-                continue;
-            }
-
-            // steal == -1: nothing to steal — we are truly idle
+            // Flush pending before checking termination
             if (disc_count > 0) {
                 flush_discoveries(disc_buf, disc_count, next_buf);
                 disc_count = 0;
             }
-
-            // Drop active status ONLY before checking global termination
-            atomic_fetch_add_i64(&g_active_harts, -1);
-            is_active = false;
-
-            // Confirm everything is truly exhausted and no harts are mid-work
-            bool all_empty = true;
-            if (atomic_load_i64(&g_active_harts) > 0) {
-                all_empty = false;
-            } else if (atomic_load_i64(&shared_queue.head) < atomic_load_i64(&shared_queue.tail)) {
-                all_empty = false;
-            } else {
-                for (int c = 0; c < g_total_cores; c++) {
-                    if (core_q[c].tail > atomic_load_i64(&core_q[c].head)) {
-                        all_empty = false;
-                        break;
-                    }
-                }
-            }
-            if (all_empty) break;
+            // Confirm queue is truly empty
+            int64_t h = atomic_load_i64(&shared_queue.head);
+            int64_t t = atomic_load_i64(&shared_queue.tail);
+            if (h >= t) break;
             hartsleep(1);  // race window, retry
         }
-    }
-
-    // Safety: decrement if we broke out while still active
-    if (is_active) {
-        atomic_fetch_add_i64(&g_active_harts, -1);
     }
 
     // Final flush
@@ -647,7 +356,6 @@ static bool alloc_frontier_storage(uintptr_t *l2sp_heap, uintptr_t l2sp_limit,
     int64_t remaining = N - frontier_l2sp_cap;
 
     // L1SP tier: distributed across cores (power-of-2 per core for fast indexing)
-    // Note: L1SP_DATA_START already accounts for per-core queue items region
     if (remaining > 0 && *l1sp_heap_off < l1sp_data_end) {
         int32_t avail_bytes = (int32_t)(l1sp_data_end - *l1sp_heap_off);
         // Need space for 2 buffers in each core's L1SP
@@ -745,24 +453,14 @@ extern "C" int main(int argc, char **argv)
         g_N        = N;
         g_degree   = degree;
         g_sim_exit = 0;
-        g_frontier_error = 0;
         g_sum_dist = 0;
         g_reached  = 0;
         g_max_dist = 0;
-        g_active_harts = 0;
         cur_buf    = 0;
-        frontier_tail[0].val = 0;
-        frontier_tail[1].val = 0;
+        frontier_tail[0] = 0;
+        frontier_tail[1] = 0;
         shared_queue.head = 0;
         shared_queue.tail = 0;
-
-        // Initialize per-core queue control
-        for (int c = 0; c < cores_per_pod; c++) {
-            core_q[c].head = 0;
-            core_q[c].read_head = 0;
-            core_q[c].tail = 0;
-            core_q[c].refill_lock = 0;
-        }
 
         ws::barrier_init(&g_barrier, threads_per_pod);
 
@@ -771,7 +469,6 @@ extern "C" int main(int argc, char **argv)
         for (int c = 0; c < cores_per_pod; c++) {
             stat_nodes_per_core[c] = 0;
             stat_edges_per_core[c] = 0;
-            stat_steals_per_core[c] = 0;
         }
 
         // Set up L1SP data regions
@@ -843,7 +540,7 @@ extern "C" int main(int argc, char **argv)
         size_t l2sp_used = l2sp_heap - l2sp_base;
         int64_t dram_frontier_entries = N - frontier_l2sp_cap - frontier_l1sp_cap;
 
-        std::printf("=== CSR BFS with L1SP Queues + L2SP Overflow + Work Stealing ===\n");
+        std::printf("=== CSR BFS with Shared Queue (per-vertex frontier) ===\n");
         std::printf("CSR BFS (bulk load): N=%d E=%d degree=%d source=%d\n",
                     N, hdr_E, degree, hdr_source);
         std::printf("HW: total_harts=%d, pxn=%d pods/pxn=%d cores/pod=%d harts/core=%d\n",
@@ -851,10 +548,7 @@ extern "C" int main(int argc, char **argv)
         std::printf("Using: %d cores x %d harts = %d total\n",
                     cores_per_pod, harts_per_core, threads_per_pod);
 
-        std::printf("\nLocal queue: cap=%d, refill=%d (items in L1SP, control in L2SP)\n",
-                    CORE_Q_CAP, REFILL_SIZE);
-
-        std::printf("\nFrontier tiers (per buffer):\n");
+        std::printf("\nMemory tiers (per frontier buffer):\n");
         std::printf("  L2SP: %ld entries (%lu bytes used / %lu total)\n",
                     (long)frontier_l2sp_cap, (unsigned long)l2sp_used,
                     (unsigned long)podL2SPSize());
@@ -863,15 +557,15 @@ extern "C" int main(int argc, char **argv)
                         (long)frontier_l1sp_cap, frontier_l1sp_per_core,
                         g_total_cores, g_l1sp_data_bytes_per_core);
         } else {
-            std::printf("  L1SP: 0 entries (reserved for local queue)\n");
+            std::printf("  L1SP: 0 entries (no room or not needed)\n");
         }
         std::printf("  DRAM: %ld entries\n", (long)dram_frontier_entries);
         std::printf("  Total capacity: %ld entries (= N)\n", (long)frontier_total_cap);
-        std::printf("  Pop chunk: %d, discovery buffer: %d\n\n", BFS_CHUNK_SIZE, LOCAL_BUF_SIZE);
+        std::printf("  Chunk size: %d, local buffer: %d\n\n", BFS_CHUNK_SIZE, LOCAL_BUF_SIZE);
 
         // Set up initial frontier: just the source vertex
         frontier_set(0, 0, (int64_t)g_source);
-        frontier_tail[0].val = 1;
+        frontier_tail[0] = 1;
 
         std::atomic_thread_fence(std::memory_order_release);
         g_initialized.store(1, std::memory_order_release);
@@ -902,17 +596,18 @@ extern "C" int main(int argc, char **argv)
     int32_t level = 0;
 
     while (true) {
-        // Hart 0: distribute frontier into L1SP queues, overflow to L2SP
+        // Hart 0: set up shared queue from current frontier, reset next
         if (tid == 0) {
+            int64_t fsize = frontier_tail[cur_buf];
+            shared_queue.head = 0;
+            shared_queue.tail = fsize;
             // Reset the next buffer's tail for this level's discoveries
-            frontier_tail[cur_buf ^ 1].val = 0;
-            // Distribute current frontier into per-core L1SP queues
-            distribute_frontier();
+            frontier_tail[cur_buf ^ 1] = 0;
         }
         barrier();
 
-        int64_t total_work = frontier_tail[cur_buf].val;
-        if (total_work == 0 || g_frontier_error) break;
+        int64_t total_work = atomic_load_i64(&shared_queue.tail);
+        if (total_work == 0) break;
 
         if (tid == 0) {
             std::printf("Level %d: frontier=%ld\n", level, (long)total_work);
@@ -997,24 +692,21 @@ extern "C" int main(int argc, char **argv)
         // Per-core work balance
         int64_t total_processed = 0;
         int64_t total_edges_done = 0;
-        int64_t total_steals = 0;
         int64_t min_nodes = 0x7FFFFFFFFFFFFFFFLL;
         int64_t max_nodes = 0;
 
         std::printf("\nPer-core statistics:\n");
-        std::printf("Core | Processed |     Edges | Steals\n");
-        std::printf("-----|-----------|-----------|-------\n");
+        std::printf("Core | Processed | Edges\n");
+        std::printf("-----|-----------|------\n");
 
         for (int c = 0; c < g_total_cores; c++) {
             int64_t cp = stat_nodes_per_core[c];
             int64_t ce = stat_edges_per_core[c];
-            int64_t cs = stat_steals_per_core[c];
             total_processed += cp;
             total_edges_done += ce;
-            total_steals += cs;
             if (cp < min_nodes) min_nodes = cp;
             if (cp > max_nodes) max_nodes = cp;
-            std::printf("%4d | %9ld | %9ld | %5ld\n", c, (long)cp, (long)ce, (long)cs);
+            std::printf("%4d | %9ld | %9ld\n", c, (long)cp, (long)ce);
         }
 
         int64_t avg = (g_total_cores > 0) ? (total_processed / g_total_cores) : 0;
@@ -1024,7 +716,6 @@ extern "C" int main(int argc, char **argv)
         std::printf("\nSummary:\n");
         std::printf("  Total nodes processed: %ld\n", (long)total_processed);
         std::printf("  Total edges traversed: %ld\n", (long)total_edges_done);
-        std::printf("  Total L1SP steals:     %ld\n", (long)total_steals);
         std::printf("  Average per core:      %ld nodes\n", (long)avg);
         std::printf("  Min/Max per core:      %ld / %ld\n", (long)min_nodes, (long)max_nodes);
         std::printf("  Imbalance (max-min)/max: %ld%%\n", (long)imbalance_pct);

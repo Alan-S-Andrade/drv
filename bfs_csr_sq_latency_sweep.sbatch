@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J bfs_csr_sq_multi
+#SBATCH -J bfs_lat_sweep
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
@@ -8,7 +8,7 @@
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH -c 112
-#SBATCH -t 24:00:00
+#SBATCH -t 48:00:00
 
 set -eo pipefail
 
@@ -69,22 +69,23 @@ if [[ ! -f "$MEMH_LIB" ]]; then
 fi
 
 # ------------------------------------------------------------------
-# STEP 2: RUN BFS CSR SHARED-QUEUE MULTI-POD SWEEP
+# STEP 2: RUN BFS CSR SHARED-QUEUE DRAM LINK LATENCY SWEEP
 # ------------------------------------------------------------------
 
-# Graph parameters (same as single-pod baseline)
-VTX_PER_THREAD=1024
-DEGREE=16
+# Fixed 64-core config: 8x8 cores, 16 thread/core
+PODS=1
+CX=8
+CY=8
+THR=1
+DRAM_CACHE_KIB=512
 
-# Graph type: "uniform" or "rmat"
+# Graph parameters
+VTX_PER_THREAD=1024
 GRAPH_TYPE="rmat"
-# Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
 EF=16
 
-# Spill threshold (SPILL_PCT) is set per-config in CONFIGS below.
-# % of frontier capacity kept in local shared queue.
-# Excess spills to DRAM work pool (stealable by other pods).
-# Lower = more aggressive inter-pod work stealing. 75 = default.
+# Latencies to sweep (in ns)
+LATENCIES=(1)     #(50 400 200 12)                       #(800 100 25 1)           #(50 400 200 12)           #(800 100 25 1)   
 
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
@@ -100,75 +101,63 @@ apptainer exec --cleanenv \
     export PATH=/install/bin:$PATH
 
     MODEL=/work/model/drvr.py
-    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_multi
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_multi_nosteal_results
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_latency_single_sweep_final2
 
+    PODS='"${PODS}"'
+    CX='"${CX}"'
+    CY='"${CY}"'
+    THR='"${THR}"'
+    DRAM_CACHE_KIB='"${DRAM_CACHE_KIB}"'
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
-    DEGREE='"${DEGREE}"'
     GRAPH_TYPE='"${GRAPH_TYPE}"'
     EF='"${EF}"'
+
+    DRAM_CACHE_SIZE=$((DRAM_CACHE_KIB * 1024))
+    CORES=$((CX * CY))
+    THREADS_PER_POD=$((CORES * THR))
+    N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
+
     mkdir -p "$SWEEP_DIR"
 
-    # ---- SWEEP CONFIGURATIONS ----
-    # Format: PODS CX CY THR DRAM_CACHE_KIB SPILL_PCT
-    # SPILL_PCT: % of frontier kept local (rest spills to stealable DRAM pool)
-    CONFIGS=(
-      # 2-pod sweep: vary spill threshold
-      "2 8  1 16 128 100"
-      "4 8  1 16 256 100"
-      #"2 8  1 16 64 50"
-      #"2 8  1 16 64 25"
-      # 4-pod sweep
-     # "4 8  1 16 256 50"
-     # "4 8  1 16 256 25"
-    )
+    # Generate graph once (same for all latency points)
+    SCALE=$(python3 -c "import math; print(int(math.log2($N)))")
+    RUN_DEGREE=$((2 * EF + 4))
 
-    for cfg in "${CONFIGS[@]}"; do
-      read -r PODS CX CY THR DRAM_CACHE_KIB SPILL_PCT <<< "$cfg"
-      DRAM_CACHE_SIZE=$((DRAM_CACHE_KIB * 1024))
-      CORES=$((CX * CY))
-      THREADS_PER_POD=$((CORES * THR))
-      N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
+    GRAPH_DIR="${SWEEP_DIR}/shared_graph"
+    mkdir -p "$GRAPH_DIR"
 
-      CACHE_MB=$((DRAM_CACHE_KIB / 1024))
-      RUN_NAME="bfs_csr_sq_multi_p${PODS}_c${CORES}_t${THR}_dc${CACHE_MB}M_sp${SPILL_PCT}"
+    echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${THREADS_PER_POD}..."
+    python3 /work/gen_rmat_csr.py \
+      --scale ${SCALE} \
+      --ef ${EF} \
+      --cusp ${THREADS_PER_POD} \
+      --seed 42 \
+      -o "$GRAPH_DIR/uniform_graph.bin"
+
+    echo "Generating BFS init state..."
+    python3 /work/gen_bfs_init_state.py \
+      --graph "$GRAPH_DIR/uniform_graph.bin" \
+      -o "$GRAPH_DIR"
+
+    LATENCIES=('"$(echo "${LATENCIES[@]}")"')
+
+    for LAT in "${LATENCIES[@]}"; do
+      RUN_NAME="bfs_csr_sq_64c_lat${LAT}ns"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${PODS} pods, ${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE}, spill=${SPILL_PCT}%)"
+      echo "RUN: ${RUN_NAME} (64 cores, DRAM link latency = ${LAT}ns)"
       echo "=============================================="
 
       mkdir -p "$RUN_DIR"
       cp /work/model/summarize.py "$RUN_DIR/"
       cp /work/model/summarize_ramulator.py "$RUN_DIR/"
 
-      # Generate graph into run dir
-      if [ "$GRAPH_TYPE" = "rmat" ]; then
-        SCALE=$(python3 -c "import math; print(int(math.log2($N)))")
-        RUN_DEGREE=$((2 * EF + 4))
-        echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${THREADS_PER_POD}..."
-        python3 /work/gen_rmat_csr.py \
-          --scale ${SCALE} \
-          --ef ${EF} \
-          --cusp ${THREADS_PER_POD} \
-          --seed 42 \
-          -o "$RUN_DIR/uniform_graph.bin"
-      else
-        RUN_DEGREE=${DEGREE}
-        echo "Generating uniform graph: N=${N} degree=${DEGREE}..."
-        python3 /work/gen_uniform_csr.py \
-          -N ${N} \
-          -D ${DEGREE} \
-          --seed 42 \
-          -o "$RUN_DIR/uniform_graph.bin"
-      fi
-
-      # Generate pre-initialized BFS state
-      echo "Generating BFS init state..."
-      python3 /work/gen_bfs_init_state.py \
-        --graph "$RUN_DIR/uniform_graph.bin" \
-        -o "$RUN_DIR"
+      # Symlink shared graph data into run dir
+      ln -sf "$GRAPH_DIR/uniform_graph.bin" "$RUN_DIR/uniform_graph.bin"
+      ln -sf "$GRAPH_DIR/bfs_dist_init.bin" "$RUN_DIR/bfs_dist_init.bin"
 
       cd "$RUN_DIR"
 
@@ -189,10 +178,10 @@ apptainer exec --cleanenv \
         --pxn-dram-cache-slices=4 \
         --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
         --pxn-dram-cache-alu=0 \
+        --pxn-dram-link-latency="${LAT}ns" \
         "$BINARY" \
         --V ${VTX_PER_THREAD} \
         --D ${RUN_DEGREE} \
-        --spill-pct ${SPILL_PCT} \
         | tee "$RUN_DIR/output.txt"
 
       echo ""
@@ -210,7 +199,7 @@ apptainer exec --cleanenv \
     done
 
     echo "=============================================="
-    echo "BFS CSR SHARED-QUEUE MULTI-POD SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_sq_multi_nosteal_results/"
+    echo "DRAM LINK LATENCY SWEEP COMPLETE"
+    echo "Results in: build_stampede/drvr/bfs_csr_sq_latency_single_sweep_final2/"
     echo "=============================================="
   '

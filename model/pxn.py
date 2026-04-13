@@ -52,7 +52,7 @@ class PXNBuilder(object):
         self.network_bw = "1GB/s"
         self.input_buf_size = "1KB"
         self.output_buf_size = "1KB"
-        self.router_latency = "0ns"
+        self.router_latency = "2ns"
         return
 
     @property
@@ -175,10 +175,11 @@ class PXNBuilder(object):
                 # Single slice (default): original behavior
                 dram = self.dram.build(system_builder, self.dram_bank_name(name, dram_bank_id))
                 nwif, port = dram.network_interface()
+                dram_link_lat = getattr(self.dram, 'dram_link_latency', '1ns')
                 link = sst.Link(f"{dram.name}_to_{self.router_name(name)}")
                 link.connect(
-                    (nwif, port, "1ns"),
-                    (pxn.network, f"port{current_port}", "1ns")
+                    (nwif, port, dram_link_lat),
+                    (pxn.network, f"port{current_port}", dram_link_lat)
                 )
                 pxn.dram_banks.append(dram)
                 current_port += 1
@@ -242,7 +243,7 @@ class PXNBuilder(object):
                         "banks" : self.dram.cache_banks,
                         "mshr_num_entries" : self.dram.mshr_num_entries,
                         "replacement_policy" : "lru",
-                        "access_latency_cycles" : 1,
+                        "access_latency_cycles" : 5,
                         # Same interleaved address range as the MemController
                         "addr_range_start" : addr_start + (slice_id * cache_line),
                         "addr_range_end" : addr_stop,
@@ -272,10 +273,11 @@ class PXNBuilder(object):
                         "network_bw" : self.dram.network_bw,
                     })
 
+                    dram_link_lat = getattr(self.dram, 'dram_link_latency', '1ns')
                     link = sst.Link(f"{slice_name}_to_{self.router_name(name)}")
                     link.connect(
-                        (cache_cpunic, "port", "1ns"),
-                        (pxn.network, f"port{current_port}", "1ns")
+                        (cache_cpunic, "port", dram_link_lat),
+                        (pxn.network, f"port{current_port}", dram_link_lat)
                     )
                     current_port += 1
 

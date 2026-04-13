@@ -22,7 +22,7 @@ class PANDOHammer(object):
         l1sp = L1SPBuilder()
         l1sp.clock = "1GHz"
         l1sp.access_time = "1ns"
-        l1sp.size = 256*1024
+        l1sp.size = 64*1024
         l1sp.network_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
         
         # core
@@ -85,6 +85,7 @@ class PANDOHammer(object):
         dram.cache_size = arguments.pxn_dram_cache_size
         dram.dram_backend_config_sliced = arguments.dram_backend_config_sliced
         dram.alu_latency = arguments.pxn_dram_cache_alu
+        dram.dram_link_latency = arguments.pxn_dram_link_latency
 
         dram_cache_slices = arguments.pxn_dram_cache_slices
 

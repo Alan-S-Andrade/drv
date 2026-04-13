@@ -4,10 +4,10 @@
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p pvc
+#SBATCH -p spr
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 96
+#SBATCH -c 112
 #SBATCH -t 24:00:00
 
 set -eo pipefail
@@ -95,9 +95,9 @@ apptainer exec --cleanenv \
     export PATH=/install/bin:$PATH
 
     MODEL=/work/model/drvr.py
-    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue
+    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_results
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_lowcache_sweep_final
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
@@ -110,12 +110,13 @@ apptainer exec --cleanenv \
     # Format: PODS CX CY THR DRAM_CACHE_KIB
     # Same configurations as work-stealing baseline
     CONFIGS=(
-      #"1 1  1 16 4096"
-      #"1 2  1 16 4096"
-      #"1 4  1 16 4096"
-      "1 8  1 16 64"
-      "2 8  1 16 128"
-      "4 8  4 16 256"
+      #"1 1 1 16 4"	    
+      #"1 2 1 16 8"
+      #"1 4 1 16 16"
+      #"1 8 1 16 32"
+      #"1 8 2 16 64"
+      "1 8 8 16 256"
+      "1 8 8 16 128"
       #"8 8  8 16 4096"
     )
 
@@ -205,6 +206,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "BFS CSR SHARED-QUEUE SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_sq_results/"
+    echo "Results in: build_stampede/drvr/bfs_csr_sq_lowcache_sweep_final/"
     echo "=============================================="
   '

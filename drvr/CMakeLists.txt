@@ -423,6 +423,15 @@ drvr_test_build_properties(bfs_csr_shared_queue
   DRV_BUILD_CORE_THREADS 16
   )
 
+# BFS CSR with shared queue baseline (flat fetch-add, no local L1SP queue)
+drvr_test_with_pandohammer(bfs_csr_shared_queue_baseline bfs_csr_shared_queue_baseline.cpp)
+drvr_test_build_properties(bfs_csr_shared_queue_baseline
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
 # BFS CSR with shared queue + inter-pod DRAM work stealing (multi-pod)
 drvr_test_with_pandohammer(bfs_csr_shared_queue_multi bfs_csr_shared_queue_multi.cpp)
 drvr_test_build_properties(bfs_csr_shared_queue_multi

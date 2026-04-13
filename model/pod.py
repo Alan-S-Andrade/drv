@@ -42,7 +42,7 @@ class PodBuilder(object):
         self.link_bw = "1GB/s"
         self.input_buf_size = "1KB"
         self.output_buf_size = "1KB"
-        self.router_latency = "0ns"
+        self.router_latency = "2ns"
         self.network_bw = "1GB/s"
         return
 

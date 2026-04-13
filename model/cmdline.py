@@ -44,6 +44,8 @@ def parser(core_l1sp_size=128*1024):
                         help="ramulator config file path for each slice (should have channels/num_slices)")
     p.add_argument("--pxn-dram-cache-alu", type=int, default=0,
                         help="near-cache ALU latency in cycles for atomics (0=disabled, uses Ramulator timing; >0=fixed cycle ALU)")
+    p.add_argument("--pxn-dram-link-latency", type=str, default="1ns",
+                        help="link latency between PXN router and DRAM (default 1ns)")
 
     p.add_argument("--with-command-processor", type=str, default="",
                         help="Command processor program to run. Defaults to empty string, in which no command processor will be included in the model.")

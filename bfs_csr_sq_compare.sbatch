@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH -J bfs_csr_sq_multi
+#SBATCH -J bfs_csr_sq_compare
 #SBATCH -o logs/%x_%j.out
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p spr
+#SBATCH -p pvc
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 112
-#SBATCH -t 24:00:00
+#SBATCH -c 96
+#SBATCH -t 44:00:00
 
 set -eo pipefail
 
@@ -52,7 +52,7 @@ apptainer exec --cleanenv \
       -DSST_ENABLE_RAMULATOR=1 \
       -DRAMULATOR_DIR=/tmp/ramulator
 
-    echo "Building binary..."
+    echo "Building binaries..."
     make -j'"${SLURM_CPUS_PER_TASK}"' rv64 Drv pandocommand_loader
     echo "Build complete"
   '
@@ -69,22 +69,13 @@ if [[ ! -f "$MEMH_LIB" ]]; then
 fi
 
 # ------------------------------------------------------------------
-# STEP 2: RUN BFS CSR SHARED-QUEUE MULTI-POD SWEEP
+# STEP 2: RUN BOTH BINARIES ON SAME GRAPH (64-core config)
 # ------------------------------------------------------------------
 
-# Graph parameters (same as single-pod baseline)
 VTX_PER_THREAD=1024
 DEGREE=16
-
-# Graph type: "uniform" or "rmat"
 GRAPH_TYPE="rmat"
-# Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
 EF=16
-
-# Spill threshold (SPILL_PCT) is set per-config in CONFIGS below.
-# % of frontier capacity kept in local shared queue.
-# Excess spills to DRAM work pool (stealable by other pods).
-# Lower = more aggressive inter-pod work stealing. 75 = default.
 
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
@@ -100,117 +91,135 @@ apptainer exec --cleanenv \
     export PATH=/install/bin:$PATH
 
     MODEL=/work/model/drvr.py
-    BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_multi
+    BINARY_TWOTIER=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue
+    BINARY_BASELINE=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_multi_nosteal_results
+    COMPARE_DIR=/work/build_stampede/drvr/bfs_csr_sq_compare
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
     GRAPH_TYPE='"${GRAPH_TYPE}"'
     EF='"${EF}"'
-    mkdir -p "$SWEEP_DIR"
+
+    mkdir -p "$COMPARE_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
-    # Format: PODS CX CY THR DRAM_CACHE_KIB SPILL_PCT
-    # SPILL_PCT: % of frontier kept local (rest spills to stealable DRAM pool)
+    # Format: PODS CX CY THR DRAM_CACHE_KIB
     CONFIGS=(
-      # 2-pod sweep: vary spill threshold
-      "2 8  1 16 128 100"
-      "4 8  1 16 256 100"
-      #"2 8  1 16 64 50"
-      #"2 8  1 16 64 25"
-      # 4-pod sweep
-     # "4 8  1 16 256 50"
-     # "4 8  1 16 256 25"
+      "1 8  8 16 512"
+    )
+
+    # Binaries to compare: TAG BINARY_PATH
+    BINARIES=(
+      "twotier  $BINARY_TWOTIER"
+      "baseline $BINARY_BASELINE"
     )
 
     for cfg in "${CONFIGS[@]}"; do
-      read -r PODS CX CY THR DRAM_CACHE_KIB SPILL_PCT <<< "$cfg"
+      read -r PODS CX CY THR DRAM_CACHE_KIB <<< "$cfg"
       DRAM_CACHE_SIZE=$((DRAM_CACHE_KIB * 1024))
       CORES=$((CX * CY))
       THREADS_PER_POD=$((CORES * THR))
       N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
 
       CACHE_MB=$((DRAM_CACHE_KIB / 1024))
-      RUN_NAME="bfs_csr_sq_multi_p${PODS}_c${CORES}_t${THR}_dc${CACHE_MB}M_sp${SPILL_PCT}"
-      RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
+      CFG_TAG="p${PODS}_c${CORES}_t${THR}_dc${CACHE_MB}M"
 
-      echo "=============================================="
-      echo "RUN: ${RUN_NAME} (${PODS} pods, ${CX}x${CY} cores, ${THR} threads/core, N=${N}, degree=${DEGREE}, spill=${SPILL_PCT}%)"
-      echo "=============================================="
+      # --- Generate graph ONCE per config ---
+      GRAPH_DIR="${COMPARE_DIR}/graph_${CFG_TAG}"
+      mkdir -p "$GRAPH_DIR"
 
-      mkdir -p "$RUN_DIR"
-      cp /work/model/summarize.py "$RUN_DIR/"
-      cp /work/model/summarize_ramulator.py "$RUN_DIR/"
-
-      # Generate graph into run dir
       if [ "$GRAPH_TYPE" = "rmat" ]; then
         SCALE=$(python3 -c "import math; print(int(math.log2($N)))")
         RUN_DEGREE=$((2 * EF + 4))
-        echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${THREADS_PER_POD}..."
+        echo "=============================================="
+        echo "Generating RMAT+CUSP graph: N=${N} (scale=${SCALE}), ef=${EF}, cusp=${THREADS_PER_POD}"
+        echo "=============================================="
         python3 /work/gen_rmat_csr.py \
           --scale ${SCALE} \
           --ef ${EF} \
           --cusp ${THREADS_PER_POD} \
           --seed 42 \
-          -o "$RUN_DIR/uniform_graph.bin"
+          -o "$GRAPH_DIR/uniform_graph.bin"
       else
         RUN_DEGREE=${DEGREE}
-        echo "Generating uniform graph: N=${N} degree=${DEGREE}..."
+        echo "=============================================="
+        echo "Generating uniform graph: N=${N} degree=${DEGREE}"
+        echo "=============================================="
         python3 /work/gen_uniform_csr.py \
           -N ${N} \
           -D ${DEGREE} \
           --seed 42 \
-          -o "$RUN_DIR/uniform_graph.bin"
+          -o "$GRAPH_DIR/uniform_graph.bin"
       fi
 
-      # Generate pre-initialized BFS state
       echo "Generating BFS init state..."
       python3 /work/gen_bfs_init_state.py \
-        --graph "$RUN_DIR/uniform_graph.bin" \
-        -o "$RUN_DIR"
+        --graph "$GRAPH_DIR/uniform_graph.bin" \
+        -o "$GRAPH_DIR"
 
-      cd "$RUN_DIR"
+      # --- Run each binary on the SAME graph ---
+      for bin_entry in "${BINARIES[@]}"; do
+        read -r TAG BINARY <<< "$bin_entry"
 
-      PYTHONPATH=/work/py::/work/model \
-        /install/bin/sst -n 1 \
-        "$MODEL" \
-        -- \
-        --with-command-processor="$CP" \
-        --num-pxn=1 \
-        --pxn-pods=${PODS} \
-        --pod-cores-x=${CX} \
-        --pod-cores-y=${CY} \
-        --core-threads=${THR} \
-        --pod-l2sp-banks=4 \
-        --pod-l2sp-interleave=64 \
-        --pxn-dram-banks=1 \
-        --pxn-dram-cache-size=${DRAM_CACHE_SIZE} \
-        --pxn-dram-cache-slices=4 \
-        --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
-        --pxn-dram-cache-alu=0 \
-        "$BINARY" \
-        --V ${VTX_PER_THREAD} \
-        --D ${RUN_DEGREE} \
-        --spill-pct ${SPILL_PCT} \
-        | tee "$RUN_DIR/output.txt"
+        RUN_NAME="${TAG}_${CFG_TAG}"
+        RUN_DIR="${COMPARE_DIR}/${RUN_NAME}"
 
-      echo ""
-      if [ -f "summarize.py" ]; then
-          echo "--- Summary for ${RUN_NAME} ---"
-          python3 summarize.py
-      fi
-      if [ -f "summarize_ramulator.py" ] && [ -f "ramulator_system_pxn0_dram0.stats" ]; then
-          echo "--- Ramulator Summary for ${RUN_NAME} ---"
-          python3 summarize_ramulator.py
-      fi
-      echo ""
+        echo ""
+        echo "=============================================="
+        echo "RUN: ${RUN_NAME} (${PODS} pods, ${CX}x${CY} cores, ${THR} threads/core, N=${N})"
+        echo "Binary: ${BINARY}"
+        echo "=============================================="
 
-      cd /work
+        mkdir -p "$RUN_DIR"
+        cp /work/model/summarize.py "$RUN_DIR/"
+        cp /work/model/summarize_ramulator.py "$RUN_DIR/"
+
+        # Symlink graph files (same graph for both runs)
+        ln -sf "$GRAPH_DIR/uniform_graph.bin" "$RUN_DIR/uniform_graph.bin"
+        ln -sf "$GRAPH_DIR/bfs_dist_init.bin" "$RUN_DIR/bfs_dist_init.bin"
+
+        cd "$RUN_DIR"
+
+        PYTHONPATH=/work/py::/work/model \
+          /install/bin/sst -n 1 \
+          "$MODEL" \
+          -- \
+          --with-command-processor="$CP" \
+          --num-pxn=1 \
+          --pxn-pods=${PODS} \
+          --pod-cores-x=${CX} \
+          --pod-cores-y=${CY} \
+          --core-threads=${THR} \
+          --pod-l2sp-banks=4 \
+          --pod-l2sp-interleave=64 \
+          --pxn-dram-banks=1 \
+          --pxn-dram-cache-size=${DRAM_CACHE_SIZE} \
+          --pxn-dram-cache-slices=4 \
+          --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
+          --pxn-dram-cache-alu=0 \
+          "$BINARY" \
+          --V ${VTX_PER_THREAD} \
+          --D ${RUN_DEGREE} \
+          | tee "$RUN_DIR/output.txt"
+
+        echo ""
+        if [ -f "summarize.py" ]; then
+            echo "--- Summary for ${RUN_NAME} ---"
+            python3 summarize.py
+        fi
+        if [ -f "summarize_ramulator.py" ] && [ -f "ramulator_system_pxn0_dram0.stats" ]; then
+            echo "--- Ramulator Summary for ${RUN_NAME} ---"
+            python3 summarize_ramulator.py
+        fi
+        echo ""
+
+        cd /work
+      done
     done
 
     echo "=============================================="
-    echo "BFS CSR SHARED-QUEUE MULTI-POD SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_sq_multi_nosteal_results/"
+    echo "COMPARISON SWEEP COMPLETE"
+    echo "Results in: build_stampede/drvr/bfs_csr_sq_compare/"
     echo "=============================================="
   '

@@ -83,7 +83,7 @@ EF=16
 # Fixed compute configuration: 1 pod, 8x2=16 cores, 16 threads/core
 PODS=1
 CX=8
-CY=2
+CY=8
 THR=16
 
 # DRAM cache sizes to sweep (bytes): 128KB, 192KB, 256KB
