@@ -85,7 +85,7 @@ GRAPH_TYPE="rmat"
 EF=16
 
 # Latencies to sweep (in ns)
-LATENCIES=(1)     #(50 400 200 12)                       #(800 100 25 1)           #(50 400 200 12)           #(800 100 25 1)   
+LATENCIES=(50 200)     #(50 400 200 12)                       #(800 100 25 1)           #(50 400 200 12)           #(800 100 25 1)   
 
 apptainer exec --cleanenv \
   --env XALT_EXECUTABLE_TRACKING=no \
@@ -103,7 +103,7 @@ apptainer exec --cleanenv \
     MODEL=/work/model/drvr.py
     BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_latency_single_sweep_final2
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_latency_check_single
 
     PODS='"${PODS}"'
     CX='"${CX}"'
@@ -200,6 +200,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "DRAM LINK LATENCY SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_sq_latency_single_sweep_final2/"
+    echo "Results in: build_stampede/drvr/bfs_csr_sq_latency_check_single/"
     echo "=============================================="
   '

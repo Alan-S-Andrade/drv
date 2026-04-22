@@ -1,0 +1,126 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Configuring 16 harts
+Configuring 16 harts
+PXN:   0 POD:  0 CORE:   0 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  1 : 0x8000000000003f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  2 : 0x8000000000005f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  3 : 0x8000000000007f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  4 : 0x8000000000009f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  5 : 0x800000000000bf00
+PXN:   0 POD:  0 CORE:   0 THREAD:  6 : 0x800000000000df00
+PXN:   0 POD:  0 CORE:   0 THREAD:  7 : 0x800000000000ff00
+PXN:   0 POD:  0 CORE:   0 THREAD:  8 : 0x8000000000011f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  9 : 0x8000000000013f00
+PXN:   0 POD:  0 CORE:   0 THREAD: 10 : 0x8000000000015f00
+PXN:   0 POD:  0 CORE:   0 THREAD: 11 : 0x8000000000017f00
+PXN:   0 POD:  0 CORE:   0 THREAD: 12 : 0x8000000000019f00
+PXN:   0 POD:  0 CORE:   0 THREAD: 13 : 0x800000000001bf00
+PXN:   0 POD:  0 CORE:   0 THREAD: 14 : 0x800000000001df00
+PXN:   0 POD:  0 CORE:   0 THREAD: 15 : 0x800000000001ff00
+PXN:   0 POD:  0 CORE:   0 THREAD:  0 : 0x8000000000001f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  1 : 0x9000000000003f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  2 : 0x9000000000005f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  3 : 0x9000000000007f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  4 : 0x9000000000009f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  5 : 0x900000000000bf00
+PXN:   0 POD:  0 CORE:   1 THREAD:  6 : 0x900000000000df00
+PXN:   0 POD:  0 CORE:   1 THREAD:  7 : 0x900000000000ff00
+PXN:   0 POD:  0 CORE:   1 THREAD:  8 : 0x9000000000011f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  9 : 0x9000000000013f00
+PXN:   0 POD:  0 CORE:   1 THREAD: 10 : 0x9000000000015f00
+PXN:   0 POD:  0 CORE:   1 THREAD: 11 : 0x9000000000017f00
+PXN:   0 POD:  0 CORE:   1 THREAD: 12 : 0x9000000000019f00
+PXN:   0 POD:  0 CORE:   1 THREAD: 13 : 0x900000000001bf00
+PXN:   0 POD:  0 CORE:   1 THREAD: 14 : 0x900000000001df00
+PXN:   0 POD:  0 CORE:   1 THREAD: 15 : 0x900000000001ff00
+PXN:   0 POD:  0 CORE:   1 THREAD:  0 : 0x9000000000001f00
+=== CSR BFS with Shared Queue (per-vertex frontier) ===
+CSR BFS (bulk load): N=32768 E=524288 degree=16 source=0
+HW: total_harts=32, pxn=1 pods/pxn=1 cores/pod=2 harts/core=16
+Using: 2 cores x 16 harts = 32 total
+
+Memory tiers (per frontier buffer):
+  L2SP: 32768 entries (542448 bytes used / 1048576 total)
+  L1SP: 0 entries (no room or not needed)
+  DRAM: 0 entries
+  Total capacity: 32768 entries (= N)
+  Chunk size: 8, local buffer: 32
+
+Level 0: frontier=1
+Level 1: frontier=16
+Level 2: frontier=253
+Level 3: frontier=3793
+Level 4: frontier=24203
+Level 5: frontier=4502
+
+=== BFS Complete ===
+Levels: 6 (18307257 cycles)
+Reached: 32768/32768 (100%)
+max_dist=5  sum_dist=131223  avg_dist=4.0
+RESULT: PASS
+
+Per-core statistics:
+Core | Processed | Edges
+-----|-----------|------
+   0 |     16367 |    261872
+   1 |     16401 |    262416
+
+Summary:
+  Total nodes processed: 32768
+  Total edges traversed: 524288
+  Average per core:      16384 nodes
+  Min/Max per core:      16367 / 16401
+  Imbalance (max-min)/max: 0%
+  Cycles per node:       558
+
+Frontier tier utilization:
+  L2SP: 32768 / 32768 entries
+
+BFS complete, signaling exit.
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: filename='uniform_graph.bin' dest=0x40802f20 size=2359320
+SSTRISCVCore[handleBulkLoad:928]: BULK_LOAD: read 2359320 bytes from file. Header bytes: 00 80 00 00 00 00 08 00 10 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:942]: BULK_LOAD: dest_local=0x40802f20 dest_abs=0xc000000000802f20
+SSTRISCVCore[handleBulkLoad:959]: BULK_LOAD: wrote 36865 chunks (2359320 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: filename='bfs_dist_init.bin' dest=0x40a42f40 size=131072
+SSTRISCVCore[handleBulkLoad:928]: BULK_LOAD: read 131072 bytes from file. Header bytes: 00 00 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+SSTRISCVCore[handleBulkLoad:942]: BULK_LOAD: dest_local=0x40a42f40 dest_abs=0xc000000000a42f40
+SSTRISCVCore[handleBulkLoad:959]: BULK_LOAD: wrote 2048 chunks (131072 bytes) to backing store
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s3.stats
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s2.stats
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s1.stats
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s0.stats
+Simulation is complete, simulated time: 20.0454 ms

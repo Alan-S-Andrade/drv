@@ -1,0 +1,655 @@
+import csv
+import sys
+import math
+import os
+import struct
+import collections
+
+# Core statistics we care about
+CORE_STATS = [
+    "busy_cycles",
+    "memory_wait_cycles",
+    "active_idle_cycles",
+    "load_dram",
+    "load_l1sp",
+    "load_l2sp",
+    "store_dram",
+    "store_l1sp",
+    "store_l2sp",
+    "atomic_l1sp",
+    "atomic_l2sp",
+    "atomic_dram",
+    "icache_miss",
+    "load_latency_total",
+    "load_request_count",
+    "dram_load_latency_total",
+    "dram_load_request_count",
+    "useful_load_l1sp",
+    "useful_store_l1sp",
+    "useful_atomic_l1sp",
+    "useful_load_l2sp",
+    "useful_store_l2sp",
+    "useful_atomic_l2sp",
+    "useful_load_dram",
+    "useful_store_dram",
+    "useful_atomic_dram",
+    "useful_busy_cycles",
+    "useful_memory_wait_cycles",
+    "useful_active_idle_cycles",
+    "useful_load_latency_total",
+    "useful_load_request_count",
+    "useful_dram_load_latency_total",
+    "useful_dram_load_request_count",
+    "outstanding_requests_sum",
+    "useful_outstanding_requests_sum",
+    "dram_outstanding_requests_sum",
+    "useful_dram_outstanding_requests_sum",
+]
+
+# DRAM cache statistics
+CACHE_STATS = [
+    "CacheHits",
+    "CacheMisses",
+    "latency_GetS_hit",
+    "latency_GetX_hit",
+    "latency_GetS_miss",
+    "latency_GetX_miss",
+]
+
+# MemController statistics (SST built-in + custom)
+MEMCTRL_STATS = [
+    "outstanding_requests",
+    "cycles_with_issue",
+    "cycles_attempted_issue_but_rejected",
+    "total_cycles",
+    "requests_received_GetS",
+    "requests_received_GetX",
+    "requests_received_Write",
+    "requests_received_PutM",
+    "latency_GetS",
+    "latency_GetX",
+    "latency_Write",
+    "latency_PutM",
+]
+
+def read_graph_edges(graph_path):
+    """Read number of edges from binary CSR graph header (5 x int32: N, E, avg_deg, 0, source)."""
+    with open(graph_path, "rb") as f:
+        header = f.read(20)
+    if len(header) < 20:
+        return None
+    N, E, _, _, _ = struct.unpack("<5i", header)
+    return E
+
+
+def is_dram_cache(name):
+    """Check if component is a DRAM cache (victim_cache or dram*_cache)"""
+    return "victim_cache" in name or ("dram" in name and "_cache" in name)
+
+def short_core_name(full_name):
+    """Convert system_pxn0_pod0_core0_core to pxn0_pod0_core0"""
+    name = full_name.replace("system_", "").replace("_core_core", "").replace("_core", "")
+    # Handle hostcore
+    if "hostcore" in name:
+        return name
+    return name
+
+def short_cache_name(full_name):
+    """Convert system_pxn0_dram0_cache to pxn0_dram0"""
+    return full_name.replace("system_", "").replace("_cache", "")
+
+def short_memctrl_name(full_name):
+    """Convert system_pxn0_pod0_l2sp0_memctrl to pxn0_pod0_l2sp0"""
+    return full_name.replace("system_", "").replace("_memctrl", "")
+
+def main():
+    # Parse optional --edges / --graph arguments
+    num_edges = None
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--edges" and i + 1 < len(args):
+            num_edges = int(args[i + 1])
+            i += 2
+        elif args[i] == "--graph" and i + 1 < len(args):
+            num_edges = read_graph_edges(args[i + 1])
+            i += 2
+        else:
+            i += 1
+
+    # Auto-detect graph file for edge count
+    if num_edges is None and os.path.exists("uniform_graph.bin"):
+        num_edges = read_graph_edges("uniform_graph.bin")
+
+    core_stats = collections.defaultdict(lambda: collections.defaultdict(int))
+    cache_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "count": 0}))
+    memctrl_stats = collections.defaultdict(lambda: collections.defaultdict(lambda: {"sum": 0, "sumsq": 0, "count": 0, "min": 0, "max": 0}))
+
+    # 1. Read the CSV produced by SST
+    try:
+        with open("stats.csv", "r") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                full_name = row["ComponentName"]
+                stat_name = row["StatisticName"]
+
+                # Core statistics (exclude cache components)
+                if "core" in full_name and "_cache" not in full_name:
+                    core_id = full_name
+                    if stat_name in CORE_STATS:
+                        core_stats[core_id][stat_name] += int(row["Sum.u64"])
+
+                # DRAM cache statistics
+                if is_dram_cache(full_name):
+                    cache_id = full_name
+                    if stat_name in CACHE_STATS:
+                        cache_stats[cache_id][stat_name]["sum"] += int(row["Sum.u64"])
+                        cache_stats[cache_id][stat_name]["count"] += int(row["Count.u64"])
+
+                # MemController stats (L1SP, L2SP, DRAM)
+                if "memctrl" in full_name and stat_name in MEMCTRL_STATS:
+                    memctrl_stats[full_name][stat_name]["sum"] += int(row["Sum.u64"])
+                    memctrl_stats[full_name][stat_name]["sumsq"] += int(row["SumSQ.u64"])
+                    memctrl_stats[full_name][stat_name]["count"] += int(row["Count.u64"])
+                    memctrl_stats[full_name][stat_name]["min"] = int(row["Min.u64"])
+                    memctrl_stats[full_name][stat_name]["max"] = int(row["Max.u64"])
+
+    except FileNotFoundError:
+        print("Error: 'stats.csv' not found. Did you run the simulation?")
+        sys.exit(1)
+
+    # 2. Aggregate totals
+    total_load_l1sp = sum(d["load_l1sp"] for d in core_stats.values())
+    total_load_l2sp = sum(d["load_l2sp"] for d in core_stats.values())
+    total_load_dram = sum(d["load_dram"] for d in core_stats.values())
+    total_store_l1sp = sum(d["store_l1sp"] for d in core_stats.values())
+    total_store_l2sp = sum(d["store_l2sp"] for d in core_stats.values())
+    total_store_dram = sum(d["store_dram"] for d in core_stats.values())
+    total_atomic_l1sp = sum(d["atomic_l1sp"] for d in core_stats.values())
+    total_atomic_l2sp = sum(d["atomic_l2sp"] for d in core_stats.values())
+    total_atomic_dram = sum(d["atomic_dram"] for d in core_stats.values())
+
+    # Useful stats
+    total_useful_load_l1sp = sum(d["useful_load_l1sp"] for d in core_stats.values())
+    total_useful_store_l1sp = sum(d["useful_store_l1sp"] for d in core_stats.values())
+    total_useful_atomic_l1sp = sum(d["useful_atomic_l1sp"] for d in core_stats.values())
+    total_useful_load_l2sp = sum(d["useful_load_l2sp"] for d in core_stats.values())
+    total_useful_store_l2sp = sum(d["useful_store_l2sp"] for d in core_stats.values())
+    total_useful_atomic_l2sp = sum(d["useful_atomic_l2sp"] for d in core_stats.values())
+    total_useful_load_dram = sum(d["useful_load_dram"] for d in core_stats.values())
+    total_useful_store_dram = sum(d["useful_store_dram"] for d in core_stats.values())
+    total_useful_atomic_dram = sum(d["useful_atomic_dram"] for d in core_stats.values())
+
+    total_cache_hits = sum(d["CacheHits"]["sum"] for d in cache_stats.values())
+    total_cache_misses = sum(d["CacheMisses"]["sum"] for d in cache_stats.values())
+
+    # Cache-local latencies (measured at cache, excludes interconnect)
+    total_hit_lat_sum = sum(d["latency_GetS_hit"]["sum"] + d["latency_GetX_hit"]["sum"] for d in cache_stats.values())
+    total_hit_lat_count = sum(d["latency_GetS_hit"]["count"] + d["latency_GetX_hit"]["count"] for d in cache_stats.values())
+
+    total_miss_lat_sum = sum(d["latency_GetS_miss"]["sum"] + d["latency_GetX_miss"]["sum"] for d in cache_stats.values())
+    total_miss_lat_count = sum(d["latency_GetS_miss"]["count"] + d["latency_GetX_miss"]["count"] for d in cache_stats.values())
+
+    # Core-perspective latencies (end-to-end, includes interconnect)
+    total_dram_lat_sum = sum(d["dram_load_latency_total"] for d in core_stats.values())
+    total_dram_lat_count = sum(d["dram_load_request_count"] for d in core_stats.values())
+    total_load_lat_sum = sum(d["load_latency_total"] for d in core_stats.values())
+    total_load_lat_count = sum(d["load_request_count"] for d in core_stats.values())
+
+    # Useful-phase latency aggregates
+    useful_load_lat_sum = sum(d["useful_load_latency_total"] for d in core_stats.values())
+    useful_load_lat_count = sum(d["useful_load_request_count"] for d in core_stats.values())
+    useful_dram_lat_sum = sum(d["useful_dram_load_latency_total"] for d in core_stats.values())
+    useful_dram_lat_count = sum(d["useful_dram_load_request_count"] for d in core_stats.values())
+
+    # Useful-phase cycle aggregates (across all cores)
+    total_useful_busy = sum(d["useful_busy_cycles"] for d in core_stats.values())
+    total_useful_memwait = sum(d["useful_memory_wait_cycles"] for d in core_stats.values())
+    total_useful_idle = sum(d["useful_active_idle_cycles"] for d in core_stats.values())
+
+    # Useful phase duration: max across cores (the phase window length)
+    useful_phase_per_core = []
+    for d in core_stats.values():
+        phase_cyc = d["useful_busy_cycles"] + d["useful_memory_wait_cycles"] + d["useful_active_idle_cycles"]
+        if phase_cyc > 0:
+            useful_phase_per_core.append(phase_cyc)
+    max_useful_phase_cycles = max(useful_phase_per_core) if useful_phase_per_core else 0
+
+    # Total simulation cycles (from any core)
+    total_sim_per_core = []
+    for d in core_stats.values():
+        sim_cyc = d["busy_cycles"] + d["memory_wait_cycles"] + d["active_idle_cycles"]
+        if sim_cyc > 0:
+            total_sim_per_core.append(sim_cyc)
+    max_sim_cycles = max(total_sim_per_core) if total_sim_per_core else 0
+
+    # 3. Print Summary Statistics
+    print("=" * 90)
+    print("MEMORY ACCESS SUMMARY (PANDOHammer)")
+    print("=" * 90)
+
+    total_mem_accesses = (total_load_l1sp + total_load_l2sp + total_load_dram +
+                          total_store_l1sp + total_store_l2sp + total_store_dram)
+    total_cache_accesses = total_cache_hits + total_cache_misses
+
+    print(f"\n{'Metric':<45} {'Value':<15} {'Details':<25}")
+    print("-" * 90)
+
+    # L1 Scratchpad stats
+    l1sp_accesses = total_load_l1sp + total_store_l1sp
+    l1sp_pct = (l1sp_accesses / total_mem_accesses * 100) if total_mem_accesses > 0 else 0
+    print(f"{'L1 Scratchpad (L1SP) Accesses':<45} {l1sp_accesses:<15} {l1sp_pct:.1f}% of all accesses")
+    print(f"  - Loads{'':<39} {total_load_l1sp:<15}")
+    print(f"  - Stores{'':<38} {total_store_l1sp:<15}")
+
+    # L2 Scratchpad stats
+    l2sp_accesses = total_load_l2sp + total_store_l2sp
+    l2sp_pct = (l2sp_accesses / total_mem_accesses * 100) if total_mem_accesses > 0 else 0
+    print(f"\n{'L2 Scratchpad (L2SP) Accesses':<45} {l2sp_accesses:<15} {l2sp_pct:.1f}% of all accesses")
+    print(f"  - Loads{'':<39} {total_load_l2sp:<15}")
+    print(f"  - Stores{'':<38} {total_store_l2sp:<15}")
+
+    # DRAM address space stats (goes through DRAM cache)
+    dram_space_accesses = total_load_dram + total_store_dram
+    dram_space_pct = (dram_space_accesses / total_mem_accesses * 100) if total_mem_accesses > 0 else 0
+    print(f"\n{'DRAM Address Space Accesses':<45} {dram_space_accesses:<15} {dram_space_pct:.1f}% of all accesses")
+    print(f"  - Loads{'':<39} {total_load_dram:<15}")
+    print(f"  - Stores{'':<38} {total_store_dram:<15}")
+
+    # Useful accesses breakdown
+    print(f"\n{'--- Useful vs Total Accesses (stat_phase filtering) ---':<45}")
+
+    total_l1sp = total_load_l1sp + total_store_l1sp + total_atomic_l1sp
+    useful_l1sp = total_useful_load_l1sp + total_useful_store_l1sp + total_useful_atomic_l1sp
+    overhead_l1sp_pct = ((total_l1sp - useful_l1sp) / total_l1sp * 100) if total_l1sp > 0 else 0
+    print(f"{'L1SP Total':<30} {total_l1sp:<12} {'Useful:':<10} {useful_l1sp:<12} {'Overhead:':<10} {overhead_l1sp_pct:.1f}%")
+    print(f"  - Loads:  total={total_load_l1sp:<10} useful={total_useful_load_l1sp:<10}")
+    print(f"  - Stores: total={total_store_l1sp:<10} useful={total_useful_store_l1sp:<10}")
+    print(f"  - Atomic: total={total_atomic_l1sp:<10} useful={total_useful_atomic_l1sp:<10}")
+
+    total_l2sp = total_load_l2sp + total_store_l2sp + total_atomic_l2sp
+    useful_l2sp = total_useful_load_l2sp + total_useful_store_l2sp + total_useful_atomic_l2sp
+    overhead_l2sp_pct = ((total_l2sp - useful_l2sp) / total_l2sp * 100) if total_l2sp > 0 else 0
+    print(f"{'L2SP Total':<30} {total_l2sp:<12} {'Useful:':<10} {useful_l2sp:<12} {'Overhead:':<10} {overhead_l2sp_pct:.1f}%")
+    print(f"  - Loads:  total={total_load_l2sp:<10} useful={total_useful_load_l2sp:<10}")
+    print(f"  - Stores: total={total_store_l2sp:<10} useful={total_useful_store_l2sp:<10}")
+    print(f"  - Atomic: total={total_atomic_l2sp:<10} useful={total_useful_atomic_l2sp:<10}")
+
+    total_dram_all = total_load_dram + total_store_dram + total_atomic_dram
+    useful_dram = total_useful_load_dram + total_useful_store_dram + total_useful_atomic_dram
+    overhead_dram_pct = ((total_dram_all - useful_dram) / total_dram_all * 100) if total_dram_all > 0 else 0
+    print(f"{'DRAM Total':<30} {total_dram_all:<12} {'Useful:':<10} {useful_dram:<12} {'Overhead:':<10} {overhead_dram_pct:.1f}%")
+    print(f"  - Loads:  total={total_load_dram:<10} useful={total_useful_load_dram:<10}")
+    print(f"  - Stores: total={total_store_dram:<10} useful={total_useful_store_dram:<10}")
+    print(f"  - Atomic: total={total_atomic_dram:<10} useful={total_useful_atomic_dram:<10}")
+
+    # DRAM cache stats
+    cache_hit_rate = (total_cache_hits / total_cache_accesses * 100) if total_cache_accesses > 0 else 0
+
+    # Cache-local latencies (excludes interconnect - measured at cache component)
+    cache_local_hit_lat = total_hit_lat_sum / total_hit_lat_count if total_hit_lat_count > 0 else 0
+    cache_local_miss_lat = total_miss_lat_sum / total_miss_lat_count if total_miss_lat_count > 0 else 0
+
+    # Core-perspective latencies (includes interconnect - measured at core)
+    avg_dram_lat = total_dram_lat_sum / total_dram_lat_count if total_dram_lat_count > 0 else 0
+    avg_load_lat = total_load_lat_sum / total_load_lat_count if total_load_lat_count > 0 else 0
+
+    # Estimate interconnect overhead: difference between core-perspective and cache-local average
+    # Core sees: hits * hit_lat + misses * miss_lat = total_dram_lat
+    # Cache sees: hits * cache_hit_lat + misses * cache_miss_lat = cache_total_lat
+    cache_local_avg = (total_hit_lat_sum + total_miss_lat_sum) / (total_hit_lat_count + total_miss_lat_count) if (total_hit_lat_count + total_miss_lat_count) > 0 else 0
+    interconnect_overhead = avg_dram_lat - cache_local_avg if cache_local_avg > 0 else 0
+
+    # Core-perspective hit/miss latencies (cache-local + interconnect)
+    core_hit_lat = cache_local_hit_lat + interconnect_overhead
+    core_miss_lat = cache_local_miss_lat + interconnect_overhead
+
+    print(f"\n{'DRAM Cache Hits':<45} {total_cache_hits:<15} {cache_hit_rate:.1f}% hit rate")
+    print(f"{'DRAM Cache Misses (actual DRAM accesses)':<45} {total_cache_misses:<15}")
+    print(f"\n{'--- Core-Perspective Latencies (includes interconnect) ---':<45}")
+    print(f"{'  Avg DRAM Load Latency (end-to-end)':<45} {avg_dram_lat:.1f} cycles")
+    print(f"{'  Estimated Cache Hit Latency':<45} {core_hit_lat:.1f} cycles")
+    print(f"{'  Estimated Cache Miss Latency':<45} {core_miss_lat:.1f} cycles")
+    print(f"{'  Interconnect Overhead (round-trip)':<45} {interconnect_overhead:.1f} cycles")
+    print(f"\n{'--- Cache-Local Latencies (excludes interconnect) ---':<45}")
+    print(f"{'  Cache Hit Latency':<45} {cache_local_hit_lat:.1f} cycles")
+    print(f"{'  Cache Miss Latency':<45} {cache_local_miss_lat:.1f} cycles")
+
+    # Overall memory stats
+    print(f"\n{'--- Overall Memory Performance ---':<45}")
+    print(f"{'  Avg Load Latency (all memory types)':<45} {avg_load_lat:.1f} cycles")
+
+    # Useful-phase latencies
+    useful_avg_load_lat = useful_load_lat_sum / useful_load_lat_count if useful_load_lat_count > 0 else 0
+    useful_avg_dram_lat = useful_dram_lat_sum / useful_dram_lat_count if useful_dram_lat_count > 0 else 0
+
+    print(f"\n{'--- Useful Phase Memory Performance (stat_phase=1 only) ---':<45}")
+    print(f"{'  Useful Phase Duration (max core)':<45} {max_useful_phase_cycles:<15} cycles ({max_useful_phase_cycles/1e6:.3f} ms)")
+    print(f"{'  Total Simulation Duration (max core)':<45} {max_sim_cycles:<15} cycles ({max_sim_cycles/1e6:.3f} ms)")
+    startup_pct = ((max_sim_cycles - max_useful_phase_cycles) / max_sim_cycles * 100) if max_sim_cycles > 0 else 0
+    print(f"{'  Startup/Teardown Overhead':<45} {startup_pct:.1f}%")
+    print(f"{'  Avg Load Latency (useful phase)':<45} {useful_avg_load_lat:.1f} cycles")
+    if useful_dram_lat_count > 0:
+        print(f"{'  Avg DRAM Load Latency (useful phase)':<45} {useful_avg_dram_lat:.1f} cycles")
+
+    # Average outstanding requests (all memory types)
+    num_cores = len(core_stats)
+    total_useful_oreq_sum = sum(d["useful_outstanding_requests_sum"] for d in core_stats.values())
+    total_useful_cycles = total_useful_busy + total_useful_memwait + total_useful_idle
+    avg_useful_outstanding = total_useful_oreq_sum / total_useful_cycles if total_useful_cycles > 0 else 0
+    sys_useful_outstanding = avg_useful_outstanding * num_cores
+
+    total_oreq_sum = sum(d["outstanding_requests_sum"] for d in core_stats.values())
+    total_all_cycles = sum(d["busy_cycles"] + d["memory_wait_cycles"] + d["active_idle_cycles"] for d in core_stats.values())
+    avg_outstanding = total_oreq_sum / total_all_cycles if total_all_cycles > 0 else 0
+    sys_outstanding = avg_outstanding * num_cores
+
+    print(f"{'  Avg Outstanding Reqs / core (useful)':<45} {avg_useful_outstanding:.2f}")
+    print(f"{'  Avg Outstanding Reqs system (useful)':<45} {sys_useful_outstanding:.1f}  ({num_cores} cores)")
+    print(f"{'  Avg Outstanding Reqs / core (total)':<45} {avg_outstanding:.2f}")
+    print(f"{'  Avg Outstanding Reqs system (total)':<45} {sys_outstanding:.1f}  ({num_cores} cores)")
+
+    # Average DRAM outstanding requests
+    total_useful_dram_oreq = sum(d.get("useful_dram_outstanding_requests_sum", 0) for d in core_stats.values())
+    avg_useful_dram_outstanding = total_useful_dram_oreq / total_useful_cycles if total_useful_cycles > 0 else 0
+    sys_useful_dram_outstanding = avg_useful_dram_outstanding * num_cores
+
+    total_dram_oreq = sum(d.get("dram_outstanding_requests_sum", 0) for d in core_stats.values())
+    avg_dram_outstanding = total_dram_oreq / total_all_cycles if total_all_cycles > 0 else 0
+    sys_dram_outstanding = avg_dram_outstanding * num_cores
+
+    if total_useful_dram_oreq > 0 or total_dram_oreq > 0:
+        print(f"{'  Avg DRAM Outstanding / core (useful)':<45} {avg_useful_dram_outstanding:.2f}")
+        print(f"{'  Avg DRAM Outstanding system (useful)':<45} {sys_useful_dram_outstanding:.1f}  ({num_cores} cores)")
+        print(f"{'  Avg DRAM Outstanding / core (total)':<45} {avg_dram_outstanding:.2f}")
+        print(f"{'  Avg DRAM Outstanding system (total)':<45} {sys_dram_outstanding:.1f}  ({num_cores} cores)")
+
+    # --- DRAM Bandwidth Utilization (after cache filtering) ---
+    # Count DRAM banks from MemController components
+    dram_mc_keys = [k for k in memctrl_stats if "dram" in k and "l2sp" not in k and "l1sp" not in k]
+    num_dram_banks = len(dram_mc_keys)
+    DRAM_LINE_BYTES = 64  # interleave / cache line size
+
+    if num_dram_banks > 0 and total_cache_misses > 0:
+        # Actual DRAM backend traffic = cache misses * line_size
+        actual_dram_bytes_total = total_cache_misses * DRAM_LINE_BYTES
+
+        # Total-phase DRAM BW
+        total_phase_sec = max_sim_cycles * 1e-9  # 1 GHz clock
+        actual_dram_bw_total = (actual_dram_bytes_total / total_phase_sec / 1e9) if total_phase_sec > 0 else 0
+
+        # Useful-phase estimate: scale actual cache misses by useful/total
+        # core DRAM request ratio (preserves cache filtering correctly)
+        useful_frac = useful_dram / total_dram_all if total_dram_all > 0 else 0
+        est_useful_cache_misses = total_cache_misses * useful_frac
+        actual_dram_bytes_useful = est_useful_cache_misses * DRAM_LINE_BYTES
+        useful_phase_sec = max_useful_phase_cycles * 1e-9
+        actual_dram_bw_useful = (actual_dram_bytes_useful / useful_phase_sec / 1e9) if useful_phase_sec > 0 else 0
+
+        # Peak BW from measured avg DRAM backend latency, capped by HBM spec
+        MSHRS_PER_BANK = 256
+        HBM_SPEC_PEAK_PER_BANK = 1024.0  # GB/s (64ch x 128-bit x 1Gbps)
+
+        # Compute measured avg DRAM latency from MemController stats
+        dram_mc_lat_sum = 0
+        dram_mc_lat_count = 0
+        for k in dram_mc_keys:
+            d = memctrl_stats[k]
+            dram_mc_lat_sum += d["latency_GetS"]["sum"] + d["latency_GetX"]["sum"]
+            dram_mc_lat_count += d["latency_GetS"]["count"] + d["latency_GetX"]["count"]
+        measured_avg_lat_cyc = dram_mc_lat_sum / dram_mc_lat_count if dram_mc_lat_count > 0 else 40
+
+        # MSHR-limited peak: 32 outstanding x 64B / avg_latency (1 GHz => cycles = ns)
+        mshr_peak_per_bank = MSHRS_PER_BANK * DRAM_LINE_BYTES / measured_avg_lat_cyc
+        peak_bw_per_bank = min(HBM_SPEC_PEAK_PER_BANK, mshr_peak_per_bank)
+        peak_bw_gbs = num_dram_banks * peak_bw_per_bank
+        util_total = (actual_dram_bw_total / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+        util_useful = (actual_dram_bw_useful / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+
+        # PutM (dirty eviction) write traffic
+        total_dram_putm = sum(memctrl_stats[k]["requests_received_PutM"]["sum"] for k in dram_mc_keys)
+        dram_write_bytes = total_dram_putm * DRAM_LINE_BYTES
+
+        print(f"\n{'--- DRAM Bandwidth Utilization (after cache filtering) ---':<45}")
+        print(f"{'  DRAM Banks':<45} {num_dram_banks}")
+        print(f"{'  MSHRs per Bank':<45} {MSHRS_PER_BANK}")
+        print(f"{'  Measured Avg DRAM Latency (MemCtrl)':<45} {measured_avg_lat_cyc:.1f} cycles")
+        print(f"{'  Cache Hit Rate':<45} {cache_hit_rate:.1f}%")
+        print(f"{'  Total Cache Misses (demand DRAM reads)':<45} {total_cache_misses:,}")
+        print(f"{'  DRAM Read Traffic (total phase)':<45} {actual_dram_bytes_total / 1e6:.2f} MB")
+        print(f"{'  DRAM Write Traffic (PutM evictions)':<45} {dram_write_bytes / 1e6:.2f} MB ({total_dram_putm:,} evictions)")
+        print(f"{'  Actual DRAM Read BW (total phase)':<45} {actual_dram_bw_total:.2f} GB/s")
+        print(f"{'  Est. Useful-Phase Cache Misses':<45} {est_useful_cache_misses:,.0f}")
+        print(f"{'  Est. DRAM Traffic (useful phase)':<45} {actual_dram_bytes_useful / 1e6:.2f} MB")
+        print(f"{'  Est. DRAM BW (useful phase)':<45} {actual_dram_bw_useful:.2f} GB/s")
+        bottleneck = "HBM spec" if peak_bw_per_bank == HBM_SPEC_PEAK_PER_BANK else "MSHR"
+        peak_label = f"  Peak DRAM BW ({bottleneck}-limited, {num_dram_banks} banks)"
+        print(f"{peak_label:<45} {peak_bw_gbs:.1f} GB/s  (per-bank: {peak_bw_per_bank:.1f} GB/s)")
+        print(f"{'  DRAM Util % (total phase)':<45} {util_total:.2f}%")
+        print(f"{'  DRAM Util % (useful phase)':<45} {util_useful:.2f}%")
+
+        # --- Non-Atomic DRAM Bandwidth ---
+        # PutM (dirty eviction) write traffic already computed above
+        non_atomic_bytes_total = actual_dram_bytes_total + dram_write_bytes
+        non_atomic_bw_total = (non_atomic_bytes_total / total_phase_sec / 1e9) if total_phase_sec > 0 else 0
+        non_atomic_bytes_useful = actual_dram_bytes_useful + dram_write_bytes * useful_frac
+        non_atomic_bw_useful = (non_atomic_bytes_useful / useful_phase_sec / 1e9) if useful_phase_sec > 0 else 0
+        non_atomic_util_total = (non_atomic_bw_total / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+        non_atomic_util_useful = (non_atomic_bw_useful / peak_bw_gbs * 100) if peak_bw_gbs > 0 else 0
+
+        print(f"\n{'--- Non-Atomic DRAM Bandwidth ---':<45}")
+        print(f"{'  Non-Atomic Traffic (total phase)':<45} {non_atomic_bytes_total / 1e6:.2f} MB")
+        print(f"{'  Non-Atomic BW (total phase)':<45} {non_atomic_bw_total:.2f} GB/s")
+        print(f"{'  Non-Atomic Traffic (useful phase)':<45} {non_atomic_bytes_useful / 1e6:.2f} MB")
+        print(f"{'  Non-Atomic BW (useful phase)':<45} {non_atomic_bw_useful:.2f} GB/s")
+        print(f"{'  Non-Atomic Util % (total phase)':<45} {non_atomic_util_total:.2f}%")
+        print(f"{'  Non-Atomic Util % (useful phase)':<45} {non_atomic_util_useful:.2f}%")
+
+        # --- DRAM Bytes per Edge ---
+        # Atomic DRAM ops go through CustomReq path to ramulator (each = 64B read)
+        # but are NOT counted in cache miss stats. Include them for accurate totals.
+        atomic_dram_bytes = total_atomic_dram * DRAM_LINE_BYTES
+        total_dram_traffic = actual_dram_bytes_total + dram_write_bytes + atomic_dram_bytes
+
+        print(f"{'  Atomic DRAM Ops':<45} {total_atomic_dram:,}  ({atomic_dram_bytes / 1e6:.2f} MB)")
+        print(f"{'  Total DRAM Traffic (reads+writes+atomics)':<45} {total_dram_traffic / 1e6:.2f} MB")
+
+        if num_edges is not None and num_edges > 0:
+            total_bytes_per_edge = total_dram_traffic / num_edges
+            read_bytes_per_edge = actual_dram_bytes_total / num_edges
+            write_bytes_per_edge = dram_write_bytes / num_edges
+            atomic_bytes_per_edge = atomic_dram_bytes / num_edges
+            useful_atomic_bytes = total_useful_atomic_dram * DRAM_LINE_BYTES
+            useful_total_bytes = actual_dram_bytes_useful + useful_atomic_bytes
+            useful_bytes_per_edge = useful_total_bytes / num_edges
+            print(f"\n{'  --- DRAM Bytes per Edge ---':<45}")
+            print(f"{'  Graph Edges:':<45} {num_edges:,}")
+            print(f"{'  Total DRAM Bytes / Edge:':<45} {total_bytes_per_edge:.2f} B")
+            print(f"{'    Cache Miss (read) / Edge:':<45} {read_bytes_per_edge:.2f} B")
+            print(f"{'    Write (PutM eviction) / Edge:':<45} {write_bytes_per_edge:.2f} B")
+            print(f"{'    Atomic / Edge:':<45} {atomic_bytes_per_edge:.2f} B")
+            non_atomic_bytes_per_edge = read_bytes_per_edge + write_bytes_per_edge
+            print(f"{'  Non-Atomic DRAM Bytes / Edge:':<45} {non_atomic_bytes_per_edge:.2f} B")
+            useful_non_atomic_bytes = actual_dram_bytes_useful + dram_write_bytes * useful_frac
+            useful_non_atomic_per_edge = useful_non_atomic_bytes / num_edges
+            print(f"{'  Est. Useful Non-Atomic Bytes / Edge:':<45} {useful_non_atomic_per_edge:.2f} B")
+            non_atomic_bw_per_edge_total = non_atomic_bw_total * 1e9 / num_edges
+            non_atomic_bw_per_edge_useful = non_atomic_bw_useful * 1e9 / num_edges
+            print(f"{'  Non-Atomic BW / Edge (total phase):':<45} {non_atomic_bw_per_edge_total:.2f} B/s")
+            print(f"{'  Non-Atomic BW / Edge (useful phase):':<45} {non_atomic_bw_per_edge_useful:.2f} B/s")
+            teps = num_edges / useful_phase_sec if useful_phase_sec > 0 else 0
+            mteps = teps / 1e6
+            gteps = teps / 1e9
+            print(f"\n{'  --- Traversal Rate (TEPS) ---':<45}")
+            print(f"{'  TEPS (useful phase):':<45} {mteps:.2f} MTEPS  ({gteps:.4f} GTEPS)")
+            if non_atomic_bw_useful > 0:
+                mteps_per_gbps = mteps / non_atomic_bw_useful
+                print(f"{'  MTEPS / Non-Atomic BW (useful):':<45} {mteps_per_gbps:.2f} MTEPS/GB/s")
+        elif num_edges is not None:
+            print(f"\n{'  Graph Edges:':<45} {num_edges} (zero — skipping bytes/edge)")
+        else:
+            print(f"\n{'  DRAM Bytes/Edge:':<45} N/A (no --edges/--graph and no uniform_graph.bin found)")
+
+    # 4. Print Per-Core Statistics (Total and Useful Phase)
+    print("\n" + "=" * 170)
+    print("PER-CORE STATISTICS (Total | Useful Phase)")
+    print("=" * 170)
+    headers = ["Core",
+               "Busy %", "MemWait %", "Idle %",
+               "uBusy %", "uMemW %", "uIdle %",
+               "L1SP Ld", "L2SP Ld", "DRAM Ld", "I-Miss"]
+    print(f"{headers[0]:<25} "
+          f"{headers[1]:<10} {headers[2]:<10} {headers[3]:<10} "
+          f"{headers[4]:<10} {headers[5]:<10} {headers[6]:<10} "
+          f"{headers[7]:<12} {headers[8]:<12} {headers[9]:<12} {headers[10]:<10}")
+    print("-" * 170)
+
+    for core in sorted(core_stats.keys()):
+        d = core_stats[core]
+        total_active = d["busy_cycles"] + d["memory_wait_cycles"] + d["active_idle_cycles"]
+        if total_active == 0: total_active = 1
+
+        busy_pct = (d["busy_cycles"] / total_active) * 100
+        wait_pct = (d["memory_wait_cycles"] / total_active) * 100
+        idle_pct = (d["active_idle_cycles"] / total_active) * 100
+
+        # Useful-phase percentages
+        useful_active = d["useful_busy_cycles"] + d["useful_memory_wait_cycles"] + d["useful_active_idle_cycles"]
+        if useful_active == 0: useful_active = 1
+        u_busy_pct = (d["useful_busy_cycles"] / useful_active) * 100
+        u_wait_pct = (d["useful_memory_wait_cycles"] / useful_active) * 100
+        u_idle_pct = (d["useful_active_idle_cycles"] / useful_active) * 100
+
+        display_name = short_core_name(core)
+        print(f"{display_name:<25} "
+              f"{busy_pct:<10.1f} {wait_pct:<10.1f} {idle_pct:<10.1f} "
+              f"{u_busy_pct:<10.1f} {u_wait_pct:<10.1f} {u_idle_pct:<10.1f} "
+              f"{d['load_l1sp']:<12} {d['load_l2sp']:<12} {d['load_dram']:<12} {d['icache_miss']:<10}")
+
+    # 5. Print DRAM Cache Table
+    if cache_stats:
+        print("\n" + "=" * 100)
+        print("PER-DRAM-CACHE STATISTICS (cache-local latencies, add ~{:.0f} cycles for core-perspective)".format(interconnect_overhead))
+        print("=" * 100)
+        headers = ["DRAM Cache", "Hits", "Misses", "Hit %", "Hit Lat (cyc)", "Miss Lat (cyc)"]
+        print(f"{headers[0]:<20} {headers[1]:<12} {headers[2]:<12} {headers[3]:<10} {headers[4]:<15} {headers[5]:<15}")
+        print("-" * 100)
+
+        for cache in sorted(cache_stats.keys()):
+            d = cache_stats[cache]
+            hits = d["CacheHits"]["sum"]
+            misses = d["CacheMisses"]["sum"]
+            total = hits + misses
+            hit_rate = (hits / total * 100) if total > 0 else 0
+
+            hit_lat_sum = d["latency_GetS_hit"]["sum"] + d["latency_GetX_hit"]["sum"]
+            hit_lat_count = d["latency_GetS_hit"]["count"] + d["latency_GetX_hit"]["count"]
+            avg_hit = hit_lat_sum / hit_lat_count if hit_lat_count > 0 else 0
+
+            miss_lat_sum = d["latency_GetS_miss"]["sum"] + d["latency_GetX_miss"]["sum"]
+            miss_lat_count = d["latency_GetS_miss"]["count"] + d["latency_GetX_miss"]["count"]
+            avg_miss = miss_lat_sum / miss_lat_count if miss_lat_count > 0 else 0
+
+            display_name = short_cache_name(cache)
+            print(f"{display_name:<20} {hits:<12} {misses:<12} {hit_rate:<10.1f} {avg_hit:<15.1f} {avg_miss:<15.1f}")
+
+    # 6. Print MemController Statistics (L2SP, L1SP, DRAM)
+    def compute_stddev(sumsq, sumv, count):
+        """Compute stddev from SumSQ, Sum, and Count."""
+        if count < 2:
+            return 0.0
+        mean = sumv / count
+        variance = (sumsq / count) - (mean * mean)
+        return math.sqrt(max(variance, 0.0))
+
+    def print_memctrl_table(title, banks, useful_phase_cycles=0, useful_total_reqs=0, total_core_reqs=0):
+        if not banks:
+            return
+        num_banks = len(banks)
+        print("\n" + "=" * 240)
+        print(f"{title}")
+        print("=" * 240)
+        headers = ["Bank", "Reads", "Writes", "Evict", "Util %", "uUtil %",
+                   "Rejected",
+                   "Avg Queue", "uAvg Queue", "Max Queue", "Queue SD",
+                   "Avg Rd Lat", "Min Rd Lat", "Max Rd Lat", "Rd Lat SD",
+                   "Avg Wr Lat", "Avg IAT", "uIAT"]
+        print(f"{headers[0]:<28} {headers[1]:<10} {headers[2]:<10} {headers[3]:<10} {headers[4]:<8} {headers[5]:<8} "
+              f"{headers[6]:<10} "
+              f"{headers[7]:<10} {headers[8]:<10} {headers[9]:<10} {headers[10]:<10} "
+              f"{headers[11]:<10} {headers[12]:<10} {headers[13]:<10} {headers[14]:<10} "
+              f"{headers[15]:<10} {headers[16]:<10} {headers[17]:<10}")
+        print("-" * 240)
+        for bank in sorted(banks.keys()):
+            d = banks[bank]
+            reads = d["requests_received_GetS"]["sum"]
+            # Writes: GetX (ramulator/coherence) + Write (SimpleMemory/scratchpad)
+            writes = d["requests_received_GetX"]["sum"] + d["requests_received_Write"]["sum"]
+            evictions = d["requests_received_PutM"]["sum"]
+            total_cyc = d["total_cycles"]["sum"] if d["total_cycles"]["sum"] > 0 else 1
+            issue_cyc = d["cycles_with_issue"]["sum"]
+            util = (issue_cyc / total_cyc) * 100
+            rejected = d["cycles_attempted_issue_but_rejected"]["sum"]
+
+            # Useful-phase utilization: scale this bank's actual MC requests
+            # by the useful/total ratio of core-side requests.
+            # This correctly accounts for cache filtering (DRAM) and phase windowing.
+            mc_reqs = reads + writes + evictions
+            useful_frac = useful_total_reqs / total_core_reqs if total_core_reqs > 0 else 0
+            est_useful_mc_reqs = mc_reqs * useful_frac
+            u_util = (est_useful_mc_reqs / useful_phase_cycles * 100) if useful_phase_cycles > 0 else 0
+
+            # Queue depth stats
+            oq = d["outstanding_requests"]
+            avg_q = oq["sum"] / oq["count"] if oq["count"] > 0 else 0
+            u_avg_q = avg_q * useful_frac * (total_cyc / useful_phase_cycles) if useful_phase_cycles > 0 else 0
+            max_q = oq["max"]
+            q_sd = compute_stddev(oq["sumsq"], oq["sum"], oq["count"])
+
+            # Read latency stats
+            rl = d["latency_GetS"]
+            avg_rd = rl["sum"] / rl["count"] if rl["count"] > 0 else 0
+            min_rd = rl["min"] if rl["count"] > 0 else 0
+            max_rd = rl["max"] if rl["count"] > 0 else 0
+            rd_sd = compute_stddev(rl["sumsq"], rl["sum"], rl["count"])
+
+            # Write latency: GetX (ramulator/coherence) or Write (SimpleMemory/scratchpad)
+            wr_lat_sum = d["latency_GetX"]["sum"] + d["latency_Write"]["sum"]
+            wr_lat_count = d["latency_GetX"]["count"] + d["latency_Write"]["count"]
+            avg_wr = wr_lat_sum / wr_lat_count if wr_lat_count > 0 else 0
+
+            # Average inter-arrival time (total cycles / total demand requests)
+            total_reqs = reads + writes + evictions
+            avg_iat = total_cyc / total_reqs if total_reqs > 0 else 0
+            # Useful IAT: useful phase cycles / estimated useful MC requests for this bank
+            u_iat = useful_phase_cycles / est_useful_mc_reqs if est_useful_mc_reqs > 0 else 0
+
+            display = short_memctrl_name(bank)
+            print(f"{display:<28} {reads:<10} {writes:<10} {evictions:<10} {util:<8.1f} {u_util:<8.1f} "
+                  f"{rejected:<10} "
+                  f"{avg_q:<10.2f} {u_avg_q:<10.2f} {max_q:<10} {q_sd:<10.2f} "
+                  f"{avg_rd:<10.1f} {min_rd:<10} {max_rd:<10} {rd_sd:<10.2f} "
+                  f"{avg_wr:<10.1f} {avg_iat:<10.2f} {u_iat:<10.2f}")
+
+    if memctrl_stats:
+        l2sp_mc = {k: v for k, v in memctrl_stats.items() if "l2sp" in k}
+        l1sp_mc = {k: v for k, v in memctrl_stats.items() if "l1sp" in k}
+        dram_mc = {k: v for k, v in memctrl_stats.items() if "dram" in k and "l2sp" not in k and "l1sp" not in k}
+
+        useful_l2sp_reqs = total_useful_load_l2sp + total_useful_store_l2sp + total_useful_atomic_l2sp
+        useful_l1sp_reqs = total_useful_load_l1sp + total_useful_store_l1sp + total_useful_atomic_l1sp
+        useful_dram_reqs = total_useful_load_dram + total_useful_store_dram + total_useful_atomic_dram
+
+        total_core_l2sp_reqs = total_load_l2sp + total_store_l2sp + total_atomic_l2sp
+        total_core_l1sp_reqs = total_load_l1sp + total_store_l1sp + total_atomic_l1sp
+        total_core_dram_reqs = total_load_dram + total_store_dram + total_atomic_dram
+
+        print_memctrl_table("L2SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
+                            l2sp_mc, max_useful_phase_cycles, useful_l2sp_reqs, total_core_l2sp_reqs)
+        print_memctrl_table("L1SP BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
+                            l1sp_mc, max_useful_phase_cycles, useful_l1sp_reqs, total_core_l1sp_reqs)
+        print_memctrl_table("DRAM BANK STATISTICS (per-bank MemController) [uUtil/uIAT = core-side useful-phase estimate]",
+                            dram_mc, max_useful_phase_cycles, useful_dram_reqs, total_core_dram_reqs)
+
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,5 @@
 from compute import XCoreBuilder, RCoreBuilder, ComputeBuilder
-from memory import L1SPBuilder, L2SPBuilder, DRAMBuilder, CachedDRAMBuilder, NoCacheDRAMBuilder
+from memory import L1SPBuilder, L2SPBuilder, DRAMBuilder, CachedDRAMBuilder, NoCacheDRAMBuilder, DirectoryDRAMBuilder
 from pod import PodBuilder
 from pxn import PXNBuilder
 from system import SystemBuilder
@@ -22,7 +22,7 @@ class PANDOHammer(object):
         l1sp = L1SPBuilder()
         l1sp.clock = "1GHz"
         l1sp.access_time = "1ns"
-        l1sp.size = 64*1024
+        l1sp.size = arguments.core_l1sp_size
         l1sp.network_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
         
         # core
@@ -41,6 +41,8 @@ class PANDOHammer(object):
         compute.network_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
         compute.xbar_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
         compute.link_bw = f"{bandwidth_bytes_per_second_per_core}B/s"
+        compute.l1_cache_size = arguments.core_l1_cache_size
+        compute.l1_cache_assoc = arguments.core_l1_cache_assoc
         
         # l2sp tile
         l2sp = L2SPBuilder()
@@ -70,7 +72,9 @@ class PANDOHammer(object):
         hostcore.is_host = True
 
         # dram
-        if arguments.without_pxn_dram_cache:
+        if arguments.core_l1_cache_size > 0:
+            dram = DirectoryDRAMBuilder()
+        elif arguments.without_pxn_dram_cache:
             dram = NoCacheDRAMBuilder()
         else:
             dram = CachedDRAMBuilder()

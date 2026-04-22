@@ -206,6 +206,7 @@ class RCoreBuilder(CoreBuilder):
     """
     def __init__(self):
         super().__init__()
+        self.use_memlink = False  # When True, use MemLink instead of MemNIC (for L1 cache)
 
     def build_core_network_interface(self, system_builder, core):
         """
@@ -217,14 +218,18 @@ class RCoreBuilder(CoreBuilder):
             "verbose" : self.debug.debug_level,
         })
 
-        core.memory_nic \
-            = core.memory_interface.setSubComponent("memlink", "memHierarchy.MemNIC")
-        core.memory_nic.addParams({
-            "group" : self.group,
-            "network_bw" : self.network_bw,
-            "destinations" : self.destinations,
-            "verbose_level" : 0
-        })
+        if self.use_memlink:
+            core.memory_nic \
+                = core.memory_interface.setSubComponent("memlink", "memHierarchy.MemLink")
+        else:
+            core.memory_nic \
+                = core.memory_interface.setSubComponent("memlink", "memHierarchy.MemNIC")
+            core.memory_nic.addParams({
+                "group" : self.group,
+                "network_bw" : self.network_bw,
+                "destinations" : self.destinations,
+                "verbose_level" : 0
+            })
         return core
 
     @property
@@ -312,6 +317,11 @@ class ComputeBuilder(object):
         self.input_buf_size = "1024B"
         self.output_buf_size = "1024B"
         self.router_latency = "0ns"
+        # L1 cache parameters (0 = disabled)
+        self.l1_cache_size = 0
+        self.l1_cache_assoc = 4
+        self.l1_cache_line_size = 64
+        self.l1_cache_latency = 1  # access latency in cycles
         return
 
     def router_name(self, name):
@@ -337,6 +347,12 @@ class ComputeBuilder(object):
         Returns the bridge name
         """
         return f"{name}_bridge"
+
+    def l1cache_name(self, name):
+        """
+        Returns the l1 cache name
+        """
+        return f"{name}_l1cache"
 
     def core_port(self):
         return "port0"
@@ -383,14 +399,62 @@ class ComputeBuilder(object):
         # 1 cycle latency from the network into the tile
         network_latency = "1ns"
 
+        use_l1_cache = self.l1_cache_size > 0
+
+        # Tell core builder to use MemLink (not MemNIC) when L1 cache is present
+        if use_l1_cache and hasattr(self.core, 'use_memlink'):
+            self.core.use_memlink = True
+
         self.core.id = self.id
         compute.core = self.core.build(system_builder, self.core_name(name))
-        nwif, port  = compute.core.network_interface()
-        link = sst.Link(f"{self.router_name(name)}_to_{self.core_name(name)}")
-        link.connect(
-            (nwif, port, local_latency),
-            (compute.router, self.core_port(), local_latency)
-        )
+
+        if use_l1_cache:
+            # Create L1 cache between core and compute router
+            cache_cname = self.l1cache_name(name)
+            l1cache = sst.Component(cache_cname, "memHierarchy.Cache")
+            l1cache.addParams({
+                "cache_frequency" : self.core.clock,
+                "cache_size" : f"{self.l1_cache_size}B",
+                "associativity" : self.l1_cache_assoc,
+                "cache_line_size" : self.l1_cache_line_size,
+                "replacement_policy" : "lru",
+                "access_latency_cycles" : self.l1_cache_latency,
+                "L1" : "true",
+                "coherence_protocol" : "mesi",
+                "cache_type" : "inclusive",
+                "mshr_num_entries" : 16,
+            })
+            l1cache.enableAllStatistics()
+
+            # Connect core (MemLink) -> L1 cache cpulink (MemLink)
+            cache_cpulink = l1cache.setSubComponent("cpulink", "memHierarchy.MemLink")
+            nwif, port = compute.core.network_interface()
+            link = sst.Link(f"link_{self.core_name(name)}_to_{cache_cname}")
+            link.connect(
+                (nwif, port, local_latency),
+                (cache_cpulink, "port", local_latency)
+            )
+
+            # Connect L1 cache memlink (MemNIC) -> compute router
+            cache_memnic = l1cache.setSubComponent("memlink", "memHierarchy.MemNIC")
+            cache_memnic.addParams({
+                "group" : self.core.group,
+                "sources" : "2",
+                "network_bw" : self.network_bw,
+                "destinations" : self.core.destinations,
+            })
+            link = sst.Link(f"{self.router_name(name)}_to_{self.core_name(name)}")
+            link.connect(
+                (cache_memnic, "port", local_latency),
+                (compute.router, self.core_port(), local_latency)
+            )
+        else:
+            nwif, port  = compute.core.network_interface()
+            link = sst.Link(f"{self.router_name(name)}_to_{self.core_name(name)}")
+            link.connect(
+                (nwif, port, local_latency),
+                (compute.router, self.core_port(), local_latency)
+            )
 
         # build the l1sp
         compute.l1sp = self.l1sp.build(system_builder, self.l1sp_name(name))

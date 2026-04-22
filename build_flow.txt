@@ -1,0 +1,95 @@
+  DRV is an SST-based cycle-level simulator of the PANDOHammer architecture. You write a RISC-V program (a "driver" in drvr/), cross-compile it for RV64, and SST
+  runs it on a simulated machine whose topology is built up by Python scripts in model/. DRAM timing comes from Ramulator, loaded as a shared library.
+
+  The "machine" hierarchy is: PXN → Pod → Core → Hart (HW thread). Each core has a private L1SP (scratchpad), each pod has a banked L2SP, and each PXN has a DRAM
+  cache in front of a Ramulator-backed HBM. All of that is wired together in model/pxn.py, pod.py, compute.py, memory.py, with drvr.py as the top-level entry.
+
+  Why Apptainer is in the loop
+
+  Stampede3 doesn't have the exact SST-core / SST-elements / RISC-V toolchain we need. So instead of building that stack on the login node, we use a prebuilt
+  container:
+
+  /work2/10238/vineeth_architect/stampede3/drv_latest.sif
+
+  Inside the container: /install holds sst, sst-elements, the RISC-V gcc, Boost, MPI — everything. The codebase itself is NOT in the container. We bind-mount the
+  working tree into the container at /work:
+
+  apptainer exec --bind "$SCRIPT_DIR:/work" ... drv_latest.sif bash -lc '...'
+
+  Same trick for Ramulator — it's built once outside and bind-mounted in:
+
+  --bind "$RAMULATOR_LIB:/install/lib/libramulator.so"
+
+  And the patched libmemHierarchy.so (coherence-ALU tagging) is bind-mounted over the one inside the container. So the container is frozen; code, Ramulator, and
+  memHierarchy all come from the host.
+
+  How the code got here
+
+  It's a git clone — drv is checked out on branch tacc_branch. The Ramulator build lives one level up at ../ramulator-build/, and the patched sst-elements tree lives
+   in ../drv-stack/sst-elements/. These three trees (drv, ramulator-build, drv-stack) were pulled onto /work2/... and that's what the sbatch scripts reference by
+  absolute path.
+
+  Build flow
+
+  There's no "build" step on the login node. Every sbatch script starts with a build phase that runs inside the container:
+
+  STEP 1 (in container):
+    cd /work/build_stampede
+    cmake ..  (with SST paths pointing at /install)
+    make -j rv64 Drv pandocommand_loader
+
+  This produces two kinds of artifacts under build_stampede/:
+  - RV64 binaries — rv64/drvr/drvr_bfs_csr_weak_roi, drvr_atomic_bw_blocking, etc. These are the RISC-V ELFs SST will execute.
+  - Host .so's — libpandocommand_loader.so (the command processor) and the Drv SST element.
+
+  Because cmake + make are idempotent, re-submitting an sbatch is cheap — only changed files recompile.
+
+  Simulation flow (what happens per run)
+
+  1. Graph/init generation (host Python): gen_uniform_csr.py or gen_rmat_csr.py writes uniform_graph.bin; gen_bfs_init_state.py writes bfs_dist_init.bin. These live
+  in the per-run directory.
+  2. SST launch (in container):
+  sst model/drvr.py -- --num-pxn=1 --pxn-pods=1 --pod-cores-x=1 ... BINARY prog-args
+  2. drvr.py reads cmdline.py args, constructs the PXN/Pod/Core/Hart component graph, wires up L1SP, L2SP, DRAM cache, Ramulator, and the command processor, then
+  runs the simulation.
+  3. RISC-V program executes inside SSTRISCVCore (one instance per core). Each hart runs its copy of the ELF. MMIO writes (ph_print_int, ph_stat_phase, etc.) are
+  handled by SSTRISCVSimulator::visitStoreMMIO. The important one: ph_stat_phase(1) toggles the per-hart stat_phase_ flag so useful_* counters accumulate only during
+   the ROI.
+  4. Output files written to CWD:
+    - stats.csv — SST's stat dump (cores, caches, memctrls).
+    - ramulator_system_pxn0_dram0.stats (one per slice if sliced) — raw Ramulator counters.
+    - output.txt — everything stdout'd, via tee.
+  5. Post-process: summarize.py reads stats.csv, summarize_ramulator.py reads the ramulator stats. The sbatch copies both into each run dir so you can re-run them
+  later without recomputing.
+
+  The apptainer invocation pattern (why it looks weird)
+
+  Every sbatch block is:
+
+  apptainer exec --cleanenv \
+    --bind host_path:container_path ... \
+    "$SIF" \
+    bash -lc '
+      export PATH=/install/bin:$PATH
+      cd /work/build_stampede
+      ...
+    '
+
+  --cleanenv wipes the host env (TACC modules, XALT, etc. would otherwise break the container's Python/MPI). --bind stitches host paths into the container.
+  Everything after bash -lc '...' runs inside the container with /install on PATH. That's why paths in the commands are /work/... and /install/..., not the real host
+   paths.
+
+  How to build from scratch (mental version)
+
+  # One-time, on the host:
+  # 1. Make sure these exist:
+  #    /work2/.../drv_copy/drv                  (this repo)
+  #    /work2/.../drv_copy/ramulator-build      (prebuilt ramulator)
+  #    /work2/.../drv-stack/sst-elements        (patched memHierarchy)
+  #    /work2/.../drv_latest.sif                (the container)
+  # 2. If memHierarchy source changed:
+  ./rebuild_memhierarchy.sh
+
+  # Per experiment:
+  sbatch bfs_csr_weak_roi.sbatch   # builds + runs + summarizes
+

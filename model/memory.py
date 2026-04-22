@@ -350,6 +350,81 @@ class NoCacheDRAMBuilder(DRAMBuilder):
         })
         return dram
 
+class DirectoryDRAM(Memory):
+    """
+    A DRAM with a directory controller for L1 cache coherence (no DRAM cache)
+    """
+    def __init__(self, name):
+        super().__init__(name)
+        self.memctrl = None
+        self.backend = None
+        self.cmdhandler = None
+        self.directory = None
+        self.nic = None
+        return
+
+    def network_interface(self):
+        return (self.nic, "port")
+
+class DirectoryDRAMBuilder(DRAMBuilder):
+    """
+    Builds a DRAM with a directory controller for L1 cache coherence.
+    Used when per-core L1 caches need coherence but no DRAM cache is desired.
+    """
+    def __init__(self):
+        super().__init__()
+        self.cache_line_size = 64
+        self.dir_entry_cache_size = 32768
+        return
+
+    @property
+    def is_coherent(self):
+        # The directory handles coherence, not the MemController.
+        # Use regular MemController with no shootdowns.
+        return False
+
+    def create_dram(self, name):
+        return DirectoryDRAM(name)
+
+    def build(self, system_builder, name):
+        dram = self.build_dram(system_builder, name)
+
+        addr_start, addr_stop, addr_interleave_size, addr_interleave_step \
+            = self.address_range(system_builder)
+
+        # Create directory controller between network and MemController
+        dir_name = name + "_dir"
+        dram.directory = sst.Component(dir_name, "memHierarchy.DirectoryController")
+        dram.directory.addParams({
+            "clock" : self.clock,
+            "coherence_protocol" : "mesi",
+            "entry_cache_size" : self.dir_entry_cache_size,
+            "addr_range_start" : addr_start,
+            "addr_range_end" : addr_stop,
+            "interleave_size" : f'{addr_interleave_size}B',
+            "interleave_step" : f'{addr_interleave_step}B',
+        })
+        dram.directory.enableAllStatistics()
+
+        # Connect directory -> MemController via MemLink
+        dir_memlink = dram.directory.setSubComponent("memlink", "memHierarchy.MemLink")
+        mem_cpulink = dram.memctrl.setSubComponent("cpulink", "memHierarchy.MemLink")
+        link = sst.Link(f"link_{dir_name}_to_{self.memctrl_name(name)}")
+        link.connect(
+            (dir_memlink, "port", "1ns"),
+            (mem_cpulink, "port", "1ns")
+        )
+
+        # MemNIC on directory cpulink -> PXN router
+        dram.nic = dram.directory.setSubComponent("cpulink", "memHierarchy.MemNIC")
+        dram.nic.addParams({
+            "group" : self.group,
+            "sources" : "0,1",
+            "network_bw" : self.network_bw,
+        })
+
+        return dram
+
 class CachedDRAM(Memory):
     """
     A base class for a DRAM bank with a cache in front of it

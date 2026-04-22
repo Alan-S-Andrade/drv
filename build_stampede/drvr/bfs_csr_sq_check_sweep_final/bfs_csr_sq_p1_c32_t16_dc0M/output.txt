@@ -1,0 +1,1146 @@
+Parsing arguments
+Building system
+Initializing SystemBuilder
+Running simualation
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+Configuring 16 harts
+PXN:   0 POD:  0 CORE:   0 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  1 : 0x8000000000001f00
+PXN:   0 POD:  0 CORE:   7 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  2 : 0x8000000000002f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   0 THREAD:  3 : 0x8000000000003f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  4 : 0x8000000000004f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  5 : 0x8000000000005f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  6 : 0x8000000000006f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  7 : 0x8000000000007f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  8 : 0x8000000000008f00
+PXN:   0 POD:  0 CORE:   0 THREAD:  9 : 0x8000000000009f00
+PXN:   0 POD:  0 CORE:   0 THREAD: 10 : 0x800000000000af00
+PXN:   0 POD:  0 CORE:   0 THREAD: 11 : 0x800000000000bf00
+PXN:   0 POD:  0 CORE:   0 THREAD: 12 : 0x800000000000cf00
+PXN:   0 POD:  0 CORE:   0 THREAD: 13 : 0x800000000000df00
+PXN:   0 POD:  0 CORE:   0 THREAD: 14 : 0x800000000000ef00
+PXN:   0 POD:  0 CORE:   0 THREAD: 15 : 0x800000000000ff00
+PXN:   0 POD:  0 CORE:   0 THREAD:  0 : 0x8000000000000f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  1 : 0x8100000000001f00
+PXN:   0 POD:  0 CORE:   8 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  2 : 0x8100000000002f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   1 THREAD:  3 : 0x8100000000003f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  4 : 0x8100000000004f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  5 : 0x8100000000005f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  6 : 0x8100000000006f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  7 : 0x8100000000007f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  8 : 0x8100000000008f00
+PXN:   0 POD:  0 CORE:   1 THREAD:  9 : 0x8100000000009f00
+PXN:   0 POD:  0 CORE:   1 THREAD: 10 : 0x810000000000af00
+PXN:   0 POD:  0 CORE:   1 THREAD: 11 : 0x810000000000bf00
+PXN:   0 POD:  0 CORE:   1 THREAD: 12 : 0x810000000000cf00
+PXN:   0 POD:  0 CORE:   1 THREAD: 13 : 0x810000000000df00
+PXN:   0 POD:  0 CORE:   1 THREAD: 14 : 0x810000000000ef00
+PXN:   0 POD:  0 CORE:   1 THREAD: 15 : 0x810000000000ff00
+PXN:   0 POD:  0 CORE:   1 THREAD:  0 : 0x8100000000000f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  1 : 0x8200000000001f00
+PXN:   0 POD:  0 CORE:   9 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  2 : 0x8200000000002f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   2 THREAD:  3 : 0x8200000000003f00
+PXN:   0 POD:  0 CORE:   2 THREAD:  4 : 0x8200000000004f00
+PXN:   0 POD:  0 CORE:   2 THREAD:  5 : 0x8200000000005f00
+PXN:   0 POD:  0 CORE:   2 THREAD:  6 : 0x8200000000006f00
+PXN:   0 POD:  0 CORE:   2 THREAD:  7 : 0x8200000000007f00
+PXN:   0 POD:  0 CORE:   2 THREAD:  8 : 0x8200000000008f00
+PXN:   0 POD:  0 CORE:   2 THREAD:  9 : 0x8200000000009f00
+PXN:   0 POD:  0 CORE:   2 THREAD: 10 : 0x820000000000af00
+PXN:   0 POD:  0 CORE:   2 THREAD: 11 : 0x820000000000bf00
+PXN:   0 POD:  0 CORE:   2 THREAD: 12 : 0x820000000000cf00
+PXN:   0 POD:  0 CORE:   2 THREAD: 13 : 0x820000000000df00
+PXN:   0 POD:  0 CORE:   2 THREAD: 14 : 0x820000000000ef00
+PXN:   0 POD:  0 CORE:   2 THREAD: 15 : 0x820000000000ff00
+PXN:   0 POD:  0 CORE:   2 THREAD:  0 : 0x8200000000000f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  1 : 0x8300000000001f00
+PXN:   0 POD:  0 CORE:  10 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  2 : 0x8300000000002f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   3 THREAD:  3 : 0x8300000000003f00
+PXN:   0 POD:  0 CORE:   3 THREAD:  4 : 0x8300000000004f00
+PXN:   0 POD:  0 CORE:   3 THREAD:  5 : 0x8300000000005f00
+PXN:   0 POD:  0 CORE:   3 THREAD:  6 : 0x8300000000006f00
+PXN:   0 POD:  0 CORE:   3 THREAD:  7 : 0x8300000000007f00
+PXN:   0 POD:  0 CORE:   3 THREAD:  8 : 0x8300000000008f00
+PXN:   0 POD:  0 CORE:   3 THREAD:  9 : 0x8300000000009f00
+PXN:   0 POD:  0 CORE:   3 THREAD: 10 : 0x830000000000af00
+PXN:   0 POD:  0 CORE:   3 THREAD: 11 : 0x830000000000bf00
+PXN:   0 POD:  0 CORE:   3 THREAD: 12 : 0x830000000000cf00
+PXN:   0 POD:  0 CORE:   3 THREAD: 13 : 0x830000000000df00
+PXN:   0 POD:  0 CORE:   3 THREAD: 14 : 0x830000000000ef00
+PXN:   0 POD:  0 CORE:   3 THREAD: 15 : 0x830000000000ff00
+PXN:   0 POD:  0 CORE:   3 THREAD:  0 : 0x8300000000000f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  1 : 0x8400000000001f00
+PXN:   0 POD:  0 CORE:  11 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  2 : 0x8400000000002f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   4 THREAD:  3 : 0x8400000000003f00
+PXN:   0 POD:  0 CORE:   4 THREAD:  4 : 0x8400000000004f00
+PXN:   0 POD:  0 CORE:   4 THREAD:  5 : 0x8400000000005f00
+PXN:   0 POD:  0 CORE:   4 THREAD:  6 : 0x8400000000006f00
+PXN:   0 POD:  0 CORE:   4 THREAD:  7 : 0x8400000000007f00
+PXN:   0 POD:  0 CORE:   4 THREAD:  8 : 0x8400000000008f00
+PXN:   0 POD:  0 CORE:   4 THREAD:  9 : 0x8400000000009f00
+PXN:   0 POD:  0 CORE:   4 THREAD: 10 : 0x840000000000af00
+PXN:   0 POD:  0 CORE:   4 THREAD: 11 : 0x840000000000bf00
+PXN:   0 POD:  0 CORE:   4 THREAD: 12 : 0x840000000000cf00
+PXN:   0 POD:  0 CORE:   4 THREAD: 13 : 0x840000000000df00
+PXN:   0 POD:  0 CORE:   4 THREAD: 14 : 0x840000000000ef00
+PXN:   0 POD:  0 CORE:   4 THREAD: 15 : 0x840000000000ff00
+PXN:   0 POD:  0 CORE:   4 THREAD:  0 : 0x8400000000000f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  1 : 0x8500000000001f00
+PXN:   0 POD:  0 CORE:  12 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  2 : 0x8500000000002f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   5 THREAD:  3 : 0x8500000000003f00
+PXN:   0 POD:  0 CORE:   5 THREAD:  4 : 0x8500000000004f00
+PXN:   0 POD:  0 CORE:   5 THREAD:  5 : 0x8500000000005f00
+PXN:   0 POD:  0 CORE:   5 THREAD:  6 : 0x8500000000006f00
+PXN:   0 POD:  0 CORE:   5 THREAD:  7 : 0x8500000000007f00
+PXN:   0 POD:  0 CORE:   5 THREAD:  8 : 0x8500000000008f00
+PXN:   0 POD:  0 CORE:   5 THREAD:  9 : 0x8500000000009f00
+PXN:   0 POD:  0 CORE:   5 THREAD: 10 : 0x850000000000af00
+PXN:   0 POD:  0 CORE:   5 THREAD: 11 : 0x850000000000bf00
+PXN:   0 POD:  0 CORE:   5 THREAD: 12 : 0x850000000000cf00
+PXN:   0 POD:  0 CORE:   5 THREAD: 13 : 0x850000000000df00
+PXN:   0 POD:  0 CORE:   5 THREAD: 14 : 0x850000000000ef00
+PXN:   0 POD:  0 CORE:   5 THREAD: 15 : 0x850000000000ff00
+PXN:   0 POD:  0 CORE:   5 THREAD:  0 : 0x8500000000000f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  1 : 0x8600000000001f00
+PXN:   0 POD:  0 CORE:  13 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  2 : 0x8600000000002f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   6 THREAD:  3 : 0x8600000000003f00
+PXN:   0 POD:  0 CORE:   6 THREAD:  4 : 0x8600000000004f00
+PXN:   0 POD:  0 CORE:   6 THREAD:  5 : 0x8600000000005f00
+PXN:   0 POD:  0 CORE:   6 THREAD:  6 : 0x8600000000006f00
+PXN:   0 POD:  0 CORE:   6 THREAD:  7 : 0x8600000000007f00
+PXN:   0 POD:  0 CORE:   6 THREAD:  8 : 0x8600000000008f00
+PXN:   0 POD:  0 CORE:   6 THREAD:  9 : 0x8600000000009f00
+PXN:   0 POD:  0 CORE:   6 THREAD: 10 : 0x860000000000af00
+PXN:   0 POD:  0 CORE:   6 THREAD: 11 : 0x860000000000bf00
+PXN:   0 POD:  0 CORE:   6 THREAD: 12 : 0x860000000000cf00
+PXN:   0 POD:  0 CORE:   6 THREAD: 13 : 0x860000000000df00
+PXN:   0 POD:  0 CORE:   6 THREAD: 14 : 0x860000000000ef00
+PXN:   0 POD:  0 CORE:   6 THREAD: 15 : 0x860000000000ff00
+PXN:   0 POD:  0 CORE:   6 THREAD:  0 : 0x8600000000000f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  1 : 0x8700000000001f00
+PXN:   0 POD:  0 CORE:  14 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  2 : 0x8700000000002f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   7 THREAD:  3 : 0x8700000000003f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  4 : 0x8700000000004f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  5 : 0x8700000000005f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  6 : 0x8700000000006f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  7 : 0x8700000000007f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  8 : 0x8700000000008f00
+PXN:   0 POD:  0 CORE:   7 THREAD:  9 : 0x8700000000009f00
+PXN:   0 POD:  0 CORE:   7 THREAD: 10 : 0x870000000000af00
+PXN:   0 POD:  0 CORE:   7 THREAD: 11 : 0x870000000000bf00
+PXN:   0 POD:  0 CORE:   7 THREAD: 12 : 0x870000000000cf00
+PXN:   0 POD:  0 CORE:   7 THREAD: 13 : 0x870000000000df00
+PXN:   0 POD:  0 CORE:   7 THREAD: 14 : 0x870000000000ef00
+PXN:   0 POD:  0 CORE:   7 THREAD: 15 : 0x870000000000ff00
+PXN:   0 POD:  0 CORE:   7 THREAD:  0 : 0x8700000000000f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  1 : 0x8800000000001f00
+PXN:   0 POD:  0 CORE:  15 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  2 : 0x8800000000002f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   8 THREAD:  3 : 0x8800000000003f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  4 : 0x8800000000004f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  5 : 0x8800000000005f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  6 : 0x8800000000006f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  7 : 0x8800000000007f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  8 : 0x8800000000008f00
+PXN:   0 POD:  0 CORE:   8 THREAD:  9 : 0x8800000000009f00
+PXN:   0 POD:  0 CORE:   8 THREAD: 10 : 0x880000000000af00
+PXN:   0 POD:  0 CORE:   8 THREAD: 11 : 0x880000000000bf00
+PXN:   0 POD:  0 CORE:   8 THREAD: 12 : 0x880000000000cf00
+PXN:   0 POD:  0 CORE:   8 THREAD: 13 : 0x880000000000df00
+PXN:   0 POD:  0 CORE:   8 THREAD: 14 : 0x880000000000ef00
+PXN:   0 POD:  0 CORE:   8 THREAD: 15 : 0x880000000000ff00
+PXN:   0 POD:  0 CORE:   8 THREAD:  0 : 0x8800000000000f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  1 : 0x8900000000001f00
+PXN:   0 POD:  0 CORE:  16 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  2 : 0x8900000000002f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:   9 THREAD:  3 : 0x8900000000003f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  4 : 0x8900000000004f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  5 : 0x8900000000005f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  6 : 0x8900000000006f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  7 : 0x8900000000007f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  8 : 0x8900000000008f00
+PXN:   0 POD:  0 CORE:   9 THREAD:  9 : 0x8900000000009f00
+PXN:   0 POD:  0 CORE:   9 THREAD: 10 : 0x890000000000af00
+PXN:   0 POD:  0 CORE:   9 THREAD: 11 : 0x890000000000bf00
+PXN:   0 POD:  0 CORE:   9 THREAD: 12 : 0x890000000000cf00
+PXN:   0 POD:  0 CORE:   9 THREAD: 13 : 0x890000000000df00
+PXN:   0 POD:  0 CORE:   9 THREAD: 14 : 0x890000000000ef00
+PXN:   0 POD:  0 CORE:   9 THREAD: 15 : 0x890000000000ff00
+PXN:   0 POD:  0 CORE:   9 THREAD:  0 : 0x8900000000000f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  1 : 0x8a00000000001f00
+PXN:   0 POD:  0 CORE:  17 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  2 : 0x8a00000000002f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  10 THREAD:  3 : 0x8a00000000003f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  4 : 0x8a00000000004f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  5 : 0x8a00000000005f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  6 : 0x8a00000000006f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  7 : 0x8a00000000007f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  8 : 0x8a00000000008f00
+PXN:   0 POD:  0 CORE:  10 THREAD:  9 : 0x8a00000000009f00
+PXN:   0 POD:  0 CORE:  10 THREAD: 10 : 0x8a0000000000af00
+PXN:   0 POD:  0 CORE:  10 THREAD: 11 : 0x8a0000000000bf00
+PXN:   0 POD:  0 CORE:  10 THREAD: 12 : 0x8a0000000000cf00
+PXN:   0 POD:  0 CORE:  10 THREAD: 13 : 0x8a0000000000df00
+PXN:   0 POD:  0 CORE:  10 THREAD: 14 : 0x8a0000000000ef00
+PXN:   0 POD:  0 CORE:  10 THREAD: 15 : 0x8a0000000000ff00
+PXN:   0 POD:  0 CORE:  10 THREAD:  0 : 0x8a00000000000f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  1 : 0x8b00000000001f00
+PXN:   0 POD:  0 CORE:  18 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  2 : 0x8b00000000002f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  11 THREAD:  3 : 0x8b00000000003f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  4 : 0x8b00000000004f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  5 : 0x8b00000000005f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  6 : 0x8b00000000006f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  7 : 0x8b00000000007f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  8 : 0x8b00000000008f00
+PXN:   0 POD:  0 CORE:  11 THREAD:  9 : 0x8b00000000009f00
+PXN:   0 POD:  0 CORE:  11 THREAD: 10 : 0x8b0000000000af00
+PXN:   0 POD:  0 CORE:  11 THREAD: 11 : 0x8b0000000000bf00
+PXN:   0 POD:  0 CORE:  11 THREAD: 12 : 0x8b0000000000cf00
+PXN:   0 POD:  0 CORE:  11 THREAD: 13 : 0x8b0000000000df00
+PXN:   0 POD:  0 CORE:  11 THREAD: 14 : 0x8b0000000000ef00
+PXN:   0 POD:  0 CORE:  11 THREAD: 15 : 0x8b0000000000ff00
+PXN:   0 POD:  0 CORE:  11 THREAD:  0 : 0x8b00000000000f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  1 : 0x8c00000000001f00
+PXN:   0 POD:  0 CORE:  19 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  2 : 0x8c00000000002f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  12 THREAD:  3 : 0x8c00000000003f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  4 : 0x8c00000000004f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  5 : 0x8c00000000005f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  6 : 0x8c00000000006f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  7 : 0x8c00000000007f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  8 : 0x8c00000000008f00
+PXN:   0 POD:  0 CORE:  12 THREAD:  9 : 0x8c00000000009f00
+PXN:   0 POD:  0 CORE:  12 THREAD: 10 : 0x8c0000000000af00
+PXN:   0 POD:  0 CORE:  12 THREAD: 11 : 0x8c0000000000bf00
+PXN:   0 POD:  0 CORE:  12 THREAD: 12 : 0x8c0000000000cf00
+PXN:   0 POD:  0 CORE:  12 THREAD: 13 : 0x8c0000000000df00
+PXN:   0 POD:  0 CORE:  12 THREAD: 14 : 0x8c0000000000ef00
+PXN:   0 POD:  0 CORE:  12 THREAD: 15 : 0x8c0000000000ff00
+PXN:   0 POD:  0 CORE:  12 THREAD:  0 : 0x8c00000000000f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  1 : 0x8d00000000001f00
+PXN:   0 POD:  0 CORE:  20 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  2 : 0x8d00000000002f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  13 THREAD:  3 : 0x8d00000000003f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  4 : 0x8d00000000004f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  5 : 0x8d00000000005f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  6 : 0x8d00000000006f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  7 : 0x8d00000000007f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  8 : 0x8d00000000008f00
+PXN:   0 POD:  0 CORE:  13 THREAD:  9 : 0x8d00000000009f00
+PXN:   0 POD:  0 CORE:  13 THREAD: 10 : 0x8d0000000000af00
+PXN:   0 POD:  0 CORE:  13 THREAD: 11 : 0x8d0000000000bf00
+PXN:   0 POD:  0 CORE:  13 THREAD: 12 : 0x8d0000000000cf00
+PXN:   0 POD:  0 CORE:  13 THREAD: 13 : 0x8d0000000000df00
+PXN:   0 POD:  0 CORE:  13 THREAD: 14 : 0x8d0000000000ef00
+PXN:   0 POD:  0 CORE:  13 THREAD: 15 : 0x8d0000000000ff00
+PXN:   0 POD:  0 CORE:  13 THREAD:  0 : 0x8d00000000000f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  1 : 0x8e00000000001f00
+PXN:   0 POD:  0 CORE:  21 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  2 : 0x8e00000000002f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  14 THREAD:  3 : 0x8e00000000003f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  4 : 0x8e00000000004f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  5 : 0x8e00000000005f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  6 : 0x8e00000000006f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  7 : 0x8e00000000007f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  8 : 0x8e00000000008f00
+PXN:   0 POD:  0 CORE:  14 THREAD:  9 : 0x8e00000000009f00
+PXN:   0 POD:  0 CORE:  14 THREAD: 10 : 0x8e0000000000af00
+PXN:   0 POD:  0 CORE:  14 THREAD: 11 : 0x8e0000000000bf00
+PXN:   0 POD:  0 CORE:  14 THREAD: 12 : 0x8e0000000000cf00
+PXN:   0 POD:  0 CORE:  14 THREAD: 13 : 0x8e0000000000df00
+PXN:   0 POD:  0 CORE:  14 THREAD: 14 : 0x8e0000000000ef00
+PXN:   0 POD:  0 CORE:  14 THREAD: 15 : 0x8e0000000000ff00
+PXN:   0 POD:  0 CORE:  14 THREAD:  0 : 0x8e00000000000f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  1 : 0x8f00000000001f00
+PXN:   0 POD:  0 CORE:  22 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  2 : 0x8f00000000002f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  15 THREAD:  3 : 0x8f00000000003f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  4 : 0x8f00000000004f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  5 : 0x8f00000000005f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  6 : 0x8f00000000006f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  7 : 0x8f00000000007f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  8 : 0x8f00000000008f00
+PXN:   0 POD:  0 CORE:  15 THREAD:  9 : 0x8f00000000009f00
+PXN:   0 POD:  0 CORE:  15 THREAD: 10 : 0x8f0000000000af00
+PXN:   0 POD:  0 CORE:  15 THREAD: 11 : 0x8f0000000000bf00
+PXN:   0 POD:  0 CORE:  15 THREAD: 12 : 0x8f0000000000cf00
+PXN:   0 POD:  0 CORE:  15 THREAD: 13 : 0x8f0000000000df00
+PXN:   0 POD:  0 CORE:  15 THREAD: 14 : 0x8f0000000000ef00
+PXN:   0 POD:  0 CORE:  15 THREAD: 15 : 0x8f0000000000ff00
+PXN:   0 POD:  0 CORE:  15 THREAD:  0 : 0x8f00000000000f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  1 : 0x9000000000001f00
+PXN:   0 POD:  0 CORE:  23 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  2 : 0x9000000000002f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  16 THREAD:  3 : 0x9000000000003f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  4 : 0x9000000000004f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  5 : 0x9000000000005f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  6 : 0x9000000000006f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  7 : 0x9000000000007f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  8 : 0x9000000000008f00
+PXN:   0 POD:  0 CORE:  16 THREAD:  9 : 0x9000000000009f00
+PXN:   0 POD:  0 CORE:  16 THREAD: 10 : 0x900000000000af00
+PXN:   0 POD:  0 CORE:  16 THREAD: 11 : 0x900000000000bf00
+PXN:   0 POD:  0 CORE:  16 THREAD: 12 : 0x900000000000cf00
+PXN:   0 POD:  0 CORE:  16 THREAD: 13 : 0x900000000000df00
+PXN:   0 POD:  0 CORE:  16 THREAD: 14 : 0x900000000000ef00
+PXN:   0 POD:  0 CORE:  16 THREAD: 15 : 0x900000000000ff00
+PXN:   0 POD:  0 CORE:  16 THREAD:  0 : 0x9000000000000f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  1 : 0x9100000000001f00
+PXN:   0 POD:  0 CORE:  24 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  2 : 0x9100000000002f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  17 THREAD:  3 : 0x9100000000003f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  4 : 0x9100000000004f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  5 : 0x9100000000005f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  6 : 0x9100000000006f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  7 : 0x9100000000007f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  8 : 0x9100000000008f00
+PXN:   0 POD:  0 CORE:  17 THREAD:  9 : 0x9100000000009f00
+PXN:   0 POD:  0 CORE:  17 THREAD: 10 : 0x910000000000af00
+PXN:   0 POD:  0 CORE:  17 THREAD: 11 : 0x910000000000bf00
+PXN:   0 POD:  0 CORE:  17 THREAD: 12 : 0x910000000000cf00
+PXN:   0 POD:  0 CORE:  17 THREAD: 13 : 0x910000000000df00
+PXN:   0 POD:  0 CORE:  17 THREAD: 14 : 0x910000000000ef00
+PXN:   0 POD:  0 CORE:  17 THREAD: 15 : 0x910000000000ff00
+PXN:   0 POD:  0 CORE:  17 THREAD:  0 : 0x9100000000000f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  25 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  1 : 0x9200000000001f00
+PXN:   0 POD:  0 CORE:  25 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  2 : 0x9200000000002f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  18 THREAD:  3 : 0x9200000000003f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  4 : 0x9200000000004f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  5 : 0x9200000000005f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  6 : 0x9200000000006f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  7 : 0x9200000000007f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  8 : 0x9200000000008f00
+PXN:   0 POD:  0 CORE:  18 THREAD:  9 : 0x9200000000009f00
+PXN:   0 POD:  0 CORE:  18 THREAD: 10 : 0x920000000000af00
+PXN:   0 POD:  0 CORE:  18 THREAD: 11 : 0x920000000000bf00
+PXN:   0 POD:  0 CORE:  18 THREAD: 12 : 0x920000000000cf00
+PXN:   0 POD:  0 CORE:  18 THREAD: 13 : 0x920000000000df00
+PXN:   0 POD:  0 CORE:  18 THREAD: 14 : 0x920000000000ef00
+PXN:   0 POD:  0 CORE:  18 THREAD: 15 : 0x920000000000ff00
+PXN:   0 POD:  0 CORE:  18 THREAD:  0 : 0x9200000000000f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  26 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  1 : 0x9300000000001f00
+PXN:   0 POD:  0 CORE:  26 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  2 : 0x9300000000002f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  19 THREAD:  3 : 0x9300000000003f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  4 : 0x9300000000004f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  5 : 0x9300000000005f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  6 : 0x9300000000006f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  7 : 0x9300000000007f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  8 : 0x9300000000008f00
+PXN:   0 POD:  0 CORE:  19 THREAD:  9 : 0x9300000000009f00
+PXN:   0 POD:  0 CORE:  19 THREAD: 10 : 0x930000000000af00
+PXN:   0 POD:  0 CORE:  19 THREAD: 11 : 0x930000000000bf00
+PXN:   0 POD:  0 CORE:  19 THREAD: 12 : 0x930000000000cf00
+PXN:   0 POD:  0 CORE:  19 THREAD: 13 : 0x930000000000df00
+PXN:   0 POD:  0 CORE:  19 THREAD: 14 : 0x930000000000ef00
+PXN:   0 POD:  0 CORE:  19 THREAD: 15 : 0x930000000000ff00
+PXN:   0 POD:  0 CORE:  19 THREAD:  0 : 0x9300000000000f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  27 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  1 : 0x9400000000001f00
+PXN:   0 POD:  0 CORE:  27 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  2 : 0x9400000000002f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  20 THREAD:  3 : 0x9400000000003f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  4 : 0x9400000000004f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  5 : 0x9400000000005f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  6 : 0x9400000000006f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  7 : 0x9400000000007f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  8 : 0x9400000000008f00
+PXN:   0 POD:  0 CORE:  20 THREAD:  9 : 0x9400000000009f00
+PXN:   0 POD:  0 CORE:  20 THREAD: 10 : 0x940000000000af00
+PXN:   0 POD:  0 CORE:  20 THREAD: 11 : 0x940000000000bf00
+PXN:   0 POD:  0 CORE:  20 THREAD: 12 : 0x940000000000cf00
+PXN:   0 POD:  0 CORE:  20 THREAD: 13 : 0x940000000000df00
+PXN:   0 POD:  0 CORE:  20 THREAD: 14 : 0x940000000000ef00
+PXN:   0 POD:  0 CORE:  20 THREAD: 15 : 0x940000000000ff00
+PXN:   0 POD:  0 CORE:  20 THREAD:  0 : 0x9400000000000f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  28 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  1 : 0x9500000000001f00
+PXN:   0 POD:  0 CORE:  28 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  2 : 0x9500000000002f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  21 THREAD:  3 : 0x9500000000003f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  4 : 0x9500000000004f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  5 : 0x9500000000005f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  6 : 0x9500000000006f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  7 : 0x9500000000007f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  8 : 0x9500000000008f00
+PXN:   0 POD:  0 CORE:  21 THREAD:  9 : 0x9500000000009f00
+PXN:   0 POD:  0 CORE:  21 THREAD: 10 : 0x950000000000af00
+PXN:   0 POD:  0 CORE:  21 THREAD: 11 : 0x950000000000bf00
+PXN:   0 POD:  0 CORE:  21 THREAD: 12 : 0x950000000000cf00
+PXN:   0 POD:  0 CORE:  21 THREAD: 13 : 0x950000000000df00
+PXN:   0 POD:  0 CORE:  21 THREAD: 14 : 0x950000000000ef00
+PXN:   0 POD:  0 CORE:  21 THREAD: 15 : 0x950000000000ff00
+PXN:   0 POD:  0 CORE:  21 THREAD:  0 : 0x9500000000000f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  29 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  1 : 0x9600000000001f00
+PXN:   0 POD:  0 CORE:  29 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  2 : 0x9600000000002f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  22 THREAD:  3 : 0x9600000000003f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  4 : 0x9600000000004f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  5 : 0x9600000000005f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  6 : 0x9600000000006f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  7 : 0x9600000000007f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  8 : 0x9600000000008f00
+PXN:   0 POD:  0 CORE:  22 THREAD:  9 : 0x9600000000009f00
+PXN:   0 POD:  0 CORE:  22 THREAD: 10 : 0x960000000000af00
+PXN:   0 POD:  0 CORE:  22 THREAD: 11 : 0x960000000000bf00
+PXN:   0 POD:  0 CORE:  22 THREAD: 12 : 0x960000000000cf00
+PXN:   0 POD:  0 CORE:  22 THREAD: 13 : 0x960000000000df00
+PXN:   0 POD:  0 CORE:  22 THREAD: 14 : 0x960000000000ef00
+PXN:   0 POD:  0 CORE:  22 THREAD: 15 : 0x960000000000ff00
+PXN:   0 POD:  0 CORE:  22 THREAD:  0 : 0x9600000000000f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  30 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  1 : 0x9700000000001f00
+PXN:   0 POD:  0 CORE:  30 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  2 : 0x9700000000002f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  23 THREAD:  3 : 0x9700000000003f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  4 : 0x9700000000004f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  5 : 0x9700000000005f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  6 : 0x9700000000006f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  7 : 0x9700000000007f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  8 : 0x9700000000008f00
+PXN:   0 POD:  0 CORE:  23 THREAD:  9 : 0x9700000000009f00
+PXN:   0 POD:  0 CORE:  23 THREAD: 10 : 0x970000000000af00
+PXN:   0 POD:  0 CORE:  23 THREAD: 11 : 0x970000000000bf00
+PXN:   0 POD:  0 CORE:  23 THREAD: 12 : 0x970000000000cf00
+PXN:   0 POD:  0 CORE:  23 THREAD: 13 : 0x970000000000df00
+PXN:   0 POD:  0 CORE:  23 THREAD: 14 : 0x970000000000ef00
+PXN:   0 POD:  0 CORE:  23 THREAD: 15 : 0x970000000000ff00
+PXN:   0 POD:  0 CORE:  23 THREAD:  0 : 0x9700000000000f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  1 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  2 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  3 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  4 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  5 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  6 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  7 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  8 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD:  9 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD: 10 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD: 11 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD: 12 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD: 13 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  31 THREAD: 14 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  1 : 0x9800000000001f00
+PXN:   0 POD:  0 CORE:  31 THREAD: 15 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  2 : 0x9800000000002f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  0 : 0xdeadbeef
+PXN:   0 POD:  0 CORE:  24 THREAD:  3 : 0x9800000000003f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  4 : 0x9800000000004f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  5 : 0x9800000000005f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  6 : 0x9800000000006f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  7 : 0x9800000000007f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  8 : 0x9800000000008f00
+PXN:   0 POD:  0 CORE:  24 THREAD:  9 : 0x9800000000009f00
+PXN:   0 POD:  0 CORE:  24 THREAD: 10 : 0x980000000000af00
+PXN:   0 POD:  0 CORE:  24 THREAD: 11 : 0x980000000000bf00
+PXN:   0 POD:  0 CORE:  24 THREAD: 12 : 0x980000000000cf00
+PXN:   0 POD:  0 CORE:  24 THREAD: 13 : 0x980000000000df00
+PXN:   0 POD:  0 CORE:  24 THREAD: 14 : 0x980000000000ef00
+PXN:   0 POD:  0 CORE:  24 THREAD: 15 : 0x980000000000ff00
+PXN:   0 POD:  0 CORE:  24 THREAD:  0 : 0x9800000000000f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  1 : 0x9900000000001f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  2 : 0x9900000000002f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  3 : 0x9900000000003f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  4 : 0x9900000000004f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  5 : 0x9900000000005f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  6 : 0x9900000000006f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  7 : 0x9900000000007f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  8 : 0x9900000000008f00
+PXN:   0 POD:  0 CORE:  25 THREAD:  9 : 0x9900000000009f00
+PXN:   0 POD:  0 CORE:  25 THREAD: 10 : 0x990000000000af00
+PXN:   0 POD:  0 CORE:  25 THREAD: 11 : 0x990000000000bf00
+PXN:   0 POD:  0 CORE:  25 THREAD: 12 : 0x990000000000cf00
+PXN:   0 POD:  0 CORE:  25 THREAD: 13 : 0x990000000000df00
+PXN:   0 POD:  0 CORE:  25 THREAD: 14 : 0x990000000000ef00
+PXN:   0 POD:  0 CORE:  25 THREAD: 15 : 0x990000000000ff00
+PXN:   0 POD:  0 CORE:  25 THREAD:  0 : 0x9900000000000f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  1 : 0x9a00000000001f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  2 : 0x9a00000000002f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  3 : 0x9a00000000003f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  4 : 0x9a00000000004f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  5 : 0x9a00000000005f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  6 : 0x9a00000000006f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  7 : 0x9a00000000007f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  8 : 0x9a00000000008f00
+PXN:   0 POD:  0 CORE:  26 THREAD:  9 : 0x9a00000000009f00
+PXN:   0 POD:  0 CORE:  26 THREAD: 10 : 0x9a0000000000af00
+PXN:   0 POD:  0 CORE:  26 THREAD: 11 : 0x9a0000000000bf00
+PXN:   0 POD:  0 CORE:  26 THREAD: 12 : 0x9a0000000000cf00
+PXN:   0 POD:  0 CORE:  26 THREAD: 13 : 0x9a0000000000df00
+PXN:   0 POD:  0 CORE:  26 THREAD: 14 : 0x9a0000000000ef00
+PXN:   0 POD:  0 CORE:  26 THREAD: 15 : 0x9a0000000000ff00
+PXN:   0 POD:  0 CORE:  26 THREAD:  0 : 0x9a00000000000f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  1 : 0x9b00000000001f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  2 : 0x9b00000000002f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  3 : 0x9b00000000003f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  4 : 0x9b00000000004f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  5 : 0x9b00000000005f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  6 : 0x9b00000000006f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  7 : 0x9b00000000007f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  8 : 0x9b00000000008f00
+PXN:   0 POD:  0 CORE:  27 THREAD:  9 : 0x9b00000000009f00
+PXN:   0 POD:  0 CORE:  27 THREAD: 10 : 0x9b0000000000af00
+PXN:   0 POD:  0 CORE:  27 THREAD: 11 : 0x9b0000000000bf00
+PXN:   0 POD:  0 CORE:  27 THREAD: 12 : 0x9b0000000000cf00
+PXN:   0 POD:  0 CORE:  27 THREAD: 13 : 0x9b0000000000df00
+PXN:   0 POD:  0 CORE:  27 THREAD: 14 : 0x9b0000000000ef00
+PXN:   0 POD:  0 CORE:  27 THREAD: 15 : 0x9b0000000000ff00
+PXN:   0 POD:  0 CORE:  27 THREAD:  0 : 0x9b00000000000f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  1 : 0x9c00000000001f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  2 : 0x9c00000000002f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  3 : 0x9c00000000003f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  4 : 0x9c00000000004f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  5 : 0x9c00000000005f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  6 : 0x9c00000000006f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  7 : 0x9c00000000007f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  8 : 0x9c00000000008f00
+PXN:   0 POD:  0 CORE:  28 THREAD:  9 : 0x9c00000000009f00
+PXN:   0 POD:  0 CORE:  28 THREAD: 10 : 0x9c0000000000af00
+PXN:   0 POD:  0 CORE:  28 THREAD: 11 : 0x9c0000000000bf00
+PXN:   0 POD:  0 CORE:  28 THREAD: 12 : 0x9c0000000000cf00
+PXN:   0 POD:  0 CORE:  28 THREAD: 13 : 0x9c0000000000df00
+PXN:   0 POD:  0 CORE:  28 THREAD: 14 : 0x9c0000000000ef00
+PXN:   0 POD:  0 CORE:  28 THREAD: 15 : 0x9c0000000000ff00
+PXN:   0 POD:  0 CORE:  28 THREAD:  0 : 0x9c00000000000f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  1 : 0x9d00000000001f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  2 : 0x9d00000000002f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  3 : 0x9d00000000003f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  4 : 0x9d00000000004f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  5 : 0x9d00000000005f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  6 : 0x9d00000000006f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  7 : 0x9d00000000007f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  8 : 0x9d00000000008f00
+PXN:   0 POD:  0 CORE:  29 THREAD:  9 : 0x9d00000000009f00
+PXN:   0 POD:  0 CORE:  29 THREAD: 10 : 0x9d0000000000af00
+PXN:   0 POD:  0 CORE:  29 THREAD: 11 : 0x9d0000000000bf00
+PXN:   0 POD:  0 CORE:  29 THREAD: 12 : 0x9d0000000000cf00
+PXN:   0 POD:  0 CORE:  29 THREAD: 13 : 0x9d0000000000df00
+PXN:   0 POD:  0 CORE:  29 THREAD: 14 : 0x9d0000000000ef00
+PXN:   0 POD:  0 CORE:  29 THREAD: 15 : 0x9d0000000000ff00
+PXN:   0 POD:  0 CORE:  29 THREAD:  0 : 0x9d00000000000f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  1 : 0x9e00000000001f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  2 : 0x9e00000000002f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  3 : 0x9e00000000003f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  4 : 0x9e00000000004f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  5 : 0x9e00000000005f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  6 : 0x9e00000000006f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  7 : 0x9e00000000007f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  8 : 0x9e00000000008f00
+PXN:   0 POD:  0 CORE:  30 THREAD:  9 : 0x9e00000000009f00
+PXN:   0 POD:  0 CORE:  30 THREAD: 10 : 0x9e0000000000af00
+PXN:   0 POD:  0 CORE:  30 THREAD: 11 : 0x9e0000000000bf00
+PXN:   0 POD:  0 CORE:  30 THREAD: 12 : 0x9e0000000000cf00
+PXN:   0 POD:  0 CORE:  30 THREAD: 13 : 0x9e0000000000df00
+PXN:   0 POD:  0 CORE:  30 THREAD: 14 : 0x9e0000000000ef00
+PXN:   0 POD:  0 CORE:  30 THREAD: 15 : 0x9e0000000000ff00
+PXN:   0 POD:  0 CORE:  30 THREAD:  0 : 0x9e00000000000f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  1 : 0x9f00000000001f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  2 : 0x9f00000000002f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  3 : 0x9f00000000003f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  4 : 0x9f00000000004f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  5 : 0x9f00000000005f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  6 : 0x9f00000000006f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  7 : 0x9f00000000007f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  8 : 0x9f00000000008f00
+PXN:   0 POD:  0 CORE:  31 THREAD:  9 : 0x9f00000000009f00
+PXN:   0 POD:  0 CORE:  31 THREAD: 10 : 0x9f0000000000af00
+PXN:   0 POD:  0 CORE:  31 THREAD: 11 : 0x9f0000000000bf00
+PXN:   0 POD:  0 CORE:  31 THREAD: 12 : 0x9f0000000000cf00
+PXN:   0 POD:  0 CORE:  31 THREAD: 13 : 0x9f0000000000df00
+PXN:   0 POD:  0 CORE:  31 THREAD: 14 : 0x9f0000000000ef00
+PXN:   0 POD:  0 CORE:  31 THREAD: 15 : 0x9f0000000000ff00
+PXN:   0 POD:  0 CORE:  31 THREAD:  0 : 0x9f00000000000f00
+=== CSR BFS with Shared Queue (per-vertex frontier) ===
+CSR BFS (bulk load): N=524288 E=15482852 degree=36 source=0
+HW: total_harts=512, pxn=1 pods/pxn=1 cores/pod=32 harts/core=16
+Using: 32 cores x 16 harts = 512 total
+
+Memory tiers (per frontier buffer):
+  L2SP: 64401 entries (1048576 bytes used / 1048576 total)
+  L1SP: 0 entries (no room or not needed)
+  DRAM: 459887 entries
+  Total capacity: 524288 entries (= N)
+  Chunk size: 8, local buffer: 32
+
+Level 0: frontier=1
+Level 1: frontier=40432
+Level 2: frontier=276373
+Level 3: frontier=18128
+Level 4: frontier=60
+
+=== BFS Complete ===
+Levels: 5 (59224492 cycles)
+Reached: 334994/524288 (63%)
+max_dist=4  sum_dist=647802  avg_dist=1.9
+RESULT: PASS
+
+Per-core statistics:
+Core | Processed | Edges
+-----|-----------|------
+   0 |     10476 |    473096
+   1 |     10160 |    477834
+   2 |     10245 |    470707
+   3 |     10608 |    481592
+   4 |     10408 |    512634
+   5 |     10360 |    499507
+   6 |     10160 |    469615
+   7 |     10368 |    483648
+   8 |     10536 |    541903
+   9 |     10344 |    464686
+  10 |     10184 |    495255
+  11 |     10584 |    459543
+  12 |     11008 |    472942
+  13 |     10392 |    491780
+  14 |     10312 |    475444
+  15 |     10488 |    459669
+  16 |     10616 |    466993
+  17 |     10232 |    491416
+  18 |     10376 |    480785
+  19 |     10672 |    483277
+  20 |     10728 |    505372
+  21 |     10608 |    483637
+  22 |     10440 |    464504
+  23 |     10440 |    505302
+  24 |     10712 |    467067
+  25 |     10136 |    490206
+  26 |     10808 |    483524
+  27 |     10712 |    460438
+  28 |     10465 |    523365
+  29 |     10456 |    494874
+  30 |     10392 |    483970
+  31 |     10568 |    468071
+
+Summary:
+  Total nodes processed: 334994
+  Total edges traversed: 15482656
+  Average per core:      10468 nodes
+  Min/Max per core:      10136 / 11008
+  Imbalance (max-min)/max: 7%
+  Cycles per node:       176
+
+Frontier tier utilization:
+  L2SP: 64401 / 64401 entries
+  DRAM: up to 459887 entries
+
+BFS complete, signaling exit.
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: filename='uniform_graph.bin' dest=0x40802f20 size=79691800
+SSTRISCVCore[handleBulkLoad:928]: BULK_LOAD: read 66125736 bytes from file. Header bytes: 00 00 08 00 e4 3f ec 00 1d 00 00 00 00 00 00 00 00 00 00 00
+SSTRISCVCore[handleBulkLoad:942]: BULK_LOAD: dest_local=0x40802f20 dest_abs=0xc000000000802f20
+SSTRISCVCore[handleBulkLoad:959]: BULK_LOAD: wrote 1033216 chunks (66125736 bytes) to backing store
+SSTRISCVCore[handleBulkLoad:905]: BULK_LOAD: filename='bfs_dist_init.bin' dest=0x45402f40 size=2097152
+SSTRISCVCore[handleBulkLoad:928]: BULK_LOAD: read 2097152 bytes from file. Header bytes: 00 00 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+SSTRISCVCore[handleBulkLoad:942]: BULK_LOAD: dest_local=0x45402f40 dest_abs=0xc000000005402f40
+SSTRISCVCore[handleBulkLoad:959]: BULK_LOAD: wrote 32768 chunks (2097152 bytes) to backing store
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s3.stats
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s2.stats
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s1.stats
+[/work/element/DrvCustomRamulatorMem.cpp:112:finish]: Ramulator stats written to ramulator_system_pxn0_dram0_s0.stats
+Simulation is complete, simulated time: 62.0894 ms

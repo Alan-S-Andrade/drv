@@ -22,6 +22,16 @@
 #include <pandohammer/mmio.h>
 #include <pandohammer/staticdecl.h>
 
+// =============================================================================
+// PART 1 — CONFIGURATION DEFAULTS
+// =============================================================================
+// Compile-time knobs and limits:
+//   * DEFAULT_VTX_PER_THREAD / DEFAULT_DEGREE — fallbacks for --V / --D args.
+//   * DO_FULL_VERIFY — if 1, pod 0 runs a triangle-inequality check over every
+//                      edge after the BFS completes (expensive but exhaustive).
+//   * MAX_PODS      — sizes the per-pod phase array used by the inter-pod
+//                      barrier.
+// -----------------------------------------------------------------------------
 // ---------- Configuration defaults ----------
 #ifndef DEFAULT_VTX_PER_THREAD
 #define DEFAULT_VTX_PER_THREAD 1024
@@ -34,9 +44,33 @@
 static const int DO_FULL_VERIFY = 0;
 static const int MAX_PODS = 8;
 
+// =============================================================================
+// PART 2 — L2SP SECTION ATTRIBUTE
+// =============================================================================
+// Macro that places a global into the linker section ".l2sp", which the
+// PANDOHammer ABI maps into each pod's L2 scratchpad. Variables tagged
+// __l2sp__ are pod-local (one copy per pod, not shared between pods) and
+// get fast access for all harts on that pod.
+// -----------------------------------------------------------------------------
 // ---------- Section attribute ----------
 #define __l2sp__ __attribute__((section(".l2sp")))
 
+// =============================================================================
+// PART 3 — LOW-LEVEL HELPERS
+// =============================================================================
+// Small utilities used throughout:
+//   * atomic_or_i32 — inline RISC-V amoor.w, the primitive used for both
+//                     local bitmap updates (L2SP next_frontier) AND remote
+//                     updates (DRAM exchange buffer). "Blocking" = returns
+//                     the old value; the store is committed before return.
+//   * parse_i       — argv integer with default fallback.
+//   * wait          — tight nop-loop backoff (used inside the intra-pod
+//                     barrier's spin).
+//   * bulk_load     — host-file -> simulated DRAM via ph_bulk_load_file
+//                     MMIO. Used to load uniform_graph.bin and the pre-
+//                     computed bfs_dist_init.bin (that pre-init is what
+//                     makes this the "ROI-only" variant — see file header).
+// -----------------------------------------------------------------------------
 // ---------- Blocking atomic OR (standard RISC-V amoor.w) ----------
 static inline int32_t atomic_or_i32(volatile int32_t *ptr, int32_t val)
 {
@@ -81,6 +115,24 @@ static void bulk_load(const char *name, void *dest, size_t size)
     }
 }
 
+// =============================================================================
+// PART 4 — INTRA-POD BARRIER (L2SP)
+// =============================================================================
+// Fast barrier for all threads within a single pod. State lives in L2SP so
+// every hart on the pod has cheap access:
+//   * barrier_data    — raw POD struct: count / signal / num_threads.
+//   * g_barrier_data  — the single instance (one per pod, lives in L2SP).
+//   * barrier_ref     — thin wrapper that exposes .sync(). The pattern is
+//                        the classic "sense-reversing" barrier: each thread
+//                        atomic-adds to count; the last arrival runs an
+//                        optional callback `f()` and flips `signal`. Losers
+//                        spin on the old signal value with exponential
+//                        backoff (wait() nop-loop) up to backoff_limit=1000
+//                        to reduce memory-system pressure while waiting.
+// This barrier is used dozens of times per BFS level — it MUST be cheap,
+// which is why it is entirely L2SP-resident. Cross-pod synchronization uses
+// the separate DRAM inter_pod_barrier below.
+// -----------------------------------------------------------------------------
 // ---------- Intra-pod Barrier (L2SP) ----------
 struct barrier_data {
     int count;
@@ -120,6 +172,24 @@ public:
     }
 };
 
+// =============================================================================
+// PART 5 — INTER-POD BARRIER (DRAM)
+// =============================================================================
+// Cross-pod synchronization primitive. State is in DRAM because L2SP is
+// pod-local and invisible to other pods.
+//   * g_inter_pod_count   — shared 64-bit counter of arrivals in current phase.
+//   * g_inter_pod_phase   — shared 64-bit phase number (incremented per release).
+//   * g_pod_local_phase[] — each pod's remembered "my phase" value. Used so a
+//                            pod that hasn't arrived yet spins until the shared
+//                            phase advances past its own remembered value.
+// Protocol: atomic fetch-add on count; the last arrival (old == num_pods-1)
+// subtracts num_pods and bumps phase. Others hartsleep with exponential
+// backoff (64 -> 2048) polling the phase. Only ONE hart per pod calls this
+// (typically tid 0); other harts wait on the intra-pod barrier.
+//
+// NOTE: this barrier runs many times per BFS level, and each call touches
+// DRAM — it is a major contributor to multi-pod overhead at scale.
+// -----------------------------------------------------------------------------
 // ---------- Inter-pod Barrier (DRAM) ----------
 static volatile int64_t g_inter_pod_count = 0;
 static volatile int64_t g_inter_pod_phase = 0;
@@ -143,6 +213,35 @@ static inline void inter_pod_barrier(int pod_id, int num_pods)
     g_pod_local_phase[pod_id] = my_phase + 1;
 }
 
+// =============================================================================
+// PART 6 — DRAM GLOBALS FOR MULTI-POD COORDINATION
+// =============================================================================
+// Variables backed by DRAM so ALL pods see the same physical memory. These
+// break into three groups:
+//
+// 1) Handshake / termination flags written by pod 0 tid 0 (init leader)
+//    and polled by every other hart:
+//      g_pods_ready          — 0=not ready, 1=init complete, -1=init failed.
+//      g_global_done         — set by pod 0 when BFS frontier is globally empty.
+//      g_global_any_work     — OR-reduction target: did any pod produce work
+//                              this level? Cleared each iteration.
+//      g_global_bfs_iters    — current BFS level counter (authoritative copy).
+//      g_global_sim_exit     — final kill switch; parks non-participating
+//                              harts until pod 0 signals shutdown.
+//
+// 2) g_remote_frontier — DRAM array of shape [num_pods][bm_words_local].
+//    This is the inter-pod frontier exchange buffer. When a local hart
+//    discovers a neighbor that lives on a REMOTE pod, it atomic-ORs a bit
+//    into the remote pod's slice. After the inter-pod barrier, each pod
+//    drains its own slice into its local next_frontier.
+//
+// 3) DRAM pointer/parameter shadow — g_dram_file_buffer, g_dram_csr_offsets,
+//    g_dram_csr_edges, g_dram_dist, g_dram_N, g_dram_N_local, g_dram_degree,
+//    g_dram_source, g_dram_total_threads_per_pod, g_dram_bm_words_local,
+//    g_dram_num_pods. Pod 0 tid 0 allocates the graph buffers and writes
+//    these; every other pod's tid 0 reads them into its L2SP copies in
+//    Phase 0b. This avoids each pod bulk-loading the same file.
+// -----------------------------------------------------------------------------
 // ---------- DRAM globals for multi-pod coordination ----------
 static volatile int32_t g_pods_ready = 0;
 static volatile int32_t g_global_done = 0;
@@ -164,6 +263,41 @@ static int32_t  g_dram_total_threads_per_pod = 0;
 static int32_t  g_dram_bm_words_local = 0;
 static int32_t  g_dram_num_pods = 0;
 
+// =============================================================================
+// PART 7 — L2SP GLOBALS (PER-POD)
+// =============================================================================
+// Per-pod shadow of DRAM parameters plus per-pod state. One copy per pod,
+// living in the pod's L2 scratchpad for fast access by every hart on that
+// pod. All are populated by tid 0 in Phase 0b from the DRAM copies.
+//
+//   Topology / sizing (read-only after Phase 0b):
+//     g_N, g_N_local, g_vtx_offset, g_degree, g_total_threads,
+//     g_bitmap_words, g_pod_id, g_num_pods
+//
+//   Per-iteration control flags (written by tid 0, read by peers):
+//     g_bfs_done      — set when global BFS completes; signals loop exit.
+//     g_sim_exit      — set at the very end; non-pod-0 wait on this.
+//     g_any_work      — OR-reduced per-pod "did we push anything" flag.
+//
+//   Per-pod reduction accumulators (filled in Phase 3, drained to DRAM):
+//     g_sum_dist, g_reached, g_max_dist
+//
+//   DRAM pointer cache (fast local read of pointers, deref still goes to DRAM):
+//     g_csr_offsets, g_csr_edges, g_dist, g_source
+//
+//   Frontier bitmaps (L2SP, double-buffered):
+//     g_frontier      — current level's bitmap.
+//     g_next_frontier — build target for the next level; swap at end of level.
+//
+//   g_my_remote_frontier — pointer into g_remote_frontier at THIS pod's
+//                           slice. During the "merge remote" step, each
+//                           thread drains a word-range from this slice
+//                           into g_next_frontier and posts a zero back.
+//
+//   l2sp_end — linker-provided symbol marking the end of static .l2sp data.
+//              The frontier bitmaps are allocated dynamically starting here
+//              (see Phase 0b), so their size scales with N_local.
+// -----------------------------------------------------------------------------
 // ---------- L2SP globals (per-pod) ----------
 __l2sp__ int32_t g_N;                  // total vertices (global)
 __l2sp__ int32_t g_N_local;            // vertices owned by this pod
@@ -199,11 +333,113 @@ __l2sp__ volatile int32_t *g_my_remote_frontier;
 // Linker symbol: first free byte in L2SP after static data
 extern "C" char l2sp_end[];
 
+// =============================================================================
+// PART 8 — GLOBAL REDUCTION ACCUMULATORS IN DRAM
+// =============================================================================
+// Cross-pod final reduction targets. Each pod first reduces its own
+// partition into its per-pod L2SP accumulators (g_sum_dist, g_reached,
+// g_max_dist), then pod leaders (tid 0) fold those into these DRAM
+// variables using atomic-add (for sum/count) and CAS-loop-max (for max).
+// Pod 0 tid 0 reads and prints these in Phase 4.
+// -----------------------------------------------------------------------------
 // ---------- Global reduction accumulators in DRAM ----------
 static volatile int64_t g_global_sum_dist = 0;
 static volatile int32_t g_global_reached = 0;
 static volatile int32_t g_global_max_dist = 0;
 
+// =============================================================================
+// PART 9 — MAIN (per-hart entry point + multi-pod BFS driver)
+// =============================================================================
+// Every hart on every pod enters main(). Flow:
+//
+//   Preamble
+//     * Parse --V / --D / --T from argv.
+//     * Read hardware topology (pxn/pod/core/hart ids, counts).
+//     * Compute local tid within pod and clamp active thread count to
+//       `threads_per_pod`.
+//     * Park non-pxn-0 harts and harts whose tid >= total_threads. They
+//       hartsleep until g_global_sim_exit is raised at the end.
+//     * Derive per-pod N_local, total N, and bitmap word count.
+//
+//   Phase 0a — Pod 0, tid 0 only: DRAM bulk-load & global setup
+//     * malloc() the graph file buffer and bulk_load("uniform_graph.bin").
+//     * Parse the 20-byte header; sanity-check N and E against expected.
+//     * malloc() dist[] and bulk_load("bfs_dist_init.bin") — pre-initialized
+//       (all -1 with source=0). THIS IS WHAT MAKES THIS THE "ROI-ONLY"
+//       VARIANT: dist[] init is NOT simulated, only the BFS loop is.
+//     * malloc() and zero the per-pod remote frontier exchange slices.
+//     * Publish everything to the g_dram_* globals.
+//     * Zero the inter-pod barrier state.
+//     * Raise g_pods_ready=1 (or -1 on any allocation/verify failure).
+//
+//   Synchronize on g_pods_ready
+//     * Pod-0 harts wait() for the init leader; other pods hartsleep().
+//     * If init failed, everybody exits cleanly.
+//
+//   Phase 0b — Each pod tid 0: copy DRAM params into this pod's L2SP
+//     * Populate all g_* L2SP globals.
+//     * Allocate frontier and next_frontier bitmaps from the L2SP heap
+//       starting at l2sp_end (8-byte aligned). Abort if L2SP would overflow.
+//     * Non-tid-0 harts wait() for barrier.num_threads() to be set, then
+//       everyone syncs on the intra-pod barrier.
+//
+//   Phase 1 — Lightweight frontier initialization
+//     * Cache L2SP globals into function-local consts (the hot loop
+//       below references these, reducing L2SP reads).
+//     * Partition vertex and bitmap-word ranges across threads within pod.
+//     * Clear both bitmap buffers (cheap — L2SP only, no DRAM traffic).
+//     * Only the pod that owns the source vertex sets the source bit,
+//       guarded by a barrier.sync([&]{...}) so exactly one hart does it.
+//     * Inter-pod barrier (pod leaders only) ensures all pods are ready.
+//
+//   Phase 2 — Main BFS loop  [THE REGION OF INTEREST]
+//     Wrapped by cycle() timestamps. One level per outer iteration:
+//       Step 1: Expand frontier. Each thread walks its word range of
+//               `local_frontier`; for each set bit, reads neighbors via
+//               CSR, CASes dist[neighbor] from -1 to cur_level+1. On
+//               success, figure out the neighbor's owning pod:
+//                 – If local: atomic_or_i32 into local_next_frontier.
+//                 – If remote: atomic_or_i32 into g_remote_frontier[target].
+//               ph_stat_phase(1/0) brackets this step so summarize.py
+//               attributes the memory traffic to "useful" work.
+//       Step 2: Intra-pod barrier — all local threads finish expansion.
+//       Step 3: Inter-pod barrier (leaders only) — all pods finish Step 1.
+//       Step 4: Drain THIS pod's remote-frontier slice into local_next_
+//               frontier, atomic-OR then posted-swap-zero back. Each
+//               thread handles its own word range.
+//       Step 5: Intra-pod barrier; last arrival clears g_any_work.
+//       Step 6: Promote next_frontier → frontier, clear next_frontier,
+//               track whether any bit was nonzero -> local_any.
+//               OR into g_any_work.
+//       Step 7: Pod leaders (tid 0) OR into g_global_any_work, inter-pod
+//               barrier, pod 0 decides: if any work → advance g_global_
+//               bfs_iters and clear g_global_any_work; else set g_global_
+//               done=1. Second inter-pod barrier propagates the decision,
+//               then copy to L2SP g_bfs_done.
+//       Step 8: Intra-pod barrier propagates g_bfs_done; break if done.
+//
+//   Phase 3 — Parallel reduction
+//     * Each thread reduces its vertex range into local_sum / local_cnt /
+//       local_max (guarded by ph_stat_phase so the reduction traffic is
+//       also counted as useful).
+//     * Reduce into per-pod L2SP accumulators with atomics + CAS-max.
+//     * Pod leaders fold per-pod totals into the DRAM g_global_* counters,
+//       then inter-pod barrier to make the global values consistent.
+//
+//   Phase 4 — Results & optional verify (pod 0, tid 0 only)
+//     * Print iteration count, BFS cycles, reached%, max/sum/avg dist.
+//     * Sanity checks: dist[source]==0 and reached>=1.
+//     * If DO_FULL_VERIFY, walk every edge and check triangle inequality
+//       dist[u] <= dist[v]+1. Print up to 10 violations.
+//     * Emit final PASS/FAIL line.
+//     * free() DRAM allocations (remote_frontier, dist, file_buffer).
+//     * Set g_global_sim_exit=1.
+//
+//   Exit propagation
+//     * Non-pod-0 leaders wait for g_global_sim_exit, then set local
+//       g_sim_exit. Pod 0 tid 0 sets its own g_sim_exit. Every remaining
+//       hart spins on g_sim_exit and returns.
+// -----------------------------------------------------------------------------
 // ---------- Main ----------
 extern "C" int main(int argc, char **argv)
 {

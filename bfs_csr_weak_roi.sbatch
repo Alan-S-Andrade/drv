@@ -4,10 +4,10 @@
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p pvc
+#SBATCH -p spr
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 96
+#SBATCH -c 112
 #SBATCH -t 48:00:00
 
 set -eo pipefail
@@ -77,7 +77,7 @@ VTX_PER_THREAD=1024
 DEGREE=16
 
 # Graph type: "uniform" or "rmat"
-GRAPH_TYPE="rmat"
+GRAPH_TYPE="uniform"
 # Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
 EF=16
 
@@ -100,7 +100,7 @@ apptainer exec --cleanenv \
     BINARY_MULTI=/work/build_stampede/rv64/drvr/drvr_bfs_csr_weak_multi_roi
 
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_roi_results_rmat_plain
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_weak_roi_results_uniform_new
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
@@ -110,27 +110,29 @@ apptainer exec --cleanenv \
     mkdir -p "$SWEEP_DIR"
 
     # ---- SWEEP CONFIGURATIONS ----
-    # Format: PODS CX CY THR
+    # Format: PODS CX CY THR DRAM_CACHE_KIB
     CONFIGS=(
-      "1 1  1 16"
-      "1 2  1 16"
-      "1 4  1 16"
-      "1 8  1 16"
-      "1 8  2 16"
-      "1 8  4 16"
-      "1 8  8 16"
+      "1 1  1 16 8"
+      "1 2  1 16 16"
+      "1 4  1 16 32"
+      "1 8  1 16 64"
+      "1 8  2 16 128"
+      "1 8  4 16 256"
+      #"1 8  8 16 512"
       # Multi-pod weak scaling
-      #"2 8  8 16"
-      #"4 8  8 16"
+      #"2 8  8 16 4096"
+      #"4 8  8 16 4096"
     )
 
     for cfg in "${CONFIGS[@]}"; do
-      read -r PODS CX CY THR <<< "$cfg"
+      read -r PODS CX CY THR DRAM_CACHE_KIB <<< "$cfg"
+      DRAM_CACHE_SIZE=$((DRAM_CACHE_KIB * 1024))
       CORES=$((CX * CY))
       THREADS_PER_POD=$((CORES * THR))
       N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
 
-      RUN_NAME="bfs_csr_roi_p${PODS}_c${CORES}_t${THR}"
+      CACHE_MB=$((DRAM_CACHE_KIB / 1024))
+      RUN_NAME="bfs_csr_roi_p${PODS}_c${CORES}_t${THR}_dc${CACHE_MB}M"
       RUN_DIR="${SWEEP_DIR}/${RUN_NAME}"
 
       echo "=============================================="
@@ -191,7 +193,7 @@ apptainer exec --cleanenv \
         --pod-l2sp-banks=4 \
         --pod-l2sp-interleave=64 \
         --pxn-dram-banks=1 \
-        --pxn-dram-cache-size=4194304 \
+        --pxn-dram-cache-size=${DRAM_CACHE_SIZE} \
         --pxn-dram-cache-slices=4 \
         --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
         --pxn-dram-cache-alu=0 \
@@ -216,6 +218,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "BFS CSR WEAK SCALING ROI-ONLY SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_weak_roi_results_rmat_plain/"
+    echo "Results in: build_stampede/drvr/bfs_csr_weak_roi_results_uniform_new/"
     echo "=============================================="
   '

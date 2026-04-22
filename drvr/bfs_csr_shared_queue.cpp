@@ -32,6 +32,23 @@
 
 #include "work_stealing.h"   // reuse barrier from ws::
 
+// =============================================================================
+// PART 1 — CONFIGURATION CONSTANTS
+// =============================================================================
+// Compile-time knobs that shape the algorithm:
+//   * DEFAULT_* — fallbacks when --V / --D are not passed.
+//   * MAX_HARTS / MAX_CORES — upper bounds for statically-sized arrays below.
+//   * BFS_CHUNK_SIZE  — vertices a hart pops per local-queue grab.
+//   * LOCAL_BUF_SIZE  — per-hart discovery buffer before a batched flush to the
+//                       next-level frontier (amortises the fetch-add tail bump).
+//   * CORE_Q_CAP      — per-core L1SP circular buffer depth (power of 2).
+//   * REFILL_SIZE     — items moved L2SP-shared-queue -> L1SP-core-queue each
+//                       refill.
+//   * STEAL_SIZE      — items taken when one core steals from another's L1SP.
+//   * L1SP_ALIGN_PAD / CORE_Q_L1SP_OFFSET / L1SP_DATA_START / L1SP_STACK_GUARD
+//     — layout within each core's L1SP: low bytes reserved, then the circular
+//       queue items, then the frontier L1SP tier, with a stack guard at top.
+// -----------------------------------------------------------------------------
 // ---------- Configuration ----------
 #ifndef DEFAULT_VTX_PER_THREAD
 #define DEFAULT_VTX_PER_THREAD 1024
@@ -57,6 +74,25 @@ static constexpr uintptr_t CORE_Q_L1SP_OFFSET = L1SP_ALIGN_PAD;
 static constexpr uintptr_t L1SP_DATA_START = CORE_Q_L1SP_OFFSET + CORE_Q_CAP * sizeof(int64_t);
 static constexpr uintptr_t L1SP_STACK_GUARD = 5120;  // 5KB guard for stack growth
 
+// =============================================================================
+// PART 2 — DATA STRUCTURES
+// =============================================================================
+// Two small structs define the work-distribution machinery:
+//
+//   CoreQueueCtrl — one per core, lives in L2SP. Holds the head/tail/lock of
+//                   the core's L1SP circular item buffer. Cache-line padded so
+//                   writes from different cores don't false-share.
+//                   * head       : next item to pop (CAS-advanced).
+//                   * read_head  : slots safely readable by cross-core thieves;
+//                                  refill must not overwrite past this.
+//                   * tail       : one past last valid item.
+//                   * refill_lock: only one hart per core refills at a time.
+//
+//   SharedQueue   — the pod-wide overflow pool in L2SP. Cores fetch-add their
+//                   way through it to refill their L1SP queue. Head/tail on
+//                   separate cache lines (alignas(64)) to avoid false sharing
+//                   between producer and consumer sides.
+// -----------------------------------------------------------------------------
 // ---------- Per-Core Queue Control (in L2SP) ----------
 // Padded to 64 bytes to avoid false sharing between cores.
 // Items array lives in L1SP (via absolute addressing).
@@ -77,6 +113,18 @@ struct SharedQueue {
     alignas(64) volatile int64_t tail;
 };
 
+// =============================================================================
+// PART 3 — SMALL HELPERS
+// =============================================================================
+// Utility routines used during startup and accounting:
+//   * parse_i       — argv integer parse with default.
+//   * bulk_load     — host-file -> simulated DRAM transfer via MMIO
+//                     (ph_bulk_load_file). Used to load the CSR graph and the
+//                     pre-computed bfs_dist_init.bin.
+//   * floor_pow2    — largest power of two <= n (used for L1SP per-core sizing).
+//   * ilog2_pow2    — log2 of a power of two (used as the shift amount when
+//                     indexing the per-core L1SP frontier tier).
+// -----------------------------------------------------------------------------
 // ---------- Helpers ----------
 static int parse_i(const char *s, int d)
 {
@@ -118,6 +166,29 @@ static inline int32_t ilog2_pow2(int32_t n) {
     return k;
 }
 
+// =============================================================================
+// PART 4 — L2SP GLOBALS (shared pod state)
+// =============================================================================
+// Everything tagged __l2sp__ lives in the pod's L2 scratchpad and is shared by
+// all harts on the pod. Grouped by purpose:
+//   * Runtime config      — topology (harts/cores), init flag.
+//   * Barrier             — hart synchronisation between levels.
+//   * Shared queue        — overflow pool cores refill from.
+//   * Per-core queue ctrl — head/tail/lock for each core's L1SP queue.
+//   * Graph parameters    — N, degree, source vertex.
+//   * DRAM pointers       — CSR arrays + dist[] (actual arrays in DRAM, these
+//                           pointers are in L2SP for fast deref).
+//   * Control flags       — sim exit, frontier-overflow error.
+//   * Quiescence counter  — g_active_harts, used by the termination check.
+//   * Reduction accum.    — g_sum_dist / g_reached / g_max_dist (result stats).
+//   * Per-hart/per-core   — stat_* arrays populated during the BFS loop and
+//     stats                 printed at the end.
+//   * Frontier tier state — cur_buf, frontier_tail[2] (double-buffered), plus
+//                           the L2SP / L1SP / DRAM tier descriptors used by
+//                           frontier_ptr() to route an index to the right tier.
+//   * l2sp_end symbol     — provided by the linker; marks where the L2SP heap
+//                           begins, so alloc_frontier_storage() can bump-alloc.
+// -----------------------------------------------------------------------------
 // ---------- L2SP Globals ----------
 
 // Runtime config
@@ -190,6 +261,16 @@ __l2sp__ int64_t frontier_total_cap;           // total entries per buffer (L2SP
 // L2SP heap boundary
 extern "C" char l2sp_end[];
 
+// =============================================================================
+// PART 5 — THREAD ID + BARRIER
+// =============================================================================
+// Thin wrappers over the hardware topology:
+//   * get_thread_id() — flat pod-wide hart id (core*harts_per_core + hart).
+//   * barrier()       — pod-wide level-sync barrier (reuses ws::barrier from
+//                       work_stealing.h). Called between BFS levels so the
+//                       frontier swap and distribute_frontier happen atomically
+//                       with respect to all harts.
+// -----------------------------------------------------------------------------
 // ---------- Thread ID + Barrier ----------
 static inline int get_thread_id() {
     return myCoreId() * (int)g_harts_per_core + myThreadId();
@@ -199,6 +280,25 @@ static inline void barrier() {
     ws::barrier(&g_barrier, get_thread_id(), g_total_harts);
 }
 
+// =============================================================================
+// PART 6 — FRONTIER STORAGE (tiered: L2SP -> L1SP -> DRAM)
+// =============================================================================
+// The BFS frontier is double-buffered (two buffers, swapped each level via
+// cur_buf ^= 1). Each buffer is spread across three tiers, fastest first:
+//
+//   Tier 1 — L2SP : pod-shared, up to what fits in the L2SP heap.
+//   Tier 2 — L1SP : distributed across cores; each core holds an equal
+//                   power-of-two slice accessed via absolute addressing.
+//                   Index -> (core, local) via frontier_l1sp_shift / mask.
+//   Tier 3 — DRAM : overflow via plain malloc().
+//
+// init_l1sp_data_regions()  sets up the absolute-address base per core and
+//                           computes how many bytes of each core's L1SP are
+//                           free for data (after queue items + stack guard).
+// frontier_ptr / get / set  route a logical index [0..N) to the right tier.
+// (distribute_frontier, flush_discoveries, and alloc_frontier_storage further
+//  down are also part of this frontier layer.)
+// -----------------------------------------------------------------------------
 // ---------- L1SP Data Region Setup ----------
 static inline void init_l1sp_data_regions() {
     for (int c = 0; c < g_total_cores; c++) {
@@ -239,6 +339,28 @@ static inline void frontier_set(int buf, int64_t idx, int64_t val) {
     *frontier_ptr(buf, idx) = val;
 }
 
+// =============================================================================
+// PART 7 — PER-CORE LOCAL QUEUE OPERATIONS (producer/consumer on L1SP)
+// =============================================================================
+// Each core has a circular buffer in its own L1SP holding vertex ids ready to
+// be processed. Head/tail/lock live in L2SP (see CoreQueueCtrl). Two-level
+// queueing: pop is almost always fast because only the 16 harts on that core
+// contend for head. When the local queue is empty, ONE hart per core refills
+// it from the shared L2SP queue (protected by refill_lock).
+//
+//   core_q_items()        — absolute-address pointer to a core's L1SP items.
+//   core_q_pop_chunk()    — TTAS + CAS to atomically grab up to max_k items.
+//                           Uses a fence r,r so readers see item writes that
+//                           preceded the publishing tail bump.
+//   core_q_try_refill()   — one hart acquires refill_lock, fetch-adds on the
+//                           shared queue, copies items L2SP frontier -> L1SP
+//                           circular buffer, publishes via tail update.
+//                           Returns: 1 = got/has work, 0 = retry, -1 = shared
+//                           queue globally empty (caller should try stealing).
+//
+// The read_head field is what makes this safe against concurrent cross-core
+// stealers: refill won't overwrite slots a thief may still be reading.
+// -----------------------------------------------------------------------------
 // ---------- Per-Core Local Queue Operations ----------
 // Items stored in L1SP circular buffer, control (head/tail/lock) in L2SP.
 // Only 16 harts per core contend on each core's queue — CAS nearly always succeeds.
@@ -344,6 +466,16 @@ static inline int core_q_try_refill(int my_core) {
     return 1;
 }
 
+// =============================================================================
+// PART 8 — NEXT-FRONTIER BATCH PUSH
+// =============================================================================
+// Harts accumulate newly-discovered vertices in a small per-hart local buffer
+// and push them into the next-level frontier in bursts (here, LOCAL_BUF_SIZE
+// items at a time). A single fetch-add reserves a contiguous slot range on
+// frontier_tail[next_buf], then items are written via frontier_set() which
+// routes each write to L2SP / L1SP / DRAM by index. Overflow is detected
+// against frontier_total_cap (sets g_frontier_error so the level loop aborts).
+// -----------------------------------------------------------------------------
 // ---------- Next Frontier Batch Push ----------
 // Flush local discovery buffer to next frontier in one atomic tail bump.
 static inline void flush_discoveries(int64_t *buf, int count, int next_buf) {
@@ -360,6 +492,16 @@ static inline void flush_discoveries(int64_t *buf, int count, int next_buf) {
     }
 }
 
+// =============================================================================
+// PART 9 — LEVEL-START FRONTIER DISTRIBUTION
+// =============================================================================
+// Called by hart 0 at the top of each BFS level. Takes the current frontier
+// (size = frontier_tail[cur_buf]) and seeds each core's L1SP circular queue
+// with an equal slice (ceiling-div so small frontiers still land in L1SP).
+// Anything that doesn't fit in the L1SP queues stays in the frontier buffer
+// and is accessed through the shared L2SP queue's head/tail range. This is
+// what gives the algorithm its "L1SP fast path, L2SP overflow" character.
+// -----------------------------------------------------------------------------
 // ---------- Distribute Frontier into L1SP Queues ----------
 // Hart 0 calls this at level start. Distributes frontier entries round-robin
 // into per-core L1SP queues (up to CORE_Q_CAP each). Overflow stays in the
@@ -398,6 +540,20 @@ static void distribute_frontier() {
     shared_queue.tail = fsize;
 }
 
+// =============================================================================
+// PART 10 — CROSS-CORE WORK STEALING
+// =============================================================================
+// Last-resort work acquisition when BOTH the local L1SP queue AND the shared
+// L2SP queue are empty. One hart per stealing core (serialised via the core's
+// own refill_lock) scans every other core's CoreQueueCtrl, picks the one with
+// the largest head..tail gap, and CAS-claims up to STEAL_SIZE items from the
+// victim's head. Items are copied from the victim's L1SP circular buffer into
+// the stealer's L1SP circular buffer, then the victim's read_head is advanced
+// so its next refill knows those slots are safe to overwrite.
+//
+// Return codes: 1 = stole work, 0 = contention (caller retries), -1 = nothing
+// worth stealing (caller moves to the termination check).
+// -----------------------------------------------------------------------------
 // ---------- Work Stealing from Another Core's L1SP Queue ----------
 // Scans all cores, finds the one with the most items, steals a fixed chunk.
 // Returns: 1 = stole work, 0 = contention (retry), -1 = nothing to steal.
@@ -490,6 +646,31 @@ static inline int steal_from_fullest(int my_core) {
     return 1;
 }
 
+// =============================================================================
+// PART 11 — BFS INNER LOOP (core algorithm for one level)
+// =============================================================================
+// This is THE BFS kernel. Every hart runs this function once per level. The
+// control flow is a state machine over three sources of work:
+//
+//   [POP]    core_q_pop_chunk  — grab up to BFS_CHUNK_SIZE vertices from own
+//                                core's L1SP queue; relax outgoing edges with
+//                                CAS(dist[v], -1, level+1); push winners into
+//                                the per-hart discovery buffer; flush to the
+//                                next frontier when the buffer fills.
+//   [REFILL] core_q_try_refill — when the local queue is empty, pull a REFILL
+//                                chunk from the shared L2SP queue.
+//   [STEAL]  steal_from_fullest — when shared is also empty, steal from
+//                                another core's L1SP queue.
+//
+// Termination — "is_active" counter (g_active_harts). A hart only decrements
+// it when it has nothing to pop, nothing to refill, AND nothing to steal.
+// Then it verifies (a) no other hart is active, (b) shared queue is empty,
+// (c) every core_q is empty. Only then does it exit the loop. This avoids
+// premature termination when work is in flight between tiers.
+//
+// Final bookkeeping: flush remaining discoveries and update per-hart/per-core
+// stats (stat_nodes_processed, stat_nodes_per_core, stat_edges_per_core).
+// -----------------------------------------------------------------------------
 // ---------- BFS Level Processing ----------
 static void process_bfs_level(int tid, int32_t level)
 {
@@ -606,6 +787,19 @@ static void process_bfs_level(int tid, int32_t level)
     atomic_fetch_add_i64(&stat_edges_per_core[my_core], local_edges);
 }
 
+// =============================================================================
+// PART 12 — FRONTIER STORAGE ALLOCATION
+// =============================================================================
+// One-time setup (hart 0 only) of the three frontier tiers for N vertices.
+// Greedy top-down fill:
+//   1. Consume as much L2SP heap as possible (up to N entries per buffer).
+//   2. If entries remain, carve equal power-of-two slices out of each core's
+//      L1SP data region (rounded down to keep indexing a shift).
+//   3. malloc() any leftover into DRAM (both buffers).
+// Writes into the L2SP globals described in PART 6 so the frontier_ptr()
+// accessors know where each logical index lives. Returns false on malloc
+// failure (main then reports an error and signals exit).
+// -----------------------------------------------------------------------------
 // ---------- Frontier Memory Allocation (L2SP -> L1SP -> DRAM) ----------
 // Allocates double-buffered frontier storage across memory tiers.
 // Returns false on allocation failure.
@@ -688,6 +882,41 @@ static bool alloc_frontier_storage(uintptr_t *l2sp_heap, uintptr_t l2sp_limit,
     return true;
 }
 
+// =============================================================================
+// PART 13 — MAIN (per-hart entry point + BFS driver)
+// =============================================================================
+// Every hart on the simulated machine enters main(). The function splits into
+// four phases; which ones a given hart runs depends on its topology id.
+//
+//   Phase A — Argument parsing & topology reads
+//     Parse --V / --D. Query myCoreId / myThreadId / myPodId / myPXNId and
+//     derive flat tid. Harts on non-(pxn0,pod0), or beyond threads_per_pod,
+//     spin on g_sim_exit and return.
+//
+//   Phase B — Hart-0 init (hart 0 only)
+//     Fill in the __l2sp__ globals (topology, counters, barrier state), set
+//     up per-core queue control, call init_l1sp_data_regions(), malloc +
+//     bulk_load the graph file and dist[] init file, validate header, call
+//     alloc_frontier_storage(), print the banner describing the resulting
+//     tier layout, seed frontier[0] with the source vertex, and release
+//     g_initialized. Other harts spin on g_initialized until this completes.
+//
+//   Phase C — BFS level loop (all harts)
+//     While frontier is non-empty and no overflow:
+//       - hart 0 zeros the next-buffer tail and calls distribute_frontier()
+//       - barrier()
+//       - ph_stat_phase(1); process_bfs_level(); ph_stat_phase(0)
+//         (The stat_phase window is what makes summarize.py's useful_* stats
+//          measure only the ROI and not the distribute/barrier overhead.)
+//       - barrier(); hart 0 flips cur_buf; barrier()
+//
+//   Phase D — Results
+//     Every hart computes a local (count, sum, max) over its slice of dist[]
+//     and atomically folds into g_reached / g_sum_dist / g_max_dist. Hart 0
+//     then prints the BFS summary (levels, reached %, avg distance, PASS/FAIL
+//     check, per-core work balance, frontier-tier utilisation), free()s all
+//     DRAM, and sets g_sim_exit=1 to release the idle harts.
+// -----------------------------------------------------------------------------
 // ---------- Main ----------
 extern "C" int main(int argc, char **argv)
 {

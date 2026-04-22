@@ -4,10 +4,10 @@
 #SBATCH -e logs/%x_%j.err
 
 #SBATCH -A CCR22006
-#SBATCH -p spr
+#SBATCH -p pvc
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH -c 112
+#SBATCH -c 96
 #SBATCH -t 24:00:00
 
 set -eo pipefail
@@ -77,7 +77,7 @@ VTX_PER_THREAD=1024
 DEGREE=16
 
 # Graph type: "uniform" or "rmat"
-GRAPH_TYPE="rmat"
+GRAPH_TYPE="uniform"
 # Edge factor for RMAT (only used when GRAPH_TYPE=rmat)
 EF=16
 
@@ -97,7 +97,7 @@ apptainer exec --cleanenv \
     MODEL=/work/model/drvr.py
     BINARY=/work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline
     CP=/work/build_stampede/pandocommand/libpandocommand_loader.so
-    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_lowcache_sweep_final
+    SWEEP_DIR=/work/build_stampede/drvr/bfs_csr_sq_core_sweep_uniform
 
     VTX_PER_THREAD='"${VTX_PER_THREAD}"'
     DEGREE='"${DEGREE}"'
@@ -110,13 +110,14 @@ apptainer exec --cleanenv \
     # Format: PODS CX CY THR DRAM_CACHE_KIB
     # Same configurations as work-stealing baseline
     CONFIGS=(
-      #"1 1 1 16 4"	    
-      #"1 2 1 16 8"
-      #"1 4 1 16 16"
-      #"1 8 1 16 32"
-      #"1 8 2 16 64"
-      "1 8 8 16 256"
-      "1 8 8 16 128"
+      #"1 1 1 16 8"	    
+      #"1 1 2 16 16"
+      #"1 1 4 16 32"
+      #"1 1 8 16 64"
+      #"1 2 8 16 128"
+      #"1 4 8 16 256"
+      "1 8 8 16 512"
+      #"4 8 8 16 2048"
       #"8 8  8 16 4096"
     )
 
@@ -206,6 +207,6 @@ apptainer exec --cleanenv \
 
     echo "=============================================="
     echo "BFS CSR SHARED-QUEUE SWEEP COMPLETE"
-    echo "Results in: build_stampede/drvr/bfs_csr_sq_lowcache_sweep_final/"
+    echo "Results in: build_stampede/drvr/bfs_csr_sq_core_sweep_uniform/"
     echo "=============================================="
   '

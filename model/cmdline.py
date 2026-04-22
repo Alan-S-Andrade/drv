@@ -26,6 +26,8 @@ def parser(core_l1sp_size=128*1024):
     p.add_argument("--core-clock", type=str, default="1GHz", help="clock frequency of cores")
     p.add_argument("--core-max-idle", type=int, default=1, help="max idle time of cores")
     p.add_argument("--core-l1sp-size", type=int, default=core_l1sp_size, help="size of l1sp per core")
+    p.add_argument("--core-l1-cache-size", type=int, default=0, help="L1 cache size per core in bytes (0=disabled)")
+    p.add_argument("--core-l1-cache-assoc", type=int, default=4, help="L1 cache associativity")
 
     p.add_argument("--pod-l2sp-banks", type=int, default=1, help="number of l2sp banks per pod")
     p.add_argument("--pod-l2sp-interleave", type=int, default=0, help="interleave size of l2sp addresses (defaults to no  interleaving)")

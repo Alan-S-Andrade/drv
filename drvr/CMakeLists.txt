@@ -432,6 +432,15 @@ drvr_test_build_properties(bfs_csr_shared_queue_baseline
   DRV_BUILD_CORE_THREADS 16
   )
 
+# BFS tiered work queue with FAA (L1SP + L2SP, dedicated fetcher harts)
+drvr_test_with_pandohammer(bfs_tiered_wq_faa bfs_tiered_wq_faa.cpp)
+drvr_test_build_properties(bfs_tiered_wq_faa
+  PROPERTIES
+  DRV_BUILD_POD_CORES_X 1
+  DRV_BUILD_POD_CORES_Y 1
+  DRV_BUILD_CORE_THREADS 16
+  )
+
 # BFS CSR with shared queue + inter-pod DRAM work stealing (multi-pod)
 drvr_test_with_pandohammer(bfs_csr_shared_queue_multi bfs_csr_shared_queue_multi.cpp)
 drvr_test_build_properties(bfs_csr_shared_queue_multi
