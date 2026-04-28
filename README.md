@@ -316,7 +316,7 @@ docker run -it --rm \
 
   ## Running
 
-  The simplest path is to copy and adapt one of the existing `*.sbatch` files (e.g. `bfs_csr_shared_queue.sbatch`) — they wire up build + run + sweep loop +
+  The simplest path is to copy and adapt one of the existing `*.sbatch` files (e.g. `bfs_csr_shared_queue.sbatch`)  they wire up build + run + sweep loop +
   summarization in one file.
 
   If you want to run interactively, the runtime apptainer invocation looks like:
@@ -369,7 +369,7 @@ docker run -it --rm \
   - Inside the container, `/install/lib/libramulator.so` is the Dockerfile's stock build.
   - Outside, `drv_copy/ramulator-build/libramulator.so` is the same source rebuilt against the host glibc with the SST patches — and it's the one your rebuilt
   `libmemHierarchy.so` was linked against.
-  - If you run with the in-container ramulator, the rebuilt `libmemHierarchy.so` may load a `libramulator.so` whose symbols don't match — hence the bind-mount
+  - If you run with the in-container ramulator, the rebuilt `libmemHierarchy.so` may load a `libramulator.so` whose symbols don't match hence the bind-mount
   override on every run.
 
 
