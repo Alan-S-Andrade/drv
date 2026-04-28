@@ -168,174 +168,117 @@ docker run -it --rm \
   drv:latest bash
 
 
-## To run it on TACC - Stampede3
+  # Running on TACC — Stampede3
 
-  1. SSH + compute node + module
+  The Stampede3 workflow uses the published Docker image (`alansandrade/drv:latest`) wrapped as an Apptainer SIF, plus two host-side libraries that are bind-mounted
+  over the in-container copies:
 
-  ssh vineeth_architect@stampede3.tacc.utexas.edu
-  # get a compute node (idev or sbatch)
-  cdw
-  module load tacc-apptainer/1.4.1
-  cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
+  - `libramulator.so` — built from a patched Ramulator source tree on the host.
+  - `libmemHierarchy.so` — rebuilt with `-DDRV_CACHE_ALU` so the DRAM cache supports ALU-tagged operations.
 
-  2. Set the paths used by the new bind mounts
+  If this is your first time on Stampede3, do the **fresh setup** first, then come back to **running**.
 
-  SIF=/work2/10238/vineeth_architect/stampede3/drv_latest.sif
-  RAMULATOR_SRC=/work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build
-  RAMULATOR_LIB=$RAMULATOR_SRC/libramulator.so
-  RAMULATOR_CONFIGS=$RAMULATOR_SRC/configs
-  MEMH_LIB=/work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
+  ---
 
-  3. BUILD step — apptainer with Ramulator binds
+  ## Fresh setup (do this once)
 
-  apptainer exec --cleanenv \
-    --env XALT_EXECUTABLE_TRACKING=no \
-    --bind "$PWD:/work" \
-    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
-    --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
-    "$SIF" \
-    bash -lc '
-      export RISCV_HOME=/install
-      export PATH=/install/bin:$PATH
-      cd /work/build_stampede
-      cmake .. \
-        -DSST_CORE_PREFIX=/install \
-        -DSST_ELEMENTS_PREFIX=/install \
-        -DGNU_RISCV_TOOLCHAIN_PREFIX=/install \
-        -DCMAKE_INSTALL_PREFIX=/work/.local \
-        -DSST_ENABLE_RAMULATOR=1 \
-        -DRAMULATOR_DIR=/tmp/ramulator
-      make -j32 rv64 Drv pandocommand_loader
-    '
+  ### Step 0 — Workspace
 
-  4. RUN step — apptainer with Ramulator + memHierarchy binds
-
-  apptainer exec --cleanenv \
-    --env XALT_EXECUTABLE_TRACKING=no \
-    --env OMPI_MCA_mtl=^psm2 \
-    --bind "$PWD:/work" \
-    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
-    --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
-    --bind "$MEMH_LIB:/install/lib/sst-elements-library/libmemHierarchy.so" \
-    "$SIF" \
-    bash
-
-  Run-step additions vs. old README:
-  - --env OMPI_MCA_mtl=^psm2 — disables PSM2 MTL (avoids MPI/OFI noise on Stampede3 fabric).
-  - --bind $RAMULATOR_LIB → /install/lib/libramulator.so — same override as build.
-  - --bind $RAMULATOR_CONFIGS → /work/ramulator-configs — the model passes --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg, so this mount is
-  required at runtime.
-  - --bind $MEMH_LIB → /install/lib/sst-elements-library/libmemHierarchy.so — overrides the container's libmemHierarchy.so with your prebuilt one that has coherence
-  ALU tagging. Requires the prebuilt .so to exist (rebuilt via rebuild_memhierarchy.sh if needed).
-
-  5. Inside the container, invoking SST directly via an sbatch script, where you can set architectural parameters and also set the binary.
-  e.g.:
-  PYTHONPATH=/work/py::/work/model \
-    /install/bin/sst -n 1 /work/model/drvr.py -- \
-      --with-command-processor=/work/build_stampede/pandocommand/libpandocommand_loader.so \
-      --num-pxn=1 --pxn-pods=1 --pod-cores-x=8 --pod-cores-y=8 --core-threads=16 \
-      --pod-l2sp-banks=4 --pod-l2sp-interleave=64 \
-      --pxn-dram-banks=1 --pxn-dram-cache-size=$((512*1024)) --pxn-dram-cache-slices=4 \
-      --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
-      --pxn-dram-cache-alu=0 \
-      /work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline \
-      --V 1024 --D 16
-
-  For end-to-end runs, the easiest path is to copy/adapt one of the existing sbatch files (e.g. bfs_csr_shared_queue.sbatch) — they wire up build + run + sweep loop
-  + summarization in one file.
-
-
-
-## To start a fresh setup on TACC
-
-
-DRV Apptainer setup from scratch on Stampede3
-
-  Step 0 — Workspace
-
+  ```bash
   ssh vineeth_architect@stampede3.tacc.utexas.edu
   cdw                              # cd to $WORK2
   cd /work2/10238/vineeth_architect/stampede3
   module load tacc-apptainer/1.4.1
+  ```
 
-  Step 1 — Pull the Docker image and convert to a SIF
+  ### Step 1 — Pull the Docker image and convert to a SIF
 
-  Apptainer can pull straight from Docker Hub — no local Docker daemon needed. Don't run this on a login node (image conversion is hefty); use an idev session or a
-  small sbatch.
+  Apptainer can pull straight from Docker Hub — no local Docker daemon needed. Don't run this on a login node (image conversion is hefty); use an `idev` session or a
+   small `sbatch`.
 
-  - Use a writable cache/tmp inside $WORK so /tmp doesn't fill up
-  export APPTAINER_CACHEDIR=$WORK/.apptainer/cache 
-  
-  export APPTAINER_TMPDIR=$WORK/.apptainer/tmp 
-  
-  mkdir -p "$APPTAINER_CACHEDIR" "$APPTAINER_TMPDIR" 
-  
+  ```bash
+  # Use a writable cache/tmp inside $WORK so /tmp doesn't fill up
+  export APPTAINER_CACHEDIR=$WORK/.apptainer/cache
+  export APPTAINER_TMPDIR=$WORK/.apptainer/tmp
+  mkdir -p "$APPTAINER_CACHEDIR" "$APPTAINER_TMPDIR"
 
-   - Pull and build the SIF (output is the file every sbatch references)
-   
+  # Pull and build the SIF (output is the file every sbatch references)
   apptainer pull drv_latest.sif docker://alansandrade/drv:latest
+  ```
 
-  After this you should have /work2/10238/vineeth_architect/stampede3/drv_latest.sif.
+  After this you should have `/work2/10238/vineeth_architect/stampede3/drv_latest.sif`.
 
-  ▎ The image is built from drv/docker/Dockerfile. It bakes in sst-core (mrutt92/sst-core branch devel-drv-changes), sst-elements (same fork, devel-drv-changes),
-  ▎ Boost 1.89, the RISC-V GNU toolchain, CMake 4.2, plus a stub libramulator.so at /install/lib/. We override the stub at run time with our own builds — see Steps 2
-  ▎  and 3.
+  > The image is built from `drv/docker/Dockerfile`. It bakes in `sst-core` (`mrutt92/sst-core`, branch `devel-drv-changes`), `sst-elements` (same fork,
+  `devel-drv-changes`), Boost 1.89, the RISC-V GNU toolchain, CMake 4.2, plus a stub `libramulator.so` at `/install/lib/`. We override the stub at run time with our
+  own builds — see Steps 2 and 3.
 
-  Step 2 — Build libramulator.so outside the container
+  ### Step 2 — Build `libramulator.so` outside the container
 
-  The image still has the Dockerfile's baked-in libramulator.so, but we now ship our own copy with our preferred patches and the HBM-pando configs. Build it once on
-  the host (no apptainer needed — it's a plain g++ build).
+  The image still has the Dockerfile's baked-in `libramulator.so`, but we ship our own copy with the SST patches and the HBM-pando configs. Build it once on the host
+   (no apptainer needed — it's a plain `g++` build).
 
+  If `ramulator-build/` is missing on a fresh checkout:
+
+  ```bash
   cd /work2/10238/vineeth_architect/stampede3/drv_copy
-   If ramulator-build/ is missing on a fresh checkout:  
-   
-     git clone https://github.com/CMU-SAFARI/ramulator.git ramulator-build  
-     
-     cd ramulator-build && git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c  
-     
-     wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch  
-     
-     wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch  
-     
-     patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch  
-     
-     patch -p1 -i ramulator_sha_7d2e723_libPatch.patch  
-     
+  git clone https://github.com/CMU-SAFARI/ramulator.git ramulator-build
+  cd ramulator-build
+  git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c
+  wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch
+  wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch
+  patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch
+  patch -p1 -i ramulator_sha_7d2e723_libPatch.patch
+  ```
 
+  Then build it:
+
+  ```bash
   cd /work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build
   make CXX=g++ libramulator.so
   ls libramulator.so configs/HBM-pando-16ch.cfg     # sanity check
+  ```
 
-  This is the file the sbatch scripts mount over /install/lib/libramulator.so at run time. The configs/ directory (with HBM-pando-16ch.cfg, HBM-pando-32ch.cfg, etc.)
-   is mounted into the container at /work/ramulator-configs.
+  This `.so` is what the sbatch scripts mount over `/install/lib/libramulator.so` at run time. The `configs/` directory (with `HBM-pando-16ch.cfg`,
+  `HBM-pando-32ch.cfg`, etc.) is mounted into the container at `/work/ramulator-configs`.
 
-  Step 3 : Build libmemHierarchy.so with DRV_CACHE_ALU support (optional)
+  **Why two patches?** The Ramulator commit we pin (`7d2e723`) was written for old toolchains and only built a static `.a`. The SST project ships two patches:
+  - `gcc48Patch.patch` — fixes lambdas in `Scheduler.h` so it compiles on modern GCC/Clang.
+  - `libPatch.patch` — adds a `libramulator.so` Makefile target and `-fPIC` so SST can dlopen it as a memHierarchy backend.
 
-  The DRAM-cache ALU-tagging changes live in  local sst-elements tree (drv-stack/sst-elements) and need to be compiled against locally-built ramulator.
-  There's a helper script that does exactly that:
+  ### Step 3 — Build `libmemHierarchy.so` with `DRV_CACHE_ALU` (optional)
+
+  The DRAM-cache ALU-tagging changes live in your local sst-elements tree (`drv-stack/sst-elements`) and must be compiled against the locally-built ramulator. A
+  helper script does exactly that:
+
+  ```bash
   cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
   ./rebuild_memhierarchy.sh
   ls /work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
+  ```
 
-  This compiles every memHierarchy/*.cc with -DDRV_CACHE_ALU, links against libramulator.so from Step 2, and writes the .so to the location the sbatch files bind in.
+  This compiles every `memHierarchy/*.cc` with `-DDRV_CACHE_ALU`, links against `libramulator.so` from Step 2, and writes the `.so` where the sbatch files bind it
+  in.
 
-  ▎ Prereqs the script assumes already exist on disk: drv_stack/sst-elements/src/ (sources) and drv-stack/sst-core/include/ (SST core headers). If those are missing
-  ▎ on a fresh machine, you'd need to clone mrutt92/sst-core and mrutt92/sst-elements (branch devel-drv-changes) into those paths and run ./autogen.sh && ./configure
-  ▎  once, mirroring the Dockerfile.
+  > **Prereqs the script assumes already exist:** `drv_stack/sst-elements/src/` (sources) and `drv-stack/sst-core/include/` (SST core headers). On a fresh machine,
+  clone `mrutt92/sst-core` and `mrutt92/sst-elements` (branch `devel-drv-changes`) into those paths and run `./autogen.sh && ./configure` once, mirroring the
+  Dockerfile.
 
-  Step 4 - Verify everything is wired
+  ### Step 4 — Verify everything is wired
 
+  ```bash
   ls -lh /work2/10238/vineeth_architect/stampede3/drv_latest.sif
   ls -lh /work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build/libramulator.so
   ls -lh /work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build/configs/HBM-pando-16ch.cfg
   ls -lh /work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
+  ```
 
-  All four must exist before any of the *.sbatch files will work.
+  All four must exist before any of the `*.sbatch` files will work.
 
-  Step 5 — Build DRV inside the container
+  ---
 
-  Same as before:
+  ## Building DRV inside the container
 
+  ```bash
   cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
   mkdir -p build_stampede
 
@@ -362,19 +305,73 @@ DRV Apptainer setup from scratch on Stampede3
         -DRAMULATOR_DIR=/tmp/ramulator
       make -j32 rv64 Drv pandocommand_loader
     '
+  ```
 
-  Step 6 - Run
+  Notes vs. the older README:
+  - New cmake flags: `-DGNU_RISCV_TOOLCHAIN_PREFIX=/install`, `-DSST_ENABLE_RAMULATOR=1`, `-DRAMULATOR_DIR=/tmp/ramulator`.
+  - New binds: host `libramulator.so` over the in-container stub, plus the Ramulator source tree at `/tmp/ramulator` so cmake can find headers.
+  - Build targets are now `rv64 Drv pandocommand_loader`. The old `make drvr-run-bfs_multi_sw` is no longer the canonical entry point.
 
-  Use any *.sbatch file in drv_copy/drv/ (e.g. bfs_csr_shared_queue.sbatch) as a template. Each one already wires up the four binds: source tree, libramulator.so,
-  ramulator-configs/, and the rebuilt libmemHierarchy.so.
+  ---
 
-  Why the libramulator separation matters
+  ## Running
 
-  - Inside the container, /install/lib/libramulator.so is the Dockerfile's stock build.
-  - Outside, drv_copy/ramulator-build/libramulator.so is the same source rebuilt against the host glibc with our patches, and it's the one your rebuilt
-  libmemHierarchy.so was linked against.
-  - If you run with the in-container ramulator, the rebuilt libmemHierarchy.so may load a libramulator.so that doesn't match its symbols — hence the bind-mount
+  The simplest path is to copy and adapt one of the existing `*.sbatch` files (e.g. `bfs_csr_shared_queue.sbatch`) — they wire up build + run + sweep loop +
+  summarization in one file.
+
+  If you want to run interactively, the runtime apptainer invocation looks like:
+
+  ```bash
+  SIF=/work2/10238/vineeth_architect/stampede3/drv_latest.sif
+  RAMULATOR_SRC=/work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build
+  RAMULATOR_LIB=$RAMULATOR_SRC/libramulator.so
+  RAMULATOR_CONFIGS=$RAMULATOR_SRC/configs
+  MEMH_LIB=/work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
+
+  apptainer exec --cleanenv \
+    --env XALT_EXECUTABLE_TRACKING=no \
+    --env OMPI_MCA_mtl=^psm2 \
+    --bind "$PWD:/work" \
+    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+    --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
+    --bind "$MEMH_LIB:/install/lib/sst-elements-library/libmemHierarchy.so" \
+    "$SIF" \
+    bash
+  ```
+
+  Run-step additions vs. the older README:
+  - `--env OMPI_MCA_mtl=^psm2` — disables PSM2 MTL (avoids MPI/OFI noise on Stampede3 fabric).
+  - `--bind $RAMULATOR_LIB → /install/lib/libramulator.so` — same override as build.
+  - `--bind $RAMULATOR_CONFIGS → /work/ramulator-configs` — the model passes `--dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg`, so this mount
+   is required at runtime.
+  - `--bind $MEMH_LIB → /install/lib/sst-elements-library/libmemHierarchy.so` — overrides the container's `libmemHierarchy.so` with the DRV_CACHE_ALU build from Step
+   3.
+
+  ### Inside the container — invoking SST directly
+
+  ```bash
+  PYTHONPATH=/work/py::/work/model \
+    /install/bin/sst -n 1 /work/model/drvr.py -- \
+      --with-command-processor=/work/build_stampede/pandocommand/libpandocommand_loader.so \
+      --num-pxn=1 --pxn-pods=1 --pod-cores-x=8 --pod-cores-y=8 --core-threads=16 \
+      --pod-l2sp-banks=4 --pod-l2sp-interleave=64 \
+      --pxn-dram-banks=1 --pxn-dram-cache-size=$((512*1024)) --pxn-dram-cache-slices=4 \
+      --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
+      --pxn-dram-cache-alu=0 \
+      /work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline \
+      --V 1024 --D 16
+  ```
+
+  ---
+
+  ## Why the libramulator / libmemHierarchy separation matters
+
+  - Inside the container, `/install/lib/libramulator.so` is the Dockerfile's stock build.
+  - Outside, `drv_copy/ramulator-build/libramulator.so` is the same source rebuilt against the host glibc with the SST patches — and it's the one your rebuilt
+  `libmemHierarchy.so` was linked against.
+  - If you run with the in-container ramulator, the rebuilt `libmemHierarchy.so` may load a `libramulator.so` whose symbols don't match — hence the bind-mount
   override on every run.
+
 
 
 
