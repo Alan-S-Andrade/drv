@@ -142,8 +142,6 @@ Each sweep writes into `build_stampede/drvr/<sweep_dir>/<run_name>/`.
 
   ### 3b. Set up paths and apptainer binds
 
-  Same bind set as the README's "To run it on TACC - Stampede3" section, just expressed as shell variables instead of a heredoc:
-
   ```bash
   cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
   module load tacc-apptainer/1.4.1
@@ -238,6 +236,10 @@ Each sweep writes into `build_stampede/drvr/<sweep_dir>/<run_name>/`.
 
   The same recipe works for any binary in `build_stampede/rv64/drvr/` — swap the binary path, the `--pxn-*`/`--pod-*` flags, and the program argv (e.g. PR/SSSP take
   a different `--V`/`--D`/`--PR_ITERS` set).
+
+
+NOTE: You can directly end the default the architectural parameters for a particular run  in drvr/CMakeLists.txt , any new code that you add, can be added in drvr, and then mentioned in CMakeLists.txt in the same format as others.
+
 
   ### 3f. Edit-and-rerun loop
 
