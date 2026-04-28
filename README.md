@@ -263,12 +263,16 @@ DRV Apptainer setup from scratch on Stampede3
   Apptainer can pull straight from Docker Hub — no local Docker daemon needed. Don't run this on a login node (image conversion is hefty); use an idev session or a
   small sbatch.
 
-  # Use a writable cache/tmp inside $WORK so /tmp doesn't fill up
-  export APPTAINER_CACHEDIR=$WORK/.apptainer/cache
-  export APPTAINER_TMPDIR=$WORK/.apptainer/tmp
-  mkdir -p "$APPTAINER_CACHEDIR" "$APPTAINER_TMPDIR"
+  - Use a writable cache/tmp inside $WORK so /tmp doesn't fill up
+  export APPTAINER_CACHEDIR=$WORK/.apptainer/cache 
+  
+  export APPTAINER_TMPDIR=$WORK/.apptainer/tmp 
+  
+  mkdir -p "$APPTAINER_CACHEDIR" "$APPTAINER_TMPDIR" 
+  
 
-  # Pull and build the SIF (output is the file every sbatch references)
+   - Pull and build the SIF (output is the file every sbatch references)
+   
   apptainer pull drv_latest.sif docker://alansandrade/drv:latest
 
   After this you should have /work2/10238/vineeth_architect/stampede3/drv_latest.sif.
