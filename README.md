@@ -309,11 +309,10 @@ DRV Apptainer setup from scratch on Stampede3
   This is the file the sbatch scripts mount over /install/lib/libramulator.so at run time. The configs/ directory (with HBM-pando-16ch.cfg, HBM-pando-32ch.cfg, etc.)
    is mounted into the container at /work/ramulator-configs.
 
-  Step 3 — Build libmemHierarchy.so with DRV_CACHE_ALU support
+  Step 3 : Build libmemHierarchy.so with DRV_CACHE_ALU support (optional)
 
-  The DRAM-cache ALU-tagging changes live in your local sst-elements tree (drv-stack/sst-elements) and need to be compiled against your locally-built ramulator.
+  The DRAM-cache ALU-tagging changes live in  local sst-elements tree (drv-stack/sst-elements) and need to be compiled against locally-built ramulator.
   There's a helper script that does exactly that:
-
   cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
   ./rebuild_memhierarchy.sh
   ls /work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
@@ -324,7 +323,7 @@ DRV Apptainer setup from scratch on Stampede3
   ▎ on a fresh machine, you'd need to clone mrutt92/sst-core and mrutt92/sst-elements (branch devel-drv-changes) into those paths and run ./autogen.sh && ./configure
   ▎  once, mirroring the Dockerfile.
 
-  Step 4 — Verify everything is wired
+  Step 4 - Verify everything is wired
 
   ls -lh /work2/10238/vineeth_architect/stampede3/drv_latest.sif
   ls -lh /work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build/libramulator.so
@@ -364,7 +363,7 @@ DRV Apptainer setup from scratch on Stampede3
       make -j32 rv64 Drv pandocommand_loader
     '
 
-  Step 6 — Run
+  Step 6 - Run
 
   Use any *.sbatch file in drv_copy/drv/ (e.g. bfs_csr_shared_queue.sbatch) as a template. Each one already wires up the four binds: source tree, libramulator.so,
   ramulator-configs/, and the rebuilt libmemHierarchy.so.
