@@ -203,11 +203,6 @@ Each sweep writes into `build_stampede/drvr/<sweep_dir>/<run_name>/`.
   export RISCV_HOME=/install
   export PATH=/install/bin:$PATH
 
-  # Pick the smallest point in the canonical ladder
-  PODS=1 CX=1 CY=1 THR=16
-  VTX_PER_THREAD=1024 DEGREE=16
-  THREADS_PER_POD=$((CX * CY * THR))
-  N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
 
   # Per-run directory
   RUN_DIR=/work/build_stampede/drvr/idev_bfs_p${PODS}_c$((CX*CY))_t${THR}
