@@ -127,8 +127,138 @@ tail -f logs/<jobname>_<jobid>.out
 Each sweep writes into `build_stampede/drvr/<sweep_dir>/<run_name>/`.
 
 ---
+  ## 3. Running interactively on an idev node
 
-## 3. Key `drvr.py` command-line flags
+  The `*.sbatch` files are the easiest way to drive a full sweep, but for **development** — iterating on kernel code, debugging an SST crash, or running a single
+  configuration — it's faster to do everything by hand inside an `idev` allocation. The recipe below is the manual equivalent of the three phases in §2.
+
+  ### 3a. Grab an interactive node
+
+  ```bash
+  # On a Stampede3 login node
+  idev -p spr -N 1 -n 1 -c 112 -t 02:00:00 -A CCR22006
+  # or `-p pvc` for the GPU partition
+  ```
+
+  ### 3b. Set up paths and apptainer binds
+
+  Same bind set as the README's "To run it on TACC - Stampede3" section, just expressed as shell variables instead of a heredoc:
+
+  ```bash
+  cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
+  module load tacc-apptainer/1.4.1
+
+  SIF=/work2/10238/vineeth_architect/stampede3/drv_latest.sif
+  RAMULATOR_SRC=/work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build
+  RAMULATOR_LIB=$RAMULATOR_SRC/libramulator.so
+  RAMULATOR_CONFIGS=$RAMULATOR_SRC/configs
+  MEMH_LIB=/work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
+  ```
+
+  ### 3c. Build (once, or after touching C++ sources)
+
+  ```bash
+  apptainer exec --cleanenv \
+    --env XALT_EXECUTABLE_TRACKING=no \
+    --bind "$PWD:/work" \
+    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+    --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
+    "$SIF" \
+    bash -lc '
+      export RISCV_HOME=/install
+      export PATH=/install/bin:$PATH
+      cd /work/build_stampede
+      cmake .. \
+        -DSST_CORE_PREFIX=/install \
+        -DSST_ELEMENTS_PREFIX=/install \
+        -DGNU_RISCV_TOOLCHAIN_PREFIX=/install \
+        -DCMAKE_INSTALL_PREFIX=/work/.local \
+        -DSST_ENABLE_RAMULATOR=1 \
+        -DRAMULATOR_DIR=/tmp/ramulator
+      make -j32 rv64 Drv pandocommand_loader
+    '
+  ```
+
+  ### 3d. Drop into an interactive shell inside the container
+
+  ```bash
+  apptainer exec --cleanenv \
+    --env XALT_EXECUTABLE_TRACKING=no \
+    --env OMPI_MCA_mtl=^psm2 \
+    --bind "$PWD:/work" \
+    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+    --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
+    --bind "$MEMH_LIB:/install/lib/sst-elements-library/libmemHierarchy.so" \
+    "$SIF" \
+    bash
+  ```
+
+  You're now in the container, with the source tree at `/work` and the SST install at `/install`.
+
+  ### 3e. Generate inputs and run a single configuration
+
+  Inside the container shell:
+
+  ```bash
+  export RISCV_HOME=/install
+  export PATH=/install/bin:$PATH
+
+  # Pick the smallest point in the canonical ladder
+  PODS=1 CX=1 CY=1 THR=16
+  VTX_PER_THREAD=1024 DEGREE=16
+  THREADS_PER_POD=$((CX * CY * THR))
+  N=$((VTX_PER_THREAD * THREADS_PER_POD * PODS))
+
+  # Per-run directory
+  RUN_DIR=/work/build_stampede/drvr/idev_bfs_p${PODS}_c$((CX*CY))_t${THR}
+  mkdir -p "$RUN_DIR"
+  cp /work/model/summarize.py /work/model/summarize_ramulator.py "$RUN_DIR/"
+
+  # Generate uniform graph + BFS init state
+  python3 /work/gen_uniform_csr.py -N ${N} -D ${DEGREE} --seed 42 \
+    -o "$RUN_DIR/uniform_graph.bin"
+  python3 /work/gen_bfs_init_state.py --graph "$RUN_DIR/uniform_graph.bin" \
+    -o "$RUN_DIR"
+
+  # Run SST from the run dir so stats land beside the graph
+  cd "$RUN_DIR"
+  PYTHONPATH=/work/py::/work/model \
+    /install/bin/sst -n 1 /work/model/drvr.py -- \
+      --with-command-processor=/work/build_stampede/pandocommand/libpandocommand_loader.so \
+      --num-pxn=1 --pxn-pods=${PODS} \
+      --pod-cores-x=${CX} --pod-cores-y=${CY} \
+      --core-threads=${THR} \
+      --pod-l2sp-banks=4 --pod-l2sp-interleave=64 \
+      --pxn-dram-banks=1 \
+      --pxn-dram-cache-size=$((8 * 1024)) --pxn-dram-cache-slices=4 \
+      --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
+      --pxn-dram-cache-alu=0 \
+      /work/build_stampede/rv64/drvr/drvr_bfs_csr_weak_roi \
+      --V ${VTX_PER_THREAD} --D ${DEGREE} \
+    | tee output.txt
+
+  python3 summarize.py
+  python3 summarize_ramulator.py
+  ```
+
+  The same recipe works for any binary in `build_stampede/rv64/drvr/` — swap the binary path, the `--pxn-*`/`--pod-*` flags, and the program argv (e.g. PR/SSSP take
+  a different `--V`/`--D`/`--PR_ITERS` set).
+
+  ### 3f. Edit-and-rerun loop
+
+  You can leave the apptainer shell open across iterations. Edit C++ sources from a second terminal on the login node — the source tree is bind-mounted, so changes
+  are immediately visible inside the container. Then from the running shell:
+
+  ```bash
+  cd /work/build_stampede
+  make -j32 rv64 Drv pandocommand_loader   # rebuild only what changed
+  cd "$RUN_DIR" && /install/bin/sst -n 1 /work/model/drvr.py -- ...  # rerun
+  ```
+
+  For Python-only changes (under `model/`, `pandohammer/*.py`, the `gen_*.py` helpers) no rebuild is needed — just rerun the `sst` line.
+
+
+## 4. Key `drvr.py` command-line flags
 
 Full list: `model/cmdline.py`. The ones you will actually touch:
 
@@ -158,11 +288,11 @@ After the flags comes the **binary path** then **program argv**
 
 ---
 
-## 4. Getting stats
+## 5. Getting stats
 
 Two post-processors live side-by-side in `model/`:
 
-### 4a. `summarize.py` — reads `stats.csv` (SST built-ins + custom)
+### 5a. `summarize.py` — reads `stats.csv` (SST built-ins + custom)
 
 SST writes `stats.csv` in the run directory when
 `statLoadLevel=1` is set (already done by `drvr.py`). `summarize.py`
@@ -211,7 +341,7 @@ Report sections printed:
    with queue depth, read/write latency, inter-arrival time, and a
    useful-phase utilization estimate.
 
-### 4b. `summarize_ramulator.py` — reads `ramulator_*.stats`
+### 5b. `summarize_ramulator.py` — reads `ramulator_*.stats`
 
 Ramulator dumps `ramulator_system_pxn0_dram0.stats` (or
 `..._s<slice>.stats` when sliced) next to `stats.csv`. The summarizer:
@@ -237,7 +367,7 @@ per DRAM cache slice) and reports:
 * **DRAM bytes / edge** — if the graph is present or `--edges` is
   supplied.
 
-### 4c. Typical combined workflow
+### 5c. Typical combined workflow
 
 ```bash
 cd build_stampede/drvr/<sweep>/<run_name>
@@ -252,7 +382,7 @@ tells you what the **DRAM device** saw (after the cache).
 Disagreements between them usually point at cache filtering or
 eviction traffic you forgot about.
 
-### 4d. Instrumenting new ROIs
+### 5d. Instrumenting new ROIs
 
 The `useful_*` stats only accumulate while `stat_phase_` is 1 on that
 hart. From RISC-V code:
@@ -270,14 +400,14 @@ phase metrics in `summarize.py` will read 0 cycles / 0 accesses.
 
 ---
 
-## 5. The main `*.sbatch` scripts
+## 6. The main `*.sbatch` scripts
 
 All scripts build once then loop over a `CONFIGS` array. To reduce
 a sweep to a single point, comment out all lines in `CONFIGS` except
 the one you want. Numbers below are the format used by each script's
 array.
 
-### 5a. BFS on CSR graphs
+### 6a. BFS on CSR graphs
 
 | Script | Binary / purpose |
 |---|---|
@@ -292,21 +422,21 @@ array.
 | `bfs_csr_sq_l1cache.sbatch` | CURRENTLY DOESNT WORK - Shared-queue kernel with **per-core L1 cache enabled** (`--core-l1-cache-size=8192`) and **no DRAM cache** — used to study whether L1 caches alone are enough. |
 | `bfs_tiered_wq_faa.sbatch` | `drvr_bfs_tiered_wq_faa` — CURRENTLY DOESNT WORK - tiered work-queue with fetch-and-add, needs `rmat_r16.bin`. |
 
-### 5b. Other BFS variants
+### 6b. Other BFS variants
 
 | Script | Purpose |
 |---|---|
 | `bfs_pgas.sbatch` | `drvr_bfs_pgas` — multi-PXN BFS over the PGAS address space. Configs: `"NUM_PXN CX CY THR"`. |
 | `bfs_pgas_scatter.sbatch` | `drvr_bfs_pgas_scatter` — scatter variant, sweeps VGID block sizes. |
 
-### 5c. PageRank / SSSP
+### 6c. PageRank / SSSP
 
 | Script | Binary |
 |---|---|
 | `pr_csr_weak_roi.sbatch` | `drvr_pr_csr_weak_roi` — PageRank ROI-only. Has a `PR_ITERS` knob. |
 | `sssp_csr_weak_roi.sbatch` | `drvr_sssp_csr_weak_roi` — SSSP ROI-only. Same `"PODS CX CY THR"` sweep. |
 
-### 5d. Microbenchmarks & infrastructure sweeps
+### 6d. Microbenchmarks & infrastructure sweeps
 
 | Script | Purpose |
 |---|---|
@@ -326,7 +456,7 @@ array.
 
 ---
 
-## 6. Picking a point in the sweep (`CONFIGS`)
+## 7. Picking a point in the sweep (`CONFIGS`)
 
 For the weak-scaling BFS drivers the canonical ladder is
 
@@ -348,7 +478,7 @@ doubles with cores so per-thread working set stays roughly constant.
 
 ---
 
-## 7. Troubleshooting checklist
+## 8. Troubleshooting checklist
 
 * **`Error: 'stats.csv' not found.`** — the SST run crashed before stats
   were written. Look at `output.txt` in the run dir, then `logs/…err`.
@@ -369,7 +499,7 @@ doubles with cores so per-thread working set stays roughly constant.
 
 ---
 
-## 8. Quickstart — one-pod BFS from scratch
+## 9. Quickstart — one-pod BFS from scratch
 
 ```bash
 cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
