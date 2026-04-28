@@ -550,14 +550,6 @@ docker run -it --rm \
 
   ---
 
-  ## Why the libramulator / libmemHierarchy separation matters
-
-  - Inside the container, `/install/lib/libramulator.so` is the Dockerfile's stock build.
-  - Outside, `drv_copy/ramulator-build/libramulator.so` is the same source rebuilt against the host glibc with the SST patches — and it's the one your rebuilt
-  `libmemHierarchy.so` was linked against.
-  - If you run with the in-container ramulator, the rebuilt `libmemHierarchy.so` may load a `libramulator.so` whose symbols don't match hence the bind-mount
-  override on every run.
-
 
 
 
