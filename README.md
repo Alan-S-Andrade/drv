@@ -190,7 +190,7 @@ docker run -it --rm \
   MEMH_LIB=/work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
   ```
 
-  ### 3. BUILD step — apptainer with Ramulator binds
+  ### 3. BUILD step - apptainer with Ramulator binds
 
   ```bash
   apptainer exec --cleanenv \
@@ -276,7 +276,7 @@ docker run -it --rm \
   export DRV_ROOT=$WORK/stampede3
   ```
 
-  ### Step 1 — Pull the Docker image and convert to a SIF
+  ### Step 1 - Pull the Docker image and convert to a SIF
 
   Apptainer can pull straight from Docker Hub — no local Docker daemon needed. Don't run this on a login node (image conversion is hefty); use an `idev` session or a
    small `sbatch`.
@@ -298,7 +298,7 @@ docker run -it --rm \
   `devel-drv-changes`), Boost 1.89, the RISC-V GNU toolchain, CMake 4.2, plus a stub `libramulator.so` at `/install/lib/`. We override the stub at run time with our
   own builds — see Steps 2 and 3.
 
-  ### Step 2 — Build `libramulator.so` outside the container
+  ### Step 2 - Build `libramulator.so` outside the container
 
   The image still has the Dockerfile's baked-in `libramulator.so`, but we ship our own copy with the SST patches and the HBM-pando configs. Build it once on the host
    (no apptainer needed — it's a plain `g++` build).
@@ -330,7 +330,7 @@ docker run -it --rm \
   - `gcc48Patch.patch` — fixes lambdas in `Scheduler.h` so it compiles on modern GCC/Clang.
   - `libPatch.patch` — adds a `libramulator.so` Makefile target and `-fPIC` so SST can dlopen it as a memHierarchy backend.
 
-  ### Step 3 — Build `libmemHierarchy.so` with `DRV_CACHE_ALU` (optional)
+  ### Step 3 - Build `libmemHierarchy.so` with `DRV_CACHE_ALU` (optional)
 
   The DRAM-cache ALU-tagging changes live in a local sst-elements tree (`$DRV_ROOT/drv-stack/sst-elements`) and must be compiled against the locally-built ramulator.
    A helper script (`rebuild_memhierarchy.sh` in the drv repo) does exactly that — first edit the absolute paths near the top of the script to point at your
