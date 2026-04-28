@@ -238,7 +238,8 @@ Each sweep writes into `build_stampede/drvr/<sweep_dir>/<run_name>/`.
   a different `--V`/`--D`/`--PR_ITERS` set).
 
 
-NOTE: You can directly end the default the architectural parameters for a particular run  in drvr/CMakeLists.txt , any new code that you add, can be added in drvr, and then mentioned in CMakeLists.txt in the same format as others.
+### NOTE:
+You can directly add the default the architectural parameters for a particular run  in drvr/CMakeLists.txt , any new code that you add, can be added in drvr, and then mentioned in CMakeLists.txt in the same format as others.
 
 
   ### 3f. Edit-and-rerun loop
