@@ -283,13 +283,13 @@ DRV Apptainer setup from scratch on Stampede3
   the host (no apptainer needed — it's a plain g++ build).
 
   cd /work2/10238/vineeth_architect/stampede3/drv_copy
-  # If ramulator-build/ is missing on a fresh checkout:
-  #   git clone https://github.com/CMU-SAFARI/ramulator.git ramulator-build
-  #   cd ramulator-build && git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c
-  #   wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch
-  #   wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch
-  #   patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch
-  #   patch -p1 -i ramulator_sha_7d2e723_libPatch.patch
+   If ramulator-build/ is missing on a fresh checkout:
+     git clone https://github.com/CMU-SAFARI/ramulator.git ramulator-build
+     cd ramulator-build && git checkout 7d2e72306c6079768e11a1867eb67b60cee34a1c
+     wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_gcc48Patch.patch
+     wget https://github.com/sstsimulator/sst-downloads/releases/download/Patch_Files/ramulator_sha_7d2e723_libPatch.patch
+     patch -p1 -i ramulator_sha_7d2e723_gcc48Patch.patch
+     patch -p1 -i ramulator_sha_7d2e723_libPatch.patch
 
   cd /work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build
   make CXX=g++ libramulator.so
