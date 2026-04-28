@@ -246,7 +246,7 @@ docker run -it --rm \
 
 
 
-##To start a fresh setup on TACC
+## To start a fresh setup on TACC
 
 
 DRV Apptainer setup from scratch on Stampede3
