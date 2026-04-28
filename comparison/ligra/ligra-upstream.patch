@@ -1,0 +1,25 @@
+diff --git a/apps/Makefile b/apps/Makefile
+index 819ae7e..2190359 100644
+--- a/apps/Makefile
++++ b/apps/Makefile
+@@ -43,7 +43,7 @@ endif
+ 
+ COMMON= ligra.h graph.h compressedVertex.h vertex.h utils.h IO.h parallel.h gettime.h index_map.h maybe.h sequence.h edgeMap_utils.h binary_search.h quickSort.h blockRadixSort.h transpose.h parseCommandLine.h byte.h byteRLE.h nibble.h byte-pd.h byteRLE-pd.h nibble-pd.h vertexSubset.h encoder.C decoder.C
+ 
+-ALL= encoder decoder BFS BC BellmanFord Components Components-Shortcut Radii PageRank PageRankDelta BFSCC BFS-Bitvector KCore MIS Triangle CF
++ALL= encoder decoder BFS BFS_PushOnly BC BellmanFord Components Components-Shortcut Radii PageRank PageRankDelta BFSCC BFS-Bitvector KCore MIS Triangle CF
+ 
+ all: $(ALL)
+ 
+diff --git a/ligra/utils.h b/ligra/utils.h
+index 648888f..f60e724 100644
+--- a/ligra/utils.h
++++ b/ligra/utils.h
+@@ -26,6 +26,7 @@
+ #include <iostream>
+ #include <fstream>
+ #include <stdlib.h>
++#include <cstdint>
+ #include "parallel.h"
+ using namespace std;
+ 
