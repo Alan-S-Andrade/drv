@@ -170,29 +170,77 @@ docker run -it --rm \
 
 ## To run it on TACC - Stampede3
 
-ssh vineeth_architect@stampede3.tacc.utexas.edu
+  1. SSH + compute node + module
 
-Move to a compute node 
+  ssh vineeth_architect@stampede3.tacc.utexas.edu
+  # get a compute node (idev or sbatch)
+  cdw
+  module load tacc-apptainer/1.4.1
+  cd /work2/10238/vineeth_architect/stampede3/drv_copy/drv
 
-cdw
+  2. Set the paths used by the new bind mounts
 
-module load tacc-apptainer/1.4.1
+  SIF=/work2/10238/vineeth_architect/stampede3/drv_latest.sif
+  RAMULATOR_SRC=/work2/10238/vineeth_architect/stampede3/drv_copy/ramulator-build
+  RAMULATOR_LIB=$RAMULATOR_SRC/libramulator.so
+  RAMULATOR_CONFIGS=$RAMULATOR_SRC/configs
+  MEMH_LIB=/work2/10238/vineeth_architect/stampede3/drv-stack/sst-elements/lib/sst-elements-library/libmemHierarchy.so
 
-cd /work2/10238/vineeth_architect/stampede3/drv
+  3. BUILD step — apptainer with Ramulator binds
 
-apptainer exec --cleanenv \
-  --env XALT_EXECUTABLE_TRACKING=no \
-  --bind $PWD:/work \
-  $WORK/drv.sif \
-  bash
+  apptainer exec --cleanenv \
+    --env XALT_EXECUTABLE_TRACKING=no \
+    --bind "$PWD:/work" \
+    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+    --bind "$RAMULATOR_SRC:/tmp/ramulator:ro" \
+    "$SIF" \
+    bash -lc '
+      export RISCV_HOME=/install
+      export PATH=/install/bin:$PATH
+      cd /work/build_stampede
+      cmake .. \
+        -DSST_CORE_PREFIX=/install \
+        -DSST_ELEMENTS_PREFIX=/install \
+        -DGNU_RISCV_TOOLCHAIN_PREFIX=/install \
+        -DCMAKE_INSTALL_PREFIX=/work/.local \
+        -DSST_ENABLE_RAMULATOR=1 \
+        -DRAMULATOR_DIR=/tmp/ramulator
+      make -j32 rv64 Drv pandocommand_loader
+    '
 
-export RISCV_HOME=/install
-export PATH=/install/bin:$PATH
+  4. RUN step — apptainer with Ramulator + memHierarchy binds
 
-cmake .. \
-  -DSST_CORE_PREFIX=/install \
-  -DSST_ELEMENTS_PREFIX=/install \
-  -DCMAKE_INSTALL_PREFIX=/work/.local
+  apptainer exec --cleanenv \
+    --env XALT_EXECUTABLE_TRACKING=no \
+    --env OMPI_MCA_mtl=^psm2 \
+    --bind "$PWD:/work" \
+    --bind "$RAMULATOR_LIB:/install/lib/libramulator.so" \
+    --bind "$RAMULATOR_CONFIGS:/work/ramulator-configs" \
+    --bind "$MEMH_LIB:/install/lib/sst-elements-library/libmemHierarchy.so" \
+    "$SIF" \
+    bash
 
-make -j32 drvr-run-bfs_multi_sw
+  Run-step additions vs. old README:
+  - --env OMPI_MCA_mtl=^psm2 — disables PSM2 MTL (avoids MPI/OFI noise on Stampede3 fabric).
+  - --bind $RAMULATOR_LIB → /install/lib/libramulator.so — same override as build.
+  - --bind $RAMULATOR_CONFIGS → /work/ramulator-configs — the model passes --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg, so this mount is
+  required at runtime.
+  - --bind $MEMH_LIB → /install/lib/sst-elements-library/libmemHierarchy.so — overrides the container's libmemHierarchy.so with your prebuilt one that has coherence
+  ALU tagging. Requires the prebuilt .so to exist (rebuilt via rebuild_memhierarchy.sh if needed).
+
+  5. Inside the container, invoking SST directly via an sbatch script, where you can set architectural parameters and also set the binary.
+  e.g.:
+  PYTHONPATH=/work/py::/work/model \
+    /install/bin/sst -n 1 /work/model/drvr.py -- \
+      --with-command-processor=/work/build_stampede/pandocommand/libpandocommand_loader.so \
+      --num-pxn=1 --pxn-pods=1 --pod-cores-x=8 --pod-cores-y=8 --core-threads=16 \
+      --pod-l2sp-banks=4 --pod-l2sp-interleave=64 \
+      --pxn-dram-banks=1 --pxn-dram-cache-size=$((512*1024)) --pxn-dram-cache-slices=4 \
+      --dram-backend-config-sliced=/work/ramulator-configs/HBM-pando-16ch.cfg \
+      --pxn-dram-cache-alu=0 \
+      /work/build_stampede/rv64/drvr/drvr_bfs_csr_shared_queue_baseline \
+      --V 1024 --D 16
+
+  For end-to-end runs, the easiest path is to copy/adapt one of the existing sbatch files (e.g. bfs_csr_shared_queue.sbatch) — they wire up build + run + sweep loop
+  + summarization in one file.
 
